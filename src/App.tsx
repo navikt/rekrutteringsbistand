@@ -1,21 +1,14 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 
-import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
-import Modiadekoratør from './modia/Modiadekoratør';
-import {
-    Kandidat,
-    Kandidatsøk,
-    Statistikk,
-    Stilling,
-    Stillingssøk,
-} from './microfrontends/microfrontends';
+import Navigeringsmeny from './header/navigeringsmeny/Navigeringsmeny';
+import Modiadekoratør from './header/modia/Modiadekoratør';
 import {
     AmplitudeEvent,
     sendEvent,
     sendGenerellEvent,
     setNavKontorForAmplitude,
-} from './amplitude';
-import { generaliserPath } from './utils/path';
+} from './felles/amplitude';
+import { generaliserPath } from './header/utils/path';
 import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { History } from 'history';
 
@@ -68,23 +61,11 @@ const App: FunctionComponent<Props> = ({ history }) => {
                     </>
                 }
             >
-                <Route index element={<Statistikk navKontor={navKontor} history={history} />} />
-                <Route
-                    path="stillinger/*"
-                    element={<Stilling navKontor={navKontor} history={history} />}
-                />
-                <Route
-                    path="stillingssok/*"
-                    element={<Stillingssøk navKontor={navKontor} history={history} />}
-                />
-                <Route
-                    path="kandidater/*"
-                    element={<Kandidat navKontor={navKontor} history={history} />}
-                />
-                <Route
-                    path="kandidatsok/*"
-                    element={<Kandidatsøk navKontor={navKontor} history={history} />}
-                />
+                <Route index element={<div>Placeholder</div>} />
+                <Route path="stillinger/*" element={<div>Placeholder</div>} />
+                <Route path="stillingssok/*" element={<div>Placeholder</div>} />
+                <Route path="kandidater/*" element={<div>Placeholder</div>} />
+                <Route path="kandidatsok/*" element={<div>Placeholder</div>} />
             </Route>
         </Routes>
     );
