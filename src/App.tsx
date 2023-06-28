@@ -1,48 +1,14 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { useState } from 'react';
+import { Outlet, Route, Routes } from 'react-router-dom';
 
 import Navigeringsmeny from './header/navigeringsmeny/Navigeringsmeny';
 import Modiadekoratør from './header/modia/Modiadekoratør';
-import {
-    AmplitudeEvent,
-    sendEvent,
-    sendGenerellEvent,
-    setNavKontorForAmplitude,
-} from './felles/amplitude';
-import { generaliserPath } from './header/utils/path';
-import { Outlet, Route, Routes, useLocation } from 'react-router-dom';
-import { History } from 'history';
+import useAmplitude from './header/useAmplitude';
 
-type Props = {
-    history: History;
-};
-
-const App: FunctionComponent<Props> = ({ history }) => {
-    const location = useLocation();
-
+const App = () => {
     const [navKontor, setNavKontor] = useState<string | null>(null);
-    const [harSendtÅpneAppEvent, setHarSendtÅpneAppEvent] = useState<boolean>(false);
 
-    useEffect(() => {
-        const konfigurerAmplitudeOgSendEvents = async (navKontor: string) => {
-            setNavKontorForAmplitude(navKontor);
-
-            await sendGenerellEvent(AmplitudeEvent.Sidevisning, {
-                path: generaliserPath(location.pathname),
-            });
-
-            if (!harSendtÅpneAppEvent) {
-                sendEvent(AmplitudeEvent.ÅpneRekrutteringsbistand, {
-                    skjermbredde: window.screen.width,
-                });
-
-                setHarSendtÅpneAppEvent(true);
-            }
-        };
-
-        if (navKontor) {
-            konfigurerAmplitudeOgSendEvents(navKontor);
-        }
-    }, [location.pathname, navKontor, harSendtÅpneAppEvent]);
+    useAmplitude(navKontor);
 
     return (
         <Routes>
