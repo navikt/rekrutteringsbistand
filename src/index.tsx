@@ -5,8 +5,8 @@ import ContainerRouter from './ContainerRouter';
 import App from './App';
 import './index.css';
 
-const container = document.getElementById('rekrutteringsbistand-container');
-const root = createRoot(container!);
+const element = document.getElementById('rekrutteringsbistand');
+const root = createRoot(element as HTMLElement);
 
 const history = createBrowserHistory();
 

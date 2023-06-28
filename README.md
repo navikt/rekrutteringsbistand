@@ -1,6 +1,6 @@
-# rekrutteringsbistand-container
+# rekrutteringsbistand
 
-Container-app for Rekrutteringsbistand, en microfrontend-basert app for veiledere.
+Et arbeidsmobiliseringsverktøy for veiledere og markedskontakter i NAV.
 
 ## Installasjon
 
@@ -10,43 +10,9 @@ npm install
 
 ## Utvikling
 
-Du kan selv velge om du vil jobbe isolert med container-appen, eller fyre opp appen sammen med microfrontendene lokalt.
-
-### Kun container-app
-
 ```sh
-npm start
+npm run start
 ```
-
-### Med microfrontend
-
-I denne appen:
-
-```sh
-npm run start:import
-```
-
-I én eller flere microfrontends:
-
-```sh
-npm run start:export
-```
-
-Create-react-app vil lese `src/setupProxy.js` under oppstart og sette opp proxies til microfrontendene, slik at den får tak i ressursene (JS/CSS) den trenger.
-
-Si vi rendrer følgende komponent i `App.tsx`:
-
-```jsx
-<Microfrontend
-    appName="rekrutteringsbistand-statistikk"
-    appPath="/statistikk"
-    appProps={{
-        navKontor: '0239',
-    }}
-/>
-```
-
-Container-appen vil da forvente at statistikk-appen ligger tilgjengelig under `/statistikk`. Proxy-configen sørger for at all trafikk herifra routes videre til `http://localhost:3001/statistikk` der statistikk-appen hostes lokalt.
 
 
 # Henvendelser
