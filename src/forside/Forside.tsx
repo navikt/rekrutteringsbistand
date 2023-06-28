@@ -1,5 +1,9 @@
+import useNavKontor from '../felles/navKontor';
+
 const Forside = () => {
-    return <div>Hemmelig beskjed i en annen modul</div>;
+    const navKontor = useNavKontor((state) => state.navKontor);
+
+    return <div>Valgt NAV-kontor er {navKontor}</div>;
 };
 
 export default Forside;

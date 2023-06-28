@@ -13,32 +13,38 @@ const getApiKey = () => {
 };
 
 export const setNavKontorForAmplitude = (navKontor: string) => {
-    client.setUserProperties({
-        navKontor,
-    });
+    if (import.meta.env.PROD) {
+        client.setUserProperties({
+            navKontor,
+        });
+    }
 };
 
 export const sendEvent = (område: string, hendelse: string, data?: Object) => {
-    client.logEvent(['#rekrutteringsbistand', område, hendelse].join('-'), data);
+    if (import.meta.env.PROD) {
+        client.logEvent(['#rekrutteringsbistand', område, hendelse].join('-'), data);
+    }
 };
 
 export const sendGenerellEvent = (
     event: AmplitudeEvent,
     properties: Record<string, any>
 ): Promise<void> => {
-    const eventProperties = {
-        app: 'rekrutteringsbistand',
-        ...properties,
-    };
+    if (import.meta.env.PROD) {
+        const eventProperties = {
+            app: 'rekrutteringsbistand',
+            ...properties,
+        };
 
-    return new Promise((resolve, reject) => {
-        client.logEvent(
-            event,
-            eventProperties,
-            () => resolve(),
-            () => reject()
-        );
-    });
+        return new Promise((resolve, reject) => {
+            client.logEvent(
+                event,
+                eventProperties,
+                () => resolve(),
+                () => reject()
+            );
+        });
+    }
 };
 
 const client: AmplitudeClient = amplitudeJs.getInstance();
