@@ -1,7 +1,5 @@
-type Props = { navKontor: string | null };
-
-const Forside = ({ navKontor }: Props) => {
-    return <div>Forside</div>;
+const Forside = () => {
+    return <div>Hemmelig beskjed i en annen modul</div>;
 };
 
 export default Forside;

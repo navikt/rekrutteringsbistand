@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Header from './header/Header';
-import Forside from './forside/Forside';
 
 const App = () => {
     const [navKontor, setNavKontor] = useState<string | null>(null);
@@ -14,7 +13,7 @@ const App = () => {
             children: [
                 {
                     path: '/',
-                    element: <Forside navKontor={navKontor} />,
+                    lazy: () => import('./forside/index'),
                 },
                 {
                     path: 'stillinger/*',
