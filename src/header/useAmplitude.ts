@@ -19,7 +19,7 @@ const useAmplitude = (navKontor: string | null) => {
             });
 
             if (!harSendtÅpneAppEvent) {
-                sendEvent(AmplitudeEvent.ÅpneRekrutteringsbistand, {
+                sendEvent('app', 'åpne', {
                     skjermbredde: window.screen.width,
                 });
 
