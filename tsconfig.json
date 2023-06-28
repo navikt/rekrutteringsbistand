@@ -1,24 +1,13 @@
 {
     "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "strictNullChecks": true,
-        "module": "ESNext",
-        "types": ["jest", "vite/client", "vite-plugin-svgr/client"],
         "jsx": "react-jsx",
-        "target": "ESNext",
-        "allowJs": true,
-        "strict": false,
-        "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true,
-        "lib": ["es7", "dom"],
+        "module": "ESNext",
+        "target": "ES2022",
+        "moduleResolution": "Node",
+        "noEmit": true,
         "skipLibCheck": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "noFallthroughCasesInSwitch": true,
-        "isolatedModules": true,
-        "noEmit": true
+        "types": ["jest", "vite/client", "vite-plugin-svgr/client"],
+        "allowSyntheticDefaultImports": true
     },
-    "include": ["./src/"]
+    "include": ["src"]
 }
