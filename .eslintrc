@@ -1,0 +1,51 @@
+{
+    "extends": ["react-app", "prettier"],
+    "plugins": ["import"],
+    "rules": {
+        "import/no-restricted-paths": [
+            "error",
+            {
+                "basePath": "src",
+                "zones": [
+                    {
+                        "target": "header",
+                        "message": "Headeren kan kun importere filer fra egen mappe eller fellesmappen",
+                        "from": ["forside", "kandidat", "kandidatsok", "stilling", "stillingssok"]
+                    },
+                    {
+                        "target": "forside",
+                        "message": "Forsiden kan kun importere filer fra egen mappe eller fellesmappen",
+                        "from": ["header", "kandidat", "kandidatsok", "stilling", "stillingssok"]
+                    },
+                    {
+                        "target": "kandidat",
+                        "message": "Kandidatsiden kan kun importere filer fra egen mappe eller fellesmappen",
+                        "from": ["header", "forside", "kandidatsok", "stilling", "stillingssok"]
+                    },
+                    {
+                        "target": "kandidatsok",
+                        "message": "Kandidatsøket kan kun importere filer fra egen mappe eller fellesmappen",
+                        "from": ["header", "forside", "kandidat", "stilling", "stillingssok"]
+                    },
+                    {
+                        "target": "stilling",
+                        "message": "Stillingssiden kan kun importere filer fra egen mappe eller fellesmappen",
+                        "from": ["header", "forside", "kandidat", "kandidatsok", "stillingssok"]
+                    },
+                    {
+                        "target": "stillingssok",
+                        "message": "Stillingssøket kan kun importere filer fra egen mappe eller fellesmappen",
+                        "from": ["header", "forside", "kandidat", "kandidatsok", "stilling"]
+                    }
+                ]
+            }
+        ]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".ts", ".tsx", ".js", ".jsx"]
+            }
+        }
+    }
+}

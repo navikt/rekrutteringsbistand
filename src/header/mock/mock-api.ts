@@ -8,6 +8,7 @@ const url = {
     modiaWebsocket: `wss://veilederflatehendelser-q0.adeo.no/modiaeventdistribution/ws/${minIdent}`,
     modiaContext: `/modiacontextholder/api/context`,
     modiaAktivEnhet: `/modiacontextholder/api/context/aktivenhet`,
+    modiaAktivBruker: `/modiacontextholder/api/context/aktivbruker`,
     modiaDecorator: `/modiacontextholder/api/decorator`,
 };
 
@@ -39,5 +40,6 @@ const log = (response: MockResponse | MockResponseFunction) => {
 
 fetchMock
     .get(url.modiaAktivEnhet, log(aktivEnhetOgBruker))
+    .delete(url.modiaAktivBruker, log(200))
     .get(url.modiaDecorator, log(decorator))
     .post(url.modiaContext, log(201));

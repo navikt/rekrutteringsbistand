@@ -6,8 +6,10 @@ import {
     sendEvent,
 } from '../felles/amplitude';
 import { generaliserPath } from './utils/path';
+import { useLocation } from 'react-router-dom';
 
 const useAmplitude = (navKontor: string | null) => {
+    const location = useLocation();
     const [harSendtÅpneAppEvent, setHarSendtÅpneAppEvent] = useState<boolean>(false);
 
     useEffect(() => {
