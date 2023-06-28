@@ -1,0 +1,21 @@
+{
+    "ingress": "https://rekrutteringsbistand-mono.intern.dev.nav.no",
+
+    "adGruppeModiaGenerellTilgang": "67a06857-0028-4a90-bf4c-9c9a92c7d733",
+    "adGruppeModiaOppfolging": "554a66fb-fbec-4b92-90c1-0d9c085c362c",
+
+    "statistikkApiHost": "rekrutteringsbistand-statistikk-api.dev-fss-pub.nais.io",
+    "smsApiHost": "rekrutteringsbistand-sms.dev-fss-pub.nais.io",
+    "kandidatApiHost": "rekrutteringsbistand-kandidat-api.dev-fss-pub.nais.io",
+    "foresporselOmDelingAvCvApiHost": "foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io",
+    "modiaContextHolderHost": "modiacontextholder-q0.dev-fss-pub.nais.io",
+
+    "statistikkApiUrl": "https://rekrutteringsbistand-statistikk-api.dev-fss-pub.nais.io/rekrutteringsbistand-statistikk-api",
+    "stillingssokProxyUrl": "http://rekrutteringsbistand-stillingssok-proxy",
+    "stillingApiUrl": "http://rekrutteringsbistand-stilling-api",
+    "kandidatApiUrl": "https://rekrutteringsbistand-kandidat-api.dev-fss-pub.nais.io/rekrutteringsbistand-kandidat-api/rest",
+    "smsApi": "https://rekrutteringsbistand-sms.dev-fss-pub.nais.io/rekrutteringsbistand-sms/sms",
+    "foresporselOmDelingAvCvApi": "https://foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io",
+    "synlighetsmotorApi": "http://toi-synlighetsmotor",
+    "modiaContextHolderApi": "https://modiacontextholder-q0.dev-fss-pub.nais.io/modiacontextholder"
+}

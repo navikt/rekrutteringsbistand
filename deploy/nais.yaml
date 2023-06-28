@@ -1,0 +1,71 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+    name: rekrutteringsbistand
+    namespace: toi
+    labels:
+        team: toi
+
+spec:
+    # prettier-ignore
+    image: {{ image }}
+    port: 8080
+    ingresses:
+        - {{ ingress }}
+    liveness:
+        initialDelay: 5
+        path: /internal/isAlive
+    readiness:
+        initialDelay: 5
+        path: /internal/isReady
+    azure:
+        application:
+            enabled: true
+            allowAllUsers: true
+            claims:
+                extra:
+                    - NAVident
+        sidecar:
+            enabled: true
+    openSearch:
+      access: read
+      instance: kandidat
+    secureLogs:
+      enabled: true
+    accessPolicy:
+      outbound:
+        rules:
+          - application: rekrutteringsbistand-stilling-api
+          - application: rekrutteringsbistand-stillingssok-proxy
+          - application: toi-synlighetsmotor
+        external:
+          - host: {{ statistikkApiHost }}
+          - host: {{ smsApiHost }}
+          - host: {{ kandidatApiHost }}
+          - host: {{ foresporselOmDelingAvCvApiHost }}
+          - host: {{ modiaContextHolderHost }}
+    env:
+        - name: NODE_EXTRA_CA_CERTS
+          value: /etc/ssl/ca-bundle.pem
+
+        - name: AD_GRUPPE_MODIA_GENERELL_TILGANG
+          value: {{ adGruppeModiaGenerellTilgang }}
+        - name: AD_GRUPPE_MODIA_OPPFOLGING
+          value: {{ adGruppeModiaOppfolging }}
+          
+        - name: STATISTIKK_API_URL
+          value: {{ statistikkApiUrl }}
+        - name: STILLINGSSOK_PROXY_URL
+          value: {{ stillingssokProxyUrl }}
+        - name: STILLING_API_URL
+          value: {{ stillingApiUrl }}
+        - name: KANDIDAT_API_URL
+          value: {{ kandidatApiUrl }}
+        - name: SMS_API
+          value: {{ smsApi }}
+        - name: FORESPORSEL_OM_DELING_AV_CV_API
+          value: {{ foresporselOmDelingAvCvApi }}
+        - name: SYNLIGHETSMOTOR_API
+          value: {{ synlighetsmotorApi }}
+        - name: MODIA_CONTEXT_HOLDER_API
+          value: {{ modiaContextHolderApi }}
