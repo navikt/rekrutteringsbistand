@@ -1,0 +1,26 @@
+.svartelling {
+    text-align: left;
+}
+
+.svartelling svg {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.svartJa {
+    color: green;
+}
+
+.svartNei {
+    color: red;
+    position: relative;
+}
+
+.kryss {
+    color: red;
+    position: absolute;
+}
+
+.oppsummering {
+    display: block;
+}
