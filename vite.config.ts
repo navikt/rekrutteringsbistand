@@ -2,11 +2,20 @@ import { defineConfig } from 'vite';
 
 import reactPlugin from '@vitejs/plugin-react';
 import svgrPlugin from 'vite-plugin-svgr';
-import eslintPlugin from 'vite-plugin-eslint';
+import checkerPlugin from 'vite-plugin-checker';
 
 export default defineConfig(() => {
     return {
-        plugins: [reactPlugin(), svgrPlugin(), eslintPlugin()],
+        plugins: [
+            reactPlugin(),
+            svgrPlugin(),
+            checkerPlugin({
+                typescript: true,
+                eslint: {
+                    lintCommand: 'eslint "./src/**/*.{ts,tsx,js,jsx}"',
+                },
+            }),
+        ],
         server: {
             port: 3000,
             proxy: {
