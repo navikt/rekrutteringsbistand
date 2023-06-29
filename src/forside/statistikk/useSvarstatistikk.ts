@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { formaterDatoTilApi } from './datoUtils';
-import { Nettressurs } from '../../felles/Nettressurs';
+import { Nettressurs } from '../../felles/nettressurs';
 
 const apiBasePath = '/foresporsel-om-deling-av-cv-api';
 export const forespørslerApiUrl = `${apiBasePath}/statistikk`;

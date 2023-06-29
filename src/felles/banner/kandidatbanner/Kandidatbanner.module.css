@@ -1,0 +1,61 @@
+.banner {
+    background-color: white;
+    width: 100%;
+    border-bottom: 2px solid var(--a-border-subtle);
+    padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+    .banner {
+        padding: 0 2rem;
+    }
+}
+
+.piktogramOgInnhold {
+    max-width: 103rem;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.piktogram {
+    margin-top: 0.75rem;
+    flex-shrink: 0;
+}
+
+.innhold {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1.5rem;
+}
+
+.hovedinnhold {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.ekstrainnhold {
+    align-self: flex-end;
+}
+
+.personalia {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.personalia svg {
+    flex-shrink: 0;
+}
+
+.personalia * {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
