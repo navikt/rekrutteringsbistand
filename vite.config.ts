@@ -6,6 +6,9 @@ import checkerPlugin from 'vite-plugin-checker';
 
 export default defineConfig(() => {
     return {
+        build: {
+            target: 'es2022',
+        },
         plugins: [
             reactPlugin(),
             svgrPlugin(),
