@@ -1,4 +1,4 @@
-import useNavKontor from '../felles/navKontor';
+import useNavKontor from '../felles/store/navKontor';
 
 const Forside = () => {
     const navKontor = useNavKontor((state) => state.navKontor);

@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 
 import Header from './header/Header';
-import useNavKontor from './felles/navKontor';
+import useNavKontor from './felles/store/navKontor';
 
 const App = () => {
     const { navKontor, setNavKontor } = useNavKontor();
