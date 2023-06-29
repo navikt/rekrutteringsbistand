@@ -4,16 +4,12 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
 } from 'react-router-dom';
-
 import Header from './header/Header';
-import useNavKontor from './felles/store/navKontor';
 
 const App = () => {
-    const { navKontor, setNavKontor } = useNavKontor();
-
     const router = createBrowserRouter(
         createRoutesFromElements(
-            <Route path="/" element={<Header navKontor={navKontor} setNavKontor={setNavKontor} />}>
+            <Route path="/" element={<Header />}>
                 <Route path="/" lazy={() => import('./forside/index')} />
                 <Route path="stillinger/*" element={<div>Placeholder</div>} />
                 <Route path="stillingssok/*" element={<div>Placeholder</div>} />

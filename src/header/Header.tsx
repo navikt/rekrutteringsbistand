@@ -1,13 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import Modiadekoratør from './modia/Modiadekoratør';
 import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
-type Props = {
-    navKontor: string | null;
-    setNavKontor: (navKontor: string) => void;
-};
+import useNavKontor from '../felles/store/navKontor';
 
-const Header = ({ navKontor, setNavKontor }: Props) => {
+const Header = () => {
     // useAmplitude(navKontor);
+
+    const { navKontor, setNavKontor } = useNavKontor();
 
     return (
         <>

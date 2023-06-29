@@ -1,0 +1,30 @@
+.hurtiglenker {
+    display: grid;
+    grid-template-columns: 3fr;
+    gap: 1rem;
+    width: 100%;
+    margin-bottom: var(--a-spacing-16);
+}
+
+.lenkeinnhold {
+    display: flex;
+    align-items: center;
+}
+
+.lenkeikon {
+    margin-right: 2rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.lenkeikon img {
+    width: 6.25rem;
+    vertical-align: middle;
+}
+
+@media (min-width: 48rem) {
+    .hurtiglenker {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
