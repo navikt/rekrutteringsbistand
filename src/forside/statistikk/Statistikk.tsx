@@ -22,6 +22,7 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
         .fill(0, 0, antallMånederForHistorikk)
         .map((_, i) => {
             const statistikkTidspunkt = new Date();
+            statistikkTidspunkt.setDate(1);
             statistikkTidspunkt.setMonth(statistikkTidspunkt.getMonth() - i);
 
             const fraOgMed = førsteDagIMåned(new Date(statistikkTidspunkt));
