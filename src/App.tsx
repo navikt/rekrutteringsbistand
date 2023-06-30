@@ -23,7 +23,7 @@ const App = () => {
                 />
                 <Route path="kandidatsok" lazy={() => import('./kandidatsok/index')} />
 
-                <Route path="kandidater/*" element={<div>Placeholder</div>} />
+                <Route path="kandidater/*" lazy={() => import('./kandidat/index')} />
             </Route>
         )
     );

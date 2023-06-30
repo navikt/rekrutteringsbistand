@@ -1,0 +1,53 @@
+.header {
+    background-color: var(--rekrutteringsbistandBla);
+    padding: 0rem 1rem 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--a-border-divider);
+}
+
+.navigasjon {
+    background-color: var(--rekrutteringsbistandBla);
+    padding: 0.75rem 1rem;
+    top: 0px;
+    position: sticky;
+    z-index: 2;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    margin: 0 auto;
+    max-width: var(--kandidatsokInnholdBredde);
+}
+
+.header > .column {
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 65rem;
+    position: relative;
+}
+
+.kontaktinfo > *:not(:last-child)::after {
+    content: '|';
+    margin: 0 0.5rem;
+}
+
+@media (min-width: 800px) {
+    .header {
+        padding: 0rem 2rem 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .column {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .navigasjon {
+        padding: 1rem 2rem;
+    }
+}

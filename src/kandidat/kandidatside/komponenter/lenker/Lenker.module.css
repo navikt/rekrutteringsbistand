@@ -1,0 +1,8 @@
+.lenker {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.lenker a {
+    text-decoration: none;
+}
