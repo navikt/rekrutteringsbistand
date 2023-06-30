@@ -76,4 +76,6 @@ const createReduxStore = () => {
     return reduxStore;
 };
 
-export default createReduxStore;
+const store = createReduxStore();
+
+export default store;

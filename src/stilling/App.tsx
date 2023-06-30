@@ -3,17 +3,21 @@ import { Provider, useDispatch } from 'react-redux';
 
 import { ReporteeAction, ReporteeActionType } from './reportee/ReporteeAction';
 import Varsling from './common/varsling/Varsling';
-import createReduxStore from './redux/store';
+import store from './redux/store';
 
 if (import.meta.env.VITE_MOCK) {
-    await import('./mock/api');
+    await import('./mock/mock-api');
 }
 
 type Props = {
     children: ReactNode;
 };
 
-export const store = createReduxStore();
+const AppMedProvider = ({ children }: Props) => (
+    <Provider store={store}>
+        <App>{children}</App>
+    </Provider>
+);
 
 const App = ({ children }: Props) => {
     const dispatch = useDispatch();
@@ -23,11 +27,11 @@ const App = ({ children }: Props) => {
     }, [dispatch]);
 
     return (
-        <Provider store={store}>
+        <>
             <Varsling />
             {children}
-        </Provider>
+        </>
     );
 };
 
-export default App;
+export default AppMedProvider;

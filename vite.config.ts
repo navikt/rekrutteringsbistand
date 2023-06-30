@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => {
         build: {
             target: 'es2022',
             sourcemap: true,
+            chunkSizeWarningLimit: 3000,
         },
         plugins: [
             reactPlugin(),
