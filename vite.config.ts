@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig, splitVendorChunkPlugin } from 'vite';
 
 import reactPlugin from '@vitejs/plugin-react';
 import svgrPlugin from 'vite-plugin-svgr';
@@ -8,10 +8,12 @@ export default defineConfig(() => {
     return {
         build: {
             target: 'es2022',
+            manifest: true,
         },
         plugins: [
             reactPlugin(),
             svgrPlugin(),
+            splitVendorChunkPlugin(),
             checkerPlugin({
                 typescript: true,
                 eslint: {

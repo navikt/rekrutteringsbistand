@@ -11,8 +11,9 @@ const App = () => {
         createRoutesFromElements(
             <Route path="/" element={<Header />}>
                 <Route path="/" lazy={() => import('./forside/index')} />
+                <Route path="stillingssok/:fnr?" lazy={() => import('./stillingssok/index')} />
+
                 <Route path="stillinger/*" element={<div>Placeholder</div>} />
-                <Route path="stillingssok/*" element={<div>Placeholder</div>} />
                 <Route path="kandidater/*" element={<div>Placeholder</div>} />
                 <Route path="kandidatsok/*" element={<div>Placeholder</div>} />
             </Route>

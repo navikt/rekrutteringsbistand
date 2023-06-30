@@ -1,0 +1,7 @@
+.sorter {
+    margin-left: auto;
+}
+
+.sorter select {
+    min-height: 42px;
+}
