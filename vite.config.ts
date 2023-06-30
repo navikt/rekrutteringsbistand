@@ -29,12 +29,17 @@ export default defineConfig(({ mode }) => {
         server: {
             port: 3000,
             proxy: {
-                '/kandidatsok-proxy': 'http://localhost:3005/kandidatsok-proxy',
+                '/kandidatsok-proxy': {
+                    changeOrigin: true,
+                    target: `${env.KANDIDAT_ES_URI}/veilederkandidat_current/_search`,
+                    rewrite: (path) => path.replace('/kandidatsok-proxy', ''),
+                    auth: `${env.KANDIDAT_ES_USERNAME}:${env.KANDIDAT_ES_PASSWORD}`,
+                },
                 '/stillingssok-proxy': {
                     changeOrigin: true,
-                    target: `${env.OPEN_SEARCH_URI}`,
+                    target: `${env.STILLING_ES_URI}`,
                     rewrite: (path) => path.replace('/stillingssok-proxy', ''),
-                    auth: `${env.OPEN_SEARCH_USERNAME}:${env.OPEN_SEARCH_PASSWORD}`,
+                    auth: `${env.STILLING_ES_USERNAME}:${env.STILLING_ES_PASSWORD}`,
                 },
             },
         },

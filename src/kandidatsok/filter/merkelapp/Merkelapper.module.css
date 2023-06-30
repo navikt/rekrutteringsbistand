@@ -1,0 +1,38 @@
+.merkelapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.merkelapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    border-radius: var(--a-border-radius-medium);
+    padding: 0.5rem 1rem;
+    background-color: var(--a-blue-100);
+}
+
+.merkelapp:hover {
+    background-color: var(--a-blue-50);
+}
+
+.merkelapp:focus {
+    box-shadow: 0 0 0 3px var(--a-border-focus);
+}
+
+.merkelapp svg {
+    flex-shrink: 0;
+}
+
+.merkelapp[data-variant='oransje'] {
+    background-color: var(--a-orange-100);
+}
+
+.merkelapp[data-variant='oransje']:hover {
+    background-color: var(--a-orange-50);
+}

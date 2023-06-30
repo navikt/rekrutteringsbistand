@@ -1,0 +1,40 @@
+.filter {
+    margin-top: 1.5rem;
+    background-color: white;
+}
+
+.filter :global(.navds-fieldset):not(:last-child),
+.filter form:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+.filter :global(.navds-accordion__content) {
+    padding: 1rem;
+}
+
+.filter :global(.navds-checkbox__label) {
+    padding-bottom: 0.5rem;
+}
+
+.tømFilter {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.tømFilter button {
+    padding: 0.5rem;
+}
+
+.tømFilter :global(.navds-label) {
+    font-weight: normal;
+}
+
+.arbeidserfaringErFersk {
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
+}
+
+.borPåØnsketSted {
+    margin-top: -1.5rem;
+}

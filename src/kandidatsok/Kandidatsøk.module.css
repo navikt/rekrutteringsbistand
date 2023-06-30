@@ -1,0 +1,33 @@
+.container {
+    margin: 1rem auto 2.5rem;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem 3rem;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.75rem;
+}
+
+.hovedinnhold {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 900px) {
+    .container {
+        display: grid;
+        grid-template-columns: 20rem 1fr;
+        max-width: var(--app-maksbredde);
+    }
+}
+
+@media (min-width: 1700px) {
+    .container {
+        grid-template-columns: 22rem 1fr;
+        max-width: var(--app-maksbredde-stor);
+    }
+}

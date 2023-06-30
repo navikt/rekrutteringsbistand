@@ -1,0 +1,105 @@
+.kandidatrad {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    position: relative;
+}
+
+.kandidatrad:focus {
+    box-shadow: inset 0 0 0 3px var(--a-deepblue-200);
+}
+
+.kandidatrad a:visited {
+    color: var(--a-purple-500);
+}
+
+.kandidatrad:nth-child(2n-1) {
+    background-color: white;
+}
+
+.fremhevetKandidatrad {
+    box-shadow: inset 0 0 0 3px var(--a-orange-200);
+}
+
+.kandidatinformasjon {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 1rem;
+    width: 100%;
+}
+
+.navn {
+    grid-column: span 2;
+}
+
+.innsatsgruppe {
+    text-align: left;
+}
+
+.jobbønske {
+    grid-column: span 2;
+}
+
+.innsatsgruppe,
+.jobbønske p {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.kandidatPåListe {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    background: linear-gradient(
+        to top left,
+        transparent 0%,
+        transparent 50%,
+        var(--a-green-200) 50%,
+        var(--a-green-200) 100%
+    );
+    height: 3.25rem;
+    width: 3.25rem;
+}
+
+.kandidatPåListe svg {
+    color: var(--a-green-600);
+    transform: translate(5px, 7px) scale(1.25);
+}
+
+@media (min-width: 500px) {
+    .kandidatrad {
+        padding: 1rem 1.5rem;
+    }
+
+    .navn {
+        grid-column: span 1;
+    }
+
+    .innsatsgruppe {
+        text-align: right;
+    }
+}
+
+@media (min-width: 1700px) {
+    .kandidatinformasjon {
+        grid-template-columns: 20rem 2fr auto;
+        grid-template-areas: 'navn jobbønske innsatsgruppe';
+    }
+
+    .navn {
+        grid-area: navn;
+        align-self: center;
+    }
+
+    .jobbønske {
+        grid-area: jobbønske;
+    }
+
+    .innsatsgruppe {
+        grid-area: innsatsgruppe;
+        align-self: center;
+    }
+}

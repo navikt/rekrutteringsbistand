@@ -21,10 +21,9 @@ const App = () => {
                     path="/stillinger/stilling/:uuid"
                     lazy={() => import('./stilling/stilling/index')}
                 />
+                <Route path="kandidatsok" lazy={() => import('./kandidatsok/index')} />
 
-                <Route path="stillinger/*" element={<div>Placeholder</div>} />
                 <Route path="kandidater/*" element={<div>Placeholder</div>} />
-                <Route path="kandidatsok/*" element={<div>Placeholder</div>} />
             </Route>
         )
     );
