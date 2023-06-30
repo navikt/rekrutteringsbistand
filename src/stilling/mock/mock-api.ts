@@ -53,6 +53,7 @@ const modiacontextholderContextUrl = `${modiacontextholderApiUrl}/context`;
 const modiacontextholderDecoratorUrl = `${modiacontextholderApiUrl}/decorator`;
 
 fetchMock.config.fallbackToNetwork = true;
+fetchMock.config.warnOnFallback = false;
 fetchMock.config.overwriteRoutes = true;
 
 const hentStillingPåUuid = (uuid: string): Rekrutteringsbistandstilling => {

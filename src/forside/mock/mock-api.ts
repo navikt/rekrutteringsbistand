@@ -4,6 +4,7 @@ import { statistikkApiUrl } from '../statistikk/useUtfallsstatistikk';
 import { hentAntallFormidlinger, hentForespørslerstatistikk } from './testdata';
 
 fetchMock.config.fallbackToNetwork = true;
+fetchMock.config.warnOnFallback = false;
 
 fetchMock.get(`begin:${statistikkApiUrl}`, (url) => {
     const searchQuery = url.split('?').pop();

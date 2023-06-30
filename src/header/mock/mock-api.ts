@@ -1,6 +1,7 @@
 import fetchMock, { MockRequest, MockResponse, MockResponseFunction } from 'fetch-mock';
 
 fetchMock.config.fallbackToNetwork = true;
+fetchMock.config.warnOnFallback = false;
 
 const minIdent = 'A123456';
 
