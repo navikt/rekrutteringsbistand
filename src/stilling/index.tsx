@@ -1,12 +1,10 @@
 import { Provider } from 'react-redux';
-import store from './state/reduxStore';
-import App from './app/App';
+import store from './redux/store';
+import App from './App';
 
 if (import.meta.env.VITE_MOCK) {
     await import('./mock/mock-api');
 }
-
-console.log('Hei');
 
 export const Component = () => (
     <Provider store={store}>

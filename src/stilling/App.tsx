@@ -1,25 +1,13 @@
-import { ReactNode, useEffect } from 'react';
-import { Provider, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { ReporteeAction, ReporteeActionType } from './reportee/ReporteeAction';
 import Varsling from './common/varsling/Varsling';
-import store from './redux/store';
+import MineStillinger from './mine-stillinger/MineStillinger';
+import Stilling from './stilling/Stilling';
+import { Route, Routes } from 'react-router-dom';
 
-if (import.meta.env.VITE_MOCK) {
-    await import('./mock/mock-api');
-}
-
-type Props = {
-    children: ReactNode;
-};
-
-const AppMedProvider = ({ children }: Props) => (
-    <Provider store={store}>
-        <App>{children}</App>
-    </Provider>
-);
-
-const App = ({ children }: Props) => {
+const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,9 +17,12 @@ const App = ({ children }: Props) => {
     return (
         <>
             <Varsling />
-            {children}
+            <Routes>
+                <Route path="minestillinger" element={<MineStillinger />} />
+                <Route path="stilling/:uuid" element={<Stilling />} />
+            </Routes>
         </>
     );
 };
 
-export default AppMedProvider;
+export default App;
