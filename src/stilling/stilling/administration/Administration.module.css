@@ -1,0 +1,20 @@
+.administration {
+    position: sticky;
+    top: 0;
+}
+
+.elements {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.bottom {
+    position: sticky;
+    bottom: 0;
+    background: var(--a-blue-50);
+    border-top: 2px solid var(--a-border-subtle);
+    padding: 1rem;
+    z-index: 2;
+}

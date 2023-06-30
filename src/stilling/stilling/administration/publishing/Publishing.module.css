@@ -1,0 +1,9 @@
+.publishing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.publishing :global .navds-form-field__error {
+    max-width: 10rem;
+}

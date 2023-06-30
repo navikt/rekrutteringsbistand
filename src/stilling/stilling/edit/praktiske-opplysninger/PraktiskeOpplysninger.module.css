@@ -1,0 +1,22 @@
+.datepickerOgCheckbox {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 1rem;
+}
+
+.inlineFields :global(.navds-radio-buttons),
+.inlineFields :global(.navds-checkboxes) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.inlineFields label {
+    padding: var(--a-spacing-1) 0;
+}
+
+.skillelinje {
+    border-bottom: 1px solid #d8d8d8;
+    margin: 0 -1rem;
+}

@@ -1,0 +1,18 @@
+.postkode ul {
+    overflow-y: auto;
+    max-height: 20rem;
+}
+
+.poststed {
+    margin-bottom: 1.5rem;
+}
+
+.tags {
+    margin-top: 0.5rem;
+}
+
+.spacing {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

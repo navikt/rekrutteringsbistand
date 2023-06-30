@@ -1,0 +1,17 @@
+.mulighet {
+    background-color: var(--rekrutteringsbistand-blue);
+}
+
+.inkluderingsmulighet {
+    margin-bottom: 1rem;
+}
+
+.inkluderingsmulighet:not(:last-child) {
+    margin-bottom: 2rem;
+}
+
+.tagliste {
+    margin-top: 0.25rem;
+    margin-bottom: 0rem;
+    padding-left: 1.25rem;
+}

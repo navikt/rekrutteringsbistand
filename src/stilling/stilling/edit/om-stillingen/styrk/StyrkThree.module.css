@@ -1,0 +1,22 @@
+.tree {
+    padding: 1.25rem;
+}
+
+.item button span {
+    font-weight: normal;
+}
+
+.item > .item {
+    padding-left: 3rem;
+    width: 100%;
+}
+
+.branch {
+    color: black;
+}
+
+.branch,
+.leaf {
+    margin: 0.125rem 0;
+    text-align: left;
+}

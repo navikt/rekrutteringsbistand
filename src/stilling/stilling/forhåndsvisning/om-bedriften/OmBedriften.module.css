@@ -1,0 +1,7 @@
+.beskrivelse {
+    margin-top: 1rem;
+}
+
+.beskrivelse p:last-child {
+    margin-bottom: 0;
+}

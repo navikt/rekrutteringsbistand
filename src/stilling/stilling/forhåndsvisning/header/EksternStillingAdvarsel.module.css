@@ -1,0 +1,9 @@
+.advarsel {
+    margin: 0.75rem 0 2rem;
+}
+
+@media print {
+    .advarsel {
+        display: none;
+    }
+}

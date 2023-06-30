@@ -1,0 +1,138 @@
+{
+    "took": 39,
+    "timed_out": false,
+    "_shards": { "total": 3, "successful": 3, "skipped": 0, "failed": 0 },
+    "hits": {
+        "total": { "value": 40, "relation": "eq" },
+        "max_score": 15.714438,
+        "hits": [
+            {
+                "_index": "underenhet20191217",
+                "_type": "_doc",
+                "_id": "976434099",
+                "_score": 15.714438,
+                "_source": {
+                    "organisasjonsnummer": "976434099",
+                    "navn": "TULLEKONTORET AS",
+                    "organisasjonsform": "BEDR",
+                    "antallAnsatte": 1,
+                    "overordnetEnhet": "912819973",
+                    "adresse": {
+                        "adresse": "Lilleakerveien 37D",
+                        "postnummer": "0284",
+                        "poststed": "OSLO",
+                        "kommunenummer": "0301",
+                        "kommune": "OSLO",
+                        "landkode": "NO",
+                        "land": "Norge"
+                    },
+                    "naringskoder": [
+                        {
+                            "kode": "90.012",
+                            "beskrivelse": "Utøvende kunstnere og underholdningsvirksomhet innen scenekunst"
+                        }
+                    ]
+                }
+            },
+            {
+                "_index": "underenhet20191217",
+                "_type": "_doc",
+                "_id": "921300794",
+                "_score": 15.320892,
+                "_source": {
+                    "organisasjonsnummer": "921300794",
+                    "navn": "TULLEN ØLSTØRN",
+                    "organisasjonsform": "BEDR",
+                    "antallAnsatte": 0,
+                    "overordnetEnhet": "921218966",
+                    "adresse": {
+                        "adresse": "Wintherbakken 8",
+                        "postnummer": "3016",
+                        "poststed": "DRAMMEN",
+                        "kommunenummer": "0602",
+                        "kommune": "DRAMMEN",
+                        "landkode": "NO",
+                        "land": "Norge"
+                    },
+                    "naringskoder": [
+                        { "kode": "14.130", "beskrivelse": "Produksjon av annet yttertøy" }
+                    ]
+                }
+            },
+            {
+                "_index": "underenhet20191217",
+                "_type": "_doc",
+                "_id": "921431953",
+                "_score": 15.320892,
+                "_source": {
+                    "organisasjonsnummer": "921431953",
+                    "navn": "TULLUT VAKTMESTERTJENESTER",
+                    "organisasjonsform": "BEDR",
+                    "antallAnsatte": 0,
+                    "overordnetEnhet": "921345798",
+                    "adresse": {
+                        "adresse": "Ulvollsvegen 7",
+                        "postnummer": "2670",
+                        "poststed": "OTTA",
+                        "kommunenummer": "0517",
+                        "kommune": "SEL",
+                        "landkode": "NO",
+                        "land": "Norge"
+                    },
+                    "naringskoder": [{ "kode": "81.101", "beskrivelse": "Vaktmestertjenester" }]
+                }
+            },
+            {
+                "_index": "underenhet20191217",
+                "_type": "_doc",
+                "_id": "921730810",
+                "_score": 15.320892,
+                "_source": {
+                    "organisasjonsnummer": "921730810",
+                    "navn": "TULLEKUNSTNEREN MARTINSEN",
+                    "organisasjonsform": "BEDR",
+                    "antallAnsatte": 0,
+                    "overordnetEnhet": "921323824",
+                    "adresse": {
+                        "adresse": "Skytterdalen 7",
+                        "postnummer": "1337",
+                        "poststed": "SANDVIKA",
+                        "kommunenummer": "0219",
+                        "kommune": "BÆRUM",
+                        "landkode": "NO",
+                        "land": "Norge"
+                    },
+                    "naringskoder": [{ "kode": "43.341", "beskrivelse": "Malerarbeid" }]
+                }
+            },
+            {
+                "_index": "underenhet20191217",
+                "_type": "_doc",
+                "_id": "918204687",
+                "_score": 15.320892,
+                "_source": {
+                    "organisasjonsnummer": "918204687",
+                    "navn": "TULLINKVARTALET AS",
+                    "organisasjonsform": "BEDR",
+                    "antallAnsatte": 0,
+                    "overordnetEnhet": "897746182",
+                    "adresse": {
+                        "adresse": "Biskop Gunnerus' gate 14",
+                        "postnummer": "0185",
+                        "poststed": "OSLO",
+                        "kommunenummer": "0301",
+                        "kommune": "OSLO",
+                        "landkode": "NO",
+                        "land": "Norge"
+                    },
+                    "naringskoder": [
+                        {
+                            "kode": "68.209",
+                            "beskrivelse": "Utleie av egen eller leid fast eiendom ellers"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

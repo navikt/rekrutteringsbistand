@@ -1,0 +1,46 @@
+.stilling {
+    background: var(--a-bg-subtle);
+}
+
+.innhold {
+    display: grid;
+    grid-template-columns: 1fr 25rem;
+}
+
+.venstreInnhold {
+    margin: 0 auto;
+    max-width: 75rem;
+    padding: 1.5rem 1rem;
+}
+
+.høyre {
+    border-left: 2px solid var(--a-border-subtle);
+    background: var(--a-blue-50);
+}
+
+.spinner {
+    text-align: center;
+    padding-top: 10rem;
+}
+
+.slettet {
+    text-align: center;
+    padding-top: 5rem;
+}
+
+@media print {
+    .venstre {
+        max-height: unset;
+        width: 100%;
+    }
+
+    .høyre {
+        display: none;
+    }
+}
+
+@media (min-width: 1600px) {
+    .innhold {
+        grid-template-columns: 1fr 30rem;
+    }
+}

@@ -1,0 +1,126 @@
+{
+    "id": 211270,
+    "uuid": "0bb8c381-ae60-4c3c-9ed9-4a3e5c0f18d3",
+    "created": "2019-12-10T13:39:14.883021",
+    "createdBy": "pam-rekrutteringsbistand",
+    "updated": "2019-12-12T00:00:00.160096",
+    "updatedBy": "pam-rekrutteringsbistand",
+    "mediaList": [],
+    "contactList": [],
+    "title": "Tulleskolen søker tøysekopper",
+    "status": "INACTIVE",
+    "privacy": "SHOW_ALL",
+    "source": "DIR",
+    "medium": "DIR",
+    "reference": "0bb8c381-ae60-4c3c-9ed9-4a3e5c0f18d3",
+    "published": "2019-12-10T13:41:16.794604",
+    "expires": "2019-12-11T11:00:00",
+    "employer": {
+        "id": 203480,
+        "uuid": "c7ebcc88-02a1-4eec-80e1-f7a866744f0e",
+        "created": "2019-11-18T11:42:21.042131",
+        "createdBy": "pam-ad",
+        "updated": "2019-11-18T11:42:21.042131",
+        "updatedBy": "pam-ad",
+        "mediaList": [],
+        "contactList": [],
+        "location": {
+            "address": "Lilleakerveien 37D",
+            "postalCode": "0284",
+            "county": "OSLO",
+            "municipal": "OSLO",
+            "municipalCode": "0301",
+            "city": "OSLO",
+            "country": "NORGE",
+            "latitude": "59.92172360812686",
+            "longitude": "10.637563808231683"
+        },
+        "locationList": [
+            {
+                "address": "Lilleakerveien 37D",
+                "postalCode": "0284",
+                "county": "OSLO",
+                "municipal": "OSLO",
+                "municipalCode": "0301",
+                "city": "OSLO",
+                "country": "NORGE",
+                "latitude": "59.92172360812686",
+                "longitude": "10.637563808231683"
+            }
+        ],
+        "properties": {
+            "nace2": "[{\"code\":\"90.012\",\"name\":\"Utøvende kunstnere og underholdningsvirksomhet innen scenekunst\"}]"
+        },
+        "name": "TULLEKONTORET AS",
+        "orgnr": "976434099",
+        "status": "ACTIVE",
+        "parentOrgnr": "912819973",
+        "publicName": "TULLEKONTORET AS",
+        "deactivated": null,
+        "orgform": "BEDR",
+        "employees": 1
+    },
+    "administration": {
+        "id": 188691,
+        "status": "DONE",
+        "comments": null,
+        "reportee": "Joare Mangstuen  Mossby",
+        "remarks": [],
+        "navIdent": "A123456"
+    },
+    "location": {
+        "address": null,
+        "postalCode": "0001",
+        "county": "OSLO",
+        "municipal": "OSLO",
+        "municipalCode": "0301",
+        "city": "OSLO",
+        "country": "NORGE",
+        "latitude": null,
+        "longitude": null
+    },
+    "locationList": [
+        {
+            "address": null,
+            "postalCode": "0001",
+            "county": "OSLO",
+            "municipal": "OSLO",
+            "municipalCode": "0301",
+            "city": "OSLO",
+            "country": "NORGE",
+            "latitude": null,
+            "longitude": null
+        }
+    ],
+    "categoryList": [
+        {
+            "id": 5,
+            "code": "0000.01",
+            "categoryType": "STYRK08NAV",
+            "name": "Hjelpearbeider (privat/offentlig virksomhet)",
+            "description": null,
+            "parentId": 4
+        }
+    ],
+    "properties": {
+        "extent": "Heltid",
+        "workhours": "[\"Dagtid\"]",
+        "applicationdue": "2019-12-11T11:00:00.000Z",
+        "workday": "[\"Ukedager\"]",
+        "jobtitle": "Hjelpearbeider (privat/offentlig virksomhet)",
+        "positioncount": "1",
+        "engagementtype": "Fast",
+        "starttime": "2019-12-12T11:00:00.000Z",
+        "jobarrangement": "Skift",
+        "adtext": "<p>Tøyseskolen søker tøysekopper!</p>",
+        "searchtags": "[{\"label\":\"Siviltjenestearbeider\",\"score\":1.0},{\"label\":\"Miljøarbeider sosiale fagfelt\",\"score\":0.07064377}]",
+        "classification_input_source": "categoryName",
+        "sector": "Privat"
+    },
+    "publishedByAdmin": "2019-12-10T13:41:16.794604",
+    "businessName": "Tulleskolen for alle",
+    "firstPublished": true,
+    "deactivatedByExpiry": true,
+    "activationOnPublishingDate": false,
+    "rekruttering": null
+}

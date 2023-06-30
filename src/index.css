@@ -1,5 +1,9 @@
 @import '@navikt/ds-css' layer(designsystem);
 
+:root {
+    --rekrutteringsbistand-blue: #e3edf8;
+}
+
 body {
     margin: 0;
     background-color: var(--a-bg-subtle);

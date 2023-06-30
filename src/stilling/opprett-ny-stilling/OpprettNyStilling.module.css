@@ -1,0 +1,34 @@
+.advarsel {
+    margin-bottom: 1rem;
+}
+
+.knapper {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.velgKategori {
+    margin-bottom: 1rem;
+}
+
+.valgITypeahead {
+    padding: 0.25rem 0;
+}
+
+.velgArbeidsgiverInput li {
+    padding: 0.25rem 0;
+}
+
+.velgArbeidsgiverInput ul li {
+    white-space: normal;
+}
+
+.velgArbeidsgiverInput ul {
+    overflow-y: auto;
+    max-height: 20rem;
+}
+
+.valgtArbeidsgiver {
+    margin-top: 0.5rem;
+}

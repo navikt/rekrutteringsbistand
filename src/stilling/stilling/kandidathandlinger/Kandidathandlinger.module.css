@@ -1,0 +1,14 @@
+.kandidathandlinger {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.leggTilKandidatKnapp {
+    border: none;
+    background: none;
+}
+
+.leggTilKandidatKnapp:hover {
+    cursor: pointer;
+}

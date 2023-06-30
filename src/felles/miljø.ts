@@ -15,3 +15,5 @@ export const getMiljø = (): string => {
         return Miljø.Lokalt;
     }
 };
+
+export const erIkkeProd = getMiljø() !== Miljø.DevGcp;

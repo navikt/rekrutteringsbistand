@@ -29,7 +29,7 @@ export const sendEvent = (område: string, hendelse: string, data?: Object) => {
 };
 
 export const sendGenerellEvent = (
-    event: AmplitudeEvent,
+    event: AmplitudeEvent | string,
     properties: Record<string, any>
 ): Promise<void> => {
     if (import.meta.env.PROD && SEND_EVENTS) {

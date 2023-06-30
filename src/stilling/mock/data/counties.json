@@ -1,0 +1,16 @@
+[
+    { "code": "03", "name": "OSLO" },
+    { "code": "54", "name": "TROMS OG FINNMARK" },
+    { "code": "23", "name": "KONTINENTALSOKKELEN" },
+    { "code": "46", "name": "VESTLAND" },
+    { "code": "34", "name": "INNLANDET" },
+    { "code": "15", "name": "MØRE OG ROMSDAL" },
+    { "code": "11", "name": "ROGALAND" },
+    { "code": "18", "name": "NORDLAND" },
+    { "code": "21", "name": "SVALBARD" },
+    { "code": "50", "name": "TRØNDELAG" },
+    { "code": "22", "name": "JAN MAYEN" },
+    { "code": "42", "name": "AGDER" },
+    { "code": "30", "name": "VIKEN" },
+    { "code": "38", "name": "VESTFOLD OG TELEMARK" }
+]

@@ -1,0 +1,21 @@
+.preview {
+    position: sticky;
+    top: 0;
+}
+
+.paneler {
+    margin: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.previewPanelButton {
+    margin: 1rem 1.5rem;
+}
+
+@media (min-width: 1400px) {
+    .previewPanelButton {
+        margin: 1rem 2rem;
+    }
+}

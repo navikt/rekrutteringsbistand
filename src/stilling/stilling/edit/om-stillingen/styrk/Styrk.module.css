@@ -1,0 +1,12 @@
+.velgFraListeKnapp {
+    margin-left: 1rem;
+}
+
+.typeahead ul {
+    overflow-y: auto;
+    max-height: 20rem;
+}
+
+.typeaheadValg {
+    padding: 0.25rem 0;
+}

@@ -1,0 +1,7 @@
+.sjekkboksgruppe :global(.navds-checkboxes) {
+    margin-top: 0 !important;
+}
+
+.sjekkboksgruppe {
+    margin-bottom: 1rem;
+}
