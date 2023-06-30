@@ -70,7 +70,14 @@ const startServer = () => {
         OPEN_SEARCH_PASSWORD
     );
 
-    app.use(`/assets`, express.static(`${buildPath}/assets`));
+    app.use(
+        `/assets`,
+        express.static(`${buildPath}/assets`, {
+            maxAge: 31536000,
+            immutable: true,
+        })
+    );
+
     app.get(['/', '/*'], redirectIfUnauthorized, (_, res) => {
         res.sendFile(`${buildPath}/index.html`);
     });
