@@ -1,7 +1,7 @@
 import amplitudeJs, { AmplitudeClient } from 'amplitude-js';
 import { Miljø, getMiljø } from './miljø';
 
-const SEND_EVENTS = false;
+const SEND_EVENTS = true;
 
 export enum AmplitudeEvent {
     Sidevisning = 'sidevisning',
