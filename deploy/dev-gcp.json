@@ -17,5 +17,7 @@
     "smsApi": "https://rekrutteringsbistand-sms.dev-fss-pub.nais.io/rekrutteringsbistand-sms/sms",
     "foresporselOmDelingAvCvApi": "https://foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io",
     "synlighetsmotorApi": "http://toi-synlighetsmotor",
+
+    "modiaDecoratorUrl": "https://internarbeidsflatedecorator-q0.dev.intern.nav.no",
     "modiaContextHolderApi": "https://modiacontextholder-q0.dev-fss-pub.nais.io/modiacontextholder"
 }

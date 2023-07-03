@@ -1,9 +1,5 @@
-.mocket .dekorator__feilmelding {
-    display: none;
-}
-
 .placeholder {
-    height: 4.35rem;
+    min-height: 78.5px;
     width: 100%;
     background-color: var(--a-text-default);
 }

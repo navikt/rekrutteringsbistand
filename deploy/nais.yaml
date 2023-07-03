@@ -69,3 +69,5 @@ spec:
           value: {{ synlighetsmotorApi }}
         - name: MODIA_CONTEXT_HOLDER_API
           value: {{ modiaContextHolderApi }}
+        - name: MODIA_DECORATOR_URL
+          value: {{ modiaDecoratorUrl }}

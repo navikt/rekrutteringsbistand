@@ -9,6 +9,14 @@ import { app } from './server';
 import { RequestHandler } from 'express';
 import { logger } from './logger';
 
+export const proxyTilAnnetDomene = (domene: string) =>
+    createProxyMiddleware({
+        target: domene,
+        changeOrigin: true,
+        secure: true,
+        logger,
+    });
+
 // Krever ekstra miljøvariabler, se nais.yaml
 export const setupProxy = (fraPath: string, tilTarget: string): RequestHandler =>
     createProxyMiddleware({

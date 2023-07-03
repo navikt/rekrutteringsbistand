@@ -41,6 +41,10 @@ export default defineConfig(({ mode }) => {
                     rewrite: (path) => path.replace('/stillingssok-proxy', ''),
                     auth: `${env.STILLING_ES_USERNAME}:${env.STILLING_ES_PASSWORD}`,
                 },
+                '/internarbeidsflatedecorator': {
+                    changeOrigin: true,
+                    target: `https://navikt.github.io`,
+                },
             },
         },
     };
