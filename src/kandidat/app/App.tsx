@@ -1,11 +1,9 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
 
 import { NavKontorAction, NavKontorActionTypes } from '../state/navKontorReducer';
 import { TilToppenKnapp } from '../komponenter/tilToppenKnapp/TilToppenKnapp';
-import { ErrorAction, ErrorActionType } from '../state/errorReducer';
-import AppState from '../state/AppState';
 import CvSide from '../cv/CvSide';
 import Historikkside from '../historikk/Historikkside';
 import Kandidatlisteoversikt from '../kandidatlisteoversikt/Kandidatlisteoversikt';
@@ -15,9 +13,20 @@ import Kandidatside from '../kandidatside/Kandidatside';
 import NotFound from '../komponenter/errorside/NotFound';
 import Varsling from '../varsling/Varsling';
 import ManglerTilgang from './ManglerTilgang';
+import useNavKontor from '../../felles/store/navKontor';
 import css from './App.module.css';
 
 const App = () => {
+    const dispatch = useDispatch();
+    const { navKontor } = useNavKontor();
+
+    useEffect(() => {
+        dispatch<NavKontorAction>({
+            type: NavKontorActionTypes.VelgNavKontor,
+            valgtNavKontor: navKontor,
+        });
+    }, [navKontor, dispatch]);
+
     return (
         <>
             <Varsling />
@@ -48,14 +57,4 @@ const App = () => {
     );
 };
 
-const mapStateToProps = (state: AppState) => ({
-    error: state.error.error,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch<ErrorAction | NavKontorAction>) => ({
-    fjernError: () => dispatch({ type: ErrorActionType.FjernError }),
-    velgNavKontor: (valgtNavKontor: string) =>
-        dispatch({ type: NavKontorActionTypes.VelgNavKontor, valgtNavKontor }),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
