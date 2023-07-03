@@ -21,10 +21,12 @@ const App = () => {
     const { navKontor } = useNavKontor();
 
     useEffect(() => {
-        dispatch<NavKontorAction>({
-            type: NavKontorActionTypes.VelgNavKontor,
-            valgtNavKontor: navKontor,
-        });
+        if (navKontor) {
+            dispatch<NavKontorAction>({
+                type: NavKontorActionTypes.VelgNavKontor,
+                valgtNavKontor: navKontor,
+            });
+        }
     }, [navKontor, dispatch]);
 
     return (
