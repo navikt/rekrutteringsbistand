@@ -50,7 +50,10 @@ const startServer = () => {
     app.get([`/internal/isAlive`, `/internal/isReady`], (_, res) => res.sendStatus(200));
 
     app.get('/meg', respondUnauthorizedIfNotLoggedIn, responderMedBrukerinfo);
-    app.get('/internarbeidsflatedecorator', proxyTilAnnetDomene(MODIA_DECORATOR_URL));
+    app.get(
+        '/internarbeidsflatedecorator',
+        proxyTilAnnetDomene(`${MODIA_DECORATOR_URL}/internarbeidsflatedecorator`)
+    );
 
     proxyMedOboToken('/modiacontextholder', MODIA_CONTEXT_HOLDER_API, scopes.modiaContextHolder);
     proxyMedOboToken('/statistikk-api', STATISTIKK_API_URL, scopes.statistikk);

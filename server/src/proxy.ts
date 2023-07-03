@@ -9,9 +9,9 @@ import { app } from './server';
 import { RequestHandler } from 'express';
 import { logger } from './logger';
 
-export const proxyTilAnnetDomene = (domene: string) =>
+export const proxyTilAnnetDomene = (target: string) =>
     createProxyMiddleware({
-        target: domene,
+        target,
         changeOrigin: true,
         secure: true,
         logger,
