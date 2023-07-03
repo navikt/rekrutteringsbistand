@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 
 import { NavKontorAction, NavKontorActionTypes } from '../state/navKontorReducer';
 import { TilToppenKnapp } from '../komponenter/tilToppenKnapp/TilToppenKnapp';
@@ -10,13 +10,14 @@ import Kandidatlisteoversikt from '../kandidatlisteoversikt/Kandidatlisteoversik
 import KandidatlistesideMedStilling from '../kandidatliste/KandidatlistesideMedStilling';
 import KandidatlisteUtenStilling from '../kandidatliste/KandidatlistesideUtenStilling';
 import Kandidatside from '../kandidatside/Kandidatside';
-import NotFound from '../komponenter/errorside/NotFound';
-import Varsling from '../varsling/Varsling';
 import ManglerTilgang from './ManglerTilgang';
+import NotFound from '../komponenter/errorside/NotFound';
+import store from '../state/reduxStore';
 import useNavKontor from '../../felles/store/navKontor';
-import css from './App.module.css';
+import Varsling from '../varsling/Varsling';
+import css from './KandidatApp.module.css';
 
-const App = () => {
+const KandidatApp = () => {
     const dispatch = useDispatch();
     const { navKontor } = useNavKontor();
 
@@ -59,4 +60,10 @@ const App = () => {
     );
 };
 
-export default App;
+const MedProvider = () => (
+    <Provider store={store}>
+        <KandidatApp />
+    </Provider>
+);
+
+export default MedProvider;

@@ -5,6 +5,7 @@ import {
     createRoutesFromElements,
 } from 'react-router-dom';
 import Header from './header/Header';
+import Appfeil from './felles/feilmelding/Appfeil';
 
 import { Component as Forside } from './forside/index';
 import { Component as Stillingssøk } from './stillingssok/index';
@@ -17,10 +18,14 @@ const App = () => {
         createRoutesFromElements(
             <Route path="/" element={<Header />}>
                 <Route path="/" element={<Forside />} />
-                <Route path="stillingssok/:fnr?" element={<Stillingssøk />} />
-                <Route path="stillinger/*" element={<Stilling />} />
-                <Route path="kandidatsok" element={<Kandidatsøk />} />
-                <Route path="kandidater/*" element={<Kandidat />} />
+                <Route
+                    path="stillingssok/:fnr?"
+                    element={<Stillingssøk />}
+                    errorElement={<Appfeil />}
+                />
+                <Route path="stillinger/*" element={<Stilling />} errorElement={<Appfeil />} />
+                <Route path="kandidatsok" element={<Kandidatsøk />} errorElement={<Appfeil />} />
+                <Route path="kandidater/*" element={<Kandidat />} errorElement={<Appfeil />} />
             </Route>
         )
     );

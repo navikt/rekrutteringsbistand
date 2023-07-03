@@ -1,0 +1,9 @@
+.appfeil {
+    max-width: 50rem;
+    margin: 3.5rem auto;
+}
+
+.feilmelding {
+    font-size: 1rem;
+    font-family: monospace;
+}
