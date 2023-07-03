@@ -6,8 +6,6 @@ if (import.meta.env.VITE_MOCK) {
     await import('./mock/mock-api');
 }
 
-console.log('Hei');
-
 export const Component = () => (
     <Provider store={store}>
         <App />
