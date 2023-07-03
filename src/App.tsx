@@ -16,23 +16,11 @@ const App = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<Header />}>
-                <Route path="/" element={<Forside />} /*lazy={() => import('./forside/index')}*/ />
-                <Route
-                    path="stillingssok/:fnr?"
-                    element={<Stillingssøk />} /*lazy={() => import('./stillingssok/index')}*/
-                />
-                <Route
-                    path="stillinger/*"
-                    element={<Stilling />} /*lazy={() => import('./stilling/index')}*/
-                />
-                <Route
-                    path="kandidatsok"
-                    element={<Kandidatsøk />} /*lazy={() => import('./kandidatsok/index')}*/
-                />
-                <Route
-                    path="kandidater/*"
-                    element={<Kandidat />} /*lazy={() => import('./kandidat/index')}*/
-                />
+                <Route path="/" element={<Forside />} />
+                <Route path="stillingssok/:fnr?" element={<Stillingssøk />} />
+                <Route path="stillinger/*" element={<Stilling />} />
+                <Route path="kandidatsok" element={<Kandidatsøk />} />
+                <Route path="kandidater/*" element={<Kandidat />} />
             </Route>
         )
     );
