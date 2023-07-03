@@ -15,6 +15,10 @@ export const proxyTilAnnetDomene = (domene: string) =>
         changeOrigin: true,
         secure: true,
         logger,
+        on: {
+            // Fikser proxien ved bruk sammen med express.json()-middleware i server.ts
+            proxyReq: fixRequestBody,
+        },
     });
 
 // Krever ekstra miljøvariabler, se nais.yaml
