@@ -19,7 +19,8 @@
 
 .tabs {
     display: flex;
-    gap: 1rem;
+    gap: 0 1rem;
+    flex-wrap: wrap;
 }
 
 .tab,
@@ -35,8 +36,8 @@
     transform: translateY(3px);
 }
 
-.tab {
-    display: inline-block;
+.tab,
+.forsidelenke {
     text-decoration: none;
     color: var(--a-text-default);
     letter-spacing: 0.3px;

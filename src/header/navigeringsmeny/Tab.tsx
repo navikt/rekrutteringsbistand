@@ -38,7 +38,7 @@ const Tab: FunctionComponent<Props> = ({ config, erAktiv, erFremhevet }) => {
                 search: queryParam,
             }}
         >
-            <BodyShort>{tittel}</BodyShort>
+            <BodyShort as="span">{tittel}</BodyShort>
         </Link>
     );
 };
