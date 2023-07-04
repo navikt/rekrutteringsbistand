@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-
-export const kandidatProxyUrl = '/kandidatsok-proxy';
+import { api } from '../../../felles/api';
 
 export type EsRespons = {
     hits: {
@@ -51,7 +50,7 @@ const useKandidat = (fnr: string) => {
     useEffect(() => {
         const hentKandidat = async (fnr: string) => {
             try {
-                const respons = await fetch(kandidatProxyUrl, {
+                const respons = await fetch(api.kandidatsøk, {
                     method: 'POST',
                     body: JSON.stringify(byggQuery(fnr)),
                     headers: { 'Content-Type': 'application/json' },

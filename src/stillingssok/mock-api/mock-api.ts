@@ -1,13 +1,11 @@
 import fetchMock, { MockRequest, MockResponseFunction } from 'fetch-mock';
-import { stillingApi, stillingssøkProxy } from '../api/api';
 import { resultat } from './mock-data/stillingssøk';
 import StandardsøkDto from '../filter/standardsøk/Standardsøk';
 import standardsøk from './mock-data/standardsøk';
-import kandidatsøk from './mock-data/kandidatsøk';
-import { kandidatProxyUrl } from '../kontekst-av-kandidat/kandidatQuery';
+import { api } from '../../felles/api';
 
-const stillingssøkUrl = `${stillingssøkProxy}/stilling/_search`;
-const standardsøkUrl = `${stillingApi}/standardsok`;
+const stillingssøkUrl = `${api.stillingssøk}/stilling/_search`;
+const standardsøkUrl = `${api.stilling}/standardsok`;
 
 const logg =
     (response: any): MockResponseFunction =>
@@ -32,10 +30,7 @@ if (import.meta.env.VITE_MOCK_ES) {
     fetchMock.post(stillingssøkUrl, logg(resultat));
 }
 
-fetchMock
-    .get(standardsøkUrl, logg(standardsøk))
-    .put(standardsøkUrl, (url, opts) => {
-        const standardsøk = putStandardsøk(url, opts);
-        return logg(standardsøk);
-    })
-    .post(kandidatProxyUrl, logg(kandidatsøk));
+fetchMock.get(standardsøkUrl, logg(standardsøk)).put(standardsøkUrl, (url, opts) => {
+    const standardsøk = putStandardsøk(url, opts);
+    return logg(standardsøk);
+});

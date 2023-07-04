@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { formaterDatoTilApi } from './datoUtils';
-
-const apiBasePath = '/statistikk-api';
-
-export const statistikkApiUrl = `${apiBasePath}/statistikk`;
+import { api } from '../../felles/api';
 
 type AntallFormidlingerInboundDto = {
     antallPresentert: number;
@@ -16,7 +13,7 @@ const useUtfallsstatistikk = (navKontor: string, fraOgMed: Date, tilOgMed: Date)
 
     useEffect(() => {
         const url =
-            `${statistikkApiUrl}?` +
+            `${api.statistikk}/statistikk?` +
             new URLSearchParams({
                 fraOgMed: formaterDatoTilApi(fraOgMed),
                 tilOgMed: formaterDatoTilApi(tilOgMed),

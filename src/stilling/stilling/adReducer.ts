@@ -2,7 +2,6 @@ import { KanInkludere } from './edit/registrer-inkluderingsmuligheter/Direktemel
 import deepEqual from 'deep-equal';
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { hentRekrutteringsbistandstilling, kopierStilling, postStilling } from '../api/api';
-import { stillingApi } from '../api/api';
 import { getReportee } from '../reportee/reporteeReducer';
 import {
     SET_AD_DATA,
@@ -43,6 +42,7 @@ import Stilling, {
     Status,
     System,
 } from '../domene/Stilling';
+import { api } from '../../felles/api';
 
 export const FETCH_AD = 'FETCH_AD';
 export const FETCH_AD_BEGIN = 'FETCH_AD_BEGIN';
@@ -447,7 +447,7 @@ function* saveRekrutteringsbistandStilling() {
         state = yield select();
 
         // Modified category list requires store/PUT with (re)classification
-        let putUrl = `${stillingApi}/rekrutteringsbistandstilling`;
+        let putUrl = `${api.stilling}/rekrutteringsbistandstilling`;
         if (
             typeof state.ad.originalData === 'undefined' ||
             needClassify(state.ad.originalData, state.adData)
@@ -551,7 +551,7 @@ function* deleteAd() {
         yield put({ type: SET_UPDATED_BY });
 
         const state: State = yield select();
-        const deleteUrl = `${stillingApi}/rekrutteringsbistandstilling/${state.adData?.uuid}`;
+        const deleteUrl = `${api.stilling}/rekrutteringsbistandstilling/${state.adData?.uuid}`;
 
         const response = yield fetchDelete(deleteUrl);
 
@@ -569,7 +569,7 @@ function* forkastNyStilling() {
         yield put({ type: SET_UPDATED_BY });
 
         const state = yield select();
-        const deleteUrl = `${stillingApi}/rekrutteringsbistandstilling/${state.adData?.uuid}`;
+        const deleteUrl = `${api.stilling}/rekrutteringsbistandstilling/${state.adData?.uuid}`;
 
         const response = yield fetchDelete(deleteUrl);
         yield put({ type: FORKAST_NY_STILLING_SUCCESS, response });

@@ -6,11 +6,9 @@ import { FormidlingAvUsynligKandidatOutboundDto } from '../felles/legg-til-kandi
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
 import Cv from '../cv/reducer/cv-typer';
+import { api } from '../../felles/api';
 
-export const ENHETSREGISTER_API = `/stilling-api/search-api`;
-export const KANDIDATSOK_API = `/kandidat-api`;
-export const SMS_API = `/sms-api`;
-export const SYNLIGHET_API = `/synlighet-api`;
+export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
 const convertToUrlParams = (query: object) =>
     Object.keys(query)
@@ -45,16 +43,16 @@ const employerNameCompletionQueryTemplate = (match) => ({
 
 export function fetchCv(kandidatnr: string): Promise<Cv> {
     return fetchJson(
-        `${KANDIDATSOK_API}/veileder/kandidatsok/hentcv?${convertToUrlParams({ kandidatnr })}`,
+        `${api.kandidat}/veileder/kandidatsok/hentcv?${convertToUrlParams({ kandidatnr })}`,
         true
     );
 }
 
 export const fetchKandidatlisteMedStillingsId = (stillingsId: string) =>
-    fetchJson(`${KANDIDATSOK_API}/veileder/stilling/${stillingsId}/kandidatliste`, true);
+    fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`, true);
 
 export const fetchKandidatlisteMedKandidatlisteId = (kandidatlisteId: string) =>
-    fetchJson(`${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}`, true);
+    fetchJson(`${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`, true);
 
 export const putStatusKandidat = (
     status: Kandidatstatus,
@@ -62,7 +60,7 @@ export const putStatusKandidat = (
     kandidatnr: string
 ): Promise<Kandidatliste> =>
     putJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/status`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/status`,
         JSON.stringify({ status })
     );
 
@@ -73,34 +71,34 @@ export const putUtfallKandidat = (
     kandidatnr: string
 ): Promise<Kandidatliste> =>
     putJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/utfall`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/utfall`,
         JSON.stringify({ utfall, navKontor })
     );
 
 export const postKandidatliste = (kandidatlisteDto: KandidatlisteDto) =>
-    postJson(`${KANDIDATSOK_API}/veileder/me/kandidatlister`, JSON.stringify(kandidatlisteDto));
+    postJson(`${api.kandidat}/veileder/me/kandidatlister`, JSON.stringify(kandidatlisteDto));
 
 export function putKandidatliste(stillingsId) {
-    return putJson(`${KANDIDATSOK_API}/veileder/stilling/${stillingsId}/kandidatliste/`);
+    return putJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste/`);
 }
 
 export function endreKandidatliste(kandidatlisteId: string, kandidatlisteDto: KandidatlisteDto) {
     return putJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`,
         JSON.stringify(kandidatlisteDto)
     );
 }
 
 export function fetchGeografiKode(geografiKode) {
-    return fetchJson(`${KANDIDATSOK_API}/kodeverk/arenageografikoder/${geografiKode}`, true);
+    return fetchJson(`${api.kandidat}/kodeverk/arenageografikoder/${geografiKode}`, true);
 }
 
 export const fetchStillingFraListe = (stillingsId) =>
-    fetchJson(`${KANDIDATSOK_API}/kandidatsok/stilling/sokeord/${stillingsId}`, true);
+    fetchJson(`${api.kandidat}/kandidatsok/stilling/sokeord/${stillingsId}`, true);
 
 export const fetchNotater = (kandidatlisteId, kandidatnr) =>
     fetchJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater`,
         true
     );
 
@@ -112,7 +110,7 @@ export const postDelteKandidater = (
     navKontor
 ) =>
     postJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/deltekandidater`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/deltekandidater`,
         JSON.stringify({
             epostMottakere: mailadresser,
             epostTekst: beskjed,
@@ -128,7 +126,7 @@ export const postKandidatTilKandidatliste = async (
 ): Promise<Nettressurs<Kandidatliste>> => {
     try {
         const body = await postJson(
-            `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
+            `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
             JSON.stringify([
                 {
                     kandidatnr,
@@ -155,7 +153,7 @@ export const postFormidlingerAvUsynligKandidat = async (
 ): Promise<Nettressurs<Kandidatliste>> => {
     try {
         const body = await postJson(
-            `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/formidlingeravusynligkandidat`,
+            `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/formidlingeravusynligkandidat`,
             JSON.stringify(dto)
         );
 
@@ -178,30 +176,30 @@ export const putFormidlingsutfallForUsynligKandidat = (
     navKontor: string
 ): Promise<Kandidatliste> =>
     putJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/formidlingeravusynligkandidat/${formidlingId}/utfall`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/formidlingeravusynligkandidat/${formidlingId}/utfall`,
         JSON.stringify({ utfall, navKontor })
     );
 
 export const postNotat = (kandidatlisteId, kandidatnr, tekst) =>
     postJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater`,
         JSON.stringify({ tekst })
     );
 
 export const putNotat = (kandidatlisteId, kandidatnr, notatId, tekst) =>
     putJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater/${notatId}`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater/${notatId}`,
         JSON.stringify({ tekst })
     );
 
 export const deleteNotat = (kandidatlisteId, kandidatnr, notatId) =>
     deleteReq(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater/${notatId}`
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater/${notatId}`
     );
 
 export const putArkivert = (kandidatlisteId: string, kandidatNr: string, arkivert: boolean) => {
     return putJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatNr}/arkivert`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatNr}/arkivert`,
         JSON.stringify({ arkivert })
     );
 };
@@ -221,14 +219,14 @@ export const putArkivertForFlereKandidater = (
 };
 
 export const fetchKandidatlister = (query = {}) =>
-    fetchJson(`${KANDIDATSOK_API}/veileder/kandidatlister?${convertToUrlParams(query)}`, true);
+    fetchJson(`${api.kandidat}/veileder/kandidatlister?${convertToUrlParams(query)}`, true);
 
 export const fetchMineKandidatlister = async (
     side: number,
     pageSize: number
 ): Promise<MineKandidatlister> =>
     await fetchJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister?kunEgne=true&status=ÅPEN&pagesize=${pageSize}${
+        `${api.kandidat}/veileder/kandidatlister?kunEgne=true&status=ÅPEN&pagesize=${pageSize}${
             side > 1 ? `&pagenumber=${side - 1}` : ''
         }`
     );
@@ -239,7 +237,7 @@ export const fetchKandidatlisterForKandidat = (
     filtrerPåStilling?: string
 ) => {
     return fetchJson(
-        `${KANDIDATSOK_API}/veileder/kandidater/${kandidatnr}/listeoversikt?${convertToUrlParams({
+        `${api.kandidat}/veileder/kandidater/${kandidatnr}/listeoversikt?${convertToUrlParams({
             inkluderSlettede: 'true',
             filtrerPaaStilling: filtrerPåStilling,
         })}`,
@@ -252,7 +250,7 @@ export const fetchUsynligKandidat = async (
 ): Promise<Nettressurs<UsynligKandidat[]>> => {
     try {
         const body = await postJson(
-            `${KANDIDATSOK_API}/veileder/kandidater/navn`,
+            `${api.kandidat}/veileder/kandidater/navn`,
             JSON.stringify({
                 fnr,
             })
@@ -283,22 +281,22 @@ export const fetchArbeidsgivereEnhetsregisterOrgnr = (orgnr) => {
 };
 
 export const markerKandidatlisteUtenStillingSomMin = (kandidatlisteId: string) =>
-    putJson(`${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/eierskap`);
+    putJson(`${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/eierskap`);
 
 export async function deleteKandidatliste(kandidatlisteId: string): Promise<Nettressurs<any>> {
     return await deleteJsonMedType<any>(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}`
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`
     );
 }
 
 export const fetchSendteMeldinger = (kandidatlisteId: string) =>
-    fetchJson(`${SMS_API}/${kandidatlisteId}`, true);
+    fetchJson(`${api.sms}/${kandidatlisteId}`, true);
 
-export const fetchSmserForKandidat = (fnr: string) => fetchJson(`${SMS_API}/fnr/${fnr}`, true);
+export const fetchSmserForKandidat = (fnr: string) => fetchJson(`${api.sms}/fnr/${fnr}`, true);
 
 export const postSmsTilKandidater = (melding: string, fnr: string[], kandidatlisteId: string) =>
     postJson(
-        `${SMS_API}`,
+        `${api.sms}`,
         JSON.stringify({
             melding,
             fnr,
@@ -307,11 +305,11 @@ export const postSmsTilKandidater = (melding: string, fnr: string[], kandidatlis
     );
 
 export const fetchFerdigutfylteStillinger = () => {
-    return fetchJson(`${KANDIDATSOK_API}/veileder/ferdigutfyltesok`, true);
+    return fetchJson(`${api.kandidat}/veileder/ferdigutfyltesok`, true);
 };
 
 export const hentKandidatnr = (fnr: string): Promise<{ kandidatnr: string }> => {
-    return postJson(`${KANDIDATSOK_API}/fnr-til-kandidatnr`, JSON.stringify({ fnr }));
+    return postJson(`${api.kandidat}/fnr-til-kandidatnr`, JSON.stringify({ fnr }));
 };
 
 export const putKandidatlistestatus = (
@@ -319,7 +317,7 @@ export const putKandidatlistestatus = (
     status: Kandidatlistestatus
 ): Promise<Kandidatliste> => {
     return putJson(
-        `${KANDIDATSOK_API}/veileder/kandidatlister/${kandidatlisteId}/status`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/status`,
         JSON.stringify({ status })
     );
 };
@@ -330,7 +328,7 @@ export const slettCvFraArbeidsgiversKandidatliste = (
     navKontor: string | null
 ): Promise<Kandidatliste> => {
     return putJson(
-        `${KANDIDATSOK_API}/veileder/kandidat/arbeidsgiverliste/${kandidatlisteId}/${kandidatnummer}`,
+        `${api.kandidat}/veileder/kandidat/arbeidsgiverliste/${kandidatlisteId}/${kandidatnummer}`,
         JSON.stringify({ navKontor })
     );
 };

@@ -1,9 +1,10 @@
 import { rest } from 'msw';
 import { Respons } from '../../src/kandidatsok/kandidater/elasticSearchTyper';
 import { Innsatsgruppe } from '../../src/kandidatsok/filter/Jobbmuligheter';
+import { api } from '../../src/felles/api';
 
 export const kandidatsøkMock = [
-    rest.post(`/kandidatsok-proxy`, (_, res, ctx) => {
+    rest.post(api.kandidatsøk, (_, res, ctx) => {
         const respons: Respons = {
             _shards: {
                 total: 0,

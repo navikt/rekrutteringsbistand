@@ -1,5 +1,5 @@
+import { api } from '../../../felles/api';
 import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
-import { KANDIDATSOK_API, SYNLIGHET_API } from '../../api/api';
 import { SearchApiError, postHeaders } from '../../api/fetchUtils';
 import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';
 
@@ -11,7 +11,7 @@ export type Fødselsnummersøk = {
 };
 
 export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<Fødselsnummersøk>> => {
-    const url = `${KANDIDATSOK_API}/veileder/kandidatsok/fnrsok`;
+    const url = `${api.kandidat}/veileder/kandidatsok/fnrsok`;
     const body = JSON.stringify({ fnr });
 
     try {
@@ -46,7 +46,7 @@ export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<Fød
 export const fetchSynlighetsevaluering = async (
     fødselsnummer: string
 ): Promise<Nettressurs<Synlighetsevaluering>> => {
-    const url = `${SYNLIGHET_API}/evaluering/${fødselsnummer}`;
+    const url = `${api.synlighet}/evaluering/${fødselsnummer}`;
 
     try {
         const response = await fetch(url, {

@@ -1,7 +1,7 @@
 import { put, takeLatest, throttle } from 'redux-saga/effects';
-import { stillingApi } from '../../../../api/api';
 import { ApiError, fetchGet } from '../../../../api/apiUtils';
 import { SET_STYRK } from '../../../adDataReducer';
+import { api } from '../../../../../felles/api';
 
 export const SET_STYRK_TYPEAHEAD_VALUE = 'SET_STYRK_TYPEAHEAD_VALUE';
 export const FETCH_STYRK = 'FETCH_STYRK';
@@ -198,7 +198,7 @@ export default function styrkReducer(state = initialState, action) {
 function* getStyrk() {
     if (!originalStyrkThree) {
         try {
-            const url = `${stillingApi}/rekrutteringsbistand/api/v1/categories-with-altnames?taxonomy=STYRK08NAV`;
+            const url = `${api.stilling}/rekrutteringsbistand/api/v1/categories-with-altnames?taxonomy=STYRK08NAV`;
             const response = yield fetchGet(url);
             const sorted = response.sort((a, b) => {
                 if (a.code < b.code) return -1;

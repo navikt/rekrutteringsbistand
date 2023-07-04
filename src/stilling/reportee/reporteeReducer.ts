@@ -1,7 +1,7 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
-import { stillingApi } from '../api/api';
 import { fetchGet, ApiError } from '../api/apiUtils';
 import { ReporteeAction, ReporteeActionType } from './ReporteeAction';
+import { api } from '../../felles/api';
 
 export type Reportee = {
     displayName: string;
@@ -61,7 +61,7 @@ export function* getReportee() {
 
         try {
             const response: Reportee = yield fetchGet(
-                `${stillingApi}/rekrutteringsbistand/api/v1/reportee`
+                `${api.stilling}/rekrutteringsbistand/api/v1/reportee`
             );
 
             yield putAction({ type: ReporteeActionType.FetchReporteeSuccess, response });
