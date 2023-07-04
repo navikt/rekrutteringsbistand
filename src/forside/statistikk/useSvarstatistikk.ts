@@ -3,8 +3,6 @@ import { formaterDatoTilApi } from './datoUtils';
 import { Nettressurs } from '../../felles/nettressurs';
 import { api } from '../../felles/api';
 
-export const forespørslerApiUrl = `${api.forespørselOmDelingAvCv}/statistikk`;
-
 export type Svarstatistikk = {
     antallSvartJa: number;
     antallSvartNei: number;
@@ -19,12 +17,13 @@ const useSvarstatistikk = (navKontor: string, fraOgMed: Date, tilOgMed: Date) =>
 
     useEffect(() => {
         const url =
-            `${forespørslerApiUrl}?` +
+            `${api.forespørselOmDelingAvCv}/statistikk?` +
             new URLSearchParams({
                 fraOgMed: formaterDatoTilApi(fraOgMed),
                 tilOgMed: formaterDatoTilApi(tilOgMed),
                 navKontor,
             });
+
         const hentData = async () => {
             setSvarstatistikk({
                 kind: 'laster-inn',
