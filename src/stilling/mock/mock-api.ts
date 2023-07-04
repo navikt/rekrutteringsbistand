@@ -19,9 +19,6 @@ import municipals from './data/municipals.json';
 import categoriesWithAltnames from './data/categories-with-altnames.json';
 import postdata from './data/postdata.json';
 import search from './data/search.json';
-import aktivEnhet from './data/dekoratør/aktivenhet.json';
-import aktivBruker from './data/dekoratør/aktivbruker.json';
-import decorator from './data/dekoratør/decorator.json';
 import mineStillingerFraOpenSearch from './data/mineStillingerOpenSearch';
 import kandidatsøk from './data/kandidatsøk';
 
@@ -45,12 +42,6 @@ const fnrsokUrl = `express:${KANDIDAT_API}/veileder/kandidatsok/fnrsok`;
 const leggKandidatIKandidatlisteUrl = `express:${KANDIDAT_API}/veileder/kandidatlister/:kandidatlisteId/kandidater`;
 
 const searchApiUrl = `express:${stillingApi}/search-api/underenhet/_search`;
-
-const modiacontextholderApiUrl = '/modiacontextholder/api';
-const modiacontextholderAktivEnhetUrl = `${modiacontextholderApiUrl}/context/aktivenhet`;
-const modiacontextholderAktivBrukerUrl = `${modiacontextholderApiUrl}/context/aktivbruker`;
-const modiacontextholderContextUrl = `${modiacontextholderApiUrl}/context`;
-const modiacontextholderDecoratorUrl = `${modiacontextholderApiUrl}/decorator`;
 
 fetchMock.config.fallbackToNetwork = true;
 fetchMock.config.warnOnFallback = false;
@@ -116,10 +107,6 @@ fetchMock
     .get(postdataUrl, log(postdata))
     .get(searchApiUrl, log(search))
     .post(searchApiUrl, log(search))
-    .get(modiacontextholderAktivEnhetUrl, log(aktivEnhet))
-    .get(modiacontextholderAktivBrukerUrl, log(aktivBruker))
-    .get(modiacontextholderDecoratorUrl, log(decorator))
-    .post(modiacontextholderContextUrl, log(200))
     .post(fnrsokUrl, log(fnrsok))
     .post(kandidatProxyUrl, log(kandidatsøk))
     .post(leggKandidatIKandidatlisteUrl, log(kandidatliste))

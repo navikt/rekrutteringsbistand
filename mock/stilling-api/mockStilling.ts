@@ -1,4 +1,4 @@
-import { Stilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
+import { Stilling } from '../../src/kandidatsok/hooks/useKontekstAvKandidatlisteEllerStilling';
 
 export const mockStilling: Stilling = {
     stilling: {

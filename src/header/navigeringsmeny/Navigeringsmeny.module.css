@@ -19,12 +19,14 @@
 
 .tabs {
     display: flex;
-    align-items: stretch;
+    gap: 1rem;
 }
 
 .tab,
 .forsidelenke {
-    padding: 1.25rem 1rem;
+    padding: 1rem;
+    border-top: 0.25rem solid transparent;
+    border-bottom: 0.25rem solid transparent;
 }
 
 .forsidelenke svg {
@@ -38,13 +40,6 @@
     text-decoration: none;
     color: var(--a-text-default);
     letter-spacing: 0.3px;
-}
-
-.tab,
-.forsidelenke {
-    margin-right: 1rem;
-    border-top: 0.25rem solid transparent;
-    border-bottom: 0.25rem solid transparent;
 }
 
 .tabAktiv,

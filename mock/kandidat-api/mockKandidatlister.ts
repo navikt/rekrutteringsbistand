@@ -1,6 +1,6 @@
-import { Kandidatliste } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
-import { LagreKandidaterDto } from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
-import { MineKandidatlister } from '../kandidatliste/useMineKandidatlister';
+import { Kandidatliste } from '../../src/kandidatsok/hooks/useKontekstAvKandidatlisteEllerStilling';
+import { LagreKandidaterDto } from '../../src/kandidatsok/kandidatliste/LagreKandidaterIMineKandidatlisterModal';
+import { MineKandidatlister } from '../../src/kandidatsok/kandidatliste/useMineKandidatlister';
 
 export const mockMineKandidatlister: MineKandidatlister = {
     liste: [

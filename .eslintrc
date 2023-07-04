@@ -8,34 +8,46 @@
                 "basePath": "src",
                 "zones": [
                     {
+                        "target": "felles",
+                        "message": "Fellesmappen kan kun importere filer fra egen mappe",
+                        "from": ".",
+                        "except": ["felles"]
+                    },
+                    {
                         "target": "header",
                         "message": "Headeren kan kun importere filer fra egen mappe eller fellesmappen",
-                        "from": ["forside", "kandidat", "kandidatsok", "stilling", "stillingssok"]
+                        "from": ".",
+                        "except": ["header", "felles"]
                     },
                     {
                         "target": "forside",
                         "message": "Forsiden kan kun importere filer fra egen mappe eller fellesmappen",
-                        "from": ["header", "kandidat", "kandidatsok", "stilling", "stillingssok"]
+                        "from": ".",
+                        "except": ["forside", "felles"]
                     },
                     {
                         "target": "kandidat",
                         "message": "Kandidatsiden kan kun importere filer fra egen mappe eller fellesmappen",
-                        "from": ["header", "forside", "kandidatsok", "stilling", "stillingssok"]
+                        "from": ".",
+                        "except": ["kandidat", "felles"]
                     },
                     {
                         "target": "kandidatsok",
                         "message": "Kandidatsøket kan kun importere filer fra egen mappe eller fellesmappen",
-                        "from": ["header", "forside", "kandidat", "stilling", "stillingssok"]
+                        "from": ".",
+                        "except": ["kandidatsok", "felles"]
                     },
                     {
                         "target": "stilling",
                         "message": "Stillingssiden kan kun importere filer fra egen mappe eller fellesmappen",
-                        "from": ["header", "forside", "kandidat", "kandidatsok", "stillingssok"]
+                        "from": ".",
+                        "except": ["stilling", "felles"]
                     },
                     {
                         "target": "stillingssok",
                         "message": "Stillingssøket kan kun importere filer fra egen mappe eller fellesmappen",
-                        "from": ["header", "forside", "kandidat", "kandidatsok", "stilling"]
+                        "from": ".",
+                        "except": ["stillingssok", "felles"]
                     }
                 ]
             }
