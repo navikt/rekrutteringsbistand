@@ -11,10 +11,8 @@ const Header = () => {
 
     return (
         <>
-            <>
-                <Modiadekoratør navKontor={navKontor} onNavKontorChange={setNavKontor} />
-                <Navigeringsmeny />
-            </>
+            <Modiadekoratør navKontor={navKontor} onNavKontorChange={setNavKontor} />
+            <Navigeringsmeny />
             <Outlet />
         </>
     );

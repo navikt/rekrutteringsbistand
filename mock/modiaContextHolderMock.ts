@@ -22,7 +22,7 @@ const decorator = {
     ],
 };
 
-export const headerMocks = [
+export const modiaContextHolderMock = [
     rest.get(url.modiaDecorator, (_, res, ctx) => res(ctx.json(decorator))),
     rest.get(url.modiaAktivEnhet, (_, res, ctx) => res(ctx.json(aktivEnhetOgBruker))),
 

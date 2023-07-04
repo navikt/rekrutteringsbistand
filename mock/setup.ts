@@ -1,7 +1,15 @@
 import { setupWorker } from 'msw';
-import { headerMocks } from './headerMocks';
+import { modiaContextHolderMock } from './modiaContextHolderMock';
+import { innloggetBrukerMock } from './innloggetBrukerMock';
+import { kandidatApiMock } from './kandidat-api/kandidatApiMock';
+import { kandidatsøkMock } from './kandidatsøk/kandidatsøkMock';
 
-const handlers = [...headerMocks];
+const handlers = [
+    ...innloggetBrukerMock,
+    ...modiaContextHolderMock,
+    ...kandidatApiMock,
+    ...kandidatsøkMock,
+];
 
 const worker = setupWorker(...handlers);
 
