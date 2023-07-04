@@ -46,9 +46,7 @@ const Navigeringsmeny: FunctionComponent = () => {
                         />
                     ))}
                 </nav>
-                <div className={css.nyheter}>
-                    <Nyheter />
-                </div>
+                <Nyheter />
             </div>
         </div>
     );
