@@ -4,7 +4,8 @@
     "private": true,
     "homepage": "/",
     "scripts": {
-        "start": "cross-env VITE_MOCK=true vite",
+        "start": "cross-env VITE_MOCK=true VITE_MOCK_MODIA=true vite",
+        "start:modia": "cross-env VITE_MOCK=true vite",
         "build": "vite build",
         "test": "jest src",
         "prepare": "husky install"
