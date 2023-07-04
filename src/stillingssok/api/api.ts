@@ -1,11 +1,9 @@
+import { api } from '../../felles/api';
 import { Query, Respons } from '../domene/elasticSearchTyper';
 import StandardsøkDto from '../filter/standardsøk/Standardsøk';
 
-export const stillingssøkProxy = `/stillingssok-proxy`;
-export const stillingApi = `/stilling-api`;
-
 export const søk = async (query: Query, forklarScore: boolean = false): Promise<Respons> => {
-    const url = `${stillingssøkProxy}/stilling/_search`;
+    const url = `${api.stillingssøk}/stilling/_search`;
     const urlMedParams = forklarScore ? `${url}?explain=true` : url;
     const respons = await post(urlMedParams, query);
 
@@ -21,7 +19,7 @@ export const søk = async (query: Query, forklarScore: boolean = false): Promise
 };
 
 export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
-    const respons = await fetch(`${stillingApi}/standardsok`, {
+    const respons = await fetch(`${api.stilling}/standardsok`, {
         method: 'GET',
     });
 
@@ -37,7 +35,7 @@ export const hentStandardsøk = async (): Promise<StandardsøkDto> => {
 export const oppdaterStandardsøk = async (
     standardsøk: URLSearchParams
 ): Promise<StandardsøkDto> => {
-    const respons = await put(`${stillingApi}/standardsok`, {
+    const respons = await put(`${api.stilling}/standardsok`, {
         søk: standardsøk.toString(),
     });
 

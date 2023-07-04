@@ -1,9 +1,9 @@
 import { rest } from 'msw';
-import { stillingApi } from '../../src/stillingssok/api/api';
 import { mockStilling } from './mockStilling';
+import { api } from '../../src/felles/api';
 
 export const stillingApiMock = [
-    rest.get(`${stillingApi}/rekrutteringsbistandstilling/:stillingsId`, (req, res, ctx) =>
+    rest.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, (_, res, ctx) =>
         res(ctx.json(mockStilling))
     ),
 ];

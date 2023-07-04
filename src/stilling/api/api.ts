@@ -11,9 +11,7 @@ import Stilling, {
     Stillingsinfo,
 } from '../domene/Stilling';
 import { Miljø, getMiljø } from '../../felles/miljø';
-
-export const stillingApi = '/stilling-api';
-export const stillingssøkProxy = '/stillingssok-proxy';
+import { api } from '../../felles/api';
 
 export type Side<T> = {
     content: T[];
@@ -25,7 +23,7 @@ export const postStilling = async (
     stilling: Partial<Stilling>,
     kategori: Stillingskategori
 ): Promise<Rekrutteringsbistandstilling> => {
-    const postUrl = `${stillingApi}/rekrutteringsbistandstilling`;
+    const postUrl = `${api.stilling}/rekrutteringsbistandstilling`;
 
     return await fetchPost(postUrl, {
         stilling,
@@ -37,7 +35,7 @@ export const hentRekrutteringsbistandstilling = async (
     uuid: string
 ): Promise<Rekrutteringsbistandstilling> => {
     const rekrutteringsbistandstilling: Rekrutteringsbistandstilling = await fetchGet(
-        `${stillingApi}/rekrutteringsbistandstilling/${uuid}`
+        `${api.stilling}/rekrutteringsbistandstilling/${uuid}`
     );
 
     if (rekrutteringsbistandstilling.stilling.administration === null) {
@@ -57,7 +55,7 @@ export const hentMineStillingerOpenSearch = async (
 
     const openSearchQuery = lagOpenSearchQuery(query, sidestørrelse);
     const respons: OpenSearchResponse = await fetchPost(
-        `${stillingssøkProxy}/stilling/_search`,
+        `${api.stillingssøk}/stilling/_search`,
         openSearchQuery
     );
 
@@ -72,7 +70,7 @@ export const hentMineStillingerOpenSearch = async (
 export const kopierStilling = async (
     stillingsId: string
 ): Promise<Rekrutteringsbistandstilling> => {
-    return await fetchPost(`${stillingApi}/rekrutteringsbistandstilling/kopier/${stillingsId}`);
+    return await fetchPost(`${api.stilling}/rekrutteringsbistandstilling/kopier/${stillingsId}`);
 };
 
 export type OpprettKandidatlisteForEksternStillingDto = {
@@ -83,7 +81,7 @@ export type OpprettKandidatlisteForEksternStillingDto = {
 
 export const opprettKandidatlisteForEksternStilling = async (
     dto: OpprettKandidatlisteForEksternStillingDto
-): Promise<Stillingsinfo> => await fetchPut(`${stillingApi}/stillingsinfo`, dto);
+): Promise<Stillingsinfo> => await fetchPut(`${api.stilling}/stillingsinfo`, dto);
 
 const employerNameCompletionQueryTemplate = (match: string) => ({
     query: {
@@ -108,7 +106,7 @@ export const fetchEmployerNameCompletionHits = async (
     }
 
     const result = await fetchPost(
-        `${stillingApi}/search-api/underenhet/_search`,
+        `${api.stilling}/search-api/underenhet/_search`,
         employerNameCompletionQueryTemplate(input)
     );
 
@@ -138,7 +136,7 @@ export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Arbeidsg
     }
 
     const result = await fetchGet(
-        `${stillingApi}/search-api/underenhet/_search?q=organisasjonsnummer:${utenMellomrom}*`
+        `${api.stilling}/search-api/underenhet/_search?q=organisasjonsnummer:${utenMellomrom}*`
     );
 
     return [

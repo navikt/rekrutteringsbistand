@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { formaterDatoTilApi } from './datoUtils';
+import { api } from '../../felles/api';
 
-const apiBasePath = '/statistikk-api';
-
-export const statistikkApiUrl = `${apiBasePath}/statistikk`;
+export const statistikkApiUrl = `${api.statistikk}/statistikk`;
 
 type AntallFormidlingerInboundDto = {
     antallPresentert: number;

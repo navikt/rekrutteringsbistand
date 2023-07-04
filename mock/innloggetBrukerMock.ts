@@ -1,7 +1,8 @@
 import { rest } from 'msw';
+import { api } from '../src/felles/api';
 
 export const innloggetBrukerMock = [
-    rest.get('/meg', (_, res, ctx) =>
+    rest.get(api.innloggetBruker, (_, res, ctx) =>
         res(
             ctx.json({
                 navIdent: 'z994161',

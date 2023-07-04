@@ -1,60 +1,60 @@
 import fetchMock, { MockResponse, MockResponseFunction } from 'fetch-mock';
 
 import { FormidlingAvUsynligKandidatOutboundDto } from '../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
-import { KANDIDATSOK_API, SMS_API, ENHETSREGISTER_API, SYNLIGHET_API } from '../api/api';
-import { FORESPORSEL_OM_DELING_AV_CV_API } from '../api/forespørselOmDelingAvCvApi';
 import { Kandidatutfall } from '../kandidatliste/domene/Kandidat';
 
 import { mock } from './mock-data';
 import { meg } from './data/kandidat/veileder.mock';
+import { api } from '../../felles/api';
+import { ENHETSREGISTER_API } from '../api/api';
 
 fetchMock.config.fallbackToNetwork = true;
 
-const api = `express:${KANDIDATSOK_API}`;
-const smsApi = `express:${SMS_API}`;
-const forespørselOmDelingAvCvApi = `express:${FORESPORSEL_OM_DELING_AV_CV_API}`;
-const synlighetApi = `express:${SYNLIGHET_API}`;
+const baseUrl = `express:${api.kandidat}`;
+const smsBaseUrl = `express:${api.sms}`;
+const forespørselOmDelingAvCvBaseUrl = `express:${api.forespørselOmDelingAvCv}`;
+const synlighetBaseUrl = `express:${api.synlighet}`;
 
 const url = {
-    fnrsok: `${api}/veileder/kandidatsok/fnrsok`,
-    synlighetsevaluering: `${synlighetApi}/evaluering/:fnr`,
+    fnrsok: `${baseUrl}/veileder/kandidatsok/fnrsok`,
+    synlighetsevaluering: `${synlighetBaseUrl}/evaluering/:fnr`,
 
     // Cv
-    cv: `${api}/veileder/kandidatsok/hentcv`,
-    listeoversikt: `${api}/veileder/kandidater/:kandidatnr/listeoversikt`,
+    cv: `${baseUrl}/veileder/kandidatsok/hentcv`,
+    listeoversikt: `${baseUrl}/veileder/kandidater/:kandidatnr/listeoversikt`,
 
     // Kandidatliste
-    kandidatlister: `${api}/veileder/kandidatlister`,
-    kandidatliste: `${api}/veileder/kandidatlister/:kandidatlisteId`,
-    markerKandidatlisteSomMin: `${api}/veileder/kandidatlister/:kandidatlisteId/eierskap`,
-    kandidatlisteMedStilling: `${api}/veileder/stilling/:stillingsId/kandidatliste`,
-    kandidatlistePost: `${api}/veileder/me/kandidatlister`,
-    notater: `${api}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
-    notaterMedId: `${api}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater/:notatId`,
-    statusPut: `${api}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/status`,
-    utfallPut: `${api}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/utfall`,
-    arkivertPut: `${api}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/arkivert`,
-    delKandidater: `${api}/veileder/kandidatlister/:kandidatlisteId/deltekandidater`,
-    postKandidater: `${api}/veileder/kandidatlister/:kandidatlisteId/kandidater`,
-    søkUsynligKandidat: `${api}/veileder/kandidater/navn`,
-    postFormidlingerAvUsynligKandidat: `${api}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat`,
-    putFormidlingerAvUsynligKandidat: `${api}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat/:formidlingId/utfall`,
-    putKandidatlistestatus: `${api}/veileder/kandidatlister/:kandidatlisteId/status`,
-    putSlettCvFraArbeidsgiversKandidatliste: `${api}/veileder/kandidat/arbeidsgiverliste/:kandidatlisteId/:kandidatnummer`,
+    kandidatlister: `${baseUrl}/veileder/kandidatlister`,
+    kandidatliste: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId`,
+    markerKandidatlisteSomMin: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/eierskap`,
+    kandidatlisteMedStilling: `${baseUrl}/veileder/stilling/:stillingsId/kandidatliste`,
+    kandidatlistePost: `${baseUrl}/veileder/me/kandidatlister`,
+    notater: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
+    notaterMedId: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater/:notatId`,
+    statusPut: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/status`,
+    utfallPut: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/utfall`,
+    arkivertPut: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/arkivert`,
+    delKandidater: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/deltekandidater`,
+    postKandidater: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater`,
+    søkUsynligKandidat: `${baseUrl}/veileder/kandidater/navn`,
+    postFormidlingerAvUsynligKandidat: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat`,
+    putFormidlingerAvUsynligKandidat: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat/:formidlingId/utfall`,
+    putKandidatlistestatus: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/status`,
+    putSlettCvFraArbeidsgiversKandidatliste: `${baseUrl}/veileder/kandidat/arbeidsgiverliste/:kandidatlisteId/:kandidatnummer`,
 
-    forespørselOmDelingAvCv: `${forespørselOmDelingAvCvApi}/foresporsler/:stillingsId`,
-    forespørselOmDelingAvCvForKandidat: `${forespørselOmDelingAvCvApi}/foresporsler/kandidat/:aktorId`,
-    postForespørselOmDelingAvCv: `${forespørselOmDelingAvCvApi}/foresporsler`,
-    postResendForespørselOmDelingAvCv: `${forespørselOmDelingAvCvApi}/foresporsler/kandidat/:aktorId`,
+    forespørselOmDelingAvCv: `${forespørselOmDelingAvCvBaseUrl}/foresporsler/:stillingsId`,
+    forespørselOmDelingAvCvForKandidat: `${forespørselOmDelingAvCvBaseUrl}/foresporsler/kandidat/:aktorId`,
+    postForespørselOmDelingAvCv: `${forespørselOmDelingAvCvBaseUrl}/foresporsler`,
+    postResendForespørselOmDelingAvCv: `${forespørselOmDelingAvCvBaseUrl}/foresporsler/kandidat/:aktorId`,
 
     // Alternative backends
-    sms: `${smsApi}/:kandidatlisteId`,
-    smsFnr: `${smsApi}/fnr/:fnr`,
-    smsPost: `${smsApi}`,
+    sms: `${smsBaseUrl}/:kandidatlisteId`,
+    smsFnr: `${smsBaseUrl}/fnr/:fnr`,
+    smsPost: `${smsBaseUrl}`,
     enhetsregister: `${ENHETSREGISTER_API}/underenhet/_search`,
 
     // Misc
-    toggles: `${api}/veileder/kandidatsok/toggles`,
+    toggles: `${baseUrl}/veileder/kandidatsok/toggles`,
 };
 
 const getCv = (url: string) => {

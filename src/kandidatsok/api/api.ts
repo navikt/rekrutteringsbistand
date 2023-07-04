@@ -9,25 +9,22 @@ import {
 import { Kandidatliste, Stilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { MineKandidatlister } from '../kandidatliste/useMineKandidatlister';
-
-const kandidatsøkProxy = `/kandidatsok-proxy`;
-export const kandidatApi = '/kandidat-api';
-export const stillingApi = '/stilling-api';
+import { api } from '../../felles/api';
 
 export const søk = async (query: SearchQuery): Promise<Respons> => {
-    const respons = await post(kandidatsøkProxy, query);
+    const respons = await post(api.kandidatsøk, query);
 
     return parseJsonEllerKastFeil(respons, 'Klarte ikke å søke');
 };
 
 export const suggest = async (query: SuggestQuery): Promise<SuggestionRespons> => {
-    const respons = await post(kandidatsøkProxy, query);
+    const respons = await post(api.kandidatsøk, query);
 
     return parseJsonEllerKastFeil(respons, 'Klarte ikke å hente suggestions');
 };
 
 export const fuzzySuggest = async (query: FuzzySuggestQuery): Promise<FuzzySuggestionRespons> => {
-    const respons = await post(kandidatsøkProxy, query);
+    const respons = await post(api.kandidatsøk, query);
 
     return parseJsonEllerKastFeil(respons, 'Klarte ikke å hente fuzzy suggestions');
 };
@@ -37,7 +34,7 @@ export const hentMineKandidatlister = async (
     pageSize: number
 ): Promise<MineKandidatlister> => {
     const respons = await get(
-        `${kandidatApi}/veileder/kandidatlister?kunEgne=true&status=ÅPEN&pagesize=${pageSize}${
+        `${api.kandidat}/veileder/kandidatlister?kunEgne=true&status=ÅPEN&pagesize=${pageSize}${
             side > 1 ? `&pagenumber=${side - 1}` : ''
         }`
     );
@@ -48,7 +45,7 @@ export const hentMineKandidatlister = async (
 export const hentKandidatlisteMedStillingsId = async (
     stillingsId: string
 ): Promise<Kandidatliste> => {
-    const respons = await get(`${kandidatApi}/veileder/stilling/${stillingsId}/kandidatliste`);
+    const respons = await get(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`);
 
     return parseJsonEllerKastFeil(
         respons,
@@ -57,13 +54,13 @@ export const hentKandidatlisteMedStillingsId = async (
 };
 
 export const hentKandidatliste = async (kandidatlisteId: string): Promise<Kandidatliste> => {
-    const respons = await get(`${kandidatApi}/veileder/kandidatlister/${kandidatlisteId}`);
+    const respons = await get(`${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`);
 
     return parseJsonEllerKastFeil(respons, `Fant ikke kandidatliste med id ${kandidatlisteId}`);
 };
 
 export const hentStilling = async (stillingsId: string): Promise<Stilling> => {
-    const respons = await get(`${stillingApi}/rekrutteringsbistandstilling/${stillingsId}`);
+    const respons = await get(`${api.stilling}/rekrutteringsbistandstilling/${stillingsId}`);
 
     return parseJsonEllerKastFeil(respons, `Fant ikke stilling med id ${stillingsId}`);
 };
@@ -84,7 +81,7 @@ export const lagreKandidaterIKandidatliste = async (
     kandidatlisteId: string
 ): Promise<Kandidatliste> => {
     const respons = await post(
-        `${kandidatApi}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
+        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
         lagreKandidaterDto
     );
 

@@ -1,5 +1,4 @@
 import { put, takeEvery, select } from 'redux-saga/effects';
-import { stillingApi } from '../../../api/api';
 import { fetchGet } from '../../../api/apiUtils';
 import { ApiError } from '../../../api/apiUtils';
 import {
@@ -9,6 +8,7 @@ import {
     SAVE_AD_SUCCESS,
     FETCH_AD_SUCCESS,
 } from '../../adReducer';
+import { api } from '../../../../felles/api';
 
 export const FETCH_LOCATIONS = 'FETCH_LOCATIONS';
 export const FETCH_LOCATIONS_BEGIN = 'FETCH_LOCATIONS_BEGIN';
@@ -82,7 +82,7 @@ export function* fetchLocations() {
     try {
         if (!state.locationCode.hasFetchedLocations) {
             yield put({ type: FETCH_LOCATIONS_BEGIN });
-            const response = yield fetchGet(`${stillingApi}/rekrutteringsbistand/api/v1/postdata`);
+            const response = yield fetchGet(`${api.stilling}/rekrutteringsbistand/api/v1/postdata`);
             const sorted = response.sort((a, b) => {
                 if (a.city < b.city) return -1;
                 if (a.city > b.city) return 1;

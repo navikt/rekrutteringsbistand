@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { get } from '../api/api';
+import { api } from '../../felles/api';
 
 export type InnloggetBruker = {
     navIdent: string | null;
@@ -11,7 +12,7 @@ const useInnloggetBruker = (navKontor: string | null): InnloggetBruker => {
 
     useEffect(() => {
         const hentNavIdent = async () => {
-            const response = await get('/meg');
+            const response = await get(api.innloggetBruker);
             const { navIdent } = await response.json();
 
             setNavIdent(navIdent);

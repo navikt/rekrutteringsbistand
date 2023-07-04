@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { formaterDatoTilApi } from './datoUtils';
 import { Nettressurs } from '../../felles/nettressurs';
+import { api } from '../../felles/api';
 
-const apiBasePath = '/foresporsel-om-deling-av-cv-api';
-export const forespørslerApiUrl = `${apiBasePath}/statistikk`;
+export const forespørslerApiUrl = `${api.forespørselOmDelingAvCv}/statistikk`;
 
 export type Svarstatistikk = {
     antallSvartJa: number;
