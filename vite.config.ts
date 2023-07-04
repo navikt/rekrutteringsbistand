@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
             checkerPlugin({
                 typescript: true,
                 eslint: {
-                    lintCommand: 'eslint "./src/**/*.{ts,tsx,js,jsx}"',
+                    lintCommand: 'eslint "./{src,mock}/**/*.{ts,tsx,js,jsx}"',
                 },
             }),
 

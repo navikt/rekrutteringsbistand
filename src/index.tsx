@@ -4,7 +4,7 @@ import App from './App';
 import './index.css';
 
 if (import.meta.env.VITE_MOCK) {
-    await import('./felles/mock/setup');
+    await import('../mock/setup');
 }
 
 const element = document.getElementById('rekrutteringsbistand');
