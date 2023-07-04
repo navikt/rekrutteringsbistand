@@ -4,10 +4,6 @@ import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
 import useNavKontor from '../felles/store/navKontor';
 import useAmplitude from './useAmplitude';
 
-if (import.meta.env.VITE_MOCK) {
-    await import('./mock/mock-api');
-}
-
 const Header = () => {
     const { navKontor, setNavKontor } = useNavKontor();
 
