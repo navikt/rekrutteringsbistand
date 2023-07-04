@@ -46,7 +46,7 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/en-bundle'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/tweak-modia'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
