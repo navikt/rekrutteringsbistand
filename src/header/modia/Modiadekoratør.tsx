@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
 import Navspa from '@navikt/navspa';
 import loadjs from 'loadjs';
 import DekoratørProps, { EnhetDisplay } from './DekoratørProps';
@@ -18,7 +18,7 @@ type Props = {
 };
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
-    const Microfrontend = Navspa.importer<DekoratørProps>(appName);
+    const microfrontend = useRef<ComponentType<DekoratørProps>>();
 
     const [status, setStatus] = useState<Status>(
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
@@ -30,6 +30,9 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                 await loadjs(staticPaths, appName, {
                     returnPromise: true,
                 });
+
+                const component = Navspa.importer<DekoratørProps>(appName);
+                microfrontend.current = component;
 
                 setStatus(Status.Klar);
             } catch (e) {
@@ -48,9 +51,9 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
     }, []);
 
     return (
-        <div className={css.placeholder}>
+        <div className={css.wrapper}>
             {status === Status.Klar && (
-                <Microfrontend
+                <microfrontend.current
                     appname="Rekrutteringsbistand"
                     useProxy={true}
                     enhet={{

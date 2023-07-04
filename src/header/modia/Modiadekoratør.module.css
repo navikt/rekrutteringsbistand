@@ -1,9 +1,5 @@
-.mocket .dekorator__feilmelding {
-    display: none;
-}
-
-.placeholder {
+.wrapper {
     min-height: 78.5px;
     width: 100%;
-    background-color: var(--a-text-default);
+    background-color: #3e3832;
 }
