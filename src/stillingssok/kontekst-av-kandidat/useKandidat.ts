@@ -11,10 +11,10 @@ import {
     Kandidatrespons,
     Yrkejobbønske,
     byggKandidatQuery,
-    kandidatProxyUrl,
 } from './kandidatQuery';
 import { sendEvent } from '../../felles/amplitude';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
+import { api } from '../../felles/api';
 
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
@@ -49,7 +49,7 @@ const useKandidat = (fnr: string) => {
 
         const hentKandidat = async (fnr: string) => {
             try {
-                const respons = await fetch(kandidatProxyUrl, {
+                const respons = await fetch(api.kandidatsøk, {
                     method: 'POST',
                     body: JSON.stringify(byggKandidatQuery(fnr)),
                     headers: { 'Content-Type': 'application/json' },

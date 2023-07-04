@@ -1,8 +1,7 @@
 import fetchMock, { MockRequest, MockResponse, MockResponseFunction } from 'fetch-mock';
 
-import { KANDIDAT_API } from '../stilling/legg-til-kandidat-modal/kandidatApi';
-import { kandidatProxyUrl } from '../stilling/kontekst-av-kandidat/useKandidat';
 import { Rekrutteringsbistandstilling } from '../domene/Stilling';
+import { api } from '../../felles/api';
 import fnrsok from './data/fnrsok';
 import kandidatliste from './data/kandidatliste';
 
@@ -19,8 +18,6 @@ import categoriesWithAltnames from './data/categories-with-altnames.json';
 import postdata from './data/postdata.json';
 import search from './data/search.json';
 import mineStillingerFraOpenSearch from './data/mineStillingerOpenSearch';
-import kandidatsøk from './data/kandidatsøk';
-import { api } from '../../felles/api';
 
 const reporteeUrl = `${api.stilling}/rekrutteringsbistand/api/v1/reportee`;
 const mineStillingerOpenSearchUrl = `express:${api.stillingssøk}/stilling/_search`;
@@ -31,15 +28,15 @@ const slettStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling/:
 const getStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling/:stillingsId`;
 const putStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling`;
 const putStillingsinfoUrl = `express:${api.stilling}/stillingsinfo`;
-const kandidatlisteUrl = `express:${KANDIDAT_API}/veileder/stilling/:stillingsId/kandidatliste`;
+const kandidatlisteUrl = `express:${api.kandidat}/veileder/stilling/:stillingsId/kandidatliste`;
 
 const countiesUrl = `${api.stilling}/rekrutteringsbistand/api/v1/geography/counties`;
 const countriesUrl = `${api.stilling}/rekrutteringsbistand/api/v1/geography/countries`;
 const municipalsUrl = `${api.stilling}/rekrutteringsbistand/api/v1/geography/municipals`;
 const categoriesWithAltnamesUrl = `${api.stilling}/rekrutteringsbistand/api/v1/categories-with-altnames?taxonomy=STYRK08NAV`;
 const postdataUrl = `${api.stilling}/rekrutteringsbistand/api/v1/postdata`;
-const fnrsokUrl = `express:${KANDIDAT_API}/veileder/kandidatsok/fnrsok`;
-const leggKandidatIKandidatlisteUrl = `express:${KANDIDAT_API}/veileder/kandidatlister/:kandidatlisteId/kandidater`;
+const fnrsokUrl = `express:${api.kandidat}/veileder/kandidatsok/fnrsok`;
+const leggKandidatIKandidatlisteUrl = `express:${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater`;
 
 const searchApiUrl = `express:${api.stilling}/search-api/underenhet/_search`;
 
@@ -108,7 +105,6 @@ fetchMock
     .get(searchApiUrl, log(search))
     .post(searchApiUrl, log(search))
     .post(fnrsokUrl, log(fnrsok))
-    .post(kandidatProxyUrl, log(kandidatsøk))
     .post(leggKandidatIKandidatlisteUrl, log(kandidatliste))
     .get(kandidatlisteUrl, log(kandidatliste), {
         delay: 500,

@@ -1,15 +1,13 @@
+import { api } from '../../../felles/api';
 import { ApiError } from '../../api/apiUtils';
 import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
 import { Kandidat, Kandidatliste, Synlighetsevaluering } from './kandidatlistetyper';
 import { KandidatOutboundDto } from './LeggTilKandidatModal';
 
-export const KANDIDAT_API = '/kandidat-api';
-export const SYNLIGHET_API = `/synlighet-api`;
-
 export const fetchSynlighetsevaluering = async (
     fødselsnummer: string
 ): Promise<Nettressurs<Synlighetsevaluering>> => {
-    const url = `${SYNLIGHET_API}/evaluering/${fødselsnummer}`;
+    const url = `${api.synlighet}/evaluering/${fødselsnummer}`;
 
     try {
         const response = await fetch(url, {
@@ -55,7 +53,7 @@ export const postKandidaterTilKandidatliste = async (
     kandidatlisteId: string,
     kandidater: KandidatOutboundDto[]
 ): Promise<Nettressurs<Kandidatliste>> => {
-    const url = `${KANDIDAT_API}/veileder/kandidatlister/${kandidatlisteId}/kandidater`;
+    const url = `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`;
 
     try {
         const body = await postJson(url, JSON.stringify(kandidater));
@@ -73,7 +71,7 @@ export const postKandidaterTilKandidatliste = async (
 };
 
 export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<Kandidat>> => {
-    const url = `${KANDIDAT_API}/veileder/kandidatsok/fnrsok`;
+    const url = `${api.kandidat}/veileder/kandidatsok/fnrsok`;
     const body = JSON.stringify({ fnr });
 
     try {
@@ -106,10 +104,10 @@ export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<Kand
 };
 
 export const putKandidatliste = (stillingsId: string): Promise<Kandidatliste> =>
-    putRequest(`${KANDIDAT_API}/veileder/stilling/${stillingsId}/kandidatliste`);
+    putRequest(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`);
 
 export const fetchKandidatliste = (stillingsId: string): Promise<Kandidatliste> =>
-    fetchJson(`${KANDIDAT_API}/veileder/stilling/${stillingsId}/kandidatliste`);
+    fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`);
 
 const postHeaders = () => {
     return {

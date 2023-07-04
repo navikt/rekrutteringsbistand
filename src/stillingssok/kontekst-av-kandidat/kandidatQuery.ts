@@ -1,5 +1,3 @@
-export const kandidatProxyUrl = '/kandidatsok-proxy';
-
 export type EsRespons = {
     hits: {
         hits: Array<{

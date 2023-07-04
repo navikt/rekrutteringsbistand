@@ -6,9 +6,9 @@ import { kandidatsøkMock } from './kandidatsøk/kandidatsøkMock';
 
 const handlers = [
     ...innloggetBrukerMock,
-    ...modiaContextHolderMock,
     ...kandidatApiMock,
-    ...kandidatsøkMock,
+    ...(import.meta.env.VITE_MOCK_MODIA ? modiaContextHolderMock : []),
+    ...(import.meta.env.VITE_MOCK_AIVEN ? kandidatsøkMock : []),
 ];
 
 const worker = setupWorker(...handlers);

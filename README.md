@@ -10,8 +10,40 @@ npm install
 
 ## Utvikling
 
+Følgende kommando starter appen i et utviklingsmiljø. Alle API-kall er mocket så man ikke trenger å kjøre backends lokalt.
+
 ```sh
 npm run start
+```
+
+### Modia
+
+I utviklingsmiljøet er Modia-dekoratøren erstattet med en placeholder. Slik laster du heller inn den ekte Modia-dekoratøren:
+
+```sh
+npm run start:modia
+```
+
+### Aiven
+
+Noen ganger er det ønskelig å koble appen direkte mot ElasticSearch på Aiven i stedet for å mocke stillingssøket og kandidatsøket:
+
+```sh
+npm run start:aiven
+```
+
+Merk at Aiven krever brukernavn og passord for autentisering. Det er opprettet en proxy i `vite.config.ts`, men for at denne skal fungere må du opprette en fil `.env.development.local` på rot og definere følgende miljøvariabler:
+
+```
+# Stillingssøk
+STILLING_ES_USERNAME=<brukernavn>
+STILLING_ES_PASSWORD=<passord>
+STILLING_ES_URI=<url>
+
+# Kandidatsøk
+KANDIDAT_ES_USERNAME=<brukernavn>
+KANDIDAT_ES_PASSWORD=<passord>
+KANDIDAT_ES_URI=<url>
 ```
 
 
