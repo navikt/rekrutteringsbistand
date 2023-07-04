@@ -1,5 +1,7 @@
 import { setupWorker } from 'msw';
-import { handlers } from './handlers';
+import { headerMocks } from './headerMocks';
+
+const handlers = [...headerMocks];
 
 const worker = setupWorker(...handlers);
 

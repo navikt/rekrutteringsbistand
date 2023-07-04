@@ -7,8 +7,6 @@ const url = {
     modiaAktivEnhet: `/modiacontextholder/api/context/aktivenhet`,
     modiaAktivBruker: `/modiacontextholder/api/context/aktivbruker`,
     modiaDecorator: `/modiacontextholder/api/decorator`,
-
-    modiaWebsocket: `wss://veilederflatehendelser-q0.adeo.no/modiaeventdistribution/ws/${minIdent}`,
 };
 
 const aktivEnhetOgBruker = { aktivBruker: null, aktivEnhet: '0239' };

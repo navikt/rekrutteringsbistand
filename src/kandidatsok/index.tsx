@@ -1,8 +1,8 @@
 import App from './App';
-import { setupMock } from './mocks/mockSetup';
 
 if (import.meta.env.VITE_MOCK) {
-    setupMock();
+    // TODO: Flytt mock til fellesmappen.
+    // setupMock();
 }
 
 export const Component = () => <App />;
