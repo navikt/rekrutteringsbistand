@@ -1,4 +1,4 @@
-import { feil, ikkeLastet, lasterInn, Nettressurs, suksess } from '../api/Nettressurs';
+import { Nettressurs, ikkeLastet, lasterInn, suksess, feil } from 'felles/nettressurs';
 import { Status } from '../domene/Stilling';
 import { RekrutteringsbistandstillingOpenSearch } from '../domene/StillingOpenSearch';
 import { MineStillingerAction, MineStillingerActionType } from './MineStillingerAction';

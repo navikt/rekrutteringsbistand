@@ -1,9 +1,9 @@
 import { PersonCheckmarkIcon, PersonGroupIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import { Link } from 'react-router-dom';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
-import { Kandidatliste } from '../legg-til-kandidat-modal/kandidatlistetyper';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import css from './Kandidatlistehandlinger.module.css';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     fnr: string;

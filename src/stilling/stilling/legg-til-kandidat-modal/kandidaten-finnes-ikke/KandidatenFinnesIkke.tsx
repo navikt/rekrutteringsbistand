@@ -1,13 +1,12 @@
 import { FunctionComponent, ReactNode } from 'react';
-import {
-    Synlighetsevaluering,
-    Synlighetskriterie,
-    kriterierPerAnsvarsområde,
+import { ErrorMessage } from '@navikt/ds-react';
+import Synlighetsevaluering, {
     KravTilKandidaten,
     KravTilVeileder,
     KriterieUtenforNoensKontroll,
-} from './Synlighetsevaluering';
-import { ErrorMessage } from '@navikt/ds-react';
+    Synlighetskriterie,
+    kriterierPerAnsvarsområde,
+} from 'felles/domene/synlighet/Synlighetsevaluering';
 
 type Props = {
     synlighetsevaluering: Synlighetsevaluering;

@@ -5,8 +5,6 @@ import { NewspaperIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
-import { Kandidatliste } from '../legg-til-kandidat-modal/kandidatlistetyper';
-import { Nettressurs } from '../../api/Nettressurs';
 import { RESET_VALIDATION_ERROR } from '../adValidationReducer';
 import { State } from '../../redux/store';
 import HvordanSendeSøknad from './hvordan-sende-søknad/HvordanSendeSøknad';
@@ -23,6 +21,8 @@ import Stillingsheader from '../header/Stillingsheader';
 import Seksjon from './seksjon/Seksjon';
 
 import css from './Edit.module.css';
+import { Nettressurs } from 'felles/nettressurs';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     onPreviewAdClick: () => void;

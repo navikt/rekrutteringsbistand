@@ -2,12 +2,12 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import { BodyShort, Detail, Label } from '@navikt/ds-react';
 
 import { fetchEmployerNameCompletionHits, fetchOrgnrSuggestions } from '../api/api';
-import { ikkeLastet, Nettressurs, Nettstatus } from '../api/Nettressurs';
 import capitalizeEmployerName from '../stilling/edit/endre-arbeidsgiver/capitalizeEmployerName';
 import capitalizeLocation from '../stilling/edit/arbeidssted/capitalizeLocation';
 import Typeahead, { Suggestion } from '../common/typeahead/Typeahead';
 import css from './OpprettNyStilling.module.css';
 import { Arbeidsgiver, Geografi } from '../domene/Stilling';
+import { Nettressurs, ikkeLastet, Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     arbeidsgiver: Arbeidsgiverforslag | null;

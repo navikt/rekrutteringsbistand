@@ -1,25 +1,13 @@
 import { useState, useEffect } from 'react';
 import { api } from 'felles/api';
+import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 
 export type EsRespons = {
     hits: {
         hits: Array<{
-            _source: Kandidatrespons;
+            _source: ForenkletKandidatISøk;
         }>;
     };
-};
-
-export type Kandidatrespons = {
-    fornavn: string;
-    etternavn: string;
-    arenaKandidatnr: string;
-    fodselsdato: string | null;
-    adresselinje1: string | null;
-    postnummer: string | null;
-    poststed: string | null;
-    epostadresse: string | null;
-    telefon: string | null;
-    veileder: string | null;
 };
 
 const byggQuery = (fodselsnummer: string) => ({
@@ -29,22 +17,29 @@ const byggQuery = (fodselsnummer: string) => ({
         },
     },
     size: 1,
+
+    // Feltene fra 'ForenkletKandidatISøk'-typen
     _source: [
-        'fornavn',
+        'adresselinje1',
+        'aktorId',
+        'arenaKandidatnr',
+        'epostadresse',
         'etternavn',
         'fodselsdato',
-        'adresselinje1',
+        'fodselsnummer',
+        'fornavn',
+        'kandidatnr',
+        'kommunenummer',
+        'kommunenummerstring',
         'postnummer',
         'poststed',
-        'epostadresse',
         'telefon',
         'veileder',
-        'arenaKandidatnr',
     ],
 });
 
 const useKandidat = (fnr: string) => {
-    const [kandidat, setKandidat] = useState<Kandidatrespons>();
+    const [kandidat, setKandidat] = useState<ForenkletKandidatISøk>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
     useEffect(() => {

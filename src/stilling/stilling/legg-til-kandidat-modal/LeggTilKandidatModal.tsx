@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
 import { Alert, ErrorMessage, Heading, Loader } from '@navikt/ds-react';
 
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
-import { Kandidatliste } from './kandidatlistetyper';
 import Modal from '../../common/modal/Modal';
 import LeggTilKandidat from './LeggTilKandidat';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './LeggTilKandidatModal.module.css';
 
 export type KandidatOutboundDto = {

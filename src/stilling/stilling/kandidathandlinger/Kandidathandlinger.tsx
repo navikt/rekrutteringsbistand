@@ -4,14 +4,14 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-import { Kandidatliste } from '../legg-til-kandidat-modal/kandidatlistetyper';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
 import { State } from '../../redux/store';
 import { stillingenHarKandidatliste } from '../adUtils';
 import { sendGenerellEvent } from 'felles/amplitude';
 import LeggTilKandidatModal from '../legg-til-kandidat-modal/LeggTilKandidatModal';
 import css from './Kandidathandlinger.module.css';
 import Stilling from '../../domene/Stilling';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     kandidatliste: Nettressurs<Kandidatliste>;

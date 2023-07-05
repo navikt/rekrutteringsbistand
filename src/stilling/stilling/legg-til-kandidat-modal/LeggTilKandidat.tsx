@@ -1,18 +1,20 @@
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Loader, TextField } from '@navikt/ds-react';
 import fnrValidator from '@navikt/fnrvalidator';
+import { useDispatch } from 'react-redux';
 
-import { ApiError } from '../../api/apiUtils';
 import { fetchKandidatMedFnr } from './kandidatApi';
 import { fetchSynlighetsevaluering } from './kandidatApi';
-import { Kandidat, Kandidatliste } from './kandidatlistetyper';
-import { Nettressurs, ikkeLastet, Nettstatus, lasterInn } from '../../api/Nettressurs';
-import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';
 import { sendEvent } from 'felles/amplitude';
-import BekreftMedNotat from './BekreftMedNotat';
+import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
+import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
 import KandidatenFinnesIkke from './kandidaten-finnes-ikke/KandidatenFinnesIkke';
 import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './LeggTilKandidatModal.module.css';
+import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
+import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
 type Props = {
     kandidatliste: Kandidatliste;
@@ -20,9 +22,11 @@ type Props = {
 };
 
 const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) => {
+    const dispatch = useDispatch();
+
     const [fnr, setFnr] = useState<string>('');
     const [feilmelding, setFeilmelding] = useState<string | null>(null);
-    const [fnrSøk, setFnrSøk] = useState<Nettressurs<Kandidat>>(ikkeLastet());
+    const [fnrSøk, setFnrSøk] = useState<Nettressurs<ForenkletKandidatISøk>>(ikkeLastet());
     const [synlighetsevaluering, setSynlighetsevaluering] = useState<
         Nettressurs<Synlighetsevaluering>
     >(ikkeLastet());
@@ -86,7 +90,20 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
         } catch (e) {
             setFnrSøk({
                 kind: Nettstatus.Feil,
-                error: new ApiError('Klarte ikke å hente kandidat med fødselsnummer', 0),
+                error: {
+                    message: 'Klarte ikke å hente kandidat med fødselsnummer',
+                },
+            });
+        }
+    };
+
+    const varsleKandidatlisteOmNyKandidat = () => {
+        onClose();
+
+        if (fnrSøk.kind === Nettstatus.Suksess) {
+            dispatch<VarslingAction>({
+                type: VarslingActionType.VisVarsling,
+                innhold: `Kandidat ${fnrSøk.data.fornavn} ${fnrSøk.data.etternavn} (${fnr}) er lagt til`,
             });
         }
     };
@@ -115,7 +132,8 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
                     fnr={fnr}
                     kandidat={fnrSøk.data}
                     kandidatliste={kandidatliste}
-                    onClose={onClose}
+                    onAvbryt={onClose}
+                    onBekreft={varsleKandidatlisteOmNyKandidat}
                 />
             )}
 

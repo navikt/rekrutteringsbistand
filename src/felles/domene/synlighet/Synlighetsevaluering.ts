@@ -1,18 +1,3 @@
-export type Kandidat = {
-    arenaKandidatnr: string;
-    fornavn: string;
-    etternavn: string;
-};
-
-export type Kandidatliste = {
-    stillingId: string;
-    kandidatlisteId: string;
-    kandidater: Array<{
-        fodselsnr: string;
-        kandidatnr: string;
-    }>;
-};
-
 export enum KriterieUtenforNoensKontroll {
     ErIkkeSperretAnsatt = 'erIkkeSperretAnsatt',
     ErIkkeDød = 'erIkkeDoed',
@@ -40,3 +25,5 @@ export const kriterierPerAnsvarsområde: Record<string, Synlighetskriterie[]> = 
     kandidat: Object.values(KravTilKandidaten),
     veileder: Object.values(KravTilVeileder),
 };
+
+export default Synlighetsevaluering;

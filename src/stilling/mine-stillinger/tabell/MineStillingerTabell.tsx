@@ -1,13 +1,14 @@
 import { FunctionComponent } from 'react';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import classNames from 'classnames';
 import { Ingress, SortState, Table } from '@navikt/ds-react';
+
 import { MineStillingerResultat } from '../mineStillingerReducer';
 import { nesteSorteringsretning, Retning } from './Retning';
 import { MineStillingerActionType } from '../MineStillingerAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../redux/store';
 import { MineStillingerSorteringsfelt } from '../MineStillingerSortering';
-import classNames from 'classnames';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import TabellHeader from './TabellHeader';
 import TabellBody from './TabellBody';
 import css from './MineStillingerTabell.module.css';
