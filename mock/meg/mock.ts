@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { api } from '../src/felles/api';
+import { api } from '../../src/felles/api';
 
 export const innloggetBrukerMock = [
     rest.get(api.innloggetBruker, (_, res, ctx) =>

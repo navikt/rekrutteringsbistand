@@ -1,12 +1,12 @@
 import { setupWorker } from 'msw';
-import { modiaContextHolderMock } from './modiaContextHolderMock';
-import { innloggetBrukerMock } from './innloggetBrukerMock';
-import { kandidatApiMock } from './kandidat-api/kandidatApiMock';
-import { kandidatsøkMock } from './kandidatsok-proxy/kandidatsøkMock';
-import { forespørselOmDelingAvCvMock } from './forespørsel-om-deling-av-cv-api/forespørselOmDelingAvCvMock';
-import { statistikkApiMock } from './statistikk-api/statistikkApiMock';
-import { stillingApiMock } from './stilling-api/stillingApiMock';
-import { stillingssøkMock } from './stillingssok-proxy/stillingssøkMock';
+import { modiaContextHolderMock } from './modiacontextholder/mock';
+import { innloggetBrukerMock } from './meg/mock';
+import { kandidatApiMock } from './kandidat-api/mock';
+import { kandidatsøkMock } from './kandidatsok-proxy/mock';
+import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
+import { statistikkApiMock } from './statistikk-api/mock';
+import { stillingApiMock } from './stilling-api/mock';
+import { stillingssøkMock } from './stillingssok-proxy/mock';
 
 const handlers = [
     ...innloggetBrukerMock,
