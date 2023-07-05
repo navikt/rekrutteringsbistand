@@ -1,7 +1,7 @@
-import { Respons } from '../../domene/elasticSearchTyper';
-import { Ansettelsesform, Omfang, Søknadsfrist } from '../../domene/Stilling';
+import { Ansettelsesform, Søknadsfrist, Omfang } from '../../src/stillingssok/domene/Stilling';
+import { Respons } from '../../src/stillingssok/domene/elasticSearchTyper';
 
-export const resultat: Respons = {
+export const mockStillingssøk: Respons = {
     took: 5,
     timed_out: false,
     _shards: { total: 3, successful: 3, skipped: 0, failed: 0 },

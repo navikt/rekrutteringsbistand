@@ -17,10 +17,8 @@ import municipals from './data/municipals.json';
 import categoriesWithAltnames from './data/categories-with-altnames.json';
 import postdata from './data/postdata.json';
 import search from './data/search.json';
-import mineStillingerFraOpenSearch from './data/mineStillingerOpenSearch';
 
 const reporteeUrl = `${api.stilling}/rekrutteringsbistand/api/v1/reportee`;
-const mineStillingerOpenSearchUrl = `express:${api.stillingssøk}/stilling/_search`;
 const opprettStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling`;
 const kopierStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling/kopier/:stillingsId`;
 const slettStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling/:stillingsId`;
@@ -87,7 +85,6 @@ const putStilling = (_: string, options: MockRequest): Rekrutteringsbistandstill
 };
 
 fetchMock
-    .post(mineStillingerOpenSearchUrl, log(mineStillingerFraOpenSearch))
     .post(opprettStillingUrl, log(rekrutteringsbistandStilling))
     .post(kopierStillingUrl, log(rekrutteringsbistandStilling))
     .get(reporteeUrl, log(reportee))
