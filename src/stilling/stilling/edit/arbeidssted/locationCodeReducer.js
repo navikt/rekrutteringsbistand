@@ -8,7 +8,7 @@ import {
     SAVE_AD_SUCCESS,
     FETCH_AD_SUCCESS,
 } from '../../adReducer';
-import { api } from '../../../../felles/api';
+import { api } from 'felles/api';
 
 export const FETCH_LOCATIONS = 'FETCH_LOCATIONS';
 export const FETCH_LOCATIONS_BEGIN = 'FETCH_LOCATIONS_BEGIN';

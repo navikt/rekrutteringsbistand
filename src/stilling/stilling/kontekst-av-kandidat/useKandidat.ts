@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { api } from '../../../felles/api';
+import { api } from 'felles/api';
 
 export type EsRespons = {
     hits: {

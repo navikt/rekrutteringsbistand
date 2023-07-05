@@ -10,7 +10,7 @@ import { postKandidaterTilKandidatliste } from './kandidatApi';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 import LeggTilEllerAvbryt from './LeggTilEllerAvbryt';
 import css from './LeggTilKandidatModal.module.css';
-import { sendEvent } from '../../../felles/amplitude';
+import { sendEvent } from 'felles/amplitude';
 
 const MAKS_NOTATLENGDE = 2000;
 

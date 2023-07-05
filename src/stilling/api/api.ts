@@ -10,8 +10,8 @@ import Stilling, {
     Rekrutteringsbistandstilling,
     Stillingsinfo,
 } from '../domene/Stilling';
-import { Miljø, getMiljø } from '../../felles/miljø';
-import { api } from '../../felles/api';
+import { Miljø, getMiljø } from 'felles/miljø';
+import { api } from 'felles/api';
 
 export type Side<T> = {
     content: T[];

@@ -4,7 +4,7 @@ import useKontekstAvKandidatlisteEllerStilling from './hooks/useKontekstAvKandid
 import useNavigeringsstate from './hooks/useNavigeringsstate';
 import { ØktContext, ØktContextProvider } from './Økt';
 import Kandidatsøk from './Kandidatsøk';
-import useNavKontor from '../felles/store/navKontor';
+import useNavKontor from 'felles/store/navKontor';
 import '@reach/combobox/styles.css';
 
 const App = () => {

@@ -1,7 +1,7 @@
 import fetchMock, { MockRequest, MockResponse, MockResponseFunction } from 'fetch-mock';
 
 import { Rekrutteringsbistandstilling } from '../domene/Stilling';
-import { api } from '../../felles/api';
+import { api } from 'felles/api';
 import fnrsok from './data/fnrsok';
 import kandidatliste from './data/kandidatliste';
 

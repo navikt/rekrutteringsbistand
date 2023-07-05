@@ -5,7 +5,7 @@ import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from './utils/url
 import { Respons } from './domene/elasticSearchTyper';
 import useNavigering from './useNavigering';
 import useStandardsøk from './standardsøk/StandardsøkContext';
-import { sendEvent } from '../felles/amplitude';
+import { sendEvent } from 'felles/amplitude';
 
 export const DEFAULT_VALGTE_KRITERIER = '?publisert=intern&statuser=publisert';
 

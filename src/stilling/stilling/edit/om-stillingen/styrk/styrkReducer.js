@@ -1,7 +1,7 @@
 import { put, takeLatest, throttle } from 'redux-saga/effects';
 import { ApiError, fetchGet } from '../../../../api/apiUtils';
 import { SET_STYRK } from '../../../adDataReducer';
-import { api } from '../../../../../felles/api';
+import { api } from 'felles/api';
 
 export const SET_STYRK_TYPEAHEAD_VALUE = 'SET_STYRK_TYPEAHEAD_VALUE';
 export const FETCH_STYRK = 'FETCH_STYRK';

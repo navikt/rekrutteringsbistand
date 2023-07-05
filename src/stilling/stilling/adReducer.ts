@@ -33,7 +33,7 @@ import { MineStillingerActionType } from '../mine-stillinger/MineStillingerActio
 import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
 import { formatISOString } from '../utils/datoUtils';
-import { sendEvent } from '../../felles/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import Stilling, {
     AdminStatus,
     Kilde,
@@ -42,7 +42,7 @@ import Stilling, {
     Status,
     System,
 } from '../domene/Stilling';
-import { api } from '../../felles/api';
+import { api } from 'felles/api';
 
 export const FETCH_AD = 'FETCH_AD';
 export const FETCH_AD_BEGIN = 'FETCH_AD_BEGIN';

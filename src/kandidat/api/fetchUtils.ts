@@ -1,9 +1,9 @@
-import { videresendTilInnlogging } from '../../felles/api';
+import { videresendTilInnlogging } from 'felles/api';
 import { lenkeTilTilgangsside } from '../app/paths';
 import { feil, Nettressurs, suksess } from './Nettressurs';
 
 export const createCallIdHeader = () => ({
-    'Nav-CallId': Math.random().toString(16).substr(2),
+    'Nav-CallId': Math.random().toString(16).substring(2),
 });
 
 export class SearchApiError {

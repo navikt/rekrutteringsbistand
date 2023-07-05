@@ -5,7 +5,7 @@ import { Kandidatutfall } from '../kandidatliste/domene/Kandidat';
 
 import { mock } from './mock-data';
 import { meg } from './data/kandidat/veileder.mock';
-import { api } from '../../felles/api';
+import { api } from 'felles/api';
 import { ENHETSREGISTER_API } from '../api/api';
 
 fetchMock.config.fallbackToNetwork = true;

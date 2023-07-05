@@ -1,7 +1,7 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { fetchGet } from '../../../api/apiUtils';
 import { ADD_LOCATION_AREA } from '../../adDataReducer';
-import { api } from '../../../../felles/api';
+import { api } from 'felles/api';
 
 /** *********************************************************
  * ACTIONS

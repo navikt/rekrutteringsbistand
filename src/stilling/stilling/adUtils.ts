@@ -1,4 +1,4 @@
-import { Miljø, getMiljø } from '../../felles/miljø';
+import { Miljø, getMiljø } from 'felles/miljø';
 
 const visStillingUrl =
     getMiljø() === Miljø.DevGcp

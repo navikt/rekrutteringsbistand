@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { api, videresendTilInnlogging } from 'felles/api';
 import { formaterDatoTilApi } from './datoUtils';
-import { Nettressurs } from '../../felles/nettressurs';
-import { api, videresendTilInnlogging } from '../../felles/api';
+import { Nettressurs } from 'felles/nettressurs';
 
 export type Svarstatistikk = {
     antallSvartJa: number;

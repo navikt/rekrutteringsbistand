@@ -1,7 +1,7 @@
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { fetchGet, ApiError } from '../api/apiUtils';
 import { ReporteeAction, ReporteeActionType } from './ReporteeAction';
-import { api } from '../../felles/api';
+import { api } from 'felles/api';
 
 export type Reportee = {
     displayName: string;

@@ -2,6 +2,7 @@ import { defineConfig, splitVendorChunkPlugin, loadEnv } from 'vite';
 import reactPlugin from '@vitejs/plugin-react';
 import svgrPlugin from 'vite-plugin-svgr';
 import checkerPlugin from 'vite-plugin-checker';
+import path from 'path';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
@@ -41,6 +42,11 @@ export default defineConfig(({ mode }) => {
                     rewrite: (path) => path.replace('/stillingssok-proxy', ''),
                     auth: `${env.STILLING_ES_USERNAME}:${env.STILLING_ES_PASSWORD}`,
                 },
+            },
+        },
+        resolve: {
+            alias: {
+                felles: path.resolve(__dirname, './src/felles'),
             },
         },
     };

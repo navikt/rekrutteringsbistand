@@ -12,9 +12,9 @@ import {
     Yrkejobbønske,
     byggKandidatQuery,
 } from './kandidatQuery';
-import { sendEvent } from '../../felles/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
-import { api } from '../../felles/api';
+import { api } from 'felles/api';
 
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();

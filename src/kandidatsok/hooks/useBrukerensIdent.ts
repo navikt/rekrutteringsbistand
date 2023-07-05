@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { get } from '../api/api';
-import { api } from '../../felles/api';
+import { api } from 'felles/api';
 
 export type InnloggetBruker = {
     navIdent: string | null;

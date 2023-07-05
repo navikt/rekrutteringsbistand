@@ -1,4 +1,4 @@
-import { api } from '../../../felles/api';
+import { api } from 'felles/api';
 import { ApiError } from '../../api/apiUtils';
 import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
 import { Kandidat, Kandidatliste, Synlighetsevaluering } from './kandidatlistetyper';

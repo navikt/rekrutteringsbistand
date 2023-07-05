@@ -13,7 +13,7 @@ import Kandidatside from '../kandidatside/Kandidatside';
 import ManglerTilgang from './ManglerTilgang';
 import NotFound from '../komponenter/errorside/NotFound';
 import store from '../state/reduxStore';
-import useNavKontor from '../../felles/store/navKontor';
+import useNavKontor from 'felles/store/navKontor';
 import Varsling from '../varsling/Varsling';
 import css from './KandidatApp.module.css';
 

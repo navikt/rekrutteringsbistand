@@ -1,4 +1,4 @@
-import { sendEvent } from '../../../felles/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import { Portefølje } from '../../filter/porteføljetabs/PorteføljeTabs';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 

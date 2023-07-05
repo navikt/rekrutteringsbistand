@@ -8,7 +8,7 @@ import { Kandidatliste } from '../legg-til-kandidat-modal/kandidatlistetyper';
 import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
 import { State } from '../../redux/store';
 import { stillingenHarKandidatliste } from '../adUtils';
-import { sendGenerellEvent } from '../../../felles/amplitude';
+import { sendGenerellEvent } from 'felles/amplitude';
 import LeggTilKandidatModal from '../legg-til-kandidat-modal/LeggTilKandidatModal';
 import css from './Kandidathandlinger.module.css';
 import Stilling from '../../domene/Stilling';

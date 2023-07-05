@@ -1,4 +1,4 @@
-import { api } from '../../../felles/api';
+import { api } from 'felles/api';
 import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
 import { SearchApiError, postHeaders } from '../../api/fetchUtils';
 import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';

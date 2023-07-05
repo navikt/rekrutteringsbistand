@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Modiadekoratør from './modiadekoratør/Modiadekoratør';
 import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
-import useNavKontor from '../felles/store/navKontor';
+import useNavKontor from 'felles/store/navKontor';
 import useAmplitude from './useAmplitude';
 import Placeholder from './modiadekoratør/Placeholder';
 

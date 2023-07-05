@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { formaterDatoTilApi } from './datoUtils';
-import { api } from '../../felles/api';
+import { api } from 'felles/api';
 
 type AntallFormidlingerInboundDto = {
     antallPresentert: number;

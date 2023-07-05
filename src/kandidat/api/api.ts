@@ -6,7 +6,7 @@ import { FormidlingAvUsynligKandidatOutboundDto } from '../felles/legg-til-kandi
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
 import Cv from '../cv/reducer/cv-typer';
-import { api } from '../../felles/api';
+import { api } from 'felles/api';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 

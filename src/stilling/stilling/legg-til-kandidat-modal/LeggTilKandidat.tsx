@@ -12,7 +12,7 @@ import BekreftMedNotat from './BekreftMedNotat';
 import KandidatenFinnesIkke from './kandidaten-finnes-ikke/KandidatenFinnesIkke';
 import LeggTilEllerAvbryt from './LeggTilEllerAvbryt';
 import css from './LeggTilKandidatModal.module.css';
-import { sendEvent } from '../../../felles/amplitude';
+import { sendEvent } from 'felles/amplitude';
 
 type Props = {
     kandidatliste: Kandidatliste;

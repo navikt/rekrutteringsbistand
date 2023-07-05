@@ -9,7 +9,7 @@ import {
 import { Kandidatliste, Stilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { MineKandidatlister } from '../kandidatliste/useMineKandidatlister';
-import { api, videresendTilInnlogging } from '../../felles/api';
+import { api, videresendTilInnlogging } from 'felles/api';
 
 export const søk = async (query: SearchQuery): Promise<Respons> => {
     const respons = await post(api.kandidatsøk, query);

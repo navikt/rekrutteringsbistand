@@ -1,8 +1,6 @@
 import amplitudeJs, { AmplitudeClient } from 'amplitude-js';
 import { Miljø, getMiljø } from './miljø';
 
-const SEND_EVENTS = true;
-
 export enum AmplitudeEvent {
     Sidevisning = 'sidevisning',
     Navigere = 'navigere',
@@ -23,7 +21,7 @@ export const setNavKontorForAmplitude = (navKontor: string) => {
 };
 
 export const sendEvent = (område: string, hendelse: string, data?: Object) => {
-    if (import.meta.env.PROD && SEND_EVENTS) {
+    if (import.meta.env.PROD) {
         client.logEvent(['#rekrutteringsbistand', område, hendelse].join('-'), data);
     }
 };
@@ -32,7 +30,7 @@ export const sendGenerellEvent = (
     event: AmplitudeEvent | string,
     properties: Record<string, any>
 ): Promise<void> => {
-    if (import.meta.env.PROD && SEND_EVENTS) {
+    if (import.meta.env.PROD) {
         const eventProperties = {
             app: 'rekrutteringsbistand',
             ...properties,

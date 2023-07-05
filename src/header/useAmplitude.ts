@@ -4,7 +4,7 @@ import {
     sendGenerellEvent,
     AmplitudeEvent,
     sendEvent,
-} from '../felles/amplitude';
+} from 'felles/amplitude';
 import { generaliserPath } from './utils/path';
 import { useLocation } from 'react-router-dom';
 

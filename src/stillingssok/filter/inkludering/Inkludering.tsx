@@ -3,10 +3,10 @@ import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
+import { sendEvent } from 'felles/amplitude';
 import Filtergruppe from '../Filtergruppe';
 import useNavigering from '../../useNavigering';
 import css from '../Filter.module.css';
-import { sendEvent } from '../../../felles/amplitude';
 
 const Inkludering: FunctionComponent = () => {
     const { searchParams, navigate } = useNavigering();

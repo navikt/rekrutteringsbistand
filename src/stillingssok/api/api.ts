@@ -1,4 +1,4 @@
-import { api, videresendTilInnlogging } from '../../felles/api';
+import { api, videresendTilInnlogging } from 'felles/api';
 import { Query, Respons } from '../domene/elasticSearchTyper';
 import StandardsøkDto from '../filter/standardsøk/Standardsøk';
 
