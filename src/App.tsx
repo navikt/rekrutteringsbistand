@@ -5,7 +5,7 @@ import {
     createRoutesFromElements,
 } from 'react-router-dom';
 import Header from './header/Header';
-import Appfeil from './felles/feilmelding/Appfeil';
+import Appfeil from './felles/komponenter/feilmelding/Appfeil';
 
 import { Component as Forside } from './forside/index';
 import { Component as Stillingssøk } from './stillingssok/index';

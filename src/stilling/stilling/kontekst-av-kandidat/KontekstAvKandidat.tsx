@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { Kandidatliste } from '../legg-til-kandidat-modal/kandidatlistetyper';
 import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
-import Kandidatbanner from '../kandidatbanner/Kandidatbanner';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
+import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidat, { Kandidatrespons } from './useKandidat';
 import Stilling from '../../domene/Stilling';
 

@@ -1,5 +1,5 @@
 import useKandidat from './useKandidat';
-import Kandidatbanner from 'felles/banner/kandidatbanner/Kandidatbanner';
+import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 
 type Props = {
     fnr: string;
