@@ -6,7 +6,7 @@ import { getMiljø, Miljø } from '../../utils/miljøUtils';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from '../../api/Nettressurs';
 import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
 import { SearchApiError } from '../../api/fetchUtils';
-import { sendEvent } from '../../amplitude/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';
 import { fetchKandidatMedFnr, fetchSynlighetsevaluering, Fødselsnummersøk } from './api';
 import BekreftMedNotat from './BekreftMedNotat';

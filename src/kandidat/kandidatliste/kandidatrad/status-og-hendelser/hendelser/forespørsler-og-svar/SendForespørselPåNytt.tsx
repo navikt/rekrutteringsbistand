@@ -14,7 +14,7 @@ import VelgSvarfrist, {
 import Hendelse, { Hendelsesstatus } from '../Hendelse';
 import KandidatlisteActionType from '../../../../reducer/KandidatlisteActionType';
 import { SearchApiError } from '../../../../../api/fetchUtils';
-import { sendEvent } from '../../../../../amplitude/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import AppState from '../../../../../state/AppState';
 import css from './SendForespørselPåNytt.module.css';
 

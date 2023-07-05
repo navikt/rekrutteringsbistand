@@ -1,4 +1,4 @@
-import { sendEvent } from '../../amplitude/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import {
     postSmsTilKandidater,
     fetchSendteMeldinger,

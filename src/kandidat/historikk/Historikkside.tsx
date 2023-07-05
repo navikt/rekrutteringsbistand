@@ -11,7 +11,7 @@ import { Historikktabell } from './historikktabell/Historikktabell';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from '../api/Nettressurs';
 import { KandidatlisteForKandidat, KandidatlisterForKandidatActionType } from './historikkReducer';
 import { KandidatQueryParam } from '../kandidatside/Kandidatside';
-import { sendEvent } from '../amplitude/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import { Sms } from '../kandidatliste/domene/Kandidatressurser';
 import AppState from '../state/AppState';
 import Cv from '../cv/reducer/cv-typer';

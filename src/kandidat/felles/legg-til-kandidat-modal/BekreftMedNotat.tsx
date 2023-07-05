@@ -2,7 +2,7 @@ import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { BodyShort, ErrorMessage, Textarea } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
-import { sendEvent } from '../../amplitude/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import { postKandidatTilKandidatliste } from '../../api/api';
 import { Nettressurs, ikkeLastet, senderInn, Nettstatus } from '../../api/Nettressurs';
 import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';

@@ -1,7 +1,7 @@
 import { ExternalLinkIcon, DownloadIcon } from '@navikt/aksel-icons';
 import { Link as NavLink } from '@navikt/ds-react';
 
-import { sendEvent } from '../../../amplitude/amplitude';
+import { sendEvent } from 'felles/amplitude';
 import { arbeidsrettetOppfølgingUrl, lastNedCvUrl } from '../../../utils/eksterneUrler';
 import css from './Lenker.module.css';
 
