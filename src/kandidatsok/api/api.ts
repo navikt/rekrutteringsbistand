@@ -9,7 +9,7 @@ import {
 import { Kandidatliste, Stilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { MineKandidatlister } from '../kandidatliste/useMineKandidatlister';
-import { api } from '../../felles/api';
+import { api, videresendTilInnlogging } from '../../felles/api';
 
 export const søk = async (query: SearchQuery): Promise<Respons> => {
     const respons = await post(api.kandidatsøk, query);
@@ -117,7 +117,3 @@ export const get = (url: string) =>
         method: 'GET',
         credentials: 'include',
     });
-
-const videresendTilInnlogging = () => {
-    window.location.href = `/oauth2/login?redirect=${window.location.pathname}`;
-};

@@ -1,3 +1,4 @@
+import { videresendTilInnlogging } from '../../felles/api';
 import { lenkeTilTilgangsside } from '../app/paths';
 import { feil, Nettressurs, suksess } from './Nettressurs';
 
@@ -53,10 +54,6 @@ export async function fetchJson(url: string, includeCredentials: boolean = false
         });
     }
 }
-
-const videresendTilInnlogging = () => {
-    window.location.href = `/oauth2/login?redirect=${window.location.pathname}`;
-};
 
 const videresendTilTilgangsside = () => {
     window.location.href = lenkeTilTilgangsside;

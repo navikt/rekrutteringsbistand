@@ -9,3 +9,7 @@ export const api = {
     kandidatsøk: '/kandidatsok-proxy',
     forespørselOmDelingAvCv: '/foresporsel-om-deling-av-cv-api',
 };
+
+export const videresendTilInnlogging = () => {
+    window.location.href = `/oauth2/login?redirect=${window.location.pathname}`;
+};

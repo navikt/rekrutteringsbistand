@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { formaterDatoTilApi } from './datoUtils';
 import { Nettressurs } from '../../felles/nettressurs';
-import { api } from '../../felles/api';
+import { api, videresendTilInnlogging } from '../../felles/api';
 
 export type Svarstatistikk = {
     antallSvartJa: number;
@@ -57,10 +57,6 @@ const useSvarstatistikk = (navKontor: string, fraOgMed: Date, tilOgMed: Date) =>
     }, [navKontor, fraOgMed, tilOgMed]);
 
     return svarstatistikk;
-};
-
-const videresendTilInnlogging = () => {
-    window.location.href = `/oauth2/login?redirect=${window.location.pathname}`;
 };
 
 export default useSvarstatistikk;
