@@ -1,21 +1,39 @@
-export type Nettstatus = 'ikke-lastet' | 'laster-inn' | 'suksess' | 'feil';
+export enum Nettstatus {
+    IkkeLastet = 'IkkeLastet',
+    LasterInn = 'LasterInn',
+    SenderInn = 'SenderInn',
+    Suksess = 'Suksess',
+    FinnesIkke = 'FinnesIkke',
+    Feil = 'Feil',
+}
 
 type IkkeLastet = {
-    kind: 'ikke-lastet';
+    kind: Nettstatus.IkkeLastet;
 };
 
 type LasterInn = {
-    kind: 'laster-inn';
+    kind: Nettstatus.LasterInn;
+};
+
+type SenderInn = {
+    kind: Nettstatus.SenderInn;
 };
 
 type Suksess<T> = {
-    kind: 'suksess';
+    kind: Nettstatus.Suksess;
     data: T;
 };
 
-type Feil = {
-    kind: 'feil';
-    error: string;
+type FinnesIkke = {
+    kind: Nettstatus.FinnesIkke;
 };
 
-export type Nettressurs<T> = IkkeLastet | LasterInn | Suksess<T> | Feil;
+type Feil = {
+    kind: Nettstatus.Feil;
+    error: {
+        message: string;
+        status: number;
+    };
+};
+
+export type Nettressurs<T> = IkkeLastet | LasterInn | SenderInn | Feil | Suksess<T> | FinnesIkke;
