@@ -1,12 +1,12 @@
 import { FunctionComponent, ReactNode } from 'react';
-import { ErrorMessage } from '@navikt/ds-react';
+import { Alert } from '@navikt/ds-react';
 import Synlighetsevaluering, {
+    Synlighetskriterie,
+    KriterieUtenforNoensKontroll,
     KravTilKandidaten,
     KravTilVeileder,
-    KriterieUtenforNoensKontroll,
-    Synlighetskriterie,
-    kriterierPerAnsvarsområde,
 } from 'felles/domene/synlighet/Synlighetsevaluering';
+import css from './LeggTilKandidat.module.css';
 
 type Props = {
     synlighetsevaluering: Synlighetsevaluering;
@@ -22,56 +22,60 @@ const KandidatenFinnesIkke: FunctionComponent<Props> = ({ synlighetsevaluering }
 
     let forklaring: ReactNode = null;
 
-    if (ingenKriterierStemmer) {
-        forklaring = <p>Kandidaten finnes ikke.</p>;
-    } else if (alleKriterierStemmer) {
-        forklaring = null;
-    } else {
-        const kandidatensKriterierPerAnsvarsområde =
-            hentKandidatensKriterierPerAnsvarsområde(synlighetsevaluering);
+    if (ingenKriterierStemmer || alleKriterierStemmer) {
+        return null;
+    }
 
-        if (kandidatensKriterierPerAnsvarsområde.utenforNoensKontroll.length) {
-            forklaring = (
-                <>
-                    <span>Mulige årsaker er:</span>
-                    {kandidatensKriterierPerAnsvarsområde.utenforNoensKontroll.map((kriterie) => (
-                        <li>{kriterieTilForklaring(kriterie)}</li>
-                    ))}
-                </>
-            );
-        } else {
-            forklaring = (
-                <>
-                    {kandidatensKriterierPerAnsvarsområde.kandidat.length > 0 && (
-                        <>
-                            <span>For å bli synlig må kandidaten</span>
-                            <ul>
-                                {kandidatensKriterierPerAnsvarsområde.kandidat.map((kriterie) => (
-                                    <li>{kriterieTilForklaring(kriterie)}</li>
-                                ))}
-                            </ul>
-                        </>
-                    )}
-                    {kandidatensKriterierPerAnsvarsområde.veileder.length > 0 && (
-                        <>
-                            <span>For å bli synlig må du</span>
-                            <ul>
-                                {kandidatensKriterierPerAnsvarsområde.veileder.map((kriterie) => (
-                                    <li>{kriterieTilForklaring(kriterie)}</li>
-                                ))}
-                            </ul>
-                        </>
-                    )}
-                </>
-            );
-        }
+    const kandidatensKriterierPerAnsvarsområde =
+        hentKandidatensKriterierPerAnsvarsområde(synlighetsevaluering);
+
+    if (kandidatensKriterierPerAnsvarsområde.utenforNoensKontroll.length) {
+        forklaring = (
+            <>
+                <span>Mulige årsaker er:</span>
+                {kandidatensKriterierPerAnsvarsområde.utenforNoensKontroll.map((kriterie) => (
+                    <li>{kriterieTilForklaring(kriterie)}</li>
+                ))}
+            </>
+        );
+    } else {
+        forklaring = (
+            <>
+                {kandidatensKriterierPerAnsvarsområde.kandidat.length > 0 && (
+                    <>
+                        <span>For å bli synlig må kandidaten</span>
+                        <ul>
+                            {kandidatensKriterierPerAnsvarsområde.kandidat.map((kriterie) => (
+                                <li key={kriterie}>{kriterieTilForklaring(kriterie)}</li>
+                            ))}
+                        </ul>
+                    </>
+                )}
+                {kandidatensKriterierPerAnsvarsområde.veileder.length > 0 && (
+                    <>
+                        <span>For å bli synlig må du</span>
+                        <ul>
+                            {kandidatensKriterierPerAnsvarsområde.veileder.map((kriterie) => (
+                                <li key={kriterie}>{kriterieTilForklaring(kriterie)}</li>
+                            ))}
+                        </ul>
+                    </>
+                )}
+            </>
+        );
     }
 
     return (
-        <ErrorMessage as="div" aria-live="polite" spacing>
+        <Alert variant="info" aria-live="polite" className={css.forklaring}>
             {forklaring}
-        </ErrorMessage>
+        </Alert>
     );
+};
+
+export const kriterierPerAnsvarsområde: Record<string, Synlighetskriterie[]> = {
+    utenforNoensKontroll: Object.values(KriterieUtenforNoensKontroll),
+    kandidat: Object.values(KravTilKandidaten),
+    veileder: Object.values(KravTilVeileder),
 };
 
 const hentKandidatensKriterierPerAnsvarsområde = (synlighetsevaluering: Synlighetsevaluering) => {

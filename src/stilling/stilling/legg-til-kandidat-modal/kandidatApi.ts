@@ -26,22 +26,12 @@ export const fetchSynlighetsevaluering = async (
             throw new ApiError(await response.text(), response.status);
         }
     } catch (e) {
-        /* TODO
-        if (e instanceof ApiError) {
-            return {
-                kind: Nettstatus.Feil,
-                error: {
-                    message: e.message,
-                    
-                },
-            };
-        }
-
         return {
             kind: Nettstatus.Feil,
-            error: new ApiError('Ukjent feil', 0),
+            error: {
+                message: 'Nettverksfeil',
+            },
         };
-        */
     }
 };
 
@@ -90,9 +80,6 @@ export const fetchKandidatMedFnr = async (
     }
 };
 
-export const putKandidatliste = (stillingsId: string): Promise<Kandidatliste> =>
-    putRequest(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`);
-
 export const fetchKandidatliste = (stillingsId: string): Promise<Kandidatliste> =>
     fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`);
 
@@ -117,27 +104,6 @@ async function fetchJson(url) {
             throwError(response.statusText, response.status);
         }
         throwError(error.message, error.status);
-    } catch (e) {
-        throwError(e.message, e.status);
-    }
-}
-
-async function putRequest(url: string) {
-    try {
-        const response = await fetch(url, {
-            credentials: 'include',
-            method: 'PUT',
-            headers: {
-                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN'),
-            },
-            mode: 'cors',
-        });
-
-        if (response.ok) {
-            return await response.json();
-        }
-
-        throwError(undefined, response.status);
     } catch (e) {
         throwError(e.message, e.status);
     }

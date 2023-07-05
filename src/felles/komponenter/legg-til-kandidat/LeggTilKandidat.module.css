@@ -1,19 +1,9 @@
-.innhold {
-    display: flex;
-    flex-direction: column;
+.forklaring {
+    margin: 1.5rem 0;
 }
 
-.input input {
-    max-width: 10rem;
-    margin-bottom: 0.5rem;
-}
-
-.advarsel {
-    margin-bottom: 1.5rem;
-}
-
-.folkeregisterInfo {
-    margin-bottom: 1.5rem;
+.forklaring ul {
+    margin-bottom: 0;
 }
 
 .notat {
@@ -28,7 +18,6 @@
     gap: 1rem;
 }
 
-.spinner {
-    align-self: center;
-    margin-bottom: 2.5rem;
+.feilmelding {
+    margin-top: 1rem;
 }

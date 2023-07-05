@@ -111,7 +111,9 @@ const BekreftMedNotat = ({
                 avbrytDisabled={leggTilKandidat.kind === Nettstatus.SenderInn}
             />
             {leggTilKandidat.kind === Nettstatus.Feil && (
-                <ErrorMessage>Klarte ikke å legge til kandidat</ErrorMessage>
+                <ErrorMessage className={css.feilmelding}>
+                    Klarte ikke å legge til kandidat
+                </ErrorMessage>
             )}
         </>
     );

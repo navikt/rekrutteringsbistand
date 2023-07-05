@@ -20,10 +20,4 @@ export type Synlighetskriterie = KriterieUtenforNoensKontroll | KravTilKandidate
 
 export type Synlighetsevaluering = Record<Synlighetskriterie, boolean>;
 
-export const kriterierPerAnsvarsområde: Record<string, Synlighetskriterie[]> = {
-    utenforNoensKontroll: Object.values(KriterieUtenforNoensKontroll),
-    kandidat: Object.values(KravTilKandidaten),
-    veileder: Object.values(KravTilVeileder),
-};
-
 export default Synlighetsevaluering;
