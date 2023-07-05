@@ -12,9 +12,9 @@ import { fetchKandidatMedFnr, fetchSynlighetsevaluering, Fødselsnummersøk } fr
 import BekreftMedNotat from './BekreftMedNotat';
 import InformasjonOmUsynligKandidat from './InformasjonOmUsynligKandidat';
 import KandidatenFinnesIkke from './kandidaten-finnes-ikke/KandidatenFinnesIkke';
-import LeggTilEllerAvbryt from './LeggTilEllerAvbryt';
 import Modal from '../../komponenter/modal/Modal';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import css from './LeggTilKandidatModal.module.css';
 
 export type FormidlingAvUsynligKandidatOutboundDto = {
@@ -176,7 +176,7 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
             )}
 
             {fnrSøk.kind !== Nettstatus.Suksess && fnrSøk.kind !== Nettstatus.FinnesIkke && (
-                <LeggTilEllerAvbryt leggTilDisabled onAvbrytClick={onClose} />
+                <Knapper leggTilDisabled onAvbrytClick={onClose} />
             )}
         </Modal>
     );

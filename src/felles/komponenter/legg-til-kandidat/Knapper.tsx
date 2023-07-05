@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Button } from '@navikt/ds-react';
-import css from './LeggTilKandidatModal.module.css';
+import css from './LeggTilKandidat.module.css';
 
 type Props = {
     onLeggTilClick?: () => void;
@@ -11,7 +11,7 @@ type Props = {
     avbrytDisabled?: boolean;
 };
 
-const LeggTilEllerAvbryt: FunctionComponent<Props> = ({
+const Knapper: FunctionComponent<Props> = ({
     onLeggTilClick,
     onAvbrytClick,
     leggTilSpinner,
@@ -29,4 +29,4 @@ const LeggTilEllerAvbryt: FunctionComponent<Props> = ({
     </div>
 );
 
-export default LeggTilEllerAvbryt;
+export default Knapper;

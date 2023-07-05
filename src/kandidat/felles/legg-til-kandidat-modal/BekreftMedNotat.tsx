@@ -9,7 +9,7 @@ import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import LeggTilEllerAvbryt from './LeggTilEllerAvbryt';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import { Fødselsnummersøk } from './api';
 import css from './BekreftMedNotat.module.css';
 
@@ -83,7 +83,7 @@ const BekreftMedNotat: FunctionComponent<{
                 onChange={onNotatChange}
             />
 
-            <LeggTilEllerAvbryt
+            <Knapper
                 onLeggTilClick={onLeggTilKandidat}
                 onAvbrytClick={onClose}
                 leggTilSpinner={leggTilKandidat.kind === Nettstatus.SenderInn}

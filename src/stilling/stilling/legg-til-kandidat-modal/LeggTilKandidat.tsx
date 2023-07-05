@@ -8,11 +8,11 @@ import { fetchSynlighetsevaluering } from './kandidatApi';
 import { Kandidat, Kandidatliste } from './kandidatlistetyper';
 import { Nettressurs, ikkeLastet, Nettstatus, lasterInn } from '../../api/Nettressurs';
 import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';
+import { sendEvent } from 'felles/amplitude';
 import BekreftMedNotat from './BekreftMedNotat';
 import KandidatenFinnesIkke from './kandidaten-finnes-ikke/KandidatenFinnesIkke';
-import LeggTilEllerAvbryt from './LeggTilEllerAvbryt';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import css from './LeggTilKandidatModal.module.css';
-import { sendEvent } from 'felles/amplitude';
 
 type Props = {
     kandidatliste: Kandidatliste;
@@ -125,7 +125,7 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
                 )}
 
             {fnrSøk.kind !== Nettstatus.Suksess && (
-                <LeggTilEllerAvbryt leggTilDisabled onAvbrytClick={onClose} />
+                <Knapper leggTilDisabled onAvbrytClick={onClose} />
             )}
         </>
     );

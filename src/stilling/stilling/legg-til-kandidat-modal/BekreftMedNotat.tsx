@@ -8,9 +8,9 @@ import { KandidatOutboundDto } from './LeggTilKandidatModal';
 import { Kandidatrespons } from '../kontekst-av-kandidat/useKandidat';
 import { postKandidaterTilKandidatliste } from './kandidatApi';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
-import LeggTilEllerAvbryt from './LeggTilEllerAvbryt';
-import css from './LeggTilKandidatModal.module.css';
 import { sendEvent } from 'felles/amplitude';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
+import css from './LeggTilKandidatModal.module.css';
 
 const MAKS_NOTATLENGDE = 2000;
 
@@ -90,7 +90,7 @@ const BekreftMedNotat: FunctionComponent<{
                         : 'Du skal ikke skrive sensitive opplysninger her. Notatet er synlig for alle veiledere.'
                 }
             />
-            <LeggTilEllerAvbryt
+            <Knapper
                 onLeggTilClick={onLeggTilKandidat}
                 onAvbrytClick={onClose}
                 leggTilSpinner={leggTilKandidat.kind === Nettstatus.SenderInn}

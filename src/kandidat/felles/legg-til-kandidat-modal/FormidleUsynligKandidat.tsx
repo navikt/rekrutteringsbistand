@@ -11,8 +11,8 @@ import { UsynligKandidat } from '../../kandidatliste/domene/Kandidat';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import LeggTilEllerAvbryt from './LeggTilEllerAvbryt';
 import css from './LeggTilKandidatModal.module.css';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 
 type Props = {
     fnr: string;
@@ -99,7 +99,7 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
                     Registrer at personen har fått jobb
                 </Checkbox>
             </CheckboxGroup>
-            <LeggTilEllerAvbryt
+            <Knapper
                 onLeggTilClick={formidleUsynligKandidat}
                 onAvbrytClick={onClose}
                 leggTilSpinner={formidling.kind === Nettstatus.SenderInn}
