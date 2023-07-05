@@ -48,11 +48,11 @@ const useLagreØkt = (innloggetBruker: InnloggetBruker) => {
             }
         };
 
-        if (innloggetBruker.navKontor !== null) {
+        if (innloggetBruker.navKontor !== null && innloggetBruker.navIdent !== null) {
             hentKandidatnumreForNavigering();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [søkekriterier.side, innloggetBruker]);
+    }, [søkekriterier.side, innloggetBruker.navKontor, innloggetBruker.navIdent]);
 };
 
 export default useLagreØkt;
