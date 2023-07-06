@@ -3,8 +3,7 @@
     min-height: 20rem;
 }
 
-.advarsel,
-.forklaring {
+.advarsel {
     margin: 1.5rem 0;
 }
 
@@ -18,14 +17,4 @@
 
 .fødselsnummer input {
     width: unset;
-}
-
-.forklaring ul {
-    margin-bottom: 0;
-}
-
-.knapper {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
 }

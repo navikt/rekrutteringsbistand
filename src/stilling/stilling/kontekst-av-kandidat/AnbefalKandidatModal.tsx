@@ -4,7 +4,7 @@ import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/Bekre
 import Modal from '../../common/modal/Modal';
 import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettressurs } from 'felles/nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useDispatch } from 'react-redux';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
@@ -27,12 +27,19 @@ const AnbefalKandidatModal = ({
 }: Props) => {
     const dispatch = useDispatch();
 
-    const varsleKandidatlisteOmNyKandidat = () => {
+    const handleBekreft = () => {
         onClose();
 
         dispatch<VarslingAction>({
             type: VarslingActionType.VisVarsling,
             innhold: `Kandidat ${kandidat.fornavn} ${kandidat.etternavn} (${fnr}) er anbefalt til stillingen`,
+        });
+    };
+
+    const handleOppdatertKandidatliste = (kandidatliste: Kandidatliste) => {
+        setKandidatliste({
+            kind: Nettstatus.Suksess,
+            data: kandidatliste,
         });
     };
 
@@ -46,9 +53,9 @@ const AnbefalKandidatModal = ({
                 fnr={fnr}
                 kandidat={kandidat}
                 kandidatliste={kandidatliste}
-                onOppdatertKandidatliste={setKandidatliste}
                 onAvbryt={onClose}
-                onBekreft={varsleKandidatlisteOmNyKandidat}
+                onOppdatertKandidatliste={handleOppdatertKandidatliste}
+                onBekreft={handleBekreft}
             />
         </Modal>
     );

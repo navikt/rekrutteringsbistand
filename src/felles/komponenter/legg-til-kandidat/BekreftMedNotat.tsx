@@ -16,7 +16,7 @@ type Props = {
     fnr: string;
     kandidat: ForenkletKandidatISøk;
     kandidatliste: Kandidatliste;
-    onOppdatertKandidatliste?: (kandidatliste: Nettressurs<Kandidatliste>) => void;
+    onOppdatertKandidatliste?: (kandidatliste: Kandidatliste) => void;
     onAvbryt: () => void;
     onBekreft: () => void;
     erAnbefaling?: boolean;
@@ -69,7 +69,7 @@ const BekreftMedNotat = ({
             onBekreft();
 
             if (onOppdatertKandidatliste) {
-                onOppdatertKandidatliste(respons);
+                onOppdatertKandidatliste(respons.data);
             }
         }
     };

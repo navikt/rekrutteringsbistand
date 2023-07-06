@@ -97,7 +97,7 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
         }
     };
 
-    const handleKandidatLagtTil = () => {
+    const handleBekreft = () => {
         onClose();
 
         if (fnrSøk.kind === Nettstatus.Suksess) {
@@ -133,7 +133,7 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
                     kandidat={fnrSøk.data}
                     kandidatliste={kandidatliste}
                     onAvbryt={onClose}
-                    onBekreft={handleKandidatLagtTil}
+                    onBekreft={handleBekreft}
                 />
             )}
 

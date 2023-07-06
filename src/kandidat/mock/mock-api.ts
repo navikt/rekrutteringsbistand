@@ -16,7 +16,7 @@ const forespørselOmDelingAvCvBaseUrl = `express:${api.forespørselOmDelingAvCv}
 const synlighetBaseUrl = `express:${api.synlighet}`;
 
 const url = {
-    fnrsok: `${baseUrl}/veileder/kandidatsok/fnrsok_gammel`,
+    fnrsok: `${baseUrl}/veileder/kandidatsok/fnrsok`,
     synlighetsevaluering: `${synlighetBaseUrl}/evaluering/:fnr`,
 
     // Cv
@@ -27,7 +27,7 @@ const url = {
     kandidatlister: `${baseUrl}/veileder/kandidatlister`,
     kandidatliste: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId`,
     markerKandidatlisteSomMin: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/eierskap`,
-    kandidatlisteMedStilling: `${baseUrl}/veileder/stilling/:stillingsId/kandidatliste_gammel`,
+    kandidatlisteMedStilling: `${baseUrl}/veileder/stilling/:stillingsId/kandidatliste`,
     kandidatlistePost: `${baseUrl}/veileder/me/kandidatlister`,
     notater: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
     notaterMedId: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater/:notatId`,

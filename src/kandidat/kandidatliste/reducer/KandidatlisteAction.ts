@@ -74,7 +74,6 @@ export interface OppdaterKandidatlisteMedKandidatAction {
     type: KandidatlisteActionType.OppdaterKandidatlisteMedKandidat;
     kandidatliste: Kandidatliste;
     kandidatnr: string;
-    notat?: string;
 }
 
 export interface EndreStatusKandidatAction {

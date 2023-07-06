@@ -1,20 +1,25 @@
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Alert, Heading, TextField } from '@navikt/ds-react';
 import fnrValidator from '@navikt/fnrvalidator';
+import { useDispatch } from 'react-redux';
 
+import { fetchKandidatMedFnr, fetchSynlighetsevaluering } from './api';
+import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import { getMiljø, Miljø } from '../../utils/miljøUtils';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError } from '../../api/fetchUtils';
 import { sendEvent } from 'felles/amplitude';
-import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';
-import { fetchKandidatMedFnr, fetchSynlighetsevaluering, Fødselsnummersøk } from './api';
-import BekreftMedNotat from './BekreftMedNotat';
+import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
+import BekreftMedNotat from 'felles/komponenter/legg-til-kandidat/BekreftMedNotat';
 import InformasjonOmUsynligKandidat from './InformasjonOmUsynligKandidat';
-import KandidatenFinnesIkke from './kandidaten-finnes-ikke/KandidatenFinnesIkke';
+import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
+import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import Modal from '../../komponenter/modal/Modal';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
-import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
-import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import css from './LeggTilKandidatModal.module.css';
 
 export type FormidlingAvUsynligKandidatOutboundDto = {
@@ -40,10 +45,11 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
     stillingsId,
     valgtNavKontor,
 }) => {
+    const dispatch = useDispatch();
     const [fnr, setFnr] = useState<string>('');
     const [feilmelding, setFeilmelding] = useState<string | null>(null);
     const [erAlleredeLagtTil, setAlleredeLagtTil] = useState<boolean>(false);
-    const [fnrSøk, setFnrSøk] = useState<Nettressurs<Fødselsnummersøk>>(ikkeLastet());
+    const [fnrSøk, setFnrSøk] = useState<Nettressurs<ForenkletKandidatISøk>>(ikkeLastet());
     const [synlighetsevaluering, setSynlighetsevaluering] = useState<
         Nettressurs<Synlighetsevaluering>
     >(ikkeLastet());
@@ -114,6 +120,27 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
         }
     };
 
+    const handleOppdatertKandidatliste = (oppdatertKandidatliste: Kandidatliste) => {
+        if (fnrSøk.kind === Nettstatus.Suksess) {
+            dispatch<KandidatlisteAction>({
+                type: KandidatlisteActionType.OppdaterKandidatlisteMedKandidat,
+                kandidatliste: oppdatertKandidatliste,
+                kandidatnr: fnrSøk.data.arenaKandidatnr,
+            });
+        }
+    };
+
+    const handleBekreft = () => {
+        onClose();
+
+        if (fnrSøk.kind === Nettstatus.Suksess) {
+            dispatch<VarslingAction>({
+                type: VarslingActionType.VisVarsling,
+                innhold: `Kandidat ${fnrSøk.data.fornavn} ${fnrSøk.data.etternavn} (${fnr}) er lagt til`,
+            });
+        }
+    };
+
     return (
         <Modal
             open={vis}
@@ -156,7 +183,9 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
                     fnr={fnr}
                     kandidat={fnrSøk.data}
                     kandidatliste={kandidatliste}
-                    onClose={onClose}
+                    onAvbryt={onClose}
+                    onBekreft={handleBekreft}
+                    onOppdatertKandidatliste={handleOppdatertKandidatliste}
                 />
             )}
 
