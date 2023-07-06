@@ -20,7 +20,7 @@ export type SearchQuery = {
             order: Sorteringsrekkefølge;
         };
     };
-    _source?: string[] | false;
+    _source?: string[] | boolean;
     aggs?: Aggregeringer;
 };
 
