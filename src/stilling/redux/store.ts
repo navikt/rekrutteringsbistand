@@ -1,4 +1,4 @@
-import { compose, createStore, combineReducers, applyMiddleware, legacy_createStore } from 'redux';
+import { compose, combineReducers, applyMiddleware, legacy_createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import adDataReducer, { adDataSaga, AdDataState } from '../stilling/adDataReducer';
 import adReducer, { adSaga, AdState } from '../stilling/adReducer';
