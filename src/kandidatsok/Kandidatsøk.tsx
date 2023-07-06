@@ -5,17 +5,18 @@ import {
     Kandidatliste,
     KontekstAvKandidatlisteEllerStilling,
 } from './hooks/useKontekstAvKandidatlisteEllerStilling';
+import { Kandidat } from './kandidater/Kandidat';
 import { Økt } from './Økt';
+import Filter from './filter/Filter';
 import Kandidater from './kandidater/Kandidater';
+import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
 import LagreKandidaterIMineKandidatlisterModal from './kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import LagreKandidaterISpesifikkKandidatlisteModal from './kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import PorteføljeTabs from './filter/porteføljetabs/PorteføljeTabs';
-import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
 import TømFiltre from './filter/TømFiltre';
+import useLagreØkt from './hooks/useLagreØkt';
 import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import css from './Kandidatsøk.module.css';
-import Filter from './filter/Filter';
-import { Kandidat } from './kandidater/Kandidat';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;
@@ -43,6 +44,7 @@ const Kandidatsøk = ({
         forrigeØkt?.markerteKandidater
     );
 
+    useLagreØkt(innloggetBruker);
     useEffect(() => {
         setØkt({
             markerteKandidater: Array.from(markerteKandidater),

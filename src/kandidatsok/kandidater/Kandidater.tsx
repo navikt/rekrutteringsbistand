@@ -12,7 +12,6 @@ import Paginering from '../filter/Paginering';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import MarkerAlle from './MarkerAlle';
 import Sortering from './sortering/Sortering';
-import useLagreØkt from '../hooks/useLagreØkt';
 import css from './Kandidater.module.css';
 
 type Props = {
@@ -37,7 +36,6 @@ const Kandidater: FunctionComponent<Props> = ({
     setKandidaterPåSiden,
 }) => {
     const respons = useRespons(innloggetBruker);
-    useLagreØkt(innloggetBruker);
 
     const { kandidater, totaltAntallKandidater } = useMemo(() => {
         if (respons.kind === 'suksess' || respons.kind === 'oppdaterer') {
