@@ -2,7 +2,7 @@ import { Nettressurs, Nettstatus } from './nettressurs';
 
 export const api = {
     innloggetBruker: '/meg',
-    statistikk: '/statistikk',
+    statistikk: '/statistikk-api',
     stillingssøk: '/stillingssok-proxy',
     stilling: '/stilling-api',
     sms: '/sms-api',
