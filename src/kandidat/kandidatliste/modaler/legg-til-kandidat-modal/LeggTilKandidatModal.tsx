@@ -54,8 +54,12 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
         Nettressurs<Synlighetsevaluering>
     >(ikkeLastet());
 
-    const tilbakestill = (medFeilmelding: string | null = null) => {
-        setFeilmelding(medFeilmelding);
+    const nullstill = (nullstillInputfelt?: boolean) => {
+        if (nullstillInputfelt) {
+            setFnr('');
+        }
+
+        setFeilmelding(null);
         setAlleredeLagtTil(false);
         setFnrSøk(ikkeLastet());
         setSynlighetsevaluering(ikkeLastet());
@@ -67,11 +71,11 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
         setFnr(fnr);
 
         if (fnr.length < 11) {
-            tilbakestill();
+            nullstill();
         } else if (fnr.length > 11) {
             setFeilmelding('Fødselsnummeret er for langt');
         } else {
-            tilbakestill();
+            nullstill();
 
             const erGyldig = validerFnr(fnr);
 
@@ -131,7 +135,7 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
     };
 
     const handleBekreft = () => {
-        onClose();
+        nullstillOgLukk();
 
         if (fnrSøk.kind === Nettstatus.Suksess) {
             dispatch<VarslingAction>({
@@ -139,6 +143,11 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
                 innhold: `Kandidat ${fnrSøk.data.fornavn} ${fnrSøk.data.etternavn} (${fnr}) er lagt til`,
             });
         }
+    };
+
+    const nullstillOgLukk = () => {
+        nullstill(true);
+        onClose();
     };
 
     return (
@@ -183,7 +192,7 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
                     fnr={fnr}
                     kandidat={fnrSøk.data}
                     kandidatliste={kandidatliste}
-                    onAvbryt={onClose}
+                    onAvbryt={nullstillOgLukk}
                     onBekreft={handleBekreft}
                     onOppdatertKandidatliste={handleOppdatertKandidatliste}
                 />
