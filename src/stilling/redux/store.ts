@@ -1,4 +1,4 @@
-import { compose, createStore, combineReducers, applyMiddleware } from 'redux';
+import { compose, createStore, combineReducers, applyMiddleware, legacy_createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import adDataReducer, { adDataSaga, AdDataState } from '../stilling/adDataReducer';
 import adReducer, { adSaga, AdState } from '../stilling/adReducer';
@@ -45,7 +45,7 @@ const createReduxStore = () => {
 
     const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-    const reduxStore = createStore(
+    const reduxStore = legacy_createStore(
         combineReducers({
             ad: adReducer,
             adData: adDataReducer,
