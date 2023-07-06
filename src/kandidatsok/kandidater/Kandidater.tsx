@@ -6,6 +6,7 @@ import { InnloggetBruker } from '../hooks/useBrukerensIdent';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Økt } from '../Økt';
 import { Kandidat } from './Kandidat';
+import { Nettstatus } from 'felles/nettressurs';
 import AntallKandidater from './AntallKandidater';
 import useRespons from '../hooks/useRespons';
 import Paginering from '../filter/Paginering';
@@ -40,7 +41,7 @@ const Kandidater: FunctionComponent<Props> = ({
     useLagreØkt(innloggetBruker);
 
     const { kandidater, totaltAntallKandidater } = useMemo(() => {
-        if (respons.kind === 'suksess' || respons.kind === 'oppdaterer') {
+        if (respons.kind === Nettstatus.Suksess || respons.kind === Nettstatus.Oppdaterer) {
             const hits = respons.data.hits;
             const kandidater = hits.hits.map((t) => t._source);
 
@@ -87,15 +88,15 @@ const Kandidater: FunctionComponent<Props> = ({
                 </div>
             </div>
 
-            {respons.kind === 'laster-inn' && (
+            {respons.kind === Nettstatus.LasterInn && (
                 <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />
             )}
 
-            {respons.kind === 'feil' && (
+            {respons.kind === Nettstatus.Feil && (
                 <BodyShort className={css.feilmelding} aria-live="assertive">
-                    {respons.statuskode === 403
+                    {respons.error.status === 403
                         ? 'Du har ikke tilgang til kandidatsøket'
-                        : respons.error}
+                        : respons.error.message}
                 </BodyShort>
             )}
 

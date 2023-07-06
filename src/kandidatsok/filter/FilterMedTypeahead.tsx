@@ -3,6 +3,7 @@ import { Forslagsfelt } from '../api/query/byggSuggestion';
 import useSuggestions from '../hooks/useSuggestions';
 import { kombinerStringsTilSearchParam } from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
+import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     label: string;
@@ -57,7 +58,7 @@ const FilterMedTypeahead: FunctionComponent<Props> = ({
             label={label}
             description={description}
             value={input}
-            suggestions={forslag.kind === 'suksess' ? forslag.data : []}
+            suggestions={forslag.kind === Nettstatus.Suksess ? forslag.data : []}
             selectedSuggestions={valgteVerdier}
             onRemoveSuggestion={onFjernValgtVerdi}
             onSelect={onSelect}

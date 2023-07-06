@@ -14,6 +14,7 @@ import TekstlinjeMedIkon from './TekstlinjeMedIkon';
 import useScrollTilKandidat from '../../hooks/useScrollTilKandidat';
 import { CheckmarkIcon, HeartIcon, PinIcon } from '@navikt/aksel-icons';
 import css from './Kandidatrad.module.css';
+import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     kandidat: Kandidat;
@@ -39,7 +40,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
     const alleØnskedeSteder = hentKandidatensØnskedeSteder(kandidat);
 
     const kandidatAlleredeLagtTilPåKandidatlista =
-        kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === 'suksess'
+        kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === Nettstatus.Suksess
             ? kandidatenErPåKandidatlista(
                   kandidat,
                   kontekstAvKandidatlisteEllerStilling.kandidatliste.data
@@ -47,7 +48,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
             : false;
 
     const kandidatlisteId =
-        kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === 'suksess'
+        kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === Nettstatus.Suksess
             ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.kandidatlisteId
             : undefined;
 

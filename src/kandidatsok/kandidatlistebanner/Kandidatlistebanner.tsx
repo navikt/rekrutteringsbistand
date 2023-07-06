@@ -6,6 +6,7 @@ import { lenkeTilKandidatliste, lenkeTilStilling } from '../utils';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
 import css from './Kandidatlistebanner.module.css';
+import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     kontekst: KontekstAvKandidatlisteEllerStilling;
@@ -16,7 +17,7 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
 
     useSøkekriterierFraStilling(stilling, brukKriterierFraStillingen);
 
-    if (kandidatliste.kind !== 'suksess') {
+    if (kandidatliste.kind !== Nettstatus.Suksess) {
         return null;
     }
 

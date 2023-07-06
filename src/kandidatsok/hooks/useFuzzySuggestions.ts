@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { fuzzySuggest } from '../api/api';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import byggFuzzySuggestion from '../api/query/byggFuzzySuggestion';
 import useDebouncedEffect from './useDebouncedEffect';
 
@@ -12,7 +12,7 @@ const useFuzzySuggestions = (
     query: string
 ): Nettressurs<string[]> => {
     const [suggestions, setSuggestions] = useState<Nettressurs<string[]>>({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
 
     useDebouncedEffect(() => {
@@ -24,13 +24,13 @@ const useFuzzySuggestions = (
                 );
 
                 setSuggestions({
-                    kind: 'suksess',
+                    kind: Nettstatus.Suksess,
                     data: forslagRespons,
                 });
             } catch (e) {
                 setSuggestions({
-                    kind: 'feil',
-                    error: e as string,
+                    kind: Nettstatus.Feil,
+                    error: { message: e as string },
                 });
             }
         };

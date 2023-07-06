@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { hentKandidatliste, hentKandidatlisteMedStillingsId, hentStilling } from '../api/api';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Navigeringsstate } from './useNavigeringsstate';
 
 export type KontekstAvKandidatlisteEllerStilling = {
@@ -19,50 +19,50 @@ const useKontekstAvKandidatlisteEllerStilling = (
 
     const stillingId = searchParams.get('stilling');
     const [kandidatliste, setKandidatliste] = useState<Nettressurs<Kandidatliste>>({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
     const [stilling, setStilling] = useState<Nettressurs<Stilling>>({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
 
     useEffect(() => {
         const brukStilling = async (stillingsId: string) => {
             setStilling({
-                kind: 'laster-inn',
+                kind: Nettstatus.LasterInn,
             });
 
             try {
                 const stilling = await hentStilling(stillingsId);
 
                 setStilling({
-                    kind: 'suksess',
+                    kind: Nettstatus.Suksess,
                     data: stilling,
                 });
             } catch (error) {
                 setStilling({
-                    kind: 'feil',
-                    error: error as string,
+                    kind: Nettstatus.Feil,
+                    error: { message: error as string },
                 });
             }
         };
 
         const brukKandidatliste = async (kandidatlisteId: string): Promise<string | null> => {
             setKandidatliste({
-                kind: 'laster-inn',
+                kind: Nettstatus.LasterInn,
             });
 
             try {
                 const respons = await hentKandidatliste(kandidatlisteId);
 
                 setKandidatliste({
-                    kind: 'suksess',
+                    kind: Nettstatus.Suksess,
                     data: respons,
                 });
                 return respons.stillingId;
             } catch (error) {
                 setKandidatliste({
-                    kind: 'feil',
-                    error: error as string,
+                    kind: Nettstatus.Feil,
+                    error: { message: error as string },
                 });
             }
 
@@ -71,20 +71,20 @@ const useKontekstAvKandidatlisteEllerStilling = (
 
         const brukKandidatlisteMedStillingsId = async (stillingId: string) => {
             setKandidatliste({
-                kind: 'laster-inn',
+                kind: Nettstatus.LasterInn,
             });
 
             try {
                 const respons = await hentKandidatlisteMedStillingsId(stillingId);
 
                 setKandidatliste({
-                    kind: 'suksess',
+                    kind: Nettstatus.Suksess,
                     data: respons,
                 });
             } catch (error) {
                 setKandidatliste({
-                    kind: 'feil',
-                    error: error as string,
+                    kind: Nettstatus.Feil,
+                    error: { message: error as string },
                 });
             }
         };
@@ -121,7 +121,7 @@ const useKontekstAvKandidatlisteEllerStilling = (
                 brukKriterierFraStillingen: navigeringsstate.brukKriterierFraStillingen || false,
                 setOppdatertKandidatliste: (kandidatliste: Kandidatliste) =>
                     setKandidatliste({
-                        kind: 'suksess',
+                        kind: Nettstatus.Suksess,
                         data: kandidatliste,
                     }),
             };

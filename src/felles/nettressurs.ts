@@ -1,6 +1,7 @@
 export enum Nettstatus {
     IkkeLastet = 'IkkeLastet',
     LasterInn = 'LasterInn',
+    Oppdaterer = 'Oppdaterer',
     SenderInn = 'SenderInn',
     Suksess = 'Suksess',
     FinnesIkke = 'FinnesIkke',
@@ -15,8 +16,14 @@ type LasterInn = {
     kind: Nettstatus.LasterInn;
 };
 
-type SenderInn = {
+type Oppdaterer<T> = {
+    kind: Nettstatus.Oppdaterer;
+    data: T;
+};
+
+type SenderInn<T> = {
     kind: Nettstatus.SenderInn;
+    data?: T;
 };
 
 type Suksess<T> = {
@@ -46,8 +53,9 @@ export const lasterInn = (): LasterInn => ({
     kind: Nettstatus.LasterInn,
 });
 
-export const senderInn = (): SenderInn => ({
+export const senderInn = <T>(data?: T): SenderInn<T> => ({
     kind: Nettstatus.SenderInn,
+    data,
 });
 
 export const suksess = <T>(data: T): Suksess<T> => ({
@@ -64,4 +72,11 @@ export const feil = (error: Error): Feil => ({
     error,
 });
 
-export type Nettressurs<T> = IkkeLastet | LasterInn | SenderInn | Feil | Suksess<T> | FinnesIkke;
+export type Nettressurs<T> =
+    | IkkeLastet
+    | LasterInn
+    | Oppdaterer<T>
+    | SenderInn<T>
+    | Feil
+    | Suksess<T>
+    | FinnesIkke;

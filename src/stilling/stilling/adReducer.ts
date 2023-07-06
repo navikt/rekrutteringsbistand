@@ -43,6 +43,7 @@ import Stilling, {
     System,
 } from '../domene/Stilling';
 import { api } from 'felles/api';
+import { Nettstatus } from 'felles/nettressurs';
 
 export const FETCH_AD = 'FETCH_AD';
 export const FETCH_AD_BEGIN = 'FETCH_AD_BEGIN';
@@ -113,7 +114,7 @@ export enum NyStillingState {
     SkalBeholdes = 'skalBeholdes',
     Forkastes = 'forkastes',
     ErForkastet = 'erforkastet',
-    Feil = 'feil',
+    Feil = Nettstatus.Feil,
 }
 
 export type AdState = {

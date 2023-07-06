@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 import { Kandidat } from './Kandidat';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import css from './Kandidater.module.css';
+import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     kandidater: Kandidat[];
@@ -58,7 +59,7 @@ const hentKandidaterSomIkkeErPåKandidatlisten = (
         return kandidater;
     }
 
-    if (kontekst.kandidatliste.kind === 'suksess') {
+    if (kontekst.kandidatliste.kind === Nettstatus.Suksess) {
         const kandidaterPåListen = kontekst.kandidatliste.data.kandidater;
 
         return kandidater.filter(
