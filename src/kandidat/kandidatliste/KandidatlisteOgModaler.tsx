@@ -270,29 +270,25 @@ class KandidatlisteOgModaler extends React.Component<Props> {
 
         return (
             <div>
-                {deleModalOpen && (
-                    <PresenterKandidaterModal
-                        vis={this.state.deleModalOpen}
-                        deleStatus={deleStatus}
-                        onClose={this.onToggleDeleModal}
-                        onSubmit={this.onDelMedArbeidsgiver}
-                        antallMarkerteKandidater={markerteKandidater.length}
-                        antallKandidaterSomHarSvartJa={kandidaterSomHarSvartJa.length}
-                        alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere={
-                            erKobletTilStilling(kandidatliste) &&
-                            kandidaterMåGodkjenneDelingAvCv(kandidatliste)
-                        }
-                    />
-                )}
-                {leggTilModalOpen && (
-                    <LeggTilKandidatModal
-                        vis={this.state.leggTilModalOpen}
-                        onClose={this.onToggleLeggTilKandidatModal}
-                        stillingsId={kandidatliste.stillingId}
-                        kandidatliste={kandidatliste}
-                        valgtNavKontor={this.props.valgtNavKontor}
-                    />
-                )}
+                <PresenterKandidaterModal
+                    vis={deleModalOpen}
+                    deleStatus={deleStatus}
+                    onClose={this.onToggleDeleModal}
+                    onSubmit={this.onDelMedArbeidsgiver}
+                    antallMarkerteKandidater={markerteKandidater.length}
+                    antallKandidaterSomHarSvartJa={kandidaterSomHarSvartJa.length}
+                    alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere={
+                        erKobletTilStilling(kandidatliste) &&
+                        kandidaterMåGodkjenneDelingAvCv(kandidatliste)
+                    }
+                />
+                <LeggTilKandidatModal
+                    vis={leggTilModalOpen}
+                    onClose={this.onToggleLeggTilKandidatModal}
+                    stillingsId={kandidatliste.stillingId}
+                    kandidatliste={kandidatliste}
+                    valgtNavKontor={this.props.valgtNavKontor}
+                />
                 {kandidatliste.stillingId &&
                     this.props.sendteMeldinger.kind === Nettstatus.Suksess && (
                         <>
