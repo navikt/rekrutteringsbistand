@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage, Heading } from '@navikt/ds-react';
 
-import { feil, Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { feil, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import { endreKandidatliste } from '../../api/api';

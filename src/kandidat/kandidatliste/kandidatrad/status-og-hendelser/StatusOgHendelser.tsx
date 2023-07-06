@@ -4,13 +4,13 @@ import { EyeIcon, PencilIcon, XMarkIcon } from '@navikt/aksel-icons';
 
 import { ForespørslerForKandidatForStilling } from '../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Kandidat, Kandidatstatus } from '../../domene/Kandidat';
-import { Nettressurs, Nettstatus } from '../../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { Sms } from '../../domene/Kandidatressurser';
+import { erKobletTilStilling, Kandidatliste } from '../../domene/Kandidatliste';
 import EndreStatusOgHendelser from './endre-status-og-hendelser/EndreStatusOgHendelser';
 import SeHendelser from './se-hendelser/SeHendelser';
 import StatusEtikett from './etiketter/StatusEtikett';
 import Hendelsesetikett from './etiketter/Hendelsesetikett';
-import { erKobletTilStilling, Kandidatliste } from '../../domene/Kandidatliste';
-import { Sms } from '../../domene/Kandidatressurser';
 import css from './StatusOgHendelser.module.css';
 import classNames from 'classnames';
 

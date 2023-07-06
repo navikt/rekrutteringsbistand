@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { BodyLong, Button, Link } from '@navikt/ds-react';
 import { TenancyIcon } from '@navikt/aksel-icons';
 
-import { Nettstatus } from '../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
 import MedPopover from '../med-popover/MedPopover';
 import { Kandidat } from '../domene/Kandidat';

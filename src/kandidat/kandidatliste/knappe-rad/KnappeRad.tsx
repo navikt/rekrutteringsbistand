@@ -9,7 +9,7 @@ import {
     Kandidatlistestatus,
     Stillingskategori,
 } from '../domene/Kandidatliste';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import MedPopover from '../med-popover/MedPopover';
 import ForespørselOmDelingAvCv from './forespørsel-om-deling-av-cv/ForespørselOmDelingAvCv';

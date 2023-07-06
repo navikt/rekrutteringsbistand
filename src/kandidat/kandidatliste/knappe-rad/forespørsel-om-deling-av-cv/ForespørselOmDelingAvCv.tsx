@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ForespørselOutboundDto } from './Forespørsel';
 import { Kandidat } from '../../domene/Kandidat';
-import { Nettstatus } from '../../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../../state/AppState';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';

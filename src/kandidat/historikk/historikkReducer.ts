@@ -1,5 +1,5 @@
 import { Kandidatstatus, Kandidatutfall, Utfallsendring } from '../kandidatliste/domene/Kandidat';
-import { ApiError, feil, ikkeLastet, lasterInn, Nettressurs, suksess } from '../api/Nettressurs';
+import { Error, feil, ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { fetchKandidatlisterForKandidat } from '../api/api';
 import { SearchApiError } from '../api/fetchUtils';
@@ -49,7 +49,7 @@ type FetchKandidatlisterForKandidatSuccessAction = {
 
 type FetchKandidatlisterForKandidatFailureAction = {
     type: KandidatlisterForKandidatActionType.FetchFailure;
-    error: ApiError;
+    error: Error;
 };
 
 type HistorikkAction =

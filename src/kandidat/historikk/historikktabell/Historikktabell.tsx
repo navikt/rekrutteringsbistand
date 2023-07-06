@@ -4,7 +4,7 @@ import { Table } from '@navikt/ds-react';
 import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Historikkrad } from './Historikkrad/Historikkrad';
 import { KandidatlisteForKandidat } from '../historikkReducer';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Sms } from '../../kandidatliste/domene/Kandidatressurser';
 
 interface Props {

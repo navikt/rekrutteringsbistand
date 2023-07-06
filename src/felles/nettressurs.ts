@@ -33,7 +33,7 @@ type Feil = {
     error: Error;
 };
 
-type Error = {
+export type Error = {
     message: string;
     status?: number;
 };

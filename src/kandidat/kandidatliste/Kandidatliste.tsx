@@ -12,7 +12,7 @@ import {
 } from './domene/Kandidatliste';
 import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
 import { Kandidatstatus, erInaktiv } from './domene/Kandidat';
-import { Nettstatus } from '../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { queryParamsTilFilter, filterTilQueryParams } from './filter/filter-utils';
 import AppState from '../state/AppState';
 import Filter from './filter/Filter';

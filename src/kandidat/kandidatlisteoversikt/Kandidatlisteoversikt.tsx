@@ -5,7 +5,7 @@ import { Heading, Pagination } from '@navikt/ds-react';
 
 import { KandidatlisteSammendrag } from '../kandidatliste/domene/Kandidatliste';
 import { ListeoversiktAction, ListeoversiktActionType } from './reducer/ListeoversiktAction';
-import { Nettstatus } from '../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import Filter, { Stillingsfilter } from './filter/Filter';
 import Header from './header/Header';
 import AppState from '../state/AppState';

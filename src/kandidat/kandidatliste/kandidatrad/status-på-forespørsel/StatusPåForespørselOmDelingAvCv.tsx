@@ -1,6 +1,6 @@
 import { FunctionComponent, useRef, useState } from 'react';
 import classNames from 'classnames';
-import { Nettressurs, Nettstatus } from '../../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import {
     ForespørslerForKandidatForStilling,
     TilstandPåForespørsel,

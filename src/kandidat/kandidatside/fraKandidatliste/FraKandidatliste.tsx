@@ -2,7 +2,7 @@ import { Label, Tabs } from '@navikt/ds-react';
 import React, { Dispatch, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { lenkeTilKandidatliste } from '../../app/paths';
 import AppState from '../../state/AppState';
 import Sidefeil from '../../komponenter/sidefeil/Sidefeil';

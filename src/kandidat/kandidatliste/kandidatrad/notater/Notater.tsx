@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import { Kandidatliste } from '../../domene/Kandidatliste';
 import { Kandidat } from '../../domene/Kandidat';
-import { Nettressurs, Nettstatus } from '../../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';

@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { BodyLong, ErrorMessage, Heading } from '@navikt/ds-react';
 import { fetchUsynligKandidat } from '../../api/api';
-import { Nettressurs, ikkeLastet, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, ikkeLastet, Nettstatus } from 'felles/nettressurs';
 import { UsynligKandidat } from '../../kandidatliste/domene/Kandidat';
 import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
 import FormidleUsynligKandidat from './FormidleUsynligKandidat';

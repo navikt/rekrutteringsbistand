@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { ApiError, Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Error, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError } from '../../api/fetchUtils';
 import { fetchCv } from '../../api/api';
 import Cv from './cv-typer';
@@ -37,7 +37,7 @@ export type FetchCvNotFoundAction = {
 
 export type FetchCvFailureAction = {
     type: CvActionType.FetchCvFailure;
-    error: ApiError;
+    error: Error;
 };
 
 export type CvAction =

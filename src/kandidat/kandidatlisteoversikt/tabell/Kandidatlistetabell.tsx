@@ -8,7 +8,7 @@ import {
 } from '../../kandidatliste/liste-header/sorterbarKolonneheader/Retning';
 import { KandidatlisteSorteringsfelt } from '../Kandidatlistesortering';
 import { ListeoversiktActionType } from '../reducer/ListeoversiktAction';
-import { Nettstatus } from '../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './Kandidatlistetabell.module.css';

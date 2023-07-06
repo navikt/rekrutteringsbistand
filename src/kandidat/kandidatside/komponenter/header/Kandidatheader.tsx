@@ -3,7 +3,7 @@ import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading } from '@navikt/ds-react';
 
 import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
-import { Nettressurs, Nettstatus } from '../../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Cv from '../../../cv/reducer/cv-typer';
 import Fødselsinfo from './Fødselsinfo';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';

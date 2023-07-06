@@ -8,7 +8,7 @@ import { fetchForespørslerOmDelingAvCvForKandidat } from '../api/forespørselOm
 import { fetchSmserForKandidat } from '../api/api';
 import { ForespørselOmDelingAvCv } from '../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Historikktabell } from './historikktabell/Historikktabell';
-import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from '../api/Nettressurs';
+import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from 'felles/nettressurs';
 import { KandidatlisteForKandidat, KandidatlisterForKandidatActionType } from './historikkReducer';
 import { KandidatQueryParam } from '../kandidatside/Kandidatside';
 import { sendEvent } from 'felles/amplitude';

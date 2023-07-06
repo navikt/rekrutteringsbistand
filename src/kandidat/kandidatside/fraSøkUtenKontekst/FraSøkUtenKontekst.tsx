@@ -12,7 +12,7 @@ import useNavigerbareKandidaterFraSøk from '../hooks/useNavigerbareKandidaterFr
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useFaner from '../hooks/useFaner';
 import LagreKandidaterIMineKandidatlisterModal from './lagre-kandidat-modal/LagreKandidatIMineKandidatlisterModal';
-import { Nettstatus } from '../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import css from './FraSøkUtenKontekst.module.css';
 
 type Props = {

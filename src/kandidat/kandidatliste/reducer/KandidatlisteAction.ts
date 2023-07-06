@@ -1,6 +1,6 @@
 import { Kandidatlistestatus } from '../domene/Kandidatliste';
 import { Kandidatstatus, Kandidatutfall } from '../domene/Kandidat';
-import { ApiError } from '../../api/Nettressurs';
+import { Error } from 'felles/nettressurs';
 import { Kandidatliste } from '../domene/Kandidatliste';
 import { Notat, Visningsstatus } from '../domene/Kandidatressurser';
 import { Kandidat } from '../domene/Kandidat';
@@ -24,7 +24,7 @@ export interface HentKandidatlisteMedStillingsIdSuccessAction {
 
 export interface HentKandidatlisteMedStillingsIdFailureAction {
     type: KandidatlisteActionType.HentKandidatlisteMedStillingsIdFailure;
-    error: ApiError;
+    error: Error;
 }
 
 export interface HentKandidatlisteMedKandidatlisteIdAction {
@@ -39,7 +39,7 @@ export interface HentKandidatlisteMedKandidatlisteIdSuccessAction {
 
 export interface HentKandidatlisteMedKandidatlisteIdFailureAction {
     type: KandidatlisteActionType.HentKandidatlisteMedKandidatlisteIdFailure;
-    error: ApiError;
+    error: Error;
 }
 
 export interface NullstillKandidatlisteAction {

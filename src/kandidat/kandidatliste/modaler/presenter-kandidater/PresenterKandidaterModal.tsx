@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { inneholderSærnorskeBokstaver, erGyldigEpost } from './epostValidering';
 import Modal from '../../../komponenter/modal/Modal';
-import { Nettstatus } from '../../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import {
     Alert,
     BodyLong,

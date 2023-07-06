@@ -3,7 +3,7 @@ import { Heading } from '@navikt/ds-react';
 
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Kandidat } from '../../../domene/Kandidat';
-import { Nettressurs } from '../../../../api/Nettressurs';
+import { Nettressurs } from 'felles/nettressurs';
 import { Sms } from '../../../domene/Kandidatressurser';
 import { Stillingskategori } from '../../../domene/Kandidatliste';
 import CvErSlettet from '../hendelser/CvErSlettet';

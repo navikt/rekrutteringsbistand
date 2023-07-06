@@ -5,7 +5,7 @@ import {
     Hendelse,
     hentKandidatensSisteHendelse,
 } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import {
     ForespørslerGruppertPåAktørId,
     hentForespørslerForKandidatForStilling,

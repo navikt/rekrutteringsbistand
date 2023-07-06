@@ -6,7 +6,7 @@ import DelCvMedArbeidsgiver from '../hendelser/DelCvMedArbeidsgiver';
 import HarFåttJobben from '../hendelser/HarFåttJobben';
 import { statusToDisplayName } from '../etiketter/StatusEtikett';
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Nettressurs } from '../../../../api/Nettressurs';
+import { Nettressurs } from 'felles/nettressurs';
 import NyKandidat from '../hendelser/NyKandidat';
 import ForespørslerOgSvar from '../hendelser/forespørsler-og-svar/ForespørslerOgSvar';
 import {

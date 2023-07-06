@@ -7,7 +7,7 @@ import { erKobletTilStilling, Kandidatliste, Kandidatlistestatus } from '../dome
 import { erInaktiv, Kandidat } from '../domene/Kandidat';
 import { lenkeTilCv } from '../../app/paths';
 import { modifierTilListeradGrid } from '../liste-header/ListeHeader';
-import { Nettstatus } from '../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { Visningsstatus } from '../domene/Kandidatressurser';
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
 import AppState from '../../state/AppState';

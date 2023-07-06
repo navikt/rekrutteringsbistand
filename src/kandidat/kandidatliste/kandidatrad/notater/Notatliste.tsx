@@ -3,7 +3,7 @@ import { PencilIcon, TrashIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button } from '@navikt/ds-react';
 
 import { Notat } from '../../domene/Kandidatressurser';
-import { Nettstatus, Nettressurs } from '../../../api/Nettressurs';
+import { Nettstatus, Nettressurs } from 'felles/nettressurs';
 import NotatInfo from './NotatInfo';
 import Sidelaster from '../../../komponenter/sidelaster/Sidelaster';
 import css from './Notatliste.module.css';

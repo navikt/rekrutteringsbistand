@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Nettstatus } from '../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../state/AppState';
 import Jobbprofil from './jobbprofil/Jobbprofil';
 import KandidatCv from './cv/Cv';

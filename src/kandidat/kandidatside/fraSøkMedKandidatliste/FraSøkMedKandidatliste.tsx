@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { PersonPlusIcon } from '@navikt/aksel-icons';
 
 import { lenkeTilKandidatliste, lenkeTilKandidatsøk } from '../../app/paths';
-import { Nettstatus } from '../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { hentØktFraKandidatsøk } from '../søkekontekst';
 import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatmeny from '../komponenter/meny/Kandidatmeny';

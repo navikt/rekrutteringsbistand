@@ -8,7 +8,7 @@ import {
     Kandidatliste as Kandidatlistetype,
 } from './domene/Kandidatliste';
 import { Kandidatstatus } from './domene/Kandidat';
-import { Nettressurs, Nettstatus } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { sendEvent } from 'felles/amplitude';
 import AppState from '../state/AppState';
 import KandidatlisteAction from './reducer/KandidatlisteAction';

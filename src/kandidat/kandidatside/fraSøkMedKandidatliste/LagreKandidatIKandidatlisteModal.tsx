@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { postKandidatTilKandidatliste } from '../../api/api';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';

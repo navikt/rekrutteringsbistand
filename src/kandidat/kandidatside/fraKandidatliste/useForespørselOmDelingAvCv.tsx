@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppState from '../../state/AppState';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import { finnesIkke, Nettstatus, feil, lasterInn, suksess } from '../../api/Nettressurs';
+import { finnesIkke, Nettstatus, feil, lasterInn, suksess } from 'felles/nettressurs';
 import { Kandidat } from '../../kandidatliste/domene/Kandidat';
 import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
 

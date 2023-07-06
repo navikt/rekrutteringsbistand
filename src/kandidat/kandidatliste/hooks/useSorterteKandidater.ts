@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
 import { Kandidat } from '../domene/Kandidat';
 import { sorteringsalgoritmer } from '../kandidatsortering';

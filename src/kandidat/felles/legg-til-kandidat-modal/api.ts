@@ -1,5 +1,5 @@
 import { api } from 'felles/api';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError, postHeaders } from '../../api/fetchUtils';
 import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';
 

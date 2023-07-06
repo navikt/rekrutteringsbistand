@@ -1,4 +1,4 @@
-import { Nettstatus } from '../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { Reducer } from 'redux';
 import { ListeoversiktAction, ListeoversiktActionType } from './ListeoversiktAction';
 import { KandidatlisteSorteringsfelt } from '../Kandidatlistesortering';

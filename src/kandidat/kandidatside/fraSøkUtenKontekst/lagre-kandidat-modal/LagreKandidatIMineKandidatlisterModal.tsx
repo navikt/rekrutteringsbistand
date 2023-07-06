@@ -3,7 +3,7 @@ import { Button, Heading } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
 import { postKandidatTilKandidatliste } from '../../../api/api';
-import { Nettstatus } from '../../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { Kandidatliste } from '../../../kandidatliste/domene/Kandidatliste';
 import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../../kandidatliste/reducer/KandidatlisteAction';

@@ -1,4 +1,4 @@
-import { Nettressurs } from '../../api/Nettressurs';
+import { Nettressurs } from 'felles/nettressurs';
 import { Fødselsnummer, Kandidatnr } from './Kandidat';
 
 export type Notat = {

@@ -8,7 +8,7 @@ import {
     Nettressurs,
     Nettstatus,
     suksess,
-} from '../../api/Nettressurs';
+} from 'felles/nettressurs';
 import {
     ForespørslerForKandidatForStilling,
     hentForespørslerForKandidatForStilling,

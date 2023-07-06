@@ -15,7 +15,7 @@ import {
     Nettstatus,
     senderInn,
     suksess,
-} from '../../api/Nettressurs';
+} from 'felles/nettressurs';
 import KandidatlisteAction from './KandidatlisteAction';
 import { SearchApiError } from '../../api/fetchUtils';
 import { Kandidatliste } from '../domene/Kandidatliste';
