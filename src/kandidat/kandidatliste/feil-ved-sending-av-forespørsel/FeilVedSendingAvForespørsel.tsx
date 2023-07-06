@@ -4,8 +4,8 @@ import {
     ForespørslerGruppertPåAktørId,
     TilstandPåForespørsel,
 } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidatliste } from '../domene/kandidatlisteUtils';
 import useSlettedeKandidater from '../hooks/useIkkeSlettedeKandidater';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './FeilVedSendingAvForespørsel.module.css';
 
 type Props = {

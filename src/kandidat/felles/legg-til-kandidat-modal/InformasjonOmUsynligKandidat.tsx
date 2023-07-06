@@ -1,10 +1,11 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { BodyLong, ErrorMessage, Heading } from '@navikt/ds-react';
+
 import { fetchUsynligKandidat } from '../../api/api';
 import { Nettressurs, ikkeLastet, Nettstatus } from 'felles/nettressurs';
-import { UsynligKandidat } from '../../kandidatliste/domene/kandidatUtils';
-import { Kandidatliste } from '../../kandidatliste/domene/kandidatlisteUtils';
+import { UsynligKandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import FormidleUsynligKandidat from './FormidleUsynligKandidat';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './InformasjonOmUsynligKandidat.module.css';
 

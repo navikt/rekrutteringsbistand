@@ -2,15 +2,15 @@ import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { BodyShort, ErrorMessage, Textarea } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
-import { sendEvent } from 'felles/amplitude';
-import { postKandidatTilKandidatliste } from '../../api/api';
+import { Fødselsnummersøk } from './api';
 import { Nettressurs, ikkeLastet, senderInn, Nettstatus } from 'felles/nettressurs';
-import { Kandidatliste } from '../../kandidatliste/domene/kandidatlisteUtils';
+import { postKandidatTilKandidatliste } from '../../api/api';
+import { sendEvent } from 'felles/amplitude';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
 import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
-import { Fødselsnummersøk } from './api';
 import css from './BekreftMedNotat.module.css';
 
 const MAKS_NOTATLENGDE = 2000;

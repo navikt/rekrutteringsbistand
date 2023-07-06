@@ -1,4 +1,3 @@
-import { Kandidat, Kandidatstatus } from '../domene/kandidatUtils';
 import { Kandidatlistefilter } from '../reducer/kandidatlisteReducer';
 import {
     Hendelse,
@@ -9,6 +8,7 @@ import {
     ForespørslerGruppertPåAktørId,
     hentForespørslerForKandidatForStilling,
 } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 const QUERY_PARAM_SEPARATOR = '-';
 

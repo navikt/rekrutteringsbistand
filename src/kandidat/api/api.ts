@@ -1,16 +1,16 @@
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
+import { FormidlingAvUsynligKandidatOutboundDto } from '../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
+import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
+import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
+import { api } from 'felles/api';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import {
     Kandidatstatus,
     Kandidatutfall,
     UsynligKandidat,
-} from '../kandidatliste/domene/kandidatUtils';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
-import { Kandidatliste, Kandidatlistestatus } from '../kandidatliste/domene/kandidatlisteUtils';
-import { FormidlingAvUsynligKandidatOutboundDto } from '../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
-import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
-import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Cv from '../cv/reducer/cv-typer';
-import { api } from 'felles/api';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
