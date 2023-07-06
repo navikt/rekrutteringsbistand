@@ -1,6 +1,6 @@
 import { api } from 'felles/api';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { SearchApiError, postHeaders } from '../../api/fetchUtils';
+import { SearchApiError, postHeaders } from '../../../api/fetchUtils';
 import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 

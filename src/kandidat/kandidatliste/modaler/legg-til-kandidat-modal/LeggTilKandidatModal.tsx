@@ -5,20 +5,20 @@ import { useDispatch } from 'react-redux';
 
 import { fetchKandidatMedFnr, fetchSynlighetsevaluering } from './api';
 import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
-import { getMiljø, Miljø } from '../../utils/miljøUtils';
+import { getMiljø, Miljø } from '../../../utils/miljøUtils';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { SearchApiError } from '../../api/fetchUtils';
+import { SearchApiError } from '../../../api/fetchUtils';
 import { sendEvent } from 'felles/amplitude';
-import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
+import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import BekreftMedNotat from 'felles/komponenter/legg-til-kandidat/BekreftMedNotat';
 import InformasjonOmUsynligKandidat from './InformasjonOmUsynligKandidat';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
-import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
+import KandidatlisteAction from '../../reducer/KandidatlisteAction';
+import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
-import Modal from '../../komponenter/modal/Modal';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
+import Modal from '../../../komponenter/modal/Modal';
+import Sidelaster from '../../../komponenter/sidelaster/Sidelaster';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import css from './LeggTilKandidatModal.module.css';
 

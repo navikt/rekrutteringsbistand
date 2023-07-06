@@ -2,15 +2,15 @@ import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Alert, BodyShort, Checkbox, CheckboxGroup, ErrorMessage } from '@navikt/ds-react';
 
-import { capitalizeFirstLetter } from '../../utils/formateringUtils';
+import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
 import { FormidlingAvUsynligKandidatOutboundDto } from './LeggTilKandidatModal';
 import { Nettressurs, ikkeLastet, senderInn, Nettstatus } from 'felles/nettressurs';
-import { postFormidlingerAvUsynligKandidat } from '../../api/api';
+import { postFormidlingerAvUsynligKandidat } from '../../../api/api';
 import { UsynligKandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
+import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
-import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
+import KandidatlisteAction from '../../reducer/KandidatlisteAction';
+import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import css from './LeggTilKandidatModal.module.css';
 

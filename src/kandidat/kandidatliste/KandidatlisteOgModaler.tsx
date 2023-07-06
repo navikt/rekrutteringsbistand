@@ -18,7 +18,7 @@ import {
     ForespørslerGruppertPåAktørId,
     hentForespørslerForKandidatForStilling,
 } from './knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import LeggTilKandidatModal from '../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
+import LeggTilKandidatModal from './modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
 import { AlertType, VarslingAction, VarslingActionType } from '../varsling/varslingReducer';
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 

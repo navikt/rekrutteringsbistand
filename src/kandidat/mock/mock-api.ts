@@ -1,6 +1,6 @@
 import fetchMock, { MockResponse, MockResponseFunction } from 'fetch-mock';
 
-import { FormidlingAvUsynligKandidatOutboundDto } from '../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
+import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
 
 import { mock } from './mock-data';
 import { meg } from './data/kandidat/veileder.mock';
