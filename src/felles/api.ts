@@ -34,7 +34,7 @@ export const post = async <Returtype>(
         if (response.status === 200 || response.status === 201) {
             return {
                 kind: Nettstatus.Suksess,
-                data: response.json() as Returtype,
+                data: (await response.json()) as Returtype,
             };
         }
 
