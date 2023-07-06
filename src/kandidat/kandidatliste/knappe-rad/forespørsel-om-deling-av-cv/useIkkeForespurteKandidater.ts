@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Nettstatus } from 'felles/nettressurs';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import AppState from '../../../state/AppState';
-import { Kandidat } from '../../domene/Kandidat';
 
 const useIkkeForespurteKandidater = (markerteKandidater: Kandidat[]): Kandidat[] => {
     const [ikkeForespurteKandidater, setIkkeForespurteKandidater] = useState<Kandidat[]>([]);

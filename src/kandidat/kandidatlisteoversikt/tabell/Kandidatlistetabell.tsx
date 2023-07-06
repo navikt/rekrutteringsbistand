@@ -9,10 +9,10 @@ import {
 import { KandidatlisteSorteringsfelt } from '../Kandidatlistesortering';
 import { ListeoversiktActionType } from '../reducer/ListeoversiktAction';
 import { Nettstatus } from 'felles/nettressurs';
-import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
-import css from './Kandidatlistetabell.module.css';
 import classNames from 'classnames';
+import css from './Kandidatlistetabell.module.css';
 
 type Props = {
     nettstatus: Nettstatus;

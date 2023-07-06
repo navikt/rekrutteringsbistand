@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Checkbox, Label } from '@navikt/ds-react';
 
-import { Kandidatliste } from '../../../kandidatliste/domene/Kandidatliste';
 import { lenkeTilKandidatliste } from '../../../app/paths';
 import { capitalizeEmployerName } from '../../../utils/formateringUtils';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './VelgKandidatlister.module.css';
 
 type Props = {

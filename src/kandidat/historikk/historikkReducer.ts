@@ -1,8 +1,12 @@
-import { Kandidatstatus, Kandidatutfall, Utfallsendring } from '../kandidatliste/domene/Kandidat';
 import { Error, feil, ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { fetchKandidatlisterForKandidat } from '../api/api';
 import { SearchApiError } from '../api/fetchUtils';
+import {
+    Kandidatstatus,
+    Kandidatutfall,
+    Utfallsendring,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 export interface KandidatlisteForKandidat {
     kandidatnr: string;

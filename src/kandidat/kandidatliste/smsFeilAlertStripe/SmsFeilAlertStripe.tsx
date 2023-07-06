@@ -4,7 +4,7 @@ import { Alert, Button } from '@navikt/ds-react';
 import { XMarkIcon } from '@navikt/aksel-icons';
 
 import { Kandidatmeldinger, SmsStatus } from '../domene/Kandidatressurser';
-import { Kandidat } from '../domene/Kandidat';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import css from './smsFeilAlertStripe.module.css';
 
 const LESTE_SMS_IDER_KEY = 'lesteSmsIder';

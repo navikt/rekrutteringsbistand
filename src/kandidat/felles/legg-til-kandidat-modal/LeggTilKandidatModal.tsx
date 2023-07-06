@@ -3,7 +3,7 @@ import { Alert, Heading, TextField } from '@navikt/ds-react';
 import fnrValidator from '@navikt/fnrvalidator';
 
 import { getMiljø, Miljø } from '../../utils/miljøUtils';
-import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { SearchApiError } from '../../api/fetchUtils';
 import { sendEvent } from 'felles/amplitude';
 import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';
@@ -14,8 +14,8 @@ import KandidatenFinnesIkke from './kandidaten-finnes-ikke/KandidatenFinnesIkke'
 import Modal from '../../komponenter/modal/Modal';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
-import css from './LeggTilKandidatModal.module.css';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
+import css from './LeggTilKandidatModal.module.css';
 
 export type FormidlingAvUsynligKandidatOutboundDto = {
     fnr: string;

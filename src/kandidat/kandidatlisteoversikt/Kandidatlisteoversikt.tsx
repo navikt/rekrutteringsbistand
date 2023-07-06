@@ -3,23 +3,23 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { Heading, Pagination } from '@navikt/ds-react';
 
-import { KandidatlisteSammendrag } from '../kandidatliste/domene/Kandidatliste';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import { ListeoversiktAction, ListeoversiktActionType } from './reducer/ListeoversiktAction';
 import { Nettstatus } from 'felles/nettressurs';
-import Filter, { Stillingsfilter } from './filter/Filter';
-import Header from './header/Header';
+import { Søkekriterier } from './reducer/listeoversiktReducer';
 import AppState from '../state/AppState';
 import EndreModal from './modaler/EndreModal';
+import Filter, { Stillingsfilter } from './filter/Filter';
+import Header from './header/Header';
+import KandidatlisteAction from '../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../kandidatliste/reducer/KandidatlisteActionType';
-import TabellBody from './tabell/TabellBody';
-import TabellHeader from './tabell/TabellHeader';
+import Kandidatlistetabell from './tabell/Kandidatlistetabell';
 import MarkerSomMinModal from './modaler/MarkerSomMinModal';
 import OpprettModal from './modaler/OpprettModal';
 import SlettModal from './modaler/SlettModal';
-import Kandidatlistetabell from './tabell/Kandidatlistetabell';
+import TabellBody from './tabell/TabellBody';
+import TabellHeader from './tabell/TabellHeader';
 import css from './Kandidatlisteoversikt.module.css';
-import KandidatlisteAction from '../kandidatliste/reducer/KandidatlisteAction';
-import { Søkekriterier } from './reducer/listeoversiktReducer';
 
 const SIDESTØRRELSE = 20;
 

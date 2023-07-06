@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Kandidatstatus } from '../../../domene/Kandidat';
+import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Etikett from './Etikett';
 import css from './StatusEtikett.module.css';
 

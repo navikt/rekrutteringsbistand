@@ -5,8 +5,8 @@ import AppState from '../../state/AppState';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
 import { Nettstatus } from 'felles/nettressurs';
-import { Kandidat } from '../../kandidatliste/domene/Kandidat';
-import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 const useSendtKandidatmelding = (kandidat: Kandidat, kandidatliste: Kandidatliste) => {
     const dispatch: Dispatch<KandidatlisteAction> = useDispatch();

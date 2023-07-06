@@ -6,13 +6,14 @@ import { TenancyIcon } from '@navikt/aksel-icons';
 import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
 import MedPopover from '../med-popover/MedPopover';
-import { Kandidat } from '../domene/Kandidat';
-import { kandidaterMåGodkjenneDelingAvCv, Kandidatliste } from '../domene/Kandidatliste';
+import { kandidaterMåGodkjenneDelingAvCv } from '../domene/kandidatlisteUtils';
 import {
     hentForespørslerForKandidatForStilling,
     TilstandPåForespørsel,
 } from './forespørsel-om-deling-av-cv/Forespørsel';
 import { cvErSendtTilArbeidsgiverOgSlettet } from '../kandidatrad/status-og-hendelser/hendelser/CvErSlettet';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type Props = {
     kandidatliste: Kandidatliste;

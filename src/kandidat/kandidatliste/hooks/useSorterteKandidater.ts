@@ -2,7 +2,6 @@ import { Dispatch } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
-import { Kandidat } from '../domene/Kandidat';
 import { sorteringsalgoritmer } from '../kandidatsortering';
 import {
     ForespørselOmDelingAvCv,
@@ -12,6 +11,7 @@ import {
 import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
 import { Kandidatsortering } from '../reducer/kandidatlisteReducer';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type Returverdi = {
     sorterteKandidater: Kandidat[];

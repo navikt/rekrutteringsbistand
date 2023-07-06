@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { PersonPlusIcon, MenuElipsisHorizontalCircleIcon } from '@navikt/aksel-icons';
 
 import { formaterDato } from '../../utils/dateUtils';
-import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
 import { lenkeTilFinnKandidater, lenkeTilKandidatliste } from '../../app/paths';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import Dropdownmeny from './Dropdownmeny';
 import Redigerknapp from './Redigerknapp';
 import css from './Kandidatlistetabell.module.css';

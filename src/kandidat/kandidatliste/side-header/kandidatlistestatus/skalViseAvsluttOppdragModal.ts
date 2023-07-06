@@ -1,4 +1,4 @@
-import { Kandidatlistestatus } from '../../domene/Kandidatliste';
+import { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 
 export const skalViseModal = (
     status: Kandidatlistestatus,

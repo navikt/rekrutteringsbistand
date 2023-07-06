@@ -1,4 +1,4 @@
-import { Kandidatstatus, Kandidatutfall } from '../../../kandidatliste/domene/Kandidat';
+import { Kandidatutfall, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { KandidatlisteForKandidat } from '../../../historikk/historikkReducer';
 import { Veileder } from './veileder.mock';
 

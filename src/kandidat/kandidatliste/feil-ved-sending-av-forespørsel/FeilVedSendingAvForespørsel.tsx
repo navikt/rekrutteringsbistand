@@ -4,7 +4,7 @@ import {
     ForespørslerGruppertPåAktørId,
     TilstandPåForespørsel,
 } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidatliste } from '../domene/Kandidatliste';
+import { Kandidatliste } from '../domene/kandidatlisteUtils';
 import useSlettedeKandidater from '../hooks/useIkkeSlettedeKandidater';
 import css from './FeilVedSendingAvForespørsel.module.css';
 

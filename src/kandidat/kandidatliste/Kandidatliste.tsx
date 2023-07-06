@@ -6,12 +6,13 @@ import {
     erEierAvKandidatlisten,
     erKobletTilStilling,
     kandidaterMåGodkjenneDelingAvCv,
-    Kandidatliste as Kandidatlistetype,
+} from './domene/kandidatlisteUtils';
+import Kandidatlistetype, {
     Kandidatlistestatus,
     Stillingskategori,
-} from './domene/Kandidatliste';
+} from 'felles/domene/kandidatliste/Kandidatliste';
 import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
-import { Kandidatstatus, erInaktiv } from './domene/Kandidat';
+import { erInaktiv } from './domene/kandidatUtils';
 import { Nettstatus } from 'felles/nettressurs';
 import { queryParamsTilFilter, filterTilQueryParams } from './filter/filter-utils';
 import AppState from '../state/AppState';
@@ -37,6 +38,7 @@ import { Hendelse } from './kandidatrad/status-og-hendelser/etiketter/Hendelsese
 import FeilVedSendingAvForespørsel from './feil-ved-sending-av-forespørsel/FeilVedSendingAvForespørsel';
 import { Search } from '@navikt/ds-react';
 import css from './Kandidatliste.module.css';
+import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type Props = {
     kandidatliste: Kandidatlistetype;

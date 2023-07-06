@@ -47,7 +47,7 @@ import {
     putArkivert,
     putFormidlingsutfallForUsynligKandidat,
 } from '../../api/api';
-import { Kandidatliste } from '../domene/Kandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { SearchApiError } from '../../api/fetchUtils';
 import {
     fetchForespørslerOmDelingAvCv,

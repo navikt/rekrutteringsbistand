@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
-import { Kandidat } from '../../../domene/Kandidat';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
 
 type Props = {

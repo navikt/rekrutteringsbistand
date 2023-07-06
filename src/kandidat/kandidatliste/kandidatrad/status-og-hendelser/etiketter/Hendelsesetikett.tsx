@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import moment from 'moment';
-import { hentSisteKandidatutfall, Kandidatutfall, Utfallsendring } from '../../../domene/Kandidat';
+import { hentSisteKandidatutfall } from '../../../domene/kandidatUtils';
 import {
     ForespørselOmDelingAvCv,
     TilstandPåForespørsel,
@@ -8,6 +8,7 @@ import {
 import { formaterDato, formaterDatoUtenÅrstall } from '../../../../utils/dateUtils';
 import { Sms, SmsStatus } from '../../../domene/Kandidatressurser';
 import { cvErSendtTilArbeidsgiverOgSlettet } from '../hendelser/CvErSlettet';
+import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Etikett from './Etikett';
 import css from './Hendelsesetikett.module.css';
 

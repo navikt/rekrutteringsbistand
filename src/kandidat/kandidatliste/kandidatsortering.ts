@@ -1,10 +1,10 @@
-import { Kandidatstatus } from './domene/Kandidat';
 import { Retning } from './liste-header/sorterbarKolonneheader/Retning';
 import {
     Hendelse,
     hentKandidatensSisteHendelse,
 } from './kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
 import { KandidatMedForespørsel } from './hooks/useSorterteKandidater';
+import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 export enum KandidatSorteringsfelt {
     Navn,

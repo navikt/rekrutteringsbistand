@@ -1,30 +1,32 @@
 import { FunctionComponent, useEffect, useRef } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
+import { InformationSquareIcon, TasklistIcon, TrashIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 
-import { erKobletTilStilling, Kandidatliste, Kandidatlistestatus } from '../domene/Kandidatliste';
-import { erInaktiv, Kandidat } from '../domene/Kandidat';
+import { capitalizeFirstLetter } from '../../utils/formateringUtils';
+import { erInaktiv } from '../domene/kandidatUtils';
+import { erKobletTilStilling } from '../domene/kandidatlisteUtils';
+import { formaterDato } from '../../utils/dateUtils';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { lenkeTilCv } from '../../app/paths';
 import { modifierTilListeradGrid } from '../liste-header/ListeHeader';
 import { Nettstatus } from 'felles/nettressurs';
 import { Visningsstatus } from '../domene/Kandidatressurser';
-import { capitalizeFirstLetter } from '../../utils/formateringUtils';
 import AppState from '../../state/AppState';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
 import MerInfo from './mer-info/MerInfo';
 import Notater from './notater/Notater';
 import SmsStatusPopup from './smsstatus/SmsStatusPopup';
 import StatusOgHendelser from './status-og-hendelser/StatusOgHendelser';
+import StatusPåForespørselOmDelingAvCv from './status-på-forespørsel/StatusPåForespørselOmDelingAvCv';
 import useForespørselOmDelingAvCv from '../hooks/useForespørselOmDelingAvCv';
 import useKandidatnotater from '../hooks/useKandidatnotater';
 import useKandidattilstand from '../hooks/useKandidattilstand';
 import useSendtKandidatmelding from '../hooks/useSendtKandidatmelding';
-import StatusPåForespørselOmDelingAvCv from './status-på-forespørsel/StatusPåForespørselOmDelingAvCv';
-import { formaterDato } from '../../utils/dateUtils';
-import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
-import { InformationSquareIcon, TasklistIcon, TrashIcon } from '@navikt/aksel-icons';
 import css from './Kandidatrad.module.css';
 
 type Props = {

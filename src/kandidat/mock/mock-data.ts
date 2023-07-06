@@ -1,4 +1,3 @@
-import { Kandidat } from '../kandidatliste/domene/Kandidat';
 import { mockCver } from './data/kandidat/cv.mock';
 import {
     kandidatlistesammendragLister,
@@ -17,6 +16,7 @@ import {
 } from './data/forespørselOmDelingAvCv/forespørselOmDelingAvCv.mock';
 import enhetsregister from './data/kandidat/enhetsregister.mock.json';
 import notater from './data/kandidat/notater.mock.json';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 const cver = mockCver(meg);
 const kandidatlister = mockKandidatlister(meg, enAnnenVeileder, cver);

@@ -2,8 +2,8 @@ import { FunctionComponent } from 'react';
 import { BodyShort, Label, Link } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 
-import { Kandidat } from '../../domene/Kandidat';
 import { arbeidsrettetOppfølgingUrl } from '../../../utils/eksterneUrler';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
 import css from './MerInfo.module.css';
 

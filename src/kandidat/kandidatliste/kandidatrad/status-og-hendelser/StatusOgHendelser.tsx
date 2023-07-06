@@ -1,18 +1,19 @@
 import { FunctionComponent, useRef, useState } from 'react';
 import { Button, Popover } from '@navikt/ds-react';
 import { EyeIcon, PencilIcon, XMarkIcon } from '@navikt/aksel-icons';
+import classNames from 'classnames';
 
+import { erKobletTilStilling } from '../../domene/kandidatlisteUtils';
 import { ForespørslerForKandidatForStilling } from '../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidat, Kandidatstatus } from '../../domene/Kandidat';
+import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Sms } from '../../domene/Kandidatressurser';
-import { erKobletTilStilling, Kandidatliste } from '../../domene/Kandidatliste';
 import EndreStatusOgHendelser from './endre-status-og-hendelser/EndreStatusOgHendelser';
+import Hendelsesetikett from './etiketter/Hendelsesetikett';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import SeHendelser from './se-hendelser/SeHendelser';
 import StatusEtikett from './etiketter/StatusEtikett';
-import Hendelsesetikett from './etiketter/Hendelsesetikett';
 import css from './StatusOgHendelser.module.css';
-import classNames from 'classnames';
 
 type Props = {
     kandidat: Kandidat;

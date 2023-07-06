@@ -9,8 +9,8 @@ import {
     CLEAR_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
 } from '../../komponenter/typeahead/enhetsregisterReducer';
 import AppState from '../../state/AppState';
-import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
 import { capitalizeEmployerName, capitalizeLocation } from '../../utils/formateringUtils';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './Modal.module.css';
 
 export type KandidatlisteDto = {

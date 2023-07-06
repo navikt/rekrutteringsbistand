@@ -1,5 +1,5 @@
+import { AktørId } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { ForespørslerForStillingInboundDto } from '../../../api/forespørselOmDelingAvCvApi';
-import { AktørId } from '../../domene/Kandidat';
 
 export type ForespørselOutboundDto = {
     stillingsId: string;

@@ -1,7 +1,7 @@
 import { KandidatlisteSorteringsfelt } from '../Kandidatlistesortering';
 import { Retning } from '../../kandidatliste/liste-header/sorterbarKolonneheader/Retning';
-import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
 import { Søkekriterier } from './listeoversiktReducer';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 
 export enum ListeoversiktActionType {
     HentKandidatlister = 'HENT_KANDIDATLISTER',

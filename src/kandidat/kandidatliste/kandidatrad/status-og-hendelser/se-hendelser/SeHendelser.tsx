@@ -2,10 +2,10 @@ import { FunctionComponent } from 'react';
 import { Heading } from '@navikt/ds-react';
 
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidat } from '../../../domene/Kandidat';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettressurs } from 'felles/nettressurs';
 import { Sms } from '../../../domene/Kandidatressurser';
-import { Stillingskategori } from '../../../domene/Kandidatliste';
+import { Stillingskategori } from 'felles/domene/kandidatliste/Kandidatliste';
 import CvErSlettet from '../hendelser/CvErSlettet';
 import DelCvMedArbeidsgiver from '../hendelser/DelCvMedArbeidsgiver';
 import ForespørslerOgSvar from '../hendelser/forespørsler-og-svar/ForespørslerOgSvar';

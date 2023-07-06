@@ -1,6 +1,4 @@
 import moment from 'moment';
-import { AktørId } from '../../../kandidatliste/domene/Kandidat';
-import { Kandidatliste } from '../../../kandidatliste/domene/Kandidatliste';
 import {
     ForespørselOmDelingAvCv,
     ForespørselDeltStatus,
@@ -9,6 +7,8 @@ import {
 } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { KandidatlisteForKandidat } from '../../../historikk/historikkReducer';
 import { Veileder } from '../kandidat/veileder.mock';
+import { AktørId } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 export const mockForespørslerOmDelingAvCv = (
     eier: Veileder,

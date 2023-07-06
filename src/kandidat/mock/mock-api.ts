@@ -1,12 +1,12 @@
 import fetchMock, { MockResponse, MockResponseFunction } from 'fetch-mock';
 
 import { FormidlingAvUsynligKandidatOutboundDto } from '../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
-import { Kandidatutfall } from '../kandidatliste/domene/Kandidat';
 
 import { mock } from './mock-data';
 import { meg } from './data/kandidat/veileder.mock';
 import { api } from 'felles/api';
 import { ENHETSREGISTER_API } from '../api/api';
+import { Kandidatutfall } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 fetchMock.config.fallbackToNetwork = true;
 

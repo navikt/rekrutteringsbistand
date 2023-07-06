@@ -1,4 +1,4 @@
-import { Kandidat, Kandidatstatus } from '../domene/Kandidat';
+import { Kandidat, Kandidatstatus } from '../domene/kandidatUtils';
 import { Kandidatlistefilter } from '../reducer/kandidatlisteReducer';
 import {
     Hendelse,

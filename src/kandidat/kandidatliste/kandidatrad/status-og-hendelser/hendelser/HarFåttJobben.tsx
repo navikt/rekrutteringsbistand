@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppState from '../../../../state/AppState';
 import KandidatlisteActionType from '../../../reducer/KandidatlisteActionType';
 import FåttJobben from './FåttJobben';
-import { Kandidat, Kandidatutfall } from '../../../domene/Kandidat';
+import { Kandidat, Kandidatutfall } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type Props = {
     kanEndre: boolean;

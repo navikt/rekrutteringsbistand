@@ -4,10 +4,10 @@ import { Alert, BodyShort, Checkbox, CheckboxGroup, ErrorMessage } from '@navikt
 
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
 import { FormidlingAvUsynligKandidatOutboundDto } from './LeggTilKandidatModal';
-import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
+import { Kandidatliste } from '../../kandidatliste/domene/kandidatlisteUtils';
 import { Nettressurs, ikkeLastet, senderInn, Nettstatus } from 'felles/nettressurs';
 import { postFormidlingerAvUsynligKandidat } from '../../api/api';
-import { UsynligKandidat } from '../../kandidatliste/domene/Kandidat';
+import { UsynligKandidat } from '../../kandidatliste/domene/kandidatUtils';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
