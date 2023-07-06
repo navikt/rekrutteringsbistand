@@ -3,19 +3,19 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ingress } from '@navikt/ds-react';
 
-import { capitalizeFirstLetter } from '../utils/formateringUtils';
-import { fetchForespørslerOmDelingAvCvForKandidat } from '../api/forespørselOmDelingAvCvApi';
-import { fetchSmserForKandidat } from '../api/api';
-import { ForespørselOmDelingAvCv } from '../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { capitalizeFirstLetter } from '../../utils/formateringUtils';
+import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
+import { fetchSmserForKandidat } from '../../api/api';
+import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Historikktabell } from './historikktabell/Historikktabell';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from 'felles/nettressurs';
 import { KandidatlisteForKandidat, KandidatlisterForKandidatActionType } from './historikkReducer';
-import { KandidatQueryParam } from '../kandidatside/Kandidatside';
+import { KandidatQueryParam } from '../Kandidatside';
 import { sendEvent } from 'felles/amplitude';
-import { Sms } from '../kandidatliste/domene/Kandidatressurser';
-import AppState from '../state/AppState';
+import { Sms } from '../../kandidatliste/domene/Kandidatressurser';
+import AppState from '../../state/AppState';
 import Cv from '../cv/reducer/cv-typer';
-import Sidelaster from '../komponenter/sidelaster/Sidelaster';
+import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './Historikkside.module.css';
 
 const Historikkside: FunctionComponent = () => {

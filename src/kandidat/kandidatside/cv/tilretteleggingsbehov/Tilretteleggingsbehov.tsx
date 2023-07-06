@@ -1,7 +1,7 @@
 import { BodyLong, Link } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { sendEvent } from 'felles/amplitude';
-import { arbeidsrettetOppfølgingUrl } from '../../utils/eksterneUrler';
+import { arbeidsrettetOppfølgingUrl } from '../../../utils/eksterneUrler';
 import Informasjonspanel from '../Informasjonspanel';
 import css from './Tilretteleggingsbehov.module.css';
 

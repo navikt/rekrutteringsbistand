@@ -5,7 +5,7 @@ import {
     TilstandPåForespørsel,
     IdentType,
 } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { KandidatlisteForKandidat } from '../../../historikk/historikkReducer';
+import { KandidatlisteForKandidat } from '../../../kandidatside/historikk/historikkReducer';
 import { Veileder } from '../kandidat/veileder.mock';
 import { AktørId } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';

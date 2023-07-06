@@ -5,13 +5,13 @@ import { BodyShort, Detail, Table } from '@navikt/ds-react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 
-import { capitalizeEmployerName } from '../../../utils/formateringUtils';
-import { ForespørselOmDelingAvCv } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { capitalizeEmployerName } from '../../../../utils/formateringUtils';
+import { ForespørselOmDelingAvCv } from '../../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { KandidatlisteForKandidat } from '../../historikkReducer';
-import { lenkeTilKandidatliste, lenkeTilStilling } from '../../../app/paths';
-import { Sms } from '../../../kandidatliste/domene/Kandidatressurser';
-import Hendelsesetikett from '../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
-import StatusEtikett from '../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
+import { lenkeTilKandidatliste, lenkeTilStilling } from '../../../../app/paths';
+import { Sms } from '../../../../kandidatliste/domene/Kandidatressurser';
+import Hendelsesetikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
+import StatusEtikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
 import css from './Historikkrad.module.css';
 
 interface Props {

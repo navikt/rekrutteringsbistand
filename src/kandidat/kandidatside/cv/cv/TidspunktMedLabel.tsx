@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { formaterDatoTilMånedOgÅr } from '../../utils/dateUtils';
+import { formaterDatoTilMånedOgÅr } from '../../../utils/dateUtils';
 
 type Props = {
     tidspunkt: Date | null;

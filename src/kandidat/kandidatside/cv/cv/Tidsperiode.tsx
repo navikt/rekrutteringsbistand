@@ -1,4 +1,4 @@
-import { formaterDatoTilMånedOgÅr } from '../../utils/dateUtils';
+import { formaterDatoTilMånedOgÅr } from '../../../utils/dateUtils';
 
 type Props = {
     fradato?: string | null;

@@ -1,4 +1,4 @@
-import { CvSøkeresultat } from '../../cv/reducer/cv-typer';
+import { CvSøkeresultat } from '../../kandidatside/cv/reducer/cv-typer';
 import {
     filtrerKandidater,
     lagTomtStatusfilter,

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AppState from '../../state/AppState';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
-import { CvAction, CvActionType } from '../../cv/reducer/cvReducer';
+import { CvAction, CvActionType } from '../cv/reducer/cvReducer';
 
 const useCv = (kandidatnr: string) => {
     const dispatch: Dispatch<CvAction | KandidatlisteAction> = useDispatch();
