@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react';
 import { BodyShort } from '@navikt/ds-react';
-import Cv from '../reducer/cv-typer';
 import Informasjonspanel from '../Informasjonspanel';
 import css from './Jobbprofil.module.css';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 const oppstartskoder = {
     LEDIG_NAA: { key: 'LEDIG_NAA', label: 'Kandidaten er ledig nå' },
@@ -11,7 +11,7 @@ const oppstartskoder = {
 };
 
 type Props = {
-    cv: Cv;
+    cv: KandidatCv;
 };
 
 const Jobbønsker: FunctionComponent<Props> = ({ cv }) => (

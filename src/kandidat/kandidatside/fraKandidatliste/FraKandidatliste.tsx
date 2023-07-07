@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
 import { filterTilQueryParams } from '../../kandidatliste/filter/filter-utils';
-import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import {
+    KandidatIKandidatliste,
+    Kandidatstatus,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { lenkeTilKandidatliste } from '../../app/paths';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
-import Cv from '../cv/reducer/cv-typer';
 import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
@@ -26,6 +28,7 @@ import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useSendtKandidatmelding from './useSendtKandidatmelding';
 import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
 import css from './FraKandidatliste.module.css';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
     tabs: ReactNode;
@@ -81,8 +84,8 @@ const FraKandidatlisteInner = ({
     children,
 }: {
     tabs: ReactNode;
-    cv: Nettressurs<Cv>;
-    kandidat: Kandidat;
+    cv: Nettressurs<KandidatCv>;
+    kandidat: KandidatIKandidatliste;
     kandidatliste: Kandidatliste;
     children: React.ReactNode;
 }) => {

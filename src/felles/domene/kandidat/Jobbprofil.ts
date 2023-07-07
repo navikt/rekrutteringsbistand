@@ -1,3 +1,5 @@
+import { Omfang } from './Cv';
+
 export type Jobbønske = {
     styrkKode: string | null;
     styrkBeskrivelse: string | null;
@@ -23,7 +25,7 @@ type Jobbprofil = {
     arbeidstidsordningJobbonskerObj: object[];
     arbeidsdagerJobbonskerObj: object[];
     arbeidstidJobbonskerObj: object[];
-    omfangJobbonskerObj: object[];
+    omfangJobbonskerObj: Omfang[];
     oppstartKode: Oppstartkode | null;
 };
 

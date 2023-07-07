@@ -1,8 +1,8 @@
 import { Fragment, FunctionComponent, ReactNode } from 'react';
 import { BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import sortByDato from './sortByDato';
-import CvType, { Sertifikat as SertifikatType } from '../reducer/cv-typer';
 import Språkferdighet from './Språkferdighet';
 import Kurs from './Kurs';
 import Informasjonspanel from '../Informasjonspanel';
@@ -10,9 +10,10 @@ import Arbeidserfaring from './Arbeidserfaring';
 import Erfaring from './Erfaring';
 import Tidsperiode from './Tidsperiode';
 import css from './Cv.module.css';
+import { Sertifikat } from 'felles/domene/kandidat/Cv';
 
 type Props = {
-    cv: CvType;
+    cv: KandidatCv;
 };
 
 const Cv: FunctionComponent<Props> = ({ cv }) => {
@@ -200,7 +201,7 @@ const BolkMedPunktliste = ({ tittel, children }: { tittel: string; children: Rea
     </div>
 );
 
-const fjernDuplikater = (forerkortListe: SertifikatType[]) => {
+const fjernDuplikater = (forerkortListe: Sertifikat[]) => {
     const forerkortAlleredeILista = new Set();
 
     return forerkortListe.filter((forerkort) => {

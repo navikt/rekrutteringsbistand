@@ -4,7 +4,7 @@ import { BodyShort, Heading } from '@navikt/ds-react';
 
 import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import Cv from '../../cv/reducer/cv-typer';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import Fødselsinfo from './Fødselsinfo';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
 import Personalia from './Personalia';
@@ -12,7 +12,7 @@ import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
 
 type Props = {
-    cv: Nettressurs<Cv>;
+    cv: Nettressurs<KandidatCv>;
     kandidatnavigering: Kandidatnavigering | null;
     tilbakelenkeTekst: string;
     tilbakelenke: {
@@ -70,7 +70,7 @@ const Kandidatheader = ({ cv, tilbakelenke, tilbakelenkeTekst, kandidatnavigerin
     );
 };
 
-const hentNavnFraCv = (cv: Cv) => {
+const hentNavnFraCv = (cv: KandidatCv) => {
     const fornavn = capitalizeFirstLetter(cv.fornavn);
     const etternavn = capitalizeFirstLetter(cv.etternavn);
 

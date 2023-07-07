@@ -1,4 +1,3 @@
-import { CvSøkeresultat } from '../../kandidatside/cv/reducer/cv-typer';
 import {
     filtrerKandidater,
     lagTomtStatusfilter,
@@ -32,8 +31,7 @@ import {
     separerGjeldendeForespørselFraRespons,
 } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Hendelse } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
-import {
-    Kandidat,
+import KandidatIKandidatliste, {
     Kandidatstatus,
     UsynligKandidat,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
@@ -46,7 +44,6 @@ export type Kandidatsortering = null | {
 };
 
 export type KandidatlisteState = {
-    kandidat?: CvSøkeresultat;
     deleStatus: Nettstatus;
     id?: string;
     kandidatliste: Nettressurs<Kandidatliste>;
@@ -583,7 +580,7 @@ const initialKandidattilstand = (): Kandidattilstand => ({
 
 const oppdaterArkivertIKandidatlisteDetaljer = (
     state: KandidatlisteState,
-    kandidat: Kandidat
+    kandidat: KandidatIKandidatliste
 ): KandidatlisteState => {
     const kandidatliste = state.kandidatliste;
     if (kandidatliste.kind === Nettstatus.Suksess) {

@@ -11,7 +11,6 @@ import KandidatlisteAction from './reducer/KandidatlisteAction';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
 import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
 import SendSmsModal from './modaler/SendSmsModal';
-import { CvSøkeresultat } from '../kandidatside/cv/reducer/cv-typer';
 import { Kandidatmeldinger, Kandidattilstander, SmsStatus } from './domene/Kandidatressurser';
 import Kandidatliste from './Kandidatliste';
 import {
@@ -40,7 +39,6 @@ type ConnectedProps = {
     smsSendStatus: SmsStatus;
     resetSmsSendStatus: () => void;
     fodselsnummer?: string;
-    kandidat?: CvSøkeresultat;
     toggleArkivert: (kandidatlisteId: string, kandidatnr: string, arkivert: boolean) => void;
     angreArkiveringForKandidater: (kandidatlisteId: string, kandidatnumre: string[]) => void;
     statusArkivering: Nettstatus;
@@ -324,7 +322,6 @@ const mapStateToProps = (state: AppState) => ({
     deleStatus: state.kandidatliste.deleStatus,
     smsSendStatus: state.kandidatliste.sms.sendStatus,
     fodselsnummer: state.kandidatliste.fodselsnummer,
-    kandidat: state.kandidatliste.kandidat,
     sendteMeldinger: state.kandidatliste.sms.sendteMeldinger,
     statusArkivering: state.kandidatliste.arkivering.statusArkivering,
     statusDearkivering: state.kandidatliste.arkivering.statusDearkivering,

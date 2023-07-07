@@ -10,7 +10,7 @@ import {
 } from '@navikt/aksel-icons';
 import { ReactComponent as Piktogram } from './minekandidater.svg';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
 import css from './Kandidatbanner.module.css';
 
 type Brødsmule = {
