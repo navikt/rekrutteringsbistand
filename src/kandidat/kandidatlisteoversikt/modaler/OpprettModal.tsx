@@ -2,7 +2,7 @@ import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage, Heading } from '@navikt/ds-react';
 
-import { feil, Nettressurs, Nettstatus, suksess } from '../../api/Nettressurs';
+import { feil, Nettressurs, Nettstatus, suksess } from 'felles/nettressurs';
 import Modal from '../../komponenter/modal/Modal';
 import Kandidatlisteskjema, { KandidatlisteDto } from './Kandidatlisteskjema';
 import { postKandidatliste } from '../../api/api';

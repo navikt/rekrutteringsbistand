@@ -3,6 +3,7 @@ import { FunctionComponent } from 'react';
 import Svartelling, { SvartellingIkon } from './Svartelling';
 import useSvarstatistikk from './useSvarstatistikk';
 import css from './Forespørsler.module.css';
+import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     navKontor: string;
@@ -22,7 +23,7 @@ export const formaterSomProsentAvTotalen = (tall: number, antallTotalt: number) 
 const Forespørsler: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed }) => {
     const svarstatistikk = useSvarstatistikk(navKontor, fraOgMed, tilOgMed);
 
-    if (svarstatistikk.kind !== 'suksess') {
+    if (svarstatistikk.kind !== Nettstatus.Suksess) {
         return null;
     }
 

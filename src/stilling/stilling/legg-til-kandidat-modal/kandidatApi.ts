@@ -1,8 +1,9 @@
 import { api } from 'felles/api';
 import { ApiError } from '../../api/apiUtils';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
-import { Kandidat, Kandidatliste, Synlighetsevaluering } from './kandidatlistetyper';
-import { KandidatOutboundDto } from './LeggTilKandidatModal';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 export const fetchSynlighetsevaluering = async (
     fødselsnummer: string
@@ -25,16 +26,11 @@ export const fetchSynlighetsevaluering = async (
             throw new ApiError(await response.text(), response.status);
         }
     } catch (e) {
-        if (e instanceof ApiError) {
-            return {
-                kind: Nettstatus.Feil,
-                error: e,
-            };
-        }
-
         return {
             kind: Nettstatus.Feil,
-            error: new ApiError('Ukjent feil', 0),
+            error: {
+                message: 'Nettverksfeil',
+            },
         };
     }
 };
@@ -49,28 +45,9 @@ export class KandidatSokError {
     }
 }
 
-export const postKandidaterTilKandidatliste = async (
-    kandidatlisteId: string,
-    kandidater: KandidatOutboundDto[]
-): Promise<Nettressurs<Kandidatliste>> => {
-    const url = `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`;
-
-    try {
-        const body = await postJson(url, JSON.stringify(kandidater));
-
-        return {
-            kind: Nettstatus.Suksess,
-            data: body,
-        };
-    } catch (e) {
-        return {
-            kind: Nettstatus.Feil,
-            error: e,
-        };
-    }
-};
-
-export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<Kandidat>> => {
+export const fetchKandidatMedFnr = async (
+    fnr: string
+): Promise<Nettressurs<ForenkletKandidatISøk>> => {
     const url = `${api.kandidat}/veileder/kandidatsok/fnrsok`;
     const body = JSON.stringify({ fnr });
 
@@ -103,9 +80,6 @@ export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<Kand
     }
 };
 
-export const putKandidatliste = (stillingsId: string): Promise<Kandidatliste> =>
-    putRequest(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`);
-
 export const fetchKandidatliste = (stillingsId: string): Promise<Kandidatliste> =>
     fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`);
 
@@ -116,24 +90,6 @@ const postHeaders = () => {
         Accept: 'application/json',
     };
 };
-
-async function postJson(url, bodyString) {
-    try {
-        const response = await fetch(url, {
-            credentials: 'include',
-            method: 'POST',
-            body: bodyString,
-            headers: postHeaders(),
-            mode: 'cors',
-        });
-        if (response.status === 200 || response.status === 201) {
-            return response.json();
-        }
-        throwError(undefined, response.status);
-    } catch (e) {
-        throwError(e.message, e.status);
-    }
-}
 
 async function fetchJson(url) {
     try {
@@ -148,27 +104,6 @@ async function fetchJson(url) {
             throwError(response.statusText, response.status);
         }
         throwError(error.message, error.status);
-    } catch (e) {
-        throwError(e.message, e.status);
-    }
-}
-
-async function putRequest(url: string) {
-    try {
-        const response = await fetch(url, {
-            credentials: 'include',
-            method: 'PUT',
-            headers: {
-                'X-XSRF-TOKEN': getCookie('XSRF-TOKEN'),
-            },
-            mode: 'cors',
-        });
-
-        if (response.ok) {
-            return await response.json();
-        }
-
-        throwError(undefined, response.status);
     } catch (e) {
         throwError(e.message, e.status);
     }

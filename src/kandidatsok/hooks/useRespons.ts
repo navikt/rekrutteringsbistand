@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { søk } from '../api/api';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
 import { Respons } from '../kandidater/elasticSearchTyper';
@@ -38,20 +38,20 @@ export type Param = FilterParam | OtherParam;
 const useRespons = (innloggetBruker: InnloggetBruker) => {
     const { søkekriterier } = useSøkekriterier();
     const [respons, setRespons] = useState<Nettressurs<Respons>>({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
 
     const query = byggQuery(søkekriterier, innloggetBruker);
 
     const setOpptatt = () => {
         setRespons(
-            respons.kind === 'suksess'
+            respons.kind === Nettstatus.Suksess
                 ? {
-                      kind: 'oppdaterer',
+                      kind: Nettstatus.Oppdaterer,
                       data: respons.data,
                   }
                 : {
-                      kind: 'laster-inn',
+                      kind: Nettstatus.LasterInn,
                   }
         );
     };
@@ -70,14 +70,13 @@ const useRespons = (innloggetBruker: InnloggetBruker) => {
                 let søkeresultat = await søk(query);
 
                 setRespons({
-                    kind: 'suksess',
+                    kind: Nettstatus.Suksess,
                     data: søkeresultat,
                 });
             } catch (e) {
                 setRespons({
-                    kind: 'feil',
-                    statuskode: (e as Response).status,
-                    error: (e as Response).statusText,
+                    kind: Nettstatus.Feil,
+                    error: { status: (e as Response).status, message: (e as Response).statusText },
                 });
             }
         };

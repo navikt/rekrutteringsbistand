@@ -1,10 +1,10 @@
-import { Nettstatus } from '../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { Reducer } from 'redux';
 import { ListeoversiktAction, ListeoversiktActionType } from './ListeoversiktAction';
 import { KandidatlisteSorteringsfelt } from '../Kandidatlistesortering';
 import { Retning } from '../../kandidatliste/liste-header/sorterbarKolonneheader/Retning';
-import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
 import { Stillingsfilter } from '../filter/Filter';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 
 export type Søkekriterier = {
     query: string;

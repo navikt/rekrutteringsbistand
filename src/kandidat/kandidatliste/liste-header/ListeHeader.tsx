@@ -2,11 +2,12 @@ import { FunctionComponent, ReactNode } from 'react';
 import { Checkbox, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 
-import { erKobletTilStilling, Kandidatliste, Kandidatlistestatus } from '../domene/Kandidatliste';
+import { erKobletTilStilling } from '../domene/kandidatlisteUtils';
 import { KandidatSorteringsfelt } from '../kandidatsortering';
 import { nesteSorteringsretning, Retning } from './sorterbarKolonneheader/Retning';
 import { Kandidatsortering } from '../reducer/kandidatlisteReducer';
 import SorterbarKolonneheader from './sorterbarKolonneheader/SorterbarKolonneheader';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import css from '../kandidatrad/Kandidatrad.module.css';
 
 interface Props {

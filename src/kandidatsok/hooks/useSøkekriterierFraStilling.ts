@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { suggest } from '../api/api';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import byggSuggestion, { Forslagsfelt } from '../api/query/byggSuggestion';
 import { encodeGeografiforslag } from '../filter/jobbønsker/ØnsketSted';
 import { Geografiforslag } from './useGeografiSuggestions';
@@ -29,7 +29,7 @@ const useSøkekriterierFraStilling = (
         };
 
         if (
-            stilling.kind === 'suksess' &&
+            stilling.kind === Nettstatus.Suksess &&
             brukKriterierFraStillingen &&
             søkeKriterierIkkeLagtTil(searchParams)
         ) {

@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactNode, useState } from 'react';
-import { Nettressurs, Nettstatus } from '../../../../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import {
     ForespørslerForKandidatForStilling,
     kanResendeForespørsel,

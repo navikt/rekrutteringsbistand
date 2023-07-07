@@ -1,9 +1,10 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { PlusCircleIcon, MinusCircleIcon } from '@navikt/aksel-icons';
-import Hendelse, { Hendelsesstatus } from './Hendelse';
-import { hentSisteKandidatutfall, Kandidatutfall, Utfallsendring } from '../../../domene/Kandidat';
-import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import { Button } from '@navikt/ds-react';
+import { hentSisteKandidatutfall } from '../../../domene/kandidatUtils';
+import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
+import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Hendelse, { Hendelsesstatus } from './Hendelse';
 import css from './Hendelse.module.css';
 
 type Props = {

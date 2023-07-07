@@ -1,16 +1,18 @@
-import { Kandidatlistestatus } from '../domene/Kandidatliste';
-import { Kandidatstatus, Kandidatutfall } from '../domene/Kandidat';
-import { ApiError } from '../../api/Nettressurs';
-import { Kandidatliste } from '../domene/Kandidatliste';
+import { Error } from 'felles/nettressurs';
 import { Notat, Visningsstatus } from '../domene/Kandidatressurser';
-import { Kandidat } from '../domene/Kandidat';
 import KandidatlisteActionType from './KandidatlisteActionType';
 import { SearchApiError } from '../../api/fetchUtils';
 import { ForespørselOutboundDto } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Sms } from '../domene/Kandidatressurser';
 import { Kandidatlistefilter, Kandidatsortering } from './kandidatlisteReducer';
 import { ForespørslerForStillingInboundDto } from '../../api/forespørselOmDelingAvCvApi';
-import { FormidlingAvUsynligKandidatOutboundDto } from '../../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
+import { FormidlingAvUsynligKandidatOutboundDto } from '../modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
+import {
+    Kandidatstatus,
+    Kandidatutfall,
+    Kandidat,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 
 export interface HentKandidatlisteMedStillingsIdAction {
     type: KandidatlisteActionType.HentKandidatlisteMedStillingsId;
@@ -24,7 +26,7 @@ export interface HentKandidatlisteMedStillingsIdSuccessAction {
 
 export interface HentKandidatlisteMedStillingsIdFailureAction {
     type: KandidatlisteActionType.HentKandidatlisteMedStillingsIdFailure;
-    error: ApiError;
+    error: Error;
 }
 
 export interface HentKandidatlisteMedKandidatlisteIdAction {
@@ -39,7 +41,7 @@ export interface HentKandidatlisteMedKandidatlisteIdSuccessAction {
 
 export interface HentKandidatlisteMedKandidatlisteIdFailureAction {
     type: KandidatlisteActionType.HentKandidatlisteMedKandidatlisteIdFailure;
-    error: ApiError;
+    error: Error;
 }
 
 export interface NullstillKandidatlisteAction {
@@ -72,7 +74,6 @@ export interface OppdaterKandidatlisteMedKandidatAction {
     type: KandidatlisteActionType.OppdaterKandidatlisteMedKandidat;
     kandidatliste: Kandidatliste;
     kandidatnr: string;
-    notat?: string;
 }
 
 export interface EndreStatusKandidatAction {

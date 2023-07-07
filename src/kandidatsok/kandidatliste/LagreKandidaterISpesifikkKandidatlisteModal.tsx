@@ -1,7 +1,7 @@
 import { BodyLong, Button, Heading, Loader, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 import { lagreKandidaterIKandidatliste } from '../api/api';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import {
     Kandidatliste,
     KontekstAvKandidatlisteEllerStilling,
@@ -25,7 +25,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
     onSuksess,
 }) => {
     const [lagreKandidater, setLagreKandidater] = useState<Nettressurs<LagreKandidaterDto>>({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
 
     const onBekreftClick = (kandidatlisteId: string) => async () => {
@@ -33,7 +33,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
             kandidatnr: kandidat,
         }));
 
-        setLagreKandidater({ kind: 'laster-opp', data: lagreKandidaterDto });
+        setLagreKandidater({ kind: Nettstatus.SenderInn, data: lagreKandidaterDto });
 
         try {
             const oppdatertKandidatliste = await lagreKandidaterIKandidatliste(
@@ -41,13 +41,13 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                 kandidatlisteId
             );
 
-            setLagreKandidater({ kind: 'suksess', data: lagreKandidaterDto });
+            setLagreKandidater({ kind: Nettstatus.Suksess, data: lagreKandidaterDto });
             onSuksess(oppdatertKandidatliste);
             onClose();
         } catch (e) {
             setLagreKandidater({
-                kind: 'feil',
-                error: typeof e === 'string' ? e : String(e),
+                kind: Nettstatus.Feil,
+                error: { message: typeof e === 'string' ? e : String(e) },
             });
         }
     };
@@ -59,10 +59,9 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                     Lagre {markerteKandidater.size} kandidat
                     {markerteKandidater.size > 1 ? 'er' : ''} i kandidatlisten
                 </Heading>
-                {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === 'laster-inn' && (
-                    <Loader />
-                )}
-                {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === 'suksess' && (
+                {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind ===
+                    Nettstatus.LasterInn && <Loader />}
+                {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === Nettstatus.Suksess && (
                     <>
                         <BodyLong className={css.beskrivelse}>
                             Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
@@ -80,7 +79,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                             </Button>
                             <Button
                                 variant="tertiary"
-                                loading={lagreKandidater.kind === 'laster-opp'}
+                                loading={lagreKandidater.kind === Nettstatus.SenderInn}
                                 onClick={() => {
                                     onClose();
                                 }}
@@ -90,7 +89,9 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                         </div>
                     </>
                 )}
-                {lagreKandidater.kind === 'feil' && <BodyLong>{lagreKandidater.error}</BodyLong>}
+                {lagreKandidater.kind === Nettstatus.Feil && (
+                    <BodyLong>{lagreKandidater.error.message}</BodyLong>
+                )}
             </div>
         </Modal>
     );

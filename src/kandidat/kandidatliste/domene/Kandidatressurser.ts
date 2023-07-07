@@ -1,5 +1,5 @@
-import { Nettressurs } from '../../api/Nettressurs';
-import { Fødselsnummer, Kandidatnr } from './Kandidat';
+import { Fødselsnummer, Kandidatnr } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { Nettressurs } from 'felles/nettressurs';
 
 export type Notat = {
     tekst: string;

@@ -1,10 +1,9 @@
-import { CvSøkeresultat } from '../../cv/reducer/cv-typer';
+import { CvSøkeresultat } from '../../kandidatside/cv/reducer/cv-typer';
 import {
     filtrerKandidater,
     lagTomtStatusfilter,
     lagTomtHendelsefilter,
 } from '../filter/filter-utils';
-import { Kandidat, Kandidatstatus, UsynligKandidat } from '../domene/Kandidat';
 import KandidatlisteActionType from './KandidatlisteActionType';
 import { Reducer } from 'redux';
 import {
@@ -15,10 +14,10 @@ import {
     Nettstatus,
     senderInn,
     suksess,
-} from '../../api/Nettressurs';
+} from 'felles/nettressurs';
 import KandidatlisteAction from './KandidatlisteAction';
 import { SearchApiError } from '../../api/fetchUtils';
-import { Kandidatliste } from '../domene/Kandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import {
     Kandidattilstander,
     Kandidatnotater,
@@ -33,6 +32,11 @@ import {
     separerGjeldendeForespørselFraRespons,
 } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Hendelse } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
+import {
+    Kandidat,
+    Kandidatstatus,
+    UsynligKandidat,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type FormidlingId = string;
 

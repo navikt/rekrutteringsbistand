@@ -1,16 +1,10 @@
-import { FunctionComponent } from 'react';
 import { Alert, ErrorMessage, Heading, Loader } from '@navikt/ds-react';
 
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
-import { Kandidatliste } from './kandidatlistetyper';
-import Modal from '../../common/modal/Modal';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import LeggTilKandidat from './LeggTilKandidat';
+import Modal from '../../common/modal/Modal';
 import css from './LeggTilKandidatModal.module.css';
-
-export type KandidatOutboundDto = {
-    kandidatnr: string;
-    notat?: string;
-};
 
 type Props = {
     vis: boolean;
@@ -18,7 +12,7 @@ type Props = {
     kandidatliste: Nettressurs<Kandidatliste>;
 };
 
-const LeggTilKandidatModal: FunctionComponent<Props> = ({ vis, onClose, kandidatliste }) => {
+const LeggTilKandidatModal = ({ vis, onClose, kandidatliste }: Props) => {
     return (
         <Modal open={vis} aria-label="Legg til kandidat" onClose={onClose}>
             <Heading spacing level="2" size="large">

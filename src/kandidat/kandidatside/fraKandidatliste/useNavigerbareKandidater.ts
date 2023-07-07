@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import { lenkeTilKandidatside, Kandidatfane } from '../../app/paths';
 import AppState from '../../state/AppState';
-import { erInaktiv } from '../../kandidatliste/domene/Kandidat';
-import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
+import { erInaktiv } from '../../kandidatliste/domene/kandidatUtils';
 import useFiltrerteKandidater from '../../kandidatliste/hooks/useFiltrerteKandidater';
 import useSorterteKandidater from '../../kandidatliste/hooks/useSorterteKandidater';
 import useFaner from '../hooks/useFaner';
 import { Kandidatnavigering } from '../komponenter/header/forrige-neste/ForrigeNeste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 const useNavigerbareKandidater = (
     kandidatnr: string,

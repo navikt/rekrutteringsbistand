@@ -2,28 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import {
-    erKobletTilStilling,
-    kandidaterMåGodkjenneDelingAvCv,
-    Kandidatliste as Kandidatlistetype,
-} from './domene/Kandidatliste';
-import { Kandidatstatus } from './domene/Kandidat';
-import { Nettressurs, Nettstatus } from '../api/Nettressurs';
+import { erKobletTilStilling, kandidaterMåGodkjenneDelingAvCv } from './domene/kandidatlisteUtils';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
 import { sendEvent } from 'felles/amplitude';
 import AppState from '../state/AppState';
 import KandidatlisteAction from './reducer/KandidatlisteAction';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
 import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
 import SendSmsModal from './modaler/SendSmsModal';
-import { CvSøkeresultat } from '../cv/reducer/cv-typer';
+import { CvSøkeresultat } from '../kandidatside/cv/reducer/cv-typer';
 import { Kandidatmeldinger, Kandidattilstander, SmsStatus } from './domene/Kandidatressurser';
 import Kandidatliste from './Kandidatliste';
 import {
     ForespørslerGruppertPåAktørId,
     hentForespørslerForKandidatForStilling,
 } from './knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import LeggTilKandidatModal from '../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
+import LeggTilKandidatModal from './modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
 import { AlertType, VarslingAction, VarslingActionType } from '../varsling/varslingReducer';
+import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type OwnProps = {
     kandidatliste: Kandidatlistetype;
@@ -273,29 +270,25 @@ class KandidatlisteOgModaler extends React.Component<Props> {
 
         return (
             <div>
-                {deleModalOpen && (
-                    <PresenterKandidaterModal
-                        vis={this.state.deleModalOpen}
-                        deleStatus={deleStatus}
-                        onClose={this.onToggleDeleModal}
-                        onSubmit={this.onDelMedArbeidsgiver}
-                        antallMarkerteKandidater={markerteKandidater.length}
-                        antallKandidaterSomHarSvartJa={kandidaterSomHarSvartJa.length}
-                        alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere={
-                            erKobletTilStilling(kandidatliste) &&
-                            kandidaterMåGodkjenneDelingAvCv(kandidatliste)
-                        }
-                    />
-                )}
-                {leggTilModalOpen && (
-                    <LeggTilKandidatModal
-                        vis={this.state.leggTilModalOpen}
-                        onClose={this.onToggleLeggTilKandidatModal}
-                        stillingsId={kandidatliste.stillingId}
-                        kandidatliste={kandidatliste}
-                        valgtNavKontor={this.props.valgtNavKontor}
-                    />
-                )}
+                <PresenterKandidaterModal
+                    vis={deleModalOpen}
+                    deleStatus={deleStatus}
+                    onClose={this.onToggleDeleModal}
+                    onSubmit={this.onDelMedArbeidsgiver}
+                    antallMarkerteKandidater={markerteKandidater.length}
+                    antallKandidaterSomHarSvartJa={kandidaterSomHarSvartJa.length}
+                    alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere={
+                        erKobletTilStilling(kandidatliste) &&
+                        kandidaterMåGodkjenneDelingAvCv(kandidatliste)
+                    }
+                />
+                <LeggTilKandidatModal
+                    vis={leggTilModalOpen}
+                    onClose={this.onToggleLeggTilKandidatModal}
+                    stillingsId={kandidatliste.stillingId}
+                    kandidatliste={kandidatliste}
+                    valgtNavKontor={this.props.valgtNavKontor}
+                />
                 {kandidatliste.stillingId &&
                     this.props.sendteMeldinger.kind === Nettstatus.Suksess && (
                         <>

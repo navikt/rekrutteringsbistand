@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Nettstatus } from '../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../state/AppState';
 import KandidatlisteOgModaler from './KandidatlisteOgModaler';
 import useScrollTilToppen from './hooks/useScrollTilToppen';

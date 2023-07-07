@@ -1,6 +1,6 @@
 import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { lagreKandidaterIValgteKandidatlister } from '../api/api';
 import VelgKandidatlister from './VelgKandidatlister';
 import css from './LagreKandidaterIMineKandidatlisterModal.module.css';
@@ -29,14 +29,14 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     const [lagreIKandidatlister, setLagreIKandidatlister] = useState<
         Nettressurs<LagreKandidaterDto>
     >({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
 
     useEffect(() => {
         setMarkerteLister(new Set());
         setLagredeLister(new Set());
         setLagreIKandidatlister({
-            kind: 'ikke-lastet',
+            kind: Nettstatus.IkkeLastet,
         });
     }, [markerteKandidater]);
 
@@ -58,14 +58,14 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
             kandidatnr: kandidat,
         }));
 
-        setLagreIKandidatlister({ kind: 'laster-opp', data: lagreKandidaterDto });
+        setLagreIKandidatlister({ kind: Nettstatus.SenderInn, data: lagreKandidaterDto });
 
         try {
             const markerteKandidatlister = Array.from(markerteLister);
 
             await lagreKandidaterIValgteKandidatlister(lagreKandidaterDto, markerteKandidatlister);
 
-            setLagreIKandidatlister({ kind: 'suksess', data: lagreKandidaterDto });
+            setLagreIKandidatlister({ kind: Nettstatus.Suksess, data: lagreKandidaterDto });
             setMarkerteLister(new Set());
 
             const oppdaterteLagredeLister = new Set(lagredeLister);
@@ -76,8 +76,10 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
             setLagredeLister(oppdaterteLagredeLister);
         } catch (e) {
             setLagreIKandidatlister({
-                kind: 'feil',
-                error: e as string,
+                kind: Nettstatus.Feil,
+                error: {
+                    message: e as string,
+                },
             });
         }
     };
@@ -101,7 +103,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
                     variant="primary"
                     onClick={onLagreKandidater}
                     disabled={markerteLister.size === 0}
-                    loading={lagreIKandidatlister.kind === 'laster-opp'}
+                    loading={lagreIKandidatlister.kind === Nettstatus.SenderInn}
                 >
                     Lagre
                 </Button>

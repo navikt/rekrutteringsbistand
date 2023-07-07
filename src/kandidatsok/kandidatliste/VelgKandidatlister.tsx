@@ -3,6 +3,7 @@ import { CheckboxGroup, Loader, Pagination } from '@navikt/ds-react';
 import VelgbarKandidatliste from './VelgbarKandidatliste';
 import useMineKandidatlister from './useMineKandidatlister';
 import css from './VelgKandidatlister.module.css';
+import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     markerteLister: Set<string>;
@@ -26,9 +27,12 @@ const VelgKandidatlister: FunctionComponent<Props> = ({
 
     const avhukedeLister = [...Array.from(markerteLister), ...Array.from(lagredeLister)];
 
-    if (mineKandidatlister.kind === 'laster-inn') {
+    if (mineKandidatlister.kind === Nettstatus.LasterInn) {
         return <Loader />;
-    } else if (mineKandidatlister.kind === 'suksess' || mineKandidatlister.kind === 'oppdaterer') {
+    } else if (
+        mineKandidatlister.kind === Nettstatus.Suksess ||
+        mineKandidatlister.kind === Nettstatus.Oppdaterer
+    ) {
         return (
             <>
                 <CheckboxGroup

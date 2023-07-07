@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api, videresendTilInnlogging } from 'felles/api';
 import { formaterDatoTilApi } from './datoUtils';
-import { Nettressurs } from 'felles/nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 
 export type Svarstatistikk = {
     antallSvartJa: number;
@@ -12,7 +12,7 @@ export type Svarstatistikk = {
 
 const useSvarstatistikk = (navKontor: string, fraOgMed: Date, tilOgMed: Date) => {
     const [svarstatistikk, setSvarstatistikk] = useState<Nettressurs<Svarstatistikk>>({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
 
     useEffect(() => {
@@ -26,7 +26,7 @@ const useSvarstatistikk = (navKontor: string, fraOgMed: Date, tilOgMed: Date) =>
 
         const hentData = async () => {
             setSvarstatistikk({
-                kind: 'laster-inn',
+                kind: Nettstatus.LasterInn,
             });
 
             const respons = await fetch(url, {
@@ -36,20 +36,22 @@ const useSvarstatistikk = (navKontor: string, fraOgMed: Date, tilOgMed: Date) =>
 
             if (respons.ok) {
                 setSvarstatistikk({
-                    kind: 'suksess',
+                    kind: Nettstatus.Suksess,
                     data: await respons.json(),
                 });
             } else if (respons.status === 401) {
                 videresendTilInnlogging();
 
                 setSvarstatistikk({
-                    kind: 'feil',
-                    error: 'Er ikke logget inn',
+                    kind: Nettstatus.Feil,
+                    error: {
+                        message: 'Er ikke logget inn',
+                    },
                 });
             } else {
                 setSvarstatistikk({
-                    kind: 'feil',
-                    error: 'Kunne ikke laste inn statistikk',
+                    kind: Nettstatus.Feil,
+                    error: { message: 'Kunne ikke laste inn statistikk' },
                 });
             }
         };

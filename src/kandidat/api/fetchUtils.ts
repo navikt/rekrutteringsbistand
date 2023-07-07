@@ -1,6 +1,6 @@
 import { videresendTilInnlogging } from 'felles/api';
 import { lenkeTilTilgangsside } from '../app/paths';
-import { feil, Nettressurs, suksess } from './Nettressurs';
+import { feil, Nettressurs, suksess } from 'felles/nettressurs';
 
 export const createCallIdHeader = () => ({
     'Nav-CallId': Math.random().toString(16).substring(2),

@@ -3,14 +3,14 @@ import { Button, Heading } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
 import { postKandidatTilKandidatliste } from '../../../api/api';
-import { Nettstatus } from '../../../api/Nettressurs';
-import { Kandidatliste } from '../../../kandidatliste/domene/Kandidatliste';
+import { Nettstatus } from 'felles/nettressurs';
 import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../../kandidatliste/reducer/KandidatlisteActionType';
 import VelgKandidatlister from './VelgKandidatlister';
 import Modal from '../../../komponenter/modal/Modal';
 import css from './LagreKandidatIMineKandidatlisterModal.module.css';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     vis: boolean;

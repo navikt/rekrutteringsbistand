@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { hentMineKandidatlister } from '../api/api';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Kandidatliste } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 
 type MinKandidatliste = Omit<Kandidatliste, 'kandidater'> & {
@@ -16,15 +16,15 @@ const SIDESTØRRELSE = 8;
 
 const useMineKandidatlister = (side: number) => {
     const [mineKandidatlister, setMineKandidatlister] = useState<Nettressurs<MineKandidatlister>>({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
 
     const lastInnKandidatlister = useCallback(async () => {
         setMineKandidatlister(
-            mineKandidatlister.kind === 'suksess'
-                ? { kind: 'oppdaterer', data: mineKandidatlister.data }
+            mineKandidatlister.kind === Nettstatus.Suksess
+                ? { kind: Nettstatus.Oppdaterer, data: mineKandidatlister.data }
                 : {
-                      kind: 'laster-inn',
+                      kind: Nettstatus.LasterInn,
                   }
         );
 
@@ -32,13 +32,15 @@ const useMineKandidatlister = (side: number) => {
             const nesteSideMedLister = await hentMineKandidatlister(side, SIDESTØRRELSE);
 
             setMineKandidatlister({
-                kind: 'suksess',
+                kind: Nettstatus.Suksess,
                 data: nesteSideMedLister,
             });
         } catch (e) {
             setMineKandidatlister({
-                kind: 'feil',
-                error: e as string,
+                kind: Nettstatus.Feil,
+                error: {
+                    message: e as string,
+                },
             });
         }
 

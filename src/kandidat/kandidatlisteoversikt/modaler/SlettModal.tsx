@@ -3,10 +3,10 @@ import { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
 import { BodyLong, Button, ErrorMessage, Heading } from '@navikt/ds-react';
 
-import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
 import { deleteKandidatliste } from '../../api/api';
-import { Nettstatus } from '../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import Modal from '../../komponenter/modal/Modal';
 import css from './Modal.module.css';
 

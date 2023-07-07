@@ -1,7 +1,7 @@
 import { Table } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { KandidatlisteSammendrag } from '../../kandidatliste/domene/Kandidatliste';
 import TabellRad from './TabellRad';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     kandidatlister: KandidatlisteSammendrag[];

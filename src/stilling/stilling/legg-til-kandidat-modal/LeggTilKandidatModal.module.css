@@ -16,18 +16,6 @@
     margin-bottom: 1.5rem;
 }
 
-.notat {
-    margin-top: 2rem;
-    min-height: 10rem;
-    margin-bottom: 2.5rem;
-}
-
-.knapper {
-    margin-top: 1.5rem;
-    display: flex;
-    gap: 1rem;
-}
-
 .spinner {
     align-self: center;
     margin-bottom: 2.5rem;

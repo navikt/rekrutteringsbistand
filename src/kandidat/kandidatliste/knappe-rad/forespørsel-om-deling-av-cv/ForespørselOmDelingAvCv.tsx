@@ -4,14 +4,14 @@ import { BeaconSignalsIcon } from '@navikt/aksel-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ForespørselOutboundDto } from './Forespørsel';
-import { Kandidat } from '../../domene/Kandidat';
-import { Nettstatus } from '../../../api/Nettressurs';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { Nettstatus } from 'felles/nettressurs';
+import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import AppState from '../../../state/AppState';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import Modal from '../../../komponenter/modal/Modal';
 import useIkkeForespurteKandidater from './useIkkeForespurteKandidater';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import VelgSvarfrist, { lagSvarfristPåSekundet, Svarfrist } from './VelgSvarfrist';
 import css from './ForespørselOmDelingAvCv.module.css';
 

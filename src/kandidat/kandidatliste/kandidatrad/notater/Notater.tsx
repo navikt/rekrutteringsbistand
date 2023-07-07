@@ -1,18 +1,18 @@
 import { ChangeEvent, FunctionComponent, useState, useEffect, useCallback } from 'react';
 import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
+import { BodyLong, Button, Heading, Textarea } from '@navikt/ds-react';
 
-import { Kandidatliste } from '../../domene/Kandidatliste';
-import { Kandidat } from '../../domene/Kandidat';
-import { Nettressurs, Nettstatus } from '../../../api/Nettressurs';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { Notat } from '../../domene/Kandidatressurser';
 import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import Notatliste from './Notatliste';
 import RedigerNotatModal from './RedigerNotatModal';
 import Slettemodal from './Slettemodal';
-import { Notat } from '../../domene/Kandidatressurser';
-import { BodyLong, Button, Heading, Textarea } from '@navikt/ds-react';
 import css from './Notater.module.css';
 
 type Props = {

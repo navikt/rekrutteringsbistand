@@ -6,7 +6,6 @@ import classNames from 'classnames';
 
 import { CLEAR_COPIED_ADS } from '../stilling/adReducer';
 import { MineStillingerAction, MineStillingerActionType } from './MineStillingerAction';
-import { Nettstatus } from '../api/Nettressurs';
 import { State } from '../redux/store';
 import AntallStillinger from './AntallStillinger';
 import Filter from './filter/Filter';
@@ -16,6 +15,7 @@ import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
 import StopAdModal from '../stilling/administration/adStatus/StopAdModal';
 import { useNavigationType } from 'react-router-dom';
 import css from './MineStillinger.module.css';
+import { Nettstatus } from 'felles/nettressurs';
 
 const MineStillinger = () => {
     const navigationType = useNavigationType();

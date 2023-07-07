@@ -1,22 +1,21 @@
 import moment from 'moment';
 import { v5 as uuid } from 'uuid';
 
-import type Cv from '../../../cv/reducer/cv-typer';
+import type Cv from '../../../kandidatside/cv/reducer/cv-typer';
+import { Veileder } from './veileder.mock';
+import { mockStrings } from './mock-strings';
 import {
-    Kandidatliste,
-    KandidatlisteSammendrag,
-    Kandidatlistestatus,
-    KanSletteKandidatliste,
-    Stillingskategori,
-} from '../../../kandidatliste/domene/Kandidatliste';
-import {
-    FormidlingAvUsynligKandidat,
     Kandidat,
     Kandidatstatus,
     Kandidatutfall,
-} from '../../../kandidatliste/domene/Kandidat';
-import { Veileder } from './veileder.mock';
-import { mockStrings } from './mock-strings';
+    FormidlingAvUsynligKandidat,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste, {
+    KanSletteKandidatliste,
+    Kandidatlistestatus,
+    Stillingskategori,
+    KandidatlisteSammendrag,
+} from 'felles/domene/kandidatliste/Kandidatliste';
 
 const antall = 25;
 const tomListe = [...new Array(antall)];

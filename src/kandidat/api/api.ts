@@ -1,12 +1,16 @@
-import { Kandidatstatus, Kandidatutfall, UsynligKandidat } from '../kandidatliste/domene/Kandidat';
-import { Nettressurs, Nettstatus } from './Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
-import { Kandidatliste, Kandidatlistestatus } from '../kandidatliste/domene/Kandidatliste';
-import { FormidlingAvUsynligKandidatOutboundDto } from '../felles/legg-til-kandidat-modal/LeggTilKandidatModal';
+import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
-import Cv from '../cv/reducer/cv-typer';
 import { api } from 'felles/api';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import {
+    Kandidatstatus,
+    Kandidatutfall,
+    UsynligKandidat,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Cv from '../kandidatside/cv/reducer/cv-typer';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 

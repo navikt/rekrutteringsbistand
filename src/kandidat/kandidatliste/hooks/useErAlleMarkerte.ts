@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import AppState from '../../state/AppState';
 import { Kandidattilstander } from '../domene/Kandidatressurser';
-import { erInaktiv, Kandidat } from '../domene/Kandidat';
+import { erInaktiv } from '../domene/kandidatUtils';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 const erAlleMarkerte = (kandidater: Kandidat[], kandidattilstander: Kandidattilstander) => {
     const aktiveOgSlettaKandidater = kandidater.filter(

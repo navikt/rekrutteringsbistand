@@ -4,14 +4,14 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { postKandidatTilKandidatliste } from '../../api/api';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
-import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
 import Modal from '../../komponenter/modal/Modal';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './LagreKandidatIKandidatlisteModal.module.css';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     vis: boolean;

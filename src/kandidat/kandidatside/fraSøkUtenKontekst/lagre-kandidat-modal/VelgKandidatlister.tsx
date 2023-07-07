@@ -4,7 +4,7 @@ import VelgbarKandidatliste from './VelgbarKandidatliste';
 import useMineKandidatlister, {
     lagreIMineKandidatlisterSidestørrelse,
 } from './useMineKandidatlister';
-import { Nettstatus } from '../../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import Sidelaster from '../../../komponenter/sidelaster/Sidelaster';
 import css from './VelgKandidatlister.module.css';
 

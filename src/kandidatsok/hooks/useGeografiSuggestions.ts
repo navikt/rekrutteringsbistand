@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { suggest } from '../api/api';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import byggSuggestion, { Forslagsfelt } from '../api/query/byggSuggestion';
 import useDebouncedEffect from './useDebouncedEffect';
 
@@ -13,7 +13,7 @@ export type Geografiforslag = {
 
 const useGeografiSuggestions = (prefix: string) => {
     const [suggestions, setSuggestions] = useState<Nettressurs<Geografiforslag[]>>({
-        kind: 'ikke-lastet',
+        kind: Nettstatus.IkkeLastet,
     });
 
     useDebouncedEffect(() => {
@@ -33,13 +33,13 @@ const useGeografiSuggestions = (prefix: string) => {
                 );
 
                 setSuggestions({
-                    kind: 'suksess',
+                    kind: Nettstatus.Suksess,
                     data: forslag,
                 });
             } catch (e) {
                 setSuggestions({
-                    kind: 'feil',
-                    error: e as string,
+                    kind: Nettstatus.Feil,
+                    error: { message: e as string },
                 });
             }
         };

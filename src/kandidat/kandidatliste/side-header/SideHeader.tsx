@@ -4,19 +4,16 @@ import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { Link } from 'react-router-dom';
 
 import { lenkeTilKandidatlisteoversikt, lenkeTilStilling } from '../../app/paths';
+import { capitalizeEmployerName } from '../../utils/formateringUtils';
+import Kandidatlistestatus from './kandidatlistestatus/Kandidatlistestatus';
+import { erKobletTilStilling, erKobletTilArbeidsgiver } from '../domene/kandidatlisteUtils';
 import {
-    erKobletTilArbeidsgiver,
-    erKobletTilStilling,
-    Kandidatliste,
-} from '../domene/Kandidatliste';
-import {
-    FormidlingAvUsynligKandidat,
     Kandidat,
     Kandidatstatus,
     Kandidatutfall,
-} from '../domene/Kandidat';
-import { capitalizeEmployerName } from '../../utils/formateringUtils';
-import Kandidatlistestatus from './kandidatlistestatus/Kandidatlistestatus';
+    FormidlingAvUsynligKandidat,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './SideHeader.module.css';
 
 type Props = {

@@ -1,0 +1,23 @@
+.forklaring {
+    margin: 1.5rem 0;
+}
+
+.forklaring ul {
+    margin-bottom: 0;
+}
+
+.notat {
+    margin-top: 2rem;
+    min-height: 10rem;
+    margin-bottom: 2.5rem;
+}
+
+.knapper {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.feilmelding {
+    margin-top: 1rem;
+}

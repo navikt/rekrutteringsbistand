@@ -1,14 +1,16 @@
 import { Heading } from '@navikt/ds-react';
 
-import { Kandidatliste } from '../legg-til-kandidat-modal/kandidatlistetyper';
-import { Kandidatrespons } from './useKandidat';
-import { Nettressurs } from '../../api/Nettressurs';
-import BekreftMedNotat from '../legg-til-kandidat-modal/BekreftMedNotat';
+import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
 import Modal from '../../common/modal/Modal';
+import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useDispatch } from 'react-redux';
+import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
 type Props = {
     fnr: string;
-    kandidat: Kandidatrespons;
+    kandidat: ForenkletKandidatISøk;
     kandidatliste: Kandidatliste;
     setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     vis: boolean;
@@ -23,6 +25,24 @@ const AnbefalKandidatModal = ({
     vis,
     onClose,
 }: Props) => {
+    const dispatch = useDispatch();
+
+    const handleBekreft = () => {
+        onClose();
+
+        dispatch<VarslingAction>({
+            type: VarslingActionType.VisVarsling,
+            innhold: `Kandidat ${kandidat.fornavn} ${kandidat.etternavn} (${fnr}) er anbefalt til stillingen`,
+        });
+    };
+
+    const handleOppdatertKandidatliste = (kandidatliste: Kandidatliste) => {
+        setKandidatliste({
+            kind: Nettstatus.Suksess,
+            data: kandidatliste,
+        });
+    };
+
     return (
         <Modal open={vis} onClose={onClose}>
             <Heading level="2" size="medium">
@@ -33,8 +53,9 @@ const AnbefalKandidatModal = ({
                 fnr={fnr}
                 kandidat={kandidat}
                 kandidatliste={kandidatliste}
-                setKandidatliste={setKandidatliste}
-                onClose={onClose}
+                onAvbryt={onClose}
+                onOppdatertKandidatliste={handleOppdatertKandidatliste}
+                onBekreft={handleBekreft}
             />
         </Modal>
     );

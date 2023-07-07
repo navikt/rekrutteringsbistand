@@ -1,18 +1,20 @@
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Loader, TextField } from '@navikt/ds-react';
 import fnrValidator from '@navikt/fnrvalidator';
+import { useDispatch } from 'react-redux';
 
-import { ApiError } from '../../api/apiUtils';
 import { fetchKandidatMedFnr } from './kandidatApi';
 import { fetchSynlighetsevaluering } from './kandidatApi';
-import { Kandidat, Kandidatliste } from './kandidatlistetyper';
-import { Nettressurs, ikkeLastet, Nettstatus, lasterInn } from '../../api/Nettressurs';
-import { Synlighetsevaluering } from './kandidaten-finnes-ikke/Synlighetsevaluering';
-import BekreftMedNotat from './BekreftMedNotat';
-import KandidatenFinnesIkke from './kandidaten-finnes-ikke/KandidatenFinnesIkke';
-import LeggTilEllerAvbryt from './LeggTilEllerAvbryt';
-import css from './LeggTilKandidatModal.module.css';
+import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import { sendEvent } from 'felles/amplitude';
+import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
+import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
+import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
+import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
+import css from './LeggTilKandidatModal.module.css';
 
 type Props = {
     kandidatliste: Kandidatliste;
@@ -20,9 +22,11 @@ type Props = {
 };
 
 const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) => {
+    const dispatch = useDispatch();
+
     const [fnr, setFnr] = useState<string>('');
     const [feilmelding, setFeilmelding] = useState<string | null>(null);
-    const [fnrSøk, setFnrSøk] = useState<Nettressurs<Kandidat>>(ikkeLastet());
+    const [fnrSøk, setFnrSøk] = useState<Nettressurs<ForenkletKandidatISøk>>(ikkeLastet());
     const [synlighetsevaluering, setSynlighetsevaluering] = useState<
         Nettressurs<Synlighetsevaluering>
     >(ikkeLastet());
@@ -33,7 +37,7 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
         setSynlighetsevaluering(ikkeLastet());
     };
 
-    const onFnrChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleFnrChange = (event: ChangeEvent<HTMLInputElement>) => {
         const fnr = event.target.value;
 
         setFnr(fnr);
@@ -86,7 +90,20 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
         } catch (e) {
             setFnrSøk({
                 kind: Nettstatus.Feil,
-                error: new ApiError('Klarte ikke å hente kandidat med fødselsnummer', 0),
+                error: {
+                    message: 'Klarte ikke å hente kandidat med fødselsnummer',
+                },
+            });
+        }
+    };
+
+    const handleBekreft = () => {
+        onClose();
+
+        if (fnrSøk.kind === Nettstatus.Suksess) {
+            dispatch<VarslingAction>({
+                type: VarslingActionType.VisVarsling,
+                innhold: `Kandidat ${fnrSøk.data.fornavn} ${fnrSøk.data.etternavn} (${fnr}) er lagt til`,
             });
         }
     };
@@ -98,7 +115,7 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
                 value={fnr}
                 size="medium"
                 id="legg-til-kandidat-fnr"
-                onChange={onFnrChange}
+                onChange={handleFnrChange}
                 placeholder="11 siffer"
                 className={css.input}
                 label="Fødselsnummer på kandidaten"
@@ -115,7 +132,8 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
                     fnr={fnr}
                     kandidat={fnrSøk.data}
                     kandidatliste={kandidatliste}
-                    onClose={onClose}
+                    onAvbryt={onClose}
+                    onBekreft={handleBekreft}
                 />
             )}
 
@@ -125,7 +143,7 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
                 )}
 
             {fnrSøk.kind !== Nettstatus.Suksess && (
-                <LeggTilEllerAvbryt leggTilDisabled onAvbrytClick={onClose} />
+                <Knapper leggTilDisabled onAvbrytClick={onClose} />
             )}
         </>
     );

@@ -5,8 +5,9 @@ import { BodyLong, Button, ErrorMessage } from '@navikt/ds-react';
 
 import { cvErSendtTilArbeidsgiverOgSlettet } from './CvErSlettet';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
-import { hentSisteKandidatutfall, Kandidatutfall, Utfallsendring } from '../../../domene/Kandidat';
-import { Nettstatus } from '../../../../api/Nettressurs';
+import { hentSisteKandidatutfall } from '../../../domene/kandidatUtils';
+import { Nettstatus } from 'felles/nettressurs';
+import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import AppState from '../../../../state/AppState';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
 import css from './Hendelse.module.css';

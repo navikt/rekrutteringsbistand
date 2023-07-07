@@ -1,14 +1,14 @@
-import { Kandidat, Kandidatstatus } from '../domene/Kandidat';
 import { Kandidatlistefilter } from '../reducer/kandidatlisteReducer';
 import {
     Hendelse,
     hentKandidatensSisteHendelse,
 } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import {
     ForespørslerGruppertPåAktørId,
     hentForespørslerForKandidatForStilling,
 } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 const QUERY_PARAM_SEPARATOR = '-';
 

@@ -4,11 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppState from '../../state/AppState';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import { finnesIkke, Nettstatus, feil, lasterInn, suksess } from '../../api/Nettressurs';
-import { Kandidat } from '../../kandidatliste/domene/Kandidat';
-import { Kandidatliste } from '../../kandidatliste/domene/Kandidatliste';
+import { finnesIkke, Nettstatus, feil, lasterInn, suksess, Nettressurs } from 'felles/nettressurs';
+import { ForespørslerForKandidatForStilling } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
-const useForespørselOmDelingAvCv = (kandidat: Kandidat, kandidatliste: Kandidatliste) => {
+const useForespørselOmDelingAvCv = (
+    kandidat: Kandidat,
+    kandidatliste: Kandidatliste
+): Nettressurs<ForespørslerForKandidatForStilling> => {
     const dispatch: Dispatch<KandidatlisteAction> = useDispatch();
     const stillingsId = kandidatliste.stillingId;
 
@@ -35,7 +39,11 @@ const useForespørselOmDelingAvCv = (kandidat: Kandidat, kandidatliste: Kandidat
         return feil(forespørslerOmDelingAvCv.error);
     }
 
-    if (forespørslerOmDelingAvCv.kind === Nettstatus.LasterInn) {
+    if (
+        forespørslerOmDelingAvCv.kind === Nettstatus.LasterInn ||
+        forespørslerOmDelingAvCv.kind === Nettstatus.Oppdaterer ||
+        forespørslerOmDelingAvCv.kind === Nettstatus.SenderInn
+    ) {
         return lasterInn();
     }
 

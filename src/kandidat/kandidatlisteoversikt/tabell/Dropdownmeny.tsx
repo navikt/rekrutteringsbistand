@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
 import { Dropdown, Tooltip } from '@navikt/ds-react';
-import {
-    KandidatlisteSammendrag,
-    KanSletteKandidatliste,
-} from '../../kandidatliste/domene/Kandidatliste';
 import css from './Kandidatlistetabell.module.css';
+import {
+    KanSletteKandidatliste,
+    KandidatlisteSammendrag,
+} from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     kandidatliste: KandidatlisteSammendrag;

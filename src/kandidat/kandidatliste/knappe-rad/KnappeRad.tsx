@@ -5,17 +5,18 @@ import {
     erKobletTilArbeidsgiver,
     erKobletTilStilling,
     kandidaterMåGodkjenneDelingAvCv,
-    Kandidatliste,
-    Kandidatlistestatus,
-    Stillingskategori,
-} from '../domene/Kandidatliste';
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
+} from '../domene/kandidatlisteUtils';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import MedPopover from '../med-popover/MedPopover';
 import ForespørselOmDelingAvCv from './forespørsel-om-deling-av-cv/ForespørselOmDelingAvCv';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
 import DelMedArbeidsgiverKnapp from './DelMedArbeidsgiverKnapp';
 import css from './KnappeRad.module.css';
+import Kandidatliste, {
+    Kandidatlistestatus,
+    Stillingskategori,
+} from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     kandidatliste: Kandidatliste;

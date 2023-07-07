@@ -3,6 +3,7 @@ import useFuzzySuggestions from '../hooks/useFuzzySuggestions';
 import { FilterParam } from '../hooks/useRespons';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
+import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     forslagId: string;
@@ -42,7 +43,7 @@ const VelgKontor: FunctionComponent<Props> = ({ forslagId }) => {
             label="Velg kontor"
             description="For eksempel «NAV Kristiansand»"
             value={input}
-            suggestions={kontorforslag.kind === 'suksess' ? kontorforslag.data : []}
+            suggestions={kontorforslag.kind === Nettstatus.Suksess ? kontorforslag.data : []}
             suggestionsId={forslagId}
             selectedSuggestions={Array.from(søkekriterier.valgtKontor)}
             onRemoveSuggestion={onFjernValgtKontor}

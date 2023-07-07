@@ -2,32 +2,29 @@ import { Label, Tabs } from '@navikt/ds-react';
 import React, { Dispatch, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Nettressurs, Nettstatus } from '../../api/Nettressurs';
-import { lenkeTilKandidatliste } from '../../app/paths';
-import AppState from '../../state/AppState';
-import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
-import useScrollTilToppen from '../../utils/useScrollTilToppen';
-import Cv from '../../cv/reducer/cv-typer';
-import { Kandidat, Kandidatstatus } from '../../kandidatliste/domene/Kandidat';
-import {
-    erKobletTilStilling,
-    Kandidatliste,
-    Kandidatlistestatus,
-} from '../../kandidatliste/domene/Kandidatliste';
+import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
 import { filterTilQueryParams } from '../../kandidatliste/filter/filter-utils';
-import StatusOgHendelser from '../../kandidatliste/kandidatrad/status-og-hendelser/StatusOgHendelser';
+import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { lenkeTilKandidatliste } from '../../app/paths';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import AppState from '../../state/AppState';
+import Cv from '../cv/reducer/cv-typer';
+import Kandidatheader from '../komponenter/header/Kandidatheader';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import useCv from '../hooks/useCv';
-import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
+import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
+import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
+import StatusOgHendelser from '../../kandidatliste/kandidatrad/status-og-hendelser/StatusOgHendelser';
+import useCv from '../hooks/useCv';
+import useFaner from '../hooks/useFaner';
 import useForespørselOmDelingAvCv from './useForespørselOmDelingAvCv';
 import useKandidatliste from '../hooks/useKandidatliste';
 import useNavigerbareKandidater from './useNavigerbareKandidater';
+import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useSendtKandidatmelding from './useSendtKandidatmelding';
 import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
-import useFaner from '../hooks/useFaner';
 import css from './FraKandidatliste.module.css';
 
 type Props = {

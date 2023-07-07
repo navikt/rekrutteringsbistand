@@ -3,15 +3,15 @@ import { Dispatch } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@navikt/ds-react';
 
+import { Alert, BodyShort, Heading, Label, Link, Select } from '@navikt/ds-react';
+import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Kandidatmeldinger, SmsStatus } from '../domene/Kandidatressurser';
-import { Kandidat } from '../domene/Kandidat';
+import { Stillingskategori } from 'felles/domene/kandidatliste/Kandidatliste';
+import AppState from '../../state/AppState';
 import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
-import AppState from '../../state/AppState';
 import Modal from '../../komponenter/modal/Modal';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
-import { Stillingskategori } from '../domene/Kandidatliste';
-import { Alert, BodyShort, Heading, Label, Link, Select } from '@navikt/ds-react';
 import css from './SendSmsModal.module.css';
 
 enum Meldingsmal {

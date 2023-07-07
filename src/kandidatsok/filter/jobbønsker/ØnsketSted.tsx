@@ -3,6 +3,7 @@ import { FilterParam } from '../../hooks/useRespons';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import { Typeahead } from '../typeahead/Typeahead';
 import useGeografiSuggestions, { Geografiforslag } from '../../hooks/useGeografiSuggestions';
+import { Nettstatus } from 'felles/nettressurs';
 
 export const GEOGRAFI_SEPARATOR = '.';
 
@@ -18,7 +19,7 @@ const ØnsketSted = () => {
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 
     const onSelect = (selection: string) => {
-        if (forslag.kind === 'suksess') {
+        if (forslag.kind === Nettstatus.Suksess) {
             const korresponderendeForslag = forslag.data.find(
                 (forslag) => forslag.geografiKodeTekst === selection
             );
@@ -49,7 +50,9 @@ const ØnsketSted = () => {
     };
 
     const suggestions =
-        forslag.kind === 'suksess' ? forslag.data.map((sted) => sted.geografiKodeTekst) : [];
+        forslag.kind === Nettstatus.Suksess
+            ? forslag.data.map((sted) => sted.geografiKodeTekst)
+            : [];
 
     return (
         <Typeahead

@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
-import { Nettressurs, Nettstatus } from '../api/Nettressurs';
 import { MineStillingerResultat } from './mineStillingerReducer';
 import { Heading } from '@navikt/ds-react';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     resultat: Nettressurs<MineStillingerResultat>;

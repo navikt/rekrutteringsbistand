@@ -1,9 +1,9 @@
 import { FunctionComponent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Kandidat, Kandidatutfall } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import AppState from '../../../../state/AppState';
 import KandidatlisteActionType from '../../../reducer/KandidatlisteActionType';
 import DelingAvCv from './DelingAvCv';
-import { Kandidat, Kandidatutfall } from '../../../domene/Kandidat';
 import KandidatlisteAction from '../../../reducer/KandidatlisteAction';
 
 type Props = {

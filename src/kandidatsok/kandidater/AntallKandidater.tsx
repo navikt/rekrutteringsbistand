@@ -1,6 +1,6 @@
 import { Heading } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { Nettressurs } from '../api/Nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Respons } from './elasticSearchTyper';
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const AntallKandidater: FunctionComponent<Props> = ({ respons }) => {
-    if (respons.kind !== 'suksess' && respons.kind !== 'oppdaterer') {
+    if (respons.kind !== Nettstatus.Suksess && respons.kind !== Nettstatus.Oppdaterer) {
         return <div />;
     }
 

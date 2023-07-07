@@ -6,13 +6,13 @@ import { DocPencilIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { StillingsinfoState } from '../../../stillingsinfo/stillingsinfoReducer';
 import { EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
 import { hentAnnonselenke, stillingErPublisert } from '../../adUtils';
-import { Kandidatliste } from '../../legg-til-kandidat-modal/kandidatlistetyper';
-import { Nettressurs } from '../../../api/Nettressurs';
 import { State } from '../../../redux/store';
 import Stilling, { Stillingsinfo, System } from '../../../domene/Stilling';
 import OpprettKandidatlisteModal from './OpprettKandidatlisteModal';
 import Stillingsheader from '../../header/Stillingsheader';
 import EksternStillingAdvarsel from './EksternStillingAdvarsel';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettressurs } from 'felles/nettressurs';
 
 type Props = {
     stilling: Stilling;

@@ -1,14 +1,14 @@
 import { FunctionComponent } from 'react';
 import { Checkbox, CheckboxGroup, Label } from '@navikt/ds-react';
+import { Accordion } from '@navikt/ds-react';
 
-import { Kandidatstatus } from '../domene/Kandidat';
 import { AntallFiltertreff } from '../hooks/useAntallFiltertreff';
-import useVinduErBredereEnn from '../hooks/useVinduErBredereEnn';
 import { statusToDisplayName } from '../kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
 import { Hendelse } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
+import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import useVinduErBredereEnn from '../hooks/useVinduErBredereEnn';
 import css from './Filter.module.css';
 import classNames from 'classnames';
-import { Accordion } from '@navikt/ds-react';
 
 type Props = {
     antallTreff: AntallFiltertreff;

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { fetchMineKandidatlister } from '../../../api/api';
-import { Nettressurs, Nettstatus } from '../../../api/Nettressurs';
-import { Kandidatliste } from '../../../kandidatliste/domene/Kandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type MinKandidatliste = Omit<Kandidatliste, 'kandidater'> & {
     antallKandidater: number;

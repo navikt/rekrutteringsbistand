@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Nettressurs, ikkeLastet, lasterInn, suksess, feil } from '../../api/Nettressurs';
 import { fetchKandidatliste } from '../legg-til-kandidat-modal/kandidatApi';
-import { Kandidatliste } from '../legg-til-kandidat-modal/kandidatlistetyper';
+import { Nettressurs, feil, ikkeLastet, lasterInn, suksess } from 'felles/nettressurs';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 const useHentKandidatliste = (
     stillingsId?: string

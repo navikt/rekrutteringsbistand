@@ -4,8 +4,8 @@ import { Provider, useDispatch } from 'react-redux';
 
 import { NavKontorAction, NavKontorActionTypes } from '../state/navKontorReducer';
 import { TilToppenKnapp } from '../komponenter/tilToppenKnapp/TilToppenKnapp';
-import CvSide from '../cv/CvSide';
-import Historikkside from '../historikk/Historikkside';
+import CvSide from '../kandidatside/cv/CvSide';
+import Historikkside from '../kandidatside/historikk/Historikkside';
 import Kandidatlisteoversikt from '../kandidatlisteoversikt/Kandidatlisteoversikt';
 import KandidatlistesideMedStilling from '../kandidatliste/KandidatlistesideMedStilling';
 import KandidatlisteUtenStilling from '../kandidatliste/KandidatlistesideUtenStilling';

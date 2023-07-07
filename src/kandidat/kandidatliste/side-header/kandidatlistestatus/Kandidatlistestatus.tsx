@@ -5,13 +5,13 @@ import classNames from 'classnames';
 
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import AppState from '../../../state/AppState';
-import { Nettstatus } from '../../../api/Nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import NudgeAvsluttOppdragModal from '../../modaler/NudgeAvsluttOppdragModal';
 import { skalViseModal } from './skalViseAvsluttOppdragModal';
 import useLagreKandidatlisteIder from './useLagreKandidatlisteIder';
 import useSletteKandidatlisteIderFraLukkedata from './useSletteLagredeStillinger';
-import { Kandidatlistestatus as Status } from '../../domene/Kandidatliste';
+import { Kandidatlistestatus as Status } from 'felles/domene/kandidatliste/Kandidatliste';
 import { PadlockLockedFillIcon, PadlockUnlockedFillIcon } from '@navikt/aksel-icons';
 import css from './Kandidatlistestatus.module.css';
 

@@ -1,4 +1,4 @@
-import Cv from '../../../cv/reducer/cv-typer';
+import Cv from '../../cv/reducer/cv-typer';
 import { capitalizePoststed } from '../../../utils/formateringUtils';
 
 type Props = { cv: Cv };

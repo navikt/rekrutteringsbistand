@@ -1,7 +1,7 @@
 import { FunctionComponent, ReactNode } from 'react';
 
-import Cv from '../../../cv/reducer/cv-typer';
-import { Nettressurs, Nettstatus } from '../../../api/Nettressurs';
+import Cv from '../../cv/reducer/cv-typer';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Lenker from '../lenker/Lenker';
 import css from './Kandidatmeny.module.css';
 

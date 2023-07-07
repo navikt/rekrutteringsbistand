@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 import { BodyLong } from '@navikt/ds-react';
 
 import { EDIT_AD, FETCH_AD, PREVIEW_EDIT_AD } from './adReducer';
-import { Nettstatus } from '../api/Nettressurs';
 import { REMOVE_AD_DATA } from './adDataReducer';
 import { State } from '../redux/store';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
@@ -21,6 +20,7 @@ import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import { Status, System } from '../domene/Stilling';
 import css from './Stilling.module.css';
+import { Nettstatus } from 'felles/nettressurs';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 
