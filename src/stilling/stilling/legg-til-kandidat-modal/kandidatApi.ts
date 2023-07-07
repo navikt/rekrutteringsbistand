@@ -1,7 +1,7 @@
 import { api } from 'felles/api';
 import { ApiError } from '../../api/apiUtils';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatLookup } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
@@ -45,9 +45,7 @@ export class KandidatSokError {
     }
 }
 
-export const fetchKandidatMedFnr = async (
-    fnr: string
-): Promise<Nettressurs<ForenkletKandidatISøk>> => {
+export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<KandidatLookup>> => {
     const url = `${api.kandidat}/veileder/kandidatsok/fnrsok`;
     const body = JSON.stringify({ fnr });
 

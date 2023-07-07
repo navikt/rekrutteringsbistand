@@ -4,7 +4,7 @@ import fnrValidator from '@navikt/fnrvalidator';
 import { useDispatch } from 'react-redux';
 
 import { fetchKandidatMedFnr, fetchSynlighetsevaluering } from './api';
-import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatLookup } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import { getMiljø, Miljø } from '../../../utils/miljøUtils';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError } from '../../../api/fetchUtils';
@@ -49,7 +49,7 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
     const [fnr, setFnr] = useState<string>('');
     const [feilmelding, setFeilmelding] = useState<string | null>(null);
     const [erAlleredeLagtTil, setAlleredeLagtTil] = useState<boolean>(false);
-    const [fnrSøk, setFnrSøk] = useState<Nettressurs<ForenkletKandidatISøk>>(ikkeLastet());
+    const [fnrSøk, setFnrSøk] = useState<Nettressurs<KandidatLookup>>(ikkeLastet());
     const [synlighetsevaluering, setSynlighetsevaluering] = useState<
         Nettressurs<Synlighetsevaluering>
     >(ikkeLastet());

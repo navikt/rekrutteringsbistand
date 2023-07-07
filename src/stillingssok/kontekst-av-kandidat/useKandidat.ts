@@ -1,30 +1,26 @@
 import { useEffect, useState } from 'react';
-import { QueryParam } from '../utils/urlUtils';
-import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
-import useNavigering from '../useNavigering';
-import { Status } from '../filter/om-annonsen/Annonsestatus';
-import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
-import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
-import {
-    EsRespons,
-    Geografijobbønske,
-    Kandidatrespons,
-    Yrkejobbønske,
-    byggKandidatQuery,
-} from './kandidatQuery';
-import { sendEvent } from 'felles/amplitude';
-import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
 import { api } from 'felles/api';
+import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
+import { EsRespons, byggKandidatQuery } from './kandidatQuery';
+import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat-i-søk/Jobbprofil';
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
+import { QueryParam } from '../utils/urlUtils';
+import { sendEvent } from 'felles/amplitude';
+import { Status } from '../filter/om-annonsen/Annonsestatus';
+import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
+import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
+import useNavigering from '../useNavigering';
 
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
     const brukKandidatkriterier = searchParams.get(QueryParam.Kandidatkriterier) !== null;
 
-    const [kandidat, setKandidat] = useState<Kandidatrespons>();
+    const [kandidat, setKandidat] = useState<KandidatTilStillingssøk>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
     useEffect(() => {
-        const brukKriterier = (kandidat: Kandidatrespons) => {
+        const brukKriterier = (kandidat: KandidatTilStillingssøk) => {
             const fylker = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
             const kommuner = hentKommunerFraJobbønsker(kandidat.geografiJobbonsker);
             const yrkesønsker = hentYrkerFraJobbønsker(kandidat.yrkeJobbonskerObj);
@@ -89,14 +85,14 @@ const hentFylkestekstFraGeografiKode = (geografiKode: string) => {
     })?.fylkesnavn;
 };
 
-const hentFylkerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
+const hentFylkerFraJobbønsker = (geografijobbønsker: JobbønskeSted[]): string[] => {
     return geografijobbønsker
         .map((jobbønske) => jobbønske.geografiKode)
         .map((geografiKode) => hentFylkestekstFraGeografiKode(geografiKode))
         .filter((fylke) => fylke !== undefined) as string[];
 };
 
-const hentKommunerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): string[] => {
+const hentKommunerFraJobbønsker = (geografijobbønsker: JobbønskeSted[]): string[] => {
     return geografijobbønsker
         .filter((jobbønske) => jobbønske.geografiKode.includes('.'))
         .map((jobbønske) => {
@@ -107,7 +103,7 @@ const hentKommunerFraJobbønsker = (geografijobbønsker: Geografijobbønske[]): 
         });
 };
 
-const hentYrkerFraJobbønsker = (yrkesønsker: Yrkejobbønske[]): string[] => {
+const hentYrkerFraJobbønsker = (yrkesønsker: Jobbønske[]): string[] => {
     return [...new Set(yrkesønsker.flatMap((yrkesønske) => yrkesønske.sokeTitler))];
 };
 

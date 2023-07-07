@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
-import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidat from './useKandidat';
-import Stilling from '../../domene/Stilling';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import Kandidatlistehandlinger from './Kandidatlistehandlinger';
+import Stilling from '../../domene/Stilling';
+import useKandidat from './useKandidat';
 
 type Props = {
     fnr: string;
@@ -52,7 +52,7 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
 const byggBrødsmulesti = (
     fnr: string,
     stilling: Stilling,
-    kandidat?: ForenkletKandidatISøk,
+    kandidat?: KandidatTilStillingssøk,
     stillingssøk?: string
 ) => {
     if (!kandidat) {

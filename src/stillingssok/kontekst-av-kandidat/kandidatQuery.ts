@@ -1,36 +1,20 @@
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+
 export type EsRespons = {
     hits: {
         hits: Array<{
-            _source: Kandidatrespons;
+            _source: KandidatTilStillingssøk;
         }>;
     };
 };
 
-export type Geografijobbønske = {
-    geografiKode: string;
-    geografiKodeTekst: string;
+type EsQuery = {
+    query: object;
+    size: number;
+    _source: Array<keyof KandidatTilStillingssøk>;
 };
 
-export type Yrkejobbønske = {
-    sokeTitler: string[];
-};
-
-export type Kandidatrespons = {
-    fornavn: string;
-    etternavn: string;
-    arenaKandidatnr: string;
-    fodselsdato: string | null;
-    adresselinje1: string | null;
-    postnummer: string | null;
-    poststed: string | null;
-    epostadresse: string | null;
-    telefon: string | null;
-    veileder: string | null;
-    geografiJobbonsker: Geografijobbønske[];
-    yrkeJobbonskerObj: Yrkejobbønske[];
-};
-
-export const byggKandidatQuery = (fodselsnummer: string) => ({
+export const byggKandidatQuery = (fodselsnummer: string): EsQuery => ({
     query: {
         term: {
             fodselsnummer,
@@ -40,6 +24,7 @@ export const byggKandidatQuery = (fodselsnummer: string) => ({
     _source: [
         'fornavn',
         'etternavn',
+        'arenaKandidatnr',
         'fodselsdato',
         'adresselinje1',
         'postnummer',
@@ -47,7 +32,6 @@ export const byggKandidatQuery = (fodselsnummer: string) => ({
         'epostadresse',
         'telefon',
         'veileder',
-        'arenaKandidatnr',
         'geografiJobbonsker',
         'yrkeJobbonskerObj',
     ],

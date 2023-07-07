@@ -2,10 +2,10 @@ import { ChangeEvent, useState } from 'react';
 import { BodyShort, ErrorMessage, Textarea } from '@navikt/ds-react';
 
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { KandidatLookup } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
 import Knapper from './Knapper';
-import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import PostKandidatTilKandidatliste from 'felles/domene/kandidatliste/PostKandidatTilKandidatliste';
 import css from './LeggTilKandidat.module.css';
@@ -14,7 +14,7 @@ const MAKS_NOTATLENGDE = 2000;
 
 type Props = {
     fnr: string;
-    kandidat: ForenkletKandidatISøk;
+    kandidat: KandidatLookup;
     kandidatliste: Kandidatliste;
     onOppdatertKandidatliste?: (kandidatliste: Kandidatliste) => void;
     onAvbryt: () => void;

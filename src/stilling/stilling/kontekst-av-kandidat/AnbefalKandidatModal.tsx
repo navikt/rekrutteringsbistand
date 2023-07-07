@@ -1,16 +1,16 @@
 import { Heading } from '@navikt/ds-react';
-
-import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
-import Modal from '../../common/modal/Modal';
-import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useDispatch } from 'react-redux';
+
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
+import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Modal from '../../common/modal/Modal';
 
 type Props = {
     fnr: string;
-    kandidat: ForenkletKandidatISøk;
+    kandidat: KandidatTilStillingssøk;
     kandidatliste: Kandidatliste;
     setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     vis: boolean;

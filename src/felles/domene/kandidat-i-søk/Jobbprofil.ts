@@ -2,6 +2,7 @@ export type Jobbønske = {
     styrkKode: string | null;
     styrkBeskrivelse: string | null;
     primaertJobbonske: boolean;
+    sokeTitler: string[];
 };
 
 export type JobbønskeSted = {

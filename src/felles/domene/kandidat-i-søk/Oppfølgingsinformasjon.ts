@@ -21,6 +21,7 @@ type Oppfølgingsinformasjon = {
     hovedmaalkode: Hovedmål;
     kvalifiseringsgruppekode: Innsatsgruppe;
     formidlingsgruppekode: Formidlingsgruppe;
+    veileder: string | null;
 };
 
 export default Oppfølgingsinformasjon;

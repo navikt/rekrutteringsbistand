@@ -15,7 +15,6 @@ type Personalia = {
     fodselsdato: string | null;
     epostadresse: string | null;
     telefon: string | null;
-    veileder: string | null;
 };
 
 type Geografi = {
@@ -62,6 +61,25 @@ type KandidatISøk = Id &
     Ubrukt &
     Deprecated;
 
-export type ForenkletKandidatISøk = Id & Personalia & Geografi;
+export type KandidatLookup = {
+    fornavn: Personalia['fornavn'];
+    etternavn: Personalia['etternavn'];
+    arenaKandidatnr: Id['arenaKandidatnr'];
+};
+
+export type KandidatTilStillingssøk = {
+    fornavn: Personalia['fornavn'];
+    etternavn: Personalia['etternavn'];
+    arenaKandidatnr: Id['arenaKandidatnr'];
+    fodselsdato: Personalia['fodselsdato'];
+    adresselinje1: Geografi['adresselinje1'];
+    postnummer: Geografi['postnummer'];
+    poststed: Geografi['poststed'];
+    epostadresse: Personalia['epostadresse'];
+    telefon: Personalia['telefon'];
+    veileder: Oppfølgingsinformasjon['veileder'];
+    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
+    yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
+};
 
 export default KandidatISøk;

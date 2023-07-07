@@ -1,45 +1,46 @@
 import { useState, useEffect } from 'react';
 import { api } from 'felles/api';
-import { ForenkletKandidatISøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 
 export type EsRespons = {
     hits: {
         hits: Array<{
-            _source: ForenkletKandidatISøk;
+            _source: KandidatTilStillingssøk;
         }>;
     };
 };
 
-const byggQuery = (fodselsnummer: string) => ({
+type EsQuery = {
+    query: object;
+    size: number;
+    _source: Array<keyof KandidatTilStillingssøk>;
+};
+
+const byggQuery = (fodselsnummer: string): EsQuery => ({
     query: {
         term: {
             fodselsnummer,
         },
     },
     size: 1,
-
-    // Feltene fra 'ForenkletKandidatISøk'-typen
     _source: [
-        'adresselinje1',
-        'aktorId',
-        'arenaKandidatnr',
-        'epostadresse',
-        'etternavn',
-        'fodselsdato',
-        'fodselsnummer',
         'fornavn',
-        'kandidatnr',
-        'kommunenummer',
-        'kommunenummerstring',
+        'etternavn',
+        'arenaKandidatnr',
+        'fodselsdato',
+        'adresselinje1',
         'postnummer',
         'poststed',
+        'epostadresse',
         'telefon',
         'veileder',
+        'geografiJobbonsker',
+        'yrkeJobbonskerObj',
     ],
 });
 
 const useKandidat = (fnr: string) => {
-    const [kandidat, setKandidat] = useState<ForenkletKandidatISøk>();
+    const [kandidat, setKandidat] = useState<KandidatTilStillingssøk>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
     useEffect(() => {

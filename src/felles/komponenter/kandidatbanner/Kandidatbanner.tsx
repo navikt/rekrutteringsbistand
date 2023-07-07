@@ -9,7 +9,8 @@ import {
     PinIcon,
 } from '@navikt/aksel-icons';
 import { ReactComponent as Piktogram } from './minekandidater.svg';
-import { brukStorForbokstav } from '../../utils/stringUtils';
+import { brukStorForbokstav } from 'felles/utils/stringUtils';
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import css from './Kandidatbanner.module.css';
 
 type Brødsmule = {
@@ -17,21 +18,8 @@ type Brødsmule = {
     href?: string;
 };
 
-type Kandidat = {
-    fornavn: string;
-    etternavn: string;
-    arenaKandidatnr: string;
-    fodselsdato: string | null;
-    adresselinje1: string | null;
-    postnummer: string | null;
-    poststed: string | null;
-    epostadresse: string | null;
-    telefon: string | null;
-    veileder: string | null;
-};
-
 type Props = {
-    kandidat?: Kandidat;
+    kandidat?: KandidatTilStillingssøk;
     brødsmulesti?: Brødsmule[];
     children?: ReactNode;
 };
@@ -145,7 +133,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
     return `Født: ${fødselsdagString} (${alder} år)`;
 };
 
-const hentAdresse = (kandidat?: Kandidat) => {
+const hentAdresse = (kandidat?: KandidatTilStillingssøk) => {
     if (!kandidat) return undefined;
 
     const { poststed, postnummer, adresselinje1 } = kandidat;
@@ -161,7 +149,7 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-const formaterNavn = (kandidat: Kandidat) => {
+const formaterNavn = (kandidat: KandidatTilStillingssøk) => {
     const fornavn = brukStorForbokstav(kandidat.fornavn);
     const etternavn = brukStorForbokstav(kandidat.etternavn);
 
