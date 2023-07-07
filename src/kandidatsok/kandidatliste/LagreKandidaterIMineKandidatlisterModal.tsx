@@ -1,17 +1,17 @@
 import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { lagreKandidaterIValgteKandidatlister } from '../api/api';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { storForbokstav } from '../utils';
 import VelgKandidatlister from './VelgKandidatlister';
 import css from './LagreKandidaterIMineKandidatlisterModal.module.css';
-import { Kandidat } from '../kandidater/Kandidat';
-import { storForbokstav } from '../utils';
 
 type Props = {
     vis: boolean;
     onClose: () => void;
     markerteKandidater: Set<string>;
-    kandidaterPåSiden: Kandidat[];
+    kandidaterPåSiden: KandidatTilKandidatsøk[];
 };
 
 export type LagreKandidaterDto = Array<{
@@ -116,7 +116,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
 };
 
 const oppsummerMarkerteKandidater = (
-    kandidaterPåSiden: Kandidat[],
+    kandidaterPåSiden: KandidatTilKandidatsøk[],
     markerteKandidater: Set<string>
 ) => {
     const noenMarkerteKandidatersNavn = kandidaterPåSiden
@@ -142,7 +142,7 @@ const oppsummerMarkerteKandidater = (
     }
 };
 
-export const formaterKandidatensNavn = (kandidat: Kandidat) =>
+export const formaterKandidatensNavn = (kandidat: KandidatTilKandidatsøk) =>
     `${storForbokstav(kandidat.fornavn)} ${storForbokstav(kandidat.etternavn)}`;
 
 export default LagreKandidaterIMineKandidatlisterModal;

@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { Respons } from '../../src/kandidatsok/kandidater/elasticSearchTyper';
-import { Innsatsgruppe } from '../../src/kandidatsok/filter/Jobbmuligheter';
 import { api } from '../../src/felles/api';
+import { Innsatsgruppe } from 'felles/domene/kandidat-i-søk/Oppfølgingsinformasjon';
 
 export const kandidatsøkMock = [
     rest.post(api.kandidatsøk, (_, res, ctx) => {

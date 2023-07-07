@@ -1,8 +1,19 @@
 export enum Innsatsgruppe {
-    Standard = 'Standard',
-    SpesieltTilpasset = 'Spesielt tilpasset innsats',
-    Situasjonsbestemt = 'Situasjonsbestemt innsats',
+    SpesieltTilpassetInnsats = 'BATT',
+    SituasjonsbestemtInnsats = 'BFORM',
+    Standardinnsats = 'IKVAL',
+    VarigTilpasset = 'VARIG',
 }
+
+export enum Servicegruppe {
+    IkkeVurdert = 'IVURD',
+    BehovForArbeidsevnevurdering = 'BKART',
+    HelserelatertArbeidsrettetOppfølgingINav = 'OPPFI',
+    SykmeldtMedOppfølgingPåArbeidsplassen = 'VURDI',
+    SykmeldtUtenArbeidsgiver = 'VURDU',
+}
+
+export type Kvalifiseringsgruppe = Innsatsgruppe | Servicegruppe;
 
 export enum Formidlingsgruppe {
     Arbeidssøker = 'ARBS',
@@ -19,7 +30,7 @@ type Oppfølgingsinformasjon = {
     navkontor: string;
     orgenhet: string;
     hovedmaalkode: Hovedmål;
-    kvalifiseringsgruppekode: Innsatsgruppe;
+    kvalifiseringsgruppekode: Kvalifiseringsgruppe;
     formidlingsgruppekode: Formidlingsgruppe;
     veileder: string | null;
 };

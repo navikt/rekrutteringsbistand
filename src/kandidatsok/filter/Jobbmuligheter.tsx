@@ -1,28 +1,12 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 import { FilterParam } from '../hooks/useRespons';
-
-export enum Innsatsgruppe {
-    SpesieltTilpassetInnsats = 'BATT',
-    SituasjonsbestemtInnsats = 'BFORM',
-    Standardinnsats = 'IKVAL',
-    VarigTilpasset = 'VARIG',
-}
+import { Innsatsgruppe, Servicegruppe } from 'felles/domene/kandidat-i-søk/Oppfølgingsinformasjon';
 
 export enum FiltrerbarInnsatsgruppe {
     Innsatsgruppe,
     AndreInnsatsgrupper = 'ANDRE',
 }
-
-export enum Servicegruppe {
-    IkkeVurdert = 'IVURD',
-    BehovForArbeidsevnevurdering = 'BKART',
-    HelserelatertArbeidsrettetOppfølgingINav = 'OPPFI',
-    SykmeldtMedOppfølgingPåArbeidsplassen = 'VURDI',
-    SykmeldtUtenArbeidsgiver = 'VURDU',
-}
-
-export type Kvalifiseringsgruppe = FiltrerbarInnsatsgruppe | Servicegruppe;
 
 const filtrerbareInnsatsgrupper = {
     [Innsatsgruppe.SpesieltTilpassetInnsats]: {

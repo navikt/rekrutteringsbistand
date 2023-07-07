@@ -1,12 +1,14 @@
 import {
-    FiltrerbarInnsatsgruppe,
     Innsatsgruppe,
     Kvalifiseringsgruppe,
     Servicegruppe,
-} from '../../filter/Jobbmuligheter';
+} from 'felles/domene/kandidat-i-søk/Oppfølgingsinformasjon';
+import { FiltrerbarInnsatsgruppe } from '../../filter/Jobbmuligheter';
 
 export const queryMedInnsatsgruppe = (innsatsgrupper: Set<FiltrerbarInnsatsgruppe>) => {
-    const kvalifiseringsgrupper = new Set(innsatsgrupper) as Set<Kvalifiseringsgruppe>;
+    const kvalifiseringsgrupper = new Set(innsatsgrupper) as Set<
+        Kvalifiseringsgruppe | FiltrerbarInnsatsgruppe
+    >;
 
     if (kvalifiseringsgrupper.size === 0) {
         return [
