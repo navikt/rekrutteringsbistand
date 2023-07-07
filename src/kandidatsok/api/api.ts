@@ -6,10 +6,11 @@ import {
     FuzzySuggestQuery,
     FuzzySuggestionRespons,
 } from '../kandidater/elasticSearchTyper';
-import { Kandidatliste, Stilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
+import { Stilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { MineKandidatlister } from '../kandidatliste/useMineKandidatlister';
 import { api, videresendTilInnlogging } from 'felles/api';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 export const søk = async (query: SearchQuery): Promise<Respons> => {
     const respons = await post(api.kandidatsøk, query);

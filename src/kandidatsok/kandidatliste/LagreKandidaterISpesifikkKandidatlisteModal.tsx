@@ -2,12 +2,10 @@ import { BodyLong, Button, Heading, Loader, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 import { lagreKandidaterIKandidatliste } from '../api/api';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import {
-    Kandidatliste,
-    KontekstAvKandidatlisteEllerStilling,
-} from '../hooks/useKontekstAvKandidatlisteEllerStilling';
+import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from './LagreKandidaterIMineKandidatlisterModal';
 import css from './LagreKandidaterISpesifikkKandidatlisteModal.module.css';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     vis: boolean;

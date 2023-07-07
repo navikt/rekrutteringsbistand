@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { hentKandidatliste, hentKandidatlisteMedStillingsId, hentStilling } from '../api/api';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Navigeringsstate } from './useNavigeringsstate';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 export type KontekstAvKandidatlisteEllerStilling = {
     kandidatliste: Nettressurs<Kandidatliste>;
@@ -130,19 +131,6 @@ const useKontekstAvKandidatlisteEllerStilling = (
     }, [kandidatlisteId, kandidatliste, stilling, navigeringsstate.brukKriterierFraStillingen]);
 
     return memoisertReturverdi;
-};
-
-export type Kandidatliste = {
-    kandidatlisteId: string;
-    stillingId: string | null;
-    tittel: string;
-    organisasjonNavn: string | null;
-    kandidater: Array<{ kandidatnr: string }>;
-    opprettetTidspunkt: string;
-    opprettetAv: {
-        ident: string;
-        navn: string;
-    };
 };
 
 export type Stilling = {

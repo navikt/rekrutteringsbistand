@@ -1,8 +1,7 @@
-import { Kandidatliste } from '../../src/kandidatsok/hooks/useKontekstAvKandidatlisteEllerStilling';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { LagreKandidaterDto } from '../../src/kandidatsok/kandidatliste/LagreKandidaterIMineKandidatlisterModal';
-import { MineKandidatlister } from '../../src/kandidatsok/kandidatliste/useMineKandidatlister';
 
-export const mockMineKandidatlister: MineKandidatlister = {
+export const mockMineKandidatlister: any = {
     liste: [
         {
             kandidatlisteId: '123',
@@ -82,6 +81,6 @@ export const mockLagringAvKandidaterIKandidatliste = (
         kandidater: [
             ...utdatertListe.kandidater,
             ...lagreKandidaterDto.map((k) => ({ kandidatnr: k.kandidatnr })),
-        ],
+        ] as any,
     };
 };

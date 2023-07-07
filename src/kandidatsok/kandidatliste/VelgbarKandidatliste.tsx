@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { lenkeTilKandidatliste, storForbokstav } from '../utils';
-import { Kandidatliste } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './VelgKandidatlister.module.css';
 
 type Props = {

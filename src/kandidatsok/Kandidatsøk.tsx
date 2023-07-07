@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { InnloggetBruker } from './hooks/useBrukerensIdent';
-import {
-    Kandidatliste,
-    KontekstAvKandidatlisteEllerStilling,
-} from './hooks/useKontekstAvKandidatlisteEllerStilling';
+import { KontekstAvKandidatlisteEllerStilling } from './hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Kandidat } from './kandidater/Kandidat';
 import { Økt } from './Økt';
 import Filter from './filter/Filter';
@@ -17,6 +14,7 @@ import TømFiltre from './filter/TømFiltre';
 import useLagreØkt from './hooks/useLagreØkt';
 import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import css from './Kandidatsøk.module.css';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;

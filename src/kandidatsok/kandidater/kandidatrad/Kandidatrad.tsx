@@ -4,10 +4,7 @@ import { Checkbox, Detail } from '@navikt/ds-react';
 
 import { alleInnsatsgrupper } from '../../filter/Jobbmuligheter';
 import { Kandidat } from '../Kandidat';
-import {
-    Kandidatliste,
-    KontekstAvKandidatlisteEllerStilling,
-} from '../../hooks/useKontekstAvKandidatlisteEllerStilling';
+import { KontekstAvKandidatlisteEllerStilling } from '../../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { lenkeTilKandidat, storForbokstav } from '../../utils';
 import { Økt } from '../../Økt';
 import TekstlinjeMedIkon from './TekstlinjeMedIkon';
@@ -15,6 +12,7 @@ import useScrollTilKandidat from '../../hooks/useScrollTilKandidat';
 import { CheckmarkIcon, HeartIcon, PinIcon } from '@navikt/aksel-icons';
 import css from './Kandidatrad.module.css';
 import { Nettstatus } from 'felles/nettressurs';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     kandidat: Kandidat;

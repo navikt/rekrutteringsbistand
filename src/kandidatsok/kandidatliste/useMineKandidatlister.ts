@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { hentMineKandidatlister } from '../api/api';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { Kandidatliste } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type MinKandidatliste = Omit<Kandidatliste, 'kandidater'> & {
     antallKandidater: number;
