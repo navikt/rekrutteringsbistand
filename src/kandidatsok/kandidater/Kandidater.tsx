@@ -3,16 +3,16 @@ import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 
 import { InnloggetBruker } from '../hooks/useBrukerensIdent';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
-import { Økt } from '../Økt';
-import { Kandidat } from './Kandidat';
 import { Nettstatus } from 'felles/nettressurs';
+import { Økt } from '../Økt';
 import AntallKandidater from './AntallKandidater';
-import useRespons from '../hooks/useRespons';
-import Paginering from '../filter/Paginering';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import MarkerAlle from './MarkerAlle';
+import Paginering from '../filter/Paginering';
 import Sortering from './sortering/Sortering';
+import useRespons from '../hooks/useRespons';
 import css from './Kandidater.module.css';
 
 type Props = {
@@ -23,7 +23,7 @@ type Props = {
     onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
     forrigeØkt: Økt | null;
-    setKandidaterPåSiden: (kandidater: Kandidat[]) => void;
+    setKandidaterPåSiden: (kandidater: KandidatTilKandidatsøk[]) => void;
 };
 
 const Kandidater: FunctionComponent<Props> = ({

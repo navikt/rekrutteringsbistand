@@ -25,7 +25,7 @@ type Geografi = {
     adresselinje1: string | null;
 };
 
-type Ubrukt = {
+type UbrukteFelter = {
     totalLengdeYrkeserfaring: number;
     samtykkeStatus: string;
     samtykkeDato: string;
@@ -43,7 +43,7 @@ type Ubrukt = {
     synligForVeilederSok: boolean;
 };
 
-type Deprecated = {
+type UtgåtteFelter = {
     mobiltelefon: null;
     statsborgerskap: null;
     disponererBil: null;
@@ -52,14 +52,14 @@ type Deprecated = {
     fritattKandidatsok: null;
 };
 
-type KandidatISøk = Id &
+type KandidatISøkMedAlleFelter = Id &
     Personalia &
     Geografi &
     Oppfølgingsinformasjon &
     Jobbprofil &
     Cv &
-    Ubrukt &
-    Deprecated;
+    UbrukteFelter &
+    UtgåtteFelter;
 
 export type KandidatLookup = {
     fornavn: Personalia['fornavn'];
@@ -82,4 +82,15 @@ export type KandidatTilStillingssøk = {
     yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
 };
 
-export default KandidatISøk;
+export type KandidatTilKandidatsøk = {
+    fodselsnummer: Id['fodselsnummer'];
+    aktorId: Id['aktorId'];
+    fornavn: Personalia['fornavn'];
+    etternavn: Personalia['etternavn'];
+    arenaKandidatnr: Id['arenaKandidatnr'];
+    kvalifiseringsgruppekode: Oppfølgingsinformasjon['kvalifiseringsgruppekode'];
+    yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
+    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
+};
+
+export default KandidatISøkMedAlleFelter;

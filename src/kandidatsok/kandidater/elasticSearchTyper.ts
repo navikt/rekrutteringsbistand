@@ -1,4 +1,4 @@
-import { Kandidat } from './Kandidat';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 
 export type SearchQuery = {
     size?: number;
@@ -20,7 +20,7 @@ export type SearchQuery = {
             order: Sorteringsrekkefølge;
         };
     };
-    _source?: string[] | boolean;
+    _source?: Array<keyof KandidatTilKandidatsøk> | boolean;
     aggs?: Aggregeringer;
 };
 
@@ -100,7 +100,7 @@ export type Hit = {
     _type: string;
     _id: string;
     _score: number | null;
-    _source: Kandidat;
+    _source: KandidatTilKandidatsøk;
     sort?: number[];
 };
 

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import { InnloggetBruker } from './hooks/useBrukerensIdent';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import { KontekstAvKandidatlisteEllerStilling } from './hooks/useKontekstAvKandidatlisteEllerStilling';
-import { Kandidat } from './kandidater/Kandidat';
 import { Økt } from './Økt';
 import Filter from './filter/Filter';
 import Kandidater from './kandidater/Kandidater';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
 import LagreKandidaterIMineKandidatlisterModal from './kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import LagreKandidaterISpesifikkKandidatlisteModal from './kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
@@ -14,7 +15,6 @@ import TømFiltre from './filter/TømFiltre';
 import useLagreØkt from './hooks/useLagreØkt';
 import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import css from './Kandidatsøk.module.css';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;
@@ -37,7 +37,7 @@ const Kandidatsøk = ({
     kontekstAvKandidatlisteEllerStilling,
 }: KandidatsøkProps) => {
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
-    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<Kandidat[]>([]);
+    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<KandidatTilKandidatsøk[]>([]);
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
         forrigeØkt?.markerteKandidater
     );

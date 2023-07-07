@@ -1,4 +1,5 @@
 import { InnloggetBruker } from '../../hooks/useBrukerensIdent';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
 import { queryMedArbeidserfaring } from './queryMedArbeidserfaring';
 import { queryMedFørerkort } from './queryMedFørerkort';
 import { queryMedFritekst } from './queryMedFritekst';
@@ -12,14 +13,14 @@ import { queryMedPortefølje } from './queryMedPortefølje';
 import { queryMedPrioritertMålgruppe } from './queryMedPrioritertMålgruppe';
 import { queryMedSpråk } from './queryMedSpråk';
 import { queryMedUtdanningsnivå } from './queryMedUtdanningsnivå';
+import { queryMedValgtKontor } from './queryMedValgtKontor';
 import { SearchQuery, Sorteringsrekkefølge } from '../../kandidater/elasticSearchTyper';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
-import { queryMedValgtKontor } from './queryMedValgtKontor';
 import { Sortering } from '../../kandidater/sortering/Sortering';
 
 export const PAGE_SIZE = 25;
 
-const interessanteKandidatfelter = [
+const interessanteKandidatfelter: Array<keyof KandidatTilKandidatsøk> = [
     'fodselsnummer',
     'fornavn',
     'etternavn',
