@@ -38,7 +38,7 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
     };
 
     return (
-        <CheckboxGroup legend="Hvor er annonsen synlig?" value={Array.from(publiseringssteder)}>
+        <CheckboxGroup legend="Synlighet" value={Array.from(publiseringssteder)}>
             {Object.values(Publisert).map((publisertValue) => (
                 <Checkbox
                     key={publisertValue}
@@ -55,7 +55,7 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
 export const publisertTilVisningsnavn = (publisert: Publisert) => {
     switch (publisert) {
         case Publisert.Intern:
-            return 'Internt i NAV (direktemeldt)';
+            return 'Internt i NAV';
         case Publisert.Arbeidsplassen:
             return 'På Arbeidsplassen';
     }

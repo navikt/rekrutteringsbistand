@@ -39,7 +39,7 @@ const VelgStillingskategori = () => {
     };
 
     return (
-        <CheckboxGroup legend="Stillingskategori" value={Array.from(valgteKategorier)}>
+        <CheckboxGroup legend="Kategori" value={Array.from(valgteKategorier)}>
             {Object.values(Stillingskategori).map((kategori) => (
                 <Checkbox key={kategori} value={kategori} onChange={onToggle}>
                     {stillingskategoriTilVisningsnavn(kategori)}
@@ -52,9 +52,9 @@ const VelgStillingskategori = () => {
 export const stillingskategoriTilVisningsnavn = (kategori: Stillingskategori) => {
     switch (kategori) {
         case Stillingskategori.Stilling:
-            return 'Stilling';
+            return 'Standard';
         case Stillingskategori.Jobbmesse:
-            return 'Jobbmesse/jobbtreff';
+            return 'Jobbmesse';
         case Stillingskategori.Formidling:
             return 'Formidling';
     }

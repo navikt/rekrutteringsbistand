@@ -67,7 +67,7 @@ export const hierarkiAvTagsForFilter: Array<GruppeMedTags> = [
 ];
 
 export const visningsnavnForFilter = {
-    [Hovedtag.Tilrettelegging]: 'Tilretteleggingsmuligheter',
+    [Hovedtag.Tilrettelegging]: 'Tilrettelegging',
 
     [Subtag.TilretteleggingArbeidstid]: 'Arbeidstid',
     [Subtag.TilretteleggingFysisk]: 'Fysisk tilrettelegging',
