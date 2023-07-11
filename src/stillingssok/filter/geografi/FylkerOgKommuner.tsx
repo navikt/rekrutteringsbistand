@@ -62,7 +62,7 @@ const FylkerOgKommuner: FunctionComponent = () => {
     };
 
     return (
-        <CheckboxGroup legend="Velg fylke eller kommune" value={Array.from(valgteFylker)}>
+        <CheckboxGroup legend="Område" value={Array.from(valgteFylker)}>
             {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
                 <Fragment key={fylke}>
                     <Checkbox value={fylke} onChange={onFylkeChange}>
