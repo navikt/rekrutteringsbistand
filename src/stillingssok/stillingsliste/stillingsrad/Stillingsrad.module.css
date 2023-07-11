@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     position: relative;
-    padding: 1.2rem 1rem 1rem;
+    padding: 0.5rem 0rem;
     align-items: center;
     flex-direction: column;
     border-radius: var(--a-border-radius-xlarge);
@@ -17,6 +17,8 @@
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    border-radius: 12px;
+    border-color: lightgray;
 }
 
 .lenkeTilStilling {
@@ -48,6 +50,7 @@
     gap: 0.25rem;
     padding-top: 0.5rem;
     align-self: flex-start;
+    margin-right: 1rem;
 }
 
 .etiketterOgDato {

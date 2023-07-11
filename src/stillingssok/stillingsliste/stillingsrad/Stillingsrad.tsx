@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { BodyShort, Detail, Tag } from '@navikt/ds-react';
+import { BodyShort, Detail, Panel, Tag } from '@navikt/ds-react';
 import { BulletListIcon } from '@navikt/aksel-icons';
 import { Link, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
@@ -45,7 +45,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
 
     return (
         <li className={css.stillingsrad}>
-            <div className={css.info}>
+            <Panel border className={css.info}>
                 <div className={css.etiketterOgDato}>
                     <div className={css.etiketter}>
                         {registrertMedInkluderingsmulighet && (
@@ -106,7 +106,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                     )}
                     {erInternStilling && eierNavn && <span>Eier: {eierNavn}</span>}
                 </span>
-            </div>
+            </Panel>
             <div className={css.kandidatlisteknapp}>
                 {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                     <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
