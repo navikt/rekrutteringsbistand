@@ -43,16 +43,6 @@
     color: var(--a-text-visited);
 }
 
-.kandidatlisteknapp {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.25rem;
-    padding-top: 0.5rem;
-    align-self: flex-start;
-    margin-right: 1rem;
-}
-
 .etiketterOgDato {
     display: flex;
     flex-direction: column;
@@ -89,6 +79,16 @@
     margin: 0 0.5rem;
 }
 
+.stillingsinfolink {
+    float: right;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.stillingsinfolink:hover {
+    text-decoration: underline;
+}
+
 .score {
     padding: 0.25rem 0.5rem;
     border-radius: 1rem;
@@ -113,7 +113,7 @@
         margin-bottom: 0;
     }
 
-    .kandidatlisteknapp {
+    .score {
         position: absolute;
         right: 1rem;
         align-self: unset;

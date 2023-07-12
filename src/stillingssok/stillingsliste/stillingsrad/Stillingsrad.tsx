@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { BodyShort, Detail, Panel, Tag } from '@navikt/ds-react';
-import { BulletListIcon, ClockIcon, PersonIcon, PinIcon } from '@navikt/aksel-icons';
+import { ClockIcon, PersonIcon, PinIcon } from '@navikt/aksel-icons';
 import { Link, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -88,42 +88,47 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                 >
                     {stilling.title}
                 </Link>
-                <span className={css.stillingsinfo}>
-                    <span>
-                        <PinIcon className={css.ikon} />
-                        {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
-                            'Ingen arbeidssted'}
+                <span>
+                    <span className={css.stillingsinfo}>
+                        <span>
+                            <PinIcon className={css.ikon} />
+                            {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
+                                'Ingen arbeidssted'}
+                        </span>
+                        {antallStillinger && (
+                            <span>
+                                {antallStillinger} {antallStillingerSuffix}
+                            </span>
+                        )}
+                        {stilling.properties.applicationdue && (
+                            <span>
+                                <ClockIcon className={css.ikon} />
+                                {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
+                            </span>
+                        )}
+                        {erInternStilling && eierNavn && (
+                            <span>
+                                <PersonIcon className={css.ikon} />
+                                {eierNavn}
+                            </span>
+                        )}
                     </span>
-                    {antallStillinger && (
-                        <span>
-                            {antallStillinger} {antallStillingerSuffix}
-                        </span>
-                    )}
-                    {stilling.properties.applicationdue && (
-                        <span>
-                            <ClockIcon className={css.ikon} />
-                            {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
-                        </span>
-                    )}
-                    {erInternStilling && eierNavn && (
-                        <span>
-                            <PersonIcon className={css.ikon} />
-                            {eierNavn}
-                        </span>
-                    )}
+                    <span>
+                        {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
+                            <Link
+                                className={css.stillingsinfolink}
+                                to={lagUrlTilKandidatliste(stilling)}
+                                title="Se kandidatliste"
+                            >
+                                Vis kandidater
+                            </Link>
+                        )}
+                    </span>
                 </span>
             </Panel>
-            <div className={css.kandidatlisteknapp}>
-                {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
-                    <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
-                        <BulletListIcon className="navds-link" />
-                    </Link>
-                )}
-                <div />
+            <div className={css.score}>
                 {import.meta.env.DEV && score !== null && (
-                    <code title="Score" className={css.score}>
-                        {score.toFixed(2)}
-                    </code>
+                    <code title="Score">{score.toFixed(2)}</code>
                 )}
             </div>
         </li>
