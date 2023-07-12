@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { BodyShort, Detail, Panel, Tag } from '@navikt/ds-react';
-import { BulletListIcon } from '@navikt/aksel-icons';
+import { BulletListIcon, ClockIcon, PersonIcon, PinIcon } from '@navikt/aksel-icons';
 import { Link, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -90,21 +90,27 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                 </Link>
                 <span className={css.stillingsinfo}>
                     <span>
+                        <PinIcon className={css.ikon} />
                         {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
                             'Ingen arbeidssted'}
                     </span>
-                    {stilling.properties.applicationdue && (
-                        <span>
-                            Søknadsfrist:{' '}
-                            {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
-                        </span>
-                    )}
                     {antallStillinger && (
                         <span>
                             {antallStillinger} {antallStillingerSuffix}
                         </span>
                     )}
-                    {erInternStilling && eierNavn && <span>Eier: {eierNavn}</span>}
+                    {stilling.properties.applicationdue && (
+                        <span>
+                            <ClockIcon className={css.ikon} />
+                            {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
+                        </span>
+                    )}
+                    {erInternStilling && eierNavn && (
+                        <span>
+                            <PersonIcon className={css.ikon} />
+                            {eierNavn}
+                        </span>
+                    )}
                 </span>
             </Panel>
             <div className={css.kandidatlisteknapp}>

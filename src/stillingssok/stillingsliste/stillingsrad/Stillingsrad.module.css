@@ -84,7 +84,8 @@
 }
 
 .stillingsinfo > span:not(:last-child)::after {
-    content: '|';
+    content: '•';
+    color: lightgray;
     margin: 0 0.5rem;
 }
 
@@ -92,6 +93,10 @@
     padding: 0.25rem 0.5rem;
     border-radius: 1rem;
     background-color: var(--a-blue-100);
+}
+
+.ikon {
+    margin-right: 0.5rem;
 }
 
 @media (min-width: 768px) {
