@@ -3,7 +3,6 @@ import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { sorterAlfabetiskPåNorsk } from '../../utils/stringUtils';
-import Filtergruppe from '../Filtergruppe';
 import useNavigering from '../../useNavigering';
 import fylkerOgKommuner from './fylkerOgKommuner.json';
 import css from '../Filter.module.css';
@@ -63,35 +62,33 @@ const FylkerOgKommuner: FunctionComponent = () => {
     };
 
     return (
-        <Filtergruppe tittel="Geografi">
-            <CheckboxGroup legend="Velg fylke eller kommune" value={Array.from(valgteFylker)}>
-                {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
-                    <Fragment key={fylke}>
-                        <Checkbox value={fylke} onChange={onFylkeChange}>
-                            {fylke}
-                        </Checkbox>
-                        {valgteFylker.has(fylke) && kommuner.length > 0 && (
-                            <CheckboxGroup
-                                hideLegend
-                                className={css.indentertCheckboxgruppe}
-                                legend={`Velg kommuner i ${fylke}`}
-                                value={Array.from(valgteKommuner)}
-                            >
-                                {kommuner.map((kommune) => (
-                                    <Checkbox
-                                        key={kommune.kommune}
-                                        value={kommune.kommune}
-                                        onChange={onKommuneChange}
-                                    >
-                                        {kommune.label}
-                                    </Checkbox>
-                                ))}
-                            </CheckboxGroup>
-                        )}
-                    </Fragment>
-                ))}
-            </CheckboxGroup>
-        </Filtergruppe>
+        <CheckboxGroup legend="Område" value={Array.from(valgteFylker)}>
+            {alleFylkerOgKommuner.map(({ fylke, kommuner }) => (
+                <Fragment key={fylke}>
+                    <Checkbox value={fylke} onChange={onFylkeChange}>
+                        {fylke}
+                    </Checkbox>
+                    {valgteFylker.has(fylke) && kommuner.length > 0 && (
+                        <CheckboxGroup
+                            hideLegend
+                            className={css.indentertCheckboxgruppe}
+                            legend={`Velg kommuner i ${fylke}`}
+                            value={Array.from(valgteKommuner)}
+                        >
+                            {kommuner.map((kommune) => (
+                                <Checkbox
+                                    key={kommune.kommune}
+                                    value={kommune.kommune}
+                                    onChange={onKommuneChange}
+                                >
+                                    {kommune.label}
+                                </Checkbox>
+                            ))}
+                        </CheckboxGroup>
+                    )}
+                </Fragment>
+            ))}
+        </CheckboxGroup>
     );
 };
 

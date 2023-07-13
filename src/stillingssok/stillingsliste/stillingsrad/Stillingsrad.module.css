@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     position: relative;
-    padding: 1.2rem 1rem 1rem;
+    padding: 0.5rem 0rem;
     align-items: center;
     flex-direction: column;
     border-radius: var(--a-border-radius-xlarge);
@@ -17,6 +17,8 @@
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    border-radius: 12px;
+    border-color: lightgray;
 }
 
 .lenkeTilStilling {
@@ -39,15 +41,6 @@
 
 .lenkeTilStilling:visited {
     color: var(--a-text-visited);
-}
-
-.kandidatlisteknapp {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.25rem;
-    padding-top: 0.5rem;
-    align-self: flex-start;
 }
 
 .etiketterOgDato {
@@ -81,14 +74,31 @@
 }
 
 .stillingsinfo > span:not(:last-child)::after {
-    content: '|';
+    content: '•';
+    color: lightgray;
     margin: 0 0.5rem;
+}
+
+.stillingsinfolink {
+    float: right;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.stillingsinfolink:hover {
+    text-decoration: underline;
 }
 
 .score {
     padding: 0.25rem 0.5rem;
     border-radius: 1rem;
     background-color: var(--a-blue-100);
+}
+
+.ikon {
+    margin-right: 0.5rem;
+    position: relative;
+    top: 0.1875rem;
 }
 
 @media (min-width: 768px) {
@@ -105,7 +115,7 @@
         margin-bottom: 0;
     }
 
-    .kandidatlisteknapp {
+    .score {
         position: absolute;
         right: 1rem;
         align-self: unset;
