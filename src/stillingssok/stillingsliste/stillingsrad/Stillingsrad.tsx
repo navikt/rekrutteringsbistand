@@ -126,11 +126,11 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                     </span>
                 </span>
             </Panel>
-            <div className={css.score}>
-                {import.meta.env.DEV && score !== null && (
-                    <code title="Score">{score.toFixed(2)}</code>
-                )}
-            </div>
+            {import.meta.env.DEV && score !== null && (
+                <code className={css.score} title="Score">
+                    {score.toFixed(2)}
+                </code>
+            )}
         </li>
     );
 };
