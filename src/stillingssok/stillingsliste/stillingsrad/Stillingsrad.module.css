@@ -97,6 +97,8 @@
 
 .ikon {
     margin-right: 0.5rem;
+    position: relative;
+    top: 0.1875rem;
 }
 
 @media (min-width: 768px) {
