@@ -46,7 +46,7 @@ export const opprettLoggmeldingForAuditlogg = (
     fnrEllerAktørId: string,
     navIdent: string
 ): string => {
-    const header = `CEF:0|${NAIS_APP_NAME}|AuditLogger|1.0|audit:access|Sporingslogg|INFO`;
+    const header = `CEF:0|Rekrutteringsbistand|${NAIS_APP_NAME}|1.0|audit:access|Sporingslogg|INFO`;
     const extension = `flexString1=Permit\
             msg=${melding}\
             duid=${fnrEllerAktørId}
