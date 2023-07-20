@@ -25,23 +25,27 @@ const Arbeidserfaring: FunctionComponent<Props> = ({ arbeidserfaring }) => {
     }
 
     return (
-        <>
-            <Detail className={css.tidsperiode}>
+        <div className={css.erfaring}>
+            <BodyShort size="small" className={css.uthevet}>
+                {stillingstittel} {arbeidsgiverOgSted}
+            </BodyShort>
+            <BodyShort size="small" className={css.tidsperiode}>
                 <Tidsperiode
                     fradato={arbeidserfaring.fraDato}
                     tildato={arbeidserfaring.tilDato}
                     navarende={!arbeidserfaring.tilDato}
                 />
-            </Detail>
-            <div className={css.erfaring}>
-                <BodyShort className={css.bold}>{stillingstittel}</BodyShort>
-                <BodyShort className={css.arbeidsgiverOgSted}>{arbeidsgiverOgSted}</BodyShort>
-
-                {arbeidserfaring.beskrivelse && (
-                    <BodyShort>{arbeidserfaring.beskrivelse}</BodyShort>
-                )}
-            </div>
-        </>
+            </BodyShort>
+            {arbeidserfaring.beskrivelse ? (
+                <BodyShort size="small" className={css.beskrivelse}>
+                    {arbeidserfaring.beskrivelse}
+                </BodyShort>
+            ) : (
+                <BodyShort size="small" className={css.beskrivelse}>
+                    -
+                </BodyShort>
+            )}
+        </div>
     );
 };
 

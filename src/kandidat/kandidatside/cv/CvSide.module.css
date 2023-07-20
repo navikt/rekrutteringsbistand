@@ -1,14 +1,16 @@
 .side {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    margin: 0 auto;
+    padding: 2rem 5rem 0.625rem 5rem;
+    align-items: flex-start;
+    gap: 2.5rem;
+    align-self: stretch;
 }
 
-.side > * {
-    max-width: 65rem;
-    width: 100%;
+.innhold {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    align-self: stretch;
 }
 
 .jobbønskerOgTilretteleggingsbehov {

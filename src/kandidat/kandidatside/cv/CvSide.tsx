@@ -23,13 +23,12 @@ const CvSide: FunctionComponent = () => {
 
     if (cv.kind === Nettstatus.Suksess) {
         return (
-            <div className={css.side}>
-                <Jobbprofil cv={cv.data} />
-                <KandidatCv cv={cv.data} />
-                {/*cv.data.tilretteleggingsbehov && (
-                    <KandidatTilretteleggingsbehov fnr={cv.data.fodselsnummer} />
-                )*/}
-            </div>
+            <main className={css.side}>
+                <div className={css.innhold}>
+                    <Jobbprofil cv={cv.data} />
+                    <KandidatCv cv={cv.data} />
+                </div>
+            </main>
         );
     }
 

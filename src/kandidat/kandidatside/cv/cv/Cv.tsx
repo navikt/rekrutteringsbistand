@@ -1,64 +1,40 @@
-import { Fragment, FunctionComponent, ReactNode } from 'react';
-import { BodyLong, BodyShort, Heading } from '@navikt/ds-react';
-
-import sortByDato from './sortByDato';
+import { ReactNode } from 'react';
 import CvType, { Sertifikat as SertifikatType } from '../reducer/cv-typer';
-import Språkferdighet from './Språkferdighet';
-import Kurs from './Kurs';
-import Informasjonspanel from '../Informasjonspanel';
+import { BodyShort, Heading, Panel } from '@navikt/ds-react';
+import {
+    Buldings2Icon,
+    PinIcon,
+    ClockIcon,
+    TimerStartIcon,
+    HourglassIcon,
+} from '@navikt/aksel-icons';
+import sortByDato from './sortByDato';
 import Arbeidserfaring from './Arbeidserfaring';
-import Erfaring from './Erfaring';
-import Tidsperiode from './Tidsperiode';
 import css from './Cv.module.css';
+
+const oppstartskoder = {
+    LEDIG_NAA: { key: 'LEDIG_NAA', label: 'Nå' },
+    ETTER_TRE_MND: { key: 'ETTER_TRE_MND', label: '3 måneders oppsigelse' },
+    ETTER_AVTALE: { key: 'ETTER_AVTALE', label: 'Etter avtale' },
+};
 
 type Props = {
     cv: CvType;
 };
 
-const Cv: FunctionComponent<Props> = ({ cv }) => {
+const Cv = ({ cv }: Props) => {
     const autorisasjoner = cv.fagdokumentasjon?.filter((f) => f.type !== 'Autorisasjon') ?? [];
 
     return (
-        <Informasjonspanel tittel="CV" className={css.cv}>
-            {cv.beskrivelse && (
-                <BolkMedToKolonner tittel="Sammendrag">
-                    <BodyLong>{cv.beskrivelse}</BodyLong>
-                </BolkMedToKolonner>
-            )}
-
-            {cv.utdanning?.length > 0 && (
-                <BolkMedErfaringer tittel="Utdanning">
-                    {sortByDato(cv.utdanning).map((utdanning) => (
-                        <Erfaring
-                            fraDato={utdanning.fraDato}
-                            tilDato={utdanning.tilDato}
-                            key={`${utdanning.nusKode}${utdanning.fraDato}`}
-                        >
-                            <BodyShort className={css.bold}>
-                                {utdanning.alternativtUtdanningsnavn
-                                    ? utdanning.alternativtUtdanningsnavn
-                                    : utdanning.nusKodeUtdanningsnavn}
-                            </BodyShort>
-                            {utdanning.utdannelsessted && (
-                                <BodyShort>{utdanning.utdannelsessted}</BodyShort>
-                            )}
-                            {utdanning.beskrivelse && (
-                                <BodyShort>{utdanning.beskrivelse}</BodyShort>
-                            )}
-                        </Erfaring>
-                    ))}
-                </BolkMedErfaringer>
-            )}
-
-            {autorisasjoner?.length > 0 && (
-                <BolkMedPunktliste tittel="Fagbrev/svennebrev og mesterbrev">
-                    {autorisasjoner.map(({ tittel, type }) => (
-                        <Fragment key={tittel}>
-                            {(tittel || type) && <BodyShort as="li">{tittel ?? type}</BodyShort>}
-                        </Fragment>
-                    ))}
-                </BolkMedPunktliste>
-            )}
+        <Panel border className={css.panel}>
+            <Heading level="2" size="small" className={css.panelOverskrift}>
+                <div className={css.overskriftMedIkon}>
+                    <div className={css.ikonRamme}>
+                        <Buldings2Icon />
+                    </div>
+                    Erfaring
+                </div>
+            </Heading>
 
             {cv.yrkeserfaring?.length > 0 && (
                 <BolkMedErfaringer tittel="Arbeidserfaring">
@@ -71,146 +47,75 @@ const Cv: FunctionComponent<Props> = ({ cv }) => {
                 </BolkMedErfaringer>
             )}
 
-            {cv.annenErfaring?.length > 0 && (
-                <BolkMedErfaringer tittel="Annen erfaring">
-                    {sortByDato(cv.annenErfaring).map((erfaring, i) => (
-                        <Erfaring
-                            key={`${erfaring.rolle}-${erfaring.fraDato}`}
-                            fraDato={erfaring.fraDato}
-                            tilDato={erfaring.tilDato}
-                        >
-                            <BodyShort className={css.bold}>{erfaring.rolle}</BodyShort>
-                            <BodyShort>{erfaring.beskrivelse}</BodyShort>
-                        </Erfaring>
-                    ))}
-                </BolkMedErfaringer>
-            )}
-
-            {cv.godkjenninger?.length > 0 && (
-                <BolkMedErfaringer tittel="Godkjenninger i lovreguelerte yrker">
-                    {cv.godkjenninger.map((godkjenning) => (
-                        <Erfaring
-                            fraDato={godkjenning.gjennomfoert}
-                            key={`${godkjenning.konseptId}-${godkjenning.gjennomfoert}`}
-                        >
-                            <BodyShort className={css.bold}>{godkjenning.tittel}</BodyShort>
-                            <BodyShort>{godkjenning.utsteder}</BodyShort>
-                            {godkjenning.utloeper && (
-                                <BodyShort>
-                                    Utløper: <Tidsperiode tildato={godkjenning.utloeper} />
-                                </BodyShort>
-                            )}
-                        </Erfaring>
-                    ))}
-                </BolkMedErfaringer>
-            )}
-
-            {cv.sertifikater?.length > 0 && (
-                <BolkMedErfaringer tittel="Andre godkjenninger">
-                    {sortByDato(cv.sertifikater).map((sertifikat) => (
-                        <Erfaring
-                            key={`${sertifikat.sertifikatKode}-${sertifikat.alternativtNavn}-${sertifikat.fraDato}`}
-                            fraDato={sertifikat.fraDato}
-                        >
-                            <BodyShort className={css.bold}>
-                                {sertifikat.alternativtNavn
-                                    ? sertifikat.alternativtNavn
-                                    : sertifikat.sertifikatKodeNavn}
-                            </BodyShort>
-                            {sertifikat.utsteder && <BodyShort>{sertifikat.utsteder}</BodyShort>}
-                            {sertifikat.tilDato && (
-                                <BodyShort>
-                                    Utløper: <Tidsperiode tildato={sertifikat.tilDato} />
-                                </BodyShort>
-                            )}
-                        </Erfaring>
-                    ))}
-                </BolkMedErfaringer>
-            )}
-
-            {cv.kurs?.length > 0 && (
-                <BolkMedErfaringer tittel="Kurs">
-                    {sortByDato(cv.kurs).map((kurs, i) => (
-                        <Kurs key={`${kurs.tittel}-${kurs.fraDato}`} kurs={kurs} />
-                    ))}
-                </BolkMedErfaringer>
-            )}
-
-            {cv.forerkort?.length > 0 && (
-                <BolkMedErfaringer tittel="Førerkort">
-                    {fjernDuplikater(sortByDato(cv.forerkort)).map((førerkort) => (
-                        <Erfaring
-                            key={`${førerkort.sertifikatKode}-${førerkort.fraDato}`}
-                            fraDato={førerkort.fraDato}
-                            tilDato={førerkort.tilDato}
-                        >
-                            <BodyShort className={css.bold}>
-                                {førerkort.alternativtNavn
-                                    ? førerkort.alternativtNavn
-                                    : førerkort.sertifikatKodeNavn}
-                            </BodyShort>
-                        </Erfaring>
-                    ))}
-                </BolkMedErfaringer>
-            )}
-
-            {cv.sprakferdigheter?.length > 0 && (
-                <BolkMedToKolonner tittel="Språk">
-                    <div className={css.kolonne}>
-                        {cv.sprakferdigheter.map((ferdighet) => (
-                            <Språkferdighet
-                                ferdighet={ferdighet}
-                                key={`${ferdighet.sprak}${ferdighet.ferdighetMuntlig}${ferdighet.ferdighetSkriftlig}`}
-                            />
-                        ))}
-                    </div>
-                </BolkMedToKolonner>
-            )}
-        </Informasjonspanel>
+            <BodyShort size="small" className={css.uthevet}>
+                <MangeTekstelementerSeparertMedKomma
+                    elementer={cv.yrkeJobbonsker.map((j) => j.styrkBeskrivelse)}
+                />
+            </BodyShort>
+            <BodyShort size="small" className={css.kompetanse}>
+                <MangeTekstelementerSeparertMedKomma
+                    elementer={cv.kompetanse.map((u) => u.kompetanseKodeTekst)}
+                />
+            </BodyShort>
+        </Panel>
     );
 };
 
-const BolkMedToKolonner = ({ tittel, children }: { tittel: string; children: ReactNode }) => (
-    <div className={css.bolkMedToKolonner}>
-        <Heading level="3" size="medium">
-            {tittel}
-        </Heading>
-        {children}
-    </div>
-);
-
 const BolkMedErfaringer = ({ tittel, children }: { tittel: string; children: ReactNode }) => (
-    <div className={css.bolkMedErfaringer}>
-        <Heading level="3" size="medium">
-            {tittel}
-        </Heading>
+    <div className={css.erfaring}>
         <div className={css.erfaringer}>{children}</div>
     </div>
 );
 
-const BolkMedPunktliste = ({ tittel, children }: { tittel: string; children: ReactNode }) => (
-    <div className={css.bolkMedPunktliste}>
-        <Heading level="3" size="medium">
-            {tittel}
-        </Heading>
-        <div className={css.erfaringer}>
-            <span />
-            <ul className={css.punktliste}>{children}</ul>
+const Erfaring = () => {
+    return (
+        <div className={css.erfaring}>
+            <BodyShort size="small" className={css.uthevet}>
+                {}
+            </BodyShort>
         </div>
-    </div>
-);
+    );
+};
 
-const fjernDuplikater = (forerkortListe: SertifikatType[]) => {
-    const forerkortAlleredeILista = new Set();
+const MangeTekstelementerSeparertMedKomma = ({
+    elementer,
+}: {
+    elementer: Array<string | null>;
+}) => {
+    return (
+        <span>
+            {elementer
+                .filter((e) => e !== null)
+                .map((element) => element)
+                .join(', ')}
+        </span>
+    );
+};
 
-    return forerkortListe.filter((forerkort) => {
-        const forerkortetErIkkeAlleredeLagtTil = !forerkortAlleredeILista.has(
-            forerkort.sertifikatKodeNavn
-        );
+const MangeTekstelementerSeparertMedOg = ({ elementer }: { elementer: Array<string | null> }) => {
+    return (
+        <span>
+            {elementer
+                .filter((e) => e !== null)
+                .map((element) => element)
+                .join(' og ')}
+        </span>
+    );
+};
 
-        forerkortAlleredeILista.add(forerkort.sertifikatKodeNavn);
-        return forerkortetErIkkeAlleredeLagtTil;
-    });
+const MangeTekstelementerSeparertMedMellomrom = ({
+    elementer,
+}: {
+    elementer: Array<string | null>;
+}) => {
+    return (
+        <span>
+            {elementer
+                .filter((e) => e !== null)
+                .map((element) => element)
+                .join(' ')}
+        </span>
+    );
 };
 
 export default Cv;
