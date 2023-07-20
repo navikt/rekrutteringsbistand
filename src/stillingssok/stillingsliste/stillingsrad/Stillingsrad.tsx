@@ -9,7 +9,9 @@ import { konverterTilPresenterbarDato } from './datoUtils';
 import {
     lagUrlTilKandidatliste,
     lagUrlTilStilling,
+    lagUrlTilStillingRedigering,
     skalViseLenkeTilKandidatliste,
+    skalViseRedigeringslenkeTilStilling,
 } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import { hentHovedtags } from '../../filter/inkludering/tags';
@@ -114,6 +116,15 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                         )}
                     </span>
                     <span>
+                        {skalViseRedigeringslenkeTilStilling(rekrutteringsbistandstilling) && (
+                            <Link
+                                className={css.stillingsinfolink}
+                                to={lagUrlTilStillingRedigering(stilling)}
+                                title="Endre stilling"
+                            >
+                                Endre
+                            </Link>
+                        )}
                         {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                             <Link
                                 className={css.stillingsinfolink}
