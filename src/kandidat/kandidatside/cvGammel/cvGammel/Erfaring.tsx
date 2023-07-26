@@ -1,5 +1,5 @@
 import { Detail } from '@navikt/ds-react';
-import Tidsperiode from './Tidsperiode';
+import Tidsperiode from '../tidsperiode/Tidsperiode';
 import css from './Cv.module.css';
 import { ReactNode } from 'react';
 

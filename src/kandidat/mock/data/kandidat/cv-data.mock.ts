@@ -56,7 +56,7 @@ export const yrkeserfaring: Yrkeserfaring[] = [
         styrkKodeStillingstittel: 'Anleggsmaskinfører',
         utelukketForFremtiden: false,
         fraDato: '2012-08-02',
-        tilDato: '2013-11-02',
+        tilDato: null,
         beskrivelse: mockStrings.arbeidsbeskrivelser[0],
     },
     {

@@ -1,14 +1,14 @@
 import { Fragment, FunctionComponent, ReactNode } from 'react';
 import { BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 
-import sortByDato from './sortByDato';
+import sortByDato from '../../cv/sortByDato';
 import CvType, { Sertifikat as SertifikatType } from '../reducer/cv-typer';
 import Språkferdighet from './Språkferdighet';
 import Kurs from './Kurs';
 import Informasjonspanel from '../Informasjonspanel';
 import Arbeidserfaring from './Arbeidserfaring';
 import Erfaring from './Erfaring';
-import Tidsperiode from './Tidsperiode';
+import Tidsperiode from '../tidsperiode/Tidsperiode';
 import css from './Cv.module.css';
 
 type Props = {

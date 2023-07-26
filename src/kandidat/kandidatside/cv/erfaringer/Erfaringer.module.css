@@ -1,0 +1,17 @@
+.erfaringer {
+    display: flex;
+    padding-bottom: 0px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.deler {
+    display: flex;
+    padding: 0rem 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+    height: 0.0625rem;
+    background: var(--border-divider, rgba(0, 0, 0, 0.19));
+}

@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
 import Jobbprofil from './jobbprofil/Jobbprofil';
+import KandidatCv from './cvGammel/Cv';
 import IkkeFunnet from './ikke-funnet/IkkeFunnet';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
 import css from './CvSide.module.css';
-import Erfaringer from './erfaringer/Erfaringer';
 
 const CvSide: FunctionComponent = () => {
     const { cv } = useSelector((state: AppState) => state.cv);
@@ -26,7 +26,7 @@ const CvSide: FunctionComponent = () => {
             <div className={css.side}>
                 <div className={css.innhold}>
                     <Jobbprofil cv={cv.data} />
-                    <Erfaringer cv={cv.data} />
+                    <KandidatCv cv={cv.data} />
                 </div>
             </div>
         );

@@ -8,7 +8,7 @@ import {
     TimerStartIcon,
     HourglassIcon,
 } from '@navikt/aksel-icons';
-import sortByDato from './sortByDato';
+import sortByDato from '../../cv/sortByDato';
 import Arbeidserfaring from './Arbeidserfaring';
 import css from './Cv.module.css';
 

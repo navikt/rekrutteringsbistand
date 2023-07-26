@@ -4,7 +4,7 @@ import { BodyShort, Heading } from '@navikt/ds-react';
 
 import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import Cv from '../../cv/reducer/cv-typer';
+import Cv from '../../cvGammel/reducer/cv-typer';
 import Fødselsinfo from './Fødselsinfo';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
 import Personalia from './Personalia';
