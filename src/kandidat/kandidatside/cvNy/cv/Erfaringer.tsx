@@ -3,12 +3,13 @@ import Erfaring from './erfaring/Erfaring';
 import Kort from '../kort/Kort';
 import CvType from '../reducer/cv-typer';
 import Tidsperiode from '../tidsperiode/Tidsperiode';
-import css from './Erfaringer.module.css';
+import css from './Cv.module.css';
 import sortByDato from '../tidsperiode/sortByDato';
 
 type Props = {
     cv: CvType;
 };
+
 const Erfaringer = ({ cv }: Props) => {
     return (
         <Kort

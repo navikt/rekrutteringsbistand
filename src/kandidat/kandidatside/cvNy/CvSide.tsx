@@ -8,7 +8,8 @@ import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
 import css from './CvSide.module.css';
 import Jobbønsker from './jobbønsker/Jobbønsker';
-import Erfaringer from './erfaringer/Erfaringer';
+import Erfaringer from './cv/Erfaringer';
+import Utdanning from './cv/Utdanning';
 
 const CvSide: FunctionComponent = () => {
     const { cv } = useSelector((state: AppState) => state.cv);
@@ -29,6 +30,7 @@ const CvSide: FunctionComponent = () => {
                         <div className={css.venstreSide}>
                             <Jobbønsker cv={cv.data} />
                             <Erfaringer cv={cv.data} />
+                            <Utdanning cv={cv.data} />
                         </div>
                         <div className={css.høyreSide}></div>
                     </div>
