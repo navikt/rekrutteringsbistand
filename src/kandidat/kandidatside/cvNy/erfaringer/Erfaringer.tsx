@@ -4,6 +4,7 @@ import Kort from '../kort/Kort';
 import CvType from '../reducer/cv-typer';
 import Tidsperiode from '../tidsperiode/Tidsperiode';
 import css from './Erfaringer.module.css';
+import sortByDato from '../tidsperiode/sortByDato';
 
 type Props = {
     cv: CvType;
@@ -16,7 +17,7 @@ const Erfaringer = ({ cv }: Props) => {
             innhold={
                 <div className={css.erfaringer}>
                     {cv.yrkeserfaring?.length > 0 &&
-                        cv.yrkeserfaring.map((erfaring) => {
+                        sortByDato(cv.yrkeserfaring).map((erfaring) => {
                             let stillingstittel,
                                 beskrivelse = '';
 
@@ -34,6 +35,7 @@ const Erfaringer = ({ cv }: Props) => {
 
                             return (
                                 <Erfaring
+                                    key={`${erfaring.styrkKode}-${erfaring.fraDato}`}
                                     overskrift={stillingstittel}
                                     beskrivelse={beskrivelse}
                                     tidsperiode={
@@ -46,17 +48,31 @@ const Erfaringer = ({ cv }: Props) => {
                                 />
                             );
                         })}
-                    <Erfaring
-                        overskrift={'en overskrift'}
-                        beskrivelse={'en beskrivelse'}
-                        tidsperiode={<Tidsperiode />}
-                    />
                     <div className={css.deler} />
-                    <Erfaring
-                        overskrift={'en ny overskrift'}
-                        beskrivelse={'en ny beskrivelse'}
-                        tidsperiode={<Tidsperiode />}
-                    />
+                    {cv.annenErfaring?.length > 0 &&
+                        sortByDato(cv.annenErfaring).map((erfaring) => {
+                            let beskrivelse = '';
+                            if (erfaring.beskrivelse) {
+                                beskrivelse = erfaring.beskrivelse;
+                            } else {
+                                beskrivelse = '-';
+                            }
+
+                            return (
+                                <Erfaring
+                                    key={`${erfaring.rolle}-${erfaring.fraDato}`}
+                                    overskrift={erfaring.rolle}
+                                    beskrivelse={beskrivelse}
+                                    tidsperiode={
+                                        <Tidsperiode
+                                            fradato={erfaring.fraDato}
+                                            tildato={erfaring.tilDato}
+                                            nåværende={!erfaring.tilDato}
+                                        />
+                                    }
+                                />
+                            );
+                        })}
                 </div>
             }
         />
