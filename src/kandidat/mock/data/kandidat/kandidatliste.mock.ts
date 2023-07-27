@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { v5 as uuid } from 'uuid';
 
-import type Cv from '../../../kandidatside/cvGammel/reducer/cv-typer';
+import type Cv from '../../../kandidatside/cv/reducer/cv-typer';
 import { Veileder } from './veileder.mock';
 import { mockStrings } from './mock-strings';
 import {

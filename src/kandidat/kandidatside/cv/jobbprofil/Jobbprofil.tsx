@@ -1,5 +1,5 @@
 import Cv from '../reducer/cv-typer';
-import { BodyShort, Heading, Panel } from '@navikt/ds-react';
+import { BodyShort } from '@navikt/ds-react';
 import { HeartIcon, PinIcon, ClockIcon, TimerStartIcon, HourglassIcon } from '@navikt/aksel-icons';
 import css from './Jobbprofil.module.css';
 import Kort from '../kort/Kort';

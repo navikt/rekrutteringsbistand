@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import Tidsperiode from '../tidsperiode/Tidsperiode';
 import { Yrkeserfaring } from '../reducer/cv-typer';
-import { Detail, BodyShort } from '@navikt/ds-react';
+import { BodyShort } from '@navikt/ds-react';
 import css from './Cv.module.css';
 
 type Props = { arbeidserfaring: Yrkeserfaring };
