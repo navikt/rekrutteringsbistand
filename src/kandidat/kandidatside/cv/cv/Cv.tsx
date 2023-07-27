@@ -1,8 +1,8 @@
 import { Fragment, FunctionComponent, ReactNode } from 'react';
 import { BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 
-import sortByDato from './sortByDato';
-import CvType, { Sertifikat as SertifikatType } from '../reducer/cv-typer';
+import sortByDato from '../../cvNy/tidsperiode/sortByDato';
+import CvType, { Sertifikat as SertifikatType } from '../../cvNy/reducer/cv-typer';
 import Språkferdighet from './Språkferdighet';
 import Kurs from './Kurs';
 import Informasjonspanel from '../Informasjonspanel';

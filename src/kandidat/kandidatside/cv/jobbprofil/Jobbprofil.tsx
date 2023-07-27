@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { BodyShort } from '@navikt/ds-react';
-import Cv from '../reducer/cv-typer';
+import Cv from '../../cvNy/reducer/cv-typer';
 import Informasjonspanel from '../Informasjonspanel';
 import css from './Jobbprofil.module.css';
 

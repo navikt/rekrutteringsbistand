@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import cvReducer, { cvSaga } from '../kandidatside/cv/reducer/cvReducer';
+import cvReducer, { cvSaga } from '../kandidatside/cvNy/reducer/cvReducer';
 import enhetsregisterReducer, {
     enhetsregisterSaga,
 } from '../komponenter/typeahead/enhetsregisterReducer';

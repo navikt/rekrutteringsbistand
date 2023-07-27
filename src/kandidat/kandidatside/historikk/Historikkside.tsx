@@ -14,7 +14,7 @@ import { KandidatQueryParam } from '../Kandidatside';
 import { sendEvent } from 'felles/amplitude';
 import { Sms } from '../../kandidatliste/domene/Kandidatressurser';
 import AppState from '../../state/AppState';
-import Cv from '../cv/reducer/cv-typer';
+import Cv from '../cvNy/reducer/cv-typer';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './Historikkside.module.css';
 

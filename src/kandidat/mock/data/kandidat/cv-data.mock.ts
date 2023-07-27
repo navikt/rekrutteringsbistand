@@ -6,7 +6,7 @@ import {
     Yrkeserfaring,
     Kompetanse,
     Utdanning,
-} from '../../../kandidatside/cv/reducer/cv-typer';
+} from '../../../kandidatside/cvNy/reducer/cv-typer';
 import { mockStrings } from './mock-strings';
 
 export const utdanning: Utdanning[] = [

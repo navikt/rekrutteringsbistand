@@ -8,7 +8,7 @@ import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIK
 import { lenkeTilKandidatliste } from '../../app/paths';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
-import Cv from '../cv/reducer/cv-typer';
+import Cv from '../cvNy/reducer/cv-typer';
 import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
