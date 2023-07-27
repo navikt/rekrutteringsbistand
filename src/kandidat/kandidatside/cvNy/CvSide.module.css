@@ -1,0 +1,40 @@
+.side {
+    display: flex;
+    padding: 2rem 5rem 0.625rem 5rem;
+    align-items: flex-start;
+    gap: 2.5rem;
+    align-self: stretch;
+}
+
+.wrapper {
+    display: flex;
+    width: 80rem;
+    padding-bottom: 0px;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    align-self: stretch;
+}
+
+.mosaik {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    align-self: stretch;
+}
+
+.venstreSide {
+    display: flex;
+    width: 49.3125rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.høyreSide {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    flex: 1 0 0;
+}
