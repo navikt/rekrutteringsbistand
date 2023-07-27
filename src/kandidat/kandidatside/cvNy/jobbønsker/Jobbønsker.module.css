@@ -1,0 +1,44 @@
+.jobbønsker {
+    font-weight: var(--a-font-weight-bold);
+    display: flex;
+    padding: 0.75rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.75rem;
+    align-self: stretch;
+}
+
+.innhold {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.kompetanse {
+    display: flex;
+    padding: 0.75rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.75rem;
+    align-self: stretch;
+    color: var(--text-default, #262626);
+}
+
+.bunn {
+    color: var(--text-subtle, rgba(0, 0, 0, 0.65));
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    align-self: stretch;
+}
+
+.uthevetTekstOgIkon {
+    font-weight: var(--a-font-weight-bold);
+    display: flex;
+    padding: 0.5rem 0.75rem;
+    align-items: center;
+    gap: 0.5rem;
+}
