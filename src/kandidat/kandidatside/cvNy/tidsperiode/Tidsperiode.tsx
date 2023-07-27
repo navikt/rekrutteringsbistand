@@ -24,7 +24,7 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                     <img src={ellipse} alt="" />
                 </div>
                 <BodyShort size="small" className={css.tekst}>
-                    Her kommer antall måneder og år
+                    {diffMellomToDatoer(fradato, tildato)}
                 </BodyShort>
             </div>
         );
@@ -39,7 +39,7 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                     <img src={ellipse} alt="" />
                 </div>
                 <BodyShort size="small" className={css.tekst}>
-                    Her kommer antall måneder og år
+                    {diffMellomToDatoer(fradato, new Date().toString())}
                 </BodyShort>
             </div>
         );
@@ -54,7 +54,7 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                     <img src={ellipse} alt="" />
                 </div>
                 <BodyShort size="small" className={css.tekst}>
-                    Her kommer antall måneder og år
+                    {diffMellomToDatoer(tildato, tildato)}
                 </BodyShort>
             </div>
         );
@@ -63,13 +63,7 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
     return (
         <div className={css.tidsperiode}>
             <BodyShort size="small" className={css.tekst}>
-                {nåværende && ' nå'}
-            </BodyShort>
-            <div className={css.ikon}>
-                <img src={ellipse} alt="" />
-            </div>
-            <BodyShort size="small" className={css.tekst}>
-                Her kommer antall måneder og år
+                {nåværende && ' nåværende'}
             </BodyShort>
         </div>
     );
@@ -81,6 +75,34 @@ const formaterDatoHvisIkkeNull = (dato?: string | null) => {
     }
 
     return formaterDatoTilMånedOgÅr(dato);
+};
+
+const diffMellomToDatoer = (fraDato: string, tilDato: string): string => {
+    const startDato = new Date(fraDato);
+    const sluttDato = new Date(tilDato);
+    const månedDiff =
+        sluttDato.getMonth() -
+        startDato.getMonth() +
+        12 * (sluttDato.getFullYear() - startDato.getFullYear());
+
+    if (månedDiff === 0) {
+        return '1 måned';
+    }
+
+    const antallÅr = (månedDiff / 12) | 0;
+    const antallMåneder = (månedDiff % 12) + 1;
+
+    if (antallÅr === 0 && antallMåneder < 12) {
+        return antallMåneder + ' måneder';
+    } else if (antallMåneder === 12) {
+        return antallÅr + 1 + ' år';
+    } else if (antallÅr > 0 && antallMåneder > 1) {
+        return antallÅr + ' år, ' + antallMåneder + ' måneder';
+    } else if (antallÅr > 0 && antallMåneder === 1) {
+        return antallÅr + ' år';
+    }
+
+    return '';
 };
 
 export default Tidsperiode;
