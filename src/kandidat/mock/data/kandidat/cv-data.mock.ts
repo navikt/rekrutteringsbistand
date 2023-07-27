@@ -56,7 +56,7 @@ export const yrkeserfaring: Yrkeserfaring[] = [
         styrkKodeStillingstittel: 'Anleggsmaskinfører',
         utelukketForFremtiden: false,
         fraDato: '2012-08-02',
-        tilDato: '2013-11-02',
+        tilDato: null,
         beskrivelse: mockStrings.arbeidsbeskrivelser[0],
     },
     {
@@ -65,7 +65,7 @@ export const yrkeserfaring: Yrkeserfaring[] = [
         styrkKode: '5223.02',
         styrkKodeStillingstittel: 'Butikkmedarbeider',
         utelukketForFremtiden: false,
-        fraDato: '2011-08-02',
+        fraDato: null,
         tilDato: '2012-06-02',
         beskrivelse: mockStrings.arbeidsbeskrivelser[1],
     },
@@ -75,8 +75,8 @@ export const yrkeserfaring: Yrkeserfaring[] = [
         styrkKode: '4321.01',
         styrkKodeStillingstittel: 'Lagerarbeider',
         utelukketForFremtiden: false,
-        fraDato: '2009-04-02',
-        tilDato: '2010-07-02',
+        fraDato: null,
+        tilDato: null,
         beskrivelse: '',
     },
     {
