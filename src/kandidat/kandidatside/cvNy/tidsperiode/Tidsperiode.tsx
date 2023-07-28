@@ -1,7 +1,7 @@
 import { BodyShort } from '@navikt/ds-react';
 import ellipse from '../ikoner/ellipse.svg';
 import css from './Tidsperiode.module.css';
-import { formaterDatoTilMånedOgÅr } from '../../../utils/dateUtils';
+import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 
 type Props = {
     fradato?: string | null;
@@ -67,14 +67,6 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
             </BodyShort>
         </div>
     );
-};
-
-const formaterDatoHvisIkkeNull = (dato?: string | null) => {
-    if (!dato) {
-        return null;
-    }
-
-    return formaterDatoTilMånedOgÅr(dato);
 };
 
 const diffMellomToDatoer = (fraDato: string, tilDato: string): string => {

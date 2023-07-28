@@ -13,6 +13,7 @@ import Utdanning from './cv/Utdanning';
 import Fagbrev from './cv/Fagbrev';
 import Førerkort from './cv/Førerkort';
 import Språk from './cv/Språk';
+import Godkjenninger from './cv/Godkjenninger';
 
 const CvSide: FunctionComponent = () => {
     const { cv } = useSelector((state: AppState) => state.cv);
@@ -39,6 +40,7 @@ const CvSide: FunctionComponent = () => {
                         <div className={css.høyreSide}>
                             <Førerkort cv={cv.data} />
                             <Språk cv={cv.data} />
+                            <Godkjenninger cv={cv.data} />
                         </div>
                     </div>
                 </div>

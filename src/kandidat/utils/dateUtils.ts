@@ -50,3 +50,11 @@ export const formaterDatoTilKortMånedOgÅr = (isoDato: string) => {
         year: 'numeric',
     });
 };
+
+export const formaterDatoHvisIkkeNull = (dato?: string | null) => {
+    if (!dato) {
+        return null;
+    }
+
+    return formaterDatoTilMånedOgÅr(dato);
+};
