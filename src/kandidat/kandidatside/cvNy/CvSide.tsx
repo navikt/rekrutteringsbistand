@@ -14,6 +14,7 @@ import Fagbrev from './cv/Fagbrev';
 import Førerkort from './cv/Førerkort';
 import Språk from './cv/Språk';
 import Godkjenninger from './cv/Godkjenninger';
+import Kurs from './cv/Kurs';
 
 const CvSide: FunctionComponent = () => {
     const { cv } = useSelector((state: AppState) => state.cv);
@@ -41,6 +42,7 @@ const CvSide: FunctionComponent = () => {
                             <Førerkort cv={cv.data} />
                             <Språk cv={cv.data} />
                             <Godkjenninger cv={cv.data} />
+                            <Kurs cv={cv.data} />
                         </div>
                     </div>
                 </div>
