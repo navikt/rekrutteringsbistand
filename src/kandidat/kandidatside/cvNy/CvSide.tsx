@@ -11,6 +11,7 @@ import Jobbønsker from './jobbønsker/Jobbønsker';
 import Erfaringer from './cv/Erfaringer';
 import Utdanning from './cv/Utdanning';
 import Fagbrev from './cv/Fagbrev';
+import Førerkort from './cv/Førerkort';
 
 const CvSide: FunctionComponent = () => {
     const { cv } = useSelector((state: AppState) => state.cv);
@@ -34,7 +35,9 @@ const CvSide: FunctionComponent = () => {
                             <Utdanning cv={cv.data} />
                             <Fagbrev cv={cv.data} />
                         </div>
-                        <div className={css.høyreSide}></div>
+                        <div className={css.høyreSide}>
+                            <Førerkort cv={cv.data} />
+                        </div>
                     </div>
                 </div>
             </div>
