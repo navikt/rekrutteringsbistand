@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 type Props = {
     overskrift: string;
-    beskrivelse: string;
+    beskrivelse: string | ReactNode;
     tidsperiode: ReactNode;
 };
 const Erfaring = ({ overskrift, beskrivelse, tidsperiode }: Props) => {
