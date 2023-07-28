@@ -11,7 +11,7 @@ import KandidatlisteAction from './reducer/KandidatlisteAction';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
 import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
 import SendSmsModal from './modaler/SendSmsModal';
-import { CvSøkeresultat } from '../kandidatside/cvNy/reducer/cv-typer';
+import { CvSøkeresultat } from '../kandidatside/cv/reducer/cv-typer';
 import { Kandidatmeldinger, Kandidattilstander, SmsStatus } from './domene/Kandidatressurser';
 import Kandidatliste from './Kandidatliste';
 import {

@@ -1,5 +1,5 @@
 import { formaterDato } from '../../../utils/dateUtils';
-import Cv from '../../cvNy/reducer/cv-typer';
+import Cv from '../../cv/reducer/cv-typer';
 
 type Props = {
     cv: Cv;

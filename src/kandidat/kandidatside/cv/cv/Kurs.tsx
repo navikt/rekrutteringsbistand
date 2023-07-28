@@ -1,30 +1,33 @@
-import { FunctionComponent } from 'react';
-import { BodyShort, Detail } from '@navikt/ds-react';
-import { Kurs as KursType, Omfang, Omfangenhet } from '../../cvNy/reducer/cv-typer';
-import TidspunktMedLabel from './TidspunktMedLabel';
-import { toDate } from '../../cvNy/tidsperiode/sortByDato';
+import { ClipboardIcon } from '@navikt/aksel-icons';
 import css from './Cv.module.css';
+import CvTyper, { Omfang, Omfangenhet } from '../reducer/cv-typer';
+import Kort from '../kort/Kort';
+import sortByDato from '../tidsperiode/sortByDato';
+import Erfaring from './erfaring/Erfaring';
 
 type Props = {
-    kurs: KursType;
+    cv: CvTyper;
 };
 
-const Kurs: FunctionComponent<Props> = ({ kurs }) => {
-    const gjeldendeDato = kurs.tilDato ? kurs.tilDato : kurs.fraDato;
-    const dato = gjeldendeDato == null ? null : toDate(gjeldendeDato);
-    const varighet = hentKursvarighet(kurs.omfang);
-
+const Kurs = ({ cv }: Props) => {
     return (
-        <>
-            <Detail className={css.tidsperiode}>
-                <TidspunktMedLabel tidspunkt={dato} labelTekst="fullført" />
-            </Detail>
-            <div className={css.erfaring}>
-                {kurs.tittel && <BodyShort className={css.bold}>{kurs.tittel}</BodyShort>}
-                {kurs.arrangor && <BodyShort>{kurs.arrangor}</BodyShort>}
-                {varighet && <BodyShort>{`Varighet: ${varighet}`}</BodyShort>}
-            </div>
-        </>
+        <Kort
+            overskrift={'Kurs'}
+            ikon={<ClipboardIcon />}
+            innhold={
+                <div className={css.erfaringer}>
+                    {cv.kurs?.length > 0 &&
+                        sortByDato(cv.kurs).map((kurs) => (
+                            <Erfaring
+                                key={`${kurs.tittel}-${kurs.fraDato}`}
+                                overskrift={kurs.tittel}
+                                beskrivelse={hentKursvarighet(kurs.omfang)}
+                                tidsperiode={null}
+                            />
+                        ))}
+                </div>
+            }
+        />
     );
 };
 

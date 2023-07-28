@@ -1,5 +1,5 @@
 import { ListeoversiktState } from '../kandidatlisteoversikt/reducer/listeoversiktReducer';
-import { CvState } from '../kandidatside/cvNy/reducer/cvReducer';
+import { CvState } from '../kandidatside/cv/reducer/cvReducer';
 import { HistorikkState } from '../kandidatside/historikk/historikkReducer';
 import { KandidatlisteState } from '../kandidatliste/reducer/kandidatlisteReducer';
 import { NavKontorState } from './navKontorReducer';
