@@ -2,9 +2,9 @@ import { SealCheckmarkIcon } from '@navikt/aksel-icons';
 import Erfaring from './erfaring/Erfaring';
 import Kort from '../kort/Kort';
 import CvType from '../reducer/cv-typer';
-import Tidsperiode from '../tidsperiode/Tidsperiode';
 import css from './Cv.module.css';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
+import sortByDato from '../tidsperiode/sortByDato';
 
 type Props = {
     cv: CvType;
@@ -40,7 +40,7 @@ const Godkjenninger = ({ cv }: Props) => {
                         })}
                     <div className={css.deler} />
                     {cv.sertifikater?.length > 0 &&
-                        cv.sertifikater.map((sertifikat) => {
+                        sortByDato(cv.sertifikater).map((sertifikat) => {
                             let beskrivelse = '';
 
                             if (sertifikat.tilDato) {
