@@ -17,23 +17,18 @@ const Førerkort = ({ cv }: Props) => {
             innhold={
                 <div className={css.erfaringer}>
                     {cv.forerkort?.length > 0 &&
-                        fjernDuplikater(sortByDato(cv.forerkort)).map((førerkort) => {
-                            console.log('sertifikatkode: ' + førerkort.sertifikatKode);
-                            console.log('alternativtNavn: ' + førerkort.alternativtNavn);
-                            console.log('sertifikatKodeNavn: ' + førerkort.sertifikatKodeNavn);
-                            return (
-                                <Erfaring
-                                    key={`${førerkort.sertifikatKode}-${førerkort.fraDato}`}
-                                    overskrift={
-                                        førerkort.alternativtNavn
-                                            ? førerkort.alternativtNavn
-                                            : førerkort.sertifikatKodeNavn
-                                    }
-                                    beskrivelse={førerkort.sertifikatKode}
-                                    tidsperiode={null}
-                                />
-                            );
-                        })}
+                        fjernDuplikater(sortByDato(cv.forerkort)).map((førerkort) => (
+                            <Erfaring
+                                key={`${førerkort.sertifikatKode}-${førerkort.fraDato}`}
+                                overskrift={
+                                    førerkort.alternativtNavn
+                                        ? førerkort.alternativtNavn
+                                        : førerkort.sertifikatKodeNavn
+                                }
+                                beskrivelse={førerkort.sertifikatKode}
+                                tidsperiode={null}
+                            />
+                        ))}
                 </div>
             }
         />
