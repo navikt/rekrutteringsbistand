@@ -26,17 +26,19 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ stillingsId, kandidatlist
                 type: KandidatlisteActionType.HentKandidatlisteMedStillingsId,
                 stillingsId,
             });
+            console.log('Med stillingsid');
         } else if (kandidatlisteId) {
             dispatch({
                 type: KandidatlisteActionType.HentKandidatlisteMedKandidatlisteId,
                 kandidatlisteId,
             });
+            console.log('Uten stillingsid');
         }
 
         const hentArbeidsgiversVurderinger = async (stillingId: string) => {
             try {
                 const respons = await fetch(
-                    `${api.presenterteKandidaterApi}/kandidatliste/${stillingId}`,
+                    `${api.presenterteKandidaterApi}/kandidatliste/${stillingId}/vurdering`,
                     {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' },
@@ -47,9 +49,12 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ stillingsId, kandidatlist
             } catch (e) {
                 console.log('Kall mot arbeidsgivers vurderinger feilet: ' + e);
             }
-
-            hentArbeidsgiversVurderinger(stillingId);
         };
+        console.log('stillingsId er ' + stillingsId);
+        if (stillingsId) {
+            console.log('inne i if');
+            hentArbeidsgiversVurderinger(stillingsId);
+        }
     }, [dispatch, stillingsId, kandidatlisteId]);
 
     if (kandidatliste.kind === Nettstatus.LasterInn) {

@@ -26,6 +26,7 @@ const scopes = {
     sms: `api://${clusterOnPrem}.toi.rekrutteringsbistand-sms/.default`,
     forespørselOmDelingAvCv: `api://${clusterOnPrem}.arbeidsgiver-inkludering.foresporsel-om-deling-av-cv-api/.default`,
     synlighetsmotor: `api://${cluster}.toi.toi-synlighetsmotor/.default`,
+    presenterteKandidater: `api://${cluster}.toi.presenterte-kandidater-api/.default`,
 };
 
 const {
@@ -36,6 +37,7 @@ const {
     SMS_API,
     FORESPORSEL_OM_DELING_AV_CV_API,
     SYNLIGHETSMOTOR_API,
+    PRESENTERTE_KANDIDATER_API,
     OPEN_SEARCH_URI,
     OPEN_SEARCH_USERNAME,
     OPEN_SEARCH_PASSWORD,
@@ -62,7 +64,11 @@ const startServer = () => {
         scopes.forespørselOmDelingAvCv
     );
     proxyMedOboToken('/synlighet-api', SYNLIGHETSMOTOR_API, scopes.synlighetsmotor);
-
+    proxyMedOboToken(
+        '/presenterte-kandidater-api',
+        PRESENTERTE_KANDIDATER_API,
+        scopes.presenterteKandidater
+    );
     proxyTilKandidatsøkEs(
         '/kandidatsok-proxy',
         OPEN_SEARCH_URI,
