@@ -45,7 +45,11 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ stillingsId, kandidatlist
                     }
                 );
                 const vurderingerJson = await respons.json();
-                console.log('Arbeidsgivers vurderinger: ' + vurderingerJson);
+                console.log(
+                    'Arbeidsgivers vurderinger: ',
+                    vurderingerJson,
+                    JSON.stringify(vurderingerJson)
+                );
             } catch (e) {
                 console.log('Kall mot arbeidsgivers vurderinger feilet: ' + e);
             }
