@@ -10,6 +10,7 @@ export const api = {
     kandidat: '/kandidat-api',
     kandidatsøk: '/kandidatsok-proxy',
     forespørselOmDelingAvCv: '/foresporsel-om-deling-av-cv-api',
+    presenterteKandidaterApi: '/presenterte-kandidater-api',
 };
 
 export const videresendTilInnlogging = () => {
