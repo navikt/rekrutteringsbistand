@@ -1,0 +1,4 @@
+.knapper {
+    display: flex;
+    flex-direction: row;
+}

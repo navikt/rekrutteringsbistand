@@ -4,7 +4,6 @@ import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { hierarkiAvTagsForFilter, visningsnavnForFilter } from './tags';
 import { sendEvent } from 'felles/amplitude';
-import Filtergruppe from '../Filtergruppe';
 import useNavigering from '../../useNavigering';
 import css from '../Filter.module.css';
 
@@ -67,37 +66,31 @@ const Inkludering: FunctionComponent = () => {
     };
 
     return (
-        <Filtergruppe tittel="Inkludering">
-            <CheckboxGroup legend="Velg kategori" value={Array.from(valgteHovedtags)}>
-                {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
-                    <Fragment key={gruppeMedTags.hovedtag}>
-                        <Checkbox value={gruppeMedTags.hovedtag} onChange={onHovedtagChange}>
-                            {visningsnavnForFilter[gruppeMedTags.hovedtag]}
-                        </Checkbox>
+        <CheckboxGroup legend="Inkludering" value={Array.from(valgteHovedtags)}>
+            {hierarkiAvTagsForFilter.map((gruppeMedTags) => (
+                <Fragment key={gruppeMedTags.hovedtag}>
+                    <Checkbox value={gruppeMedTags.hovedtag} onChange={onHovedtagChange}>
+                        {visningsnavnForFilter[gruppeMedTags.hovedtag]}
+                    </Checkbox>
 
-                        {valgteHovedtags.has(gruppeMedTags.hovedtag) &&
-                            gruppeMedTags.subtags.length > 0 && (
-                                <CheckboxGroup
-                                    hideLegend
-                                    className={css.indentertCheckboxgruppe}
-                                    legend={`Velg kategorier under ${gruppeMedTags.hovedtag}`}
-                                    value={Array.from(valgteSubtags)}
-                                >
-                                    {gruppeMedTags.subtags.map((subtag) => (
-                                        <Checkbox
-                                            key={subtag}
-                                            value={subtag}
-                                            onChange={onSubtagChange}
-                                        >
-                                            {visningsnavnForFilter[subtag]}
-                                        </Checkbox>
-                                    ))}
-                                </CheckboxGroup>
-                            )}
-                    </Fragment>
-                ))}
-            </CheckboxGroup>
-        </Filtergruppe>
+                    {valgteHovedtags.has(gruppeMedTags.hovedtag) &&
+                        gruppeMedTags.subtags.length > 0 && (
+                            <CheckboxGroup
+                                hideLegend
+                                className={css.indentertCheckboxgruppe}
+                                legend={`Velg kategorier under ${gruppeMedTags.hovedtag}`}
+                                value={Array.from(valgteSubtags)}
+                            >
+                                {gruppeMedTags.subtags.map((subtag) => (
+                                    <Checkbox key={subtag} value={subtag} onChange={onSubtagChange}>
+                                        {visningsnavnForFilter[subtag]}
+                                    </Checkbox>
+                                ))}
+                            </CheckboxGroup>
+                        )}
+                </Fragment>
+            ))}
+        </CheckboxGroup>
     );
 };
 

@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
-import { BodyShort, Detail, Tag } from '@navikt/ds-react';
-import { BulletListIcon } from '@navikt/aksel-icons';
+import { BodyShort, Detail, Panel, Tag } from '@navikt/ds-react';
+import { ClockIcon, PersonIcon, PinIcon } from '@navikt/aksel-icons';
 import { Link, useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
 
@@ -45,7 +45,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
 
     return (
         <li className={css.stillingsrad}>
-            <div className={css.info}>
+            <Panel border className={css.info}>
                 <div className={css.etiketterOgDato}>
                     <div className={css.etiketter}>
                         {registrertMedInkluderingsmulighet && (
@@ -88,38 +88,49 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
                 >
                     {stilling.title}
                 </Link>
-                <span className={css.stillingsinfo}>
-                    <span>
-                        {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
-                            'Ingen arbeidssted'}
+                <span>
+                    <span className={css.stillingsinfo}>
+                        <span>
+                            <PinIcon className={css.ikon} />
+                            {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
+                                'Ingen arbeidssted'}
+                        </span>
+                        {antallStillinger && (
+                            <span>
+                                {antallStillinger} {antallStillingerSuffix}
+                            </span>
+                        )}
+                        {stilling.properties.applicationdue && (
+                            <span>
+                                <ClockIcon className={css.ikon} />
+                                {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
+                            </span>
+                        )}
+                        {erInternStilling && eierNavn && (
+                            <span>
+                                <PersonIcon className={css.ikon} />
+                                {eierNavn}
+                            </span>
+                        )}
                     </span>
-                    {stilling.properties.applicationdue && (
-                        <span>
-                            Søknadsfrist:{' '}
-                            {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
-                        </span>
-                    )}
-                    {antallStillinger && (
-                        <span>
-                            {antallStillinger} {antallStillingerSuffix}
-                        </span>
-                    )}
-                    {erInternStilling && eierNavn && <span>Eier: {eierNavn}</span>}
+                    <span>
+                        {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
+                            <Link
+                                className={css.stillingsinfolink}
+                                to={lagUrlTilKandidatliste(stilling)}
+                                title="Se kandidatliste"
+                            >
+                                Vis kandidater
+                            </Link>
+                        )}
+                    </span>
                 </span>
-            </div>
-            <div className={css.kandidatlisteknapp}>
-                {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
-                    <Link to={lagUrlTilKandidatliste(stilling)} title="Se kandidatliste">
-                        <BulletListIcon className="navds-link" />
-                    </Link>
-                )}
-                <div />
-                {import.meta.env.DEV && score !== null && (
-                    <code title="Score" className={css.score}>
-                        {score.toFixed(2)}
-                    </code>
-                )}
-            </div>
+            </Panel>
+            {import.meta.env.DEV && score !== null && (
+                <code className={css.score} title="Score">
+                    {score.toFixed(2)}
+                </code>
+            )}
         </li>
     );
 };

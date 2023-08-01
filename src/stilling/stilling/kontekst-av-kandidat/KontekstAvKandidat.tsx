@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
@@ -9,6 +9,9 @@ import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import Stilling from '../../domene/Stilling';
 import useKandidat from './useKandidat';
+import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
+import { CopyButton } from '@navikt/ds-react';
+import css from './KontekstAvKandidat.module.css';
 
 type Props = {
     fnr: string;
@@ -27,13 +30,22 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
     return (
         <>
             <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti}>
-                <Kandidatlistehandlinger
-                    fnr={fnr}
-                    kandidatliste={kandidatliste}
-                    onAnbefalClick={() => {
-                        setVisModal(true);
-                    }}
-                />
+                <div className={css.knapper}>
+                    {stillingErPublisert(stilling) && (
+                        <CopyButton
+                            copyText={hentAnnonselenke(stilling.uuid)}
+                            text="Kopier annonselenke"
+                            size="small"
+                        />
+                    )}
+                    <Kandidatlistehandlinger
+                        fnr={fnr}
+                        kandidatliste={kandidatliste}
+                        onAnbefalClick={() => {
+                            setVisModal(true);
+                        }}
+                    />
+                </div>
             </Kandidatbanner>
             {kandidat && kandidatliste.kind === Nettstatus.Suksess && (
                 <AnbefalKandidatModal

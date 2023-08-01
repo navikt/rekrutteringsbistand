@@ -42,9 +42,9 @@ const Søkefelt: FunctionComponent = () => {
         <form className={css.form} onSubmit={onSubmit}>
             <Search
                 label="Søk etter stillinger"
-                description="For eksempel arbeidsgiver, annonsenummer eller annonsetekst"
+                placeholder="Søk i stillinger"
                 value={input}
-                hideLabel={false}
+                hideLabel={true}
                 onChange={onInputChange}
                 onClear={() => onInputChange('')}
             />
