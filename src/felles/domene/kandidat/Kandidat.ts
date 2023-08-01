@@ -52,6 +52,7 @@ type UtgåtteFelter = {
     fritattKandidatsok: null;
 };
 
+/* Fullverdig kandidattype slik det er definert i ElasticSearch. */
 type Kandidat = Id &
     Personalia &
     Geografi &
@@ -61,6 +62,7 @@ type Kandidat = Id &
     UbrukteFelter &
     UtgåtteFelter;
 
+/* Brukes når man søker opp en spesifikk person i ElasticSearch. */
 export type KandidatLookup = {
     fornavn: Personalia['fornavn'];
     etternavn: Personalia['etternavn'];
@@ -95,7 +97,9 @@ export type KandidatTilKandidatsøk = {
 
 /*
  * Dette formatet brukes av `hentcv`-endepunktet i kandidat-api, når man åpner
- * kandidatsiden i Rekrutteringsbistand.
+ * kandidatsiden i Rekrutteringsbistand. Merk at dette formatet ikke er helt likt
+ * Kandidat-typen, fordi backend gjør noe behandling før ElasticSearch-responsen
+ * returneres til frontend.
  */
 export type KandidatCv = {
     adresse: {
