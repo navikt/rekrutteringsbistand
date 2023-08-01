@@ -7,7 +7,6 @@ import KandidatlisteOgModaler from './KandidatlisteOgModaler';
 import useScrollTilToppen from './hooks/useScrollTilToppen';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
 import Sidelaster from '../komponenter/sidelaster/Sidelaster';
-import { api } from 'felles/api';
 
 type Props = {
     stillingsId?: string;
@@ -33,31 +32,6 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ stillingsId, kandidatlist
                 kandidatlisteId,
             });
             console.log('Uten stillingsid');
-        }
-
-        const hentArbeidsgiversVurderinger = async (stillingId: string) => {
-            try {
-                const respons = await fetch(
-                    `${api.presenterteKandidaterApi}/kandidatliste/${stillingId}/vurdering`,
-                    {
-                        method: 'GET',
-                        headers: { 'Content-Type': 'application/json' },
-                    }
-                );
-                const vurderingerJson = await respons.json();
-                console.log(
-                    'Arbeidsgivers vurderinger: ',
-                    vurderingerJson,
-                    JSON.stringify(vurderingerJson)
-                );
-            } catch (e) {
-                console.log('Kall mot arbeidsgivers vurderinger feilet: ' + e);
-            }
-        };
-        console.log('stillingsId er ' + stillingsId);
-        if (stillingsId) {
-            console.log('inne i if');
-            hentArbeidsgiversVurderinger(stillingsId);
         }
     }, [dispatch, stillingsId, kandidatlisteId]);
 
