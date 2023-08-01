@@ -3,9 +3,12 @@ import { useSelector } from 'react-redux';
 import AppState from '../../state/AppState';
 import { Kandidattilstander } from '../domene/Kandidatressurser';
 import { erInaktiv } from '../domene/kandidatUtils';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
-const erAlleMarkerte = (kandidater: Kandidat[], kandidattilstander: Kandidattilstander) => {
+const erAlleMarkerte = (
+    kandidater: KandidatIKandidatliste[],
+    kandidattilstander: Kandidattilstander
+) => {
     const aktiveOgSlettaKandidater = kandidater.filter(
         (kandidat) => !erInaktiv(kandidat) || kandidat.arkivert
     );
@@ -19,7 +22,7 @@ const erAlleMarkerte = (kandidater: Kandidat[], kandidattilstander: Kandidattils
     );
 };
 
-const useErAlleMarkerte = (kandidater: Kandidat[]): boolean => {
+const useErAlleMarkerte = (kandidater: KandidatIKandidatliste[]): boolean => {
     const { kandidattilstander } = useSelector((state: AppState) => state.kandidatliste);
 
     const [alleErMarkerte, setAlleErMarkerte] = useState<boolean>(

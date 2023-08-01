@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { BodyShort, Detail } from '@navikt/ds-react';
-import { Kurs as KursType, Omfang, Omfangenhet } from '../reducer/cv-typer';
+import { Kurs as KursType, Omfang, Omfangenhet } from 'felles/domene/kandidat/Cv';
 import TidspunktMedLabel from './TidspunktMedLabel';
 import { toDate } from './sortByDato';
 import css from './Cv.module.css';

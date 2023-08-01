@@ -1,6 +1,6 @@
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
-const useSlettedeKandidater = (kandidater: Kandidat[]) => {
+const useSlettedeKandidater = (kandidater: KandidatIKandidatliste[]) => {
     return kandidater.filter((kandidat) => kandidat.arkivert === true);
 };
 

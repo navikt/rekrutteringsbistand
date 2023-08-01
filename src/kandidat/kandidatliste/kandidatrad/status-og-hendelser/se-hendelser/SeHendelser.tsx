@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { Heading } from '@navikt/ds-react';
 
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettressurs } from 'felles/nettressurs';
 import { Sms } from '../../../domene/Kandidatressurser';
 import { Stillingskategori } from 'felles/domene/kandidatliste/Kandidatliste';
@@ -15,7 +15,7 @@ import SmsSendt from '../hendelser/SmsSendt';
 import css from '../endre-status-og-hendelser/EndreStatusOgHendelser.module.css';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
     kandidatlisteId: string;
     forespørselOmDelingAvCv: Nettressurs<ForespørslerForKandidatForStilling>;
     sms?: Sms;

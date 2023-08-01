@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 import { useDispatch } from 'react-redux';
 import { BodyLong, Button, Heading, Textarea } from '@navikt/ds-react';
 
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Notat } from '../../domene/Kandidatressurser';
 import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
@@ -16,7 +16,7 @@ import Slettemodal from './Slettemodal';
 import css from './Notater.module.css';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
     kandidatliste: Kandidatliste;
     antallNotater?: number;
     notater: Nettressurs<Notat[]>;

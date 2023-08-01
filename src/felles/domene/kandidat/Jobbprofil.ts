@@ -1,5 +1,3 @@
-import { Omfang } from './Cv';
-
 export type Jobbønske = {
     styrkKode: string | null;
     styrkBeskrivelse: string | null;
@@ -21,12 +19,21 @@ export enum Oppstartkode {
 type Jobbprofil = {
     yrkeJobbonskerObj: Jobbønske[];
     geografiJobbonsker: JobbønskeSted[];
-    ansettelsesformJobbonskerObj: object[];
-    arbeidstidsordningJobbonskerObj: object[];
     arbeidsdagerJobbonskerObj: object[];
-    arbeidstidJobbonskerObj: object[];
-    omfangJobbonskerObj: Omfang[];
     oppstartKode: Oppstartkode | null;
+    arbeidstidsordningJobbonskerObj: object[];
+    arbeidstidJobbonskerObj: Array<{
+        arbeidstidKode: 'DAGTID' | 'KVELD' | string;
+        arbeidstidKodeTekst: string;
+    }>;
+    ansettelsesformJobbonskerObj: Array<{
+        ansettelsesformKode: 'FAST' | 'VIKARIAT' | string;
+        ansettelsesformKodeTekst: string;
+    }>;
+    omfangJobbonskerObj: Array<{
+        heltidDeltidKode: 'HELTID' | 'DELTID' | string;
+        heltidDeltidKodeTekst: string;
+    }>;
 };
 
 export default Jobbprofil;

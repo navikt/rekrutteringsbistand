@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import Tidsperiode from './Tidsperiode';
-import { Yrkeserfaring } from '../reducer/cv-typer';
+import { Yrkeserfaring } from 'felles/domene/kandidat/Cv';
 import { Detail, BodyShort } from '@navikt/ds-react';
 import css from './Cv.module.css';
 
