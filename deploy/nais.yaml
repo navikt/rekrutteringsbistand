@@ -38,6 +38,7 @@ spec:
           - application: rekrutteringsbistand-stilling-api
           - application: rekrutteringsbistand-stillingssok-proxy
           - application: toi-synlighetsmotor
+          - application: presenterte-kandidater-api
         external:
           - host: {{ statistikkApiHost }}
           - host: {{ smsApiHost }}
