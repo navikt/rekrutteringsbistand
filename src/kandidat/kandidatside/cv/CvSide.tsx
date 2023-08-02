@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
-import Jobbprofil from './jobbprofil/Jobbprofil';
-import KandidatCv from './cv/Cv';
+import Cv from './cv/Cv';
 import IkkeFunnet from './ikke-funnet/IkkeFunnet';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
+import Jobbprofil from './jobbprofil/Jobbprofil';
 import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
+import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './CvSide.module.css';
 
 const CvSide: FunctionComponent = () => {
@@ -25,10 +25,7 @@ const CvSide: FunctionComponent = () => {
         return (
             <div className={css.side}>
                 <Jobbprofil cv={cv.data} />
-                <KandidatCv cv={cv.data} />
-                {/*cv.data.tilretteleggingsbehov && (
-                    <KandidatTilretteleggingsbehov fnr={cv.data.fodselsnummer} />
-                )*/}
+                <Cv cv={cv.data} />
             </div>
         );
     }
