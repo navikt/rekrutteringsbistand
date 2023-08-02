@@ -1,14 +1,18 @@
 import useKandidat from './useKandidat';
 import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
+import { Alert } from '@navikt/ds-react';
 
 type Props = {
     fnr: string;
 };
 
 const KontekstAvKandidat = ({ fnr }: Props) => {
-    const { kandidat } = useKandidat(fnr);
+    const { kandidat, feilmelding } = useKandidat(fnr);
 
-    return (
+    console.log('KontekstAvKandidat', kandidat);
+    return feilmelding ? (
+        <Alert variant="error">{feilmelding}</Alert>
+    ) : (
         <Kandidatbanner
             kandidat={kandidat}
             brødsmulesti={
