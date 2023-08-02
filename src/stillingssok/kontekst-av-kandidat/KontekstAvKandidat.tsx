@@ -56,7 +56,6 @@ const KontekstAvKandidat = ({ fnr }: Props) => {
         }
     }, [feilmelding, fnr]);
 
-    console.log('KontekstAvKandidat', kandidat);
     if (feilmelding) {
         return (
             <>
