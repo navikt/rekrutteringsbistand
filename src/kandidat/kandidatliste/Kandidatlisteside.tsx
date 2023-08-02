@@ -25,13 +25,11 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ stillingsId, kandidatlist
                 type: KandidatlisteActionType.HentKandidatlisteMedStillingsId,
                 stillingsId,
             });
-            console.log('Med stillingsid');
         } else if (kandidatlisteId) {
             dispatch({
                 type: KandidatlisteActionType.HentKandidatlisteMedKandidatlisteId,
                 kandidatlisteId,
             });
-            console.log('Uten stillingsid');
         }
     }, [dispatch, stillingsId, kandidatlisteId]);
 
