@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { Error, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError } from '../../../api/fetchUtils';
 import { fetchCv } from '../../../api/api';
-import Cv from './cv-typer';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 export enum CvActionType {
     NullstillCv = 'NULLSTILL_CV',
@@ -28,7 +28,7 @@ export type FetchCvBeginAction = {
 
 export type FetchCvSuccessAction = {
     type: CvActionType.FetchCvSuccess;
-    response: Cv;
+    response: KandidatCv;
 };
 
 export type FetchCvNotFoundAction = {
@@ -49,7 +49,7 @@ export type CvAction =
     | FetchCvFailureAction;
 
 export type CvState = {
-    cv: Nettressurs<Cv>;
+    cv: Nettressurs<KandidatCv>;
 };
 
 const initialState: CvState = {

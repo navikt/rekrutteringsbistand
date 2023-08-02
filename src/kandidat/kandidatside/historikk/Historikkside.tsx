@@ -14,9 +14,9 @@ import { KandidatQueryParam } from '../Kandidatside';
 import { sendEvent } from 'felles/amplitude';
 import { Sms } from '../../kandidatliste/domene/Kandidatressurser';
 import AppState from '../../state/AppState';
-import Cv from '../cv/reducer/cv-typer';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './Historikkside.module.css';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 const Historikkside: FunctionComponent = () => {
     const dispatch = useDispatch();
@@ -104,7 +104,7 @@ const formaterNavn = (fornavn: string, etternavn: string) => {
 };
 
 export const hentKandidatensNavnFraCvEllerKandidatlister = (
-    cv: Nettressurs<Cv>,
+    cv: Nettressurs<KandidatCv>,
     kandidatlister: KandidatlisteForKandidat[]
 ) => {
     if (cv.kind === Nettstatus.Suksess) {

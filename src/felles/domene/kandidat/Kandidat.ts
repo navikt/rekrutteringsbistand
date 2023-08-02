@@ -1,4 +1,4 @@
-import Cv from './Cv';
+import Cv, { Språkferdighet } from './Cv';
 import Jobbprofil from './Jobbprofil';
 import Oppfølgingsinformasjon from './Oppfølgingsinformasjon';
 
@@ -52,7 +52,8 @@ type UtgåtteFelter = {
     fritattKandidatsok: null;
 };
 
-type KandidatISøkMedAlleFelter = Id &
+/* Fullverdig kandidattype slik det er definert i ElasticSearch. */
+type Kandidat = Id &
     Personalia &
     Geografi &
     Oppfølgingsinformasjon &
@@ -61,6 +62,7 @@ type KandidatISøkMedAlleFelter = Id &
     UbrukteFelter &
     UtgåtteFelter;
 
+/* Brukes når man søker opp en spesifikk person i ElasticSearch. */
 export type KandidatLookup = {
     fornavn: Personalia['fornavn'];
     etternavn: Personalia['etternavn'];
@@ -93,4 +95,60 @@ export type KandidatTilKandidatsøk = {
     geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
 };
 
-export default KandidatISøkMedAlleFelter;
+/*
+ * Dette formatet brukes av `hentcv`-endepunktet i kandidat-api, når man åpner
+ * kandidatsiden i Rekrutteringsbistand. Merk at dette formatet ikke er helt likt
+ * Kandidat-typen, fordi backend gjør noe behandling før ElasticSearch-responsen
+ * returneres til frontend.
+ */
+export type KandidatCv = {
+    adresse: {
+        landkode: string;
+        postnr: string;
+        poststednavn: string;
+        kommunenr: number;
+        adrlinje1: string;
+        adrlinje2: string;
+        adrlinje3: string;
+    };
+    beskrivelse: Cv['beskrivelse'];
+    sprak: Cv['sprak'];
+    sprakferdigheter: Språkferdighet[];
+    yrkeserfaring: Cv['yrkeserfaring'];
+    utdanning: Cv['utdanning'];
+    forerkort: Cv['forerkort'];
+    fagdokumentasjon: Cv['fagdokumentasjon'];
+    godkjenninger: Cv['godkjenninger'];
+    aktorId: Id['aktorId'];
+    annenErfaring: Cv['annenerfaringObj'];
+    ansettelsesformJobbprofil: Jobbprofil['ansettelsesformJobbonskerObj'];
+    arbeidsdagerJobbprofil: Jobbprofil['arbeidsdagerJobbonskerObj'];
+    arbeidstidJobbprofil: Jobbprofil['arbeidstidJobbonskerObj'];
+    arbeidstidsordningJobbprofil: Jobbprofil['arbeidstidsordningJobbonskerObj'];
+    disponererBil: UtgåtteFelter['disponererBil'];
+    epost: Personalia['epostadresse'];
+    etternavn: Personalia['etternavn'];
+    fodselsdato: Personalia['fodselsdato'];
+    fodselsnummer: Id['fodselsnummer'];
+    fornavn: Personalia['fornavn'];
+    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
+    kandidatnummer: Id['arenaKandidatnr'];
+    kompetanse: Cv['kompetanseObj'];
+    kurs: Cv['kursObj'];
+    mobiltelefon: UtgåtteFelter['mobiltelefon'];
+    omfangJobbprofil: Jobbprofil['omfangJobbonskerObj'];
+    oppstartKode: Jobbprofil['oppstartKode'];
+    samtykkeDato: UbrukteFelter['samtykkeDato'];
+    samtykkeStatus: UbrukteFelter['samtykkeStatus'];
+    sertifikater: Cv['sertifikatObj'];
+    statsborgerskap: UtgåtteFelter['statsborgerskap'];
+    telefon: Personalia['telefon'];
+    sistEndret: UbrukteFelter['tidsstempel'];
+    veilederEpost: string;
+    veilederIdent: string;
+    veilederNavn: string;
+    verv: Cv['vervObj'];
+    yrkeJobbonsker: Jobbprofil['yrkeJobbonskerObj'];
+};
+
+export default Kandidat;

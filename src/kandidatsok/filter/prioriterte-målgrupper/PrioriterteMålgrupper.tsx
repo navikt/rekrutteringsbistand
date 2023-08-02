@@ -1,7 +1,7 @@
 import { FunctionComponent } from 'react';
 import { Checkbox, CheckboxGroup, HelpText, useId } from '@navikt/ds-react';
 import { FilterParam } from '../../hooks/useRespons';
-import { Innsatsgruppe } from 'felles/domene/kandidat-i-søk/Oppfølgingsinformasjon';
+import { Innsatsgruppe } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../../hooks/useSøkekriterier';
 import css from './PrioriterteMålgrupper.module.css';
 

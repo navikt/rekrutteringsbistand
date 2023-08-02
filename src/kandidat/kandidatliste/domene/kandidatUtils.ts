@@ -1,5 +1,5 @@
 import {
-    Kandidat,
+    KandidatIKandidatliste,
     Kandidatutfall,
     Utfallsendring,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
@@ -11,4 +11,4 @@ export const hentSisteKandidatutfall = (
     return utfallsendringer.find((endring) => endring.utfall === utfall);
 };
 
-export const erInaktiv = (kandidat: Kandidat): boolean => kandidat.fodselsnr === null;
+export const erInaktiv = (kandidat: KandidatIKandidatliste): boolean => kandidat.fodselsnr === null;

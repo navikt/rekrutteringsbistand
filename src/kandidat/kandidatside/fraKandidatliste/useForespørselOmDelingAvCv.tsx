@@ -6,11 +6,11 @@ import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
 import { finnesIkke, Nettstatus, feil, lasterInn, suksess, Nettressurs } from 'felles/nettressurs';
 import { ForespørslerForKandidatForStilling } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 const useForespørselOmDelingAvCv = (
-    kandidat: Kandidat,
+    kandidat: KandidatIKandidatliste,
     kandidatliste: Kandidatliste
 ): Nettressurs<ForespørslerForKandidatForStilling> => {
     const dispatch: Dispatch<KandidatlisteAction> = useDispatch();

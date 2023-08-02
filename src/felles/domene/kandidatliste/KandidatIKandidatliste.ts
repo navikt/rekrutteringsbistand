@@ -2,7 +2,7 @@ export type Kandidatnr = string;
 export type Fødselsnummer = string;
 export type AktørId = string;
 
-export type Kandidat = AktivKandidat | InaktivKandidat;
+export type KandidatIKandidatliste = AktivKandidat | InaktivKandidat;
 
 type AktivKandidat = Kandidatinformasjon & PersonaliaFraCv;
 type InaktivKandidat = Kandidatinformasjon & IngenPersonaliaFraCv;
@@ -84,3 +84,5 @@ export type FormidlingAvUsynligKandidat = UsynligKandidat & {
     arkivertAvNavn: string | null;
     arkivertTidspunkt: string | null;
 };
+
+export default KandidatIKandidatliste;

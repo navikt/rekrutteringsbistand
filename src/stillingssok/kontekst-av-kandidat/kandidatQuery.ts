@@ -1,4 +1,4 @@
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
 
 export type EsRespons = {
     hits: {

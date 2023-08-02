@@ -3,12 +3,12 @@ import { BodyShort, Label, Link } from '@navikt/ds-react';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 
 import { arbeidsrettetOppfølgingUrl } from '../../../utils/eksterneUrler';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
 import css from './MerInfo.module.css';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
 };
 
 const MerInfo: FunctionComponent<Props> = ({ kandidat }) => {

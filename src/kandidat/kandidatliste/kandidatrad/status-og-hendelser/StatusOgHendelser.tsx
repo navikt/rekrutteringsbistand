@@ -5,7 +5,10 @@ import classNames from 'classnames';
 
 import { erKobletTilStilling } from '../../domene/kandidatlisteUtils';
 import { ForespørslerForKandidatForStilling } from '../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import {
+    KandidatIKandidatliste,
+    Kandidatstatus,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Sms } from '../../domene/Kandidatressurser';
 import EndreStatusOgHendelser from './endre-status-og-hendelser/EndreStatusOgHendelser';
@@ -16,7 +19,7 @@ import StatusEtikett from './etiketter/StatusEtikett';
 import css from './StatusOgHendelser.module.css';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
     kandidatliste: Kandidatliste;
     forespørselOmDelingAvCv: Nettressurs<ForespørslerForKandidatForStilling>;
     sms?: Sms;

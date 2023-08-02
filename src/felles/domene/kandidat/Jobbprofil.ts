@@ -19,12 +19,21 @@ export enum Oppstartkode {
 type Jobbprofil = {
     yrkeJobbonskerObj: Jobbønske[];
     geografiJobbonsker: JobbønskeSted[];
-    ansettelsesformJobbonskerObj: object[];
-    arbeidstidsordningJobbonskerObj: object[];
     arbeidsdagerJobbonskerObj: object[];
-    arbeidstidJobbonskerObj: object[];
-    omfangJobbonskerObj: object[];
     oppstartKode: Oppstartkode | null;
+    arbeidstidsordningJobbonskerObj: object[];
+    arbeidstidJobbonskerObj: Array<{
+        arbeidstidKode: 'DAGTID' | 'KVELD' | string;
+        arbeidstidKodeTekst: string;
+    }>;
+    ansettelsesformJobbonskerObj: Array<{
+        ansettelsesformKode: 'FAST' | 'VIKARIAT' | string;
+        ansettelsesformKodeTekst: string;
+    }>;
+    omfangJobbonskerObj: Array<{
+        heltidDeltidKode: 'HELTID' | 'DELTID' | string;
+        heltidDeltidKodeTekst: string;
+    }>;
 };
 
 export default Jobbprofil;

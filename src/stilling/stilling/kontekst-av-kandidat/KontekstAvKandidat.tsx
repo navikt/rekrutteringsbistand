@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';

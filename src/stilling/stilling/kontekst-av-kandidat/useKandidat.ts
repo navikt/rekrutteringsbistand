@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api } from 'felles/api';
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
 
 export type EsRespons = {
     hits: {

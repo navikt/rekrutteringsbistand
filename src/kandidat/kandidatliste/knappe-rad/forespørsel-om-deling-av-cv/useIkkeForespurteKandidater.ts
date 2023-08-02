@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Nettstatus } from 'felles/nettressurs';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import AppState from '../../../state/AppState';
 
-const useIkkeForespurteKandidater = (markerteKandidater: Kandidat[]): Kandidat[] => {
-    const [ikkeForespurteKandidater, setIkkeForespurteKandidater] = useState<Kandidat[]>([]);
+const useIkkeForespurteKandidater = (
+    markerteKandidater: KandidatIKandidatliste[]
+): KandidatIKandidatliste[] => {
+    const [ikkeForespurteKandidater, setIkkeForespurteKandidater] = useState<
+        KandidatIKandidatliste[]
+    >([]);
 
     const { forespørslerOmDelingAvCv } = useSelector((state: AppState) => state.kandidatliste);
 

@@ -1,14 +1,14 @@
 import { FunctionComponent } from 'react';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import {
-    Kandidat,
+    KandidatIKandidatliste,
     Kandidatutfall,
     Utfallsendring,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
 };
 
 const CvErSlettet: FunctionComponent<Props> = ({ kandidat }) => {

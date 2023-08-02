@@ -1,12 +1,12 @@
 import { FunctionComponent, ReactNode } from 'react';
 
-import Cv from '../../cv/reducer/cv-typer';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Lenker from '../lenker/Lenker';
 import css from './Kandidatmeny.module.css';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: Nettressurs<Cv>;
+    cv: Nettressurs<KandidatCv>;
     tabs: ReactNode;
     children?: ReactNode;
 };
