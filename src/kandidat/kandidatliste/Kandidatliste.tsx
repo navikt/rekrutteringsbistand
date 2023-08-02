@@ -87,7 +87,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
             }
         };
         if (kandidatliste.stillingId !== null) {
-            console.log('stillingsId er ' + kandidatliste.stillingId);
             hentArbeidsgiversVurderinger(kandidatliste.stillingId);
         }
     }, [kandidatliste.stillingId]);
