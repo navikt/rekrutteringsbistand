@@ -90,7 +90,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
             console.log('stillingsId er ' + kandidatliste.stillingId);
             hentArbeidsgiversVurderinger(kandidatliste.stillingId);
         }
-    });
+    }, [kandidatliste.stillingId]);
 
     useMaskerFødselsnumre();
     useHentSendteMeldinger(kandidatliste.kandidatlisteId);
