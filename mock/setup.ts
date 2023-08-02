@@ -7,6 +7,7 @@ import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/
 import { statistikkApiMock } from './statistikk-api/mock';
 import { stillingApiMock } from './stilling-api/mock';
 import { stillingssøkMock } from './stillingssok-proxy/mock';
+import { presenterteKandidaterApiMock } from './presenterte-kandidater-api/mock';
 
 const handlers = [
     ...innloggetBrukerMock,
@@ -17,6 +18,7 @@ const handlers = [
     ...(import.meta.env.VITE_MOCK_MODIA ? modiaContextHolderMock : []),
     ...(import.meta.env.VITE_MOCK_AIVEN ? kandidatsøkMock : []),
     ...(import.meta.env.VITE_MOCK_AIVEN ? stillingssøkMock : []),
+    ...presenterteKandidaterApiMock,
 ];
 
 const worker = setupWorker(...handlers);

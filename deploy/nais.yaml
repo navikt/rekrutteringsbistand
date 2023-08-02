@@ -38,6 +38,7 @@ spec:
           - application: rekrutteringsbistand-stilling-api
           - application: rekrutteringsbistand-stillingssok-proxy
           - application: toi-synlighetsmotor
+          - application: presenterte-kandidater-api
         external:
           - host: {{ statistikkApiHost }}
           - host: {{ smsApiHost }}
@@ -56,9 +57,9 @@ spec:
         - name: STATISTIKK_API_URL
           value: {{ statistikkApiUrl }}
         - name: STILLINGSSOK_PROXY_URL
-          value: {{ stillingssokProxyUrl }}
+          value: http://rekrutteringsbistand-stillingssok-proxy
         - name: STILLING_API_URL
-          value: {{ stillingApiUrl }}
+          value: http://rekrutteringsbistand-stilling-api
         - name: KANDIDAT_API_URL
           value: {{ kandidatApiUrl }}
         - name: SMS_API
@@ -66,6 +67,8 @@ spec:
         - name: FORESPORSEL_OM_DELING_AV_CV_API
           value: {{ foresporselOmDelingAvCvApi }}
         - name: SYNLIGHETSMOTOR_API
-          value: {{ synlighetsmotorApi }}
+          value: http://toi-synlighetsmotor
+        - name: PRESENTERTE_KANDIDATER_API
+          value: http://presenterte-kandidater-api
         - name: MODIA_CONTEXT_HOLDER_API
           value: {{ modiaContextHolderApi }}
