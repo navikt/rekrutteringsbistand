@@ -5,7 +5,7 @@ import { Innsatsgruppe } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 
 export const kandidatsøkMock = [
     rest.post(api.kandidatsøk, async (req, res, ctx) => {
-        const respons: Respons = (await req.text()).includes('12345678910')
+        const respons: Respons = (await req.text()).includes('09043826678')
             ? {
                   took: 1,
                   timed_out: false,

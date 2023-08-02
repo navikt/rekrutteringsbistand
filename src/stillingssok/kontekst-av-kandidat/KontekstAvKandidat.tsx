@@ -11,7 +11,7 @@ const KontekstAvKandidat = ({ fnr }: Props) => {
 
     console.log('KontekstAvKandidat', kandidat);
     return feilmelding ? (
-        <Alert variant="error">{feilmelding}</Alert>
+        <Alert variant="error">Kandidaten er ikke synlig i Rekrutteringsbistand</Alert>
     ) : (
         <Kandidatbanner
             kandidat={kandidat}

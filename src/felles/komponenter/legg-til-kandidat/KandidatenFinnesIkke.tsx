@@ -6,7 +6,7 @@ import Synlighetsevaluering, {
     KravTilKandidaten,
     KravTilVeileder,
 } from 'felles/domene/synlighet/Synlighetsevaluering';
-import css from './LeggTilKandidat.module.css';
+import css from './KandidatenFinnesIkke.module.css';
 
 type Props = {
     synlighetsevaluering: Synlighetsevaluering;
