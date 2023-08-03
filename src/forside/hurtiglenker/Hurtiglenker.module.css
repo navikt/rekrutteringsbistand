@@ -8,8 +8,12 @@
 
 .lenkepanel {
     border-radius: var(--a-border-radius-xlarge);
-    background: var(--a-surface-subtle);
     box-shadow: var(--a-shadow-xsmall);
+    background: var(--a-gray-50);
+}
+
+.lenkepanel:hover {
+    background: var(--a-gray-100);
 }
 
 .lenkeinnhold {
@@ -22,7 +26,13 @@
 
 .lenkeinnhold span {
     text-decoration: underline;
+    text-decoration-thickness: 0.05rem;
+    text-underline-offset: 0.1rem;
     font-weight: 600;
+}
+
+.lenkepanel:hover .lenkeinnhold span {
+    text-decoration: none;
 }
 
 .lenkeikon {
