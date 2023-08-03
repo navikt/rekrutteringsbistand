@@ -87,6 +87,8 @@ const BekreftMedNotat = ({
         leggTilTekst = 'Legg til';
     }
 
+    console.log('kandidat:', kandidat);
+
     return (
         <>
             <BodyShort spacing>{`${kandidat.fornavn} ${kandidat.etternavn} (${fnr})`}</BodyShort>
