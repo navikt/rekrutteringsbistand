@@ -39,7 +39,6 @@ import FeilVedSendingAvForespørsel from './feil-ved-sending-av-forespørsel/Fei
 import { Search } from '@navikt/ds-react';
 import css from './Kandidatliste.module.css';
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { api } from 'felles/api';
 
 type Props = {
     kandidatliste: Kandidatlistetype;
@@ -67,7 +66,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
     onToggleArkivert,
 }) => {
     useEffect(() => {
-        const hentArbeidsgiversVurderinger = async (stillingId: string) => {
+        /*const hentArbeidsgiversVurderinger = async (stillingId: string) => {
             try {
                 const respons = await fetch(
                     `${api.presenterteKandidaterApi}/kandidatliste/${stillingId}/vurdering`,
@@ -88,7 +87,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
         };
         if (kandidatliste.stillingId !== null) {
             hentArbeidsgiversVurderinger(kandidatliste.stillingId);
-        }
+        }*/
     }, [kandidatliste.stillingId]);
 
     useMaskerFødselsnumre();
