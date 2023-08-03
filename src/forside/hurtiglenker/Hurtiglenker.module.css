@@ -38,6 +38,6 @@
 
 @media (min-width: 1280px) {
     .hurtiglenker {
-        display: flex;
+        grid-template-columns: repeat(4, 1fr);
     }
 }
