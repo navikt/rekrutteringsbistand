@@ -9,6 +9,12 @@
 .lenkeinnhold {
     display: flex;
     align-items: center;
+    font-size: 24px;
+}
+
+.lenkeinnhold span {
+    text-decoration: underline;
+    font-weight: 600;
 }
 
 .lenkeikon {
@@ -22,9 +28,16 @@
     vertical-align: middle;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 768px) {
     .hurtiglenker {
+        display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .hurtiglenker {
+        display: flex;
     }
 }

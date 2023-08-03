@@ -1,11 +1,11 @@
+import { BodyShort } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { Heading } from '@navikt/ds-react';
 import { Link } from 'react-router-dom';
-import liste from './ikoner/liste.svg';
-import blyant from './ikoner/blyant.svg';
-import kvinne from './ikoner/kvinne.svg';
-import checkliste from './ikoner/checkliste.svg';
 import css from './Hurtiglenker.module.css';
+import blyant from './ikoner/blyant.svg';
+import checkliste from './ikoner/checkliste.svg';
+import kvinne from './ikoner/kvinne.svg';
+import liste from './ikoner/liste.svg';
 
 const Hurtiglenker: FunctionComponent = () => {
     return (
@@ -43,9 +43,7 @@ const LenkepanelMedIkon: FunctionComponent<{
             <div className={css.lenkeikon}>
                 <img src={ikonSrc} alt="" />
             </div>
-            <Heading level="2" size="medium">
-                {tittel}
-            </Heading>
+            <BodyShort as="span">{tittel}</BodyShort>
         </div>
     </Link>
 );
