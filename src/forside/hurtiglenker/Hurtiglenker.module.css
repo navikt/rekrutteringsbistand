@@ -6,10 +6,18 @@
     margin-bottom: var(--a-spacing-16);
 }
 
+.lenkepanel {
+    border-radius: var(--a-border-radius-xlarge);
+    background: var(--a-surface-subtle);
+    box-shadow: var(--a-shadow-xsmall);
+}
+
 .lenkeinnhold {
     display: flex;
     align-items: center;
     font-size: 24px;
+    gap: 1.5rem;
+    padding: 1.5rem;
 }
 
 .lenkeinnhold span {
@@ -18,13 +26,12 @@
 }
 
 .lenkeikon {
-    margin-right: 2rem;
     border-radius: 50%;
     overflow: hidden;
 }
 
 .lenkeikon img {
-    width: 6.25rem;
+    width: 4rem;
     vertical-align: middle;
 }
 

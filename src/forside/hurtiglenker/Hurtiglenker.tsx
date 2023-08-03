@@ -1,4 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
+import classNames from 'classnames';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import css from './Hurtiglenker.module.css';
@@ -35,10 +36,7 @@ const LenkepanelMedIkon: FunctionComponent<{
     href: string;
     ikonSrc: string;
 }> = ({ tittel, href, ikonSrc }) => (
-    <Link
-        to={href}
-        className={`navds-panel navds-link-panel navds-panel--border ${css.lenkepanel}`}
-    >
+    <Link to={href} className={classNames('navds-link-panel', css.lenkepanel)}>
         <div className={css.lenkeinnhold}>
             <div className={css.lenkeikon}>
                 <img src={ikonSrc} alt="" />
