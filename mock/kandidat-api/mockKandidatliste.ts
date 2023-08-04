@@ -5,7 +5,7 @@ import Kandidatliste, {
 import { mockMeg } from '../meg/mock';
 import { mockKandidatIKandidatliste } from './mockKandidatIKandidatliste';
 
-export const kandidatlisteUtenStilling: Kandidatliste = {
+export const mockKandidatlisteUtenStilling: Kandidatliste = {
     kandidatlisteId: 'bf6877fa-5c82-4610-8cf7-ff7a0df18e29',
     tittel: 'Volleyballskuespiller på Pescara Beach',
     beskrivelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
@@ -29,3 +29,5 @@ export const kandidatlisteUtenStilling: Kandidatliste = {
         navn: 'Varg Veileder',
     },
 };
+
+export const mockAlleKandidatlister = [mockKandidatlisteUtenStilling];

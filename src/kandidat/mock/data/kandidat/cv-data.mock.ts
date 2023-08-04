@@ -2,7 +2,6 @@ import {
     Kompetanse,
     Kurs,
     Sertifikat,
-    Språkferdighet,
     Språkferdighetsnivå,
     Utdanning,
     Yrkeserfaring,
@@ -354,7 +353,7 @@ export const sprak: Kompetanse[] = [
     },
 ];
 
-export const sprakferdigheter: Språkferdighet[] = [
+export const sprakferdigheter = [
     {
         sprak: 'Engelsk',
         ferdighetSkriftlig: Språkferdighetsnivå.Førstespråk,

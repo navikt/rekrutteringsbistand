@@ -2,11 +2,11 @@ import fetchMock, { MockResponse, MockResponseFunction } from 'fetch-mock';
 
 import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
 
-import { mock } from './mock-data';
-import { meg } from './data/kandidat/veileder.mock';
 import { api } from 'felles/api';
-import { ENHETSREGISTER_API } from '../api/api';
 import { Kandidatutfall } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { ENHETSREGISTER_API } from '../api/api';
+import { meg } from './data/kandidat/veileder.mock';
+import { mock } from './mock-data';
 
 fetchMock.config.fallbackToNetwork = true;
 
@@ -24,11 +24,8 @@ const url = {
     listeoversikt: `${baseUrl}/veileder/kandidater/:kandidatnr/listeoversikt`,
 
     // Kandidatliste
-    kandidatlister: `${baseUrl}/veileder/kandidatlister`,
-    kandidatliste: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId`,
     markerKandidatlisteSomMin: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/eierskap`,
     kandidatlisteMedStilling: `${baseUrl}/veileder/stilling/:stillingsId/kandidatliste`,
-    kandidatlistePost: `${baseUrl}/veileder/me/kandidatlister`,
     notater: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
     notaterMedId: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater/:notatId`,
     statusPut: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/status`,
@@ -57,84 +54,12 @@ const url = {
     toggles: `${baseUrl}/veileder/kandidatsok/toggles`,
 };
 
-const getCv = (url: string) => {
-    const queryParams = url.split('?').pop();
-    const kandidatnr = new URLSearchParams(queryParams).get('kandidatnr');
-
-    if (!kandidatnr) {
-        return 404;
-    } else {
-        return mock.kandidat.cver.find((cv) => cv.kandidatnummer === kandidatnr);
-    }
-};
-
 const getUsynligKandidat = () => [mock.synlighet.usynligKandidat];
-
-const getKandidatlister = (url: string) => {
-    const queryParams = url.split('?').pop();
-    const params = new URLSearchParams(queryParams);
-    const stillingsfilter = params.get('type');
-    const eierfilter = params.get('kunEgne') && Boolean(params.get('kunEgne'));
-
-    let filtrerteKandidatlister = mock.kandidat.kandidatlistesammendrag;
-
-    if (stillingsfilter) {
-        filtrerteKandidatlister = mock.kandidat.kandidatlistesammendrag.filter((k) =>
-            stillingsfilter === 'MED_STILLING' ? !!k.stillingId : !k.stillingId
-        );
-    }
-
-    filtrerteKandidatlister = filtrerteKandidatlister.filter((k) =>
-        eierfilter ? k.opprettetAv.ident === meg.ident : true
-    );
-
-    return {
-        antall: filtrerteKandidatlister.length,
-        liste: filtrerteKandidatlister,
-    };
-};
-
-const getKandidatliste = (url: string) => {
-    const kandidatlisteId = url.split('/').pop();
-
-    return mock.kandidat.kandidatlister.find((liste) => liste.kandidatlisteId === kandidatlisteId);
-};
 
 const markerKandidatlisteSomMin = (url: string) => {
     const kandidatlisteId = url.split('/')[4];
 
     return mock.kandidat.kandidatlister.find((liste) => liste.kandidatlisteId === kandidatlisteId);
-};
-
-const getKandidatlisteMedStilling = (url: string) => {
-    const stillingsId = url.split('/')[4];
-
-    return mock.kandidat.kandidatlister.find((liste) => liste.stillingId === stillingsId);
-};
-
-const postKandidater = (url: string, options: fetchMock.MockOptionsMethodPut) => {
-    const kandidatlisteId = url.split('/')[url.split('/').length - 2];
-    const kandidatliste = mock.kandidat.kandidatlister.find(
-        (liste) => liste.kandidatlisteId === kandidatlisteId
-    );
-
-    if (!kandidatliste) {
-        return {
-            status: 404,
-        };
-    }
-
-    const kandidatnumre = JSON.parse(String(options.body));
-    const cvIndekser: number[] = kandidatnumre.map((kandidat: any) =>
-        mock.kandidat.cver.findIndex((cv) => cv.kandidatnummer === kandidat.kandidatnr)
-    );
-
-    const nyeKandidater = cvIndekser.map((cvIndeks) => mock.kandidat.kandidat(cvIndeks));
-
-    return {
-        ...kandidatliste,
-        kandidater: [...kandidatliste.kandidater, ...nyeKandidater],
-    };
 };
 
 const postFormidlingerAvUsynligKandidat = (
@@ -357,18 +282,10 @@ const litenDelay = { delay: 500 };
 
 fetchMock
     // CV
-    .get(url.cv, log(getCv))
     .get(url.listeoversikt, log(mock.kandidat.kandidatlisterForKandidat))
 
     // Kandidatliste
-    .get(url.kandidatlister, log(getKandidatlister))
-    .get(url.kandidatliste, log(getKandidatliste), litenDelay)
-    .put(url.kandidatliste, log(getKandidatliste), litenDelay)
-    .delete(url.kandidatliste, log(204), litenDelay)
     .put(url.markerKandidatlisteSomMin, log(markerKandidatlisteSomMin), litenDelay)
-
-    .get(url.kandidatlisteMedStilling, log(getKandidatlisteMedStilling))
-    .post(url.kandidatlistePost, log(201))
 
     .get(url.notater, log(mock.kandidat.notater))
     .post(url.notater, log(mock.kandidat.notater))
@@ -384,7 +301,6 @@ fetchMock
     .post(url.fnrsok, log(postFnrsok))
     .get(url.synlighetsevaluering, log(getSynlighetsevaluering))
 
-    .post(url.postKandidater, log(postKandidater), { delay: 1000 })
     .post(url.delKandidater, log(postDelKandidater))
     .post(url.søkUsynligKandidat, log(getUsynligKandidat))
     .post(url.postFormidlingerAvUsynligKandidat, log(postFormidlingerAvUsynligKandidat))

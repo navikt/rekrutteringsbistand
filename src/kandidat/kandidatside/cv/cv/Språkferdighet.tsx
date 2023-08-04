@@ -1,13 +1,14 @@
-import { FunctionComponent } from 'react';
 import { BodyShort } from '@navikt/ds-react';
-import {
-    Språkferdighet as SpråkferdighetType,
-    Språkferdighetsnivå,
-} from 'felles/domene/kandidat/Cv';
+import { Språkferdighetsnivå } from 'felles/domene/kandidat/Cv';
+import { FunctionComponent } from 'react';
 import css from './Cv.module.css';
 
 type Props = {
-    ferdighet: SpråkferdighetType;
+    ferdighet: {
+        sprak: string;
+        ferdighetSkriftlig: Språkferdighetsnivå;
+        ferdighetMuntlig: Språkferdighetsnivå;
+    };
 };
 
 const Språkferdighet: FunctionComponent<Props> = ({ ferdighet }) => (
