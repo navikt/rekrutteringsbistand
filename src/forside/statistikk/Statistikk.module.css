@@ -2,28 +2,36 @@
     width: 100%;
 }
 
-.periodeForKontor {
+.konktekstForStatistikk {
     display: flex;
     flex-direction: column;
-    height: 6rem;
-    justify-content: space-between;
     align-items: flex-start;
     margin-bottom: var(--a-spacing-8);
+    gap: 1.5rem;
+}
+
+.skillelinje {
+    display: none;
+    height: 1px;
+    background: var(--a-border-subtle);
+    flex-grow: 1;
 }
 
 @media (min-width: 48rem) {
-    .periodeForKontor {
+    .konktekstForStatistikk {
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        height: 3rem;
+    }
+
+    .skillelinje {
+        display: unset;
     }
 }
 
 .tidsperiode {
+    display: flex;
     align-items: center;
-    grid-template-columns: 1fr 3fr;
-    width: 30rem;
 }
 
 .tittel {
