@@ -15,6 +15,8 @@ import TømFiltre from './filter/TømFiltre';
 import useLagreØkt from './hooks/useLagreØkt';
 import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import css from './Kandidatsøk.module.css';
+import Banner from 'felles/komponenter/banner/Banner';
+import { ReactComponent as FinnKandidaterPiktogram } from './finnkandidater.svg';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;
@@ -69,6 +71,9 @@ const Kandidatsøk = ({
         <>
             {kontekstAvKandidatlisteEllerStilling !== null && (
                 <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
+            )}
+            {kontekstAvKandidatlisteEllerStilling === null && (
+                <Banner tittel="Kandidatsøk" gammelGrå ikon={FinnKandidaterPiktogram} />
             )}
             <div className={css.container}>
                 <TømFiltre />
