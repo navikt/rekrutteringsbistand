@@ -1,21 +1,15 @@
 import css from './Banner.module.css';
 import { Heading } from '@navikt/ds-react';
 import React, { ComponentType } from 'react';
-import classNames from 'classnames';
 
 type Props = {
     ikon: ComponentType;
-    liten: Boolean;
 };
 
-const Banner = ({ ikon: Ikon, liten }: Props) => {
+const Banner = ({ ikon: Ikon }: Props) => {
     return (
         <div className={css.banner}>
-            <div
-                className={classNames(css.piktogramOgInnhold, {
-                    [css.liten]: liten,
-                })}
-            >
+            <div className={css.piktogramOgInnhold}>
                 <Ikon></Ikon>
                 <Heading className={css.innhold} level="1" size="xlarge">
                     Stillinger

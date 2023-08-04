@@ -42,7 +42,7 @@ const Stillingssøk = () => {
     return (
         <div className={css.wrapper}>
             {fnr && <KontekstAvKandidat fnr={fnr} />}
-            {!fnr && <Banner ikon={FaaJobbPiktogram} liten={true} />}
+            {!fnr && <Banner ikon={FaaJobbPiktogram} />}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
                     <Filter fnr={fnr} />
