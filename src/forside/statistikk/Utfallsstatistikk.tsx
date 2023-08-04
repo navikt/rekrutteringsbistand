@@ -1,9 +1,8 @@
+import { EyeIcon, HandshakeIcon } from '@navikt/aksel-icons';
 import { FunctionComponent } from 'react';
+import statistikkCss from './Statistikk.module.css';
 import Telling from './Telling';
 import useUtfallsstatistikk from './useUtfallsstatistikk';
-import statistikkCss from './Statistikk.module.css';
-import tellingCss from './Telling.module.css';
-
 type Props = {
     navKontor: string;
     fraOgMed: Date;
@@ -17,26 +16,19 @@ const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilO
         tilOgMed
     );
 
-    const beskrivelseForAntallFåttJobben = `${
-        antallFåttJobben === 1 ? 'person' : 'personer'
-    } har fått jobb`;
-
-    const beskrivelseForAntallPresentert = `${
-        antallPresentert === 1 ? 'person' : 'personer'
-    } har blitt presentert for arbeidsgiver`;
-
     return (
         <div>
             <div className={statistikkCss.tall}>
                 <Telling
                     tall={antallFåttJobben}
-                    beskrivelse={beskrivelseForAntallFåttJobben}
-                    className={tellingCss.fattJobb}
+                    beskrivelse="Delt med arbeidsgiver"
+                    ikon={<EyeIcon aria-hidden />}
                 />
+
                 <Telling
                     tall={antallPresentert}
-                    beskrivelse={beskrivelseForAntallPresentert}
-                    className={tellingCss.presentert}
+                    beskrivelse="Fikk jobb"
+                    ikon={<HandshakeIcon aria-hidden />}
                 />
             </div>
         </div>

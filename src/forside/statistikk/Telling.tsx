@@ -1,21 +1,22 @@
+import { BodyShort } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import classNames from 'classnames';
 import css from './Telling.module.css';
 
 type Props = {
     tall: number;
     beskrivelse: string;
-    className: string;
+    ikon?: React.ReactNode;
 };
 
-const Telling: FunctionComponent<Props> = ({ tall, beskrivelse, className }) => {
-    const klassenavn = classNames(css.telling, className);
-
+const Telling: FunctionComponent<Props> = ({ tall, beskrivelse, ikon }) => {
     return (
-        <p className={klassenavn}>
-            <span className={css.tall}>{tall}</span>
-            {beskrivelse}
-        </p>
+        <div className={css.telling}>
+            <div>
+                <BodyShort className={css.headerTekst}>{beskrivelse}</BodyShort>
+                <span className={css.tall}>{tall}</span>
+            </div>
+            <div className={css.ikon}>{ikon}</div>
+        </div>
     );
 };
 
