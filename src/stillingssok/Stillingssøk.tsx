@@ -14,6 +14,8 @@ import useSøkMedQuery from './useSøkMedQuery';
 import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import css from './Stillingssøk.module.css';
+import React from 'react';
+import Banner from 'felles/komponenter/bruce/Banner';
 
 export type Søkekriterier = {
     side: number;
@@ -39,6 +41,7 @@ const Stillingssøk = () => {
     return (
         <div className={css.wrapper}>
             {fnr && <KontekstAvKandidat fnr={fnr} />}
+            {!fnr && <Banner />}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
                     <Filter fnr={fnr} />
