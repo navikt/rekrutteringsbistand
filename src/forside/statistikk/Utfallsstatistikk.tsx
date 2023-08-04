@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react';
-import Telling from './Telling';
-import useUtfallsstatistikk from './useUtfallsstatistikk';
 import statistikkCss from './Statistikk.module.css';
+import Telling from './Telling';
 import tellingCss from './Telling.module.css';
+import useUtfallsstatistikk from './useUtfallsstatistikk';
 
 type Props = {
     navKontor: string;
