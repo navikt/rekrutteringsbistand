@@ -1,18 +1,18 @@
 import css from './Banner.module.css';
 import { Heading } from '@navikt/ds-react';
-import React, { ComponentType } from 'react';
+import { ReactComponent as FaaJobbPiktogram } from './fåjobb.svg';
 
 type Props = {
-    ikon: ComponentType;
+    tittel: String;
 };
 
-const Banner = ({ ikon: Ikon }: Props) => {
+const Banner = ({ tittel }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.piktogramOgInnhold}>
-                <Ikon></Ikon>
+                <FaaJobbPiktogram></FaaJobbPiktogram>
                 <Heading className={css.innhold} level="1" size="xlarge">
-                    Stillinger
+                    {tittel}
                 </Heading>
             </div>
         </div>
