@@ -1,7 +1,7 @@
 import * as cvData from './cv-data.mock';
 import { Veileder } from './veileder.mock';
 import { mockStrings } from './mock-strings';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
 import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
 
 export const antall = 20;

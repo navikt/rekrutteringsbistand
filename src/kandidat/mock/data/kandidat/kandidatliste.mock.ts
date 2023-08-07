@@ -15,7 +15,7 @@ import Kandidatliste, {
     Stillingskategori,
     KandidatlisteSammendrag,
 } from 'felles/domene/kandidatliste/Kandidatliste';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
 
 const antall = 25;
 const tomListe = [...new Array(antall)];

@@ -3,7 +3,7 @@ import { api } from 'felles/api';
 import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
 import { EsRespons, byggKandidatQuery } from './kandidatQuery';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import { QueryParam } from '../utils/urlUtils';
 import { sendEvent } from 'felles/amplitude';
@@ -16,11 +16,11 @@ const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
     const brukKandidatkriterier = searchParams.get(QueryParam.Kandidatkriterier) !== null;
 
-    const [kandidat, setKandidat] = useState<KandidatTilStillingssøk>();
+    const [kandidat, setKandidat] = useState<EsKandidat>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
     useEffect(() => {
-        const brukKriterier = (kandidat: KandidatTilStillingssøk) => {
+        const brukKriterier = (kandidat: EsKandidat) => {
             const fylker = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
             const kommuner = hentKommunerFraJobbønsker(kandidat.geografiJobbonsker);
             const yrkesønsker = hentYrkerFraJobbønsker(kandidat.yrkeJobbonskerObj);

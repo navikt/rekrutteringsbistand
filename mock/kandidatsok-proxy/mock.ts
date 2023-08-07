@@ -51,6 +51,13 @@ export const kandidatsøkMock = [
                                   fornavn: 'Joar',
                                   etternavn: 'Giil',
                                   fodselsnummer: '01010101006',
+                                  adresselinje1: 'Storgata 123',
+                                  postnummer: '1234',
+                                  poststed: 'Stedet',
+                                  telefon: '12345678',
+                                  epostadresse: 'e@post.no',
+                                  fodselsdato: '2000.01.01',
+                                  veileder: 'A100000',
                                   geografiJobbonsker: [
                                       {
                                           geografiKodeTekst: 'Geiranger',

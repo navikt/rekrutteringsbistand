@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { fetchKandidatMedFnr } from './kandidatApi';
 import { fetchSynlighetsevaluering } from './kandidatApi';
-import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
+import { KandidatLookup } from 'felles/domene/kandidat/EsKandidat';
 import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import { sendEvent } from 'felles/amplitude';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';

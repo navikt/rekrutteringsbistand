@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { InnloggetBruker } from './hooks/useBrukerensIdent';
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 import { KontekstAvKandidatlisteEllerStilling } from './hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Økt } from './Økt';
 import Filter from './filter/Filter';
@@ -39,7 +39,7 @@ const Kandidatsøk = ({
     kontekstAvKandidatlisteEllerStilling,
 }: KandidatsøkProps) => {
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
-    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<KandidatTilKandidatsøk[]>([]);
+    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<EsKandidat[]>([]);
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
         forrigeØkt?.markerteKandidater
     );

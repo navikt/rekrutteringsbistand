@@ -3,7 +3,7 @@ import { FunctionComponent, ReactNode } from 'react';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Lenker from '../lenker/Lenker';
 import css from './Kandidatmeny.module.css';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
 
 type Props = {
     cv: Nettressurs<KandidatCv>;

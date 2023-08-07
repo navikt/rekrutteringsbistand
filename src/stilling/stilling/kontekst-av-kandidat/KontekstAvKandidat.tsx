@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
@@ -127,7 +127,7 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
 const byggBrødsmulesti = (
     fnr: string,
     stilling: Stilling,
-    kandidat?: KandidatTilStillingssøk,
+    kandidat?: EsKandidat,
     stillingssøk?: string
 ) => {
     if (!kandidat) {

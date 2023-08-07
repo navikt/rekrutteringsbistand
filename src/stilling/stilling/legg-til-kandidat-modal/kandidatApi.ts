@@ -1,7 +1,7 @@
 import { api } from 'felles/api';
 import { ApiError } from '../../api/apiUtils';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
+import { KandidatLookup } from 'felles/domene/kandidat/EsKandidat';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 

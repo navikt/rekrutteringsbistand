@@ -3,7 +3,7 @@ import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 
 import { InnloggetBruker } from '../hooks/useBrukerensIdent';
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Nettstatus } from 'felles/nettressurs';
 import { Økt } from '../Økt';
@@ -23,7 +23,7 @@ type Props = {
     onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
     forrigeØkt: Økt | null;
-    setKandidaterPåSiden: (kandidater: KandidatTilKandidatsøk[]) => void;
+    setKandidaterPåSiden: (kandidater: EsKandidat[]) => void;
 };
 
 const Kandidater: FunctionComponent<Props> = ({

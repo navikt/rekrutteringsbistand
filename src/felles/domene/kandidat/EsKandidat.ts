@@ -69,7 +69,7 @@ export type KandidatLookup = {
     arenaKandidatnr: Id['arenaKandidatnr'];
 };
 
-export type KandidatTilStillingssøk = {
+export type EsKandidat = {
     fornavn: Personalia['fornavn'];
     etternavn: Personalia['etternavn'];
     arenaKandidatnr: Id['arenaKandidatnr'];
@@ -82,17 +82,9 @@ export type KandidatTilStillingssøk = {
     veileder: Oppfølgingsinformasjon['veileder'];
     geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
     yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
-};
-
-export type KandidatTilKandidatsøk = {
     fodselsnummer: Id['fodselsnummer'];
     aktorId: Id['aktorId'];
-    fornavn: Personalia['fornavn'];
-    etternavn: Personalia['etternavn'];
-    arenaKandidatnr: Id['arenaKandidatnr'];
     kvalifiseringsgruppekode: Oppfølgingsinformasjon['kvalifiseringsgruppekode'];
-    yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
-    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
 };
 
 /*

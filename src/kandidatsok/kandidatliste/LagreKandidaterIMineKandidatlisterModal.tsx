@@ -2,7 +2,7 @@ import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { lagreKandidaterIValgteKandidatlister } from '../api/api';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 import { storForbokstav } from '../utils';
 import VelgKandidatlister from './VelgKandidatlister';
 import css from './LagreKandidaterIMineKandidatlisterModal.module.css';
@@ -11,7 +11,7 @@ type Props = {
     vis: boolean;
     onClose: () => void;
     markerteKandidater: Set<string>;
-    kandidaterPåSiden: KandidatTilKandidatsøk[];
+    kandidaterPåSiden: EsKandidat[];
 };
 
 export type LagreKandidaterDto = Array<{
@@ -116,7 +116,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
 };
 
 const oppsummerMarkerteKandidater = (
-    kandidaterPåSiden: KandidatTilKandidatsøk[],
+    kandidaterPåSiden: EsKandidat[],
     markerteKandidater: Set<string>
 ) => {
     const noenMarkerteKandidatersNavn = kandidaterPåSiden
@@ -142,7 +142,7 @@ const oppsummerMarkerteKandidater = (
     }
 };
 
-export const formaterKandidatensNavn = (kandidat: KandidatTilKandidatsøk) =>
+export const formaterKandidatensNavn = (kandidat: EsKandidat) =>
     `${storForbokstav(kandidat.fornavn)} ${storForbokstav(kandidat.etternavn)}`;
 
 export default LagreKandidaterIMineKandidatlisterModal;

@@ -3,14 +3,14 @@ import { get, post } from '../../api/api';
 import { byggIndreQuery } from '../../api/query/byggQuery';
 import useInnloggetBruker from '../../hooks/useBrukerensIdent';
 import { searchParamsTilSøkekriterier } from '../../hooks/useSøkekriterier';
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 
 const useKandidatMedForklaringForUtvikling = (
     kandidatNr: string | undefined,
     navKontor: string | null,
     searchParams: string | undefined
 ) => {
-    const [kandidat, setKandidat] = useState<KandidatTilKandidatsøk | null>(null);
+    const [kandidat, setKandidat] = useState<EsKandidat | null>(null);
     const [forklaring, setForklaring] = useState<any>(null);
 
     const innloggetBruker = useInnloggetBruker(navKontor);

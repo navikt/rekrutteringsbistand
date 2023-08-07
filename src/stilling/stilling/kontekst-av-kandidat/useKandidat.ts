@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { api } from 'felles/api';
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 
 export type EsRespons = {
     hits: {
         hits: Array<{
-            _source: KandidatTilStillingssøk;
+            _source: EsKandidat;
         }>;
     };
 };
@@ -13,7 +13,7 @@ export type EsRespons = {
 type EsQuery = {
     query: object;
     size: number;
-    _source: Array<keyof KandidatTilStillingssøk>;
+    _source: Array<keyof EsKandidat>;
 };
 
 const byggQuery = (fodselsnummer: string): EsQuery => ({
@@ -40,7 +40,7 @@ const byggQuery = (fodselsnummer: string): EsQuery => ({
 });
 
 const useKandidat = (fnr: string) => {
-    const [kandidat, setKandidat] = useState<KandidatTilStillingssøk>();
+    const [kandidat, setKandidat] = useState<EsKandidat>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
     useEffect(() => {

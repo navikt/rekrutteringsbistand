@@ -1,4 +1,4 @@
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
 import { formaterDato } from '../../../utils/dateUtils';
 
 type Props = {

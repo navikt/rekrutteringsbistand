@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { Nettressurs } from 'felles/nettressurs';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
 import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
