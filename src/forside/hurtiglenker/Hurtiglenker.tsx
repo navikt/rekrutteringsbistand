@@ -17,7 +17,7 @@ const Hurtiglenker: FunctionComponent = () => {
                 ikon={<FinnKandidaterIkon />}
             />
             <LenkepanelMedIkon
-                href="/kandidater/lister"
+                href="/stillingssok?standardsok"
                 tittel="Finn stillinger"
                 ikon={<FinnStillinger />}
             />
