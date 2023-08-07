@@ -1,13 +1,13 @@
-import { FunctionComponent, useEffect, useState } from 'react';
 import { BodyShort, Detail, Label } from '@navikt/ds-react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
+import { Arbeidsgiver, Geografi } from 'felles/domene/stilling/Stilling';
+import { Nettressurs, Nettstatus, ikkeLastet } from 'felles/nettressurs';
 import { fetchEmployerNameCompletionHits, fetchOrgnrSuggestions } from '../api/api';
-import capitalizeEmployerName from '../stilling/edit/endre-arbeidsgiver/capitalizeEmployerName';
-import capitalizeLocation from '../stilling/edit/arbeidssted/capitalizeLocation';
 import Typeahead, { Suggestion } from '../common/typeahead/Typeahead';
+import capitalizeLocation from '../stilling/edit/arbeidssted/capitalizeLocation';
+import capitalizeEmployerName from '../stilling/edit/endre-arbeidsgiver/capitalizeEmployerName';
 import css from './OpprettNyStilling.module.css';
-import { Arbeidsgiver, Geografi } from '../domene/Stilling';
-import { Nettressurs, ikkeLastet, Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     arbeidsgiver: Arbeidsgiverforslag | null;

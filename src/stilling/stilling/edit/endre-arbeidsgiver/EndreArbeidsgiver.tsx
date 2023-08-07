@@ -1,5 +1,8 @@
+import { BodyShort, Button, Label, TextField } from '@navikt/ds-react';
+import Stilling from 'felles/domene/stilling/Stilling';
 import { useDispatch } from 'react-redux';
-import RichTextEditor from '../richTextEditor/RichTextEditor';
+import { adjustUrl } from '../../../common/urlUtils';
+import { formaterDataFraEnhetsregisteret } from '../../../opprett-ny-stilling/VelgArbeidsgiver';
 import {
     SET_EMPLOYER_HOMEPAGE,
     SET_EMPLOYER_NAME,
@@ -8,11 +11,8 @@ import {
     SET_LINKEDIN_PAGE,
     SET_TWITTER_ADDRESS,
 } from '../../adDataReducer';
-import { adjustUrl } from '../../../common/urlUtils';
+import RichTextEditor from '../richTextEditor/RichTextEditor';
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
-import { formaterDataFraEnhetsregisteret } from '../../../opprett-ny-stilling/VelgArbeidsgiver';
-import { BodyShort, Button, Label, TextField } from '@navikt/ds-react';
-import Stilling from '../../../domene/Stilling';
 
 type Props = {
     stilling: Stilling;

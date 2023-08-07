@@ -1,7 +1,7 @@
 import { Heading, Panel } from '@navikt/ds-react';
+import Stilling from 'felles/domene/stilling/Stilling';
 import { formatISOString } from '../../../utils/datoUtils';
 import css from '../Forhåndsvisning.module.css';
-import Stilling from '../../../domene/Stilling';
 
 type Props = {
     stilling: Stilling;

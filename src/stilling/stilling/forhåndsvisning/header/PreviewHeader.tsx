@@ -1,18 +1,18 @@
+import { DocPencilIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
+import { Button, CopyButton } from '@navikt/ds-react';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, CopyButton } from '@navikt/ds-react';
-import { DocPencilIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
+import { Nettressurs } from 'felles/nettressurs';
+import { State } from '../../../redux/store';
 import { StillingsinfoState } from '../../../stillingsinfo/stillingsinfoReducer';
 import { EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
 import { hentAnnonselenke, stillingErPublisert } from '../../adUtils';
-import { State } from '../../../redux/store';
-import Stilling, { Stillingsinfo, System } from '../../../domene/Stilling';
-import OpprettKandidatlisteModal from './OpprettKandidatlisteModal';
 import Stillingsheader from '../../header/Stillingsheader';
 import EksternStillingAdvarsel from './EksternStillingAdvarsel';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettressurs } from 'felles/nettressurs';
+import OpprettKandidatlisteModal from './OpprettKandidatlisteModal';
 
 type Props = {
     stilling: Stilling;

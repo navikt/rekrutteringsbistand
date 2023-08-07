@@ -1,29 +1,28 @@
+import { Checkbox, CheckboxGroup, Fieldset, Radio, RadioGroup, TextField } from '@navikt/ds-react';
 import React, { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
-import { Checkbox, CheckboxGroup, Fieldset, Radio, RadioGroup, TextField } from '@navikt/ds-react';
 
+import Stilling, { Omfang } from 'felles/domene/stilling/Stilling';
+import { State } from '../../../redux/store';
 import { leggTilTimerPåISOString } from '../../../utils/datoUtils';
 import {
-    SET_EMPLOYMENT_EXTENT,
     CHECK_EMPLOYMENT_WORKDAY,
-    UNCHECK_EMPLOYMENT_WORKDAY,
     CHECK_EMPLOYMENT_WORKHOURS,
-    UNCHECK_EMPLOYMENT_WORKHOURS,
-    SET_EMPLOYMENT_SECTOR,
-    SET_EMPLOYMENT_POSITIONCOUNT,
     SET_APPLICATIONDUE,
+    SET_EMPLOYMENT_EXTENT,
+    SET_EMPLOYMENT_POSITIONCOUNT,
+    SET_EMPLOYMENT_SECTOR,
     SET_EMPLOYMENT_STARTTIME,
+    UNCHECK_EMPLOYMENT_WORKDAY,
+    UNCHECK_EMPLOYMENT_WORKHOURS,
 } from '../../adDataReducer';
-import { Omfang } from '../../../domene/Stilling';
-import { State } from '../../../redux/store';
 import { ValidertFelt } from '../../adValidationReducer';
 import Ansettelsesform from '../ansettelsesform/Ansettelsesform';
-import Datovelger from './Datovelger';
-import isJson from './IsJson';
 import Arbeidstidsordning from '../arbeidstidsordning/Arbeidstidsordning';
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
 import Skjemalegend from '../skjemaetikett/Skjemalegend';
-import Stilling from '../../../domene/Stilling';
+import Datovelger from './Datovelger';
+import isJson from './IsJson';
 import css from './PraktiskeOpplysninger.module.css';
 
 type Props = {

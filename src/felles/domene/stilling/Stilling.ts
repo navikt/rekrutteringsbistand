@@ -3,23 +3,10 @@ export type Rekrutteringsbistandstilling = {
     stillingsinfo: Stillingsinfo | null;
 };
 
-type Stillingbase = {
-    // nytt i ES
-    annonsenr: string | null;
-    categories: StyrkCategory[];
-    locations: Geografi[];
-    contacts: Kontaktinfo[];
-
-    // annerledes i ES
-    employer: ArbeidsgiverOpenSearch | null;
-
-    // fra api
-
+export type Stillingbase = {
     uuid: string;
     created: string;
-    createdBy: System;
     updated: string;
-    updatedBy: System;
     title: string;
     status: Status;
     privacy: Privacy | string;
@@ -30,9 +17,7 @@ type Stillingbase = {
     expires: string | null;
     administration: Administration | null;
     location: Geografi | null;
-    locationList: Geografi[];
     properties: Properties & Record<string, any>;
-    contactList?: Kontaktinfo[];
     publishedByAdmin: string | null;
     businessName: string | null;
 };
@@ -45,9 +30,12 @@ export type Stilling = Stillingbase & {
     firstPublished: boolean | null;
     categoryList: StyrkCategory[];
     deactivatedByExpiry: boolean | null;
+    createdBy: System;
+    updatedBy: System;
+    locationList: Geografi[];
+    contactList?: Kontaktinfo[];
+    mediaList?: object[];
 };
-
-export type EsStilling = Omit<Stilling, 'id'> & {};
 
 export enum System {
     Rekrutteringsbistand = 'pam-rekrutteringsbistand',
@@ -142,8 +130,8 @@ export type Properties = Partial<{
     starttime: string;
     extent: Omfang;
     engagementtype: Ansettelsesform;
-    positioncount: string;
-    tags: string;
+    positioncount: number;
+    tags: string[];
     workday: string;
     workhours: string;
 
@@ -168,6 +156,7 @@ export enum Søknadsfrist {
 }
 
 export enum Ansettelsesform {
+    Ingen = '',
     Fast = 'Fast',
     Vikariat = 'Vikariat',
     Engasjement = 'Engasjement',

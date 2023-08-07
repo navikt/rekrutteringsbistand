@@ -1,17 +1,17 @@
+import { MagnifyingGlassIcon, PersonGroupIcon, PersonPlusIcon } from '@navikt/aksel-icons';
+import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
-import { MagnifyingGlassIcon, PersonPlusIcon, PersonGroupIcon } from '@navikt/aksel-icons';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 
+import { sendGenerellEvent } from 'felles/amplitude';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Stilling from 'felles/domene/stilling/Stilling';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { State } from '../../redux/store';
 import { stillingenHarKandidatliste } from '../adUtils';
-import { sendGenerellEvent } from 'felles/amplitude';
 import LeggTilKandidatModal from '../legg-til-kandidat-modal/LeggTilKandidatModal';
 import css from './Kandidathandlinger.module.css';
-import Stilling from '../../domene/Stilling';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     kandidatliste: Nettressurs<Kandidatliste>;

@@ -1,15 +1,15 @@
 import { Panel } from '@navikt/ds-react';
 
-import { erDirektemeldtStilling } from '../adUtils';
+import Stilling from 'felles/domene/stilling/Stilling';
 import parse from 'html-react-parser';
-import Søknad from './søknad/Søknad';
+import { erDirektemeldtStilling } from '../adUtils';
+import css from './Forhåndsvisning.module.css';
 import Kontaktperson from './kontaktperson/Kontaktperson';
+import MulighetForÅInkludere from './mulighet-for-å-inkludere/MulighetForÅInkludere';
+import OmAnnonsen from './om-annonsen/OmAnnonsen';
 import OmBedriften from './om-bedriften/OmBedriften';
 import OmStillingen from './om-stillingen/OmStillingen';
-import OmAnnonsen from './om-annonsen/OmAnnonsen';
-import MulighetForÅInkludere from './mulighet-for-å-inkludere/MulighetForÅInkludere';
-import Stilling from '../../domene/Stilling';
-import css from './Forhåndsvisning.module.css';
+import Søknad from './søknad/Søknad';
 
 type Props = {
     stilling: Stilling;

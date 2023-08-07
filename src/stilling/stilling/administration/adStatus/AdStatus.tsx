@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 
+import { Alert } from '@navikt/ds-react';
+import { Status } from 'felles/domene/stilling/Stilling';
 import PrivacyStatusEnum from '../../../common/enums/PrivacyStatusEnum';
 import { formatISOString } from '../../../utils/datoUtils';
-import { Alert } from '@navikt/ds-react';
-import { Status } from '../../../domene/Stilling';
 
 const AdStatus = () => {
     const adStatus = useSelector((state: any) => state.adData?.status);

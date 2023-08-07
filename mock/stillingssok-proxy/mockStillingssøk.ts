@@ -1,4 +1,4 @@
-import { Ansettelsesform, Søknadsfrist, Omfang } from '../../src/stillingssok/domene/Stilling';
+import { Ansettelsesform, Omfang, Søknadsfrist } from '../../src/stillingssok/domene/Stilling';
 import { Respons } from '../../src/stillingssok/domene/elasticSearchTyper';
 
 export const mockStillingssøk: Respons = {

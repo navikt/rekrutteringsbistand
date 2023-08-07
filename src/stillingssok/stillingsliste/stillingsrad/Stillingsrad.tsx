@@ -1,22 +1,23 @@
-import { FunctionComponent } from 'react';
-import { BodyShort, Detail, Panel, Tag } from '@navikt/ds-react';
 import { ClockIcon, PersonIcon, PinIcon } from '@navikt/aksel-icons';
-import { Link, useSearchParams } from 'react-router-dom';
+import { BodyShort, Detail, Panel, Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
+import { FunctionComponent } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 
-import Stilling, { Location, Privacy, Rekrutteringsbistandstilling } from '../../domene/Stilling';
-import { konverterTilPresenterbarDato } from './datoUtils';
+import { EsRekrutteringsbistandstilling, EsStilling } from 'felles/domene/stilling/EsStilling';
+import { Geografi, Privacy } from 'felles/domene/stilling/Stilling';
+import { hentHovedtags } from '../../filter/inkludering/tags';
 import {
     lagUrlTilKandidatliste,
     lagUrlTilStilling,
     skalViseLenkeTilKandidatliste,
 } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
-import { hentHovedtags } from '../../filter/inkludering/tags';
 import css from './Stillingsrad.module.css';
+import { konverterTilPresenterbarDato } from './datoUtils';
 
 type Props = {
-    rekrutteringsbistandstilling: Rekrutteringsbistandstilling;
+    rekrutteringsbistandstilling: EsRekrutteringsbistandstilling;
     score: number | null;
     fnr?: string;
 };
@@ -141,14 +142,15 @@ const formaterEiernavn = (eierNavn: string | null) => {
     return navnDel.length !== 2 ? eierNavn : navnDel[1].trim() + ' ' + navnDel[0].trim();
 };
 
-const hentEier = (rekrutteringsbistandstilling: Rekrutteringsbistandstilling) => {
+const hentEier = (rekrutteringsbistandstilling: EsRekrutteringsbistandstilling) => {
     const eierNavn = rekrutteringsbistandstilling.stillingsinfo?.eierNavn;
     const reportee = rekrutteringsbistandstilling.stilling.administration?.reportee;
     return eierNavn != null ? eierNavn : reportee != null ? reportee : null;
 };
 
-const hentArbeidssted = (locations: Location[]): string | null => {
+const hentArbeidssted = (locations: Geografi[]): string | null => {
     const filtrerteLocations: string[] = [];
+
     locations.forEach((location) => {
         if (location.municipal) {
             filtrerteLocations.push(location.municipal);
@@ -160,7 +162,7 @@ const hentArbeidssted = (locations: Location[]): string | null => {
     return filtrerteLocations.join(', ');
 };
 
-const hentArbeidsgiversNavn = (stilling: Stilling) =>
+const hentArbeidsgiversNavn = (stilling: EsStilling) =>
     stilling.businessName && stilling.businessName.length > 0
         ? stilling.businessName
         : formaterMedStoreOgSmåBokstaver(stilling.employer?.name);

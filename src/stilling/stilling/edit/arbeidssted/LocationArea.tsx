@@ -1,8 +1,9 @@
+import { BodyShort, Chips, Detail } from '@navikt/ds-react';
+import { Geografi } from 'felles/domene/stilling/Stilling';
 import React from 'react';
 import { connect } from 'react-redux';
-import { BodyShort, Chips, Detail } from '@navikt/ds-react';
 import Typeahead from '../../../common/typeahead/Typeahead';
-import { FETCH_LOCATION_AREA_BEGIN, SET_LOCATION_AREA_TYPEAHEAD } from './locationAreaReducer.js';
+import { State } from '../../../redux/store';
 import {
     ADD_LOCATION_AREA,
     REMOVE_COUNTRY,
@@ -10,10 +11,9 @@ import {
     REMOVE_MUNICIPAL,
 } from '../../adDataReducer';
 import { VALIDATE_LOCATION_AREA, ValidertFelt } from '../../adValidationReducer';
-import capitalizeLocation from './capitalizeLocation';
-import { Geografi } from '../../../domene/Stilling';
-import { State } from '../../../redux/store';
 import css from './Arbeidssted.module.css';
+import capitalizeLocation from './capitalizeLocation';
+import { FETCH_LOCATION_AREA_BEGIN, SET_LOCATION_AREA_TYPEAHEAD } from './locationAreaReducer.js';
 
 type Props = {
     typeaheadValue: string;
