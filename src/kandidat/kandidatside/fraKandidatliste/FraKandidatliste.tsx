@@ -117,6 +117,7 @@ const FraKandidatlisteInner = ({
         <>
             <Kandidatheader
                 cv={cv}
+                kandidatnr={kandidat.kandidatnr}
                 kandidatnavigering={navigering}
                 tilbakelenkeTekst="Til kandidatlisten"
                 tilbakelenke={{

@@ -39,6 +39,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
         <>
             <Kandidatheader
                 cv={cv}
+                kandidatnr={kandidatnr}
                 kandidatnavigering={kandidatnavigering}
                 tilbakelenkeTekst="Til kandidatsøket"
                 tilbakelenke={tilbakelenke}
