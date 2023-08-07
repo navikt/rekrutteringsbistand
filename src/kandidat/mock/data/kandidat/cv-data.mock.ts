@@ -1,11 +1,12 @@
 import {
-    Sertifikat,
+    Kompetanse,
     Kurs,
+    Omfangenhet,
+    Sertifikat,
     Språkferdighet,
     Språkferdighetsnivå,
-    Yrkeserfaring,
-    Kompetanse,
     Utdanning,
+    Yrkeserfaring,
 } from '../../../kandidatside/cv/reducer/cv-typer';
 import { mockStrings } from './mock-strings';
 
@@ -392,28 +393,28 @@ export const kurs: Kurs[] = [
     {
         arrangor: 'Ifokus',
         tittel: 'Avklaringskurs ',
-        omfang: { verdi: 8, enhet: '' },
+        omfang: { verdi: 8, enhet: Omfangenhet.Dag },
         fraDato: '2011-08-02',
         tilDato: null,
     },
     {
         arrangor: 'ifokus',
         tittel: 'avklaringskurs',
-        omfang: { verdi: 12, enhet: '' },
+        omfang: { verdi: 12, enhet: Omfangenhet.Time },
         fraDato: '2008-06-02',
         tilDato: null,
     },
     {
         arrangor: 'ssaass',
         tittel: 'ss',
-        omfang: { verdi: 5, enhet: '' },
+        omfang: { verdi: 5, enhet: Omfangenhet.Måned },
         fraDato: '2004-01-02',
         tilDato: null,
     },
     {
         arrangor: 'Horten vgs',
         tittel: 'Datakortet',
-        omfang: { verdi: 0, enhet: '' },
+        omfang: { verdi: 0, enhet: Omfangenhet.Uke },
         fraDato: '2002-08-02',
         tilDato: null,
     },
@@ -434,7 +435,7 @@ export const kurs: Kurs[] = [
     {
         arrangor: 'Bmv laksevåg',
         tittel: 'Sveis',
-        omfang: { verdi: 3, enhet: '' },
+        omfang: { verdi: 3, enhet: Omfangenhet.Uke },
         fraDato: '1997-08-02',
         tilDato: null,
     },

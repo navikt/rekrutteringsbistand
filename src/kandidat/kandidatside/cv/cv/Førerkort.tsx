@@ -4,6 +4,8 @@ import Kort from '../kort/Kort';
 import css from './Cv.module.css';
 import sortByDato from '../tidsperiode/sortByDato';
 import Erfaring from './erfaring/Erfaring';
+import { BodyShort } from '@navikt/ds-react';
+import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 
 type Props = {
     cv: CvTyper;
@@ -26,13 +28,26 @@ const Førerkort = ({ cv }: Props) => {
                                         : førerkort.sertifikatKodeNavn
                                 }
                                 beskrivelse={førerkort.sertifikatKode}
-                                tidsperiode={null}
+                                tidsperiode={visTidsperiode(førerkort)}
                             />
                         ))}
                 </div>
             }
         />
     );
+};
+
+const visTidsperiode = (førerkort: SertifikatType) => {
+    if (førerkort.fraDato && førerkort.tilDato) {
+        return (
+            <BodyShort size="small" className={css.tekst}>
+                {formaterDatoHvisIkkeNull(førerkort.fraDato)}
+                {' – ' + formaterDatoHvisIkkeNull(førerkort.tilDato)}
+            </BodyShort>
+        );
+    } else {
+        return null;
+    }
 };
 
 const fjernDuplikater = (forerkortListe: SertifikatType[]) => {

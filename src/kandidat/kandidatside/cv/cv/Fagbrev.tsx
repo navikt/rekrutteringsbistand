@@ -13,7 +13,7 @@ const Fagbrev = ({ cv }: Props) => {
 
     return (
         <Kort
-            overskrift={'Fagbrev'}
+            overskrift={'Fagbrev/svennebrev og mesterbrev'}
             ikon={<BagdeIcon />}
             innhold={
                 <div className={css.erfaringer}>
