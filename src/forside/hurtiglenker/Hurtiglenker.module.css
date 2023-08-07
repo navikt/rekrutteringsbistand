@@ -35,16 +35,6 @@
     text-decoration: none;
 }
 
-.lenkeikon {
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-.lenkeikon img {
-    width: 4rem;
-    vertical-align: middle;
-}
-
 @media (min-width: 768px) {
     .hurtiglenker {
         display: grid;
