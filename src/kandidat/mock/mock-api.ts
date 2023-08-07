@@ -195,23 +195,6 @@ const postDelKandidater = (url: string, options: fetchMock.MockOptionsMethodPost
     };
 };
 
-const postFnrsok = (url: string, options: fetchMock.MockOptionsMethodPost): MockResponse => {
-    const fnr = JSON.parse(String(options.body)).fnr;
-    const cv = mock.kandidat.cver.find((k) => k.fodselsnummer === fnr);
-
-    if (cv) {
-        return {
-            arenaKandidatnr: cv.kandidatnummer,
-            fornavn: cv.fornavn,
-            etternavn: cv.etternavn,
-        };
-    } else {
-        return {
-            status: 404,
-        };
-    }
-};
-
 const getSynlighetsevaluering = (): MockResponse => {
     return {
         status: 200,
@@ -298,7 +281,6 @@ fetchMock
     .put(url.arkivertPut, log(putArkivert))
 
     // Legg til kandidat fra kandidatliste-modal
-    .post(url.fnrsok, log(postFnrsok))
     .get(url.synlighetsevaluering, log(getSynlighetsevaluering))
 
     .post(url.delKandidater, log(postDelKandidater))

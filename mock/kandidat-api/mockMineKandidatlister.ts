@@ -6,7 +6,7 @@ export const mockMineKandidatlister: {
     antall: number;
 } = {
     liste: mockAlleKandidatlister.map(tilKandidatlistesammendrag),
-    antall: 32,
+    antall: mockAlleKandidatlister.length,
 };
 
 function tilKandidatlistesammendrag(kandidatliste: Kandidatliste): KandidatlisteSammendrag {

@@ -1,14 +1,7 @@
-import React, { FunctionComponent, ReactNode } from 'react';
 import { Label, Radio, RadioGroup } from '@navikt/ds-react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { kategoriTilVisningsnavn } from '../stilling/forhåndsvisning/administration/kategori/Kategori';
 import css from './OpprettNyStilling.module.css';
-
-export enum Stillingskategori {
-    Stilling = 'STILLING',
-    Arbeidstrening = 'ARBEIDSTRENING',
-    Jobbmesse = 'JOBBMESSE',
-    Formidling = 'FORMIDLING',
-}
 
 const stillingskategoriSomIkkeLengerKanVelges = Stillingskategori.Arbeidstrening;
 

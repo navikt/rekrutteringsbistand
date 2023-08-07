@@ -1,12 +1,20 @@
-import { Stillingskategori } from '../opprett-ny-stilling/VelgStillingskategori';
-
 export type Rekrutteringsbistandstilling = {
     stilling: Stilling;
     stillingsinfo: Stillingsinfo | null;
 };
 
-export type Stilling = {
-    id: number;
+type Stillingbase = {
+    // nytt i ES
+    annonsenr: string | null;
+    categories: StyrkCategory[];
+    locations: Geografi[];
+    contacts: Kontaktinfo[];
+
+    // annerledes i ES
+    employer: ArbeidsgiverOpenSearch | null;
+
+    // fra api
+
     uuid: string;
     created: string;
     createdBy: System;
@@ -20,21 +28,26 @@ export type Stilling = {
     reference: string;
     published: string | null;
     expires: string | null;
-    employer: Arbeidsgiver | null;
     administration: Administration | null;
     location: Geografi | null;
     locationList: Geografi[];
     properties: Properties & Record<string, any>;
     contactList?: Kontaktinfo[];
-
-    /** Når NSS-admin trykker på "publiser" */
     publishedByAdmin: string | null;
     businessName: string | null;
-    deactivatedByExpiry: boolean | null;
-    categoryList: StyrkCategory[];
+};
+
+/* Datastrukturen som brukes i stilling-api */
+export type Stilling = Stillingbase & {
+    id: number;
+    employer: Arbeidsgiver | null;
     activationOnPublishingDate: boolean;
     firstPublished: boolean | null;
+    categoryList: StyrkCategory[];
+    deactivatedByExpiry: boolean | null;
 };
+
+export type EsStilling = Omit<Stilling, 'id'> & {};
 
 export enum System {
     Rekrutteringsbistand = 'pam-rekrutteringsbistand',
@@ -72,6 +85,13 @@ export type Stillingsinfo = {
     stillingsinfoid: string;
     stillingskategori: Stillingskategori | null;
 };
+
+export enum Stillingskategori {
+    Stilling = 'STILLING',
+    Arbeidstrening = 'ARBEIDSTRENING',
+    Jobbmesse = 'JOBBMESSE',
+    Formidling = 'FORMIDLING',
+}
 
 export type Arbeidsgiver = {
     name: string;

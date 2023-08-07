@@ -1,8 +1,10 @@
 import Kandidatliste, {
     KanSletteKandidatliste,
     Kandidatlistestatus,
+    Stillingskategori,
 } from 'felles/domene/kandidatliste/Kandidatliste';
 import { mockMeg } from '../meg/mock';
+import { mockStilling } from '../stilling-api/mockStilling';
 import { mockKandidatIKandidatliste } from './mockKandidatIKandidatliste';
 
 export const mockKandidatlisteUtenStilling: Kandidatliste = {
@@ -30,4 +32,29 @@ export const mockKandidatlisteUtenStilling: Kandidatliste = {
     },
 };
 
-export const mockAlleKandidatlister = [mockKandidatlisteUtenStilling];
+export const mockKandidatlisteMedStilling: Kandidatliste = {
+    kandidatlisteId: 'e793b0e0-14e6-450b-a0cb-ef7e50ba2385',
+    tittel: 'Er du en bedreviter?',
+    beskrivelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+
+    kanEditere: true,
+    kanSlette: KanSletteKandidatliste.KanSlettes,
+    opprettetTidspunkt: new Date().toISOString(),
+    status: Kandidatlistestatus.Åpen,
+
+    stillingId: mockStilling,
+    stillingskategori: Stillingskategori.Stilling,
+    antallStillinger: 1,
+    organisasjonReferanse: '123',
+    organisasjonNavn: 'Tulleskolen',
+
+    formidlingerAvUsynligKandidat: [],
+    kandidater: mockKandidatIKandidatliste,
+
+    opprettetAv: {
+        ident: mockMeg.navIdent,
+        navn: 'Varg Veileder',
+    },
+};
+
+export const mockAlleKandidatlister = [mockKandidatlisteMedStilling, mockKandidatlisteUtenStilling];

@@ -1,6 +1,6 @@
-import { Stilling } from '../../src/kandidatsok/hooks/useKontekstAvKandidatlisteEllerStilling';
+import { StillingOpenSearch } from '../../src/stilling/domene/StillingOpenSearch';
 
-export const mockStilling: Stilling = {
+export const mockStilling: StillingOpenSearch = {
     stilling: {
         uuid: '0e56aba6-ec4f-4b20-827a-0e238b5b4a7e',
         categoryList: [
