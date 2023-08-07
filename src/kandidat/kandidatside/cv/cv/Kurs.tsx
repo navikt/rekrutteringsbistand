@@ -35,7 +35,7 @@ const Kurs = ({ cv }: Props) => {
 };
 
 const visTidsperiode = (kurs: Kurstype) => {
-    if (kurs.fraDato && kurs.omfang.enhet.length > 0) {
+    if (kurs.fraDato && kurs.omfang.enhet.length > 0 && kurs.omfang.verdi > 0) {
         return (
             <div className={css.tidsperiode}>
                 <BodyShort size="small" className={css.tekst}>
@@ -49,13 +49,13 @@ const visTidsperiode = (kurs: Kurstype) => {
                 </BodyShort>
             </div>
         );
-    } else if (kurs.fraDato && kurs.omfang.enhet.length === 0) {
+    } else if (kurs.fraDato && (kurs.omfang.enhet.length === 0 || kurs.omfang.verdi === 0)) {
         return (
             <BodyShort size="small" className={css.tekst}>
                 Fullført {formaterDatoHvisIkkeNull(kurs.fraDato)}
             </BodyShort>
         );
-    } else if (!kurs.fraDato && kurs.omfang.enhet.length > 0) {
+    } else if (!kurs.fraDato && kurs.omfang.enhet.length > 0 && kurs.omfang.verdi > 0) {
         return (
             <BodyShort size="small" className={css.tekst}>
                 {hentKursvarighet(kurs.omfang)}
