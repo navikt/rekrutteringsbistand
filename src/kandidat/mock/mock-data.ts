@@ -16,14 +16,14 @@ import {
 } from './data/forespørselOmDelingAvCv/forespørselOmDelingAvCv.mock';
 import enhetsregister from './data/kandidat/enhetsregister.mock.json';
 import notater from './data/kandidat/notater.mock.json';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 const cver = mockCver(meg);
 const kandidatlister = mockKandidatlister(meg, enAnnenVeileder, cver);
 const kandidatliste = kandidatlister[0];
 const kandidatlisterForKandidat = kandidatlisterForKandidatMock(meg);
 const kandidatlisteForKandidat = kandidatlisterForKandidat[0];
-const kandidat = (index?: number): Kandidat => kandidatliste.kandidater[index || 0]!!;
+const kandidat = (index?: number): KandidatIKandidatliste => kandidatliste.kandidater[index || 0]!!;
 const usynligKandidat = mockUsynligKandidat(cver[7], meg);
 
 export const mock = {

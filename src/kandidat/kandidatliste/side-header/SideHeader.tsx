@@ -8,7 +8,7 @@ import { capitalizeEmployerName } from '../../utils/formateringUtils';
 import Kandidatlistestatus from './kandidatlistestatus/Kandidatlistestatus';
 import { erKobletTilStilling, erKobletTilArbeidsgiver } from '../domene/kandidatlisteUtils';
 import {
-    Kandidat,
+    KandidatIKandidatliste,
     Kandidatstatus,
     Kandidatutfall,
     FormidlingAvUsynligKandidat,
@@ -20,10 +20,10 @@ type Props = {
     kandidatliste: Kandidatliste;
 };
 
-const erIkkeArkivert = (k: Kandidat) => !k.arkivert;
-const erAktuell = (k: Kandidat) => k.status === Kandidatstatus.Aktuell;
-const erPresentert = (k: Kandidat) => k.utfall === Kandidatutfall.Presentert;
-const harFåttJobb = (k: Kandidat) => k.utfall === Kandidatutfall.FåttJobben;
+const erIkkeArkivert = (k: KandidatIKandidatliste) => !k.arkivert;
+const erAktuell = (k: KandidatIKandidatliste) => k.status === Kandidatstatus.Aktuell;
+const erPresentert = (k: KandidatIKandidatliste) => k.utfall === Kandidatutfall.Presentert;
+const harFåttJobb = (k: KandidatIKandidatliste) => k.utfall === Kandidatutfall.FåttJobben;
 const usynligKandidatHarFåttJobb = (f: FormidlingAvUsynligKandidat) =>
     f.utfall === Kandidatutfall.FåttJobben;
 

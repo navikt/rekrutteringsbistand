@@ -1,7 +1,7 @@
-import Cv from '../../cv/reducer/cv-typer';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { capitalizePoststed } from '../../../utils/formateringUtils';
 
-type Props = { cv: Cv };
+type Props = { cv: KandidatCv };
 
 const Personalia = ({ cv }: Props) => (
     <>

@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppState from '../../../../state/AppState';
 import KandidatlisteActionType from '../../../reducer/KandidatlisteActionType';
 import FåttJobben from './FåttJobben';
-import { Kandidat, Kandidatutfall } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import {
+    KandidatIKandidatliste,
+    Kandidatutfall,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type Props = {
     kanEndre: boolean;
     kandidatlisteId: string;
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
 };
 
 const HarFåttJobben: FunctionComponent<Props> = ({ kanEndre, kandidatlisteId, kandidat }) => {

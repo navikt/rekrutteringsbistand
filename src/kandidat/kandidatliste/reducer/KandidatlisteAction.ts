@@ -7,10 +7,9 @@ import { Sms } from '../domene/Kandidatressurser';
 import { Kandidatlistefilter, Kandidatsortering } from './kandidatlisteReducer';
 import { ForespørslerForStillingInboundDto } from '../../api/forespørselOmDelingAvCvApi';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
-import {
+import KandidatIKandidatliste, {
     Kandidatstatus,
     Kandidatutfall,
-    Kandidat,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 
@@ -238,7 +237,7 @@ export interface ToggleArkivertAction {
 
 export interface ToggleArkivertSuccessAction {
     type: KandidatlisteActionType.ToggleArkivertSuccess;
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
 }
 
 export interface ToggleArkivertFailureAction {

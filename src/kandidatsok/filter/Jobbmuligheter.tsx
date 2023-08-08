@@ -1,7 +1,7 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 import { FilterParam } from '../hooks/useRespons';
-import { Innsatsgruppe, Servicegruppe } from 'felles/domene/kandidat-i-søk/Oppfølgingsinformasjon';
+import { Innsatsgruppe, Servicegruppe } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 
 export enum FiltrerbarInnsatsgruppe {
     Innsatsgruppe,

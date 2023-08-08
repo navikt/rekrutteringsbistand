@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import AppState from '../../state/AppState';
 
-const useFiltrerteKandidater = (kandidater: Kandidat[]) => {
+const useFiltrerteKandidater = (kandidater: KandidatIKandidatliste[]) => {
     const { kandidattilstander } = useSelector((state: AppState) => state.kandidatliste);
 
     const filtrerteKandidater = kandidater.filter(

@@ -1,4 +1,4 @@
-import { FormidlingAvUsynligKandidat, Kandidat } from './KandidatIKandidatliste';
+import { FormidlingAvUsynligKandidat, KandidatIKandidatliste } from './KandidatIKandidatliste';
 
 type Kandidatliste = {
     kandidatlisteId: string;
@@ -11,7 +11,7 @@ type Kandidatliste = {
     opprettetTidspunkt: string;
     kanEditere: boolean;
     kanSlette: KanSletteKandidatliste;
-    kandidater: Kandidat[];
+    kandidater: KandidatIKandidatliste[];
     formidlingerAvUsynligKandidat: FormidlingAvUsynligKandidat[];
     status: Kandidatlistestatus;
     antallStillinger: number | null;

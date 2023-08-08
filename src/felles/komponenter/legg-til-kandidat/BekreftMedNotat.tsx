@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { BodyShort, ErrorMessage, Textarea } from '@navikt/ds-react';
 
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { KandidatLookup } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
 import Knapper from './Knapper';
@@ -86,6 +86,8 @@ const BekreftMedNotat = ({
             'Du skal ikke skrive sensitive opplysninger her. Notatet er synlig for alle veiledere.';
         leggTilTekst = 'Legg til';
     }
+
+    console.log('kandidat:', kandidat);
 
     return (
         <>

@@ -1,13 +1,14 @@
 import * as cvData from './cv-data.mock';
-import Cv from '../../../kandidatside/cv/reducer/cv-typer';
 import { Veileder } from './veileder.mock';
 import { mockStrings } from './mock-strings';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
 
 export const antall = 20;
 
 const tomListe = [...new Array(antall)];
 
-const baseCv = (veileder: Veileder): Cv => ({
+const baseCv = (veileder: Veileder): KandidatCv => ({
     fornavn: '<fornavn>',
     etternavn: '<etternavn>',
     kandidatnummer: '<kandidatnr>',
@@ -21,7 +22,6 @@ const baseCv = (veileder: Veileder): Cv => ({
     statsborgerskap: null,
     samtykkeDato: '2019-01-29',
     samtykkeStatus: 'G',
-    disponererBil: false,
     beskrivelse:
         'Som en dyktig urmaker med 12 års erfaring, har jeg opparbeidet meg omfattende kunnskap og ferdigheter innen reparasjon, vedlikehold og produksjon av ur. Jeg har erfaring med å håndtere en rekke forskjellige typer ur, fra mekaniske klokker til moderne smartklokker. I mitt tidligere arbeid som urmaker har jeg opparbeidet meg en god forståelse av kundens behov, og jeg er alltid forberedt på å yte den beste servicen og kvalitetsarbeidet for å sikre kundetilfredshet. Jeg er også vant til å arbeide effektivt og nøyaktig for å møte stramme tidsfrister.',
     epost: 'eksempel@dev.nav.no',
@@ -37,7 +37,7 @@ const baseCv = (veileder: Veileder): Cv => ({
         adrlinje3: '',
     },
     sistEndret: '2019-11-18T12:17:17.005',
-    oppstartKode: 'ETTER_AVTALE',
+    oppstartKode: Oppstartkode.EtterAvtale,
     utdanning: cvData.utdanning,
     fagdokumentasjon: [
         { tittel: 'Fagbrev maritime fag', type: 'Fagbrev/svennebrev', beskrivelse: null },
@@ -54,17 +54,27 @@ const baseCv = (veileder: Veileder): Cv => ({
     verv: [],
     geografiJobbonsker: [{ geografiKode: 'NO07.0712', geografiKodeTekst: 'Larvik' }],
     yrkeJobbonsker: [
-        { styrkKode: null, styrkBeskrivelse: 'Slakter', primaertJobbonske: true },
-        { styrkKode: null, styrkBeskrivelse: 'Lærer', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Lafter', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Frisør', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Utvikler', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Backend-utvikler', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Sanger', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Digital markedsfører', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Slakter', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Lærer', primaertJobbonske: false },
-        { styrkKode: null, styrkBeskrivelse: 'Lafter', primaertJobbonske: false },
+        { styrkKode: null, styrkBeskrivelse: 'Slakter', primaertJobbonske: true, sokeTitler: [] },
+        { styrkKode: null, styrkBeskrivelse: 'Lærer', primaertJobbonske: false, sokeTitler: [] },
+        { styrkKode: null, styrkBeskrivelse: 'Lafter', primaertJobbonske: false, sokeTitler: [] },
+        { styrkKode: null, styrkBeskrivelse: 'Frisør', primaertJobbonske: false, sokeTitler: [] },
+        { styrkKode: null, styrkBeskrivelse: 'Utvikler', primaertJobbonske: false, sokeTitler: [] },
+        {
+            styrkKode: null,
+            styrkBeskrivelse: 'Backend-utvikler',
+            primaertJobbonske: false,
+            sokeTitler: [],
+        },
+        { styrkKode: null, styrkBeskrivelse: 'Sanger', primaertJobbonske: false, sokeTitler: [] },
+        {
+            styrkKode: null,
+            styrkBeskrivelse: 'Digital markedsfører',
+            primaertJobbonske: false,
+            sokeTitler: [],
+        },
+        { styrkKode: null, styrkBeskrivelse: 'Slakter', primaertJobbonske: false, sokeTitler: [] },
+        { styrkKode: null, styrkBeskrivelse: 'Lærer', primaertJobbonske: false, sokeTitler: [] },
+        { styrkKode: null, styrkBeskrivelse: 'Lafter', primaertJobbonske: false, sokeTitler: [] },
     ],
     omfangJobbprofil: [
         { heltidDeltidKode: 'HELTID', heltidDeltidKodeTekst: 'Heltid' },
@@ -105,7 +115,7 @@ const baseCv = (veileder: Veileder): Cv => ({
         },
     ],
     fodselsnummer: '<fødselsnummer>',
-    tilretteleggingsbehov: true,
+    disponererBil: null,
 });
 
 const bokstaver = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

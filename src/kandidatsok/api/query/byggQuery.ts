@@ -1,5 +1,5 @@
 import { InnloggetBruker } from '../../hooks/useBrukerensIdent';
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { queryMedArbeidserfaring } from './queryMedArbeidserfaring';
 import { queryMedFørerkort } from './queryMedFørerkort';
 import { queryMedFritekst } from './queryMedFritekst';

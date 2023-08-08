@@ -2,7 +2,7 @@ import {
     Innsatsgruppe,
     Kvalifiseringsgruppe,
     Servicegruppe,
-} from 'felles/domene/kandidat-i-søk/Oppfølgingsinformasjon';
+} from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import { FiltrerbarInnsatsgruppe } from '../../filter/Jobbmuligheter';
 
 export const queryMedInnsatsgruppe = (innsatsgrupper: Set<FiltrerbarInnsatsgruppe>) => {

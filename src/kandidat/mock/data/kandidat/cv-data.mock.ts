@@ -7,7 +7,7 @@ import {
     Språkferdighetsnivå,
     Utdanning,
     Yrkeserfaring,
-} from '../../../kandidatside/cv/reducer/cv-typer';
+} from 'felles/domene/kandidat/Cv';
 import { mockStrings } from './mock-strings';
 
 export const utdanning: Utdanning[] = [

@@ -11,21 +11,21 @@ import {
 import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
 import { Kandidatsortering } from '../reducer/kandidatlisteReducer';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type Returverdi = {
-    sorterteKandidater: Kandidat[];
+    sorterteKandidater: KandidatIKandidatliste[];
     sortering: Kandidatsortering;
     setSortering: (sortering: Kandidatsortering) => void;
 };
 
 export type KandidatMedForespørsel = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
     forespørselOmDelingAvCv?: ForespørselOmDelingAvCv;
 };
 
 const useSorterteKandidater = (
-    kandidater: Kandidat[],
+    kandidater: KandidatIKandidatliste[],
     forespørslerOmDelingAvCv: Nettressurs<ForespørslerGruppertPåAktørId>
 ): Returverdi => {
     const dispatch: Dispatch<KandidatlisteAction> = useDispatch();

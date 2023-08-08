@@ -1,11 +1,10 @@
 import moment from 'moment';
 import { v5 as uuid } from 'uuid';
 
-import type Cv from '../../../kandidatside/cv/reducer/cv-typer';
 import { Veileder } from './veileder.mock';
 import { mockStrings } from './mock-strings';
 import {
-    Kandidat,
+    KandidatIKandidatliste,
     Kandidatstatus,
     Kandidatutfall,
     FormidlingAvUsynligKandidat,
@@ -16,6 +15,7 @@ import Kandidatliste, {
     Stillingskategori,
     KandidatlisteSammendrag,
 } from 'felles/domene/kandidatliste/Kandidatliste';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 const antall = 25;
 const tomListe = [...new Array(antall)];
@@ -54,7 +54,11 @@ const standardKandidatliste = (eier: Veileder): Kandidatliste => ({
     antallStillinger: 7,
 });
 
-export const mockKandidat = (cv: Cv, lagtTilAv: Veileder, lagtTilTidspunkt = iDag): Kandidat => ({
+export const mockKandidat = (
+    cv: KandidatCv,
+    lagtTilAv: Veileder,
+    lagtTilTidspunkt = iDag
+): KandidatIKandidatliste => ({
     kandidatnr: cv.kandidatnummer,
     status: Kandidatstatus.Vurderes,
     lagtTilTidspunkt: lagtTilTidspunkt.toISOString(),
@@ -87,7 +91,7 @@ const inaktivKandidat = {
     fodselsnr: null,
 };
 
-const fraCvTilUsynligKandidat = (cv: Cv, meg: Veileder): FormidlingAvUsynligKandidat => ({
+const fraCvTilUsynligKandidat = (cv: KandidatCv, meg: Veileder): FormidlingAvUsynligKandidat => ({
     id: '0',
     fornavn: cv.fornavn,
     mellomnavn: null,
@@ -102,21 +106,24 @@ const fraCvTilUsynligKandidat = (cv: Cv, meg: Veileder): FormidlingAvUsynligKand
     arkivertTidspunkt: null,
 });
 
-export const mockUsynligKandidat = (cv: Cv, meg: Veileder): FormidlingAvUsynligKandidat => ({
+export const mockUsynligKandidat = (
+    cv: KandidatCv,
+    meg: Veileder
+): FormidlingAvUsynligKandidat => ({
     ...fraCvTilUsynligKandidat(cv, meg),
 });
 
 export const mockKandidatlister = (
     eier: Veileder,
     enAnnenVeileder: Veileder,
-    cver: Cv[]
+    cver: KandidatCv[]
 ): Kandidatliste[] =>
     tomListe.map((_, index) => mockKandidatliste(eier, enAnnenVeileder, cver, index));
 
 const mockKandidatliste = (
     eier: Veileder,
     enAnnenVeileder: Veileder,
-    cver: Cv[],
+    cver: KandidatCv[],
     i: number
 ): Kandidatliste => {
     const erEier = i < 10;
@@ -128,9 +135,8 @@ const mockKandidatliste = (
     const enAnnenVeilederHarOgsåLagtTilKandidater = i === 0;
 
     let kandidatliste = standardKandidatliste(eier);
-    let kandidater: Kandidat[] = [];
-
-    let standardKandidater: Kandidat[] = [];
+    let kandidater: KandidatIKandidatliste[] = [];
+    let standardKandidater: KandidatIKandidatliste[] = [];
 
     if (i !== 1) {
         standardKandidater.push({

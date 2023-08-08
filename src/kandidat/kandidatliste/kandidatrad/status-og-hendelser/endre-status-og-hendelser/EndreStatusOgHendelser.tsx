@@ -2,7 +2,10 @@ import { FunctionComponent, useState } from 'react';
 import { Button, RadioGroup, Radio, Detail, BodyShort, Heading } from '@navikt/ds-react';
 
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import {
+    KandidatIKandidatliste,
+    Kandidatstatus,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../../domene/kandidatlisteUtils';
 import { Nettressurs } from 'felles/nettressurs';
 import { Sms } from '../../../domene/Kandidatressurser';
@@ -17,7 +20,7 @@ import SmsSendt from '../hendelser/SmsSendt';
 import css from './EndreStatusOgHendelser.module.css';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
     kandidatliste: Kandidatliste;
     forespørselOmDelingAvCv: Nettressurs<ForespørslerForKandidatForStilling>;
     sms?: Sms;

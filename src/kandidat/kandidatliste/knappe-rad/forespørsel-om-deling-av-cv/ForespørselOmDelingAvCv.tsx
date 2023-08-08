@@ -4,7 +4,7 @@ import { BeaconSignalsIcon } from '@navikt/aksel-icons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ForespørselOutboundDto } from './Forespørsel';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
 import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import AppState from '../../../state/AppState';
@@ -17,7 +17,7 @@ import css from './ForespørselOmDelingAvCv.module.css';
 
 type Props = {
     stillingsId: string;
-    markerteKandidater: Kandidat[];
+    markerteKandidater: KandidatIKandidatliste[];
 };
 
 const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, markerteKandidater }) => {

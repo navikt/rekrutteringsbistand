@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
 };
 
 const NyKandidat: FunctionComponent<Props> = ({ kandidat }) => {

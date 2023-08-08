@@ -10,7 +10,7 @@ import {
     Kandidatutfall,
     UsynligKandidat,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import Cv from '../kandidatside/cv/reducer/cv-typer';
+import Cv from 'felles/domene/kandidat/Cv';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 

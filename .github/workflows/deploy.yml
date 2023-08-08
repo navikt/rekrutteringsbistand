@@ -19,7 +19,7 @@ jobs:
                       package-lock.json
                       server/package-lock.json
             - name: Installer avhengigheter
-              run: npm ci --legacy-peer-deps
+              run: npm ci
             - name: Bygg applikasjon
               run: npm run build
             - name: Test applikasjon
@@ -46,7 +46,7 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/fiks-kopier-annonse-kontekst-av-kandidat'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/override_legacy-peer-deps'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3

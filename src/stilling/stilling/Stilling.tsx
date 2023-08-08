@@ -141,6 +141,7 @@ const Stilling = () => {
                     stilling={stilling}
                 />
             )}
+
             <div className={css.innhold}>
                 <main className={css.venstre}>
                     <div className={css.venstreInnhold}>

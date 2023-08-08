@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { InnloggetBruker } from './hooks/useBrukerensIdent';
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat-i-søk/KandidatISøk';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { KontekstAvKandidatlisteEllerStilling } from './hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Økt } from './Økt';
 import Filter from './filter/Filter';
@@ -15,6 +15,8 @@ import TømFiltre from './filter/TømFiltre';
 import useLagreØkt from './hooks/useLagreØkt';
 import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import css from './Kandidatsøk.module.css';
+import Banner from 'felles/komponenter/banner/Banner';
+import { ReactComponent as FinnKandidaterPiktogram } from './finnkandidater.svg';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;
@@ -69,6 +71,9 @@ const Kandidatsøk = ({
         <>
             {kontekstAvKandidatlisteEllerStilling !== null && (
                 <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
+            )}
+            {kontekstAvKandidatlisteEllerStilling === null && (
+                <Banner tittel="Kandidatsøk" gammelGrå ikon={FinnKandidaterPiktogram} />
             )}
             <div className={css.container}>
                 <TømFiltre />

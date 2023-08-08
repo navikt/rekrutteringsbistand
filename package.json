@@ -11,6 +11,12 @@
         "test": "jest src",
         "prepare": "husky install"
     },
+    "overrides": {
+        "@reach/combobox": {
+            "react": "18.2.0",
+            "react-dom": "18.2.0"
+        }
+    },
     "dependencies": {
         "@navikt/ds-css": "^4.5.0",
         "@navikt/ds-react": "^4.5.0",

@@ -1,8 +1,8 @@
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { formaterDato } from '../../../utils/dateUtils';
-import Cv from '../../cv/reducer/cv-typer';
 
 type Props = {
-    cv: Cv;
+    cv: KandidatCv;
 };
 
 const Fødselsinfo = ({ cv }: Props) =>

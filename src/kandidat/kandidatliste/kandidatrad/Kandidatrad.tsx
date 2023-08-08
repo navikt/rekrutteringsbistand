@@ -9,7 +9,7 @@ import { capitalizeFirstLetter } from '../../utils/formateringUtils';
 import { erInaktiv } from '../domene/kandidatUtils';
 import { erKobletTilStilling } from '../domene/kandidatlisteUtils';
 import { formaterDato } from '../../utils/dateUtils';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { lenkeTilCv } from '../../app/paths';
 import { modifierTilListeradGrid } from '../liste-header/ListeHeader';
 import { Nettstatus } from 'felles/nettressurs';
@@ -30,7 +30,7 @@ import useSendtKandidatmelding from '../hooks/useSendtKandidatmelding';
 import css from './Kandidatrad.module.css';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatIKandidatliste;
     kandidatliste: Kandidatliste;
     toggleArkivert: any;
     onToggleKandidat: (kandidatnr: string) => void;

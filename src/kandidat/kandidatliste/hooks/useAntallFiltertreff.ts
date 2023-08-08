@@ -9,7 +9,10 @@ import {
     ForespørslerGruppertPåAktørId,
     hentForespørslerForKandidatForStilling,
 } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import {
+    KandidatIKandidatliste,
+    Kandidatstatus,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 export type AntallFiltertreff = {
     arkiverte: number;
@@ -18,7 +21,7 @@ export type AntallFiltertreff = {
 };
 
 const useAntallFiltertreff = (
-    kandidater: Kandidat[],
+    kandidater: KandidatIKandidatliste[],
     forespørslerOmDelingAvCv: Nettressurs<ForespørslerGruppertPåAktørId>,
     filter: Kandidatlistefilter
 ): AntallFiltertreff => {
@@ -51,11 +54,11 @@ const useAntallFiltertreff = (
     return antallTreff;
 };
 
-const hentAntallArkiverte = (kandidater: Kandidat[]) => {
+const hentAntallArkiverte = (kandidater: KandidatIKandidatliste[]) => {
     return kandidater.filter((kandidat) => kandidat.arkivert).length;
 };
 
-const hentAntallMedStatus = (kandidater: Kandidat[]) => {
+const hentAntallMedStatus = (kandidater: KandidatIKandidatliste[]) => {
     const antallMedStatus: Record<string, number> = {};
     Object.values(Kandidatstatus).forEach((status) => {
         antallMedStatus[status] = 0;
@@ -69,7 +72,7 @@ const hentAntallMedStatus = (kandidater: Kandidat[]) => {
 };
 
 const hentAntallMedHendelse = (
-    kandidater: Kandidat[],
+    kandidater: KandidatIKandidatliste[],
     forespørslerOmDelingAvCv: Nettressurs<ForespørslerGruppertPåAktørId>
 ): Record<Hendelse, number> => {
     const antallMedHendelse: Record<string, number> = {};

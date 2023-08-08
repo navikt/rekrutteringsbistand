@@ -8,11 +8,14 @@ import {
     ForespørslerGruppertPåAktørId,
     hentForespørslerForKandidatForStilling,
 } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Kandidat, Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import {
+    KandidatIKandidatliste,
+    Kandidatstatus,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 const QUERY_PARAM_SEPARATOR = '-';
 
-export const matchNavn = (navnefilter: string) => (kandidat: Kandidat) => {
+export const matchNavn = (navnefilter: string) => (kandidat: KandidatIKandidatliste) => {
     const trimmet = navnefilter.trim();
     if (trimmet.length === 0) return true;
 
@@ -27,7 +30,7 @@ export const matchNavn = (navnefilter: string) => (kandidat: Kandidat) => {
 };
 
 export const filtrerKandidater = (
-    kandidater: Kandidat[],
+    kandidater: KandidatIKandidatliste[],
     forespørslerOmDelingAvCv: Nettressurs<ForespørslerGruppertPåAktørId>,
     filter?: Kandidatlistefilter
 ) => {

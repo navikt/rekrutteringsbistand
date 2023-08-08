@@ -14,6 +14,9 @@ import useSøkMedQuery from './useSøkMedQuery';
 import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import css from './Stillingssøk.module.css';
+import React from 'react';
+import Banner from 'felles/komponenter/banner/Banner';
+import { ReactComponent as FaaJobbPiktogram } from './fåjobb.svg';
 
 export type Søkekriterier = {
     side: number;
@@ -39,6 +42,7 @@ const Stillingssøk = () => {
     return (
         <div className={css.wrapper}>
             {fnr && <KontekstAvKandidat fnr={fnr} />}
+            {!fnr && <Banner tittel="Stillinger" ikon={FaaJobbPiktogram} />}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
                     <Filter fnr={fnr} />

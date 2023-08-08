@@ -65,6 +65,31 @@ const Kandidatliste: FunctionComponent<Props> = ({
     onToggleMarkert,
     onToggleArkivert,
 }) => {
+    useEffect(() => {
+        /*const hentArbeidsgiversVurderinger = async (stillingId: string) => {
+            try {
+                const respons = await fetch(
+                    `${api.presenterteKandidaterApi}/kandidatliste/${stillingId}/vurdering`,
+                    {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' },
+                    }
+                );
+                const vurderingerJson = await respons.json();
+                console.log(
+                    'Arbeidsgivers vurderinger: ',
+                    vurderingerJson,
+                    JSON.stringify(vurderingerJson)
+                );
+            } catch (e) {
+                console.log('Kall mot arbeidsgivers vurderinger feilet: ' + e);
+            }
+        };
+        if (kandidatliste.stillingId !== null) {
+            hentArbeidsgiversVurderinger(kandidatliste.stillingId);
+        }*/
+    }, [kandidatliste.stillingId]);
+
     useMaskerFødselsnumre();
     useHentSendteMeldinger(kandidatliste.kandidatlisteId);
     useHentForespørslerOmDelingAvCv(kandidatliste.stillingId);

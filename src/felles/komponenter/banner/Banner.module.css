@@ -1,0 +1,30 @@
+.banner {
+    background-color: white;
+    width: 100%;
+    padding: 0 1rem;
+    margin-top: 3rem;
+}
+
+@media (min-width: 768px) {
+    .banner {
+        padding: 0 2rem;
+    }
+}
+
+.piktogramOgInnhold {
+    max-width: 103rem;
+    margin: 0 auto;
+    padding: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+}
+
+.piktogram {
+    flex-shrink: 0;
+}
+
+.gammelGrå {
+    background-color: var(--a-bg-subtle);
+}

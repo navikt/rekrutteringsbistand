@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@navikt/ds-react';
 
 import { Alert, BodyShort, Heading, Label, Link, Select } from '@navikt/ds-react';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Kandidatmeldinger, SmsStatus } from '../domene/Kandidatressurser';
 import { Stillingskategori } from 'felles/domene/kandidatliste/Kandidatliste';
 import AppState from '../../state/AppState';
@@ -25,7 +25,7 @@ enum Meldingsmal {
 type Props = {
     vis: boolean;
     onClose: () => void;
-    kandidater: Kandidat[];
+    kandidater: KandidatIKandidatliste[];
     kandidatlisteId: string;
     stillingId: string;
     sendteMeldinger: Kandidatmeldinger;

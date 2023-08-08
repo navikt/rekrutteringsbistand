@@ -13,11 +13,11 @@ import {
 } from './forespørsel-om-deling-av-cv/Forespørsel';
 import { cvErSendtTilArbeidsgiverOgSlettet } from '../kandidatrad/status-og-hendelser/hendelser/CvErSlettet';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Kandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type Props = {
     kandidatliste: Kandidatliste;
-    markerteKandidater: Kandidat[];
+    markerteKandidater: KandidatIKandidatliste[];
     minstEnKandidatErMarkert: boolean;
     onKandidatShare: () => void;
 };
