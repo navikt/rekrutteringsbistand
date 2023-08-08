@@ -27,7 +27,7 @@ const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilO
     return (
         <div className={statistikkCss.tall}>
             <Telling
-                tall={data?.antallFåttJobben}
+                tall={data?.antallPresentert}
                 beskrivelse="Delt med arbeidsgiver"
                 ikon={<EyeIcon aria-hidden />}
                 detaljer={<AntallPrioriterte antall={data?.antallPresentertIPrioritertMålgruppe} />}
