@@ -30,7 +30,9 @@ const Godkjenninger = ({ cv }: Props) => {
                                 />
                             );
                         })}
-                    <div className={css.deler} />
+                    <div className={css.delerPadding}>
+                        <div className={css.deler} />
+                    </div>
                     {cv.sertifikater?.length > 0 &&
                         sortByDato(cv.sertifikater).map((sertifikat) => {
                             return (

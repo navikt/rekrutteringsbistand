@@ -49,7 +49,9 @@ const Erfaringer = ({ cv }: Props) => {
                                 />
                             );
                         })}
-                    <div className={css.deler} />
+                    <div className={css.delerPadding}>
+                        <div className={css.deler} />
+                    </div>
                     {cv.annenErfaring?.length > 0 &&
                         sortByDato(cv.annenErfaring).map((erfaring) => {
                             let beskrivelse = '';
