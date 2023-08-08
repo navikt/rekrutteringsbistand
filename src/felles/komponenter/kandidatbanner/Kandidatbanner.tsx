@@ -1,6 +1,5 @@
-import { Fragment, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
-import { Link } from 'react-router-dom';
 import {
     CandleIcon,
     EnvelopeClosedIcon,
@@ -12,12 +11,7 @@ import { ReactComponent as Piktogram } from './minekandidater.svg';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 import css from './Kandidatbanner.module.css';
-
-export type Brødsmule = {
-    tekst: string;
-    href?: string;
-    state?: any;
-};
+import BrødsmuleKomponent, { Brødsmule } from './BrødsmuleKomponent';
 
 type Props = {
     kandidat?: EsKandidat;
@@ -34,25 +28,7 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                 <div className={css.innhold}>
                     <div className={css.hovedinnhold}>
                         <div className={css.topplinje}>
-                            <div>
-                                {brødsmulesti &&
-                                    brødsmulesti.map(({ tekst, href, state }, index) => {
-                                        const brødsmule = href ? (
-                                            <Link to={href} state={state}>
-                                                {tekst}
-                                            </Link>
-                                        ) : (
-                                            <BodyShort as="span">{tekst}</BodyShort>
-                                        );
-
-                                        return (
-                                            <Fragment key={tekst}>
-                                                {index !== 0 && <span> / </span>}
-                                                {brødsmule}
-                                            </Fragment>
-                                        );
-                                    })}
-                            </div>
+                            <BrødsmuleKomponent brødsmulesti={brødsmulesti} />
                             <div>{toppHoyre}</div>
                         </div>
                         {kandidat ? (
