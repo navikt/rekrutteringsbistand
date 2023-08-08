@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import {
     CandleIcon,
     EnvelopeClosedIcon,
@@ -18,78 +18,90 @@ type Props = {
     brødsmulesti?: Brødsmule[];
     toppHoyre?: ReactNode;
     bunnHoyre?: ReactNode;
+    feil?: Boolean;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props) => {
+const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre, feil }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.piktogramOgInnhold}>
                 <Piktogram className={css.piktogram} />
+
                 <div className={css.innhold}>
                     <div className={css.hovedinnhold}>
                         <div className={css.topplinje}>
                             <BrødsmuleKomponent brødsmulesti={brødsmulesti} />
                             <div>{toppHoyre}</div>
                         </div>
-                        {kandidat ? (
-                            <Heading size="large" level="3">
-                                {formaterNavn(kandidat)}
-                            </Heading>
+                        {feil ? (
+                            <BodyLong>Informasjonen om kandidaten kan ikke vises</BodyLong>
                         ) : (
-                            <Skeleton>
-                                <Heading size="large">Placeholder</Heading>
-                            </Skeleton>
+                            <>
+                                {kandidat ? (
+                                    <Heading size="large" level="3">
+                                        {formaterNavn(kandidat)}
+                                    </Heading>
+                                ) : (
+                                    <Skeleton>
+                                        <Heading size="large">Placeholder</Heading>
+                                    </Skeleton>
+                                )}
+
+                                <div className={css.bunnlinje}>
+                                    <div className={css.personalia}>
+                                        <BodyShort>
+                                            <CandleIcon />{' '}
+                                            {kandidat ? (
+                                                lagFødselsdagtekst(kandidat?.fodselsdato)
+                                            ) : (
+                                                <Skeleton width={180} />
+                                            )}
+                                        </BodyShort>
+
+                                        <BodyShort>
+                                            <PinIcon />{' '}
+                                            {kandidat ? (
+                                                hentAdresse(kandidat) ?? '-'
+                                            ) : (
+                                                <Skeleton width={240} />
+                                            )}
+                                        </BodyShort>
+
+                                        <BodyShort>
+                                            <EnvelopeClosedIcon />
+                                            {kandidat ? (
+                                                kandidat.epostadresse?.toLowerCase() ?? '-'
+                                            ) : (
+                                                <Skeleton width={100} />
+                                            )}
+                                        </BodyShort>
+
+                                        <BodyShort>
+                                            <PhoneIcon />
+                                            {kandidat ? (
+                                                kandidat.telefon ?? '-'
+                                            ) : (
+                                                <Skeleton width={100} />
+                                            )}
+                                        </BodyShort>
+
+                                        <BodyShort>
+                                            <PersonIcon />
+                                            {kandidat ? (
+                                                kandidat.veileder ? (
+                                                    `${kandidat.veileder.toUpperCase()} (Veileder)`
+                                                ) : (
+                                                    '-'
+                                                )
+                                            ) : (
+                                                <Skeleton width={100} />
+                                            )}
+                                        </BodyShort>
+                                    </div>
+                                    <div className={css.bynnHoyre}>{bunnHoyre}</div>
+                                </div>
+                            </>
                         )}
-
-                        <div className={css.bunnlinje}>
-                            <div className={css.personalia}>
-                                <BodyShort>
-                                    <CandleIcon />{' '}
-                                    {kandidat ? (
-                                        lagFødselsdagtekst(kandidat?.fodselsdato)
-                                    ) : (
-                                        <Skeleton width={180} />
-                                    )}
-                                </BodyShort>
-
-                                <BodyShort>
-                                    <PinIcon />{' '}
-                                    {kandidat ? (
-                                        hentAdresse(kandidat) ?? '-'
-                                    ) : (
-                                        <Skeleton width={240} />
-                                    )}
-                                </BodyShort>
-
-                                <BodyShort>
-                                    <EnvelopeClosedIcon />
-                                    {kandidat ? (
-                                        kandidat.epostadresse?.toLowerCase() ?? '-'
-                                    ) : (
-                                        <Skeleton width={100} />
-                                    )}
-                                </BodyShort>
-
-                                <BodyShort>
-                                    <PhoneIcon />
-                                    {kandidat ? kandidat.telefon ?? '-' : <Skeleton width={100} />}
-                                </BodyShort>
-
-                                <BodyShort>
-                                    <PersonIcon />
-                                    {kandidat ? (
-                                        kandidat.veileder ? (
-                                            `${kandidat.veileder.toUpperCase()} (Veileder)`
-                                        ) : (
-                                            '-'
-                                        )
-                                    ) : (
-                                        <Skeleton width={100} />
-                                    )}
-                                </BodyShort>
-                            </div>
-                            <div className={css.bynnHoyre}>{bunnHoyre}</div>
-                        </div>
                     </div>
                 </div>
             </div>

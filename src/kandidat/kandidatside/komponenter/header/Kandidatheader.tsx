@@ -5,10 +5,7 @@ import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidatForBanner from 'felles/komponenter/banner/useKandidatForBanner';
-import BrødsmuleKomponent, {
-    Brødsmule,
-} from 'felles/komponenter/kandidatbanner/BrødsmuleKomponent';
-import { BodyLong } from '@navikt/ds-react';
+import { Brødsmule } from 'felles/komponenter/kandidatbanner/BrødsmuleKomponent';
 
 type Props = {
     cv: Nettressurs<KandidatCv>;
@@ -29,28 +26,18 @@ const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props
     ];
     return (
         <>
-            {feilmelding && brødsmulestiMedNavn && brødsmulestiMedNavn.length && (
-                <div className={css.column}>
-                    <div>
-                        <BrødsmuleKomponent brødsmulesti={brødsmulesti} />
-                        <BodyLong>Informasjonen om kandidaten kan ikke vises</BodyLong>
-                    </div>
-                    {kandidatnavigering && <ForrigeNeste kandidatnavigering={kandidatnavigering} />}
-                </div>
-            )}
-            {!feilmelding && (
-                <Kandidatbanner
-                    kandidat={kandidat}
-                    brødsmulesti={brødsmulestiMedNavn}
-                    toppHoyre={
-                        kandidatnavigering && (
-                            <div className={css.forrigeNeste}>
-                                <ForrigeNeste kandidatnavigering={kandidatnavigering} />
-                            </div>
-                        )
-                    }
-                ></Kandidatbanner>
-            )}
+            <Kandidatbanner
+                kandidat={kandidat}
+                brødsmulesti={brødsmulestiMedNavn}
+                toppHoyre={
+                    kandidatnavigering && (
+                        <div className={css.forrigeNeste}>
+                            <ForrigeNeste kandidatnavigering={kandidatnavigering} />
+                        </div>
+                    )
+                }
+                feil={feilmelding !== undefined}
+            ></Kandidatbanner>
         </>
     );
 };
