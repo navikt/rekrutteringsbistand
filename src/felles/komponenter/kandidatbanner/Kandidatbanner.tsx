@@ -68,50 +68,56 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, children, toppHoyre }: Props)
                             </Skeleton>
                         )}
 
-                        <div className={css.personalia}>
-                            <BodyShort>
-                                <CandleIcon />{' '}
-                                {kandidat ? (
-                                    lagFødselsdagtekst(kandidat?.fodselsdato)
-                                ) : (
-                                    <Skeleton width={180} />
-                                )}
-                            </BodyShort>
-
-                            <BodyShort>
-                                <PinIcon />{' '}
-                                {kandidat ? hentAdresse(kandidat) ?? '-' : <Skeleton width={240} />}
-                            </BodyShort>
-
-                            <BodyShort>
-                                <EnvelopeClosedIcon />
-                                {kandidat ? (
-                                    kandidat.epostadresse?.toLowerCase() ?? '-'
-                                ) : (
-                                    <Skeleton width={100} />
-                                )}
-                            </BodyShort>
-
-                            <BodyShort>
-                                <PhoneIcon />
-                                {kandidat ? kandidat.telefon ?? '-' : <Skeleton width={100} />}
-                            </BodyShort>
-
-                            <BodyShort>
-                                <PersonIcon />
-                                {kandidat ? (
-                                    kandidat.veileder ? (
-                                        `${kandidat.veileder.toUpperCase()} (Veileder)`
+                        <div className={css.bunnlinje}>
+                            <div className={css.personalia}>
+                                <BodyShort>
+                                    <CandleIcon />{' '}
+                                    {kandidat ? (
+                                        lagFødselsdagtekst(kandidat?.fodselsdato)
                                     ) : (
-                                        '-'
-                                    )
-                                ) : (
-                                    <Skeleton width={100} />
-                                )}
-                            </BodyShort>
+                                        <Skeleton width={180} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PinIcon />{' '}
+                                    {kandidat ? (
+                                        hentAdresse(kandidat) ?? '-'
+                                    ) : (
+                                        <Skeleton width={240} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <EnvelopeClosedIcon />
+                                    {kandidat ? (
+                                        kandidat.epostadresse?.toLowerCase() ?? '-'
+                                    ) : (
+                                        <Skeleton width={100} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PhoneIcon />
+                                    {kandidat ? kandidat.telefon ?? '-' : <Skeleton width={100} />}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PersonIcon />
+                                    {kandidat ? (
+                                        kandidat.veileder ? (
+                                            `${kandidat.veileder.toUpperCase()} (Veileder)`
+                                        ) : (
+                                            '-'
+                                        )
+                                    ) : (
+                                        <Skeleton width={100} />
+                                    )}
+                                </BodyShort>
+                            </div>
+                            <div className={css.ekstrainnhold}>{children}</div>
                         </div>
                     </div>
-                    <div className={css.ekstrainnhold}>{children}</div>
                 </div>
             </div>
         </div>

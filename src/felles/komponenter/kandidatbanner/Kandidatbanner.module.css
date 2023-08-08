@@ -38,6 +38,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
 }
 
 .ekstrainnhold {
@@ -61,6 +62,11 @@
 }
 
 .topplinje {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bunnlinje {
     display: flex;
     justify-content: space-between;
 }
