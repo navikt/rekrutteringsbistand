@@ -35,7 +35,7 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                     <div className={css.hovedinnhold}>
                         <div className={css.topplinje}>
                             <div>
-                                {brødsmulesti ? (
+                                {brødsmulesti &&
                                     brødsmulesti.map(({ tekst, href, state }, index) => {
                                         const brødsmule = href ? (
                                             <Link to={href} state={state}>
@@ -51,10 +51,7 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                                                 {brødsmule}
                                             </Fragment>
                                         );
-                                    })
-                                ) : (
-                                    <Skeleton width={220} />
-                                )}
+                                    })}
                             </div>
                             <div>{toppHoyre}</div>
                         </div>
@@ -115,7 +112,7 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                                     )}
                                 </BodyShort>
                             </div>
-                            <div className={css.ekstrainnhold}>{bunnHoyre}</div>
+                            <div className={css.bynnHoyre}>{bunnHoyre}</div>
                         </div>
                     </div>
                 </div>
