@@ -16,4 +16,4 @@ export const getMiljø = (): string => {
     }
 };
 
-export const erIkkeProd = getMiljø() !== Miljø.DevGcp;
+export const erIkkeProd = getMiljø() !== Miljø.ProdGcp;

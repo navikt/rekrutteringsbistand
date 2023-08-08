@@ -1,5 +1,6 @@
 import { EyeIcon, HandshakeIcon } from '@navikt/aksel-icons';
 import { BodyShort, ErrorMessage, Skeleton } from '@navikt/ds-react';
+import { erIkkeProd } from 'felles/miljø';
 import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import statistikkCss from './Statistikk.module.css';
@@ -7,6 +8,7 @@ import Telling from './Telling';
 import useUtfallsstatistikk, {
     Utfallsstatistikk as UtfallsstatistikkType,
 } from './useUtfallsstatistikk';
+
 type Props = {
     navKontor: string;
     fraOgMed: Date;
@@ -30,14 +32,22 @@ const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilO
                 tall={data?.antallPresentert}
                 beskrivelse="Delt med arbeidsgiver"
                 ikon={<EyeIcon aria-hidden />}
-                detaljer={<AntallPrioriterte antall={data?.antallPresentertIPrioritertMålgruppe} />}
+                detaljer={
+                    erIkkeProd && (
+                        <AntallPrioriterte antall={data?.antallPresentertIPrioritertMålgruppe} />
+                    )
+                }
             />
 
             <Telling
                 tall={data?.antallFåttJobben}
                 beskrivelse="Fikk jobb"
                 ikon={<HandshakeIcon aria-hidden />}
-                detaljer={<AntallPrioriterte antall={data?.antallFåttJobbenIPrioritertMålgruppe} />}
+                detaljer={
+                    erIkkeProd && (
+                        <AntallPrioriterte antall={data?.antallFåttJobbenIPrioritertMålgruppe} />
+                    )
+                }
             />
         </div>
     );
