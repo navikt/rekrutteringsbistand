@@ -1,13 +1,13 @@
-import CvType from '../reducer/cv-typer';
 import Kort from '../kort/Kort';
 import { CheckmarkCircleIcon } from '@navikt/aksel-icons';
 import css from './Cv.module.css';
 import sortByDato from '../tidsperiode/sortByDato';
 import Erfaring from './erfaring/Erfaring';
 import Tidsperiode from '../tidsperiode/Tidsperiode';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: CvType;
+    cv: KandidatCv;
 };
 
 const Utdanning = ({ cv }: Props) => {

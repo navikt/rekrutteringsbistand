@@ -1,14 +1,15 @@
 import { CarIcon } from '@navikt/aksel-icons';
-import CvTyper, { Sertifikat as SertifikatType } from '../reducer/cv-typer';
 import Kort from '../kort/Kort';
 import css from './Cv.module.css';
 import sortByDato from '../tidsperiode/sortByDato';
 import Erfaring from './erfaring/Erfaring';
 import { BodyShort } from '@navikt/ds-react';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { Sertifikat } from 'felles/domene/kandidat/Cv';
 
 type Props = {
-    cv: CvTyper;
+    cv: KandidatCv;
 };
 
 const Førerkort = ({ cv }: Props) => {
@@ -37,7 +38,7 @@ const Førerkort = ({ cv }: Props) => {
     );
 };
 
-const visTidsperiode = (førerkort: SertifikatType) => {
+const visTidsperiode = (førerkort: Sertifikat) => {
     if (førerkort.fraDato && førerkort.tilDato) {
         return (
             <BodyShort size="small" className={css.tekst}>
@@ -50,7 +51,7 @@ const visTidsperiode = (førerkort: SertifikatType) => {
     }
 };
 
-const fjernDuplikater = (forerkortListe: SertifikatType[]) => {
+const fjernDuplikater = (forerkortListe: Sertifikat[]) => {
     const forerkortAlleredeILista = new Set();
 
     return forerkortListe.filter((forerkort) => {

@@ -1,13 +1,13 @@
 import { Buldings2Icon } from '@navikt/aksel-icons';
 import Erfaring from './erfaring/Erfaring';
 import Kort from '../kort/Kort';
-import CvType from '../reducer/cv-typer';
 import Tidsperiode from '../tidsperiode/Tidsperiode';
 import css from './Cv.module.css';
 import sortByDato from '../tidsperiode/sortByDato';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: CvType;
+    cv: KandidatCv;
 };
 
 const Erfaringer = ({ cv }: Props) => {

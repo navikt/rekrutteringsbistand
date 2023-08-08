@@ -1,15 +1,16 @@
 import { ClipboardIcon } from '@navikt/aksel-icons';
 import css from './Cv.module.css';
-import CvTyper, { Kurs as Kurstype, Omfang, Omfangenhet } from '../reducer/cv-typer';
+import { Kurs as Kurstype, Omfang, Omfangenhet } from 'felles/domene/kandidat/Cv';
 import Kort from '../kort/Kort';
 import sortByDato from '../tidsperiode/sortByDato';
 import Erfaring from './erfaring/Erfaring';
 import { BodyShort } from '@navikt/ds-react';
 import ellipse from '../ikoner/ellipse.svg';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: CvTyper;
+    cv: KandidatCv;
 };
 
 const Kurs = ({ cv }: Props) => {

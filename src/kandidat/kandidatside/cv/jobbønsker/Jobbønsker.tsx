@@ -1,8 +1,8 @@
-import Cv from '../reducer/cv-typer';
 import { BodyShort } from '@navikt/ds-react';
 import { HeartIcon, PinIcon, ClockIcon, TimerStartIcon, HourglassIcon } from '@navikt/aksel-icons';
 import css from './Jobbønsker.module.css';
 import Kort from '../kort/Kort';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 const oppstartskoder = {
     LEDIG_NAA: { key: 'LEDIG_NAA', label: 'Nå' },
@@ -11,7 +11,7 @@ const oppstartskoder = {
 };
 
 type Props = {
-    cv: Cv;
+    cv: KandidatCv;
 };
 
 const Jobbønsker = ({ cv }: Props) => {

@@ -1,12 +1,12 @@
 import { LanguageIcon } from '@navikt/aksel-icons';
-import CvTyper from '../reducer/cv-typer';
 import Kort from '../kort/Kort';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
 import Språkferdighet from './språkferdighet/Språkferdighet';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: CvTyper;
+    cv: KandidatCv;
 };
 
 const Språk = ({ cv }: Props) => {
