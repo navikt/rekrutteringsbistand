@@ -47,14 +47,24 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
         kandidatliste.kind === Nettstatus.Suksess &&
         kandidatliste.data.kandidater.some((k) => k.kandidatnr === kandidatnr);
 
-    const brødsmulesti = [{ tekst: 'bb', href: 'bbbbb' }];
+    const brødsmulesti = kandidatliste.kind === Nettstatus.Suksess && [
+        {
+            tekst: kandidatliste.data.tittel,
+            href: lenkeTilKandidatliste(kandidatlisteId),
+        },
+        {
+            tekst: 'Finn kandidater',
+            href: lenkeTilKandidatsøk(økt.searchParams),
+            state: { scrollTilKandidat: true },
+        },
+    ];
 
     return (
         <>
             <Kandidatheader
                 cv={cv}
                 kandidatnr={kandidatnr}
-                tilbakelenkeTekst="Til finn kandidater"
+                tilbakelenkeTekst="Finn kandidater"
                 tilbakelenke={lenkeTilFinnKandidater}
                 kandidatnavigering={kandidatnavigering}
                 brødsmulesti={brødsmulesti}

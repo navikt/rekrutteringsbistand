@@ -16,6 +16,7 @@ import css from './Kandidatbanner.module.css';
 export type Brødsmule = {
     tekst: string;
     href?: string;
+    state?: any;
 };
 
 type Props = {
@@ -33,9 +34,11 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, children }: Props) => {
                     <div className={css.hovedinnhold}>
                         <div>
                             {brødsmulesti ? (
-                                brødsmulesti.map(({ tekst, href }, index) => {
+                                brødsmulesti.map(({ tekst, href, state }, index) => {
                                     const brødsmule = href ? (
-                                        <Link to={href}>{tekst}</Link>
+                                        <Link to={href} state={state}>
+                                            {tekst}
+                                        </Link>
                                     ) : (
                                         <BodyShort as="span">{tekst}</BodyShort>
                                     );
@@ -149,7 +152,7 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-const formaterNavn = (kandidat: EsKandidat) => {
+export const formaterNavn = (kandidat: EsKandidat) => {
     const fornavn = brukStorForbokstav(kandidat.fornavn);
     const etternavn = brukStorForbokstav(kandidat.etternavn);
 

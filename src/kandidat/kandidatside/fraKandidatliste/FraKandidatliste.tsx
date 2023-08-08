@@ -121,7 +121,7 @@ const FraKandidatlisteInner = ({
                 cv={cv}
                 kandidatnr={kandidat.kandidatnr}
                 kandidatnavigering={navigering}
-                tilbakelenkeTekst="Til kandidatlisten"
+                tilbakelenkeTekst="Kandidatliste"
                 tilbakelenke={{
                     to: tilbakelenke,
                 }}
