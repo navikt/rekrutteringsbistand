@@ -91,24 +91,28 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
     } else {
         return (
             <>
-                <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti}>
-                    <div className={css.knapper}>
-                        {stillingErPublisert(stilling) && (
-                            <CopyButton
-                                copyText={hentAnnonselenke(stilling.uuid)}
-                                text="Kopier annonselenke"
-                                size="small"
+                <Kandidatbanner
+                    kandidat={kandidat}
+                    brødsmulesti={brødsmulesti}
+                    bunnHoyre={
+                        <div className={css.knapper}>
+                            {stillingErPublisert(stilling) && (
+                                <CopyButton
+                                    copyText={hentAnnonselenke(stilling.uuid)}
+                                    text="Kopier annonselenke"
+                                    size="small"
+                                />
+                            )}
+                            <Kandidatlistehandlinger
+                                fnr={fnr}
+                                kandidatliste={kandidatliste}
+                                onAnbefalClick={() => {
+                                    setVisModal(true);
+                                }}
                             />
-                        )}
-                        <Kandidatlistehandlinger
-                            fnr={fnr}
-                            kandidatliste={kandidatliste}
-                            onAnbefalClick={() => {
-                                setVisModal(true);
-                            }}
-                        />
-                    </div>
-                </Kandidatbanner>
+                        </div>
+                    }
+                />
                 {kandidat && kandidatliste.kind === Nettstatus.Suksess && (
                     <AnbefalKandidatModal
                         fnr={fnr}

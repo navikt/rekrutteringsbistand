@@ -23,10 +23,10 @@ type Props = {
     kandidat?: EsKandidat;
     brødsmulesti?: Brødsmule[];
     toppHoyre?: ReactNode;
-    children?: ReactNode;
+    bunnHoyre?: ReactNode;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti, children, toppHoyre }: Props) => {
+const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.piktogramOgInnhold}>
@@ -115,7 +115,7 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, children, toppHoyre }: Props)
                                     )}
                                 </BodyShort>
                             </div>
-                            <div className={css.ekstrainnhold}>{children}</div>
+                            <div className={css.ekstrainnhold}>{bunnHoyre}</div>
                         </div>
                     </div>
                 </div>
