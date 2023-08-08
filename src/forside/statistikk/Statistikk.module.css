@@ -46,6 +46,10 @@
     gap: 1.5rem;
 }
 
+.talldetaljer {
+    color: var(--a-text-subtle);
+}
+
 @media (min-width: 768px) {
     .tall {
         display: grid;

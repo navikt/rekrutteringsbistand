@@ -1,8 +1,12 @@
 import { EyeIcon, HandshakeIcon } from '@navikt/aksel-icons';
+import { BodyShort, ErrorMessage, Skeleton } from '@navikt/ds-react';
+import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import statistikkCss from './Statistikk.module.css';
 import Telling from './Telling';
-import useUtfallsstatistikk from './useUtfallsstatistikk';
+import useUtfallsstatistikk, {
+    Utfallsstatistikk as UtfallsstatistikkType,
+} from './useUtfallsstatistikk';
 type Props = {
     navKontor: string;
     fraOgMed: Date;
@@ -10,29 +14,39 @@ type Props = {
 };
 
 const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed }) => {
-    const { antallPresentert, antallFåttJobben } = useUtfallsstatistikk(
-        navKontor,
-        fraOgMed,
-        tilOgMed
-    );
+    const statistikk = useUtfallsstatistikk(navKontor, fraOgMed, tilOgMed);
 
+    if (statistikk.kind === Nettstatus.Feil) {
+        return <ErrorMessage>{statistikk.error.message}</ErrorMessage>;
+    }
+
+    let data: UtfallsstatistikkType | undefined;
+    if (statistikk.kind === Nettstatus.Suksess) {
+        data = statistikk.data;
+    }
     return (
-        <div>
-            <div className={statistikkCss.tall}>
-                <Telling
-                    tall={antallFåttJobben}
-                    beskrivelse="Delt med arbeidsgiver"
-                    ikon={<EyeIcon aria-hidden />}
-                />
+        <div className={statistikkCss.tall}>
+            <Telling
+                tall={data?.antallFåttJobben}
+                beskrivelse="Delt med arbeidsgiver"
+                ikon={<EyeIcon aria-hidden />}
+                detaljer={<AntallPrioriterte antall={data?.antallPresentertIPrioritertMålgruppe} />}
+            />
 
-                <Telling
-                    tall={antallPresentert}
-                    beskrivelse="Fikk jobb"
-                    ikon={<HandshakeIcon aria-hidden />}
-                />
-            </div>
+            <Telling
+                tall={data?.antallFåttJobben}
+                beskrivelse="Fikk jobb"
+                ikon={<HandshakeIcon aria-hidden />}
+                detaljer={<AntallPrioriterte antall={data?.antallFåttJobbenIPrioritertMålgruppe} />}
+            />
         </div>
     );
 };
+
+const AntallPrioriterte = ({ antall }: { antall?: number }) => (
+    <BodyShort size="small" className={statistikkCss.talldetaljer}>
+        {antall ? `${antall} er prioriterte` : <Skeleton width={100} />}
+    </BodyShort>
+);
 
 export default Utfallsstatistikk;
