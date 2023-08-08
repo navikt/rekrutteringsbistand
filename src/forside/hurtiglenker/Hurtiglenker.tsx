@@ -1,30 +1,35 @@
-import { FunctionComponent } from 'react';
-import { Heading } from '@navikt/ds-react';
+import { BodyShort } from '@navikt/ds-react';
+import classNames from 'classnames';
+import { ReactComponent as FinnKandidaterIkon } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import { ReactComponent as FinnStillinger } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
+import { ReactComponent as OpprettNyStillingIkon } from 'felles/komponenter/piktogrammer/opprett-ny-stilling.svg';
+import { ReactComponent as SeMineStillingerIkon } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
+import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import liste from './ikoner/liste.svg';
-import blyant from './ikoner/blyant.svg';
-import kvinne from './ikoner/kvinne.svg';
-import checkliste from './ikoner/checkliste.svg';
 import css from './Hurtiglenker.module.css';
 
 const Hurtiglenker: FunctionComponent = () => {
     return (
         <nav className={css.hurtiglenker}>
             <LenkepanelMedIkon
+                href="/kandidatsok"
+                tittel="Finn kandidater"
+                ikon={<FinnKandidaterIkon />}
+            />
+            <LenkepanelMedIkon
+                href="/stillingssok?standardsok"
+                tittel="Finn stillinger"
+                ikon={<FinnStillinger />}
+            />
+            <LenkepanelMedIkon
                 href="/stillinger/minestillinger"
-                tittel="Mine stillinger"
-                ikonSrc={liste}
+                tittel="Se mine stillinger"
+                ikon={<SeMineStillingerIkon />}
             />
             <LenkepanelMedIkon
                 href="/stillinger/minestillinger?visOpprettStillingModal"
                 tittel="Opprett ny stilling"
-                ikonSrc={blyant}
-            />
-            <LenkepanelMedIkon href="/kandidatsok" tittel="Finn kandidater" ikonSrc={kvinne} />
-            <LenkepanelMedIkon
-                href="/kandidater/lister"
-                tittel="Se kandidatlister"
-                ikonSrc={checkliste}
+                ikon={<OpprettNyStillingIkon />}
             />
         </nav>
     );
@@ -33,19 +38,12 @@ const Hurtiglenker: FunctionComponent = () => {
 const LenkepanelMedIkon: FunctionComponent<{
     tittel: string;
     href: string;
-    ikonSrc: string;
-}> = ({ tittel, href, ikonSrc }) => (
-    <Link
-        to={href}
-        className={`navds-panel navds-link-panel navds-panel--border ${css.lenkepanel}`}
-    >
+    ikon: ReactNode;
+}> = ({ tittel, href, ikon }) => (
+    <Link to={href} className={classNames('navds-link-panel', css.lenkepanel)}>
         <div className={css.lenkeinnhold}>
-            <div className={css.lenkeikon}>
-                <img src={ikonSrc} alt="" />
-            </div>
-            <Heading level="2" size="medium">
-                {tittel}
-            </Heading>
+            {ikon}
+            <BodyShort as="span">{tittel}</BodyShort>
         </div>
     </Link>
 );

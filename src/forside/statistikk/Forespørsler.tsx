@@ -1,9 +1,9 @@
-import { Heading, Panel } from '@navikt/ds-react';
+import { Heading } from '@navikt/ds-react';
+import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
+import css from './Forespørsler.module.css';
 import Svartelling, { SvartellingIkon } from './Svartelling';
 import useSvarstatistikk from './useSvarstatistikk';
-import css from './Forespørsler.module.css';
-import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     navKontor: string;
@@ -33,7 +33,7 @@ const Forespørsler: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed
     const antallTotalt = antallSvartJa + antallSvartNei + antallVenterPåSvar + antallUtløpteSvar;
 
     return (
-        <Panel className={css.forespørsler}>
+        <div className={css.forespørsler}>
             <Heading level="2" size="medium">
                 Stillinger delt med kandidater i Aktivitetsplanen
             </Heading>
@@ -70,7 +70,7 @@ const Forespørsler: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed
                     forklaring={`(${antallUtløpteSvar} av ${antallTotalt})`}
                 />
             </div>
-        </Panel>
+        </div>
     );
 };
 

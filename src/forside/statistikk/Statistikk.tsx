@@ -1,9 +1,9 @@
-import { FunctionComponent, useState, ChangeEvent } from 'react';
-import { Heading, Select } from '@navikt/ds-react';
+import { BodyShort, Heading, Select } from '@navikt/ds-react';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
 import Forespørsler from './Forespørsler';
+import css from './Statistikk.module.css';
 import Utfallsstatistikk from './Utfallsstatistikk';
 import { formaterDatoTilVisning, førsteDagIMåned, sisteDagIMåned } from './datoUtils';
-import css from './Statistikk.module.css';
 
 type Props = {
     navKontor: string;
@@ -34,28 +34,26 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
 
     return (
         <div className={css.statistikk}>
-            <div className={css.periodeForKontor}>
-                <Heading level="1" size="medium" className={css.tittel}>
-                    Ditt NAV-kontor
-                </Heading>
-                <div>
-                    <Select
-                        label="Velg periode"
-                        onChange={onTidsperiodeChange}
-                        className={css.tidsperiode}
-                    >
-                        {tidsperioder.map((tidsperiode) => (
-                            <option
-                                value={tidsperiode.getTime()}
-                                key={tidsperiode.getTime()}
-                                className={css.periode}
-                            >
-                                {formaterDatoTilVisning(tidsperiode)} til{' '}
-                                {formaterDatoTilVisning(sisteDagIMåned(new Date(tidsperiode)))}
-                            </option>
-                        ))}
-                    </Select>
+            <div className={css.konktekstForStatistikk}>
+                <div className={css.dittNavKontor}>
+                    <Heading level="2" size="medium" className={css.tittel}>
+                        Ditt NAV-kontor
+                    </Heading>
+                    <BodyShort>Enhet {navKontor}</BodyShort>
                 </div>
+                <div className={css.skillelinje} />
+                <Select label="Periode" onChange={onTidsperiodeChange} className={css.tidsperiode}>
+                    {tidsperioder.map((tidsperiode) => (
+                        <option
+                            value={tidsperiode.getTime()}
+                            key={tidsperiode.getTime()}
+                            className={css.periode}
+                        >
+                            {formaterDatoTilVisning(tidsperiode)} til{' '}
+                            {formaterDatoTilVisning(sisteDagIMåned(new Date(tidsperiode)))}
+                        </option>
+                    ))}
+                </Select>
             </div>
             <Utfallsstatistikk navKontor={navKontor} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />
             <Forespørsler navKontor={navKontor} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />

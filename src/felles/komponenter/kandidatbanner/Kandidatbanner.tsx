@@ -1,6 +1,3 @@
-import { Fragment, ReactNode } from 'react';
-import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
-import { Link } from 'react-router-dom';
 import {
     CandleIcon,
     EnvelopeClosedIcon,
@@ -8,9 +5,12 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
-import { ReactComponent as Piktogram } from './minekandidater.svg';
-import { brukStorForbokstav } from 'felles/utils/stringUtils';
+import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
+import { brukStorForbokstav } from 'felles/utils/stringUtils';
+import { Fragment, ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import css from './Kandidatbanner.module.css';
 
 type Brødsmule = {
