@@ -22,37 +22,41 @@ export type Brødsmule = {
 type Props = {
     kandidat?: EsKandidat;
     brødsmulesti?: Brødsmule[];
+    toppHoyre?: ReactNode;
     children?: ReactNode;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti, children }: Props) => {
+const Kandidatbanner = ({ kandidat, brødsmulesti, children, toppHoyre }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.piktogramOgInnhold}>
                 <Piktogram className={css.piktogram} />
                 <div className={css.innhold}>
                     <div className={css.hovedinnhold}>
-                        <div>
-                            {brødsmulesti ? (
-                                brødsmulesti.map(({ tekst, href, state }, index) => {
-                                    const brødsmule = href ? (
-                                        <Link to={href} state={state}>
-                                            {tekst}
-                                        </Link>
-                                    ) : (
-                                        <BodyShort as="span">{tekst}</BodyShort>
-                                    );
+                        <div className={css.topplinje}>
+                            <div>
+                                {brødsmulesti ? (
+                                    brødsmulesti.map(({ tekst, href, state }, index) => {
+                                        const brødsmule = href ? (
+                                            <Link to={href} state={state}>
+                                                {tekst}
+                                            </Link>
+                                        ) : (
+                                            <BodyShort as="span">{tekst}</BodyShort>
+                                        );
 
-                                    return (
-                                        <Fragment key={tekst}>
-                                            {index !== 0 && <span> / </span>}
-                                            {brødsmule}
-                                        </Fragment>
-                                    );
-                                })
-                            ) : (
-                                <Skeleton width={220} />
-                            )}
+                                        return (
+                                            <Fragment key={tekst}>
+                                                {index !== 0 && <span> / </span>}
+                                                {brødsmule}
+                                            </Fragment>
+                                        );
+                                    })
+                                ) : (
+                                    <Skeleton width={220} />
+                                )}
+                            </div>
+                            <div>{toppHoyre}</div>
                         </div>
                         {kandidat ? (
                             <Heading size="large" level="3">

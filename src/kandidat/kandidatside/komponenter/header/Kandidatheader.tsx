@@ -51,6 +51,13 @@ const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props
                 <Kandidatbanner
                     kandidat={kandidat}
                     brødsmulesti={brødsmulestiMedNavn}
+                    toppHoyre={
+                        kandidatnavigering && (
+                            <div className={css.forrigeNeste}>
+                                <ForrigeNeste kandidatnavigering={kandidatnavigering} />
+                            </div>
+                        )
+                    }
                 ></Kandidatbanner>
             )}
         </>

@@ -36,6 +36,10 @@
     margin: 0 0.5rem;
 }
 
+.forrigeNeste {
+    top: 0;
+}
+
 @media (min-width: 800px) {
     .header {
         padding: 0rem 2rem 2rem;
