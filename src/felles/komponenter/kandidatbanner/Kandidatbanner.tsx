@@ -13,7 +13,7 @@ import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 import css from './Kandidatbanner.module.css';
 
-type Brødsmule = {
+export type Brødsmule = {
     tekst: string;
     href?: string;
 };

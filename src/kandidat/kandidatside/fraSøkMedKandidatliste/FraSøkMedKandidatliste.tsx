@@ -47,6 +47,8 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
         kandidatliste.kind === Nettstatus.Suksess &&
         kandidatliste.data.kandidater.some((k) => k.kandidatnr === kandidatnr);
 
+    const brødsmulesti = [{ tekst: 'bb', href: 'bbbbb' }];
+
     return (
         <>
             <Kandidatheader
@@ -55,6 +57,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                 tilbakelenkeTekst="Til finn kandidater"
                 tilbakelenke={lenkeTilFinnKandidater}
                 kandidatnavigering={kandidatnavigering}
+                brødsmulesti={brødsmulesti}
             />
             <Tabs value={fane} onChange={setFane}>
                 <Kandidatmeny tabs={tabs} cv={cv}>

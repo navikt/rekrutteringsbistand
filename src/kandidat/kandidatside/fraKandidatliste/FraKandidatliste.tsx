@@ -113,6 +113,8 @@ const FraKandidatlisteInner = ({
 
     const endreStatusTekst = erKobletTilStilling(kandidatliste) ? 'Status/hendelse:' : 'Status:';
 
+    const brødsmulesti = [{ tekst: 'aa', href: 'aaaaa' }];
+
     return (
         <>
             <Kandidatheader
@@ -123,6 +125,7 @@ const FraKandidatlisteInner = ({
                 tilbakelenke={{
                     to: tilbakelenke,
                 }}
+                brødsmulesti={brødsmulesti}
             />
             <Tabs value={fane} onChange={setFane}>
                 <Kandidatmeny tabs={tabs} cv={cv}>

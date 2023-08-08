@@ -35,6 +35,8 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
         state: { scrollTilKandidat: true },
     };
 
+    const brødsmulesti = [{ tekst: 'cc', href: 'ccccc' }];
+
     return (
         <>
             <Kandidatheader
@@ -43,6 +45,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
                 kandidatnavigering={kandidatnavigering}
                 tilbakelenkeTekst="Til kandidatsøket"
                 tilbakelenke={tilbakelenke}
+                brødsmulesti={brødsmulesti}
             />
             <Tabs value={fane} onChange={setFane}>
                 <Kandidatmeny tabs={tabs} cv={cv}>
