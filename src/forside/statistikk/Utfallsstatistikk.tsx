@@ -45,7 +45,7 @@ const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilO
 
 const AntallPrioriterte = ({ antall }: { antall?: number }) => (
     <BodyShort size="small" className={statistikkCss.talldetaljer}>
-        {antall ? `${antall} er prioriterte` : <Skeleton width={100} />}
+        {antall !== undefined ? `${antall} er prioriterte` : <Skeleton width={100} />}
     </BodyShort>
 );
 
