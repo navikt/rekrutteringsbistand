@@ -38,10 +38,6 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, kandidatlisteId);
 
     const økt = hentØktFraKandidatsøk();
-    const lenkeTilFinnKandidater = {
-        to: lenkeTilKandidatsøk(økt.searchParams),
-        state: { scrollTilKandidat: true },
-    };
 
     const kandidatErAlleredeLagretIListen =
         kandidatliste.kind === Nettstatus.Suksess &&
@@ -64,8 +60,6 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
             <Kandidatheader
                 cv={cv}
                 kandidatnr={kandidatnr}
-                tilbakelenkeTekst="Finn kandidater"
-                tilbakelenke={lenkeTilFinnKandidater}
                 kandidatnavigering={kandidatnavigering}
                 brødsmulesti={brødsmulesti}
             />

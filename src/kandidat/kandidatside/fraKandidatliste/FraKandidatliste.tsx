@@ -106,14 +106,17 @@ const FraKandidatlisteInner = ({
         });
     };
 
-    const tilbakelenke = lenkeTilKandidatliste(
-        kandidatliste.kandidatlisteId,
-        filterTilQueryParams(state.filter)
-    );
-
     const endreStatusTekst = erKobletTilStilling(kandidatliste) ? 'Status/hendelse:' : 'Status:';
 
-    const brødsmulesti = [{ tekst: 'aa', href: 'aaaaa' }];
+    const brødsmulesti = [
+        {
+            tekst: kandidatliste.tittel,
+            href: lenkeTilKandidatliste(
+                kandidatliste.kandidatlisteId,
+                filterTilQueryParams(state.filter)
+            ),
+        },
+    ];
 
     return (
         <>
@@ -121,10 +124,6 @@ const FraKandidatlisteInner = ({
                 cv={cv}
                 kandidatnr={kandidat.kandidatnr}
                 kandidatnavigering={navigering}
-                tilbakelenkeTekst="Kandidatliste"
-                tilbakelenke={{
-                    to: tilbakelenke,
-                }}
                 brødsmulesti={brødsmulesti}
             />
             <Tabs value={fane} onChange={setFane}>

@@ -30,12 +30,14 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
     const [visKandidatlisterModal, setVisKandidatlisterModal] = useState<boolean>(false);
 
     const økt = hentØktFraKandidatsøk();
-    const tilbakelenke = {
-        to: lenkeTilKandidatsøk(økt.searchParams),
-        state: { scrollTilKandidat: true },
-    };
 
-    const brødsmulesti = [{ tekst: 'cc', href: 'ccccc' }];
+    const brødsmulesti = [
+        {
+            tekst: 'Kandidatsøk',
+            href: lenkeTilKandidatsøk(økt.searchParams),
+            state: { scrollTilKandidat: true },
+        },
+    ];
 
     return (
         <>
@@ -43,8 +45,6 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
                 cv={cv}
                 kandidatnr={kandidatnr}
                 kandidatnavigering={kandidatnavigering}
-                tilbakelenkeTekst="Kandidatsøk"
-                tilbakelenke={tilbakelenke}
                 brødsmulesti={brødsmulesti}
             />
             <Tabs value={fane} onChange={setFane}>
