@@ -63,6 +63,7 @@ const useEsKandidat = (kandidatnr: string) => {
             } catch (e) {
                 setFeilmelding('Klarte ikke å hente kandidat');
             }
+            console.log('feilmelding', feilmelding);
         };
 
         hentKandidat(kandidatnr);
