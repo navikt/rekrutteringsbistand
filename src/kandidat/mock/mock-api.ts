@@ -45,9 +45,6 @@ const url = {
 
     // Alternative backends
     enhetsregister: `${ENHETSREGISTER_API}/underenhet/_search`,
-
-    // Misc
-    toggles: `${baseUrl}/veileder/kandidatsok/toggles`,
 };
 
 const getUsynligKandidat = () => [mock.synlighet.usynligKandidat];
