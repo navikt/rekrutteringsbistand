@@ -2,6 +2,8 @@ import { Heading, Loader } from '@navikt/ds-react';
 import { useParams } from 'react-router-dom';
 
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import Banner from 'felles/komponenter/banner/Banner';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import css from './Stillingssøk.module.css';
 import Filter from './filter/Filter';
 import Filtermeny from './filter/filtermeny/Filtermeny';
@@ -38,7 +40,11 @@ const Stillingssøk = () => {
 
     return (
         <div className={css.wrapper}>
-            {fnr && <KontekstAvKandidat fnr={fnr} />}
+            {fnr ? (
+                <KontekstAvKandidat fnr={fnr} />
+            ) : (
+                <Banner tittel="Stillinger" ikon={<Piktogram />} />
+            )}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
                     <Filter fnr={fnr} />

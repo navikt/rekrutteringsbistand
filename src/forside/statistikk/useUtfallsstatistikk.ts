@@ -1,15 +1,23 @@
-import { useState, useEffect } from 'react';
-import { formaterDatoTilApi } from './datoUtils';
 import { api } from 'felles/api';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useEffect, useState } from 'react';
+import { formaterDatoTilApi } from './datoUtils';
 
-type AntallFormidlingerInboundDto = {
+export type Utfallsstatistikk = {
     antallPresentert: number;
+    antallPresentertIPrioritertMålgruppe: number;
     antallFåttJobben: number;
+    antallFåttJobbenIPrioritertMålgruppe: number;
 };
 
-const useUtfallsstatistikk = (navKontor: string, fraOgMed: Date, tilOgMed: Date) => {
-    const [antallPresentert, setAntallPresentert] = useState<number>(0);
-    const [antallFåttJobben, setAntallFåttJobben] = useState<number>(0);
+const useUtfallsstatistikk = (
+    navKontor: string,
+    fraOgMed: Date,
+    tilOgMed: Date
+): Nettressurs<Utfallsstatistikk> => {
+    const [statistikk, setStatistikk] = useState<Nettressurs<Utfallsstatistikk>>({
+        kind: Nettstatus.LasterInn,
+    });
 
     useEffect(() => {
         const url =
@@ -27,16 +35,26 @@ const useUtfallsstatistikk = (navKontor: string, fraOgMed: Date, tilOgMed: Date)
             });
 
             if (respons.ok) {
-                const formidlinger: AntallFormidlingerInboundDto = await respons.json();
+                const formidlinger = await respons.json();
 
-                setAntallPresentert(formidlinger.antallPresentert);
-                setAntallFåttJobben(formidlinger.antallFåttJobben);
+                setStatistikk({
+                    kind: Nettstatus.Suksess,
+                    data: formidlinger,
+                });
+            } else {
+                setStatistikk({
+                    kind: Nettstatus.Feil,
+                    error: {
+                        message: 'Klarte ikke å hente inn statistikk',
+                        status: respons.status,
+                    },
+                });
             }
         };
         hentData();
     }, [navKontor, fraOgMed, tilOgMed]);
 
-    return { antallPresentert, antallFåttJobben };
+    return statistikk;
 };
 
 export default useUtfallsstatistikk;

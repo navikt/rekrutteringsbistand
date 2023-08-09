@@ -1,6 +1,25 @@
 .telling {
-    padding: 2rem;
-    border-radius: 0.25rem;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--a-border-subtle);
+    background: var(--a-global-white);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.headerTekst {
+    color: var(--a-text-subtle);
+    font-weight: 600;
+}
+
+.ikon {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+    font-size: 1.75rem;
+    border-radius: 50%;
+    background: var(--a-surface-alt-1-subtle);
 }
 
 .tall {
