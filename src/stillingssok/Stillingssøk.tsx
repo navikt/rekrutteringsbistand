@@ -1,19 +1,19 @@
-import { useParams } from 'react-router-dom';
 import { Heading, Loader } from '@navikt/ds-react';
+import { useParams } from 'react-router-dom';
 
-import { Publisert } from './filter/om-annonsen/HvorErAnnonsenPublisert';
-import { Status } from './filter/om-annonsen/Annonsestatus';
-import { Stillingskategori } from './filter/om-annonsen/VelgStillingskategori';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import css from './Stillingssøk.module.css';
 import Filter from './filter/Filter';
 import Filtermeny from './filter/filtermeny/Filtermeny';
+import { Status } from './filter/om-annonsen/Annonsestatus';
+import { Publisert } from './filter/om-annonsen/HvorErAnnonsenPublisert';
+import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import Paginering from './paginering/Paginering';
 import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
+import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
-import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
-import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
-import css from './Stillingssøk.module.css';
 
 export type Søkekriterier = {
     side: number;

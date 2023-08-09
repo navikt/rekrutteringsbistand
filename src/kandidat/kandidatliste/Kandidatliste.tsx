@@ -2,44 +2,42 @@ import { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { Search } from '@navikt/ds-react';
+import { api } from 'felles/api';
+import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatlistetype, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { Nettstatus } from 'felles/nettressurs';
+import useMaskerFødselsnumre from '../app/useMaskerFødselsnumre';
+import AppState from '../state/AppState';
+import css from './Kandidatliste.module.css';
+import { erInaktiv } from './domene/kandidatUtils';
 import {
     erEierAvKandidatlisten,
     erKobletTilStilling,
     kandidaterMåGodkjenneDelingAvCv,
 } from './domene/kandidatlisteUtils';
-import Kandidatlistetype, {
-    Kandidatlistestatus,
-    Stillingskategori,
-} from 'felles/domene/kandidatliste/Kandidatliste';
-import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
-import { erInaktiv } from './domene/kandidatUtils';
-import { Nettstatus } from 'felles/nettressurs';
-import { queryParamsTilFilter, filterTilQueryParams } from './filter/filter-utils';
-import AppState from '../state/AppState';
+import FeilVedSendingAvForespørsel from './feil-ved-sending-av-forespørsel/FeilVedSendingAvForespørsel';
 import Filter from './filter/Filter';
+import { filterTilQueryParams, queryParamsTilFilter } from './filter/filter-utils';
 import FormidlingAvUsynligKandidatrad from './formidling-av-usynlig-kandidatrad/FormidlingAvUsynligKandidatrad';
-import IngenKandidater from './ingen-kandidater/IngenKandidater';
-import KandidatlisteActionType from './reducer/KandidatlisteActionType';
-import Kandidatrad from './kandidatrad/Kandidatrad';
-import KnappeRad from './knappe-rad/KnappeRad';
-import ListeHeader from './liste-header/ListeHeader';
-import Meny from './meny/Meny';
-import SideHeader from './side-header/SideHeader';
-import SmsFeilAlertStripe from './smsFeilAlertStripe/SmsFeilAlertStripe';
-import TomListe from './tom-liste/TomListe';
 import useAntallFiltertreff from './hooks/useAntallFiltertreff';
 import useErAlleMarkerte from './hooks/useErAlleMarkerte';
 import useFiltrerteKandidater from './hooks/useFiltrerteKandidater';
 import useHentForespørslerOmDelingAvCv from './hooks/useHentForespørslerOmDelingAvCv';
 import useHentSendteMeldinger from './hooks/useHentSendteMeldinger';
-import useMaskerFødselsnumre from '../app/useMaskerFødselsnumre';
 import useSorterteKandidater from './hooks/useSorterteKandidater';
+import IngenKandidater from './ingen-kandidater/IngenKandidater';
+import Kandidatrad from './kandidatrad/Kandidatrad';
 import { Hendelse } from './kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
-import FeilVedSendingAvForespørsel from './feil-ved-sending-av-forespørsel/FeilVedSendingAvForespørsel';
-import { Search } from '@navikt/ds-react';
-import css from './Kandidatliste.module.css';
-import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { api } from 'felles/api';
+import KnappeRad from './knappe-rad/KnappeRad';
+import ListeHeader from './liste-header/ListeHeader';
+import Meny from './meny/Meny';
+import KandidatlisteActionType from './reducer/KandidatlisteActionType';
+import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
+import SideHeader from './side-header/SideHeader';
+import SmsFeilAlertStripe from './smsFeilAlertStripe/SmsFeilAlertStripe';
+import TomListe from './tom-liste/TomListe';
 
 type Props = {
     kandidatliste: Kandidatlistetype;

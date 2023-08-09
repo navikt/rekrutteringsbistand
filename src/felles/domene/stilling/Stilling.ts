@@ -17,7 +17,6 @@ export type Stillingbase = {
     expires: string | null;
     administration: Administration | null;
     location: Geografi | null;
-    properties: Properties & Record<string, any>;
     publishedByAdmin: string | null;
     businessName: string | null;
 };
@@ -35,6 +34,7 @@ export type Stilling = Stillingbase & {
     locationList: Geografi[];
     contactList?: Kontaktinfo[];
     mediaList?: object[];
+    properties: Properties & Record<string, any>;
 };
 
 export enum System {
@@ -130,8 +130,8 @@ export type Properties = Partial<{
     starttime: string;
     extent: Omfang;
     engagementtype: Ansettelsesform;
-    positioncount: number;
-    tags: string[];
+    positioncount: string;
+    tags: string;
     workday: string;
     workhours: string;
 

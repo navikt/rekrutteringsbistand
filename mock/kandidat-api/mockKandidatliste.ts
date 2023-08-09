@@ -1,8 +1,8 @@
 import Kandidatliste, {
     KanSletteKandidatliste,
     Kandidatlistestatus,
-    Stillingskategori,
 } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { mockMeg } from '../meg/mock';
 import { mockStilling } from '../stilling-api/mockStilling';
 import { mockKandidatIKandidatliste } from './mockKandidatIKandidatliste';
@@ -42,11 +42,11 @@ export const mockKandidatlisteMedStilling: Kandidatliste = {
     opprettetTidspunkt: new Date().toISOString(),
     status: Kandidatlistestatus.Åpen,
 
-    stillingId: mockStilling,
+    stillingId: mockStilling.uuid,
     stillingskategori: Stillingskategori.Stilling,
-    antallStillinger: 1,
-    organisasjonReferanse: '123',
-    organisasjonNavn: 'Tulleskolen',
+    antallStillinger: Number(mockStilling.properties.positioncount),
+    organisasjonReferanse: mockStilling.employer.orgnr,
+    organisasjonNavn: mockStilling.employer.publicName,
 
     formidlingerAvUsynligKandidat: [],
     kandidater: mockKandidatIKandidatliste,

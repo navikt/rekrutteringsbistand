@@ -28,7 +28,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
 
-    const antallStillinger = stilling.properties.positioncount;
+    const antallStillinger = Number(stilling.properties.positioncount);
     const antallStillingerSuffix = antallStillinger === 1 ? ` stilling` : ` stillinger`;
 
     const erInternStilling = stilling.privacy === Privacy.Intern;

@@ -1,5 +1,5 @@
 import { api } from 'felles/api';
-import { EsStilling } from 'felles/domene/stilling/EsStilling';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import Stilling, {
     AdminStatus,
     Rekrutteringsbistandstilling,
@@ -50,7 +50,7 @@ export const hentRekrutteringsbistandstilling = async (
 
 export const hentMineStillingerOpenSearch = async (
     query: HentMineStillingerQuery
-): Promise<Side<EsStilling>> => {
+): Promise<Side<EsRekrutteringsbistandstilling>> => {
     const sidestørrelse = 25;
 
     const openSearchQuery = lagOpenSearchQuery(query, sidestørrelse);
