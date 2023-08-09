@@ -1,74 +1,51 @@
 import { sendEvent } from 'felles/amplitude';
-import { api } from 'felles/api';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
 import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
-import { EsRespons, byggKandidatQuery } from './kandidatQuery';
 import EsKandidat from 'felles/domene/kandidat/EsKandidat';
+import useEsKandidat, { fodselsnrTerm } from 'felles/komponenter/banner/useEsKandidat';
 
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
     const brukKandidatkriterier = searchParams.get(QueryParam.Kandidatkriterier) !== null;
 
-    const [kandidat, setKandidat] = useState<EsKandidat>();
-    const [feilmelding, setFeilmelding] = useState<string | undefined>();
+    const { kandidat, feilmelding } = useEsKandidat(fodselsnrTerm(fnr));
 
     useEffect(() => {
-        const brukKriterier = (kandidat: EsKandidat) => {
-            const fylker = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
-            const kommuner = hentKommunerFraJobbønsker(kandidat.geografiJobbonsker);
-            const yrkesønsker = hentYrkerFraJobbønsker(kandidat.yrkeJobbonskerObj);
+        if (kandidat) {
+            const brukKriterier = (kandidat: EsKandidat) => {
+                const fylker = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
+                const kommuner = hentKommunerFraJobbønsker(kandidat.geografiJobbonsker);
+                const yrkesønsker = hentYrkerFraJobbønsker(kandidat.yrkeJobbonskerObj);
 
-            const søk = new URLSearchParams();
+                const søk = new URLSearchParams();
 
-            søk.set(QueryParam.Fylker, String(fylker));
-            søk.set(QueryParam.Kommuner, String(kommuner));
-            søk.set(QueryParam.Statuser, Status.Publisert);
-            søk.set(QueryParam.Publisert, Publisert.Intern);
-            søk.set(QueryParam.Stillingskategorier, Stillingskategori.Stilling);
-            søk.set(QueryParam.Tekst, String(yrkesønsker));
+                søk.set(QueryParam.Fylker, String(fylker));
+                søk.set(QueryParam.Kommuner, String(kommuner));
+                søk.set(QueryParam.Statuser, Status.Publisert);
+                søk.set(QueryParam.Publisert, Publisert.Intern);
+                søk.set(QueryParam.Stillingskategorier, Stillingskategori.Stilling);
+                søk.set(QueryParam.Tekst, String(yrkesønsker));
 
-            sendEvent('stillingssøk', 'kontekst_av_kandidat', {
-                antallFylker: fylker.length,
-                antallKommuner: kommuner.length,
-                antallYrkesønsker: yrkesønsker.length,
-            });
-
-            navigate({ search: søk.toString() }, { replace: true });
-        };
-
-        const hentKandidat = async (fnr: string) => {
-            try {
-                const respons = await fetch(api.kandidatsøk, {
-                    method: 'POST',
-                    body: JSON.stringify(byggKandidatQuery(fnr)),
-                    headers: { 'Content-Type': 'application/json' },
+                sendEvent('stillingssøk', 'kontekst_av_kandidat', {
+                    antallFylker: fylker.length,
+                    antallKommuner: kommuner.length,
+                    antallYrkesønsker: yrkesønsker.length,
                 });
 
-                const esRespons = (await respons.json()) as EsRespons;
-                const kandidat = esRespons.hits.hits.at(0)?._source;
+                navigate({ search: søk.toString() }, { replace: true });
+            };
 
-                if (kandidat) {
-                    setKandidat(kandidat);
-
-                    if (brukKandidatkriterier) {
-                        brukKriterier(kandidat);
-                    }
-                } else {
-                    setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);
-                }
-            } catch (e) {
-                setFeilmelding('Klarte ikke å hente kandidat');
+            if (brukKandidatkriterier) {
+                brukKriterier(kandidat);
             }
-        };
-
-        hentKandidat(fnr);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fnr]);
 

@@ -16,10 +16,10 @@ type EsQuery = {
     _source: Array<keyof EsKandidat>;
 };
 
-export const byggQueryKandidatnr = (kandidatnr: string): EsQuery => ({
+export const byggQueryTerm = (termkey: string, termValue): EsQuery => ({
     query: {
         term: {
-            kandidatnr,
+            [termkey]: termValue,
         },
     },
     size: 1,
@@ -39,39 +39,33 @@ export const byggQueryKandidatnr = (kandidatnr: string): EsQuery => ({
     ],
 });
 
-export const byggQueryFodselsnummer = (fodselsnummer: string): EsQuery => ({
-    query: {
-        term: {
-            fodselsnummer,
-        },
-    },
-    size: 1,
-    _source: [
-        'fornavn',
-        'etternavn',
-        'arenaKandidatnr',
-        'fodselsdato',
-        'adresselinje1',
-        'postnummer',
-        'poststed',
-        'epostadresse',
-        'telefon',
-        'veileder',
-        'geografiJobbonsker',
-        'yrkeJobbonskerObj',
-    ],
-});
+type Term = {
+    key: string;
+    value: string;
+};
 
-const useEsKandidat = (esQuery: EsQuery) => {
+export const kandidatnrTerm = (kandidatnr: string): Term => {
+    return { key: 'kandidatnr', value: kandidatnr };
+};
+
+export const fodselsnrTerm = (fodselsnummer: string): Term => {
+    return { key: 'fodselsnummer', value: fodselsnummer };
+};
+
+const useEsKandidat = (term: Term) => {
     const [kandidat, setKandidat] = useState<EsKandidat>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
+    const termKey = term.key;
+    const termValue = term.value;
+
     useEffect(() => {
-        const hentKandidat = async (esQuery: EsQuery) => {
+        console.log('esquery', termKey, termValue);
+        const hentKandidat = async (termKey: string, termValue: string) => {
             try {
                 const respons = await fetch(api.kandidatsøk, {
                     method: 'POST',
-                    body: JSON.stringify(esQuery),
+                    body: JSON.stringify(byggQueryTerm(termKey, termValue)),
                     headers: { 'Content-Type': 'application/json' },
                 });
 
@@ -89,8 +83,8 @@ const useEsKandidat = (esQuery: EsQuery) => {
             }
         };
 
-        hentKandidat(esQuery);
-    }, [esQuery]);
+        hentKandidat(termKey, termValue);
+    }, [termKey, termValue]);
 
     return {
         kandidat,
