@@ -53,10 +53,16 @@ const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilO
     );
 };
 
-const AntallPrioriterte = ({ antall }: { antall?: number }) => (
-    <BodyShort size="small" className={statistikkCss.talldetaljer}>
-        {antall !== undefined ? `${antall} er prioriterte` : <Skeleton width={100} />}
-    </BodyShort>
-);
+const AntallPrioriterte = ({ antall }: { antall?: number }) => {
+    if (antall !== undefined) {
+        return (
+            <BodyShort size="small" className={statistikkCss.talldetaljer}>
+                {antall} er prioriterte
+            </BodyShort>
+        );
+    } else {
+        return <Skeleton width={100} />;
+    }
+};
 
 export default Utfallsstatistikk;
