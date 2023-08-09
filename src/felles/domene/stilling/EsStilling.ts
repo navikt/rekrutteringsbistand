@@ -1,16 +1,13 @@
 import { isAfter, startOfDay } from 'date-fns';
 import {
     AdminStatus,
-    Ansettelsesform,
-    Arbeidstidsordning,
     Geografi,
     Kontaktinfo,
-    Omfang,
+    Properties,
     Status,
     Stillingbase,
     Stillingsinfo,
     StyrkCategory,
-    Søknadsfrist,
 } from './Stilling';
 
 export type EsRekrutteringsbistandstilling = {
@@ -29,24 +26,25 @@ export type EsStilling = Stillingbase & {
 };
 
 export type EsProperties = Partial<{
-    adtext: string;
-    author: string;
-    employer: string;
-    jobtitle: string;
-    location: string;
-    starttime: string;
-    extent: Omfang;
-    engagementtype: Ansettelsesform;
+    adtext: Properties['adtext'];
+    author: Properties['author'];
+    employer: Properties['employer'];
+    jobtitle: Properties['jobtitle'];
+    location: Properties['location'];
+    starttime: Properties['starttime'];
+    extent: Properties['extent'];
+    engagementtype: Properties['engagementtype'];
+    applicationurl: Properties['applicationurl'];
+    applicationemail: Properties['applicationemail'];
+    applicationdue: Properties['applicationdue'];
+    jobarrangement: Properties['jobarrangement'];
+    sector: Properties['sector'];
+    sourceurl: Properties['sourceurl'];
+
     positioncount: number;
     tags: string[];
     workday: string[];
     workhours: string[];
-    sourceurl: string;
-    applicationurl: string;
-    applicationemail: string;
-    applicationdue: Søknadsfrist | string;
-    jobarrangement: Arbeidstidsordning;
-    sector: string;
 }>;
 
 export type EsArbeidsgiver = {
