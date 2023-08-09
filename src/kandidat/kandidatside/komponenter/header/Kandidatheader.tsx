@@ -4,7 +4,7 @@ import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
 import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidatForBanner from 'felles/komponenter/banner/useKandidatForBanner';
+import useEsKandidat from 'felles/komponenter/banner/useEsKandidat';
 import { Brødsmule } from 'felles/komponenter/kandidatbanner/BrødsmuleKomponent';
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 
 const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
-    const { kandidat } = useKandidatForBanner(kandidatnr);
+    const { kandidat } = useEsKandidat(kandidatnr);
 
     const brødsmulestiMedNavn = kandidat
         ? [

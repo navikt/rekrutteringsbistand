@@ -39,7 +39,7 @@ const byggQuery = (kandidatnr: string): EsQuery => ({
     ],
 });
 
-const useKandidatForBanner = (kandidatnr: string) => {
+const useEsKandidat = (kandidatnr: string) => {
     const [kandidat, setKandidat] = useState<EsKandidat>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
@@ -74,4 +74,4 @@ const useKandidatForBanner = (kandidatnr: string) => {
     };
 };
 
-export default useKandidatForBanner;
+export default useEsKandidat;

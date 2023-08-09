@@ -8,13 +8,13 @@ import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import Stilling from '../../domene/Stilling';
-import useKandidat from './useKandidat';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import { Alert, CopyButton } from '@navikt/ds-react';
 import css from './KontekstAvKandidat.module.css';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import { api } from 'felles/api';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
+import useEsKandidat from 'felles/komponenter/banner/useEsKandidat';
 
 type Props = {
     fnr: string;
@@ -24,7 +24,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: Props) => {
-    const { kandidat, feilmelding } = useKandidat(fnr);
+    const { kandidat, feilmelding } = useEsKandidat(fnr);
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
