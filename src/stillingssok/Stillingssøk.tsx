@@ -1,22 +1,21 @@
-import { useParams } from 'react-router-dom';
 import { Heading, Loader } from '@navikt/ds-react';
+import { useParams } from 'react-router-dom';
 
-import { Publisert } from './filter/om-annonsen/HvorErAnnonsenPublisert';
-import { Status } from './filter/om-annonsen/Annonsestatus';
-import { Stillingskategori } from './filter/om-annonsen/VelgStillingskategori';
+import Banner from 'felles/komponenter/banner/Banner';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
+import css from './Stillingssøk.module.css';
 import Filter from './filter/Filter';
 import Filtermeny from './filter/filtermeny/Filtermeny';
+import { Status } from './filter/om-annonsen/Annonsestatus';
+import { Publisert } from './filter/om-annonsen/HvorErAnnonsenPublisert';
+import { Stillingskategori } from './filter/om-annonsen/VelgStillingskategori';
+import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import Paginering from './paginering/Paginering';
 import Sorter, { Sortering } from './sorter/Sorter';
 import Stillingsliste from './stillingsliste/Stillingsliste';
+import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
-import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
-import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
-import css from './Stillingssøk.module.css';
-import React from 'react';
-import Banner from 'felles/komponenter/banner/Banner';
-import { ReactComponent as FaaJobbPiktogram } from './fåjobb.svg';
 
 export type Søkekriterier = {
     side: number;
@@ -41,8 +40,11 @@ const Stillingssøk = () => {
 
     return (
         <div className={css.wrapper}>
-            {fnr && <KontekstAvKandidat fnr={fnr} />}
-            {!fnr && <Banner tittel="Stillinger" ikon={FaaJobbPiktogram} />}
+            {fnr ? (
+                <KontekstAvKandidat fnr={fnr} />
+            ) : (
+                <Banner tittel="Stillinger" ikon={<Piktogram />} />
+            )}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
                     <Filter fnr={fnr} />
