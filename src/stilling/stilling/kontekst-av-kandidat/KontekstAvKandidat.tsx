@@ -13,7 +13,7 @@ import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
-import useEsKandidat from 'felles/komponenter/banner/useEsKandidat';
+import { useEsKandidatmedFnr } from 'felles/komponenter/banner/useEsKandidat';
 import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 
 type Props = {
@@ -24,7 +24,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: Props) => {
-    const { kandidat, feilmelding } = useEsKandidat(fnr);
+    const { kandidat, feilmelding } = useEsKandidatmedFnr(fnr);
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 

@@ -75,4 +75,40 @@ const useEsKandidat = (kandidatnr: string) => {
     };
 };
 
+export const useEsKandidatmedFnr = (fodselsnummer: string) => {
+    const [kandidat, setKandidat] = useState<EsKandidat>();
+    const [feilmelding, setFeilmelding] = useState<string | undefined>();
+
+    useEffect(() => {
+        const hentKandidat = async (fodselsnummer: string) => {
+            try {
+                const respons = await fetch(api.kandidatsøk, {
+                    method: 'POST',
+                    body: JSON.stringify(byggQuery(fodselsnummer)),
+                    headers: { 'Content-Type': 'application/json' },
+                });
+
+                const esRespons = (await respons.json()) as EsRespons;
+                console.log('esRespons', esRespons);
+                const kandidat = esRespons.hits.hits.at(0)?._source;
+
+                if (kandidat) {
+                    setKandidat(kandidat);
+                } else {
+                    setFeilmelding('Fant ikke kandidat med fodselsnummer ' + fodselsnummer);
+                }
+            } catch (e) {
+                setFeilmelding('Klarte ikke å hente kandidat');
+            }
+        };
+
+        hentKandidat(fodselsnummer);
+    }, [fodselsnummer]);
+
+    return {
+        kandidat,
+        feilmelding,
+    };
+};
+
 export default useEsKandidat;
