@@ -410,6 +410,15 @@ export const mockKandidat: Kandidat = {
             beskrivelse: '',
             fraDato: null,
         },
+        {
+            kompetanseKode: null,
+            kompetanseKodeTekst:
+                'I stand til å legge til, subtrahere, multiplisere og dividere for kassering',
+            alternativTekst:
+                'I stand til å legge til, subtrahere, multiplisere og dividere for kassering',
+            beskrivelse: '',
+            fraDato: null,
+        },
     ],
     samletKompetanseObj: [],
     sertifikatObj: [

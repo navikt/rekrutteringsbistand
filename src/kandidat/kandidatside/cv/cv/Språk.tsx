@@ -10,27 +10,26 @@ type Props = {
 };
 
 const Språk = ({ cv }: Props) => {
-    return (
+    return cv.sprakferdigheter?.length > 0 ? (
         <Kort
             overskrift={'Språk'}
             ikon={<LanguageIcon />}
             innhold={
                 <div className={css.erfaringer}>
-                    {cv.sprakferdigheter?.length > 0 &&
-                        cv.sprakferdigheter.map((ferdighet) => {
-                            return (
-                                <Erfaring
-                                    key={`${ferdighet.sprak}${ferdighet.ferdighetMuntlig}${ferdighet.ferdighetSkriftlig}`}
-                                    overskrift={ferdighet.sprak}
-                                    beskrivelse={<Språkferdighet ferdighet={ferdighet} />}
-                                    tidsperiode={null}
-                                />
-                            );
-                        })}
+                    {cv.sprakferdigheter.map((ferdighet) => {
+                        return (
+                            <Erfaring
+                                key={`${ferdighet.sprak}${ferdighet.ferdighetMuntlig}${ferdighet.ferdighetSkriftlig}`}
+                                overskrift={ferdighet.sprak}
+                                beskrivelse={<Språkferdighet ferdighet={ferdighet} />}
+                                tidsperiode={null}
+                            />
+                        );
+                    })}
                 </div>
             }
         />
-    );
+    ) : null;
 };
 
 export default Språk;

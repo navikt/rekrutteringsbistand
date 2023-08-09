@@ -9,24 +9,24 @@ type Props = {
 };
 
 const Sammendrag = ({ cv }: Props) => {
-    return (
+    return cv.beskrivelse?.length > 0 ? (
         <Kort
             overskrift={'Sammendrag'}
             ikon={<InformationIcon />}
             innhold={
                 <div className={css.erfaringer}>
-                    {cv.beskrivelse?.length > 0 && (
+                    {
                         <Erfaring
                             key={`${cv.beskrivelse}`}
                             overskrift={null}
                             beskrivelse={cv.beskrivelse}
                             tidsperiode={null}
                         />
-                    )}
+                    }
                 </div>
             }
         />
-    );
+    ) : null;
 };
 
 export default Sammendrag;

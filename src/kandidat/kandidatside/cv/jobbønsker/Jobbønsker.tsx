@@ -22,41 +22,69 @@ const Jobbønsker = ({ cv }: Props) => {
             innhold={
                 <div className={css.innhold}>
                     <BodyShort size="medium" className={css.jobbønsker}>
-                        <MangeTekstelementerSeparertMedKomma
-                            elementer={cv.yrkeJobbonsker.map((j) => j.styrkBeskrivelse)}
-                        />
+                        {cv.yrkeJobbonsker?.length > 0 ? (
+                            <MangeTekstelementerSeparertMedKomma
+                                elementer={cv.yrkeJobbonsker.map((j) => j.styrkBeskrivelse)}
+                            />
+                        ) : (
+                            '-'
+                        )}
                     </BodyShort>
                     <BodyShort size="small" className={css.kompetanse}>
-                        <MangeTekstelementerSeparertMedKomma
-                            elementer={cv.kompetanse.map((u) => u.kompetanseKodeTekst)}
-                        />
+                        {cv.kompetanse?.length > 0 ? (
+                            <MangeTekstelementerSeparertMedKomma
+                                elementer={cv.kompetanse.map((u) => u.kompetanseKodeTekst)}
+                            />
+                        ) : (
+                            '-'
+                        )}
                     </BodyShort>
                     <div className={css.bunn}>
                         <BodyShort size="small" className={css.uthevetTekstOgIkon}>
                             <PinIcon />
-                            <MangeTekstelementerSeparertMedMellomrom
-                                elementer={cv.geografiJobbonsker.map((u) => u.geografiKodeTekst)}
-                            />
+                            {cv.geografiJobbonsker?.length > 0 ? (
+                                <MangeTekstelementerSeparertMedMellomrom
+                                    elementer={cv.geografiJobbonsker.map(
+                                        (u) => u.geografiKodeTekst
+                                    )}
+                                />
+                            ) : (
+                                '-'
+                            )}
                         </BodyShort>
                         <BodyShort size="small" className={css.uthevetTekstOgIkon}>
                             <ClockIcon />
-                            <MangeTekstelementerSeparertMedOg
-                                elementer={cv.omfangJobbprofil.map((u) => u.heltidDeltidKodeTekst)}
-                            />
+                            {cv.omfangJobbprofil?.length > 0 ? (
+                                <MangeTekstelementerSeparertMedOg
+                                    elementer={cv.omfangJobbprofil.map(
+                                        (u) => u.heltidDeltidKodeTekst
+                                    )}
+                                />
+                            ) : (
+                                '-'
+                            )}
                         </BodyShort>
                         <BodyShort size="small" className={css.uthevetTekstOgIkon}>
                             <TimerStartIcon />
-                            <MangeTekstelementerSeparertMedOg
-                                elementer={cv.arbeidstidJobbprofil.map(
-                                    (u) => u.arbeidstidKodeTekst
-                                )}
-                            />
+                            {cv.arbeidstidJobbprofil?.length > 0 ? (
+                                <MangeTekstelementerSeparertMedOg
+                                    elementer={cv.arbeidstidJobbprofil.map(
+                                        (u) => u.arbeidstidKodeTekst
+                                    )}
+                                />
+                            ) : (
+                                '-'
+                            )}
                         </BodyShort>
                         <BodyShort size="small" className={css.uthevetTekstOgIkon}>
                             <HourglassIcon />
-                            <MangeTekstelementerSeparertMedKomma
-                                elementer={[oppstartskoder[cv.oppstartKode]?.label]}
-                            />
+                            {cv.oppstartKode ? (
+                                <MangeTekstelementerSeparertMedKomma
+                                    elementer={[oppstartskoder[cv.oppstartKode]?.label]}
+                                />
+                            ) : (
+                                '-'
+                            )}
                         </BodyShort>
                     </div>
                 </div>
@@ -65,7 +93,7 @@ const Jobbønsker = ({ cv }: Props) => {
     );
 };
 
-const MangeTekstelementerSeparertMedKomma = ({
+export const MangeTekstelementerSeparertMedKomma = ({
     elementer,
 }: {
     elementer: Array<string | null>;
