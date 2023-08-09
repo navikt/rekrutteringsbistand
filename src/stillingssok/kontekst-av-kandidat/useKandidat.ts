@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { api } from 'felles/api';
-import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
-import { EsRespons, byggKandidatQuery } from './kandidatQuery';
-import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
-import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
-import { QueryParam } from '../utils/urlUtils';
 import { sendEvent } from 'felles/amplitude';
-import { Status } from '../filter/om-annonsen/Annonsestatus';
-import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
+import { api } from 'felles/api';
+import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { useEffect, useState } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
+import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
+import { Status } from '../filter/om-annonsen/Annonsestatus';
+import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
+import { QueryParam } from '../utils/urlUtils';
+import { EsRespons, byggKandidatQuery } from './kandidatQuery';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();

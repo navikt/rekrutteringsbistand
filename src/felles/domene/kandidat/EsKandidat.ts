@@ -1,4 +1,4 @@
-import Cv, { Språkferdighet } from './Cv';
+import Cv, { Språkferdighetsnivå } from './Cv';
 import Jobbprofil from './Jobbprofil';
 import Oppfølgingsinformasjon from './Oppfølgingsinformasjon';
 
@@ -94,6 +94,45 @@ export type EsKandidat = {
  * returneres til frontend.
  */
 export type KandidatCv = {
+    // Felter kopiert 1:1
+    aktorId: Id['aktorId'];
+    beskrivelse: Cv['beskrivelse'];
+    disponererBil: UtgåtteFelter['disponererBil'];
+    etternavn: Personalia['etternavn'];
+    fagdokumentasjon: Cv['fagdokumentasjon'];
+    fodselsdato: Personalia['fodselsdato'];
+    fodselsnummer: Id['fodselsnummer'];
+    forerkort: Cv['forerkort'];
+    fornavn: Personalia['fornavn'];
+    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
+    godkjenninger: Cv['godkjenninger'];
+    mobiltelefon: string;
+    oppstartKode: Jobbprofil['oppstartKode'];
+    telefon: Personalia['telefon'];
+    yrkeserfaring: Cv['yrkeserfaring'];
+
+    // Felter med andre navn
+    annenErfaring: Cv['annenerfaringObj'];
+    ansettelsesformJobbprofil: Jobbprofil['ansettelsesformJobbonskerObj'];
+    arbeidsdagerJobbprofil: Jobbprofil['arbeidsdagerJobbonskerObj'];
+    arbeidstidJobbprofil: Jobbprofil['arbeidstidJobbonskerObj'];
+    arbeidstidsordningJobbprofil: Jobbprofil['arbeidstidsordningJobbonskerObj'];
+    epost: Personalia['epostadresse'];
+    kandidatnummer: Id['arenaKandidatnr'];
+    kompetanse: Cv['kompetanseObj'];
+    kurs: Cv['kursObj'];
+    omfangJobbprofil: Jobbprofil['omfangJobbonskerObj'];
+    samtykkeDato: UbrukteFelter['samtykkeDato'];
+    samtykkeStatus: UbrukteFelter['samtykkeStatus'];
+    sertifikater: Cv['sertifikatObj'];
+    sistEndret: UbrukteFelter['tidsstempel'];
+    statsborgerskap: UtgåtteFelter['statsborgerskap'];
+    utdanning: Cv['utdanning'];
+    veilederIdent: string;
+    verv: Cv['vervObj'];
+    yrkeJobbonsker: Jobbprofil['yrkeJobbonskerObj'];
+
+    // Felter som er mappet om
     adresse: {
         landkode: string;
         postnr: string;
@@ -103,44 +142,22 @@ export type KandidatCv = {
         adrlinje2: string;
         adrlinje3: string;
     };
-    beskrivelse: Cv['beskrivelse'];
-    sprak: Cv['sprak'];
-    sprakferdigheter: Språkferdighet[];
-    yrkeserfaring: Cv['yrkeserfaring'];
-    utdanning: Cv['utdanning'];
-    forerkort: Cv['forerkort'];
-    fagdokumentasjon: Cv['fagdokumentasjon'];
-    godkjenninger: Cv['godkjenninger'];
-    aktorId: Id['aktorId'];
-    annenErfaring: Cv['annenerfaringObj'];
-    ansettelsesformJobbprofil: Jobbprofil['ansettelsesformJobbonskerObj'];
-    arbeidsdagerJobbprofil: Jobbprofil['arbeidsdagerJobbonskerObj'];
-    arbeidstidJobbprofil: Jobbprofil['arbeidstidJobbonskerObj'];
-    arbeidstidsordningJobbprofil: Jobbprofil['arbeidstidsordningJobbonskerObj'];
-    disponererBil: UtgåtteFelter['disponererBil'];
-    epost: Personalia['epostadresse'];
-    etternavn: Personalia['etternavn'];
-    fodselsdato: Personalia['fodselsdato'];
-    fodselsnummer: Id['fodselsnummer'];
-    fornavn: Personalia['fornavn'];
-    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
-    kandidatnummer: Id['arenaKandidatnr'];
-    kompetanse: Cv['kompetanseObj'];
-    kurs: Cv['kursObj'];
-    mobiltelefon: UtgåtteFelter['mobiltelefon'];
-    omfangJobbprofil: Jobbprofil['omfangJobbonskerObj'];
-    oppstartKode: Jobbprofil['oppstartKode'];
-    samtykkeDato: UbrukteFelter['samtykkeDato'];
-    samtykkeStatus: UbrukteFelter['samtykkeStatus'];
-    sertifikater: Cv['sertifikatObj'];
-    statsborgerskap: UtgåtteFelter['statsborgerskap'];
-    telefon: Personalia['telefon'];
-    sistEndret: UbrukteFelter['tidsstempel'];
+    sprak: Array<{
+        fraDato: null;
+        kompetanseKode: null;
+        kompetanseKodeTekst: string;
+        alternativTekst: string;
+        beskrivelse: string;
+    }>;
+    sprakferdigheter: Array<{
+        sprak: string;
+        ferdighetSkriftlig: Språkferdighetsnivå;
+        ferdighetMuntlig: Språkferdighetsnivå;
+    }>;
+
+    // Felter som er lagt til
     veilederEpost: string;
-    veilederIdent: string;
     veilederNavn: string;
-    verv: Cv['vervObj'];
-    yrkeJobbonsker: Jobbprofil['yrkeJobbonskerObj'];
 };
 
 export default Kandidat;

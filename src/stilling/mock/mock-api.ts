@@ -1,21 +1,21 @@
 import fetchMock, { MockRequest, MockResponse, MockResponseFunction } from 'fetch-mock';
 
-import { Rekrutteringsbistandstilling } from '../domene/Stilling';
 import { api } from 'felles/api';
 import fnrsok from './data/fnrsok';
 import kandidatliste from './data/kandidatliste';
 
-import rekrutteringsbistandStilling from './data/post-ads.json';
-import reportee from './data/reportee.json';
-import eksternStilling from './data/ekstern-stilling.json';
-import eksternStillingMedKandidatliste from './data/ekstern-stilling-med-kandidatliste.json';
-import internStilling from './data/intern-stilling.json';
+import { Rekrutteringsbistandstilling } from 'felles/domene/stilling/Stilling';
 import annensInterneStilling from './data/annens-interne-stilling.json';
+import categoriesWithAltnames from './data/categories-with-altnames.json';
 import counties from './data/counties.json';
 import countries from './data/countries.json';
+import eksternStillingMedKandidatliste from './data/ekstern-stilling-med-kandidatliste.json';
+import eksternStilling from './data/ekstern-stilling.json';
+import internStilling from './data/intern-stilling.json';
 import municipals from './data/municipals.json';
-import categoriesWithAltnames from './data/categories-with-altnames.json';
+import rekrutteringsbistandStilling from './data/post-ads.json';
 import postdata from './data/postdata.json';
+import reportee from './data/reportee.json';
 import search from './data/search.json';
 
 const reporteeUrl = `${api.stilling}/rekrutteringsbistand/api/v1/reportee`;

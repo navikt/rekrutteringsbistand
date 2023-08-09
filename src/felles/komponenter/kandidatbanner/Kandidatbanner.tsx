@@ -8,8 +8,8 @@ import {
     PinIcon,
 } from '@navikt/aksel-icons';
 import { ReactComponent as Piktogram } from './minekandidater.svg';
-import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import css from './Kandidatbanner.module.css';
 import BrødsmuleKomponent, { Brødsmule } from './BrødsmuleKomponent';
 

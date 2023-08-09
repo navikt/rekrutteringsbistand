@@ -1,8 +1,8 @@
-import * as cvData from './cv-data.mock';
-import { Veileder } from './veileder.mock';
-import { mockStrings } from './mock-strings';
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
 import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
+import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import * as cvData from './cv-data.mock';
+import { mockStrings } from './mock-strings';
+import { Veileder } from './veileder.mock';
 
 export const antall = 20;
 
@@ -48,7 +48,7 @@ const baseCv = (veileder: Veileder): KandidatCv => ({
     sertifikater: cvData.sertifikater,
     forerkort: cvData.forerkort,
     kompetanse: cvData.kompetanse,
-    sprak: cvData.sprak,
+    sprak: cvData.sprak as any,
     sprakferdigheter: cvData.sprakferdigheter,
     kurs: cvData.kurs,
     verv: [],

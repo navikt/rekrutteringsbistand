@@ -6,25 +6,45 @@
     margin-bottom: var(--a-spacing-16);
 }
 
+.lenkepanel {
+    border-radius: var(--a-border-radius-xlarge);
+    box-shadow: var(--a-shadow-xsmall);
+    background: var(--a-gray-50);
+}
+
+.lenkepanel:hover {
+    background: var(--a-gray-100);
+}
+
 .lenkeinnhold {
     display: flex;
     align-items: center;
+    font-size: 24px;
+    gap: 1.5rem;
+    padding: 1.5rem;
 }
 
-.lenkeikon {
-    margin-right: 2rem;
-    border-radius: 50%;
-    overflow: hidden;
+.lenkeinnhold span {
+    text-decoration: underline;
+    text-decoration-thickness: 0.05rem;
+    text-underline-offset: 0.1rem;
+    font-weight: 600;
 }
 
-.lenkeikon img {
-    width: 6.25rem;
-    vertical-align: middle;
+.lenkepanel:hover .lenkeinnhold span {
+    text-decoration: none;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 768px) {
     .hurtiglenker {
+        display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
+    }
+}
+
+@media (min-width: 1280px) {
+    .hurtiglenker {
+        grid-template-columns: repeat(4, 1fr);
     }
 }

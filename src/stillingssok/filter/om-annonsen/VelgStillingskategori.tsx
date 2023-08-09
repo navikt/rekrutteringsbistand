@@ -1,13 +1,14 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { ChangeEvent, useEffect, useState } from 'react';
 import useNavigering from '../../useNavigering';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
+import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils/urlUtils';
 
-export enum Stillingskategori {
-    Stilling = 'STILLING',
-    Jobbmesse = 'JOBBMESSE',
-    Formidling = 'FORMIDLING',
-}
+const kategorier = [
+    Stillingskategori.Stilling,
+    Stillingskategori.Jobbmesse,
+    Stillingskategori.Formidling,
+];
 
 const VelgStillingskategori = () => {
     const { searchParams, navigate } = useNavigering();
@@ -40,7 +41,7 @@ const VelgStillingskategori = () => {
 
     return (
         <CheckboxGroup legend="Kategori" value={Array.from(valgteKategorier)}>
-            {Object.values(Stillingskategori).map((kategori) => (
+            {kategorier.map((kategori) => (
                 <Checkbox key={kategori} value={kategori} onChange={onToggle}>
                     {stillingskategoriTilVisningsnavn(kategori)}
                 </Checkbox>

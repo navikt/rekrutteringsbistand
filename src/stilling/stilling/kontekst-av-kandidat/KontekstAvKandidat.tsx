@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
-import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
-import AnbefalKandidatModal from './AnbefalKandidatModal';
-import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import Kandidatlistehandlinger from './Kandidatlistehandlinger';
-import Stilling from '../../domene/Stilling';
-import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import { Alert, CopyButton } from '@navikt/ds-react';
-import css from './KontekstAvKandidat.module.css';
-import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import { api } from 'felles/api';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Stilling from 'felles/domene/stilling/Stilling';
+import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
+import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
+import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
+import AnbefalKandidatModal from './AnbefalKandidatModal';
+import Kandidatlistehandlinger from './Kandidatlistehandlinger';
+import css from './KontekstAvKandidat.module.css';
 import useEsKandidat from 'felles/komponenter/banner/useEsKandidat';
+import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 
 type Props = {
     fnr: string;

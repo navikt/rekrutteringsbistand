@@ -27,7 +27,11 @@ export enum Språkferdighetsnivå {
 }
 
 export type Språkferdighet = {
-    sprak: string;
+    fraDato: null;
+    sprakKode: null;
+    sprakKodeTekst: string;
+    alternativTekst: string;
+    beskrivelse: string;
     ferdighetSkriftlig: Språkferdighetsnivå;
     ferdighetMuntlig: Språkferdighetsnivå;
 };
@@ -95,7 +99,7 @@ export type Godkjenning = {
 
 type Cv = {
     beskrivelse: string;
-    sprak: Kompetanse[];
+    sprak: Språkferdighet[];
     yrkeserfaring: Yrkeserfaring[];
     utdanning: Utdanning[];
     forerkort: Sertifikat[];

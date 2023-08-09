@@ -1,28 +1,28 @@
+import { NewspaperIcon } from '@navikt/aksel-icons';
+import { Accordion, Alert, Button, CopyButton } from '@navikt/ds-react';
+import classNames from 'classnames';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Accordion, Alert, Button, CopyButton } from '@navikt/ds-react';
-import { NewspaperIcon } from '@navikt/aksel-icons';
-import classNames from 'classnames';
 
+import Stilling, { System } from 'felles/domene/stilling/Stilling';
+import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import { RESET_VALIDATION_ERROR } from '../adValidationReducer';
-import { State } from '../../redux/store';
+import EksternStillingAdvarsel from '../forhåndsvisning/header/EksternStillingAdvarsel';
+import Stillingsheader from '../header/Stillingsheader';
+import Arbeidssted from './arbeidssted/Arbeidssted';
+import EndreArbeidsgiver from './endre-arbeidsgiver/EndreArbeidsgiver';
+import EditHeader from './header/EditHeader';
 import HvordanSendeSøknad from './hvordan-sende-søknad/HvordanSendeSøknad';
 import Kontaktinformasjon from './kontaktinformasjon/Kontaktinformasjon';
-import EditHeader from './header/EditHeader';
-import EksternStillingAdvarsel from '../forhåndsvisning/header/EksternStillingAdvarsel';
-import EndreArbeidsgiver from './endre-arbeidsgiver/EndreArbeidsgiver';
 import OmStillingen from './om-stillingen/OmStillingen';
-import Arbeidssted from './arbeidssted/Arbeidssted';
 import PraktiskeOpplysninger from './praktiske-opplysninger/PraktiskeOpplysninger';
 import RegistrerInkluderingsmuligheter from './registrer-inkluderingsmuligheter/DirektemeldtStilling';
-import Stilling, { System } from '../../domene/Stilling';
-import Stillingsheader from '../header/Stillingsheader';
 import Seksjon from './seksjon/Seksjon';
 
-import css from './Edit.module.css';
-import { Nettressurs } from 'felles/nettressurs';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettressurs } from 'felles/nettressurs';
+import css from './Edit.module.css';
 
 type Props = {
     onPreviewAdClick: () => void;

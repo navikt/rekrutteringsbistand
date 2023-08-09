@@ -1,25 +1,25 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    PUBLISH_AD,
-    SAVE_AD,
-    PUBLISH_AD_CHANGES,
-    SHOW_STOP_AD_MODAL,
-    SHOW_DELETE_AD_MODAL,
-    PREVIEW_EDIT_AD,
-    FETCH_AD,
-} from '../../adReducer';
-import PublishErrorModal from './PublishErrorModal';
-import css from './AdStatusEdit.module.css';
-import StopAdModal from './StopAdModal';
-import AdPublishedModal from './AdPublishedModal';
-import SaveAdErrorModal from './SaveAdErrorModal';
-import { Link } from 'react-router-dom';
-import DeleteAdModal from './DeleteAdModal';
-import Sletteknapp from './Sletteknapp';
 import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Status, System } from '../../../domene/Stilling';
+import { Status, System } from 'felles/domene/stilling/Stilling';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {
+    FETCH_AD,
+    PREVIEW_EDIT_AD,
+    PUBLISH_AD,
+    PUBLISH_AD_CHANGES,
+    SAVE_AD,
+    SHOW_DELETE_AD_MODAL,
+    SHOW_STOP_AD_MODAL,
+} from '../../adReducer';
+import AdPublishedModal from './AdPublishedModal';
+import css from './AdStatusEdit.module.css';
+import DeleteAdModal from './DeleteAdModal';
+import PublishErrorModal from './PublishErrorModal';
+import SaveAdErrorModal from './SaveAdErrorModal';
+import Sletteknapp from './Sletteknapp';
+import StopAdModal from './StopAdModal';
 
 enum ButtonEnum {
     PUBLISH = 'PUBLISH',

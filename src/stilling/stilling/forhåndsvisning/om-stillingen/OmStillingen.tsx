@@ -1,7 +1,7 @@
 import { Heading, Panel } from '@navikt/ds-react';
-import { formatISOString, isValidISOString } from '../../../utils/datoUtils';
+import { Geografi, Properties } from 'felles/domene/stilling/Stilling';
 import { getWorkLocationsAsString } from '../../../common/getWorkLocation';
-import { Geografi, Properties } from '../../../domene/Stilling';
+import { formatISOString, isValidISOString } from '../../../utils/datoUtils';
 import css from '../Forhåndsvisning.module.css';
 
 type Props = {

@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Accordion, Checkbox, CheckboxGroup, Radio, RadioGroup } from '@navikt/ds-react';
-import { MineStillingerActionType } from '../MineStillingerAction';
+import { Status } from 'felles/domene/stilling/Stilling';
+import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../redux/store';
-import { Status } from '../../domene/Stilling';
+import { MineStillingerActionType } from '../MineStillingerAction';
 import css from './Filter.module.css';
 
 const Synlighet = {

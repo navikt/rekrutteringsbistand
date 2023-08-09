@@ -1,8 +1,8 @@
-import { formatISOString, isValidISOString } from '../../../utils/datoUtils';
-import { isValidUrl } from '../../../common/urlUtils';
 import { Heading, Panel } from '@navikt/ds-react';
+import { Kilde, Properties } from 'felles/domene/stilling/Stilling';
+import { isValidUrl } from '../../../common/urlUtils';
+import { formatISOString, isValidISOString } from '../../../utils/datoUtils';
 import css from '../Forhåndsvisning.module.css';
-import { Kilde, Properties } from '../../../domene/Stilling';
 
 type Props = {
     kilde: Kilde;

@@ -1,30 +1,30 @@
-import { compose, combineReducers, applyMiddleware, legacy_createStore } from 'redux';
+import { Stillingsinfo } from 'felles/domene/stilling/Stilling';
+import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import adDataReducer, { adDataSaga, AdDataState } from '../stilling/adDataReducer';
-import adReducer, { adSaga, AdState } from '../stilling/adReducer';
+import varslingReducer, { VarslingState, varslingSaga } from '../common/varsling/varslingReducer';
+import mineStillingerReducer, {
+    MineStillingerState,
+} from '../mine-stillinger/mineStillingerReducer';
+import { mineStillingerSaga } from '../mine-stillinger/mineStillingerSagas';
+import reporteeReducer, { ReporteeState, reporteeSaga } from '../reportee/reporteeReducer';
+import adDataReducer, { AdDataState, adDataSaga } from '../stilling/adDataReducer';
+import adReducer, { AdState, adSaga } from '../stilling/adReducer';
 import adValidationReducer, {
     AdValidationState,
     validationSaga,
 } from '../stilling/adValidationReducer';
-import styrkReducer, { styrkSaga } from '../stilling/edit/om-stillingen/styrk/styrkReducer';
 import locationAreaReducer, {
     locationAreaSaga,
 } from '../stilling/edit/arbeidssted/locationAreaReducer';
 import locationCodeReducer, {
     locationCodeSaga,
 } from '../stilling/edit/arbeidssted/locationCodeReducer';
-import varslingReducer, { varslingSaga, VarslingState } from '../common/varsling/varslingReducer';
-import mineStillingerReducer, {
-    MineStillingerState,
-} from '../mine-stillinger/mineStillingerReducer';
-import reporteeReducer, { reporteeSaga, ReporteeState } from '../reportee/reporteeReducer';
+import styrkReducer, { styrkSaga } from '../stilling/edit/om-stillingen/styrk/styrkReducer';
+import stillingsinfoDataReducer from '../stillingsinfo/stillingsinfoDataReducer';
 import stillingsinfoReducer, {
     StillingsinfoState,
     stillingsinfoSaga,
 } from '../stillingsinfo/stillingsinfoReducer';
-import { Stillingsinfo } from '../domene/Stilling';
-import { mineStillingerSaga } from '../mine-stillinger/mineStillingerSagas';
-import stillingsinfoDataReducer from '../stillingsinfo/stillingsinfoDataReducer';
 
 export type State = {
     ad: AdState;

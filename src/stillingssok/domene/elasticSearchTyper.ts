@@ -1,5 +1,5 @@
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import { Søkefelt } from '../søkefelter/Søkefelter';
-import { Rekrutteringsbistandstilling } from './Stilling';
 
 export type Query = {
     size?: number;
@@ -67,6 +67,6 @@ export type Hit = {
     _type: string;
     _id: string;
     _score: number | null;
-    _source: Rekrutteringsbistandstilling;
+    _source: EsRekrutteringsbistandstilling;
     _explanation?: any;
 };

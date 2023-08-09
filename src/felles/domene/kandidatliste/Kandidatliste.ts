@@ -1,3 +1,4 @@
+import { Stillingskategori } from '../stilling/Stilling';
 import { FormidlingAvUsynligKandidat, KandidatIKandidatliste } from './KandidatIKandidatliste';
 
 type Kandidatliste = {
@@ -36,13 +37,6 @@ export type KandidatlisteSammendrag = Omit<
 export enum Kandidatlistestatus {
     Åpen = 'ÅPEN',
     Lukket = 'LUKKET',
-}
-
-export enum Stillingskategori {
-    Stilling = 'STILLING',
-    Formidling = 'FORMIDLING',
-    Arbeidstrening = 'ARBEIDSTRENING',
-    Jobbmesse = 'JOBBMESSE',
 }
 
 export type OpprettetAv = {
