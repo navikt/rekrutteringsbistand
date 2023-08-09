@@ -16,14 +16,16 @@ type Props = {
 
 const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
-    const { kandidat, feilmelding } = useKandidatForBanner(kandidatnr);
+    const { kandidat } = useKandidatForBanner(kandidatnr);
 
-    const brødsmulestiMedNavn = kandidat && [
-        ...brødsmulesti,
-        {
-            tekst: formaterNavn(kandidat),
-        },
-    ];
+    const brødsmulestiMedNavn = kandidat
+        ? [
+              ...brødsmulesti,
+              {
+                  tekst: formaterNavn(kandidat),
+              },
+          ]
+        : brødsmulesti;
     return (
         <>
             <Kandidatbanner
@@ -36,7 +38,6 @@ const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props
                         </div>
                     )
                 }
-                feil={feilmelding !== undefined}
             ></Kandidatbanner>
         </>
     );

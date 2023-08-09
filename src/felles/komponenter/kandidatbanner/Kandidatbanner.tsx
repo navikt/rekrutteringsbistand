@@ -18,10 +18,9 @@ type Props = {
     brødsmulesti?: Brødsmule[];
     toppHoyre?: ReactNode;
     bunnHoyre?: ReactNode;
-    feil?: Boolean;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre, feil }: Props) => {
+const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.piktogramOgInnhold}>
@@ -33,19 +32,13 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre, feil }:
                             <BrødsmuleKomponent brødsmulesti={brødsmulesti} />
                             <div>{toppHoyre}</div>
                         </div>
-                        {feil ? (
+                        {!kandidat ? (
                             <BodyLong>Informasjonen om kandidaten kan ikke vises</BodyLong>
                         ) : (
                             <>
-                                {kandidat ? (
-                                    <Heading size="large" level="3">
-                                        {formaterNavn(kandidat)}
-                                    </Heading>
-                                ) : (
-                                    <Skeleton>
-                                        <Heading size="large">Placeholder</Heading>
-                                    </Skeleton>
-                                )}
+                                <Heading size="large" level="3">
+                                    {formaterNavn(kandidat)}
+                                </Heading>
 
                                 <div className={css.bunnlinje}>
                                     <div className={css.personalia}>
