@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Erfaringer = ({ cv }: Props) => {
-    return (
+    return cv.yrkeserfaring?.length > 0 || cv.annenErfaring?.length > 0 ? (
         <Kort
             overskrift={'Erfaring'}
             ikon={<Buldings2Icon />}
@@ -49,9 +49,11 @@ const Erfaringer = ({ cv }: Props) => {
                                 />
                             );
                         })}
-                    <div className={css.delerPadding}>
-                        <div className={css.deler} />
-                    </div>
+                    {cv.yrkeserfaring?.length > 0 && cv.annenErfaring?.length > 0 ? (
+                        <div className={css.delerPadding}>
+                            <div className={css.deler} />
+                        </div>
+                    ) : null}
                     {cv.annenErfaring?.length > 0 &&
                         sortByDato(cv.annenErfaring).map((erfaring) => {
                             let beskrivelse = '';
@@ -79,7 +81,7 @@ const Erfaringer = ({ cv }: Props) => {
                 </div>
             }
         />
-    );
+    ) : null;
 };
 
 export default Erfaringer;

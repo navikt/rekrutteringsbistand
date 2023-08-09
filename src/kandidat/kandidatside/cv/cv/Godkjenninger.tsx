@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Godkjenninger = ({ cv }: Props) => {
-    return (
+    return cv.godkjenninger?.length > 0 || cv.sertifikater?.length > 0 ? (
         <Kort
             overskrift={'Godkjenninger'}
             ikon={<SealCheckmarkIcon />}
@@ -30,9 +30,11 @@ const Godkjenninger = ({ cv }: Props) => {
                                 />
                             );
                         })}
-                    <div className={css.delerPadding}>
-                        <div className={css.deler} />
-                    </div>
+                    {cv.godkjenninger?.length > 0 && cv.sertifikater?.length > 0 ? (
+                        <div className={css.delerPadding}>
+                            <div className={css.deler} />
+                        </div>
+                    ) : null}
                     {cv.sertifikater?.length > 0 &&
                         sortByDato(cv.sertifikater).map((sertifikat) => {
                             return (
@@ -51,7 +53,7 @@ const Godkjenninger = ({ cv }: Props) => {
                 </div>
             }
         />
-    );
+    ) : null;
 };
 
 const visTidsperiodeGodkjenning = (godkjenning: Godkjenning) => {
