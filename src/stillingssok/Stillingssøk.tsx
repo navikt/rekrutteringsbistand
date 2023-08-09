@@ -43,7 +43,7 @@ const Stillingssøk = () => {
             {fnr ? (
                 <KontekstAvKandidat fnr={fnr} />
             ) : (
-                <Banner tittel="Stillinger" ikon={<Piktogram />} />
+                <Banner tittel="Søk etter stilling" ikon={<Piktogram />} />
             )}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
