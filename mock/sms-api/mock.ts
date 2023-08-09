@@ -14,6 +14,18 @@ export const smsApiMock = [
             return res(ctx.json(sms));
         }
     }),
+
+    rest.get(`${api.sms}/fnr/:fnr`, (req, res, ctx) => {
+        const sms = mockSms.filter((sms) => sms.fnr === req.params.fnr);
+
+        if (!sms) {
+            return res(ctx.status(404));
+        } else {
+            return res(ctx.json(sms));
+        }
+    }),
+
+    rest.post(`${api.sms}`, (_, res, ctx) => res(ctx.status(201))),
 ];
 
 const mockSms: Sms[] = [
