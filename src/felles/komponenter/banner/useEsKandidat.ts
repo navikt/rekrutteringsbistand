@@ -84,7 +84,7 @@ export const useEsKandidatmedFnr = (fodselsnummer: string) => {
             try {
                 const respons = await fetch(api.kandidatsøk, {
                     method: 'POST',
-                    body: JSON.stringify(byggQuery(fodselsnummer)),
+                    body: JSON.stringify(byggQueryFodselsnummer(fodselsnummer)),
                     headers: { 'Content-Type': 'application/json' },
                 });
 
@@ -110,5 +110,28 @@ export const useEsKandidatmedFnr = (fodselsnummer: string) => {
         feilmelding,
     };
 };
+
+const byggQueryFodselsnummer = (fodselsnummer: string): EsQuery => ({
+    query: {
+        term: {
+            fodselsnummer,
+        },
+    },
+    size: 1,
+    _source: [
+        'fornavn',
+        'etternavn',
+        'arenaKandidatnr',
+        'fodselsdato',
+        'adresselinje1',
+        'postnummer',
+        'poststed',
+        'epostadresse',
+        'telefon',
+        'veileder',
+        'geografiJobbonsker',
+        'yrkeJobbonskerObj',
+    ],
+});
 
 export default useEsKandidat;
