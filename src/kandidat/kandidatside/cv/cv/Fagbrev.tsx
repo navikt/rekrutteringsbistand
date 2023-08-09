@@ -11,27 +11,26 @@ type Props = {
 const Fagbrev = ({ cv }: Props) => {
     const autorisasjoner = cv.fagdokumentasjon?.filter((f) => f.type !== 'Autorisasjon') ?? [];
 
-    return (
+    return autorisasjoner?.length > 0 ? (
         <Kort
             overskrift={'Fagbrev/svennebrev og mesterbrev'}
             ikon={<BagdeIcon />}
             innhold={
                 <div className={css.erfaringer}>
-                    {autorisasjoner?.length > 0 &&
-                        autorisasjoner.map(({ tittel }) => {
-                            return (
-                                <Erfaring
-                                    key={`${tittel}`}
-                                    overskrift={tittel}
-                                    beskrivelse={null}
-                                    tidsperiode={null}
-                                />
-                            );
-                        })}
+                    {autorisasjoner.map(({ tittel }) => {
+                        return (
+                            <Erfaring
+                                key={`${tittel}`}
+                                overskrift={tittel}
+                                beskrivelse={null}
+                                tidsperiode={null}
+                            />
+                        );
+                    })}
                 </div>
             }
         />
-    );
+    ) : null;
 };
 
 export default Fagbrev;

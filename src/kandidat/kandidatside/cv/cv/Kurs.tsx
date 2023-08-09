@@ -14,25 +14,24 @@ type Props = {
 };
 
 const Kurs = ({ cv }: Props) => {
-    return (
+    return cv.kurs?.length > 0 ? (
         <Kort
             overskrift={'Kurs'}
             ikon={<ClipboardIcon />}
             innhold={
                 <div className={css.erfaringer}>
-                    {cv.kurs?.length > 0 &&
-                        sortByDato(cv.kurs).map((kurs) => (
-                            <Erfaring
-                                key={`${kurs.tittel}-${kurs.fraDato}`}
-                                overskrift={kurs.tittel}
-                                beskrivelse={null}
-                                tidsperiode={visTidsperiode(kurs)}
-                            />
-                        ))}
+                    {sortByDato(cv.kurs).map((kurs) => (
+                        <Erfaring
+                            key={`${kurs.tittel}-${kurs.fraDato}`}
+                            overskrift={kurs.tittel}
+                            beskrivelse={null}
+                            tidsperiode={visTidsperiode(kurs)}
+                        />
+                    ))}
                 </div>
             }
         />
-    );
+    ) : null;
 };
 
 const visTidsperiode = (kurs: Kurstype) => {
