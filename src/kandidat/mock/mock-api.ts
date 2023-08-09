@@ -11,7 +11,6 @@ import { mock } from './mock-data';
 fetchMock.config.fallbackToNetwork = true;
 
 const baseUrl = `express:${api.kandidat}`;
-const smsBaseUrl = `express:${api.sms}`;
 const forespørselOmDelingAvCvBaseUrl = `express:${api.forespørselOmDelingAvCv}`;
 const synlighetBaseUrl = `express:${api.synlighet}`;
 
@@ -45,9 +44,6 @@ const url = {
     postResendForespørselOmDelingAvCv: `${forespørselOmDelingAvCvBaseUrl}/foresporsler/kandidat/:aktorId`,
 
     // Alternative backends
-    sms: `${smsBaseUrl}/:kandidatlisteId`,
-    smsFnr: `${smsBaseUrl}/fnr/:fnr`,
-    smsPost: `${smsBaseUrl}`,
     enhetsregister: `${ENHETSREGISTER_API}/underenhet/_search`,
 
     // Misc
@@ -273,9 +269,6 @@ fetchMock
     .get(url.notater, log(mock.kandidat.notater))
     .post(url.notater, log(mock.kandidat.notater))
     .mock(url.notaterMedId, log(mock.kandidat.notater))
-    .get(url.sms, log(mock.sms.sms))
-    .get(url.smsFnr, log(mock.sms.sms))
-    .post(url.smsPost, log(201))
     .put(url.utfallPut, log(putUtfall))
     .put(url.statusPut, log(putStatus))
     .put(url.arkivertPut, log(putArkivert))

@@ -1,11 +1,11 @@
-import { FunctionComponent } from 'react';
 import { Table } from '@navikt/ds-react';
+import { FunctionComponent } from 'react';
 
-import { ForespørselOmDelingAvCv } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Historikkrad } from './Historikkrad/Historikkrad';
-import { KandidatlisteForKandidat } from '../historikkReducer';
+import { Sms } from 'felles/domene/sms/Sms';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { Sms } from '../../../kandidatliste/domene/Kandidatressurser';
+import { ForespørselOmDelingAvCv } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { KandidatlisteForKandidat } from '../historikkReducer';
+import { Historikkrad } from './Historikkrad/Historikkrad';
 
 interface Props {
     kandidatlister: KandidatlisteForKandidat[];

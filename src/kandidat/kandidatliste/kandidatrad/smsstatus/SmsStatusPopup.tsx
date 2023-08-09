@@ -1,9 +1,9 @@
-import { FunctionComponent } from 'react';
-import { Sms, SmsStatus } from '../../domene/Kandidatressurser';
-import MedPopover from '../../med-popover/MedPopover';
 import { MobileFillIcon, MobileIcon } from '@navikt/aksel-icons';
-import css from './SmsStatusPopup.module.css';
 import classNames from 'classnames';
+import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
+import { FunctionComponent } from 'react';
+import MedPopover from '../../med-popover/MedPopover';
+import css from './SmsStatusPopup.module.css';
 
 const formaterSendtDato = (dato: Date) => {
     return `${dato.toLocaleString('nb-NO', {

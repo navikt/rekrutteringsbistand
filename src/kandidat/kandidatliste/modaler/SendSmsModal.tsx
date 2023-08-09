@@ -5,10 +5,11 @@ import { Dispatch } from 'redux';
 
 import { Alert, BodyShort, Heading, Label, Link, Select } from '@navikt/ds-react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { SmsStatus } from 'felles/domene/sms/Sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import Modal from '../../komponenter/modal/Modal';
 import AppState from '../../state/AppState';
-import { Kandidatmeldinger, SmsStatus } from '../domene/Kandidatressurser';
+import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
 import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';

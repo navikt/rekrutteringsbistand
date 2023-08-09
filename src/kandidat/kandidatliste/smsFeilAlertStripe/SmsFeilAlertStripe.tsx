@@ -1,10 +1,11 @@
-import { FunctionComponent, useState } from 'react';
-import classNames from 'classnames';
-import { Alert, Button } from '@navikt/ds-react';
 import { XMarkIcon } from '@navikt/aksel-icons';
+import { Alert, Button } from '@navikt/ds-react';
+import classNames from 'classnames';
+import { FunctionComponent, useState } from 'react';
 
-import { Kandidatmeldinger, SmsStatus } from '../domene/Kandidatressurser';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { SmsStatus } from 'felles/domene/sms/Sms';
+import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import css from './smsFeilAlertStripe.module.css';
 
 const LESTE_SMS_IDER_KEY = 'lesteSmsIder';
