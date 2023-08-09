@@ -55,7 +55,7 @@ const Jobbønsker = ({ cv }: Props) => {
                         <BodyShort size="small" className={css.uthevetTekstOgIkon}>
                             <HourglassIcon />
                             <MangeTekstelementerSeparertMedKomma
-                                elementer={[oppstartskoder[cv.oppstartKode.toUpperCase()]?.label]}
+                                elementer={[oppstartskoder[cv.oppstartKode]?.label]}
                             />
                         </BodyShort>
                     </div>

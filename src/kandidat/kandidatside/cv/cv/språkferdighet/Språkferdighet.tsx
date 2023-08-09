@@ -1,13 +1,14 @@
 import { BodyShort } from '@navikt/ds-react';
 import ellipse from '../../ikoner/ellipse.svg';
 import css from './Språkferdighet.module.css';
-import {
-    Språkferdighet as SpråkferdighetType,
-    Språkferdighetsnivå,
-} from 'felles/domene/kandidat/Cv';
+import { Språkferdighetsnivå } from 'felles/domene/kandidat/Cv';
 
 type Props = {
-    ferdighet: SpråkferdighetType;
+    ferdighet: {
+        sprak: string;
+        ferdighetSkriftlig: Språkferdighetsnivå;
+        ferdighetMuntlig: Språkferdighetsnivå;
+    };
 };
 
 const Språkferdighet = ({ ferdighet }: Props) => (
