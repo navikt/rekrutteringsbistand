@@ -16,10 +16,10 @@ type EsQuery = {
     _source: Array<keyof EsKandidat>;
 };
 
-export const byggQueryTerm = (termkey: string, termValue): EsQuery => ({
+export const byggQueryTerm = (term: Term): EsQuery => ({
     query: {
         term: {
-            [termkey]: termValue,
+            [term.key]: term.value,
         },
     },
     size: 1,
@@ -56,16 +56,13 @@ const useEsKandidat = (term: Term) => {
     const [kandidat, setKandidat] = useState<EsKandidat>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
-    const termKey = term.key;
-    const termValue = term.value;
-
+    const { key, value } = term;
     useEffect(() => {
-        console.log('esquery', termKey, termValue);
-        const hentKandidat = async (termKey: string, termValue: string) => {
+        const hentKandidat = async (term: Term) => {
             try {
                 const respons = await fetch(api.kandidatsøk, {
                     method: 'POST',
-                    body: JSON.stringify(byggQueryTerm(termKey, termValue)),
+                    body: JSON.stringify(byggQueryTerm({ key, value })),
                     headers: { 'Content-Type': 'application/json' },
                 });
 
@@ -83,8 +80,8 @@ const useEsKandidat = (term: Term) => {
             }
         };
 
-        hentKandidat(termKey, termValue);
-    }, [termKey, termValue]);
+        hentKandidat({ key, value });
+    }, [key, value]);
 
     return {
         kandidat,
