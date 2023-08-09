@@ -30,15 +30,6 @@ const Jobbønsker = ({ cv }: Props) => {
                             '-'
                         )}
                     </BodyShort>
-                    <BodyShort size="small" className={css.kompetanse}>
-                        {cv.kompetanse?.length > 0 ? (
-                            <MangeTekstelementerSeparertMedKomma
-                                elementer={cv.kompetanse.map((u) => u.kompetanseKodeTekst)}
-                            />
-                        ) : (
-                            '-'
-                        )}
-                    </BodyShort>
                     <div className={css.bunn}>
                         <BodyShort size="small" className={css.uthevetTekstOgIkon}>
                             <PinIcon />
