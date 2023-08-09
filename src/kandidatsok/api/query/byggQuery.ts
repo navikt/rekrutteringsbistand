@@ -1,5 +1,4 @@
 import { InnloggetBruker } from '../../hooks/useBrukerensIdent';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
 import { queryMedArbeidserfaring } from './queryMedArbeidserfaring';
 import { queryMedFørerkort } from './queryMedFørerkort';
 import { queryMedFritekst } from './queryMedFritekst';
@@ -17,6 +16,7 @@ import { queryMedValgtKontor } from './queryMedValgtKontor';
 import { SearchQuery, Sorteringsrekkefølge } from '../../kandidater/elasticSearchTyper';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import { Sortering } from '../../kandidater/sortering/Sortering';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 
 export const PAGE_SIZE = 25;
 

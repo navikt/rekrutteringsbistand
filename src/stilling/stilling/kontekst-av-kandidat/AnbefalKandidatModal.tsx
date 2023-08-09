@@ -1,7 +1,7 @@
 import { Heading } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';

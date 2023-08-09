@@ -1,4 +1,4 @@
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
 import { mockKandidat } from '../kandidatsok-proxy/mockKandidat';
 
 export const mockKandidatCv: KandidatCv = {

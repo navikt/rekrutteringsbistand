@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api } from 'felles/api';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 
 export type EsRespons = {
     hits: {

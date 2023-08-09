@@ -14,7 +14,7 @@ import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
 import useEsKandidat from 'felles/komponenter/banner/useEsKandidat';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 
 type Props = {
     fnr: string;

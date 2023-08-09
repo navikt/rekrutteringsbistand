@@ -16,6 +16,7 @@ import LagreKandidaterIMineKandidatlisterModal from './kandidatliste/LagreKandid
 import LagreKandidaterISpesifikkKandidatlisteModal from './kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
 import { Økt } from './Økt';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;

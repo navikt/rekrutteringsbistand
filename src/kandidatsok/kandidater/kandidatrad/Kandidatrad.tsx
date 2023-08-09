@@ -4,7 +4,7 @@ import { Checkbox, Detail } from '@navikt/ds-react';
 
 import { alleInnsatsgrupper } from '../../filter/Jobbmuligheter';
 import { CheckmarkIcon, HeartIcon, PinIcon } from '@navikt/aksel-icons';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 import { KontekstAvKandidatlisteEllerStilling } from '../../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { lenkeTilKandidat, storForbokstav } from '../../utils';
 import { Nettstatus } from 'felles/nettressurs';

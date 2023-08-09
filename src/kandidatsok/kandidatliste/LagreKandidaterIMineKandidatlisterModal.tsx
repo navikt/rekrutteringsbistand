@@ -2,7 +2,7 @@ import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { lagreKandidaterIValgteKandidatlister } from '../api/api';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 import { storForbokstav } from '../utils';
 import VelgKandidatlister from './VelgKandidatlister';
 import css from './LagreKandidaterIMineKandidatlisterModal.module.css';

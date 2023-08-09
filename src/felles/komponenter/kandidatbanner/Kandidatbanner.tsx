@@ -7,8 +7,8 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
-import { ReactComponent as Piktogram } from './minekandidater.svg';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import css from './Kandidatbanner.module.css';
 import BrødsmuleKomponent, { Brødsmule } from './BrødsmuleKomponent';

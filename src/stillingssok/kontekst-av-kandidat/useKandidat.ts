@@ -10,7 +10,7 @@ import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
 import { EsRespons, byggKandidatQuery } from './kandidatQuery';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 
 const useKandidat = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();

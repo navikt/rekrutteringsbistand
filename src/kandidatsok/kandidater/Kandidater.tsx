@@ -3,7 +3,7 @@ import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 
 import { InnloggetBruker } from '../hooks/useBrukerensIdent';
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Nettstatus } from 'felles/nettressurs';
 import { Økt } from '../Økt';

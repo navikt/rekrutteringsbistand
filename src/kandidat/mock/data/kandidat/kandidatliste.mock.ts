@@ -1,7 +1,6 @@
 import moment from 'moment';
 import { v5 as uuid } from 'uuid';
 
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import {
     FormidlingAvUsynligKandidat,
     KandidatIKandidatliste,
@@ -16,6 +15,7 @@ import Kandidatliste, {
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { mockStrings } from './mock-strings';
 import { Veileder } from './veileder.mock';
+import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
 
 const antall = 25;
 const tomListe = [...new Array(antall)];

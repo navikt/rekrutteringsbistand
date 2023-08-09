@@ -1,4 +1,4 @@
-import { EsKandidat } from 'felles/domene/kandidat/EsKandidat';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 
 export type EsRespons = {
     hits: {

@@ -53,7 +53,7 @@ type UtgåtteFelter = {
 };
 
 /* Fullverdig kandidattype slik det er definert i ElasticSearch. */
-type Kandidat = Id &
+type EsKandidat = Id &
     Personalia &
     Geografi &
     Oppfølgingsinformasjon &
@@ -69,7 +69,7 @@ export type KandidatLookup = {
     arenaKandidatnr: Id['arenaKandidatnr'];
 };
 
-export type EsKandidat = {
+export type KandidatTilStillingssøk = {
     fornavn: Personalia['fornavn'];
     etternavn: Personalia['etternavn'];
     arenaKandidatnr: Id['arenaKandidatnr'];
@@ -82,9 +82,17 @@ export type EsKandidat = {
     veileder: Oppfølgingsinformasjon['veileder'];
     geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
     yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
+};
+
+export type KandidatTilKandidatsøk = {
     fodselsnummer: Id['fodselsnummer'];
     aktorId: Id['aktorId'];
+    fornavn: Personalia['fornavn'];
+    etternavn: Personalia['etternavn'];
+    arenaKandidatnr: Id['arenaKandidatnr'];
     kvalifiseringsgruppekode: Oppfølgingsinformasjon['kvalifiseringsgruppekode'];
+    yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
+    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
 };
 
 /*
@@ -160,4 +168,4 @@ export type KandidatCv = {
     veilederNavn: string;
 };
 
-export default Kandidat;
+export default EsKandidat;

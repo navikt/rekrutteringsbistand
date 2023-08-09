@@ -1,12 +1,12 @@
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 import {
     Formidlingsgruppe,
     Hovedmål,
     Innsatsgruppe,
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import { mockMeg } from '../meg/mock';
+import EsKandidat from 'felles/domene/kandidat/EsKandidat';
 
-export const mockKandidat: Kandidat = {
+export const mockKandidat: EsKandidat = {
     // Personalia
     fornavn: 'Jarle',
     etternavn: 'Jobbsøker',
