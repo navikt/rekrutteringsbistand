@@ -1,15 +1,15 @@
-import css from './Banner.module.css';
 import { Heading } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { ComponentType } from 'react';
+import { ReactNode } from 'react';
+import css from './Banner.module.css';
 
 type Props = {
     tittel: String;
     gammelGrå?: Boolean;
-    ikon: ComponentType;
+    ikon: ReactNode;
 };
 
-const Banner = ({ tittel, gammelGrå, ikon: Ikon }: Props) => {
+const Banner = ({ tittel, gammelGrå, ikon }: Props) => {
     return (
         <div
             className={classNames(css.banner, {
@@ -17,7 +17,7 @@ const Banner = ({ tittel, gammelGrå, ikon: Ikon }: Props) => {
             })}
         >
             <div className={css.piktogramOgInnhold}>
-                <Ikon />
+                {ikon}
                 <Heading level="1" size="xlarge">
                     {tittel}
                 </Heading>

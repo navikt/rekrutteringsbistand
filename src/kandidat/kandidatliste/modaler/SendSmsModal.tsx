@@ -1,17 +1,17 @@
-import { FunctionComponent, useState, ChangeEvent } from 'react';
-import { Dispatch } from 'redux';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@navikt/ds-react';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { Alert, BodyShort, Heading, Label, Link, Select } from '@navikt/ds-react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Kandidatmeldinger, SmsStatus } from '../domene/Kandidatressurser';
-import { Stillingskategori } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import Modal from '../../komponenter/modal/Modal';
 import AppState from '../../state/AppState';
+import { Kandidatmeldinger, SmsStatus } from '../domene/Kandidatressurser';
+import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
 import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
-import Modal from '../../komponenter/modal/Modal';
-import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
 import css from './SendSmsModal.module.css';
 
 enum Meldingsmal {

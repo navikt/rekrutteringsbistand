@@ -1,5 +1,6 @@
 .forespørsler {
-    margin-top: 1.5rem;
+    margin-top: 2.5em;
+    margin-bottom: 3rem;
 }
 
 .forespørsler:global(.navds-panel) {
@@ -11,6 +12,9 @@
     display: grid;
     grid-gap: 1.5rem;
     margin-top: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid var(--a-border-subtle);
+    border-radius: var(--a-border-radius-xlarge);
 }
 
 @media (min-width: 500px) {

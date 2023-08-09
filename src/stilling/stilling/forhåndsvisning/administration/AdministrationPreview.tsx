@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '@navikt/ds-react';
+import { System } from 'felles/domene/stilling/Stilling';
 import { EDIT_AD } from '../../adReducer';
 import { erDirektemeldtStilling } from '../../adUtils';
-import { System } from '../../../domene/Stilling';
 import AdStatus from '../../administration/adStatus/AdStatus';
+import css from './AdministrationPreview.module.css';
 import ContactInfo from './contact/ContactInfo';
-import Inkludering from './vis-inkluderingsmuligheter-ekstern-stilling/VisInkuderingsmuligheterForEksternStilling';
 import Kategori from './kategori/Kategori';
 import Notat from './notat/Notat';
 import Publishing from './publishing/Publishing';
-import css from './AdministrationPreview.module.css';
+import Inkludering from './vis-inkluderingsmuligheter-ekstern-stilling/VisInkuderingsmuligheterForEksternStilling';
 
 const AdministrationPreview = () => {
     const dispatch = useDispatch();

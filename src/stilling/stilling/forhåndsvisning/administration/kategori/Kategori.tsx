@@ -1,8 +1,8 @@
+import { BodyShort, Heading } from '@navikt/ds-react';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { Stillingskategori } from '../../../../opprett-ny-stilling/VelgStillingskategori';
 import { State } from '../../../../redux/store';
-import { BodyShort, Heading } from '@navikt/ds-react';
 
 const Kategori: FunctionComponent = () => {
     const { stillingskategori } = useSelector((state: State) => state.stillingsinfoData);

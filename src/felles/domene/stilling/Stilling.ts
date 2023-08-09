@@ -1,17 +1,12 @@
-import { Stillingskategori } from '../opprett-ny-stilling/VelgStillingskategori';
-
 export type Rekrutteringsbistandstilling = {
     stilling: Stilling;
     stillingsinfo: Stillingsinfo | null;
 };
 
-export type Stilling = {
-    id: number;
+export type Stillingbase = {
     uuid: string;
     created: string;
-    createdBy: System;
     updated: string;
-    updatedBy: System;
     title: string;
     status: Status;
     privacy: Privacy | string;
@@ -20,20 +15,26 @@ export type Stilling = {
     reference: string;
     published: string | null;
     expires: string | null;
-    employer: Arbeidsgiver | null;
     administration: Administration | null;
     location: Geografi | null;
-    locationList: Geografi[];
-    properties: Properties & Record<string, any>;
-    contactList?: Kontaktinfo[];
-
-    /** Når NSS-admin trykker på "publiser" */
     publishedByAdmin: string | null;
     businessName: string | null;
-    deactivatedByExpiry: boolean | null;
-    categoryList: StyrkCategory[];
+};
+
+/* Datastrukturen som brukes i stilling-api */
+export type Stilling = Stillingbase & {
+    id: number;
+    employer: Arbeidsgiver | null;
     activationOnPublishingDate: boolean;
     firstPublished: boolean | null;
+    categoryList: StyrkCategory[];
+    deactivatedByExpiry: boolean | null;
+    createdBy: System;
+    updatedBy: System;
+    locationList: Geografi[];
+    contactList?: Kontaktinfo[];
+    mediaList?: object[];
+    properties: Properties & Record<string, any>;
 };
 
 export enum System {
@@ -72,6 +73,13 @@ export type Stillingsinfo = {
     stillingsinfoid: string;
     stillingskategori: Stillingskategori | null;
 };
+
+export enum Stillingskategori {
+    Stilling = 'STILLING',
+    Arbeidstrening = 'ARBEIDSTRENING',
+    Jobbmesse = 'JOBBMESSE',
+    Formidling = 'FORMIDLING',
+}
 
 export type Arbeidsgiver = {
     name: string;
@@ -148,6 +156,7 @@ export enum Søknadsfrist {
 }
 
 export enum Ansettelsesform {
+    Ingen = '',
     Fast = 'Fast',
     Vikariat = 'Vikariat',
     Engasjement = 'Engasjement',

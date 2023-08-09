@@ -1,17 +1,17 @@
-import { put, take, takeLatest, select } from 'redux-saga/effects';
-import { lookUpStyrk } from './edit/om-stillingen/styrk/styrkReducer';
+import Stilling, { Privacy, Status, System } from 'felles/domene/stilling/Stilling';
+import { put, select, take, takeLatest } from 'redux-saga/effects';
+import { isValidISOString } from '../utils/datoUtils';
 import {
     CREATE_AD_BEGIN,
+    DELETE_AD_SUCCESS,
     FETCH_AD_BEGIN,
     FETCH_AD_SUCCESS,
     SAVE_AD_SUCCESS,
-    DELETE_AD_SUCCESS,
 } from './adReducer';
 import { FETCH_LOCATIONS, FETCH_LOCATIONS_SUCCESS } from './edit/arbeidssted/locationCodeReducer';
+import { lookUpStyrk } from './edit/om-stillingen/styrk/styrkReducer';
 import isJson from './edit/praktiske-opplysninger/IsJson';
-import { isValidISOString } from '../utils/datoUtils';
-import { leggTilTagUnderRegistrering, fjernTagUnderRegistrering } from './tags/utils';
-import Stilling, { Privacy, Status, System } from '../domene/Stilling';
+import { fjernTagUnderRegistrering, leggTilTagUnderRegistrering } from './tags/utils';
 
 export const SET_AD_DATA = 'SET_AD_DATA';
 export const REMOVE_AD_DATA = 'REMOVE_AD_DATA';

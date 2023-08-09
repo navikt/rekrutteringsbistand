@@ -1,15 +1,16 @@
-import { FunctionComponent, useEffect, useState } from 'react';
 import { Alert, BodyLong, Button, Heading } from '@navikt/ds-react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { CREATE_AD } from '../stilling/adReducer';
-import { REDIGERINGSMODUS_QUERY_PARAM } from '../stilling/Stilling';
-import { State } from '../redux/store';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import Modal from '../common/modal/Modal';
-import VelgArbeidsgiver, { Arbeidsgiverforslag } from './VelgArbeidsgiver';
-import VelgStillingskategori, { Stillingskategori } from './VelgStillingskategori';
+import { State } from '../redux/store';
+import { REDIGERINGSMODUS_QUERY_PARAM } from '../stilling/Stilling';
+import { CREATE_AD } from '../stilling/adReducer';
 import css from './OpprettNyStilling.module.css';
+import VelgArbeidsgiver, { Arbeidsgiverforslag } from './VelgArbeidsgiver';
+import VelgStillingskategori from './VelgStillingskategori';
 
 type Props = {
     onClose: () => void;

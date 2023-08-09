@@ -1,7 +1,5 @@
-import Kandidatliste, {
-    KandidatlisteSammendrag,
-    Stillingskategori,
-} from 'felles/domene/kandidatliste/Kandidatliste';
+import Kandidatliste, { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 
 export const kandidaterMåGodkjenneDelingAvCv = (kandidatliste: Kandidatliste) => {
     return (

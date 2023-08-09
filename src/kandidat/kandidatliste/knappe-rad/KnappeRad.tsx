@@ -1,22 +1,20 @@
-import { FunctionComponent, ReactNode } from 'react';
-import { Button } from '@navikt/ds-react';
 import { MobileIcon, TrashIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { FunctionComponent, ReactNode } from 'react';
+import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import {
     erKobletTilArbeidsgiver,
     erKobletTilStilling,
     kandidaterMåGodkjenneDelingAvCv,
 } from '../domene/kandidatlisteUtils';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { Kandidatmeldinger } from '../domene/Kandidatressurser';
-import MedPopover from '../med-popover/MedPopover';
-import ForespørselOmDelingAvCv from './forespørsel-om-deling-av-cv/ForespørselOmDelingAvCv';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
+import MedPopover from '../med-popover/MedPopover';
 import DelMedArbeidsgiverKnapp from './DelMedArbeidsgiverKnapp';
 import css from './KnappeRad.module.css';
-import Kandidatliste, {
-    Kandidatlistestatus,
-    Stillingskategori,
-} from 'felles/domene/kandidatliste/Kandidatliste';
+import ForespørselOmDelingAvCv from './forespørsel-om-deling-av-cv/ForespørselOmDelingAvCv';
 
 type Props = {
     kandidatliste: Kandidatliste;

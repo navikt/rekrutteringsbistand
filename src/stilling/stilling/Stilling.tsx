@@ -1,26 +1,26 @@
+import { BodyLong } from '@navikt/ds-react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { BodyLong } from '@navikt/ds-react';
 
-import { EDIT_AD, FETCH_AD, PREVIEW_EDIT_AD } from './adReducer';
-import { REMOVE_AD_DATA } from './adDataReducer';
-import { State } from '../redux/store';
+import { Status, System } from 'felles/domene/stilling/Stilling';
+import { Nettstatus } from 'felles/nettressurs';
+import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
+import { State } from '../redux/store';
+import css from './Stilling.module.css';
+import { REMOVE_AD_DATA } from './adDataReducer';
+import { EDIT_AD, FETCH_AD, PREVIEW_EDIT_AD } from './adReducer';
 import Administration from './administration/Administration';
 import AdministrationLimited from './administration/limited/AdministrationLimited';
-import AdministrationPreview from './forhåndsvisning/administration/AdministrationPreview';
-import DelayedSpinner from '../common/DelayedSpinner';
 import Edit from './edit/Edit';
 import Error from './error/Error';
-import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
-import useHentKandidatliste from './kandidathandlinger/useHentKandidatliste';
 import Forhåndsvisning from './forhåndsvisning/Forhåndsvisning';
+import AdministrationPreview from './forhåndsvisning/administration/AdministrationPreview';
+import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
 import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
+import useHentKandidatliste from './kandidathandlinger/useHentKandidatliste';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
-import { Status, System } from '../domene/Stilling';
-import css from './Stilling.module.css';
-import { Nettstatus } from 'felles/nettressurs';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 

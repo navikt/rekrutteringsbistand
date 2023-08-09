@@ -1,10 +1,10 @@
+import { Select } from '@navikt/ds-react';
 import React, { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
-import { Select } from '@navikt/ds-react';
 
-import { Ansettelsesform as Type } from '../../../domene/Stilling';
-import { SET_EMPLOYMENT_ENGAGEMENTTYPE } from '../../adDataReducer';
+import { Ansettelsesform as Type } from 'felles/domene/stilling/Stilling';
 import { State } from '../../../redux/store';
+import { SET_EMPLOYMENT_ENGAGEMENTTYPE } from '../../adDataReducer';
 import { ValidertFelt } from '../../adValidationReducer';
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
 
