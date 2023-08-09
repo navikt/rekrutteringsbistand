@@ -53,6 +53,7 @@ const useEsKandidat = (kandidatnr: string) => {
                 });
 
                 const esRespons = (await respons.json()) as EsRespons;
+                console.log('esRespons', esRespons);
                 const kandidat = esRespons.hits.hits.at(0)?._source;
 
                 if (kandidat) {

@@ -57,7 +57,6 @@ const KontekstAvKandidat = ({ fnr }: Props) => {
     }, [feilmelding, fnr]);
 
     if (feilmelding) {
-        console.log('feilmelding', feilmelding, kandidat);
         return (
             <>
                 <Alert variant="error">Kandidaten er ikke synlig i Rekrutteringsbistand</Alert>

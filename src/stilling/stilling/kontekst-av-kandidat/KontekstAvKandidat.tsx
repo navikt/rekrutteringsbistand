@@ -71,7 +71,7 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
             evaluerSynlighet();
         }
     }, [feilmelding, fnr]);
-
+    console.log('feilmelding', feilmelding, kandidat);
     if (feilmelding) {
         return (
             <>
