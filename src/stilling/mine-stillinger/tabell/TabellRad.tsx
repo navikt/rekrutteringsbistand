@@ -1,23 +1,23 @@
+import { BodyShort, Button, Dropdown, Table } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { BodyShort, Button, Table, Dropdown } from '@navikt/ds-react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { formatISOString } from '../../utils/datoUtils';
-import { getAdStatusLabel } from '../../common/enums/getEnumLabels';
 import { MenuElipsisHorizontalCircleIcon, PersonGroupIcon } from '@navikt/aksel-icons';
 import {
-    RekrutteringsbistandstillingOpenSearch,
+    EsRekrutteringsbistandstilling,
     stillingErUtløpt,
-} from '../../domene/StillingOpenSearch';
-import { State } from '../../redux/store';
-import DropdownMeny from './DropdownMeny';
-import getEmployerName from '../../common/getEmployerName';
+} from 'felles/domene/stilling/EsStilling';
 import PrivacyStatusEnum from '../../common/enums/PrivacyStatusEnum';
+import { getAdStatusLabel } from '../../common/enums/getEnumLabels';
+import getEmployerName from '../../common/getEmployerName';
+import { State } from '../../redux/store';
+import { formatISOString } from '../../utils/datoUtils';
+import DropdownMeny from './DropdownMeny';
 import css from './MineStillingerTabell.module.css';
 
 type Props = {
-    rekrutteringsbistandstilling: RekrutteringsbistandstillingOpenSearch;
+    rekrutteringsbistandstilling: EsRekrutteringsbistandstilling;
 };
 
 const TabellRad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling }) => {

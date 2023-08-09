@@ -1,12 +1,12 @@
-import { Nettressurs, ikkeLastet, lasterInn, suksess, feil } from 'felles/nettressurs';
-import { Status } from '../domene/Stilling';
-import { RekrutteringsbistandstillingOpenSearch } from '../domene/StillingOpenSearch';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
+import { Status } from 'felles/domene/stilling/Stilling';
+import { Nettressurs, feil, ikkeLastet, lasterInn, suksess } from 'felles/nettressurs';
 import { MineStillingerAction, MineStillingerActionType } from './MineStillingerAction';
 import { MineStillingerSorteringsfelt } from './MineStillingerSortering';
 import { Retning } from './tabell/Retning';
 
 export type MineStillingerResultat = {
-    content: RekrutteringsbistandstillingOpenSearch[];
+    content: EsRekrutteringsbistandstilling[];
     totalElements: number;
     totalPages: number;
 };

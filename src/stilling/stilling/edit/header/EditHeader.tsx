@@ -1,12 +1,11 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { TextField } from '@navikt/ds-react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { DEFAULT_TITLE_NEW_AD } from '../../adReducer';
-import { SET_AD_TITLE } from '../../adDataReducer';
-import Skjemalabel from '../skjemaetikett/Skjemalabel';
-import Stilling from '../../../domene/Stilling';
+import Stilling from 'felles/domene/stilling/Stilling';
 import { State } from '../../../redux/store';
+import { SET_AD_TITLE } from '../../adDataReducer';
+import { DEFAULT_TITLE_NEW_AD } from '../../adReducer';
+import Skjemalabel from '../skjemaetikett/Skjemalabel';
 
 type Props = {
     stilling: Stilling;

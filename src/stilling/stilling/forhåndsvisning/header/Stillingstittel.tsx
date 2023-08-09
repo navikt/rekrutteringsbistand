@@ -1,6 +1,6 @@
-import { FunctionComponent } from 'react';
 import { BodyShort, Heading } from '@navikt/ds-react';
-import { Geografi } from '../../../domene/Stilling';
+import { Geografi } from 'felles/domene/stilling/Stilling';
+import { FunctionComponent } from 'react';
 import capitalizeLocation from '../../edit/arbeidssted/capitalizeLocation';
 import css from './Stillingstittel.module.css';
 

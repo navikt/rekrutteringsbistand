@@ -1,10 +1,10 @@
+import { Fieldset, TextField } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent } from 'react';
 import { connect } from 'react-redux';
-import { Fieldset, TextField } from '@navikt/ds-react';
 
-import { Kontaktinfo } from '../../../domene/Stilling';
-import { SET_CONTACT_PERSON } from '../../adDataReducer';
+import { Kontaktinfo } from 'felles/domene/stilling/Stilling';
 import { State } from '../../../redux/store';
+import { SET_CONTACT_PERSON } from '../../adDataReducer';
 import {
     VALIDATE_CONTACTPERSON_EMAIL_AND_PHONE,
     VALIDATE_CONTACTPERSON_NAME,

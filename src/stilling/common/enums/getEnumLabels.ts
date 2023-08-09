@@ -1,4 +1,4 @@
-import { AdminStatus, Status } from '../../domene/Stilling';
+import { AdminStatus, Status } from 'felles/domene/stilling/Stilling';
 import PrivacyStatusEnum from './PrivacyStatusEnum';
 
 export function getAdStatusLabel(adStatus: Status, erUtløpt: boolean) {

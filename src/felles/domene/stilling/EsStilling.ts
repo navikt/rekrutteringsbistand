@@ -1,47 +1,53 @@
 import { isAfter, startOfDay } from 'date-fns';
-
 import {
-    Administration,
     AdminStatus,
     Geografi,
-    Kilde,
     Kontaktinfo,
-    Privacy,
     Properties,
     Status,
+    Stillingbase,
     Stillingsinfo,
     StyrkCategory,
-} from '../domene/Stilling';
+} from './Stilling';
 
-export type RekrutteringsbistandstillingOpenSearch = {
-    stilling: StillingOpenSearch;
+export type EsRekrutteringsbistandstilling = {
+    stilling: EsStilling;
     stillingsinfo: Stillingsinfo | null;
 };
 
-export type StillingOpenSearch = {
-    title: string;
-    uuid: string;
+/* Datastrukturen som brukes i ElasticSearch/OpenSearch */
+export type EsStilling = Stillingbase & {
     annonsenr: string | null;
-    status: Status;
-    privacy: Privacy | string;
-    published: string | null;
-    publishedByAdmin: string | null;
-    expires: string | null;
-    created: string;
-    updated: string;
-    employer: ArbeidsgiverOpenSearch | null;
     categories: StyrkCategory[];
-    source: Kilde | string;
-    medium: string;
-    businessName: string | null;
     locations: Geografi[];
     contacts: Kontaktinfo[];
-    reference: string;
-    administration: Administration | null;
-    properties: Properties & Record<string, any>;
+    employer: EsArbeidsgiver | null;
+    properties: EsProperties;
 };
 
-export type ArbeidsgiverOpenSearch = {
+export type EsProperties = Partial<{
+    adtext: Properties['adtext'];
+    author: Properties['author'];
+    employer: Properties['employer'];
+    jobtitle: Properties['jobtitle'];
+    location: Properties['location'];
+    starttime: Properties['starttime'];
+    extent: Properties['extent'];
+    engagementtype: Properties['engagementtype'];
+    applicationurl: Properties['applicationurl'];
+    applicationemail: Properties['applicationemail'];
+    applicationdue: Properties['applicationdue'];
+    jobarrangement: Properties['jobarrangement'];
+    sector: Properties['sector'];
+    sourceurl: Properties['sourceurl'];
+
+    positioncount: number;
+    tags: string[];
+    workday: string[];
+    workhours: string[];
+}>;
+
+export type EsArbeidsgiver = {
     name: string;
     publicName: string;
     orgnr: string | null;
@@ -58,7 +64,7 @@ const utløperFørIdag = (expires: string | null) => {
     return new Date(expires) <= startenAvDøgnet;
 };
 
-export const stillingErUtløpt = (stilling: StillingOpenSearch): boolean => {
+export const stillingErUtløpt = (stilling: EsStilling): boolean => {
     return (
         stilling.publishedByAdmin !== null &&
         stilling.status === Status.Inaktiv &&
@@ -67,7 +73,7 @@ export const stillingErUtløpt = (stilling: StillingOpenSearch): boolean => {
     );
 };
 
-export const stillingKommerTilÅBliAktiv = (stilling: StillingOpenSearch): boolean => {
+export const stillingKommerTilÅBliAktiv = (stilling: EsStilling): boolean => {
     if (stilling.published === null || stilling.expires === null) return false;
 
     return (

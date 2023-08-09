@@ -1,9 +1,9 @@
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { NavigateFunction } from 'react-router-dom';
 import { Søkekriterier } from '../Stillingssøk';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
-import { Sortering } from '../sorter/Sorter';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
-import { Stillingskategori } from '../filter/om-annonsen/VelgStillingskategori';
-import { NavigateFunction } from 'react-router-dom';
+import { Sortering } from '../sorter/Sorter';
 import { Søkefelt } from '../søkefelter/Søkefelter';
 
 export enum QueryParam {

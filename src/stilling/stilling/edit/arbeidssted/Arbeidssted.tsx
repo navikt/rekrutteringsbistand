@@ -1,21 +1,21 @@
+import { Checkbox, ErrorMessage, TextField } from '@navikt/ds-react';
+import { Geografi } from 'felles/domene/stilling/Stilling';
 import React, { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import Typeahead from '../../../common/typeahead/Typeahead';
-import { FETCH_LOCATIONS, SET_POSTAL_CODE_TYPEAHEAD_VALUE } from './locationCodeReducer';
-import {
-    ADD_POSTAL_CODE_BEGIN,
-    REMOVE_POSTAL_CODE,
-    ADD_POSTAL_CODE_ADDRESS_BEGIN,
-    REMOVE_POSTAL_CODE_ADDRESS,
-    REMOVE_LOCATION_AREAS,
-} from '../../adDataReducer';
-import capitalizeLocation from './capitalizeLocation';
-import LocationArea from './LocationArea';
-import { ValidertFelt } from '../../adValidationReducer';
-import { Geografi } from '../../../domene/Stilling';
-import { Checkbox, ErrorMessage, TextField } from '@navikt/ds-react';
 import { State } from '../../../redux/store';
+import {
+    ADD_POSTAL_CODE_ADDRESS_BEGIN,
+    ADD_POSTAL_CODE_BEGIN,
+    REMOVE_LOCATION_AREAS,
+    REMOVE_POSTAL_CODE,
+    REMOVE_POSTAL_CODE_ADDRESS,
+} from '../../adDataReducer';
+import { ValidertFelt } from '../../adValidationReducer';
 import css from './Arbeidssted.module.css';
+import LocationArea from './LocationArea';
+import capitalizeLocation from './capitalizeLocation';
+import { FETCH_LOCATIONS, SET_POSTAL_CODE_TYPEAHEAD_VALUE } from './locationCodeReducer';
 
 type Props = {
     suggestions: Array<{
