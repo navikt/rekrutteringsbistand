@@ -28,6 +28,7 @@ export const byggQueryTerm = (term: Term): EsQuery => ({
         'etternavn',
         'arenaKandidatnr',
         'fodselsdato',
+        'fodselsnummer',
         'adresselinje1',
         'postnummer',
         'poststed',
