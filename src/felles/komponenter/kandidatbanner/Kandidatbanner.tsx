@@ -109,6 +109,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
 
     const iDag = new Date();
     const fødselsdag = new Date(inputdato);
+    fødselsdag.setTime(fødselsdag.getTime() + 1 * 60 * 60 * 1000); // For å unngå tidssonetrøbbel ved indeksering. Krever at tidspunkt på dag ikke brukes videre.
 
     const harIkkeFyltÅrIÅr =
         iDag.getUTCMonth() < fødselsdag.getUTCMonth() ||

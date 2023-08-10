@@ -10,7 +10,7 @@ export const mockKandidat: Kandidat = {
     // Personalia
     fornavn: 'Jarle',
     etternavn: 'Jobbsøker',
-    fodselsdato: '1945-11-14',
+    fodselsdato: '1961-08-25T22:00:00.000+00:00',
     epostadresse: 'jarle.jobbsoker@dev.nav.no',
     telefon: '91333532',
 
