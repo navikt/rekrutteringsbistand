@@ -41,10 +41,6 @@
     width: 100%;
 }
 
-.bunnHoyre {
-    margin-top: 1rem;
-}
-
 .personalia {
     display: flex;
     flex-wrap: wrap;
@@ -74,5 +70,9 @@
 @media (max-width: 1280px) {
     .bunnlinje {
         flex-wrap: wrap;
+    }
+
+    .bunnHoyre {
+        margin-top: 1rem;
     }
 }
