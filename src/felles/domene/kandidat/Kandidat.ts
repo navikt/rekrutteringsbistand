@@ -15,6 +15,7 @@ type Personalia = {
     fodselsdato: string | null;
     epostadresse: string | null;
     telefon: string | null;
+    fodselsnummer: string | null;
 };
 
 type Geografi = {
