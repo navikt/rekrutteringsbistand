@@ -1,8 +1,8 @@
-import { defineConfig, splitVendorChunkPlugin, loadEnv } from 'vite';
 import reactPlugin from '@vitejs/plugin-react';
-import svgrPlugin from 'vite-plugin-svgr';
-import checkerPlugin from 'vite-plugin-checker';
 import path from 'path';
+import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
+import checkerPlugin from 'vite-plugin-checker';
+import svgrPlugin from 'vite-plugin-svgr';
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');

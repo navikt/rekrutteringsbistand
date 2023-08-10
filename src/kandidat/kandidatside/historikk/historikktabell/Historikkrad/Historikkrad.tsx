@@ -1,17 +1,17 @@
-import { FunctionComponent, ReactNode } from 'react';
-import classNames from 'classnames';
 import { LinkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Detail, Table } from '@navikt/ds-react';
-import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 import moment from 'moment';
+import { FunctionComponent, ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
-import { capitalizeEmployerName } from '../../../../utils/formateringUtils';
-import { ForespørselOmDelingAvCv } from '../../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { KandidatlisteForKandidat } from '../../historikkReducer';
+import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Sms } from 'felles/domene/sms/Sms';
 import { lenkeTilKandidatliste, lenkeTilStilling } from '../../../../app/paths';
-import { Sms } from '../../../../kandidatliste/domene/Kandidatressurser';
 import Hendelsesetikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
 import StatusEtikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
+import { ForespørselOmDelingAvCv } from '../../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { capitalizeEmployerName } from '../../../../utils/formateringUtils';
 import css from './Historikkrad.module.css';
 
 interface Props {
