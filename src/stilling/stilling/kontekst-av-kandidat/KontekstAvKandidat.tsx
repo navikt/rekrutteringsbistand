@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 
 import { Alert, CopyButton } from '@navikt/ds-react';
 import { api } from 'felles/api';
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling from 'felles/domene/stilling/Stilling';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
@@ -14,7 +13,8 @@ import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
-import useKandidat from './useKandidat';
+import useKandidat, { fodselsnrTerm } from 'felles/komponenter/banner/useKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
     fnr: string;
@@ -24,7 +24,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: Props) => {
-    const { kandidat, feilmelding } = useKandidat(fnr);
+    const { kandidat, feilmelding } = useKandidat(fodselsnrTerm(fnr));
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
@@ -91,24 +91,29 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
     } else {
         return (
             <>
-                <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti}>
-                    <div className={css.knapper}>
-                        {stillingErPublisert(stilling) && (
-                            <CopyButton
-                                copyText={hentAnnonselenke(stilling.uuid)}
-                                text="Kopier annonselenke"
-                                size="small"
+                <Kandidatbanner
+                    kandidat={kandidat}
+                    brødsmulesti={brødsmulesti}
+                    bunnHoyre={
+                        <div className={css.knapper}>
+                            {stillingErPublisert(stilling) && (
+                                <CopyButton
+                                    copyText={hentAnnonselenke(stilling.uuid)}
+                                    text="Kopier annonselenke"
+                                    size="small"
+                                    className={css.copyButton}
+                                />
+                            )}
+                            <Kandidatlistehandlinger
+                                fnr={fnr}
+                                kandidatliste={kandidatliste}
+                                onAnbefalClick={() => {
+                                    setVisModal(true);
+                                }}
                             />
-                        )}
-                        <Kandidatlistehandlinger
-                            fnr={fnr}
-                            kandidatliste={kandidatliste}
-                            onAnbefalClick={() => {
-                                setVisModal(true);
-                            }}
-                        />
-                    </div>
-                </Kandidatbanner>
+                        </div>
+                    }
+                />
                 {kandidat && kandidatliste.kind === Nettstatus.Suksess && (
                     <AnbefalKandidatModal
                         fnr={fnr}
@@ -127,7 +132,7 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
 const byggBrødsmulesti = (
     fnr: string,
     stilling: Stilling,
-    kandidat?: KandidatTilStillingssøk,
+    kandidat?: Kandidat,
     stillingssøk?: string
 ) => {
     if (!kandidat) {

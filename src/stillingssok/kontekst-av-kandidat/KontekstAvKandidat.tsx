@@ -1,4 +1,3 @@
-import useKandidat from './useKandidat';
 import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import { Alert } from '@navikt/ds-react';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
@@ -6,13 +5,14 @@ import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressu
 import { useEffect, useState } from 'react';
 import { api } from 'felles/api';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
+import useKandidatStillingssøk from './useKandidatStillingssøk';
 
 type Props = {
     fnr: string;
 };
 
 const KontekstAvKandidat = ({ fnr }: Props) => {
-    const { kandidat, feilmelding } = useKandidat(fnr);
+    const { kandidat, feilmelding } = useKandidatStillingssøk(fnr);
 
     const [synlighetsevaluering, setSynlighetsevaluering] = useState<
         Nettressurs<Synlighetsevaluering>

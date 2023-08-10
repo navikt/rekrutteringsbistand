@@ -1,80 +1,46 @@
-import { Link } from 'react-router-dom';
-import { ChevronLeftIcon } from '@navikt/aksel-icons';
-import { BodyShort, Heading } from '@navikt/ds-react';
-
-import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { Nettressurs } from 'felles/nettressurs';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
-import Fødselsinfo from './Fødselsinfo';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
-import Personalia from './Personalia';
 import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
+import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
+import useKandidat, { kandidatnrTerm } from 'felles/komponenter/banner/useKandidat';
+import { Brødsmule } from 'felles/komponenter/kandidatbanner/BrødsmuleKomponent';
 
 type Props = {
     cv: Nettressurs<KandidatCv>;
+    kandidatnr: string;
     kandidatnavigering: Kandidatnavigering | null;
-    tilbakelenkeTekst: string;
-    tilbakelenke: {
-        to: string;
-        state?: object;
-    };
+    brødsmulesti?: Brødsmule[];
 };
 
-const Kandidatheader = ({ cv, tilbakelenke, tilbakelenkeTekst, kandidatnavigering }: Props) => {
+const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
+    const { kandidat } = useKandidat(kandidatnrTerm(kandidatnr));
 
+    const brødsmulestiMedNavn = kandidat
+        ? [
+              ...brødsmulesti,
+              {
+                  tekst: formaterNavn(kandidat),
+              },
+          ]
+        : brødsmulesti;
     return (
         <>
-            <nav className={css.navigasjon}>
-                <div className={css.column}>
-                    <Link className="navds-link" {...tilbakelenke}>
-                        <ChevronLeftIcon />
-                        {tilbakelenkeTekst}
-                    </Link>
-                    {kandidatnavigering && <ForrigeNeste kandidatnavigering={kandidatnavigering} />}
-                </div>
-            </nav>
-            <div className={css.header}>
-                <div className={css.column}>
-                    {cv.kind === Nettstatus.Feil && (
-                        <Heading level="1" size="medium">
-                            Informasjonen om kandidaten kan ikke vises
-                        </Heading>
-                    )}
-
-                    {cv.kind === Nettstatus.Suksess && (
-                        <>
-                            <Heading level="1" size="large">
-                                {hentNavnFraCv(cv.data)}
-                            </Heading>
-                            <BodyShort className={css.kontaktinfo}>
-                                <Fødselsinfo cv={cv.data} />
-                                <BodyShort as="span">
-                                    Veileder:{' '}
-                                    <strong>
-                                        {cv.data.veilederNavn
-                                            ? `${cv.data.veilederNavn} (${cv.data.veilederIdent})`
-                                            : 'Ikke tildelt'}
-                                    </strong>
-                                </BodyShort>
-                            </BodyShort>
-                            <BodyShort className={css.kontaktinfo}>
-                                <Personalia cv={cv.data} />
-                            </BodyShort>
-                        </>
-                    )}
-                </div>
-            </div>
+            <Kandidatbanner
+                kandidat={kandidat}
+                brødsmulesti={brødsmulestiMedNavn}
+                toppHoyre={
+                    kandidatnavigering && (
+                        <div className={css.forrigeNeste}>
+                            <ForrigeNeste kandidatnavigering={kandidatnavigering} />
+                        </div>
+                    )
+                }
+            ></Kandidatbanner>
         </>
     );
-};
-
-const hentNavnFraCv = (cv: KandidatCv) => {
-    const fornavn = capitalizeFirstLetter(cv.fornavn);
-    const etternavn = capitalizeFirstLetter(cv.etternavn);
-
-    return `${fornavn} ${etternavn}`;
 };
 
 export default Kandidatheader;

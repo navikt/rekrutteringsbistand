@@ -30,18 +30,22 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
     const [visKandidatlisterModal, setVisKandidatlisterModal] = useState<boolean>(false);
 
     const økt = hentØktFraKandidatsøk();
-    const tilbakelenke = {
-        to: lenkeTilKandidatsøk(økt.searchParams),
-        state: { scrollTilKandidat: true },
-    };
+
+    const brødsmulesti = [
+        {
+            tekst: 'Kandidatsøk',
+            href: lenkeTilKandidatsøk(økt.searchParams),
+            state: { scrollTilKandidat: true },
+        },
+    ];
 
     return (
         <>
             <Kandidatheader
                 cv={cv}
+                kandidatnr={kandidatnr}
                 kandidatnavigering={kandidatnavigering}
-                tilbakelenkeTekst="Til kandidatsøket"
-                tilbakelenke={tilbakelenke}
+                brødsmulesti={brødsmulesti}
             />
             <Tabs value={fane} onChange={setFane}>
                 <Kandidatmeny tabs={tabs} cv={cv}>

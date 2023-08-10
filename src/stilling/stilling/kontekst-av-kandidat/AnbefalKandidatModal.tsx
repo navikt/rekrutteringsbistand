@@ -1,7 +1,7 @@
 import { Heading } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
@@ -10,7 +10,7 @@ import Modal from '../../common/modal/Modal';
 
 type Props = {
     fnr: string;
-    kandidat: KandidatTilStillingssøk;
+    kandidat: Kandidat;
     kandidatliste: Kandidatliste;
     setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     vis: boolean;

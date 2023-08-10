@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { api } from 'felles/api';
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export type EsRespons = {
     hits: {
         hits: Array<{
-            _source: KandidatTilStillingssøk;
+            _source: Kandidat;
         }>;
     };
 };
@@ -13,13 +13,13 @@ export type EsRespons = {
 type EsQuery = {
     query: object;
     size: number;
-    _source: Array<keyof KandidatTilStillingssøk>;
+    _source: Array<keyof Kandidat>;
 };
 
-const byggQuery = (fodselsnummer: string): EsQuery => ({
+export const byggQueryTerm = (term: Term): EsQuery => ({
     query: {
         term: {
-            fodselsnummer,
+            [term.key]: term.value,
         },
     },
     size: 1,
@@ -28,6 +28,7 @@ const byggQuery = (fodselsnummer: string): EsQuery => ({
         'etternavn',
         'arenaKandidatnr',
         'fodselsdato',
+        'fodselsnummer',
         'adresselinje1',
         'postnummer',
         'poststed',
@@ -39,16 +40,30 @@ const byggQuery = (fodselsnummer: string): EsQuery => ({
     ],
 });
 
-const useKandidat = (fnr: string) => {
-    const [kandidat, setKandidat] = useState<KandidatTilStillingssøk>();
+type Term = {
+    key: 'kandidatnr' | 'fodselsnummer';
+    value: string;
+};
+
+export const kandidatnrTerm = (kandidatnr: string): Term => {
+    return { key: 'kandidatnr', value: kandidatnr };
+};
+
+export const fodselsnrTerm = (fodselsnummer: string): Term => {
+    return { key: 'fodselsnummer', value: fodselsnummer };
+};
+
+const useKandidat = (term: Term) => {
+    const [kandidat, setKandidat] = useState<Kandidat>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
+    const { key, value } = term;
     useEffect(() => {
-        const hentKandidat = async (fnr: string) => {
+        (async () => {
             try {
                 const respons = await fetch(api.kandidatsøk, {
                     method: 'POST',
-                    body: JSON.stringify(byggQuery(fnr)),
+                    body: JSON.stringify(byggQueryTerm({ key, value })),
                     headers: { 'Content-Type': 'application/json' },
                 });
 
@@ -58,15 +73,13 @@ const useKandidat = (fnr: string) => {
                 if (kandidat) {
                     setKandidat(kandidat);
                 } else {
-                    setFeilmelding('Fant ikke kandidat med fødselsnummer ' + fnr);
+                    setFeilmelding('Fant ikke kandidat');
                 }
             } catch (e) {
                 setFeilmelding('Klarte ikke å hente kandidat');
             }
-        };
-
-        hentKandidat(fnr);
-    }, [fnr]);
+        })();
+    }, [key, value]);
 
     return {
         kandidat,

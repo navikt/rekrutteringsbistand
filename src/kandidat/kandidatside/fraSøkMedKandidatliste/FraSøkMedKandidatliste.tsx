@@ -38,22 +38,30 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, kandidatlisteId);
 
     const økt = hentØktFraKandidatsøk();
-    const lenkeTilFinnKandidater = {
-        to: lenkeTilKandidatsøk(økt.searchParams),
-        state: { scrollTilKandidat: true },
-    };
 
     const kandidatErAlleredeLagretIListen =
         kandidatliste.kind === Nettstatus.Suksess &&
         kandidatliste.data.kandidater.some((k) => k.kandidatnr === kandidatnr);
 
+    const brødsmulesti = kandidatliste.kind === Nettstatus.Suksess && [
+        {
+            tekst: kandidatliste.data.tittel,
+            href: lenkeTilKandidatliste(kandidatlisteId),
+        },
+        {
+            tekst: 'Finn kandidater',
+            href: lenkeTilKandidatsøk(økt.searchParams),
+            state: { scrollTilKandidat: true },
+        },
+    ];
+
     return (
         <>
             <Kandidatheader
                 cv={cv}
-                tilbakelenkeTekst="Til finn kandidater"
-                tilbakelenke={lenkeTilFinnKandidater}
+                kandidatnr={kandidatnr}
                 kandidatnavigering={kandidatnavigering}
+                brødsmulesti={brødsmulesti}
             />
             <Tabs value={fane} onChange={setFane}>
                 <Kandidatmeny tabs={tabs} cv={cv}>

@@ -1,9 +1,9 @@
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export type EsRespons = {
     hits: {
         hits: Array<{
-            _source: KandidatTilStillingssøk;
+            _source: Kandidat;
         }>;
     };
 };
@@ -11,7 +11,7 @@ export type EsRespons = {
 type EsQuery = {
     query: object;
     size: number;
-    _source: Array<keyof KandidatTilStillingssøk>;
+    _source: Array<keyof Kandidat>;
 };
 
 export const byggKandidatQuery = (fodselsnummer: string): EsQuery => ({
