@@ -6,17 +6,16 @@ import {
 } from './data/kandidat/kandidatliste.mock';
 import { kandidatlisterForKandidatMock } from './data/kandidat/kandidatlister-for-kandidat.mock';
 import { enAnnenVeileder, meg } from './data/kandidat/veileder.mock';
-import sms from './data/sms/sms.mock.json';
 
-import stilling from './data/stillingssøk/stilling.mock.json';
-import annenStilling from './data/stillingssøk/annen-stilling.mock.json';
+import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import {
     mockForespørslerOmDelingAvCv,
     mockForespørslerOmDelingAvCvForKandidat,
 } from './data/forespørselOmDelingAvCv/forespørselOmDelingAvCv.mock';
 import enhetsregister from './data/kandidat/enhetsregister.mock.json';
 import notater from './data/kandidat/notater.mock.json';
-import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import annenStilling from './data/stillingssøk/annen-stilling.mock.json';
+import stilling from './data/stillingssøk/stilling.mock.json';
 
 const cver = mockCver(meg);
 const kandidatlister = mockKandidatlister(meg, enAnnenVeileder, cver);
@@ -37,9 +36,6 @@ export const mock = {
         kandidatlistesammendrag: kandidatlistesammendragLister(kandidatlister),
         enhetsregister,
         notater,
-    },
-    sms: {
-        sms: sms as any,
     },
     forespørselOmDelingAvCv: {
         forespørslerOmDelingAvCv: mockForespørslerOmDelingAvCv(meg, kandidatliste),

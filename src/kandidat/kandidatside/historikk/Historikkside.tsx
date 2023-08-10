@@ -5,6 +5,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import { sendEvent } from 'felles/amplitude';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Sms } from 'felles/domene/sms/Sms';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from 'felles/nettressurs';
 import { fetchSmserForKandidat } from '../../api/api';
@@ -14,7 +15,7 @@ import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import AppState from '../../state/AppState';
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
 import { KandidatQueryParam } from '../Kandidatside';
-import { KandidatlisteForKandidat, KandidatlisterForKandidatActionType } from './historikkReducer';
+import { KandidatlisterForKandidatActionType } from './historikkReducer';
 import css from './Historikkside.module.css';
 import { Historikktabell } from './historikktabell/Historikktabell';
 

@@ -2,7 +2,7 @@ import { rest } from 'msw';
 import { api } from '../../src/felles/api';
 import { LagreKandidaterDto } from '../../src/kandidatsok/kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { mockAlleKandidatCv } from './mockKandidatCv';
-import { mockAlleKandidatlister } from './mockKandidatliste';
+import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
 
 export const kandidatApiMock = [
@@ -64,5 +64,20 @@ export const kandidatApiMock = [
         const kandidatCv = mockAlleKandidatCv.find((cv) => cv.kandidatnummer === kandidatNr);
 
         return res(kandidatCv ? ctx.json(kandidatCv) : ctx.status(404));
+    }),
+
+    rest.get(`${api.kandidat}/veileder/kandidater/:kandidatnr/listeoversikt`, (req, res, ctx) => {
+        const kandidatlister = mockAlleKandidatlister.filter((liste) =>
+            liste.kandidater.some((kandidat) => kandidat.kandidatnr === req.params.kandidatnr)
+        );
+
+        const kandidatlisterMedKandidaten = kandidatlister.map((liste) =>
+            opprettMockKandidatlisteForKandidat(
+                liste,
+                liste.kandidater.find((kandidat) => kandidat.kandidatnr === req.params.kandidatnr)
+            )
+        );
+
+        return res(ctx.json(kandidatlisterMedKandidaten));
     }),
 ];

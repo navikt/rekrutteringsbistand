@@ -11,7 +11,6 @@ import { mock } from './mock-data';
 fetchMock.config.fallbackToNetwork = true;
 
 const baseUrl = `express:${api.kandidat}`;
-const forespørselOmDelingAvCvBaseUrl = `express:${api.forespørselOmDelingAvCv}`;
 const synlighetBaseUrl = `express:${api.synlighet}`;
 
 const url = {
@@ -37,11 +36,6 @@ const url = {
     putFormidlingerAvUsynligKandidat: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat/:formidlingId/utfall`,
     putKandidatlistestatus: `${baseUrl}/veileder/kandidatlister/:kandidatlisteId/status`,
     putSlettCvFraArbeidsgiversKandidatliste: `${baseUrl}/veileder/kandidat/arbeidsgiverliste/:kandidatlisteId/:kandidatnummer`,
-
-    forespørselOmDelingAvCv: `${forespørselOmDelingAvCvBaseUrl}/foresporsler/:stillingsId`,
-    forespørselOmDelingAvCvForKandidat: `${forespørselOmDelingAvCvBaseUrl}/foresporsler/kandidat/:aktorId`,
-    postForespørselOmDelingAvCv: `${forespørselOmDelingAvCvBaseUrl}/foresporsler`,
-    postResendForespørselOmDelingAvCv: `${forespørselOmDelingAvCvBaseUrl}/foresporsler/kandidat/:aktorId`,
 
     // Alternative backends
     enhetsregister: `${ENHETSREGISTER_API}/underenhet/_search`,
@@ -278,19 +272,6 @@ fetchMock
     .post(url.postFormidlingerAvUsynligKandidat, log(postFormidlingerAvUsynligKandidat))
     .put(url.putFormidlingerAvUsynligKandidat, log(putUtfallForFormidlingAvUsynligKandidat))
     .put(url.putKandidatlistestatus, log(putKandidatlistestatus))
-    .get(url.forespørselOmDelingAvCv, log(mock.forespørselOmDelingAvCv.forespørslerOmDelingAvCv))
-    .get(
-        url.forespørselOmDelingAvCvForKandidat,
-        log(mock.forespørselOmDelingAvCv.forespørslerOmDelingAvCvForKandidat)
-    )
-    .post(
-        url.postForespørselOmDelingAvCv,
-        log({ body: mock.forespørselOmDelingAvCv.forespørslerOmDelingAvCv, status: 201 })
-    )
-    .post(
-        url.postResendForespørselOmDelingAvCv,
-        log({ body: mock.forespørselOmDelingAvCv.forespørslerOmDelingAvCv, status: 201 })
-    )
     .put(url.putSlettCvFraArbeidsgiversKandidatliste, log(putSlettCvFraArbeidsgiversKandidatliste))
 
     // Misc
