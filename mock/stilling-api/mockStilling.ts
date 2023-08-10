@@ -2,6 +2,7 @@ import add from 'date-fns/add';
 import Stilling, {
     AdminStatus,
     Ansettelsesform,
+    Arbeidsgiver,
     Kilde,
     Medium,
     Omfang,
@@ -12,9 +13,29 @@ import Stilling, {
     Stillingskategori,
     System,
 } from 'felles/domene/stilling/Stilling';
+import { mockVeileder } from '../meg/mock';
 
 const stillingsId = '1ea746af-66be-4cf8-a051-9e815f77b1d1';
 const iDag = new Date().toISOString();
+
+export const mockArbeidsgiver: Arbeidsgiver = {
+    name: 'TULLEKONTORET AS',
+    publicName: 'TULLEKONTORET AS',
+    orgnr: '976434099',
+    orgform: 'BEDR',
+    location: {
+        address: 'Lilleakerveien 37D',
+        postalCode: '0284',
+        county: 'OSLO',
+        municipal: 'OSLO',
+        municipalCode: '0301',
+        city: 'OSLO',
+        country: 'NORGE',
+        latitude: '59.92172360812686',
+        longitude: '10.637563808231683',
+    },
+    parentOrgnr: '912819973',
+};
 
 export const mockStilling: Stilling = {
     id: 100,
@@ -33,24 +54,7 @@ export const mockStilling: Stilling = {
     reference: stillingsId,
     published: iDag,
     expires: add(new Date(), { days: 7 }).toISOString(),
-    employer: {
-        name: 'TULLEKONTORET AS',
-        publicName: 'TULLEKONTORET AS',
-        orgnr: '976434099',
-        orgform: 'BEDR',
-        location: {
-            address: 'Lilleakerveien 37D',
-            postalCode: '0284',
-            county: 'OSLO',
-            municipal: 'OSLO',
-            municipalCode: '0301',
-            city: 'OSLO',
-            country: 'NORGE',
-            latitude: '59.92172360812686',
-            longitude: '10.637563808231683',
-        },
-        parentOrgnr: '912819973',
-    },
+    employer: mockArbeidsgiver,
     businessName: 'Tullekontoret',
     firstPublished: true,
     deactivatedByExpiry: false,
@@ -59,11 +63,10 @@ export const mockStilling: Stilling = {
     administration: {
         status: AdminStatus.Done,
         comments: null,
-        reportee: 'F_Z992776 E_Z992776',
+        reportee: `${mockVeileder.fornavn} ${mockVeileder.etternavn}`,
         remarks: [],
-        navIdent: 'A123456',
+        navIdent: mockVeileder.navIdent,
     },
-
     categoryList: [
         {
             name: 'Kokk',
@@ -125,4 +128,35 @@ export const mockStillingsinfo: Stillingsinfo = {
 export const mockRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
     stilling: mockStilling,
     stillingsinfo: mockStillingsinfo,
+};
+
+export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
+    stilling: {
+        ...mockStilling,
+        id: 101,
+        uuid: '004aa428-8033-404a-bcf2-4dd5e33205c9',
+        title: 'Ny stilling',
+        administration: {
+            status: AdminStatus.Pending,
+            comments: null,
+            reportee: `${mockVeileder.fornavn} ${mockVeileder.etternavn}`,
+            remarks: [],
+            navIdent: mockVeileder.navIdent,
+        },
+        location: null,
+        locationList: [],
+        properties: {},
+        firstPublished: false,
+        publishedByAdmin: null,
+        businessName: null,
+        activationOnPublishingDate: false,
+    },
+    stillingsinfo: {
+        stillingsid: '004aa428-8033-404a-bcf2-4dd5e33205c9',
+        stillingsinfoid: 'a22d7b8c-23b4-48e5-9ad0-743e1b1da6b2',
+        notat: null,
+        eierNavn: null,
+        eierNavident: null,
+        stillingskategori: Stillingskategori.Stilling,
+    },
 };

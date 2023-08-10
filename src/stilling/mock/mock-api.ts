@@ -15,10 +15,8 @@ import internStilling from './data/intern-stilling.json';
 import municipals from './data/municipals.json';
 import rekrutteringsbistandStilling from './data/post-ads.json';
 import postdata from './data/postdata.json';
-import reportee from './data/reportee.json';
 import search from './data/search.json';
 
-const reporteeUrl = `${api.stilling}/rekrutteringsbistand/api/v1/reportee`;
 const opprettStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling`;
 const kopierStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling/kopier/:stillingsId`;
 const slettStillingUrl = `express:${api.stilling}/rekrutteringsbistandstilling/:stillingsId`;
@@ -87,7 +85,6 @@ const putStilling = (_: string, options: MockRequest): Rekrutteringsbistandstill
 fetchMock
     .post(opprettStillingUrl, log(rekrutteringsbistandStilling))
     .post(kopierStillingUrl, log(rekrutteringsbistandStilling))
-    .get(reporteeUrl, log(reportee))
 
     .get(getStillingUrl, log(getStilling))
     .put(putStillingUrl, log(putStilling))

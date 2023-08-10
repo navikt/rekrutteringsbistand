@@ -1,7 +1,8 @@
 import { BodyShort, Detail, Label } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 
-import { Arbeidsgiver, Geografi } from 'felles/domene/stilling/Stilling';
+import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
+import { Arbeidsgiver } from 'felles/domene/stilling/Stilling';
 import { Nettressurs, Nettstatus, ikkeLastet } from 'felles/nettressurs';
 import { fetchEmployerNameCompletionHits, fetchOrgnrSuggestions } from '../api/api';
 import Typeahead, { Suggestion } from '../common/typeahead/Typeahead';
@@ -10,20 +11,14 @@ import capitalizeEmployerName from '../stilling/edit/endre-arbeidsgiver/capitali
 import css from './OpprettNyStilling.module.css';
 
 type Props = {
-    arbeidsgiver: Arbeidsgiverforslag | null;
-    setArbeidsgiver: (verdi: Arbeidsgiverforslag | null) => void;
+    arbeidsgiver: Enhetsregistertreff | null;
+    setArbeidsgiver: (verdi: Enhetsregistertreff | null) => void;
     feilmelding?: string;
     setFeilmelding: (verdi: string | undefined) => void;
 };
 
 export type EmployerState = {
-    suggestions: Arbeidsgiverforslag[];
-};
-
-export type Arbeidsgiverforslag = {
-    location?: Geografi;
-    name: string;
-    orgnr?: string;
+    suggestions: Enhetsregistertreff[];
 };
 
 const VelgArbeidsgiver: FunctionComponent<Props> = ({
@@ -33,7 +28,7 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
     setFeilmelding,
 }) => {
     const [input, setInput] = useState<string>('');
-    const [alleForslag, setAlleForslag] = useState<Nettressurs<Arbeidsgiverforslag[]>>(
+    const [alleForslag, setAlleForslag] = useState<Nettressurs<Enhetsregistertreff[]>>(
         ikkeLastet()
     );
 
@@ -43,7 +38,7 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
                 kind: Nettstatus.LasterInn,
             });
 
-            let response: Arbeidsgiverforslag[] | null = null;
+            let response: Enhetsregistertreff[] | null = null;
 
             try {
                 if (erOrgnummer(navn)) {
@@ -51,6 +46,8 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
                 } else {
                     response = await fetchEmployerNameCompletionHits(navn);
                 }
+
+                console.log('Hey:', response);
 
                 setAlleForslag({
                     kind: Nettstatus.Suksess,
@@ -127,7 +124,7 @@ const erOrgnummer = (input: string) => {
     return input.match(/^\s*[0-9][0-9\s]*$/) !== null;
 };
 
-const konverterTilTypeaheadFormat = (alleForslag: Nettressurs<Arbeidsgiverforslag[]>) => {
+const konverterTilTypeaheadFormat = (alleForslag: Nettressurs<Enhetsregistertreff[]>) => {
     if (alleForslag.kind === Nettstatus.Suksess) {
         return alleForslag.data.map((f) => ({
             value: f.orgnr || '',
@@ -139,7 +136,7 @@ const konverterTilTypeaheadFormat = (alleForslag: Nettressurs<Arbeidsgiverforsla
 };
 
 export const formaterDataFraEnhetsregisteret = (
-    arbeidsgiver: Arbeidsgiverforslag | Arbeidsgiver
+    arbeidsgiver: Enhetsregistertreff | Arbeidsgiver
 ) => {
     const location = arbeidsgiver.location;
     const navn = capitalizeEmployerName(arbeidsgiver.name);
@@ -150,7 +147,7 @@ export const formaterDataFraEnhetsregisteret = (
     )}, Virksomhetsnummer: ${virksomhetsnummer}`;
 };
 
-export const getEmployerSuggestionLabel = (forslag: Arbeidsgiverforslag) => {
+export const getEmployerSuggestionLabel = (forslag: Enhetsregistertreff) => {
     let commaSeparate: string[] = [];
     if (forslag.location) {
         if (forslag.location.address) {
@@ -175,9 +172,9 @@ export const getEmployerSuggestionLabel = (forslag: Arbeidsgiverforslag) => {
     );
 };
 
-const finnArbeidsgiver = (alleForslag: Arbeidsgiverforslag[], navn: string) =>
+const finnArbeidsgiver = (alleForslag: Enhetsregistertreff[], navn: string) =>
     alleForslag.find(
-        (forslag: Arbeidsgiverforslag) =>
+        (forslag: Enhetsregistertreff) =>
             forslag.name.toLowerCase() === navn.toLowerCase() ||
             forslag.orgnr === navn.replace(/\s/g, '')
     );
