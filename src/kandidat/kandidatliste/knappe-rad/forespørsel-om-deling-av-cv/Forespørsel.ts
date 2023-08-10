@@ -24,6 +24,7 @@ type UtenSvar = {
     svar: null;
 };
 
+/* TODO: Flytt til domenemappe */
 export type ForespørselOmDelingAvCv = {
     aktørId: string;
     stillingsId: string;

@@ -1,5 +1,7 @@
+import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, {
     KanSletteKandidatliste,
+    KandidatlisteForKandidat,
     Kandidatlistestatus,
 } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
@@ -56,5 +58,29 @@ export const mockKandidatlisteMedStilling: Kandidatliste = {
         navn: 'Varg Veileder',
     },
 };
+
+export const opprettMockKandidatlisteForKandidat = (
+    kandidatliste: Kandidatliste,
+    kandidat: KandidatIKandidatliste
+): KandidatlisteForKandidat => ({
+    uuid: kandidatliste.kandidatlisteId,
+    tittel: kandidatliste.tittel,
+    organisasjonReferanse: kandidatliste.organisasjonReferanse,
+    organisasjonNavn: kandidatliste.organisasjonNavn,
+    stillingId: kandidatliste.stillingId,
+    antallStillinger: kandidatliste.antallStillinger,
+    status: kandidat.status,
+    utfall: kandidat.utfall,
+
+    kandidatnr: kandidat.kandidatnr,
+    fornavn: kandidat.fornavn,
+    etternavn: kandidat.etternavn,
+    lagtTilTidspunkt: kandidat.lagtTilTidspunkt,
+    lagtTilAvIdent: kandidat.lagtTilAv.ident,
+    lagtTilAvEpost: 'epost',
+    lagtTilAvNavn: kandidat.lagtTilAv.navn,
+    utfallsendringer: kandidat.utfallsendringer,
+    slettet: kandidat.arkivert,
+});
 
 export const mockAlleKandidatlister = [mockKandidatlisteMedStilling, mockKandidatlisteUtenStilling];

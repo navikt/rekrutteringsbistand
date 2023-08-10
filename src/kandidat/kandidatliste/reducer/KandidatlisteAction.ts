@@ -1,17 +1,17 @@
-import { Error } from 'felles/nettressurs';
-import { Notat, Visningsstatus } from '../domene/Kandidatressurser';
-import KandidatlisteActionType from './KandidatlisteActionType';
-import { SearchApiError } from '../../api/fetchUtils';
-import { ForespørselOutboundDto } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Sms } from '../domene/Kandidatressurser';
-import { Kandidatlistefilter, Kandidatsortering } from './kandidatlisteReducer';
-import { ForespørslerForStillingInboundDto } from '../../api/forespørselOmDelingAvCvApi';
-import { FormidlingAvUsynligKandidatOutboundDto } from '../modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
 import KandidatIKandidatliste, {
     Kandidatstatus,
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Sms } from 'felles/domene/sms/Sms';
+import { Error } from 'felles/nettressurs';
+import { SearchApiError } from '../../api/fetchUtils';
+import { ForespørslerForStillingInboundDto } from '../../api/forespørselOmDelingAvCvApi';
+import { Notat, Visningsstatus } from '../domene/Kandidatressurser';
+import { ForespørselOutboundDto } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { FormidlingAvUsynligKandidatOutboundDto } from '../modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
+import KandidatlisteActionType from './KandidatlisteActionType';
+import { Kandidatlistefilter, Kandidatsortering } from './kandidatlisteReducer';
 
 export interface HentKandidatlisteMedStillingsIdAction {
     type: KandidatlisteActionType.HentKandidatlisteMedStillingsId;

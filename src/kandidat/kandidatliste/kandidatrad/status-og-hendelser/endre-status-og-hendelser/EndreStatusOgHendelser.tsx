@@ -6,9 +6,9 @@ import {
     Kandidatstatus,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Sms } from 'felles/domene/sms/Sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Nettressurs } from 'felles/nettressurs';
-import { Sms } from '../../../domene/Kandidatressurser';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../../domene/kandidatlisteUtils';
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { statusToDisplayName } from '../etiketter/StatusEtikett';

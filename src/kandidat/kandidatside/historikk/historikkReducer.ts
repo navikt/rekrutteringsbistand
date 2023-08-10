@@ -1,34 +1,11 @@
+import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Error, feil, ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { fetchKandidatlisterForKandidat } from '../../api/api';
 import { SearchApiError } from '../../api/fetchUtils';
-import {
-    Kandidatstatus,
-    Kandidatutfall,
-    Utfallsendring,
-} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-
-export interface KandidatlisteForKandidat {
-    kandidatnr: string;
-    fornavn: string;
-    etternavn: string;
-    lagtTilTidspunkt: string;
-    lagtTilAvIdent: string;
-    lagtTilAvEpost: string;
-    lagtTilAvNavn: string;
-    status: Kandidatstatus;
-    utfall: Kandidatutfall;
-    uuid: string;
-    tittel: string;
-    organisasjonReferanse?: string;
-    organisasjonNavn?: string;
-    stillingId?: string;
-    slettet?: boolean;
-    antallStillinger?: number;
-    utfallsendringer: Utfallsendring[];
-}
 
 type KandidatlisterForKandidatResponse = KandidatlisteForKandidat[];
+
 export type HistorikkState = {
     kandidatlisterForKandidat: Nettressurs<KandidatlisterForKandidatResponse>;
 };
