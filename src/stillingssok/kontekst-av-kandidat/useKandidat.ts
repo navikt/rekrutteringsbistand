@@ -8,7 +8,6 @@ import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 import useKandidat, { fodselsnrTerm } from 'felles/komponenter/banner/useKandidat';
 
 const useKandidatStillingssøk = (fnr: string) => {
@@ -17,13 +16,15 @@ const useKandidatStillingssøk = (fnr: string) => {
 
     const { kandidat, feilmelding } = useKandidat(fodselsnrTerm(fnr));
 
+    const { geografiJobbonsker, yrkeJobbonskerObj } = kandidat;
+
     useEffect(() => {
-        console.log('kandidatfilter', kandidat);
-        if (kandidat) {
-            const brukKriterier = (kandidat: Kandidat) => {
-                const fylker = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
-                const kommuner = hentKommunerFraJobbønsker(kandidat.geografiJobbonsker);
-                const yrkesønsker = hentYrkerFraJobbønsker(kandidat.yrkeJobbonskerObj);
+        console.log('kandidatfilter', fnr, geografiJobbonsker, yrkeJobbonskerObj);
+        if (fnr && geografiJobbonsker && yrkeJobbonskerObj) {
+            const brukKriterier = () => {
+                const fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
+                const kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
+                const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 
                 const søk = new URLSearchParams();
 
@@ -44,11 +45,10 @@ const useKandidatStillingssøk = (fnr: string) => {
             };
 
             if (brukKandidatkriterier) {
-                brukKriterier(kandidat);
+                brukKriterier();
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fnr]);
+    }, [fnr, geografiJobbonsker, yrkeJobbonskerObj, navigate, brukKandidatkriterier]);
 
     return {
         kandidat,
