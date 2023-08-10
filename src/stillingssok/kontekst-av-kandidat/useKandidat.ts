@@ -18,6 +18,7 @@ const useKandidatStillingssøk = (fnr: string) => {
     const { kandidat, feilmelding } = useKandidat(fodselsnrTerm(fnr));
 
     useEffect(() => {
+        console.log('kandidatfilter', kandidat);
         if (kandidat) {
             const brukKriterier = (kandidat: Kandidat) => {
                 const fylker = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
