@@ -17,15 +17,12 @@ const useKandidatStillingssøk = (fnr: string) => {
 
     useEffect(() => {
         if (kandidat) {
-            console.log('searchParams', searchParams);
             const brukKandidatkriterier = searchParams.get(QueryParam.Kandidatkriterier) !== null;
             const { geografiJobbonsker, yrkeJobbonskerObj } = kandidat;
             const brukKriterier = () => {
-                console.log('inni start', geografiJobbonsker, yrkeJobbonskerObj);
                 const fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
                 const kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
                 const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
-                console.log('inni etter', fylker, kommuner, yrkesønsker);
 
                 const søk = new URLSearchParams();
 
@@ -83,11 +80,6 @@ const hentKommunerFraJobbønsker = (geografijobbønsker: JobbønskeSted[]): stri
 };
 
 const hentYrkerFraJobbønsker = (yrkesønsker: Jobbønske[]): string[] => {
-    console.log(
-        'tt',
-        yrkesønsker,
-        yrkesønsker.flatMap((yrkesønske) => yrkesønske.sokeTitler)
-    );
     return [...new Set(yrkesønsker.flatMap((yrkesønske) => yrkesønske.sokeTitler))];
 };
 
