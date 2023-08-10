@@ -45,7 +45,9 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                                         <BodyShort>
                                             <CandleIcon />{' '}
                                             {kandidat ? (
-                                                lagFødselsdagtekst(kandidat?.fodselsdato)
+                                                `${lagFødselsdagtekst(kandidat?.fodselsdato)} (${
+                                                    kandidat.fodselsnummer
+                                                }) `
                                             ) : (
                                                 <Skeleton width={180} />
                                             )}
@@ -91,7 +93,7 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                                             )}
                                         </BodyShort>
                                     </div>
-                                    <div className={css.bynnHoyre}>{bunnHoyre}</div>
+                                    <div className={css.bunnHoyre}>{bunnHoyre}</div>
                                 </div>
                             </>
                         )}

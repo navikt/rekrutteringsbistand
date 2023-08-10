@@ -101,6 +101,7 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
                                     copyText={hentAnnonselenke(stilling.uuid)}
                                     text="Kopier annonselenke"
                                     size="small"
+                                    className={css.copyButton}
                                 />
                             )}
                             <Kandidatlistehandlinger
