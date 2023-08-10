@@ -58,7 +58,7 @@ const useKandidat = (term: Term) => {
 
     const { key, value } = term;
     useEffect(() => {
-        const hentKandidat = async (term: Term) => {
+        (async () => {
             try {
                 const respons = await fetch(api.kandidatsøk, {
                     method: 'POST',
@@ -77,9 +77,7 @@ const useKandidat = (term: Term) => {
             } catch (e) {
                 setFeilmelding('Klarte ikke å hente kandidat');
             }
-        };
-
-        hentKandidat({ key, value });
+        })();
     }, [key, value]);
 
     return {
