@@ -51,7 +51,7 @@ export const forespørselOmDelingAvCvMock = [
     }),
 
     rest.post(`${api.forespørselOmDelingAvCv}/foresporsler`, (_, res, ctx) => res(ctx.status(201))),
-    rest.post(`${api.forespørselOmDelingAvCv}/kandidat/:aktorId`, (_, res, ctx) =>
+    rest.post(`${api.forespørselOmDelingAvCv}/foresporsler/kandidat/:aktorId`, (_, res, ctx) =>
         res(ctx.status(201))
     ),
 

@@ -1,9 +1,12 @@
-import { rest } from 'msw';
+import { ResponseFunction, RestContext, RestRequest, rest } from 'msw';
 import { api } from '../../src/felles/api';
 import { LagreKandidaterDto } from '../../src/kandidatsok/kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { mockAlleKandidatCv } from './mockKandidatCv';
 import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
+
+const todo = (req: RestRequest, res: ResponseFunction, ctx: RestContext) =>
+    res(ctx.status(500, 'Mock er ikke implementert'));
 
 export const kandidatApiMock = [
     rest.get(`${api.kandidat}/veileder/kandidatlister`, (_, res, ctx) =>
@@ -80,4 +83,57 @@ export const kandidatApiMock = [
 
         return res(ctx.json(kandidatlisterMedKandidaten));
     }),
+
+    rest.put(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/eierskap`, todo),
+
+    rest.get(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
+        todo
+    ),
+
+    rest.post(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
+        todo
+    ),
+
+    rest.all(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater/:notatId`,
+        todo
+    ),
+
+    rest.put(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/status`,
+        todo
+    ),
+
+    rest.put(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/utfall`,
+        todo
+    ),
+
+    rest.put(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/arkivert`,
+        todo
+    ),
+
+    rest.post(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/deltekandidater`, todo),
+
+    rest.get(`${api.kandidat}/veileder/kandidater/navn`, todo),
+
+    rest.post(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat`,
+        todo
+    ),
+
+    rest.put(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat/:formidlingId/utfall`,
+        todo
+    ),
+
+    rest.put(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/status`, todo),
+
+    rest.put(
+        `${api.kandidat}/veileder/kandidat/arbeidsgiverliste/:kandidatlisteId/:kandidatnummer`,
+        todo
+    ),
 ];

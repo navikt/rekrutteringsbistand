@@ -9,6 +9,7 @@ import { smsApiMock } from './sms-api/mock';
 import { statistikkApiMock } from './statistikk-api/mock';
 import { stillingApiMock } from './stilling-api/mock';
 import { stillingssøkMock } from './stillingssok-proxy/mock';
+import { synlighetApiMock } from './synlighet-api/mock';
 
 const handlers = [
     ...innloggetBrukerMock,
@@ -18,6 +19,7 @@ const handlers = [
     ...stillingApiMock,
     ...presenterteKandidaterApiMock,
     ...smsApiMock,
+    ...synlighetApiMock,
     ...(import.meta.env.VITE_MOCK_MODIA ? modiaContextHolderMock : []),
     ...(import.meta.env.VITE_MOCK_AIVEN ? kandidatsøkMock : []),
     ...(import.meta.env.VITE_MOCK_AIVEN ? stillingssøkMock : []),

@@ -124,7 +124,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         }
 
         if (arkiveringFeiletNettopp) {
-            this.visInfobanner(`Det skjedde noe galt under sletting av kandidaten`);
+            this.visInfobanner(`Det skjedde noe galt under sletting av kandidaten`, 'error');
         }
 
         if (enKandidatErNettoppDearkivert) {
@@ -133,7 +133,8 @@ class KandidatlisteOgModaler extends React.Component<Props> {
 
         if (dearkiveringFeiletNettopp) {
             this.visInfobanner(
-                `Det skjedde noe galt, kunne ikke legge kandidaten tilbake i kandidatlisten`
+                `Det skjedde noe galt, kunne ikke legge kandidaten tilbake i kandidatlisten`,
+                'error'
             );
         }
 
