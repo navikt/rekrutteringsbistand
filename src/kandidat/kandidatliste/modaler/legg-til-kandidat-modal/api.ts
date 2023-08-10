@@ -1,7 +1,7 @@
 import { api } from 'felles/api';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError, postHeaders } from '../../../api/fetchUtils';
-import { KandidatLookup } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 
 export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<KandidatLookup>> => {

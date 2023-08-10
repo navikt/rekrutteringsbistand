@@ -1,4 +1,4 @@
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { capitalizePoststed } from '../../../utils/formateringUtils';
 
 type Props = { cv: KandidatCv };

@@ -2,7 +2,7 @@ import { BodyLong, BodyShort, Heading } from '@navikt/ds-react';
 import { Fragment, FunctionComponent, ReactNode } from 'react';
 
 import { Sertifikat } from 'felles/domene/kandidat/Cv';
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import Informasjonspanel from '../Informasjonspanel';
 import Arbeidserfaring from './Arbeidserfaring';
 import css from './Cv.module.css';

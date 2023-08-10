@@ -4,7 +4,7 @@ import fnrValidator from '@navikt/fnrvalidator';
 import { useDispatch } from 'react-redux';
 
 import { fetchKandidatMedFnr, fetchSynlighetsevaluering } from './api';
-import { KandidatLookup } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import { getMiljø, Miljø } from '../../../utils/miljøUtils';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError } from '../../../api/fetchUtils';

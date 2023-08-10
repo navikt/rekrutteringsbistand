@@ -16,7 +16,7 @@ import LagreKandidaterIMineKandidatlisterModal from './kandidatliste/LagreKandid
 import LagreKandidaterISpesifikkKandidatlisteModal from './kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
 import { Økt } from './Økt';
-import EsKandidat from 'felles/domene/kandidat/EsKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;
@@ -39,7 +39,7 @@ const Kandidatsøk = ({
     kontekstAvKandidatlisteEllerStilling,
 }: KandidatsøkProps) => {
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
-    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<EsKandidat[]>([]);
+    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<Kandidat[]>([]);
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
         forrigeØkt?.markerteKandidater
     );

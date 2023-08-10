@@ -2,11 +2,11 @@ import { Checkbox } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Nettstatus } from 'felles/nettressurs';
-import EsKandidat from 'felles/domene/kandidat/EsKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import css from './Kandidater.module.css';
 
 type Props = {
-    kandidater: EsKandidat[];
+    kandidater: Kandidat[];
     markerteKandidater: Set<string>;
     onMarkerKandidat: (kandidatnumre: string[]) => void;
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
@@ -52,7 +52,7 @@ const MarkerAlle: FunctionComponent<Props> = ({
 };
 
 const hentKandidaterSomIkkeErPåKandidatlisten = (
-    kandidater: EsKandidat[],
+    kandidater: Kandidat[],
     kontekst: KontekstAvKandidatlisteEllerStilling | null
 ) => {
     if (kontekst === null) {

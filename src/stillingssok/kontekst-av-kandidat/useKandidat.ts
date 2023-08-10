@@ -8,18 +8,18 @@ import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
-import EsKandidat from 'felles/domene/kandidat/EsKandidat';
-import useEsKandidat, { fodselsnrTerm } from 'felles/komponenter/banner/useEsKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
+import useKandidat, { fodselsnrTerm } from 'felles/komponenter/banner/useKandidat';
 
-const useKandidat = (fnr: string) => {
+const useKandidatStillingssøk = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
     const brukKandidatkriterier = searchParams.get(QueryParam.Kandidatkriterier) !== null;
 
-    const { kandidat, feilmelding } = useEsKandidat(fodselsnrTerm(fnr));
+    const { kandidat, feilmelding } = useKandidat(fodselsnrTerm(fnr));
 
     useEffect(() => {
         if (kandidat) {
-            const brukKriterier = (kandidat: EsKandidat) => {
+            const brukKriterier = (kandidat: Kandidat) => {
                 const fylker = hentFylkerFraJobbønsker(kandidat.geografiJobbonsker);
                 const kommuner = hentKommunerFraJobbønsker(kandidat.geografiJobbonsker);
                 const yrkesønsker = hentYrkerFraJobbønsker(kandidat.yrkeJobbonskerObj);
@@ -84,4 +84,4 @@ const hentYrkerFraJobbønsker = (yrkesønsker: Jobbønske[]): string[] => {
     return [...new Set(yrkesønsker.flatMap((yrkesønske) => yrkesønske.sokeTitler))];
 };
 
-export default useKandidat;
+export default useKandidatStillingssøk;

@@ -15,7 +15,7 @@ import Kandidatliste, {
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { mockStrings } from './mock-strings';
 import { Veileder } from './veileder.mock';
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 const antall = 25;
 const tomListe = [...new Array(antall)];

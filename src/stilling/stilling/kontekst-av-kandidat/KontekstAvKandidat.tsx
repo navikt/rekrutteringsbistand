@@ -13,8 +13,8 @@ import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
-import useEsKandidat, { fodselsnrTerm } from 'felles/komponenter/banner/useEsKandidat';
-import EsKandidat from 'felles/domene/kandidat/EsKandidat';
+import useKandidat, { fodselsnrTerm } from 'felles/komponenter/banner/useKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
     fnr: string;
@@ -24,7 +24,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: Props) => {
-    const { kandidat, feilmelding } = useEsKandidat(fodselsnrTerm(fnr));
+    const { kandidat, feilmelding } = useKandidat(fodselsnrTerm(fnr));
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
@@ -131,7 +131,7 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
 const byggBrødsmulesti = (
     fnr: string,
     stilling: Stilling,
-    kandidat?: EsKandidat,
+    kandidat?: Kandidat,
     stillingssøk?: string
 ) => {
     if (!kandidat) {

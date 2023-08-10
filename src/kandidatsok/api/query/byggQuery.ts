@@ -16,11 +16,11 @@ import { queryMedValgtKontor } from './queryMedValgtKontor';
 import { SearchQuery, Sorteringsrekkefølge } from '../../kandidater/elasticSearchTyper';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import { Sortering } from '../../kandidater/sortering/Sortering';
-import EsKandidat from 'felles/domene/kandidat/EsKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export const PAGE_SIZE = 25;
 
-const interessanteKandidatfelter: Array<keyof EsKandidat> = [
+const interessanteKandidatfelter: Array<keyof Kandidat> = [
     'fodselsnummer',
     'fornavn',
     'etternavn',

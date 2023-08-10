@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { BodyShort, ErrorMessage, Textarea } from '@navikt/ds-react';
 
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { KandidatLookup } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
 import Knapper from './Knapper';

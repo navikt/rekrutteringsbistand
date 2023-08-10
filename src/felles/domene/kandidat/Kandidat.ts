@@ -53,7 +53,7 @@ type UtgåtteFelter = {
 };
 
 /* Fullverdig kandidattype slik det er definert i ElasticSearch. */
-type EsKandidat = Id &
+type Kandidat = Id &
     Personalia &
     Geografi &
     Oppfølgingsinformasjon &
@@ -168,4 +168,4 @@ export type KandidatCv = {
     veilederNavn: string;
 };
 
-export default EsKandidat;
+export default Kandidat;

@@ -16,7 +16,7 @@ import { Sms } from '../../kandidatliste/domene/Kandidatressurser';
 import AppState from '../../state/AppState';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './Historikkside.module.css';
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 const Historikkside: FunctionComponent = () => {
     const dispatch = useDispatch();

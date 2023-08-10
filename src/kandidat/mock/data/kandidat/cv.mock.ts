@@ -1,5 +1,5 @@
 import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import * as cvData from './cv-data.mock';
 import { mockStrings } from './mock-strings';
 import { Veileder } from './veileder.mock';

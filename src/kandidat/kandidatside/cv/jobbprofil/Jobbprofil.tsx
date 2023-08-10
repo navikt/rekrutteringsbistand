@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react';
 import { BodyShort } from '@navikt/ds-react';
 import Informasjonspanel from '../Informasjonspanel';
 import css from './Jobbprofil.module.css';
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 const oppstartskoder = {
     LEDIG_NAA: { key: 'LEDIG_NAA', label: 'Kandidaten er ledig nå' },

@@ -4,7 +4,7 @@ import { Checkbox, Detail } from '@navikt/ds-react';
 
 import { alleInnsatsgrupper } from '../../filter/Jobbmuligheter';
 import { CheckmarkIcon, HeartIcon, PinIcon } from '@navikt/aksel-icons';
-import EsKandidat from 'felles/domene/kandidat/EsKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { KontekstAvKandidatlisteEllerStilling } from '../../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { lenkeTilKandidat, storForbokstav } from '../../utils';
 import { Nettstatus } from 'felles/nettressurs';
@@ -15,7 +15,7 @@ import useScrollTilKandidat from '../../hooks/useScrollTilKandidat';
 import css from './Kandidatrad.module.css';
 
 type Props = {
-    kandidat: EsKandidat;
+    kandidat: Kandidat;
     markerteKandidater: Set<string>;
     onMarker: () => void;
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
@@ -109,24 +109,21 @@ const Kandidatrad: FunctionComponent<Props> = ({
     );
 };
 
-const kandidatenErPåKandidatlista = (
-    kandidat: EsKandidat,
-    kandidatliste: Kandidatliste
-): boolean => {
+const kandidatenErPåKandidatlista = (kandidat: Kandidat, kandidatliste: Kandidatliste): boolean => {
     return kandidatliste.kandidater.some((kandidatPåLista) => {
         return kandidatPåLista.kandidatnr === kandidat.arenaKandidatnr;
     });
 };
 
-export const hentKandidatensNavn = (kandidat: EsKandidat) =>
+export const hentKandidatensNavn = (kandidat: Kandidat) =>
     `${storForbokstav(kandidat.etternavn)}, ${storForbokstav(kandidat.fornavn)}`;
 
-const hentKandidatensØnskedeYrker = (kandidat: EsKandidat) =>
+const hentKandidatensØnskedeYrker = (kandidat: Kandidat) =>
     kandidat.yrkeJobbonskerObj.length === 0
         ? undefined
         : kandidat.yrkeJobbonskerObj.map((jobbønske) => jobbønske.styrkBeskrivelse).join(', ');
 
-const hentKandidatensØnskedeSteder = (kandidat: EsKandidat) =>
+const hentKandidatensØnskedeSteder = (kandidat: Kandidat) =>
     kandidat.geografiJobbonsker.length === 0
         ? undefined
         : kandidat.geografiJobbonsker.map((jobbønske) => jobbønske.geografiKodeTekst).join(', ');

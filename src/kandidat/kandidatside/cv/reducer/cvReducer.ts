@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { Error, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError } from '../../../api/fetchUtils';
 import { fetchCv } from '../../../api/api';
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 export enum CvActionType {
     NullstillCv = 'NULLSTILL_CV',

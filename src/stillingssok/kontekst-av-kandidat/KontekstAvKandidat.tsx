@@ -5,14 +5,14 @@ import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressu
 import { useEffect, useState } from 'react';
 import { api } from 'felles/api';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
-import useKandidat from './useKandidat';
+import useKandidatStillingssøk from './useKandidat';
 
 type Props = {
     fnr: string;
 };
 
 const KontekstAvKandidat = ({ fnr }: Props) => {
-    const { kandidat, feilmelding } = useKandidat(fnr);
+    const { kandidat, feilmelding } = useKandidatStillingssøk(fnr);
     console.log('t1', kandidat, feilmelding);
 
     const [synlighetsevaluering, setSynlighetsevaluering] = useState<

@@ -8,13 +8,13 @@ import {
     PinIcon,
 } from '@navikt/aksel-icons';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
-import EsKandidat from 'felles/domene/kandidat/EsKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import css from './Kandidatbanner.module.css';
 import BrødsmuleKomponent, { Brødsmule } from './BrødsmuleKomponent';
 
 type Props = {
-    kandidat?: EsKandidat;
+    kandidat?: Kandidat;
     brødsmulesti?: Brødsmule[];
     toppHoyre?: ReactNode;
     bunnHoyre?: ReactNode;
@@ -124,7 +124,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
     return `Født: ${fødselsdagString} (${alder} år)`;
 };
 
-const hentAdresse = (kandidat?: EsKandidat) => {
+const hentAdresse = (kandidat?: Kandidat) => {
     if (!kandidat) return undefined;
 
     const { poststed, postnummer, adresselinje1 } = kandidat;
@@ -140,7 +140,7 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-export const formaterNavn = (kandidat: EsKandidat) => {
+export const formaterNavn = (kandidat: Kandidat) => {
     const fornavn = brukStorForbokstav(kandidat.fornavn);
     const etternavn = brukStorForbokstav(kandidat.etternavn);
 

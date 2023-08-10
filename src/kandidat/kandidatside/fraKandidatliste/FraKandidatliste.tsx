@@ -28,7 +28,7 @@ import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useSendtKandidatmelding from './useSendtKandidatmelding';
 import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
 import css from './FraKandidatliste.module.css';
-import { KandidatCv } from 'felles/domene/kandidat/EsKandidat';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
     tabs: ReactNode;
