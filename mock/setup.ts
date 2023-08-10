@@ -28,5 +28,5 @@ const handlers = [
 const worker = setupWorker(...handlers);
 
 worker.start({
-    onUnhandledRequest: 'bypass',
+    onUnhandledRequest: 'warn',
 });
