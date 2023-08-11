@@ -1,10 +1,10 @@
 import { Heading, Link, Panel } from '@navikt/ds-react';
 import parse from 'html-react-parser';
 
+import Stilling from 'felles/domene/stilling/Stilling';
 import { isValidUrl } from '../../../common/urlUtils';
 import fellesCss from '../Forhåndsvisning.module.css';
 import css from './OmBedriften.module.css';
-import Stilling from '../../../domene/Stilling';
 
 type Props = { stilling: Stilling };
 

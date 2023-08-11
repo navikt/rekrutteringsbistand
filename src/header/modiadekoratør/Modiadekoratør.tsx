@@ -75,7 +75,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
 
 const hentHostname = () => {
     if (window.location.hostname.includes('intern.dev.nav.no')) {
-        return 'https://internarbeidsflatedecorator-q0.dev.intern.nav.no';
+        return 'https://internarbeidsflatedecorator-q0.intern.dev.nav.no';
     } else if (window.location.hostname.includes('intern.nav.no')) {
         return 'https://internarbeidsflatedecorator.intern.nav.no';
     } else {

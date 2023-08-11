@@ -1,40 +1,41 @@
-import {
-    filtrerKandidater,
-    lagTomtStatusfilter,
-    lagTomtHendelsefilter,
-} from '../filter/filter-utils';
-import KandidatlisteActionType from './KandidatlisteActionType';
-import { Reducer } from 'redux';
-import {
-    Nettressurs,
-    ikkeLastet,
-    feil,
-    lasterInn,
-    Nettstatus,
-    senderInn,
-    suksess,
-} from 'felles/nettressurs';
-import KandidatlisteAction from './KandidatlisteAction';
-import { SearchApiError } from '../../api/fetchUtils';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import {
-    Kandidattilstander,
-    Kandidatnotater,
-    Kandidattilstand,
-    Visningsstatus,
-} from '../domene/Kandidatressurser';
-import { SmsStatus, Kandidatmeldinger } from '../domene/Kandidatressurser';
-import { KandidatSorteringsfelt } from '../kandidatsortering';
-import { Retning } from '../liste-header/sorterbarKolonneheader/Retning';
-import {
-    ForespørslerGruppertPåAktørId,
-    separerGjeldendeForespørselFraRespons,
-} from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Hendelse } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
 import KandidatIKandidatliste, {
     Kandidatstatus,
     UsynligKandidat,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { SmsStatus } from 'felles/domene/sms/Sms';
+import {
+    Nettressurs,
+    Nettstatus,
+    feil,
+    ikkeLastet,
+    lasterInn,
+    senderInn,
+    suksess,
+} from 'felles/nettressurs';
+import { Reducer } from 'redux';
+import { SearchApiError } from '../../api/fetchUtils';
+import {
+    Kandidatmeldinger,
+    Kandidatnotater,
+    Kandidattilstand,
+    Kandidattilstander,
+    Visningsstatus,
+} from '../domene/Kandidatressurser';
+import {
+    filtrerKandidater,
+    lagTomtHendelsefilter,
+    lagTomtStatusfilter,
+} from '../filter/filter-utils';
+import { Hendelse } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
+import { KandidatSorteringsfelt } from '../kandidatsortering';
+import {
+    ForespørslerGruppertPåAktørId,
+    separerGjeldendeForespørselFraRespons,
+} from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { Retning } from '../liste-header/sorterbarKolonneheader/Retning';
+import KandidatlisteAction from './KandidatlisteAction';
+import KandidatlisteActionType from './KandidatlisteActionType';
 
 type FormidlingId = string;
 

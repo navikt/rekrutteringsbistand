@@ -1,4 +1,11 @@
-import { FormidlingAvUsynligKandidat, KandidatIKandidatliste } from './KandidatIKandidatliste';
+import { Stillingskategori } from '../stilling/Stilling';
+import {
+    FormidlingAvUsynligKandidat,
+    KandidatIKandidatliste,
+    Kandidatstatus,
+    Kandidatutfall,
+    Utfallsendring,
+} from './KandidatIKandidatliste';
 
 type Kandidatliste = {
     kandidatlisteId: string;
@@ -16,6 +23,27 @@ type Kandidatliste = {
     status: Kandidatlistestatus;
     antallStillinger: number | null;
     stillingskategori: Stillingskategori | null;
+};
+
+/* Brukes i Historikk-fanen når vi henter alle kandidatlistene en kandidat ligger på */
+export type KandidatlisteForKandidat = {
+    kandidatnr: string;
+    fornavn: string;
+    etternavn: string;
+    lagtTilTidspunkt: string;
+    lagtTilAvIdent: string;
+    lagtTilAvEpost: string;
+    lagtTilAvNavn: string;
+    status: Kandidatstatus;
+    utfall: Kandidatutfall;
+    uuid: string;
+    tittel: string;
+    organisasjonReferanse?: string;
+    organisasjonNavn?: string;
+    stillingId?: string;
+    slettet?: boolean;
+    antallStillinger?: number;
+    utfallsendringer: Utfallsendring[];
 };
 
 export enum KanSletteKandidatliste {
@@ -36,13 +64,6 @@ export type KandidatlisteSammendrag = Omit<
 export enum Kandidatlistestatus {
     Åpen = 'ÅPEN',
     Lukket = 'LUKKET',
-}
-
-export enum Stillingskategori {
-    Stilling = 'STILLING',
-    Formidling = 'FORMIDLING',
-    Arbeidstrening = 'ARBEIDSTRENING',
-    Jobbmesse = 'JOBBMESSE',
 }
 
 export type OpprettetAv = {

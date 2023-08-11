@@ -1,17 +1,17 @@
-import { Arbeidsgiverforslag } from '../opprett-ny-stilling/VelgArbeidsgiver';
-import { fetchGet, fetchPost, fetchPut } from './apiUtils';
-import { HentMineStillingerQuery } from '../mine-stillinger/mineStillingerSagas';
-import { lagOpenSearchQuery, OpenSearchResponse } from './openSearchQuery';
-import { RekrutteringsbistandstillingOpenSearch } from '../domene/StillingOpenSearch';
-import { Stillingskategori } from '../opprett-ny-stilling/VelgStillingskategori';
-import devVirksomheter from './devVirksomheter';
+import { api } from 'felles/api';
+import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import Stilling, {
     AdminStatus,
     Rekrutteringsbistandstilling,
     Stillingsinfo,
-} from '../domene/Stilling';
+    Stillingskategori,
+} from 'felles/domene/stilling/Stilling';
 import { Miljø, getMiljø } from 'felles/miljø';
-import { api } from 'felles/api';
+import { HentMineStillingerQuery } from '../mine-stillinger/mineStillingerSagas';
+import { fetchGet, fetchPost, fetchPut } from './apiUtils';
+import devVirksomheter from './devVirksomheter';
+import { OpenSearchResponse, lagOpenSearchQuery } from './openSearchQuery';
 
 export type Side<T> = {
     content: T[];
@@ -50,7 +50,7 @@ export const hentRekrutteringsbistandstilling = async (
 
 export const hentMineStillingerOpenSearch = async (
     query: HentMineStillingerQuery
-): Promise<Side<RekrutteringsbistandstillingOpenSearch>> => {
+): Promise<Side<EsRekrutteringsbistandstilling>> => {
     const sidestørrelse = 25;
 
     const openSearchQuery = lagOpenSearchQuery(query, sidestørrelse);
@@ -97,11 +97,12 @@ const employerNameCompletionQueryTemplate = (match: string) => ({
 
 export const fetchEmployerNameCompletionHits = async (
     input: string
-): Promise<Arbeidsgiverforslag[]> => {
+): Promise<Enhetsregistertreff[]> => {
     if (getMiljø() === Miljø.DevGcp) {
-        const matchendeVirksomheter = devVirksomheter.filter((virksomhet: Arbeidsgiverforslag) =>
+        const matchendeVirksomheter = devVirksomheter.filter((virksomhet: Enhetsregistertreff) =>
             virksomhet.name.toLowerCase().includes(input.toLowerCase())
         );
+
         return Promise.resolve(matchendeVirksomheter);
     }
 
@@ -125,11 +126,11 @@ export const fetchEmployerNameCompletionHits = async (
     ];
 };
 
-export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Arbeidsgiverforslag[]> => {
+export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Enhetsregistertreff[]> => {
     const utenMellomrom = orgnummer.replace(/\s/g, '');
 
     if (getMiljø() === Miljø.DevGcp) {
-        const matchendeVirksomheter = devVirksomheter.filter((virksomhet: Arbeidsgiverforslag) =>
+        const matchendeVirksomheter = devVirksomheter.filter((virksomhet: Enhetsregistertreff) =>
             virksomhet.orgnr?.includes(orgnummer)
         );
         return Promise.resolve(matchendeVirksomheter);

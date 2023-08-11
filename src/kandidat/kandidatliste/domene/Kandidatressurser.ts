@@ -1,4 +1,5 @@
 import { Fødselsnummer, Kandidatnr } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { Sms } from 'felles/domene/sms/Sms';
 import { Nettressurs } from 'felles/nettressurs';
 
 export type Notat = {
@@ -11,23 +12,6 @@ export type Notat = {
         navn: string;
         ident: string;
     };
-};
-
-export enum SmsStatus {
-    IkkeSendt = 'IKKE_SENDT',
-    UnderUtsending = 'UNDER_UTSENDING',
-    Sendt = 'SENDT',
-    Feil = 'FEIL',
-}
-
-export type Sms = {
-    id: number;
-    fnr: Fødselsnummer;
-    opprettet: string;
-    sendt: string;
-    status: SmsStatus;
-    navIdent: string;
-    kandidatlisteId: string;
 };
 
 export type Kandidattilstand = {

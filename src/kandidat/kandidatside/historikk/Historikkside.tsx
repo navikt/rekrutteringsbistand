@@ -1,22 +1,23 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Ingress } from '@navikt/ds-react';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useParams } from 'react-router-dom';
 
-import { capitalizeFirstLetter } from '../../utils/formateringUtils';
-import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
-import { fetchSmserForKandidat } from '../../api/api';
-import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { Historikktabell } from './historikktabell/Historikktabell';
-import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from 'felles/nettressurs';
-import { KandidatlisteForKandidat, KandidatlisterForKandidatActionType } from './historikkReducer';
-import { KandidatQueryParam } from '../Kandidatside';
 import { sendEvent } from 'felles/amplitude';
-import { Sms } from '../../kandidatliste/domene/Kandidatressurser';
-import AppState from '../../state/AppState';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
-import css from './Historikkside.module.css';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Sms } from 'felles/domene/sms/Sms';
+import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from 'felles/nettressurs';
+import { fetchSmserForKandidat } from '../../api/api';
+import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
+import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
+import AppState from '../../state/AppState';
+import { capitalizeFirstLetter } from '../../utils/formateringUtils';
+import { KandidatQueryParam } from '../Kandidatside';
+import { KandidatlisterForKandidatActionType } from './historikkReducer';
+import css from './Historikkside.module.css';
+import { Historikktabell } from './historikktabell/Historikktabell';
 
 const Historikkside: FunctionComponent = () => {
     const dispatch = useDispatch();

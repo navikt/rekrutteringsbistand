@@ -1,15 +1,17 @@
-import { FunctionComponent, useEffect, useState } from 'react';
 import { Alert, BodyLong, Button, Heading } from '@navikt/ds-react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { CREATE_AD } from '../stilling/adReducer';
-import { REDIGERINGSMODUS_QUERY_PARAM } from '../stilling/Stilling';
-import { State } from '../redux/store';
+import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import Modal from '../common/modal/Modal';
-import VelgArbeidsgiver, { Arbeidsgiverforslag } from './VelgArbeidsgiver';
-import VelgStillingskategori, { Stillingskategori } from './VelgStillingskategori';
+import { State } from '../redux/store';
+import { REDIGERINGSMODUS_QUERY_PARAM } from '../stilling/Stilling';
+import { CREATE_AD } from '../stilling/adReducer';
 import css from './OpprettNyStilling.module.css';
+import VelgArbeidsgiver from './VelgArbeidsgiver';
+import VelgStillingskategori from './VelgStillingskategori';
 
 type Props = {
     onClose: () => void;
@@ -26,7 +28,7 @@ const OpprettNyStilling: FunctionComponent<Props> = ({ onClose }) => {
     const [stillingskategorifeilmelding, setStillingskatergorifeilmelding] = useState<
         string | undefined
     >();
-    const [arbeidsgiver, setArbeidsgiver] = useState<Arbeidsgiverforslag | null>(null);
+    const [arbeidsgiver, setArbeidsgiver] = useState<Enhetsregistertreff | null>(null);
     const [arbeidsgiverfeilmelding, setArbeidsgiverfeilmelding] = useState<string | undefined>();
 
     useEffect(() => {

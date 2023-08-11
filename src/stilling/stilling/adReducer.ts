@@ -1,18 +1,23 @@
-import { KanInkludere } from './edit/registrer-inkluderingsmuligheter/DirektemeldtStilling';
 import deepEqual from 'deep-equal';
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { hentRekrutteringsbistandstilling, kopierStilling, postStilling } from '../api/api';
 import { getReportee } from '../reportee/reporteeReducer';
 import {
+    SET_NAV_IDENT_STILLINGSINFO,
+    SET_NOTAT,
+    SET_STILLINGSINFO_DATA,
+} from '../stillingsinfo/stillingsinfoDataReducer';
+import { OPPRETT_STILLINGSINFO, UPDATE_STILLINGSINFO } from '../stillingsinfo/stillingsinfoReducer';
+import {
+    CHECK_TAG,
+    REMOVE_AD_DATA,
+    SET_ADMIN_STATUS,
     SET_AD_DATA,
     SET_AD_STATUS,
-    SET_ADMIN_STATUS,
+    SET_FIRST_PUBLISHED,
     SET_NAV_IDENT,
     SET_REPORTEE,
     SET_UPDATED_BY,
-    SET_FIRST_PUBLISHED,
-    REMOVE_AD_DATA,
-    CHECK_TAG,
 } from './adDataReducer';
 import {
     hasValidationErrors,
@@ -20,20 +25,11 @@ import {
     validateAll,
     validateBeforeSave,
 } from './adValidationReducer';
-import { OPPRETT_STILLINGSINFO, UPDATE_STILLINGSINFO } from '../stillingsinfo/stillingsinfoReducer';
-import {
-    SET_NAV_IDENT_STILLINGSINFO,
-    SET_NOTAT,
-    SET_STILLINGSINFO_DATA,
-} from '../stillingsinfo/stillingsinfoDataReducer';
+import { KanInkludere } from './edit/registrer-inkluderingsmuligheter/DirektemeldtStilling';
 import { tagsInneholderInkluderingsmuligheter } from './tags/utils';
 
-import { ApiError, fetchDelete, fetchPut } from '../api/apiUtils';
-import { MineStillingerActionType } from '../mine-stillinger/MineStillingerAction';
-import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
-import { State } from '../redux/store';
-import { formatISOString } from '../utils/datoUtils';
 import { sendEvent } from 'felles/amplitude';
+import { api } from 'felles/api';
 import Stilling, {
     AdminStatus,
     Kilde,
@@ -41,9 +37,13 @@ import Stilling, {
     Rekrutteringsbistandstilling,
     Status,
     System,
-} from '../domene/Stilling';
-import { api } from 'felles/api';
+} from 'felles/domene/stilling/Stilling';
 import { Nettstatus } from 'felles/nettressurs';
+import { ApiError, fetchDelete, fetchPut } from '../api/apiUtils';
+import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
+import { MineStillingerActionType } from '../mine-stillinger/MineStillingerAction';
+import { State } from '../redux/store';
+import { formatISOString } from '../utils/datoUtils';
 
 export const FETCH_AD = 'FETCH_AD';
 export const FETCH_AD_BEGIN = 'FETCH_AD_BEGIN';

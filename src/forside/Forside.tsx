@@ -8,16 +8,11 @@ const Forside = () => {
     const navKontor = useNavKontor((state) => state.navKontor);
 
     return (
-        <div className={css.forside}>
-            <Hurtiglenker />
-            <button
-                onClick={() => {
-                    throw new Error('Dette er en DEV-feil');
-                }}
-            >
-                Hei feil
-            </button>
-            {navKontor ? <Statistikk navKontor={navKontor} /> : <Loader />}
+        <div className={css.forsideWrapper}>
+            <div className={css.forside}>
+                <Hurtiglenker />
+                {navKontor ? <Statistikk navKontor={navKontor} /> : <Loader />}
+            </div>
         </div>
     );
 };

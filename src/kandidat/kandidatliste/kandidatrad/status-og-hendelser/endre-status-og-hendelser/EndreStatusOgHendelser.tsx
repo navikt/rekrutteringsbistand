@@ -1,22 +1,23 @@
+import { BodyShort, Button, Detail, Heading, Radio, RadioGroup } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
-import { Button, RadioGroup, Radio, Detail, BodyShort, Heading } from '@navikt/ds-react';
 
-import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import {
     KandidatIKandidatliste,
     Kandidatstatus,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { kandidaterMåGodkjenneDelingAvCv } from '../../../domene/kandidatlisteUtils';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Sms } from 'felles/domene/sms/Sms';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Nettressurs } from 'felles/nettressurs';
-import { Sms } from '../../../domene/Kandidatressurser';
+import { kandidaterMåGodkjenneDelingAvCv } from '../../../domene/kandidatlisteUtils';
+import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { statusToDisplayName } from '../etiketter/StatusEtikett';
 import CvErSlettet from '../hendelser/CvErSlettet';
 import DelCvMedArbeidsgiver from '../hendelser/DelCvMedArbeidsgiver';
-import ForespørslerOgSvar from '../hendelser/forespørsler-og-svar/ForespørslerOgSvar';
 import HarFåttJobben from '../hendelser/HarFåttJobben';
-import Kandidatliste, { Stillingskategori } from 'felles/domene/kandidatliste/Kandidatliste';
 import NyKandidat from '../hendelser/NyKandidat';
 import SmsSendt from '../hendelser/SmsSendt';
+import ForespørslerOgSvar from '../hendelser/forespørsler-og-svar/ForespørslerOgSvar';
 import css from './EndreStatusOgHendelser.module.css';
 
 type Props = {

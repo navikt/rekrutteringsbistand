@@ -1,13 +1,13 @@
+import { BriefcaseIcon, MagnifyingGlassIcon } from '@navikt/aksel-icons';
+import { BodyLong, Heading } from '@navikt/ds-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { BodyLong, Heading } from '@navikt/ds-react';
-import { MagnifyingGlassIcon, BriefcaseIcon } from '@navikt/aksel-icons';
 
-import { HIDE_AD_PUBLISHED_MODAL } from '../../adReducer';
-import { formatISOString } from '../../../utils/datoUtils';
-import { Status } from '../../../domene/Stilling';
-import css from './AdPublishedModal.module.css';
+import { Status } from 'felles/domene/stilling/Stilling';
 import Modal from '../../../common/modal/Modal';
+import { formatISOString } from '../../../utils/datoUtils';
+import { HIDE_AD_PUBLISHED_MODAL } from '../../adReducer';
+import css from './AdPublishedModal.module.css';
 
 const AdPublishedModal = ({ stillingId }) => {
     const dispatch = useDispatch();

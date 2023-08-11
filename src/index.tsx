@@ -4,13 +4,13 @@ import { Modal } from '@navikt/ds-react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import naisTelemetry from './faroConfig';
+import faroConfig from './faroConfig';
 import './index.css';
 
 if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
     initializeFaro({
-        url: naisTelemetry.telemetryCollectorURL,
-        app: naisTelemetry.app,
+        url: faroConfig.telemetryCollectorURL,
+        app: faroConfig.app,
         instrumentations: [
             ...getWebInstrumentations({
                 captureConsole: true,

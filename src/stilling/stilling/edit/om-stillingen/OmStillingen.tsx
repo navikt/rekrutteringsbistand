@@ -1,12 +1,12 @@
-import React, { ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { TextField } from '@navikt/ds-react';
+import { ChangeEvent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { SET_AD_TEXT, SET_EMPLOYMENT_JOBTITLE } from '../../adDataReducer';
+import Stilling from 'felles/domene/stilling/Stilling';
 import { State } from '../../../redux/store';
+import { SET_AD_TEXT, SET_EMPLOYMENT_JOBTITLE } from '../../adDataReducer';
 import RichTextEditor from '../richTextEditor/RichTextEditor';
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
-import Stilling from '../../../domene/Stilling';
 import Styrk from './styrk/Styrk';
 
 type Props = {

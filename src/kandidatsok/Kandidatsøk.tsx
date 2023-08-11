@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 
-import { InnloggetBruker } from './hooks/useBrukerensIdent';
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { KontekstAvKandidatlisteEllerStilling } from './hooks/useKontekstAvKandidatlisteEllerStilling';
-import { Økt } from './Økt';
-import Filter from './filter/Filter';
-import Kandidater from './kandidater/Kandidater';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
-import LagreKandidaterIMineKandidatlisterModal from './kandidatliste/LagreKandidaterIMineKandidatlisterModal';
-import LagreKandidaterISpesifikkKandidatlisteModal from './kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
-import PorteføljeTabs from './filter/porteføljetabs/PorteføljeTabs';
+import Banner from 'felles/komponenter/banner/Banner';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import css from './Kandidatsøk.module.css';
+import Filter from './filter/Filter';
 import TømFiltre from './filter/TømFiltre';
+import PorteføljeTabs from './filter/porteføljetabs/PorteføljeTabs';
+import { InnloggetBruker } from './hooks/useBrukerensIdent';
+import { KontekstAvKandidatlisteEllerStilling } from './hooks/useKontekstAvKandidatlisteEllerStilling';
 import useLagreØkt from './hooks/useLagreØkt';
 import useMarkerteKandidater from './hooks/useMarkerteKandidater';
-import css from './Kandidatsøk.module.css';
-import Banner from 'felles/komponenter/banner/Banner';
-import { ReactComponent as FinnKandidaterPiktogram } from './finnkandidater.svg';
+import Kandidater from './kandidater/Kandidater';
+import LagreKandidaterIMineKandidatlisterModal from './kandidatliste/LagreKandidaterIMineKandidatlisterModal';
+import LagreKandidaterISpesifikkKandidatlisteModal from './kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
+import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
+import { Økt } from './Økt';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;
@@ -39,7 +39,7 @@ const Kandidatsøk = ({
     kontekstAvKandidatlisteEllerStilling,
 }: KandidatsøkProps) => {
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
-    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<KandidatTilKandidatsøk[]>([]);
+    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<Kandidat[]>([]);
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
         forrigeØkt?.markerteKandidater
     );
@@ -73,7 +73,7 @@ const Kandidatsøk = ({
                 <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
             )}
             {kontekstAvKandidatlisteEllerStilling === null && (
-                <Banner tittel="Kandidatsøk" gammelGrå ikon={FinnKandidaterPiktogram} />
+                <Banner tittel="Kandidatsøk" gammelGrå ikon={<Piktogram />} />
             )}
             <div className={css.container}>
                 <TømFiltre />

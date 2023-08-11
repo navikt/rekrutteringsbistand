@@ -1,5 +1,5 @@
 import { Heading, Panel } from '@navikt/ds-react';
-import { Kontaktinfo } from '../../../domene/Stilling';
+import { Kontaktinfo } from 'felles/domene/stilling/Stilling';
 import css from '../Forhåndsvisning.module.css';
 
 type Props = {

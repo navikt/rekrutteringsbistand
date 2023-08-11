@@ -1,14 +1,14 @@
-import { FunctionComponent } from 'react';
+import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
 import moment from 'moment';
+import { FunctionComponent } from 'react';
+import { formaterDato, formaterDatoUtenÅrstall } from '../../../../utils/dateUtils';
 import { hentSisteKandidatutfall } from '../../../domene/kandidatUtils';
 import {
     ForespørselOmDelingAvCv,
     TilstandPåForespørsel,
 } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { formaterDato, formaterDatoUtenÅrstall } from '../../../../utils/dateUtils';
-import { Sms, SmsStatus } from '../../../domene/Kandidatressurser';
 import { cvErSendtTilArbeidsgiverOgSlettet } from '../hendelser/CvErSlettet';
-import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Etikett from './Etikett';
 import css from './Hendelsesetikett.module.css';
 
