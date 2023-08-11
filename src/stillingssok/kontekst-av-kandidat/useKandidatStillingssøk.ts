@@ -1,6 +1,8 @@
 import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import useKandidat, { fodselsnrTerm } from 'felles/komponenter/kandidatbanner/useKandidat';
+import { Nettstatus } from 'felles/nettressurs';
 import { useEffect } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
 import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
@@ -8,17 +10,17 @@ import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
-import useKandidat, { fodselsnrTerm } from 'felles/komponenter/banner/useKandidat';
 
 const useKandidatStillingssøk = (fnr: string) => {
     const { searchParams, navigate } = useNavigering();
 
-    const { kandidat, feilmelding } = useKandidat(fodselsnrTerm(fnr));
+    const kandidat = useKandidat(fodselsnrTerm(fnr));
 
     useEffect(() => {
-        if (kandidat) {
+        if (kandidat.kind === Nettstatus.Suksess) {
             const brukKandidatkriterier = searchParams.get(QueryParam.Kandidatkriterier) !== null;
-            const { geografiJobbonsker, yrkeJobbonskerObj } = kandidat;
+            const { geografiJobbonsker, yrkeJobbonskerObj } = kandidat.data;
+
             const brukKriterier = () => {
                 const fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
                 const kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
@@ -48,10 +50,7 @@ const useKandidatStillingssøk = (fnr: string) => {
         }
     }, [fnr, navigate, kandidat, searchParams]);
 
-    return {
-        kandidat,
-        feilmelding,
-    };
+    return kandidat;
 };
 
 const hentFylkestekstFraGeografiKode = (geografiKode: string) => {

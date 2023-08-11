@@ -1,7 +1,7 @@
 import { Alert } from '@navikt/ds-react';
 import { api } from 'felles/api';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
-import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
+import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
 import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ fnr }: Props) => {
-    const { kandidat, feilmelding } = useKandidatStillingssøk(fnr);
+    const kandidat = useKandidatStillingssøk(fnr);
 
     const [synlighetsevaluering, setSynlighetsevaluering] = useState<
         Nettressurs<Synlighetsevaluering>
@@ -51,12 +51,12 @@ const KontekstAvKandidat = ({ fnr }: Props) => {
             setSynlighetsevaluering(await synlighetPromise);
         };
 
-        if (feilmelding) {
+        if (kandidat.kind === Nettstatus.Feil) {
             evaluerSynlighet();
         }
-    }, [feilmelding, fnr]);
+    }, [kandidat.kind, fnr]);
 
-    if (feilmelding) {
+    if (kandidat.kind === Nettstatus.Feil) {
         return (
             <>
                 <Alert variant="error">Kandidaten er ikke synlig i Rekrutteringsbistand</Alert>
@@ -66,29 +66,25 @@ const KontekstAvKandidat = ({ fnr }: Props) => {
             </>
         );
     } else {
-        return (
-            <Kandidatbanner
-                kandidat={kandidat}
-                brødsmulesti={
-                    kandidat
-                        ? [
-                              {
-                                  href: '/kandidatsok',
-                                  tekst: 'Kandidater',
-                              },
-                              {
-                                  href: `/kandidater/kandidat/${kandidat.arenaKandidatnr}/cv?fraKandidatsok=true`,
-                                  tekst: `${kandidat.fornavn} ${kandidat.etternavn}`,
-                              },
+        const brødsmulesti =
+            kandidat.kind === Nettstatus.Suksess
+                ? [
+                      {
+                          href: '/kandidatsok',
+                          tekst: 'Kandidater',
+                      },
+                      {
+                          href: `/kandidater/kandidat/${kandidat.data.arenaKandidatnr}/cv?fraKandidatsok=true`,
+                          tekst: formaterNavn(kandidat.data),
+                      },
 
-                              {
-                                  tekst: 'Finn stilling',
-                              },
-                          ]
-                        : undefined
-                }
-            />
-        );
+                      {
+                          tekst: 'Finn stilling',
+                      },
+                  ]
+                : [];
+
+        return <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti} />;
     }
 };
 
