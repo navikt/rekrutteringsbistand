@@ -7,7 +7,7 @@
 .tittelOgInnhold {
     margin: 0 auto;
     max-width: var(--innhold-maksbredde);
-    padding: 1.5rem 0 1rem;
+    padding: 1.5rem 0 1.5rem;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
