@@ -16,6 +16,7 @@
     margin: 0 auto;
     padding: 1.5rem 0;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
     gap: 2rem;
@@ -27,4 +28,10 @@
 
 .gammelGrå {
     background-color: var(--a-bg-subtle);
+}
+
+@media (min-width: 768px) {
+    .innhold {
+        margin-left: auto;
+    }
 }
