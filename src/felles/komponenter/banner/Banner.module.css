@@ -1,24 +1,28 @@
 .banner {
     background-color: white;
+    padding: 0 2rem;
     width: 100%;
-    padding: 0 1rem;
-    margin-top: 3rem;
 }
 
-@media (min-width: 768px) {
-    .banner {
-        padding: 0 2rem;
-    }
-}
-
-.piktogramOgInnhold {
-    max-width: 103rem;
+.tittelOgInnhold {
     margin: 0 auto;
-    padding: 1.5rem 0;
+    max-width: var(--innhold-maksbredde);
+    padding: 1.5rem 0 1.5rem;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
     gap: 2rem;
+}
+
+.tittelOgInnhold h2 {
+    margin-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .tittelOgInnhold {
+        padding: 2.5rem 0 2.5rem;
+    }
 }
 
 .piktogram {
@@ -27,4 +31,10 @@
 
 .gammelGrå {
     background-color: var(--a-bg-subtle);
+}
+
+@media (min-width: 768px) {
+    .innhold {
+        margin-left: auto;
+    }
 }

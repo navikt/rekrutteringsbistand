@@ -1,6 +1,6 @@
 import { BodyShort } from '@navikt/ds-react';
-import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import css from './Brødsmulesti.module.css';
 
 export type Brødsmule = {
     tekst: string;
@@ -12,10 +12,10 @@ type Props = {
     brødsmulesti: Brødsmule[];
 };
 
-const BrødsmuleKomponent = ({ brødsmulesti }: Props) => (
-    <div>
-        {brødsmulesti &&
-            brødsmulesti.map(({ tekst, href, state }, index) => {
+const Brødsmulesti = ({ brødsmulesti }: Props) => (
+    <nav className={css.brødsmulesti} aria-label="Brødsmulesti">
+        <ul>
+            {brødsmulesti.map(({ tekst, href, state }, index) => {
                 const brødsmule = href ? (
                     <Link to={href} state={state}>
                         {tekst}
@@ -25,13 +25,13 @@ const BrødsmuleKomponent = ({ brødsmulesti }: Props) => (
                 );
 
                 return (
-                    <Fragment key={tekst}>
-                        {index !== 0 && <span> / </span>}
+                    <li aria-current="page" key={tekst}>
                         {brødsmule}
-                    </Fragment>
+                    </li>
                 );
             })}
-    </div>
+        </ul>
+    </nav>
 );
 
-export default BrødsmuleKomponent;
+export default Brødsmulesti;

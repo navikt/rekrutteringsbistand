@@ -12,7 +12,7 @@
 }
 
 .piktogramOgInnhold {
-    max-width: 103rem;
+    max-width: var(--innhold-maksbredde);
     margin: 0 auto;
     padding: 1.5rem 0;
     display: flex;
@@ -65,6 +65,8 @@
 .bunnlinje {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
 }
 
 @media (max-width: 1280px) {
@@ -72,7 +74,7 @@
         flex-wrap: wrap;
     }
 
-    .bunnHoyre {
+    .nederstTilHøyre {
         margin-top: 1rem;
     }
 }

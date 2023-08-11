@@ -7,20 +7,22 @@ type Props = {
     tittel: String;
     gammelGrå?: Boolean;
     ikon: ReactNode;
+    children?: ReactNode;
 };
 
-const Banner = ({ tittel, gammelGrå, ikon }: Props) => {
+const Banner = ({ tittel, gammelGrå, ikon, children }: Props) => {
     return (
         <div
             className={classNames(css.banner, {
                 [css.gammelGrå]: gammelGrå,
             })}
         >
-            <div className={css.piktogramOgInnhold}>
+            <div className={css.tittelOgInnhold}>
                 {ikon}
-                <Heading level="1" size="xlarge">
+                <Heading level="2" size="large">
                     {tittel}
                 </Heading>
+                {children && <div className={css.innhold}>{children}</div>}
             </div>
         </div>
     );

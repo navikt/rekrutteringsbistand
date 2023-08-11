@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-import { BodyLong, BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import {
     CandleIcon,
     EnvelopeClosedIcon,
@@ -7,20 +5,23 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
+import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
+import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
+import { ReactNode } from 'react';
+import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
 import css from './Kandidatbanner.module.css';
-import BrødsmuleKomponent, { Brødsmule } from './BrødsmuleKomponent';
 
 type Props = {
-    kandidat?: Kandidat;
+    kandidat: Nettressurs<KandidatTilBanner>;
     brødsmulesti?: Brødsmule[];
-    toppHoyre?: ReactNode;
-    bunnHoyre?: ReactNode;
+    øverstTilHøyre?: ReactNode;
+    nederstTilHøyre?: ReactNode;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props) => {
+const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilHøyre }: Props) => {
     return (
         <div className={css.banner}>
             <div className={css.piktogramOgInnhold}>
@@ -29,73 +30,83 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                 <div className={css.innhold}>
                     <div className={css.hovedinnhold}>
                         <div className={css.topplinje}>
-                            <BrødsmuleKomponent brødsmulesti={brødsmulesti} />
-                            <div>{toppHoyre}</div>
+                            {brødsmulesti ? (
+                                <Brødsmulesti brødsmulesti={brødsmulesti} />
+                            ) : (
+                                <Skeleton width={220} />
+                            )}
+                            {øverstTilHøyre}
                         </div>
-                        {!kandidat ? (
-                            <BodyLong>Informasjonen om kandidaten kan ikke vises</BodyLong>
-                        ) : (
-                            <>
-                                <Heading size="large" level="3">
-                                    {formaterNavn(kandidat)}
-                                </Heading>
+                        {kandidat.kind === Nettstatus.LasterInn && (
+                            <Skeleton>
+                                <Heading size="large">Placeholder</Heading>
+                            </Skeleton>
+                        )}
+                        {kandidat.kind === Nettstatus.Suksess && (
+                            <Heading size="large" level="2">
+                                {formaterNavn(kandidat.data)}
+                            </Heading>
+                        )}
+                        {kandidat.kind === Nettstatus.Feil && (
+                            <Heading size="large">{kandidat.error.message}</Heading>
+                        )}
 
-                                <div className={css.bunnlinje}>
-                                    <div className={css.personalia}>
-                                        <BodyShort>
-                                            <CandleIcon />{' '}
-                                            {kandidat ? (
-                                                `${lagFødselsdagtekst(kandidat?.fodselsdato)} (${
-                                                    kandidat.fodselsnummer
-                                                }) `
-                                            ) : (
-                                                <Skeleton width={180} />
-                                            )}
-                                        </BodyShort>
+                        {kandidat.kind !== Nettstatus.Feil && (
+                            <div className={css.bunnlinje}>
+                                <div className={css.personalia}>
+                                    <BodyShort>
+                                        <CandleIcon />{' '}
+                                        {kandidat.kind === Nettstatus.Suksess ? (
+                                            `${lagFødselsdagtekst(kandidat.data.fodselsdato)} (${
+                                                kandidat.data.fodselsnummer
+                                            }) `
+                                        ) : (
+                                            <Skeleton width={180} />
+                                        )}
+                                    </BodyShort>
 
-                                        <BodyShort>
-                                            <PinIcon />{' '}
-                                            {kandidat ? (
-                                                hentAdresse(kandidat) ?? '-'
-                                            ) : (
-                                                <Skeleton width={240} />
-                                            )}
-                                        </BodyShort>
+                                    <BodyShort>
+                                        <PinIcon />{' '}
+                                        {kandidat.kind === Nettstatus.Suksess ? (
+                                            hentAdresse(kandidat.data) ?? '-'
+                                        ) : (
+                                            <Skeleton width={240} />
+                                        )}
+                                    </BodyShort>
 
-                                        <BodyShort>
-                                            <EnvelopeClosedIcon />
-                                            {kandidat ? (
-                                                kandidat.epostadresse?.toLowerCase() ?? '-'
-                                            ) : (
-                                                <Skeleton width={100} />
-                                            )}
-                                        </BodyShort>
+                                    <BodyShort>
+                                        <EnvelopeClosedIcon />
+                                        {kandidat.kind === Nettstatus.Suksess ? (
+                                            kandidat.data.epostadresse?.toLowerCase() ?? '-'
+                                        ) : (
+                                            <Skeleton width={100} />
+                                        )}
+                                    </BodyShort>
 
-                                        <BodyShort>
-                                            <PhoneIcon />
-                                            {kandidat ? (
-                                                kandidat.telefon ?? '-'
-                                            ) : (
-                                                <Skeleton width={100} />
-                                            )}
-                                        </BodyShort>
+                                    <BodyShort>
+                                        <PhoneIcon />
+                                        {kandidat.kind === Nettstatus.Suksess ? (
+                                            kandidat.data.telefon ?? '-'
+                                        ) : (
+                                            <Skeleton width={100} />
+                                        )}
+                                    </BodyShort>
 
-                                        <BodyShort>
-                                            <PersonIcon />
-                                            {kandidat ? (
-                                                kandidat.veileder ? (
-                                                    `${kandidat.veileder.toUpperCase()} (Veileder)`
-                                                ) : (
-                                                    '-'
-                                                )
+                                    <BodyShort>
+                                        <PersonIcon />
+                                        {kandidat.kind === Nettstatus.Suksess ? (
+                                            kandidat.data.veileder ? (
+                                                `${kandidat.data.veileder.toUpperCase()} (Veileder)`
                                             ) : (
-                                                <Skeleton width={100} />
-                                            )}
-                                        </BodyShort>
-                                    </div>
-                                    <div className={css.bunnHoyre}>{bunnHoyre}</div>
+                                                '-'
+                                            )
+                                        ) : (
+                                            <Skeleton width={100} />
+                                        )}
+                                    </BodyShort>
                                 </div>
-                            </>
+                                <div className={css.nederstTilHøyre}>{nederstTilHøyre}</div>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -127,9 +138,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
     return `Født: ${fødselsdagString} (${alder} år)`;
 };
 
-const hentAdresse = (kandidat?: Kandidat) => {
-    if (!kandidat) return undefined;
-
+const hentAdresse = (kandidat: KandidatTilBanner) => {
     const { poststed, postnummer, adresselinje1 } = kandidat;
 
     if (!poststed && !postnummer && !adresselinje1) {
@@ -143,7 +152,7 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-export const formaterNavn = (kandidat: Kandidat) => {
+export const formaterNavn = (kandidat: KandidatTilBanner) => {
     const fornavn = brukStorForbokstav(kandidat.fornavn);
     const etternavn = brukStorForbokstav(kandidat.etternavn);
 

@@ -1,16 +1,16 @@
 import { Heading } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
-import Kandidat from 'felles/domene/kandidat/Kandidat';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
-import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
+import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
 import Modal from '../../common/modal/Modal';
+import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
 type Props = {
     fnr: string;
-    kandidat: Kandidat;
+    kandidat: KandidatTilBanner;
     kandidatliste: Kandidatliste;
     setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     vis: boolean;

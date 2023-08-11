@@ -25,7 +25,7 @@ export const mockKandidat: Kandidat = {
     kommunenummerstring: '0301',
     postnummer: '0662',
     poststed: 'OSLO',
-    adresselinje1: 'Arbeids- og velferdsdirektoratet, Sannergata 2',
+    adresselinje1: 'Sannergata 2',
 
     // Oppfølgingsinformasjon
     navkontor: 'NAV Lofoten',

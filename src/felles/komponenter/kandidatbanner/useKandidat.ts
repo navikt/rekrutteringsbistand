@@ -1,5 +1,6 @@
 import { api } from 'felles/api';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import Kandidat, { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 
 export type EsRespons = {
@@ -13,7 +14,7 @@ export type EsRespons = {
 type EsQuery = {
     query: object;
     size: number;
-    _source: Array<keyof Kandidat>;
+    _source: Array<keyof KandidatTilBanner>;
 };
 
 export const byggQueryTerm = (term: Term): EsQuery => ({
@@ -53,11 +54,12 @@ export const fodselsnrTerm = (fodselsnummer: string): Term => {
     return { key: 'fodselsnummer', value: fodselsnummer };
 };
 
-const useKandidat = (term: Term): { kandidat?: Kandidat; feilmelding?: string } => {
-    const [kandidat, setKandidat] = useState<Kandidat>(undefined);
-    const [feilmelding, setFeilmelding] = useState<string | undefined>();
-
+const useKandidat = (term: Term): Nettressurs<KandidatTilBanner> => {
+    const [kandidat, setKandidat] = useState<Nettressurs<KandidatTilBanner>>({
+        kind: Nettstatus.LasterInn,
+    });
     const { key, value } = term;
+
     useEffect(() => {
         (async () => {
             try {
@@ -71,20 +73,26 @@ const useKandidat = (term: Term): { kandidat?: Kandidat; feilmelding?: string } 
                 const kandidat = esRespons.hits.hits.at(0)?._source;
 
                 if (kandidat) {
-                    setKandidat(kandidat);
+                    setKandidat({
+                        kind: Nettstatus.Suksess,
+                        data: kandidat,
+                    });
                 } else {
-                    setFeilmelding('Fant ikke kandidat');
+                    setKandidat({
+                        kind: Nettstatus.Feil,
+                        error: { message: 'Kandidaten er ikke tilgjengelig' },
+                    });
                 }
             } catch (e) {
-                setFeilmelding('Klarte ikke å hente kandidat');
+                setKandidat({
+                    kind: Nettstatus.Feil,
+                    error: { message: 'Det skjedde en feil ved henting av kandidat' },
+                });
             }
         })();
     }, [key, value]);
 
-    return {
-        kandidat,
-        feilmelding,
-    };
+    return kandidat;
 };
 
 export default useKandidat;

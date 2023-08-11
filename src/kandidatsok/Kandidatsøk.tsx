@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Banner from 'felles/komponenter/banner/Banner';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
@@ -16,7 +17,6 @@ import LagreKandidaterIMineKandidatlisterModal from './kandidatliste/LagreKandid
 import LagreKandidaterISpesifikkKandidatlisteModal from './kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
 import { Økt } from './Økt';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;
@@ -73,7 +73,7 @@ const Kandidatsøk = ({
                 <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
             )}
             {kontekstAvKandidatlisteEllerStilling === null && (
-                <Banner tittel="Kandidatsøk" gammelGrå ikon={<Piktogram />} />
+                <Banner tittel="Kandidatsøk" ikon={<Piktogram />} />
             )}
             <div className={css.container}>
                 <TømFiltre />
