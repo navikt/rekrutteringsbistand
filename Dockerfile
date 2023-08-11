@@ -1,10 +1,10 @@
-FROM gcr.io/distroless/nodejs18-debian11
+FROM ghcr.io/navikt/baseimages/node-express:18
 
 WORKDIR /var
 
 COPY dist/ dist/
 COPY server/build server/
-copy server/node_modules  server/node_modules
+COPY server/node_modules server/node_modules
 
 WORKDIR /var/server
 
