@@ -4,7 +4,8 @@
     --rekrutteringsbistand-blue: #e3edf8;
 
     /* Innholdets maksbredde, ekskludert padding */
-    --innhold-maksbredde: 100rem;
+    --innhold-maksbredde: 1400px;
+    --innhold-maksbredde-utvidet: 1600px;
 
     /* Kandidat-appen */
     --kandidatsokSidepanelBredde: 13rem;

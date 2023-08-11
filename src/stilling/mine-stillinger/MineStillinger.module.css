@@ -14,7 +14,7 @@
 }
 
 .wrapper {
-    max-width: calc(var(--innhold-maksbredde) + 4rem);
+    max-width: calc(var(--innhold-maksbredde-utvidet) + 4rem);
 
     display: grid;
     align-items: start;
