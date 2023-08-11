@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
 import { api } from 'felles/api';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { useEffect, useState } from 'react';
 
 export type EsRespons = {
     hits: {
@@ -53,8 +53,8 @@ export const fodselsnrTerm = (fodselsnummer: string): Term => {
     return { key: 'fodselsnummer', value: fodselsnummer };
 };
 
-const useKandidat = (term: Term) => {
-    const [kandidat, setKandidat] = useState<Kandidat>();
+const useKandidat = (term: Term): { kandidat?: Kandidat; feilmelding?: string } => {
+    const [kandidat, setKandidat] = useState<Kandidat>(undefined);
     const [feilmelding, setFeilmelding] = useState<string | undefined>();
 
     const { key, value } = term;
