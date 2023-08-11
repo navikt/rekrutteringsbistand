@@ -17,7 +17,7 @@ const Banner = ({ tittel, gammelGrå, ikon, children }: Props) => {
                 [css.gammelGrå]: gammelGrå,
             })}
         >
-            <div className={css.piktogramOgInnhold}>
+            <div className={css.tittelOgInnhold}>
                 {ikon}
                 <Heading level="1" size="xlarge">
                     {tittel}

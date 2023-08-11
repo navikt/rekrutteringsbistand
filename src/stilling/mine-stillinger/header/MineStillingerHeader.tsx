@@ -8,7 +8,7 @@ type Props = {
 };
 
 const MineStillingerHeader = ({ opprettStilling }: Props) => (
-    <Banner gammelGrå tittel="Mine stillinger" ikon={<Piktogram />}>
+    <Banner tittel="Mine stillinger" ikon={<Piktogram />}>
         <Button variant="secondary" onClick={opprettStilling} icon={<PlusCircleIcon aria-hidden />}>
             Opprett ny
         </Button>

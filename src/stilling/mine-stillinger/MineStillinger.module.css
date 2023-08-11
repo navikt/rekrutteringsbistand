@@ -14,6 +14,8 @@
 }
 
 .wrapper {
+    max-width: calc(var(--innhold-maksbredde) + 4rem);
+
     display: grid;
     align-items: start;
     grid-template-areas:
@@ -25,7 +27,6 @@
     gap: 1rem;
     margin: 2.5rem auto 0;
     padding: 0 1rem 2.5rem;
-    max-width: 110rem;
 }
 
 .feilmelding {

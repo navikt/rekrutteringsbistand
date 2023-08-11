@@ -5,6 +5,9 @@
 }
 
 .stillingssøk {
+    --filter-bredde: 19rem;
+    --gap-bredde: 2.5rem;
+
     display: grid;
     row-gap: 2rem;
     overflow: hidden;
@@ -22,9 +25,12 @@
 @media (min-width: 992px) {
     .stillingssøk {
         display: grid;
-        grid-template-columns: 19rem minmax(10rem, 60rem);
+        grid-template-columns: var(--filter-bredde) minmax(
+                10rem,
+                calc(var(--innhold-maksbredde) - var(--filter-bredde) - var(--gap-bredde) - 2rem)
+            );
         place-content: center;
-        column-gap: 3rem;
+        column-gap: var(--gap-bredde);
     }
 }
 
