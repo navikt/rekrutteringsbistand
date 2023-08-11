@@ -1,7 +1,7 @@
 import { Loader } from '@navikt/ds-react';
-import Hurtiglenker from './hurtiglenker/Hurtiglenker';
-import css from './Forside.module.css';
 import useNavKontor from 'felles/store/navKontor';
+import css from './Forside.module.css';
+import Hurtiglenker from './hurtiglenker/Hurtiglenker';
 import Statistikk from './statistikk/Statistikk';
 
 const Forside = () => {
@@ -10,6 +10,13 @@ const Forside = () => {
     return (
         <div className={css.forside}>
             <Hurtiglenker />
+            <button
+                onClick={() => {
+                    throw new Error('Dette er en DEV-feil');
+                }}
+            >
+                Hei feil
+            </button>
             {navKontor ? <Statistikk navKontor={navKontor} /> : <Loader />}
         </div>
     );
