@@ -9,4 +9,4 @@ COPY server/node_modules server/node_modules
 WORKDIR /var/server
 
 EXPOSE 8080
-CMD ["server.js"]
+ENTRYPOINT ["node", "server.js"]
