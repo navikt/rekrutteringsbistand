@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-import { BodyLong, BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import {
     CandleIcon,
     EnvelopeClosedIcon,
@@ -7,11 +5,13 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
-import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
+import { BodyLong, BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
-import css from './Kandidatbanner.module.css';
+import { ReactNode } from 'react';
 import BrødsmuleKomponent, { Brødsmule } from './BrødsmuleKomponent';
+import css from './Kandidatbanner.module.css';
 
 type Props = {
     kandidat?: Kandidat;
@@ -30,13 +30,11 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                     <div className={css.hovedinnhold}>
                         <div className={css.topplinje}>
                             <BrødsmuleKomponent brødsmulesti={brødsmulesti} />
-                            <div>{toppHoyre}</div>
+                            {toppHoyre}
                         </div>
-                        {!kandidat ? (
-                            <BodyLong>Informasjonen om kandidaten kan ikke vises</BodyLong>
-                        ) : (
+                        {kandidat ? (
                             <>
-                                <Heading size="large" level="3">
+                                <Heading size="large" level="2">
                                     {formaterNavn(kandidat)}
                                 </Heading>
 
@@ -96,6 +94,8 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, bunnHoyre, toppHoyre }: Props
                                     <div className={css.bunnHoyre}>{bunnHoyre}</div>
                                 </div>
                             </>
+                        ) : (
+                            <BodyLong>Informasjonen om kandidaten kan ikke vises</BodyLong>
                         )}
                     </div>
                 </div>

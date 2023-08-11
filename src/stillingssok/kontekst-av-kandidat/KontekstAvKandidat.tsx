@@ -1,10 +1,10 @@
-import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import { Alert } from '@navikt/ds-react';
+import { api } from 'felles/api';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
+import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
+import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
 import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
-import { api } from 'felles/api';
-import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
 import useKandidatStillingssøk from './useKandidatStillingssøk';
 
 type Props = {

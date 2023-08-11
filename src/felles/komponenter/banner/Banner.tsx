@@ -19,7 +19,7 @@ const Banner = ({ tittel, gammelGrå, ikon, children }: Props) => {
         >
             <div className={css.tittelOgInnhold}>
                 {ikon}
-                <Heading level="1" size="xlarge">
+                <Heading level="2" size="large">
                     {tittel}
                 </Heading>
                 {children && <div className={css.innhold}>{children}</div>}
