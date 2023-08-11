@@ -1,18 +1,18 @@
-import { FunctionComponent, ReactNode, useState } from 'react';
-import { BodyShort, Button, Tabs } from '@navikt/ds-react';
-import { Link } from 'react-router-dom';
 import { PersonPlusIcon } from '@navikt/aksel-icons';
+import { BodyShort, Button, Tabs } from '@navikt/ds-react';
+import { FunctionComponent, ReactNode, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { lenkeTilKandidatliste, lenkeTilKandidatsøk } from '../../app/paths';
 import { Nettstatus } from 'felles/nettressurs';
-import { hentØktFraKandidatsøk } from '../søkekontekst';
-import Kandidatheader from '../komponenter/header/Kandidatheader';
-import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
+import { lenkeTilKandidatliste, lenkeTilKandidatsøk } from '../../app/paths';
+import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useCv from '../hooks/useCv';
 import useFaner from '../hooks/useFaner';
 import useKandidatliste from '../hooks/useKandidatliste';
 import useNavigerbareKandidaterFraSøk from '../hooks/useNavigerbareKandidaterFraSøk';
-import useScrollTilToppen from '../../utils/useScrollTilToppen';
+import Kandidatheader from '../komponenter/header/Kandidatheader';
+import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
+import { hentØktFraKandidatsøk } from '../søkekontekst';
 import LagreKandidatIKandidatlisteModal from './LagreKandidatIKandidatlisteModal';
 
 type Props = {
@@ -43,17 +43,20 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
         kandidatliste.kind === Nettstatus.Suksess &&
         kandidatliste.data.kandidater.some((k) => k.kandidatnr === kandidatnr);
 
-    const brødsmulesti = kandidatliste.kind === Nettstatus.Suksess && [
-        {
-            tekst: kandidatliste.data.tittel,
-            href: lenkeTilKandidatliste(kandidatlisteId),
-        },
-        {
-            tekst: 'Finn kandidater',
-            href: lenkeTilKandidatsøk(økt.searchParams),
-            state: { scrollTilKandidat: true },
-        },
-    ];
+    const brødsmulesti =
+        kandidatliste.kind === Nettstatus.Suksess
+            ? [
+                  {
+                      tekst: kandidatliste.data.tittel,
+                      href: lenkeTilKandidatliste(kandidatlisteId),
+                  },
+                  {
+                      tekst: 'Finn kandidater',
+                      href: lenkeTilKandidatsøk(økt.searchParams),
+                      state: { scrollTilKandidat: true },
+                  },
+              ]
+            : [];
 
     return (
         <>
