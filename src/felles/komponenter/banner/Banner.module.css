@@ -1,5 +1,6 @@
 .banner {
     background-color: white;
+    border-bottom: 2px solid var(--a-border-subtle);
     padding: 0 2rem;
     width: 100%;
 }
@@ -21,12 +22,14 @@
 
 @media (min-width: 768px) {
     .tittelOgInnhold {
-        padding: 2.5rem 0 2.5rem;
+        padding: 2.5rem 0 3rem;
     }
 }
 
 .piktogram {
     flex-shrink: 0;
+    height: 4rem;
+    width: 4rem;
 }
 
 .gammelGrå {
