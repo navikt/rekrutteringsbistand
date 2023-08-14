@@ -18,8 +18,8 @@ const Kandidatlistesøk: FunctionComponent<Props> = ({
     <form className={css.søkeskjema} onSubmit={onSubmitSøkKandidatlister}>
         <Search
             hideLabel={true}
-            label="Søk etter kandidatlister"
-            placeholder="Søk etter kandidatlister"
+            label="Søk i kandidatlister"
+            placeholder="Søk i kandidatlister"
             onChange={onSøkeOrdChange}
             value={søkeOrd}
             onClear={nullstillSøk}

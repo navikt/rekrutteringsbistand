@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import Banner from 'felles/komponenter/banner/Banner';
-import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { Nettstatus } from 'felles/nettressurs';
 import KandidatlisteAction from '../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../kandidatliste/reducer/KandidatlisteActionType';
