@@ -11,6 +11,7 @@ import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/min
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { ReactNode } from 'react';
+import bannerCss from '../banner/Banner.module.css';
 import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
 import css from './Kandidatbanner.module.css';
 
@@ -23,7 +24,7 @@ type Props = {
 
 const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilHøyre }: Props) => {
     return (
-        <div className={css.banner}>
+        <div className={bannerCss.banner}>
             <div className={css.piktogramOgInnhold}>
                 <Piktogram className={css.piktogram} />
 
@@ -105,7 +106,9 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilH
                                         )}
                                     </BodyShort>
                                 </div>
-                                <div className={css.nederstTilHøyre}>{nederstTilHøyre}</div>
+                                {nederstTilHøyre && (
+                                    <div className={css.nederstTilHøyre}>{nederstTilHøyre}</div>
+                                )}
                             </div>
                         )}
                     </div>

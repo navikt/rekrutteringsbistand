@@ -1,7 +1,8 @@
-import { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
 import { ChevronLeftIcon, ChevronRightIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
+import classNames from 'classnames';
+import { FunctionComponent } from 'react';
+import { Link } from 'react-router-dom';
 import css from './ForrigeNeste.module.css';
 
 export type Kandidatnavigering = {
@@ -23,18 +24,16 @@ const ForrigeNeste: FunctionComponent<Props> = ({ kandidatnavigering, lenkeClass
         return null;
     }
 
-    let forrigeCls = 'navds-link' + (forrige ? '' : ' ' + css.skjult);
-    let nesteCls = 'navds-link' + (neste ? '' : ' ' + css.skjult);
-
-    if (lenkeClass) {
-        forrigeCls += ' ' + lenkeClass;
-        nesteCls += ' ' + lenkeClass;
-    }
-
     return (
         <div className={css.forrigeNeste}>
             {forrige && (
-                <Link className={forrigeCls} to={forrige || '#'}>
+                <Link
+                    aria-hidden={forrige === undefined}
+                    className={classNames('navds-link', lenkeClass, {
+                        [css.skjult]: forrige === undefined,
+                    })}
+                    to={forrige ?? '#'}
+                >
                     <ChevronLeftIcon />
                     Forrige kandidat
                 </Link>
@@ -42,7 +41,13 @@ const ForrigeNeste: FunctionComponent<Props> = ({ kandidatnavigering, lenkeClass
             <BodyShort as="span">
                 {index + 1} av {antall}
             </BodyShort>
-            <Link className={nesteCls} to={neste || '#'}>
+            <Link
+                aria-hidden={neste === undefined}
+                className={classNames('navds-link', lenkeClass, {
+                    [css.skjult]: neste === undefined,
+                })}
+                to={neste ?? '#'}
+            >
                 Neste kandidat
                 <ChevronRightIcon />
             </Link>
