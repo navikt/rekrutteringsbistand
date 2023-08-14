@@ -2,8 +2,8 @@
     display: grid;
     align-items: start;
     grid-template-areas:
-        'over-tabell'
         'filter'
+        'over-tabell'
         'tabell'
         'under-tabell';
     gap: 1rem;
