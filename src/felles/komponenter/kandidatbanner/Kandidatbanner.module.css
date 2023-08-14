@@ -1,30 +1,3 @@
-.banner {
-    background-color: white;
-    width: 100%;
-    border-bottom: 2px solid var(--a-border-subtle);
-    padding: 0 1rem;
-}
-
-@media (min-width: 768px) {
-    .banner {
-        padding: 0 2rem;
-    }
-}
-
-.piktogramOgInnhold {
-    max-width: var(--innhold-maksbredde);
-    margin: 0 auto;
-    padding: 1.5rem 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-}
-
-.piktogram {
-    margin-top: 0.75rem;
-    flex-shrink: 0;
-}
-
 .innhold {
     display: flex;
     align-items: flex-start;
@@ -44,7 +17,7 @@
 .personalia {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem 1rem;
 }
 
 .personalia svg {
@@ -60,6 +33,7 @@
 .topplinje {
     display: flex;
     justify-content: space-between;
+    gap: 1.5rem;
 }
 
 .bunnlinje {
@@ -70,10 +44,6 @@
 }
 
 @media (max-width: 1280px) {
-    .bunnlinje {
-        flex-wrap: wrap;
-    }
-
     .nederstTilHøyre {
         margin-top: 1rem;
     }

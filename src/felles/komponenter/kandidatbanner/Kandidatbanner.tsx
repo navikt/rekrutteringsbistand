@@ -11,6 +11,7 @@ import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/min
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { ReactNode } from 'react';
+import Grunnbanner from '../grunnbanner/Grunnbanner';
 import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
 import css from './Kandidatbanner.module.css';
 
@@ -23,95 +24,93 @@ type Props = {
 
 const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilHøyre }: Props) => {
     return (
-        <div className={css.banner}>
-            <div className={css.piktogramOgInnhold}>
-                <Piktogram className={css.piktogram} />
-
-                <div className={css.innhold}>
-                    <div className={css.hovedinnhold}>
-                        <div className={css.topplinje}>
-                            {brødsmulesti ? (
-                                <Brødsmulesti brødsmulesti={brødsmulesti} />
-                            ) : (
-                                <Skeleton width={220} />
-                            )}
-                            {øverstTilHøyre}
-                        </div>
-                        {kandidat.kind === Nettstatus.LasterInn && (
-                            <Skeleton>
-                                <Heading size="large">Placeholder</Heading>
-                            </Skeleton>
+        <Grunnbanner ikon={<Piktogram />}>
+            <div className={css.innhold}>
+                <div className={css.hovedinnhold}>
+                    <div className={css.topplinje}>
+                        {brødsmulesti ? (
+                            <Brødsmulesti brødsmulesti={brødsmulesti} />
+                        ) : (
+                            <Skeleton width={220} />
                         )}
-                        {kandidat.kind === Nettstatus.Suksess && (
-                            <Heading size="large" level="2">
-                                {formaterNavn(kandidat.data)}
-                            </Heading>
-                        )}
-                        {kandidat.kind === Nettstatus.Feil && (
-                            <Heading size="large">{kandidat.error.message}</Heading>
-                        )}
-
-                        {kandidat.kind !== Nettstatus.Feil && (
-                            <div className={css.bunnlinje}>
-                                <div className={css.personalia}>
-                                    <BodyShort>
-                                        <CandleIcon />{' '}
-                                        {kandidat.kind === Nettstatus.Suksess ? (
-                                            `${lagFødselsdagtekst(kandidat.data.fodselsdato)} (${
-                                                kandidat.data.fodselsnummer
-                                            }) `
-                                        ) : (
-                                            <Skeleton width={180} />
-                                        )}
-                                    </BodyShort>
-
-                                    <BodyShort>
-                                        <PinIcon />{' '}
-                                        {kandidat.kind === Nettstatus.Suksess ? (
-                                            hentAdresse(kandidat.data) ?? '-'
-                                        ) : (
-                                            <Skeleton width={240} />
-                                        )}
-                                    </BodyShort>
-
-                                    <BodyShort>
-                                        <EnvelopeClosedIcon />
-                                        {kandidat.kind === Nettstatus.Suksess ? (
-                                            kandidat.data.epostadresse?.toLowerCase() ?? '-'
-                                        ) : (
-                                            <Skeleton width={100} />
-                                        )}
-                                    </BodyShort>
-
-                                    <BodyShort>
-                                        <PhoneIcon />
-                                        {kandidat.kind === Nettstatus.Suksess ? (
-                                            kandidat.data.telefon ?? '-'
-                                        ) : (
-                                            <Skeleton width={100} />
-                                        )}
-                                    </BodyShort>
-
-                                    <BodyShort>
-                                        <PersonIcon />
-                                        {kandidat.kind === Nettstatus.Suksess ? (
-                                            kandidat.data.veileder ? (
-                                                `${kandidat.data.veileder.toUpperCase()} (Veileder)`
-                                            ) : (
-                                                '-'
-                                            )
-                                        ) : (
-                                            <Skeleton width={100} />
-                                        )}
-                                    </BodyShort>
-                                </div>
-                                <div className={css.nederstTilHøyre}>{nederstTilHøyre}</div>
-                            </div>
-                        )}
+                        {øverstTilHøyre}
                     </div>
+                    {kandidat.kind === Nettstatus.LasterInn && (
+                        <Skeleton>
+                            <Heading size="large">Placeholder</Heading>
+                        </Skeleton>
+                    )}
+                    {kandidat.kind === Nettstatus.Suksess && (
+                        <Heading size="large" level="2">
+                            {formaterNavn(kandidat.data)}
+                        </Heading>
+                    )}
+                    {kandidat.kind === Nettstatus.Feil && (
+                        <Heading size="large">{kandidat.error.message}</Heading>
+                    )}
+
+                    {kandidat.kind !== Nettstatus.Feil && (
+                        <div className={css.bunnlinje}>
+                            <div className={css.personalia}>
+                                <BodyShort>
+                                    <CandleIcon />{' '}
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        `${lagFødselsdagtekst(kandidat.data.fodselsdato)} (${
+                                            kandidat.data.fodselsnummer
+                                        }) `
+                                    ) : (
+                                        <Skeleton width={180} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PinIcon />{' '}
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        hentAdresse(kandidat.data) ?? '-'
+                                    ) : (
+                                        <Skeleton width={240} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <EnvelopeClosedIcon />
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        kandidat.data.epostadresse?.toLowerCase() ?? '-'
+                                    ) : (
+                                        <Skeleton width={100} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PhoneIcon />
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        kandidat.data.telefon ?? '-'
+                                    ) : (
+                                        <Skeleton width={100} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PersonIcon />
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        kandidat.data.veileder ? (
+                                            `${kandidat.data.veileder.toUpperCase()} (Veileder)`
+                                        ) : (
+                                            '-'
+                                        )
+                                    ) : (
+                                        <Skeleton width={100} />
+                                    )}
+                                </BodyShort>
+                            </div>
+                            {nederstTilHøyre && (
+                                <div className={css.nederstTilHøyre}>{nederstTilHøyre}</div>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
-        </div>
+        </Grunnbanner>
     );
 };
 

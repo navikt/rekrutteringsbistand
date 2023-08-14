@@ -1,40 +1,18 @@
 .banner {
-    background-color: white;
-    padding: 0 2rem;
-    width: 100%;
-}
-
-.tittelOgInnhold {
-    margin: 0 auto;
-    max-width: var(--innhold-maksbredde);
-    padding: 1.5rem 0 1.5rem;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
-    gap: 2rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1.5rem;
 }
 
-.tittelOgInnhold h2 {
-    margin-top: 0.5rem;
-}
-
-@media (min-width: 768px) {
-    .tittelOgInnhold {
-        padding: 2.5rem 0 2.5rem;
-    }
-}
-
-.piktogram {
-    flex-shrink: 0;
-}
-
-.gammelGrå {
-    background-color: var(--a-bg-subtle);
+.banner h2 {
+    margin: 1rem auto 0 0;
 }
 
 @media (min-width: 768px) {
-    .innhold {
-        margin-left: auto;
+    .banner h2 {
+        margin: 2rem auto 2rem 0;
     }
 }

@@ -1,14 +1,13 @@
+import { Accordion, Checkbox, CheckboxGroup, Label } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { Checkbox, CheckboxGroup, Label } from '@navikt/ds-react';
-import { Accordion } from '@navikt/ds-react';
 
-import { AntallFiltertreff } from '../hooks/useAntallFiltertreff';
-import { statusToDisplayName } from '../kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
-import { Hendelse } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
-import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import useVinduErBredereEnn from '../hooks/useVinduErBredereEnn';
-import css from './Filter.module.css';
 import classNames from 'classnames';
+import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { AntallFiltertreff } from '../hooks/useAntallFiltertreff';
+import useVinduErBredereEnn from '../hooks/useVinduErBredereEnn';
+import { Hendelse } from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
+import { statusToDisplayName } from '../kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
+import css from './Filter.module.css';
 
 type Props = {
     antallTreff: AntallFiltertreff;
@@ -78,7 +77,7 @@ const Filter: FunctionComponent<Props> = ({
         <aside className={className}>
             <Accordion className={css.accordionStorSkjerm}>
                 <Accordion.Item defaultOpen>
-                    <Accordion.Header>Status/hendelser</Accordion.Header>
+                    <Accordion.Header className={css.header}>Status/hendelser</Accordion.Header>
                     <Accordion.Content className={css.content}>
                         <CheckboxGroup
                             legend="Status"

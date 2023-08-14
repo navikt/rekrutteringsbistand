@@ -1,30 +1,24 @@
 import { Heading } from '@navikt/ds-react';
-import classNames from 'classnames';
 import { ReactNode } from 'react';
+import Grunnbanner from '../grunnbanner/Grunnbanner';
 import css from './Banner.module.css';
 
 type Props = {
     tittel: String;
-    gammelGrå?: Boolean;
     ikon: ReactNode;
     children?: ReactNode;
 };
 
-const Banner = ({ tittel, gammelGrå, ikon, children }: Props) => {
+const Banner = ({ tittel, ikon, children }: Props) => {
     return (
-        <div
-            className={classNames(css.banner, {
-                [css.gammelGrå]: gammelGrå,
-            })}
-        >
-            <div className={css.tittelOgInnhold}>
-                {ikon}
+        <Grunnbanner ikon={ikon}>
+            <div className={css.banner}>
                 <Heading level="2" size="large">
                     {tittel}
                 </Heading>
-                {children && <div className={css.innhold}>{children}</div>}
+                {children}
             </div>
-        </div>
+        </Grunnbanner>
     );
 };
 
