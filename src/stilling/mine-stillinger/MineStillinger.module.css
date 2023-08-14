@@ -19,12 +19,12 @@
     display: grid;
     align-items: start;
     grid-template-areas:
-        'over-tabell'
         'filter'
+        'over-tabell'
         'tabell'
         'under-filter'
         'under-tabell';
-    gap: 1rem;
+    gap: 2rem;
     margin: 2.5rem auto 0;
     padding: 0 1rem 2.5rem;
 }
@@ -43,7 +43,7 @@
 
 @media (min-width: 1280px) {
     .wrapper {
-        grid-template-columns: 14rem auto;
+        grid-template-columns: minmax(14rem, 19rem) auto;
         grid-template-areas:
             'over-filter over-tabell'
             'filter tabell'

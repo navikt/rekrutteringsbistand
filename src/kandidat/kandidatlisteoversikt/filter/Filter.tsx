@@ -71,7 +71,7 @@ const Filter = ({
     return (
         <Accordion className={className}>
             <Accordion.Item defaultOpen>
-                <Accordion.Header>Filtrering</Accordion.Header>
+                <Accordion.Header className={css.header}>Filter</Accordion.Header>
                 <Accordion.Content className={css.content}>
                     <div className={css.innhold}>
                         <RadioGroup
