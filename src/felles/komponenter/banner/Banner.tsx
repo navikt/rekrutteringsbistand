@@ -1,5 +1,6 @@
 import { Heading } from '@navikt/ds-react';
 import { ReactNode } from 'react';
+import Grunnbanner from '../grunnbanner/Grunnbanner';
 import css from './Banner.module.css';
 
 type Props = {
@@ -10,15 +11,14 @@ type Props = {
 
 const Banner = ({ tittel, ikon, children }: Props) => {
     return (
-        <div className={css.banner}>
-            <div className={css.inner}>
-                {ikon}
-                <Heading className={css.tittel} level="2" size="large">
+        <Grunnbanner ikon={ikon}>
+            <div className={css.banner}>
+                <Heading level="2" size="large">
                     {tittel}
                 </Heading>
-                {children && <div className={css.innhold}>{children}</div>}
+                {children}
             </div>
-        </div>
+        </Grunnbanner>
     );
 };
 
