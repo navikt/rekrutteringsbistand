@@ -1,11 +1,11 @@
-import path from 'path';
-import express from 'express';
 import compression from 'compression';
+import express from 'express';
+import path from 'path';
 
 import { initializeAzureAd, responderMedBrukerinfo } from './azureAd';
-import { redirectIfUnauthorized, respondUnauthorizedIfNotLoggedIn } from './middlewares';
-import { proxyTilKandidatsøkEs, proxyMedOboToken } from './proxy';
 import { logger } from './logger';
+import { redirectIfUnauthorized, respondUnauthorizedIfNotLoggedIn } from './middlewares';
+import { proxyMedOboToken, proxyTilKandidatsøkEs } from './proxy';
 
 export const app = express();
 
@@ -17,7 +17,7 @@ export const miljøErProd = cluster === 'prod-gcp' || cluster === 'prod-fss';
 
 const scopes = {
     modiaContextHolder: `api://${clusterOnPrem}.personoversikt.modiacontextholder${
-        clusterOnPrem === 'dev-fss' ? '-q0' : ''
+        clusterOnPrem === 'dev-fss' ? '-q1' : ''
     }/.default`,
     statistikk: `api://${clusterOnPrem}.toi.rekrutteringsbistand-statistikk-api/.default`,
     stillingssøk: `api://${cluster}.toi.rekrutteringsbistand-stillingssok-proxy/.default`,
