@@ -7,6 +7,7 @@ import { Sortering } from '../sorter/Sorter';
 import { Søkefelt } from '../søkefelter/Søkefelter';
 
 export enum QueryParam {
+    // Filtre
     Tekst = 'q',
     Publisert = 'publisert',
     Side = 'side',
@@ -18,8 +19,10 @@ export enum QueryParam {
     SubInkluderingTags = 'subinkluderingstags',
     Felter = 'felter',
     Sortering = 'sortering',
-    Standardsøk = 'standardsok',
-    Kandidatkriterier = 'kandidatkriterier',
+
+    // Valgmuligheter
+    BrukStandardsøk = 'brukStandardsok',
+    BrukKriterierFraKandidat = 'brukKritererFraKandidat',
 }
 
 export type Navigeringsstate =

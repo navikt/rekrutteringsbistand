@@ -1,10 +1,10 @@
 import { FunctionComponent } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Tab, { TabConfig } from './Tab';
-import Forsidelenke from './Forsidelenke';
 import Nyheter from '../nyheter/Nyheter';
+import Forsidelenke from './Forsidelenke';
 import css from './Navigeringsmeny.module.css';
+import Tab, { TabConfig } from './Tab';
 
 const appPrefiks = '';
 
@@ -12,7 +12,7 @@ const tabs: TabConfig[] = [
     {
         tittel: 'Søk etter stilling',
         path: '/stillingssok',
-        queryParam: '?standardsok',
+        queryParam: '?brukStandardsok=true',
     },
     {
         tittel: 'Mine stillinger',

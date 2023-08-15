@@ -18,7 +18,9 @@ const useKandidatStillingssøk = (fnr: string) => {
 
     useEffect(() => {
         if (kandidat.kind === Nettstatus.Suksess) {
-            const brukKandidatkriterier = searchParams.get(QueryParam.Kandidatkriterier) !== null;
+            const brukKandidatkriterier =
+                searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
+
             const { geografiJobbonsker, yrkeJobbonskerObj } = kandidat.data;
 
             const brukKriterier = () => {
