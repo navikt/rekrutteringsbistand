@@ -1,9 +1,8 @@
-import { FunctionComponent } from 'react';
 import { BodyShort, Label, Link } from '@navikt/ds-react';
-import { ExternalLinkIcon } from '@navikt/aksel-icons';
+import { FunctionComponent } from 'react';
 
-import { arbeidsrettetOppfølgingUrl } from '../../../utils/eksterneUrler';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import LenkeTilAktivitetsplan from '../../../komponenter/lenke-til-aktivitetsplan/LenkeTilAktivitetsplan';
 import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
 import css from './MerInfo.module.css';
 
@@ -35,14 +34,7 @@ const MerInfo: FunctionComponent<Props> = ({ kandidat }) => {
                     Innsatsgruppe:
                 </Label>
                 <span>{kandidat.innsatsgruppe}</span>
-                <Link
-                    target="_blank"
-                    href={`${arbeidsrettetOppfølgingUrl}/${kandidat.fodselsnr}`}
-                    rel="noopener noreferrer"
-                >
-                    Se aktivitetsplan
-                    <ExternalLinkIcon aria-hidden />
-                </Link>
+                <LenkeTilAktivitetsplan fnr={kandidat.fodselsnr} />
             </div>
         </InfoUnderKandidat>
     );
