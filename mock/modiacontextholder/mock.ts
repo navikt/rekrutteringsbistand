@@ -9,7 +9,9 @@ const url = {
     modiaDecorator: `/modiacontextholder/api/decorator`,
 };
 
-const aktivEnhetOgBruker = { aktivBruker: null, aktivEnhet: '0239' };
+const aktivEnhet = { aktivBruker: null, aktivEnhet: '0239' };
+const aktivBruker = { aktivBruker: null, aktivEnhet: null };
+
 const decorator = {
     ident: minIdent,
     navn: 'Ola Nordmann',
@@ -24,7 +26,8 @@ const decorator = {
 
 export const modiaContextHolderMock = [
     rest.get(url.modiaDecorator, (_, res, ctx) => res(ctx.json(decorator))),
-    rest.get(url.modiaAktivEnhet, (_, res, ctx) => res(ctx.json(aktivEnhetOgBruker))),
+    rest.get(url.modiaAktivEnhet, (_, res, ctx) => res(ctx.json(aktivEnhet))),
+    rest.get(url.modiaAktivBruker, (_, res, ctx) => res(ctx.json(aktivBruker))),
 
     rest.post(url.modiaContext, (_, res, ctx) => res(ctx.status(201))),
     rest.delete(url.modiaAktivBruker, (_, res, ctx) => res(ctx.status(200))),

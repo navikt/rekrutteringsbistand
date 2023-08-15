@@ -28,12 +28,13 @@ const useKandidatStillingssøk = (fnr: string) => {
 
                 const søk = new URLSearchParams();
 
-                søk.set(QueryParam.Fylker, String(fylker));
-                søk.set(QueryParam.Kommuner, String(kommuner));
+                if (fylker.length > 0) søk.set(QueryParam.Fylker, String(fylker));
+                if (kommuner.length > 0) søk.set(QueryParam.Kommuner, String(kommuner));
+                if (yrkesønsker.length > 0) søk.set(QueryParam.Tekst, String(yrkesønsker));
+
                 søk.set(QueryParam.Statuser, Status.Publisert);
                 søk.set(QueryParam.Publisert, Publisert.Intern);
                 søk.set(QueryParam.Stillingskategorier, Stillingskategori.Stilling);
-                søk.set(QueryParam.Tekst, String(yrkesønsker));
 
                 sendEvent('stillingssøk', 'kontekst_av_kandidat', {
                     antallFylker: fylker.length,
