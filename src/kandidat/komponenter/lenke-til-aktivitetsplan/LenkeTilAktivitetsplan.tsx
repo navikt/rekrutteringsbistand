@@ -2,6 +2,7 @@ import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { Link } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
+import { erIkkeProd } from 'felles/miljø';
 import { Nettstatus } from 'felles/nettressurs';
 import { MouseEvent } from 'react';
 import { arbeidsrettetOppfølgingUrl } from '../../utils/eksterneUrler';
@@ -29,8 +30,10 @@ const LenkeTilAktivitetsplan = ({ fnr }: Props) => {
         window.open(element.href, '_blank');
     };
 
+    const lenke = erIkkeProd ? arbeidsrettetOppfølgingUrl : `${arbeidsrettetOppfølgingUrl}/${fnr}`;
+
     return (
-        <Link target="_blank" href={arbeidsrettetOppfølgingUrl} onClick={handleClick}>
+        <Link target="_blank" href={lenke} onClick={handleClick}>
             Se aktivitetsplan
             <ExternalLinkIcon />
         </Link>
