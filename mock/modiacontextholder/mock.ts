@@ -10,7 +10,7 @@ const url = {
 };
 
 const aktivEnhet = { aktivBruker: null, aktivEnhet: '0239' };
-const aktivBruker = { aktivBruker: null, aktivEnhet: null };
+const aktivBruker = { aktivBruker: '123', aktivEnhet: null };
 
 const decorator = {
     ident: minIdent,

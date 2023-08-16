@@ -6,7 +6,8 @@ import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Sidelaster from '../../felles/komponenter/sidelaster/Sidelaster';
 import css from './InngangFraArbop.module.css';
 
 type KunKandidatnr = {
@@ -14,6 +15,8 @@ type KunKandidatnr = {
 };
 
 const InngangFraArbop = () => {
+    const navigate = useNavigate();
+
     const [personbruker, setPersonbruker] = useState<Nettressurs<string>>({
         kind: Nettstatus.IkkeLastet,
     });
@@ -25,16 +28,24 @@ const InngangFraArbop = () => {
 
     useEffect(() => {
         const hentAktivPersonbruker = async () => {
-            const modiaRespons = await fetch(`${api.modiaContextHolder}`);
+            setPersonbruker({ kind: Nettstatus.LasterInn });
+            const modiaRespons = await fetch(`${api.modiaContextHolder}/context/aktivbruker`);
 
             if (!modiaRespons.ok) {
-                setPersonbruker({
+                return setPersonbruker({
                     kind: Nettstatus.Feil,
-                    error: { message: 'Fødselsnummer er ikke valgt i Modia' },
+                    error: { message: 'Klarte ikke å hente fødselsnummer fra Modia-dekoratøren' },
                 });
             }
 
-            const fnr: string = (await modiaRespons.json()).aktivBruker;
+            const fnr: string | null = (await modiaRespons.json()).aktivBruker;
+
+            if (fnr === null) {
+                return setPersonbruker({
+                    kind: Nettstatus.Feil,
+                    error: { message: 'Ingen person er valgt i Modia-dekoratøren' },
+                });
+            }
 
             const esQuery: EsQuery<KunKandidatnr> = {
                 query: {
@@ -52,7 +63,7 @@ const InngangFraArbop = () => {
                 const kandidatnr = esRespons.data.hits.hits[0]?._source?.arenaKandidatnr;
 
                 if (kandidatnr) {
-                    redirect(`/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`);
+                    navigate(`/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`);
                 }
             } else {
                 const response = await fetch(`${api.synlighet}/evaluering/${fnr}`);
@@ -72,7 +83,11 @@ const InngangFraArbop = () => {
         };
 
         hentAktivPersonbruker();
-    }, []);
+    }, [navigate]);
+
+    if (personbruker.kind === Nettstatus.LasterInn) {
+        return <Sidelaster />;
+    }
 
     if (personbruker.kind === Nettstatus.Feil) {
         return (

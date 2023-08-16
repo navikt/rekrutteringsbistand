@@ -1,12 +1,12 @@
-import { FunctionComponent, useEffect, useState } from 'react';
 import { BodyLong, ErrorMessage, Heading } from '@navikt/ds-react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
-import { fetchUsynligKandidat } from '../../../api/api';
-import { Nettressurs, ikkeLastet, Nettstatus } from 'felles/nettressurs';
 import { UsynligKandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import FormidleUsynligKandidat from './FormidleUsynligKandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import Sidelaster from '../../../komponenter/sidelaster/Sidelaster';
+import { Nettressurs, Nettstatus, ikkeLastet } from 'felles/nettressurs';
+import Sidelaster from '../../../../felles/komponenter/sidelaster/Sidelaster';
+import { fetchUsynligKandidat } from '../../../api/api';
+import FormidleUsynligKandidat from './FormidleUsynligKandidat';
 import css from './InformasjonOmUsynligKandidat.module.css';
 
 type Props = {

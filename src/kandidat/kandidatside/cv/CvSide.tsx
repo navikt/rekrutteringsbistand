@@ -2,13 +2,13 @@ import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
+import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
+import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
 import AppState from '../../state/AppState';
+import css from './CvSide.module.css';
 import Cv from './cv/Cv';
 import IkkeFunnet from './ikke-funnet/IkkeFunnet';
 import Jobbprofil from './jobbprofil/Jobbprofil';
-import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
-import css from './CvSide.module.css';
 
 const CvSide: FunctionComponent = () => {
     const { cv } = useSelector((state: AppState) => state.cv);

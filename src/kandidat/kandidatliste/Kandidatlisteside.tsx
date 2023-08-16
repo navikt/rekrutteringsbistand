@@ -2,11 +2,11 @@ import { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
+import Sidelaster from '../../felles/komponenter/sidelaster/Sidelaster';
 import AppState from '../state/AppState';
 import KandidatlisteOgModaler from './KandidatlisteOgModaler';
 import useScrollTilToppen from './hooks/useScrollTilToppen';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
-import Sidelaster from '../komponenter/sidelaster/Sidelaster';
 
 type Props = {
     stillingsId?: string;
