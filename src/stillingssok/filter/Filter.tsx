@@ -1,17 +1,17 @@
-import BrukStandardsøk from './standardsøk/BrukStandardsøk';
-import Søkefelt from './søkefelt/Søkefelt';
 import css from './Filter.module.css';
 import FilterCheckbokser from './om-annonsen/FilterCheckbokser';
+import BrukStandardsøk from './standardsøk/BrukStandardsøk';
+import Søkefelt from './søkefelt/Søkefelt';
 
 type Props = {
-    fnr?: string;
+    visStandardsøk: boolean;
 };
 
-const Filter = ({ fnr }: Props) => {
+const Filter = ({ visStandardsøk }: Props) => {
     return (
         <div className={css.filter}>
             <Søkefelt />
-            {fnr === undefined && <BrukStandardsøk />}
+            {visStandardsøk && <BrukStandardsøk />}
             <FilterCheckbokser />
         </div>
     );

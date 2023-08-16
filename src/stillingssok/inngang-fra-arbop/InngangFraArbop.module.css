@@ -1,0 +1,6 @@
+.inngangFraArbop {
+    width: 100%;
+    max-width: 40rem;
+    border: 1px solid var(--a-border-subtle);
+    border-radius: var(--a-border-radius-xlarge);
+}

@@ -1,19 +1,19 @@
-import { FunctionComponent, useMemo } from 'react';
-import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
+import { BodyShort, Button, Loader } from '@navikt/ds-react';
+import { FunctionComponent, useMemo } from 'react';
 
-import { InnloggetBruker } from '../hooks/useBrukerensIdent';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
-import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Nettstatus } from 'felles/nettressurs';
+import Paginering from '../filter/Paginering';
+import { InnloggetBruker } from '../hooks/useBrukerensIdent';
+import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
+import useQuery from '../hooks/useQuery';
 import { Økt } from '../Økt';
 import AntallKandidater from './AntallKandidater';
-import Kandidatrad from './kandidatrad/Kandidatrad';
-import MarkerAlle from './MarkerAlle';
-import Paginering from '../filter/Paginering';
-import Sortering from './sortering/Sortering';
-import useRespons from '../hooks/useRespons';
 import css from './Kandidater.module.css';
+import MarkerAlle from './MarkerAlle';
+import Kandidatrad from './kandidatrad/Kandidatrad';
+import Sortering from './sortering/Sortering';
 
 type Props = {
     innloggetBruker: InnloggetBruker;
@@ -36,11 +36,11 @@ const Kandidater: FunctionComponent<Props> = ({
     forrigeØkt,
     setKandidaterPåSiden,
 }) => {
-    const respons = useRespons(innloggetBruker);
+    const response = useQuery(innloggetBruker);
 
     const { kandidater, totaltAntallKandidater } = useMemo(() => {
-        if (respons.kind === Nettstatus.Suksess || respons.kind === Nettstatus.Oppdaterer) {
-            const hits = respons.data.hits;
+        if (response.kind === Nettstatus.Suksess || response.kind === Nettstatus.Oppdaterer) {
+            const hits = response.data.hits;
             const kandidater = hits.hits.map((t) => t._source);
 
             setKandidaterPåSiden(kandidater);
@@ -55,12 +55,12 @@ const Kandidater: FunctionComponent<Props> = ({
                 totaltAntallKandidater: 0,
             };
         }
-    }, [respons, setKandidaterPåSiden]);
+    }, [response, setKandidaterPåSiden]);
 
     return (
         <div className={css.kandidater}>
             <div className={css.handlinger}>
-                <AntallKandidater respons={respons} />
+                <AntallKandidater response={response} />
                 <div className={css.knapper}>
                     {markerteKandidater.size > 0 && (
                         <Button
@@ -86,15 +86,15 @@ const Kandidater: FunctionComponent<Props> = ({
                 </div>
             </div>
 
-            {respons.kind === Nettstatus.LasterInn && (
+            {response.kind === Nettstatus.LasterInn && (
                 <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />
             )}
 
-            {respons.kind === Nettstatus.Feil && (
+            {response.kind === Nettstatus.Feil && (
                 <BodyShort className={css.feilmelding} aria-live="assertive">
-                    {respons.error.status === 403
+                    {response.error.status === 403
                         ? 'Du har ikke tilgang til kandidatsøket'
-                        : respons.error.message}
+                        : response.error.message}
                 </BodyShort>
             )}
 

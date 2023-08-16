@@ -1,5 +1,5 @@
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
-import { Aggregeringer, SearchQuery } from '../../kandidater/elasticSearchTyper';
+import { Aggregeringer, SearchQuery } from '../../kandidater/suggestQuery';
 import { queryMedØnsketYrke } from './queryMedØnsketYrke';
 
 export enum Aggregering {

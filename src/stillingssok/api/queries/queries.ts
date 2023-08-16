@@ -1,17 +1,18 @@
-import { Søkefelt } from '../../søkefelter/Søkefelter';
-import { Query } from '../../domene/elasticSearchTyper';
+import { EsQuery } from 'felles/domene/elastic/ElasticSearch';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import { Søkekriterier } from '../../Stillingssøk';
-import { status } from './status';
-import { stillingskategori } from './stillingskategori';
-import sorterTreff from './sortering';
-import publisert from './publisert';
+import { Søkefelt } from '../../søkefelter/Søkefelter';
 import geografi from './geografi';
 import inkludering from './inkludering';
+import publisert from './publisert';
+import sorterTreff from './sortering';
+import { status } from './status';
+import { stillingskategori } from './stillingskategori';
 import søkefelt from './søkefelt';
 
 export const maksAntallTreffPerSøk = 40;
 
-export const lagQuery = (søkekriterier: Søkekriterier): Query => {
+export const lagQuery = (søkekriterier: Søkekriterier): EsQuery<EsRekrutteringsbistandstilling> => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),

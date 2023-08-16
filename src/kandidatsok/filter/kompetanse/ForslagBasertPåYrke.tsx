@@ -1,10 +1,10 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { Heading, BodyShort, Button } from '@navikt/ds-react';
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { søk } from '../../api/api';
-import { byggAggregeringerQuery, Aggregering } from '../../api/query/byggAggregeringer';
+import { Aggregering, byggAggregeringerQuery } from '../../api/query/byggAggregeringer';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
-import { AggregeringRespons } from '../../kandidater/elasticSearchTyper';
+import { AggregeringRespons } from '../../kandidater/suggestQuery';
 import Merkelapp from '../merkelapp/Merkelapp';
 import Merkelapper from '../merkelapp/Merkelapper';
 import css from './Kompetanse.module.css';

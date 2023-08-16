@@ -4,14 +4,14 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
 } from 'react-router-dom';
-import Header from './header/Header';
 import Appfeil from './felles/komponenter/feilmelding/Appfeil';
+import Header from './header/Header';
 
 import { Component as Forside } from './forside/index';
-import { Component as Stillingssøk } from './stillingssok/index';
-import { Component as Stilling } from './stilling/index';
-import { Component as Kandidatsøk } from './kandidatsok/index';
 import { Component as Kandidat } from './kandidat/index';
+import { Component as Kandidatsøk } from './kandidatsok/index';
+import { Component as Stilling } from './stilling/index';
+import { Component as Stillingssøk } from './stillingssok/index';
 
 const App = () => {
     const router = createBrowserRouter(
@@ -19,7 +19,7 @@ const App = () => {
             <Route path="/" element={<Header />}>
                 <Route path="/" element={<Forside />} />
                 <Route
-                    path="stillingssok/:fnr?"
+                    path="stillingssok/:kandidat?"
                     element={<Stillingssøk />}
                     errorElement={<Appfeil />}
                 />

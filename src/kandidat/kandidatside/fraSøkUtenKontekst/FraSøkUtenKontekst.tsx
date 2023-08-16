@@ -47,7 +47,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
                 kandidatnavigering={kandidatnavigering}
                 brødsmulesti={brødsmulesti}
             />
-            <Tabs value={fane} onChange={setFane}>
+            <Tabs value={fane} onChange={setFane as any}>
                 <Kandidatmeny tabs={tabs} cv={cv}>
                     <div className={css.knapper}>
                         {cv.kind === Nettstatus.Suksess && (

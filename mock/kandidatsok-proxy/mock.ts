@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { api } from '../../src/felles/api';
-import { Respons } from '../../src/kandidatsok/kandidater/elasticSearchTyper';
+import { Respons } from '../../src/kandidatsok/kandidater/suggestQuery';
 import { mockKandidat } from './mockKandidat';
 
 export const kandidatsøkMock = [

@@ -1,22 +1,22 @@
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { InnloggetBruker } from '../../hooks/useBrukerensIdent';
+import { Søkekriterier } from '../../hooks/useSøkekriterier';
+import { Sortering } from '../../kandidater/sortering/Sortering';
+import { SearchQuery, Sorteringsrekkefølge } from '../../kandidater/suggestQuery';
 import { queryMedArbeidserfaring } from './queryMedArbeidserfaring';
-import { queryMedFørerkort } from './queryMedFørerkort';
 import { queryMedFritekst } from './queryMedFritekst';
+import { queryMedFørerkort } from './queryMedFørerkort';
 import { queryMedHovedmål } from './queryMedHovedmål';
 import { queryMedInnsatsgruppe } from './queryMedInnsatsgruppe';
 import { queryMedKompetanse } from './queryMedKompetanse';
 import { queryMedKravOmBosted } from './queryMedKravOmBosted';
-import { queryMedØnsketSted } from './queryMedØnsketSted';
-import { queryMedØnsketYrke } from './queryMedØnsketYrke';
 import { queryMedPortefølje } from './queryMedPortefølje';
 import { queryMedPrioritertMålgruppe } from './queryMedPrioritertMålgruppe';
 import { queryMedSpråk } from './queryMedSpråk';
 import { queryMedUtdanningsnivå } from './queryMedUtdanningsnivå';
 import { queryMedValgtKontor } from './queryMedValgtKontor';
-import { SearchQuery, Sorteringsrekkefølge } from '../../kandidater/elasticSearchTyper';
-import { Søkekriterier } from '../../hooks/useSøkekriterier';
-import { Sortering } from '../../kandidater/sortering/Sortering';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { queryMedØnsketSted } from './queryMedØnsketSted';
+import { queryMedØnsketYrke } from './queryMedØnsketYrke';
 
 export const PAGE_SIZE = 25;
 

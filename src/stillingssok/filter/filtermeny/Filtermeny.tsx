@@ -1,16 +1,16 @@
-import { useSearchParams } from 'react-router-dom';
 import classNames from 'classnames';
+import { useSearchParams } from 'react-router-dom';
 
 import { QueryParam } from '../../utils/urlUtils';
-import ValgteKrierier from '../valgte-kriterier/ValgteKriterier';
 import LagreStandardsøk from '../standardsøk/LagreStandardsøk';
+import ValgteKrierier from '../valgte-kriterier/ValgteKriterier';
 import css from './Filtermeny.module.css';
 
 type Props = {
-    fnr?: string;
+    visStandardsøk: boolean;
 };
 
-const Filtermeny = ({ fnr }: Props) => {
+const Filtermeny = ({ visStandardsøk }: Props) => {
     const [searchParams] = useSearchParams();
 
     const keys = Array.from(searchParams.keys());
@@ -24,7 +24,7 @@ const Filtermeny = ({ fnr }: Props) => {
     return (
         <div className={classNames(css.wrapper, css.filtermeny)}>
             <ValgteKrierier />
-            {!fnr && <LagreStandardsøk />}
+            {visStandardsøk && <LagreStandardsøk />}
         </div>
     );
 };

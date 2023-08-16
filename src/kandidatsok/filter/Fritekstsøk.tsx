@@ -1,6 +1,6 @@
-import React, { FormEventHandler, FunctionComponent, useEffect, useState } from 'react';
 import { Search } from '@navikt/ds-react';
-import { FilterParam } from '../hooks/useRespons';
+import { FormEventHandler, FunctionComponent, useEffect, useState } from 'react';
+import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier from '../hooks/useSøkekriterier';
 import css from './Fritekstsøk.module.css';
 

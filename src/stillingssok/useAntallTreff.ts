@@ -1,6 +1,7 @@
-import { Respons } from './domene/elasticSearchTyper';
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 
-const useAntallTreff = (respons: Respons | null): number => {
+const useAntallTreff = (respons: EsResponse<EsRekrutteringsbistandstilling> | null): number => {
     if (respons === null) {
         return 0;
     }

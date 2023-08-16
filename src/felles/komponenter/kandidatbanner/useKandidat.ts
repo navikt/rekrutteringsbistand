@@ -1,23 +1,10 @@
-import { api } from 'felles/api';
-import Kandidat, { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
+import { api, post } from 'felles/api';
+import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 
-export type EsRespons = {
-    hits: {
-        hits: Array<{
-            _source: Kandidat;
-        }>;
-    };
-};
-
-type EsQuery = {
-    query: object;
-    size: number;
-    _source: Array<keyof KandidatTilBanner>;
-};
-
-export const byggQueryTerm = (term: Term): EsQuery => ({
+export const byggQueryTerm = (term: Term): EsQuery<KandidatTilBanner> => ({
     query: {
         term: {
             [term.key]: term.value,
@@ -46,14 +33,6 @@ type Term = {
     value: string;
 };
 
-export const kandidatnrTerm = (kandidatnr: string): Term => {
-    return { key: 'kandidatnr', value: kandidatnr };
-};
-
-export const fodselsnrTerm = (fodselsnummer: string): Term => {
-    return { key: 'fodselsnummer', value: fodselsnummer };
-};
-
 const useKandidat = (term: Term): Nettressurs<KandidatTilBanner> => {
     const [kandidat, setKandidat] = useState<Nettressurs<KandidatTilBanner>>({
         kind: Nettstatus.LasterInn,
@@ -62,15 +41,13 @@ const useKandidat = (term: Term): Nettressurs<KandidatTilBanner> => {
 
     useEffect(() => {
         (async () => {
-            try {
-                const respons = await fetch(api.kandidatsøk, {
-                    method: 'POST',
-                    body: JSON.stringify(byggQueryTerm({ key, value })),
-                    headers: { 'Content-Type': 'application/json' },
-                });
+            const response = await post<EsResponse<KandidatTilBanner>>(
+                api.kandidatsøk,
+                byggQueryTerm({ key, value })
+            );
 
-                const esRespons = (await respons.json()) as EsRespons;
-                const kandidat = esRespons.hits.hits.at(0)?._source;
+            if (response.kind === Nettstatus.Suksess) {
+                const kandidat = response.data.hits.hits[0]?._source;
 
                 if (kandidat) {
                     setKandidat({
@@ -79,14 +56,13 @@ const useKandidat = (term: Term): Nettressurs<KandidatTilBanner> => {
                     });
                 } else {
                     setKandidat({
-                        kind: Nettstatus.Feil,
-                        error: { message: 'Kandidaten er ikke tilgjengelig' },
+                        kind: Nettstatus.FinnesIkke,
                     });
                 }
-            } catch (e) {
+            } else {
                 setKandidat({
                     kind: Nettstatus.Feil,
-                    error: { message: 'Det skjedde en feil ved henting av kandidat' },
+                    error: { message: 'Klarte ikke å hente kandidaten' },
                 });
             }
         })();

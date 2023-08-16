@@ -19,10 +19,14 @@ import { konverterTilPresenterbarDato } from './datoUtils';
 type Props = {
     rekrutteringsbistandstilling: EsRekrutteringsbistandstilling;
     score: number | null;
-    fnr?: string;
+    kandidatnr?: string;
 };
 
-const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, fnr, score }) => {
+const Stillingsrad: FunctionComponent<Props> = ({
+    rekrutteringsbistandstilling,
+    kandidatnr,
+    score,
+}) => {
     const [searchParams] = useSearchParams();
 
     const stilling = rekrutteringsbistandstilling.stilling;
@@ -39,7 +43,7 @@ const Stillingsrad: FunctionComponent<Props> = ({ rekrutteringsbistandstilling, 
         hentHovedtags().includes(tag)
     );
 
-    let urlTilStilling = lagUrlTilStilling(stilling, fnr);
+    let urlTilStilling = lagUrlTilStilling(stilling, kandidatnr);
     if (import.meta.env.DEV) {
         urlTilStilling += `?${searchParams}`;
     }

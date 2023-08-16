@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { InnloggetBruker } from './useBrukerensIdent';
-import { ØktContext } from '../Økt';
-import { PAGE_SIZE, byggQuery } from '../api/query/byggQuery';
-import { Respons } from '../kandidater/elasticSearchTyper';
 import { søk } from '../api/api';
+import { PAGE_SIZE, byggQuery } from '../api/query/byggQuery';
+import { Respons } from '../kandidater/suggestQuery';
+import { ØktContext } from '../Økt';
+import { InnloggetBruker } from './useBrukerensIdent';
 import { searchParamsTilSøkekriterier } from './useSøkekriterier';
 
 const maksAntallNavigerbareKandidater = 500;

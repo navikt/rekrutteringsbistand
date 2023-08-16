@@ -1,8 +1,9 @@
 import { sendEvent } from 'felles/amplitude';
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import { useEffect, useState } from 'react';
 import { søk } from './api/api';
 import { lagQuery } from './api/queries/queries';
-import { Respons } from './domene/elasticSearchTyper';
 import useStandardsøk from './standardsøk/StandardsøkContext';
 import useNavigering from './useNavigering';
 import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from './utils/urlUtils';
@@ -13,7 +14,7 @@ const useSøkMedQuery = () => {
     const { navigate, searchParams, state } = useNavigering();
     const { standardsøk } = useStandardsøk();
 
-    const [respons, setRespons] = useState<Respons | null>(null);
+    const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);
 
     useEffect(() => {
         const skalBrukeStandardsøk = searchParams.has(QueryParam.BrukStandardsøk);

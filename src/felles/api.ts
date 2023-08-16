@@ -58,6 +58,38 @@ export const post = async <Returtype>(
     }
 };
 
+export const get = async <Returtype>(url: string): Promise<Nettressurs<Returtype>> => {
+    try {
+        const response = await fetch(url);
+
+        if (response.status === 200) {
+            return {
+                kind: Nettstatus.Suksess,
+                data: (await parseBody(response)) as Returtype,
+            };
+        } else if (response.status === 404) {
+            return {
+                kind: Nettstatus.FinnesIkke,
+            };
+        } else {
+            return {
+                kind: Nettstatus.Feil,
+                error: {
+                    status: response.status,
+                    message: response.statusText,
+                },
+            };
+        }
+    } catch (e) {
+        return {
+            kind: Nettstatus.Feil,
+            error: {
+                message: 'Nettverksfeil',
+            },
+        };
+    }
+};
+
 const parseBody = async (response: Response) => {
     switch (response.headers.get('Content-Type')) {
         case 'application/json':

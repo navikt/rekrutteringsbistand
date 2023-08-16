@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Portefølje } from '../filter/porteføljetabs/PorteføljeTabs';
-import { FilterParam } from './useRespons';
+import { Klasse as Førerkortklasse } from '../api/query/queryMedFørerkort';
 import { Mål as Hovedmål } from '../filter/Hovedmål';
 import { FiltrerbarInnsatsgruppe } from '../filter/Jobbmuligheter';
-import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Nivå as Utdanningsnivå } from '../filter/Utdanningsnivå';
-import { Klasse as Førerkortklasse } from '../api/query/queryMedFørerkort';
+import { Portefølje } from '../filter/porteføljetabs/PorteføljeTabs';
+import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Sortering } from '../kandidater/sortering/Sortering';
+import { FilterParam } from './useQuery';
 
 export const LISTEPARAMETER_SEPARATOR = '.';
 export const LISTEPARAMETER_SEPARATOR_REPLACEMENT = '·';
