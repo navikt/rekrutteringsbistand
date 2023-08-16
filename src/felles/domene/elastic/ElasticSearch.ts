@@ -36,7 +36,7 @@ export type EsQuery<IndexedItem> = {
         >;
         filter?: any;
     };
-    sort?: Sort | Sort[];
+    sort?: Sort | Sort[] | any;
     _source?: Array<keyof IndexedItem> | boolean;
     aggs?: AggregationsQuery;
 };
@@ -49,6 +49,7 @@ type Sort =
 
 export type AggregationsQuery = {
     [aggregering: string]: {
+        global?: {};
         terms?: {
             field: string;
             size?: number;
@@ -56,6 +57,10 @@ export type AggregationsQuery = {
         sum?: {
             field: string;
         };
+        filters?: {
+            filters: Record<string, object>;
+        };
+        aggs?: AggregationsQuery;
     };
 };
 
@@ -94,7 +99,7 @@ export type EsResponse<IndexedItem> = {
     };
     suggest?: {};
     aggregations?: {
-        [aggregering: string]: AggregationsResponse;
+        [aggregering: string]: AggregationsResponse | SubAggregationsResponse;
     };
 };
 
@@ -114,7 +119,15 @@ export type AggregationsResponse = {
     buckets: AggregationBucket[];
 };
 
+export type SubAggregationsResponse = Record<string, SubAggregation>;
+
+export type SubAggregation = {
+    doc_count_error_upper_bound: number;
+    sum_other_doc_count: number;
+    buckets: Record<string, AggregationBucket>;
+};
+
 export type AggregationBucket = {
-    key: string;
+    key?: string;
     doc_count: number;
 };

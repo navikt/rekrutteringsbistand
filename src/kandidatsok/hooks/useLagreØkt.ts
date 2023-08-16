@@ -1,8 +1,9 @@
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { søk } from '../api/api';
 import { PAGE_SIZE, byggQuery } from '../api/query/byggQuery';
-import { Respons } from '../kandidater/suggestQuery';
 import { ØktContext } from '../Økt';
 import { InnloggetBruker } from './useBrukerensIdent';
 import { searchParamsTilSøkekriterier } from './useSøkekriterier';
@@ -11,7 +12,9 @@ const maksAntallNavigerbareKandidater = 500;
 
 const useLagreØkt = (innloggetBruker: InnloggetBruker) => {
     const { setØkt } = useContext(ØktContext);
-    const [navigerbareKandidater, setNavigerbareKandidater] = useState<Respons | undefined>();
+    const [navigerbareKandidater, setNavigerbareKandidater] = useState<
+        EsResponse<Kandidat> | undefined
+    >();
     const [searchParams] = useSearchParams();
 
     useEffect(() => {

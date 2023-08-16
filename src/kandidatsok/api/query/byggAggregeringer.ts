@@ -1,5 +1,6 @@
+import { AggregationsQuery, EsQuery } from 'felles/domene/elastic/ElasticSearch';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
-import { Aggregeringer, SearchQuery } from '../../kandidater/suggestQuery';
 import { queryMedØnsketYrke } from './queryMedØnsketYrke';
 
 export enum Aggregering {
@@ -10,7 +11,7 @@ enum Aggregeringsfelt {
     Kompetanseord = 'kompetanseObj.kompKodeNavn.keyword',
 }
 
-export const byggAggregeringerQuery = (søkekriterier: Søkekriterier): SearchQuery => {
+export const byggAggregeringerQuery = (søkekriterier: Søkekriterier): EsQuery<Kandidat> => {
     const { ønsketYrke } = søkekriterier;
 
     return {
@@ -26,7 +27,7 @@ export const byggAggregeringerQuery = (søkekriterier: Søkekriterier): SearchQu
     };
 };
 
-export const kompetanseaggregering: Aggregeringer = {
+export const kompetanseaggregering: AggregationsQuery = {
     [Aggregering.Kompetanse]: {
         terms: {
             field: Aggregeringsfelt.Kompetanseord,

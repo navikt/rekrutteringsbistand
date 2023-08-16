@@ -1,10 +1,10 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
+import { AggregationBucket, AggregationsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { søk } from '../../api/api';
 import { Aggregering, byggAggregeringerQuery } from '../../api/query/byggAggregeringer';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
-import { AggregeringRespons } from '../../kandidater/suggestQuery';
 import Merkelapp from '../merkelapp/Merkelapp';
 import Merkelapper from '../merkelapp/Merkelapper';
 import css from './Kompetanse.module.css';
@@ -17,7 +17,7 @@ type Props = {
 const uinteressanteForslag = ['Fagbrev/svennebrev', 'Mesterbrev', 'Autorisasjon'];
 
 const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelgForslag }) => {
-    const [respons, setRespons] = useState<AggregeringRespons | null>(null);
+    const [respons, setRespons] = useState<AggregationsResponse | null>(null);
     const [visAlleForslag, setVisAlleForslag] = useState<boolean>(false);
 
     useEffect(() => {
@@ -28,7 +28,7 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
             if (respons.aggregations) {
                 const aggregering = respons.aggregations[Aggregering.Kompetanse];
 
-                setRespons(aggregering);
+                setRespons(aggregering as AggregationsResponse);
             }
         };
 
@@ -40,7 +40,9 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
         return null;
     }
 
-    const alleForslag = respons.buckets.map((bucket) => bucket.key);
+    const alleForslag = (respons as AggregationsResponse).buckets.map(
+        (bucket: AggregationBucket) => bucket.key
+    );
     const interessanteForslag = alleForslag.filter(
         (forslag) => !uinteressanteForslag.includes(forslag)
     );

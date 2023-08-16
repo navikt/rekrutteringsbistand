@@ -1,18 +1,18 @@
 import { api, videresendTilInnlogging } from 'felles/api';
+import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import {
     FuzzySuggestQuery,
     FuzzySuggestionRespons,
-    Respons,
-    SearchQuery,
     SuggestQuery,
     SuggestionRespons,
 } from '../kandidater/suggestQuery';
 import { LagreKandidaterDto } from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { MineKandidatlister } from '../kandidatliste/useMineKandidatlister';
 
-export const søk = async (query: SearchQuery): Promise<Respons> => {
+export const søk = async (query: EsQuery<Kandidat>): Promise<EsResponse<Kandidat>> => {
     const respons = await post(api.kandidatsøk, query);
 
     return parseJsonEllerKastFeil(respons, 'Klarte ikke å søke');

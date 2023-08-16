@@ -108,7 +108,7 @@ const opprettMockForespørselOmDelingAvCv = (
     },
 });
 
-export const hentForespørslerstatistikk = (navKontor?: string): Svarstatistikk => {
+export const hentForespørslerstatistikk = (navKontor: string | null): Svarstatistikk => {
     return navKontor === '0239'
         ? {
               antallSvartJa: 26,

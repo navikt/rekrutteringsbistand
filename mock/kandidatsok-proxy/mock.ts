@@ -1,6 +1,7 @@
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { rest } from 'msw';
 import { api } from '../../src/felles/api';
-import { Respons } from '../../src/kandidatsok/kandidater/suggestQuery';
 import { mockKandidat } from './mockKandidat';
 
 export const kandidatsøkMock = [
@@ -24,7 +25,7 @@ const metainformasjon = {
     timed_out: false,
 };
 
-const treff: Respons = {
+const treff: EsResponse<Kandidat> = {
     ...metainformasjon,
     hits: {
         total: {
@@ -44,7 +45,7 @@ const treff: Respons = {
     },
 };
 
-const ingenTreff: Respons = {
+const ingenTreff: EsResponse<Kandidat> = {
     ...metainformasjon,
     hits: {
         total: {

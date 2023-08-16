@@ -1,8 +1,8 @@
+import { EsQuery, Sorteringsrekkefølge } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { InnloggetBruker } from '../../hooks/useBrukerensIdent';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import { Sortering } from '../../kandidater/sortering/Sortering';
-import { SearchQuery, Sorteringsrekkefølge } from '../../kandidater/suggestQuery';
 import { queryMedArbeidserfaring } from './queryMedArbeidserfaring';
 import { queryMedFritekst } from './queryMedFritekst';
 import { queryMedFørerkort } from './queryMedFørerkort';
@@ -33,7 +33,7 @@ const interessanteKandidatfelter: Array<keyof Kandidat> = [
 export const byggQuery = (
     søkekriterier: Søkekriterier,
     innloggetBruker: InnloggetBruker
-): SearchQuery => {
+): EsQuery<Kandidat> => {
     const { side, sortering } = søkekriterier;
 
     return {
@@ -61,7 +61,7 @@ export const byggQueryForAktørIder = (
     søkekriterier: Søkekriterier,
     innloggetBruker: InnloggetBruker,
     maksAntallKandidater: number
-): SearchQuery => {
+): EsQuery<{ aktorId: string }> => {
     return {
         query: byggIndreQuery(søkekriterier, innloggetBruker),
         size: maksAntallKandidater,

@@ -8,7 +8,7 @@ import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling from 'felles/domene/stilling/Stilling';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidat, { fodselsnrTerm } from 'felles/komponenter/kandidatbanner/useKandidat';
+import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
 import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
@@ -24,7 +24,8 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: Props) => {
-    const kandidat = useKandidat(fodselsnrTerm(fnr));
+    const kandidat = useKandidat({ key: 'fodselsnummer', value: fnr });
+
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
