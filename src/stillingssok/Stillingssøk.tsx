@@ -5,6 +5,7 @@ import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import Banner from 'felles/komponenter/banner/Banner';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import css from './Stillingssøk.module.css';
+import { GlobalAggregering } from './domene/elasticSearchTyper';
 import Filter from './filter/Filter';
 import Filtermeny from './filter/filtermeny/Filtermeny';
 import { Status } from './filter/om-annonsen/Annonsestatus';
@@ -35,7 +36,8 @@ const Stillingssøk = () => {
     const { kandidat: kandidatnr } = useParams<{ kandidat?: string }>();
     const respons = useSøkMedQuery();
 
-    const globalAggregering = respons?.aggregations?.globalAggregering;
+    const globalAggregering = respons?.aggregations
+        ?.globalAggregering as unknown as GlobalAggregering;
     const antallTreff = useAntallTreff(respons);
 
     const visStandardsøk = kandidatnr === undefined;
@@ -60,9 +62,7 @@ const Stillingssøk = () => {
                                 <Heading level="2" size="medium" className={css.antallStillinger}>
                                     {formaterAntallAnnonser(antallTreff)}
                                 </Heading>
-                                <Søkefelter
-                                    aggregeringer={((globalAggregering as any)?.felter).buckets}
-                                />
+                                <Søkefelter aggregeringer={globalAggregering?.felter?.buckets} />
                                 <Sorter />
                             </div>
                             <Stillingsliste esResponse={respons} kandidatnr={kandidatnr} />

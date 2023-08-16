@@ -98,9 +98,7 @@ export type EsResponse<IndexedItem> = {
         hits: Array<Hit<IndexedItem>>;
     };
     suggest?: {};
-    aggregations?: {
-        [aggregering: string]: AggregationsResponse | SubAggregationsResponse;
-    };
+    aggregations?: AggregationsResponse;
 };
 
 export type Hit<IndexedItem> = {
@@ -114,20 +112,16 @@ export type Hit<IndexedItem> = {
 };
 
 export type AggregationsResponse = {
-    doc_count_error_upper_bound: number;
-    sum_other_doc_count: number;
-    buckets: AggregationBucket[];
+    [aggregering: string]: Aggregation | AggregationsResponse;
 };
 
-export type SubAggregationsResponse = Record<string, SubAggregation>;
-
-export type SubAggregation = {
+export type Aggregation = {
     doc_count_error_upper_bound: number;
     sum_other_doc_count: number;
-    buckets: Record<string, AggregationBucket>;
+    buckets: Bucket[];
 };
 
-export type AggregationBucket = {
+export type Bucket = {
     key?: string;
     doc_count: number;
 };

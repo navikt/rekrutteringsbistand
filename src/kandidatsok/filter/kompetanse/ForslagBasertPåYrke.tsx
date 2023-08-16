@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { AggregationBucket, AggregationsResponse } from 'felles/domene/elastic/ElasticSearch';
+import { Aggregation } from 'felles/domene/elastic/ElasticSearch';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { søk } from '../../api/api';
 import { Aggregering, byggAggregeringerQuery } from '../../api/query/byggAggregeringer';
@@ -17,7 +17,7 @@ type Props = {
 const uinteressanteForslag = ['Fagbrev/svennebrev', 'Mesterbrev', 'Autorisasjon'];
 
 const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelgForslag }) => {
-    const [respons, setRespons] = useState<AggregationsResponse | null>(null);
+    const [respons, setRespons] = useState<Aggregation | null>(null);
     const [visAlleForslag, setVisAlleForslag] = useState<boolean>(false);
 
     useEffect(() => {
@@ -26,9 +26,9 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
             const respons = await søk(query);
 
             if (respons.aggregations) {
-                const aggregering = respons.aggregations[Aggregering.Kompetanse];
+                const aggregering = respons.aggregations[Aggregering.Kompetanse] as Aggregation;
 
-                setRespons(aggregering as AggregationsResponse);
+                setRespons(aggregering);
             }
         };
 
@@ -40,9 +40,8 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
         return null;
     }
 
-    const alleForslag = (respons as AggregationsResponse).buckets.map(
-        (bucket: AggregationBucket) => bucket.key
-    );
+    const alleForslag = respons.buckets.map((bucket) => bucket.key);
+
     const interessanteForslag = alleForslag.filter(
         (forslag) => !uinteressanteForslag.includes(forslag)
     );
