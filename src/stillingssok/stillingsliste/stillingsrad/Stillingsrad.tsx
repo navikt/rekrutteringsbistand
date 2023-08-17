@@ -44,9 +44,6 @@ const Stillingsrad: FunctionComponent<Props> = ({
     );
 
     let urlTilStilling = lagUrlTilStilling(stilling, kandidatnr);
-    if (import.meta.env.DEV) {
-        urlTilStilling += `?${searchParams}`;
-    }
 
     return (
         <li className={css.stillingsrad}>

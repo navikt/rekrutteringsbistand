@@ -26,7 +26,7 @@ const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, still
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
-    const brødsmulesti = byggBrødsmulesti(kandidatnr, stilling, kandidat, state?.stillingsssøk);
+    const brødsmulesti = byggBrødsmulesti(kandidatnr, stilling, kandidat, state?.stillingssøk);
 
     return (
         <>
