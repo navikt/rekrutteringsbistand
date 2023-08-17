@@ -52,7 +52,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
                     <div className={css.knapper}>
                         {cv.kind === Nettstatus.Suksess && (
                             <Link
-                                to={`/stillingssok/${kandidatnr}?brukKritererFraKandidat=true`}
+                                to={`/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`}
                                 className="navds-button navds-button--secondary navds-button--small"
                             >
                                 <MagnifyingGlassIcon />
