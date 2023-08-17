@@ -3,6 +3,7 @@
     max-width: 40rem;
     border: 1px solid var(--a-border-subtle);
     border-radius: var(--a-border-radius-xlarge);
+    background: var(--a-bg-default);
     margin: 3.5rem auto;
     padding: 2rem;
 }

@@ -1,4 +1,4 @@
-import { BodyLong, ErrorMessage, Heading, Loader } from '@navikt/ds-react';
+import { BodyLong, ErrorMessage, Heading } from '@navikt/ds-react';
 import { api, post } from 'felles/api';
 import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
@@ -90,10 +90,6 @@ const InngangFraArbop = () => {
         hentAktivPersonbruker();
     }, [navigate]);
 
-    if (personbruker.kind === Nettstatus.LasterInn) {
-        return <Sidelaster />;
-    }
-
     if (personbruker.kind === Nettstatus.Feil) {
         return (
             <div className={css.inngangFraArbop}>
@@ -130,7 +126,7 @@ const InngangFraArbop = () => {
         );
     }
 
-    return <Loader size="2xlarge" />;
+    return <Sidelaster />;
 };
 
 export default InngangFraArbop;
