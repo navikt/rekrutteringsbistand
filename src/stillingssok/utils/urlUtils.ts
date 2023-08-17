@@ -22,7 +22,7 @@ export enum QueryParam {
 
     // Valgmuligheter
     BrukStandardsøk = 'brukStandardsok',
-    BrukKriterierFraKandidat = 'brukKritererFraKandidat',
+    BrukKriterierFraKandidat = 'brukKriterierFraKandidat',
 }
 
 export type Navigeringsstate =
