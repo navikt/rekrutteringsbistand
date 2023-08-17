@@ -6,13 +6,11 @@ import { mockKandidat } from './mockKandidat';
 
 export const kandidatsøkMock = [
     rest.post(api.kandidatsøk, async (req, res, ctx) => {
-        // const skalMockeIngenTreff = (await req.text()).includes('09043826678');
+        const skalMockeIngenTreff = (await req.text()).includes('09043826678');
 
-        // const respons = skalMockeIngenTreff ? ingenTreff : treff;
+        const respons = skalMockeIngenTreff ? ingenTreff : treff;
 
-        // return res(ctx.json(respons));
-
-        return res(ctx.json(ingenTreff));
+        return res(ctx.json(respons));
     }),
 ];
 
