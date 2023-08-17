@@ -91,12 +91,13 @@ export const get = async <Returtype>(url: string): Promise<Nettressurs<Returtype
 };
 
 const parseBody = async (response: Response) => {
-    switch (response.headers.get('Content-Type')) {
-        case 'application/json':
-            return await response.json();
-        case 'application/text':
-            return await response.text();
-        default:
-            return null;
+    const contentType = response.headers.get('Content-Type');
+
+    if (contentType.includes('application/json')) {
+        return await response.json();
+    } else if (contentType.includes('application/text')) {
+        return await response.text();
+    } else {
+        return null;
     }
 };
