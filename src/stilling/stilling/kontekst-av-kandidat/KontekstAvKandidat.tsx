@@ -21,7 +21,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, stilling }: Props) => {
-    const kandidat = useKandidat({ key: 'kandidatnr', value: kandidatnr });
+    const kandidat = useKandidat(kandidatnr);
 
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);

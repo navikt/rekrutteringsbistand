@@ -14,10 +14,7 @@ import { QueryParam } from '../utils/urlUtils';
 const useKandidatStillingssøk = (kandidatnr: string) => {
     const { searchParams, navigate } = useNavigering();
 
-    const kandidat = useKandidat({
-        key: 'kandidatnr',
-        value: kandidatnr,
-    });
+    const kandidat = useKandidat(kandidatnr);
 
     useEffect(() => {
         if (kandidat.kind === Nettstatus.Suksess) {

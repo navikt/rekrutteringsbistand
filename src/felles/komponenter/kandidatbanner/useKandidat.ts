@@ -4,10 +4,10 @@ import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 
-export const byggQueryTerm = (term: Term): EsQuery<KandidatTilBanner> => ({
+export const byggQuery = (kandidatnr: string): EsQuery<KandidatTilBanner> => ({
     query: {
         term: {
-            [term.key]: term.value,
+            kandidatnr: kandidatnr,
         },
     },
     size: 1,
@@ -28,22 +28,16 @@ export const byggQueryTerm = (term: Term): EsQuery<KandidatTilBanner> => ({
     ],
 });
 
-type Term = {
-    key: 'kandidatnr' | 'fodselsnummer';
-    value: string;
-};
-
-const useKandidat = (term: Term): Nettressurs<KandidatTilBanner> => {
+const useKandidat = (kandidatnr: string): Nettressurs<KandidatTilBanner> => {
     const [kandidat, setKandidat] = useState<Nettressurs<KandidatTilBanner>>({
         kind: Nettstatus.LasterInn,
     });
-    const { key, value } = term;
 
     useEffect(() => {
-        (async () => {
+        const hentKandidat = async () => {
             const response = await post<EsResponse<KandidatTilBanner>>(
                 api.kandidatsøk,
-                byggQueryTerm({ key, value })
+                byggQuery(kandidatnr)
             );
 
             if (response.kind === Nettstatus.Suksess) {
@@ -65,8 +59,10 @@ const useKandidat = (term: Term): Nettressurs<KandidatTilBanner> => {
                     error: { message: 'Klarte ikke å hente kandidaten' },
                 });
             }
-        })();
-    }, [key, value]);
+        };
+
+        hentKandidat();
+    }, [kandidatnr]);
 
     return kandidat;
 };

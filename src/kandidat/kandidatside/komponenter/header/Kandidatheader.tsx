@@ -17,7 +17,7 @@ type Props = {
 const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
 
-    const kandidat = useKandidat({ key: 'kandidatnr', value: kandidatnr });
+    const kandidat = useKandidat(kandidatnr);
 
     const brødsmulestiMedNavn =
         kandidat.kind === Nettstatus.Suksess
