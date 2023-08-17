@@ -48,11 +48,21 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilH
                         </Heading>
                     )}
 
+                    {kandidat.kind === Nettstatus.FinnesIkke && (
+                        <Heading size="large">Fant ikke kandidaten</Heading>
+                    )}
+
                     {kandidat.kind === Nettstatus.Feil && (
                         <Heading size="large">{kandidat.error.message}</Heading>
                     )}
 
                     <div className={css.bunnlinje}>
+                        {kandidat.kind === Nettstatus.FinnesIkke && (
+                            <div className={css.personalia}>
+                                Kandidaten er ikke tilgjengelig i Rekrutteringsbistand
+                            </div>
+                        )}
+
                         {kandidat.kind === Nettstatus.LasterInn && (
                             <div className={css.personalia}>
                                 <div>
