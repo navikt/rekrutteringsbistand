@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
-import IkkeFunnet from './ikke-funnet/IkkeFunnet';
 import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
 import css from './CvSide.module.css';
 import Jobbønsker from './jobbønsker/Jobbønsker';
@@ -26,7 +25,31 @@ const CvSide: FunctionComponent = () => {
     }
 
     if (cv.kind === Nettstatus.FinnesIkke) {
-        return <IkkeFunnet />;
+        return (
+            <div className={css.side}>
+                <div className={css.wrapper}>
+                    <Alert variant="warning">
+                        <Heading size="medium">
+                            Vi klarte ikke å laste inn detaljer om kandidaten
+                        </Heading>
+                        <div>
+                            <BodyLong size="medium" spacing>
+                                Det kan være fordi de har fått en ny status, eller på grunn av feil
+                                i systemene våre.
+                            </BodyLong>
+                            <BodyLong size="medium" spacing>
+                                Sjekk statusen til kandidaten i Modia-Arbeidsrettet Oppfølging.
+                                Etterpå kan du prøve å laste inn denne siden på nytt.
+                            </BodyLong>
+                            <BodyLong size="medium">
+                                Hvis feilen vedvarer kan du kontakte brukerstøtte til
+                                rekrutteringsbitand for å få hjelp med feilen.
+                            </BodyLong>
+                        </div>
+                    </Alert>
+                </div>
+            </div>
+        );
     }
 
     if (cv.kind === Nettstatus.Suksess) {
@@ -58,14 +81,21 @@ const CvSide: FunctionComponent = () => {
         <div className={css.side}>
             <div className={css.wrapper}>
                 <Alert variant="error">
-                    <Heading size="medium">Vi klarte ikke å hente detaljer om kandidaten</Heading>
-                    <BodyLong size="medium">
-                        Det kan være fordi kandidaten mangler informasjon på CVen, eller på grunn av
-                        feil i systemene våre. Sjekk om kandidaten har fyllt ut CVen sin i
-                        Modia-Arbeidsrettet Oppfølging. Etterpå kan du prøve å laste inn denne siden
-                        på nytt. Hvis feilen vedvarer kan du kontakte brukerstøtte til
-                        rekrutteringsbitand for å få hjelp med feilen.
-                    </BodyLong>
+                    <Heading size="medium">Vi klarte ikke å vise detaljer om kandidaten</Heading>
+                    <div>
+                        <BodyLong size="medium" spacing>
+                            Det kan være fordi kandidaten mangler informasjon på CVen, fordi de har
+                            fått en ny status, eller på grunn av feil i systemene våre.
+                        </BodyLong>
+                        <BodyLong size="medium" spacing>
+                            Sjekk om kandidaten har fyllt ut CVen sin i Modia-Arbeidsrettet
+                            Oppfølging. Etterpå kan du prøve å laste inn denne siden på nytt.
+                        </BodyLong>
+                        <BodyLong size="medium">
+                            Hvis feilen vedvarer kan du kontakte brukerstøtte til
+                            rekrutteringsbitand for å få hjelp med feilen.
+                        </BodyLong>
+                    </div>
                 </Alert>
             </div>
         </div>
