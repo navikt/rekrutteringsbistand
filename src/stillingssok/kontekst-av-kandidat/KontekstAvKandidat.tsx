@@ -28,7 +28,7 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
                           tekst: 'Finn stilling',
                       },
                   ]
-                : [];
+                : undefined;
 
         return <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti} />;
     }

@@ -22,7 +22,7 @@ const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props
     const brødsmulestiMedNavn =
         kandidat.kind === Nettstatus.Suksess
             ? [
-                  ...brødsmulesti,
+                  ...(brødsmulesti ?? []),
                   {
                       tekst: formaterNavn(kandidat.data),
                   },
