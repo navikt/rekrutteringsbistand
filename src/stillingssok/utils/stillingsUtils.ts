@@ -13,6 +13,7 @@ export const skalViseRedigeringslenkeTilStilling = (
 
 export const lagUrlTilStilling = (stilling: EsStilling, kandidatnr?: string) => {
     const url = `/stillinger/stilling/${stilling.uuid}`;
+
     return kandidatnr ? `${url}?kandidat=${kandidatnr}` : url;
 };
 
