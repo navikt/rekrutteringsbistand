@@ -1,6 +1,10 @@
+.header,
+.content {
+    background-color: white;
+}
+
 .content {
     padding: 1rem;
-    background-color: white;
 }
 
 .kandidatlisteFilterKategoriLitenSkjerm {

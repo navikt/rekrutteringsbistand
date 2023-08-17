@@ -1,5 +1,9 @@
 .content {
     padding: 1rem;
+}
+
+.header,
+.content {
     background-color: white;
 }
 

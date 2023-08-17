@@ -1,6 +1,6 @@
-import { Arbeidsgiverforslag } from '../opprett-ny-stilling/VelgArbeidsgiver';
+import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
 
-const devVirksomheter: Arbeidsgiverforslag[] = [
+const devVirksomheter: Enhetsregistertreff[] = [
     {
         orgnr: '312113341',
         name: 'ORDKNAPP BLOMSTRETE TIGER AS',

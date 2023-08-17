@@ -1,8 +1,9 @@
-import { ExternalLinkIcon, DownloadIcon } from '@navikt/aksel-icons';
+import { DownloadIcon } from '@navikt/aksel-icons';
 import { Link as NavLink } from '@navikt/ds-react';
 
 import { sendEvent } from 'felles/amplitude';
-import { arbeidsrettetOppfølgingUrl, lastNedCvUrl } from '../../../utils/eksterneUrler';
+import LenkeTilAktivitetsplan from '../../../komponenter/lenke-til-aktivitetsplan/LenkeTilAktivitetsplan';
+import { lastNedCvUrl } from '../../../utils/eksterneUrler';
 import css from './Lenker.module.css';
 
 type Props = {
@@ -14,14 +15,7 @@ const Lenker = ({ fødselsnummer, className }: Props) => {
     return (
         <div className={className}>
             <div className={css.lenker}>
-                <NavLink
-                    target="_blank"
-                    href={`${arbeidsrettetOppfølgingUrl}/${fødselsnummer}`}
-                    onClick={() => sendEvent('cv_aktivitetsplan_lenke', 'klikk')}
-                >
-                    Se aktivitetsplan
-                    <ExternalLinkIcon />
-                </NavLink>
+                <LenkeTilAktivitetsplan fnr={fødselsnummer} />
                 <NavLink
                     target="_blank"
                     href={`${lastNedCvUrl}${fødselsnummer}`}

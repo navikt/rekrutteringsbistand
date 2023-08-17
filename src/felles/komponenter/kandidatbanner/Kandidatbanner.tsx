@@ -6,108 +6,111 @@ import {
     PinIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
-import { Fragment, ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { ReactNode } from 'react';
+import Grunnbanner from '../grunnbanner/Grunnbanner';
+import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
 import css from './Kandidatbanner.module.css';
 
-type Brødsmule = {
-    tekst: string;
-    href?: string;
-};
-
 type Props = {
-    kandidat?: KandidatTilStillingssøk;
+    kandidat: Nettressurs<KandidatTilBanner>;
     brødsmulesti?: Brødsmule[];
-    children?: ReactNode;
+    øverstTilHøyre?: ReactNode;
+    nederstTilHøyre?: ReactNode;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti, children }: Props) => {
+const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilHøyre }: Props) => {
     return (
-        <div className={css.banner}>
-            <div className={css.piktogramOgInnhold}>
-                <Piktogram className={css.piktogram} />
-                <div className={css.innhold}>
-                    <div className={css.hovedinnhold}>
-                        <div>
-                            {brødsmulesti ? (
-                                brødsmulesti.map(({ tekst, href }, index) => {
-                                    const brødsmule = href ? (
-                                        <Link to={href}>{tekst}</Link>
-                                    ) : (
-                                        <BodyShort as="span">{tekst}</BodyShort>
-                                    );
+        <Grunnbanner ikon={<Piktogram />}>
+            <div className={css.innhold}>
+                <div className={css.hovedinnhold}>
+                    <div className={css.topplinje}>
+                        {brødsmulesti ? (
+                            <Brødsmulesti brødsmulesti={brødsmulesti} />
+                        ) : (
+                            <Skeleton width={220} />
+                        )}
+                        {øverstTilHøyre}
+                    </div>
+                    {kandidat.kind === Nettstatus.LasterInn && (
+                        <Skeleton>
+                            <Heading size="large">Placeholder</Heading>
+                        </Skeleton>
+                    )}
+                    {kandidat.kind === Nettstatus.Suksess && (
+                        <Heading size="large" level="2">
+                            {formaterNavn(kandidat.data)}
+                        </Heading>
+                    )}
+                    {kandidat.kind === Nettstatus.Feil && (
+                        <Heading size="large">{kandidat.error.message}</Heading>
+                    )}
 
-                                    return (
-                                        <Fragment key={tekst}>
-                                            {index !== 0 && <span> / </span>}
-                                            {brødsmule}
-                                        </Fragment>
-                                    );
-                                })
-                            ) : (
-                                <Skeleton width={220} />
+                    {kandidat.kind !== Nettstatus.Feil && (
+                        <div className={css.bunnlinje}>
+                            <div className={css.personalia}>
+                                <BodyShort>
+                                    <CandleIcon />{' '}
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        `${lagFødselsdagtekst(kandidat.data.fodselsdato)} (${
+                                            kandidat.data.fodselsnummer
+                                        }) `
+                                    ) : (
+                                        <Skeleton width={180} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PinIcon />{' '}
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        hentAdresse(kandidat.data) ?? '-'
+                                    ) : (
+                                        <Skeleton width={240} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <EnvelopeClosedIcon />
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        kandidat.data.epostadresse?.toLowerCase() ?? '-'
+                                    ) : (
+                                        <Skeleton width={100} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PhoneIcon />
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        kandidat.data.telefon ?? '-'
+                                    ) : (
+                                        <Skeleton width={100} />
+                                    )}
+                                </BodyShort>
+
+                                <BodyShort>
+                                    <PersonIcon />
+                                    {kandidat.kind === Nettstatus.Suksess ? (
+                                        kandidat.data.veileder ? (
+                                            `${kandidat.data.veileder.toUpperCase()} (Veileder)`
+                                        ) : (
+                                            '-'
+                                        )
+                                    ) : (
+                                        <Skeleton width={100} />
+                                    )}
+                                </BodyShort>
+                            </div>
+                            {nederstTilHøyre && (
+                                <div className={css.nederstTilHøyre}>{nederstTilHøyre}</div>
                             )}
                         </div>
-                        {kandidat ? (
-                            <Heading size="large" level="3">
-                                {formaterNavn(kandidat)}
-                            </Heading>
-                        ) : (
-                            <Skeleton>
-                                <Heading size="large">Placeholder</Heading>
-                            </Skeleton>
-                        )}
-
-                        <div className={css.personalia}>
-                            <BodyShort>
-                                <CandleIcon />{' '}
-                                {kandidat ? (
-                                    lagFødselsdagtekst(kandidat?.fodselsdato)
-                                ) : (
-                                    <Skeleton width={180} />
-                                )}
-                            </BodyShort>
-
-                            <BodyShort>
-                                <PinIcon />{' '}
-                                {kandidat ? hentAdresse(kandidat) ?? '-' : <Skeleton width={240} />}
-                            </BodyShort>
-
-                            <BodyShort>
-                                <EnvelopeClosedIcon />
-                                {kandidat ? (
-                                    kandidat.epostadresse?.toLowerCase() ?? '-'
-                                ) : (
-                                    <Skeleton width={100} />
-                                )}
-                            </BodyShort>
-
-                            <BodyShort>
-                                <PhoneIcon />
-                                {kandidat ? kandidat.telefon ?? '-' : <Skeleton width={100} />}
-                            </BodyShort>
-
-                            <BodyShort>
-                                <PersonIcon />
-                                {kandidat ? (
-                                    kandidat.veileder ? (
-                                        `${kandidat.veileder.toUpperCase()} (Veileder)`
-                                    ) : (
-                                        '-'
-                                    )
-                                ) : (
-                                    <Skeleton width={100} />
-                                )}
-                            </BodyShort>
-                        </div>
-                    </div>
-                    <div className={css.ekstrainnhold}>{children}</div>
+                    )}
                 </div>
             </div>
-        </div>
+        </Grunnbanner>
     );
 };
 
@@ -116,6 +119,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
 
     const iDag = new Date();
     const fødselsdag = new Date(inputdato);
+    fødselsdag.setTime(fødselsdag.getTime() + 1 * 60 * 60 * 1000); // For å unngå tidssonetrøbbel ved indeksering. Krever at tidspunkt på dag ikke brukes videre.
 
     const harIkkeFyltÅrIÅr =
         iDag.getUTCMonth() < fødselsdag.getUTCMonth() ||
@@ -133,9 +137,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
     return `Født: ${fødselsdagString} (${alder} år)`;
 };
 
-const hentAdresse = (kandidat?: KandidatTilStillingssøk) => {
-    if (!kandidat) return undefined;
-
+const hentAdresse = (kandidat: KandidatTilBanner) => {
     const { poststed, postnummer, adresselinje1 } = kandidat;
 
     if (!poststed && !postnummer && !adresselinje1) {
@@ -149,7 +151,7 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-const formaterNavn = (kandidat: KandidatTilStillingssøk) => {
+export const formaterNavn = (kandidat: KandidatTilBanner) => {
     const fornavn = brukStorForbokstav(kandidat.fornavn);
     const etternavn = brukStorForbokstav(kandidat.etternavn);
 

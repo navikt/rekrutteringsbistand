@@ -2,24 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { erKobletTilStilling, kandidaterMåGodkjenneDelingAvCv } from './domene/kandidatlisteUtils';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
 import { sendEvent } from 'felles/amplitude';
+import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
+import { SmsStatus } from 'felles/domene/sms/Sms';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import AppState from '../state/AppState';
-import KandidatlisteAction from './reducer/KandidatlisteAction';
-import KandidatlisteActionType from './reducer/KandidatlisteActionType';
-import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
-import SendSmsModal from './modaler/SendSmsModal';
-import { Kandidatmeldinger, Kandidattilstander, SmsStatus } from './domene/Kandidatressurser';
+import { AlertType, VarslingAction, VarslingActionType } from '../varsling/varslingReducer';
 import Kandidatliste from './Kandidatliste';
+import { Kandidatmeldinger, Kandidattilstander } from './domene/Kandidatressurser';
+import { erKobletTilStilling, kandidaterMåGodkjenneDelingAvCv } from './domene/kandidatlisteUtils';
 import {
     ForespørslerGruppertPåAktørId,
     hentForespørslerForKandidatForStilling,
 } from './knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import SendSmsModal from './modaler/SendSmsModal';
 import LeggTilKandidatModal from './modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
-import { AlertType, VarslingAction, VarslingActionType } from '../varsling/varslingReducer';
-import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
+import KandidatlisteAction from './reducer/KandidatlisteAction';
+import KandidatlisteActionType from './reducer/KandidatlisteActionType';
 
 type OwnProps = {
     kandidatliste: Kandidatlistetype;
@@ -123,7 +124,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         }
 
         if (arkiveringFeiletNettopp) {
-            this.visInfobanner(`Det skjedde noe galt under sletting av kandidaten`);
+            this.visInfobanner(`Det skjedde noe galt under sletting av kandidaten`, 'error');
         }
 
         if (enKandidatErNettoppDearkivert) {
@@ -132,7 +133,8 @@ class KandidatlisteOgModaler extends React.Component<Props> {
 
         if (dearkiveringFeiletNettopp) {
             this.visInfobanner(
-                `Det skjedde noe galt, kunne ikke legge kandidaten tilbake i kandidatlisten`
+                `Det skjedde noe galt, kunne ikke legge kandidaten tilbake i kandidatlisten`,
+                'error'
             );
         }
 

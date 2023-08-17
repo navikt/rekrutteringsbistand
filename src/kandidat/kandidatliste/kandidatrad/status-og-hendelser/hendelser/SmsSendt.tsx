@@ -1,7 +1,7 @@
+import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
 import { FunctionComponent } from 'react';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
-import { Sms, SmsStatus } from '../../../domene/Kandidatressurser';
 
 type Props = {
     sms?: Sms;

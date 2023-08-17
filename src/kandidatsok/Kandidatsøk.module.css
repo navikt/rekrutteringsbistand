@@ -17,17 +17,16 @@
     flex-direction: column;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
     .container {
         display: grid;
         grid-template-columns: 20rem 1fr;
-        max-width: var(--app-maksbredde);
     }
 }
 
 @media (min-width: 1700px) {
     .container {
         grid-template-columns: 22rem 1fr;
-        max-width: var(--app-maksbredde-stor);
+        max-width: calc(var(--innhold-maksbredde) + 4rem);
     }
 }

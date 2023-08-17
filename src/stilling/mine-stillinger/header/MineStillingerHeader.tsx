@@ -1,21 +1,18 @@
-import css from './MineStillingerHeader.module.css';
-import { Button, Heading } from '@navikt/ds-react';
+import { PlusCircleIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
+import Banner from 'felles/komponenter/banner/Banner';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
 
 type Props = {
     opprettStilling: () => void;
 };
 
 const MineStillingerHeader = ({ opprettStilling }: Props) => (
-    <div className={css.header}>
-        <div className={css.wrapper}>
-            <Heading level="1" size="xlarge" className={css.overskrift}>
-                Mine stillinger
-            </Heading>
-            <Button onClick={opprettStilling} className={css.opprettNyKnapp}>
-                Opprett ny
-            </Button>
-        </div>
-    </div>
+    <Banner tittel="Mine stillinger" ikon={<Piktogram />}>
+        <Button variant="secondary" onClick={opprettStilling} icon={<PlusCircleIcon aria-hidden />}>
+            Opprett ny
+        </Button>
+    </Banner>
 );
 
 export default MineStillingerHeader;

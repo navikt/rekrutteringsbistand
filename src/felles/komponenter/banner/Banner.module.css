@@ -1,30 +1,18 @@
 .banner {
-    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
     width: 100%;
-    padding: 0 1rem;
-    margin-top: 3rem;
+    gap: 1.5rem;
+}
+
+.banner h2 {
+    margin: 1rem auto 0 0;
 }
 
 @media (min-width: 768px) {
-    .banner {
-        padding: 0 2rem;
+    .banner h2 {
+        margin: 2rem auto 2rem 0;
     }
-}
-
-.piktogramOgInnhold {
-    max-width: 103rem;
-    margin: 0 auto;
-    padding: 1.5rem 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 2rem;
-}
-
-.piktogram {
-    flex-shrink: 0;
-}
-
-.gammelGrå {
-    background-color: var(--a-bg-subtle);
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Banner from 'felles/komponenter/banner/Banner';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
@@ -39,7 +39,7 @@ const Kandidatsøk = ({
     kontekstAvKandidatlisteEllerStilling,
 }: KandidatsøkProps) => {
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
-    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<KandidatTilKandidatsøk[]>([]);
+    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<Kandidat[]>([]);
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
         forrigeØkt?.markerteKandidater
     );
@@ -73,7 +73,7 @@ const Kandidatsøk = ({
                 <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
             )}
             {kontekstAvKandidatlisteEllerStilling === null && (
-                <Banner tittel="Kandidatsøk" gammelGrå ikon={<Piktogram />} />
+                <Banner tittel="Kandidatsøk" ikon={<Piktogram />} />
             )}
             <div className={css.container}>
                 <TømFiltre />

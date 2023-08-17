@@ -2,22 +2,28 @@
     display: grid;
     align-items: start;
     grid-template-areas:
-        'over-tabell'
         'filter'
+        'over-tabell'
         'tabell'
         'under-tabell';
-    gap: 1rem;
+    gap: 2rem;
 
     margin: 2.5rem auto 0;
     padding: 0 1rem;
-    max-width: 110rem;
+}
+
+.venstreKolonne {
+    grid-area: filter;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .filter {
     grid-area: filter;
 }
 
-.antallKandidatlister {
+.overTabell {
     grid-area: over-tabell;
 }
 
@@ -34,13 +40,14 @@
 @media (min-width: 1280px) {
     .wrapper {
         display: grid;
-        grid-template-columns: 14rem auto;
+        grid-template-columns: 19rem auto;
         grid-template-areas:
             'over-filter over-tabell'
             'filter tabell'
             'under-filter under-tabell';
 
-        gap: 2rem;
+        gap: 1.5rem 3rem;
         padding: 0 2rem;
+        max-width: calc(var(--innhold-maksbredde) + 4rem);
     }
 }

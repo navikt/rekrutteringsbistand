@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { Accordion, Checkbox, CheckboxGroup, Radio, RadioGroup } from '@navikt/ds-react';
+import { useEffect, useState } from 'react';
 import { Søkekriterier } from '../reducer/listeoversiktReducer';
 import css from './Filter.module.css';
 
@@ -71,7 +71,7 @@ const Filter = ({
     return (
         <Accordion className={className}>
             <Accordion.Item defaultOpen>
-                <Accordion.Header>Kandidatlister</Accordion.Header>
+                <Accordion.Header className={css.header}>Filter</Accordion.Header>
                 <Accordion.Content className={css.content}>
                     <div className={css.innhold}>
                         <RadioGroup

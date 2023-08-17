@@ -3,18 +3,18 @@ import { useLocation } from 'react-router-dom';
 
 import { Alert, CopyButton } from '@navikt/ds-react';
 import { api } from 'felles/api';
-import { KandidatTilStillingssøk } from 'felles/domene/kandidat/Kandidat';
+import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling from 'felles/domene/stilling/Stilling';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
-import Kandidatbanner from 'felles/komponenter/kandidatbanner/Kandidatbanner';
+import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
+import useKandidat, { fodselsnrTerm } from 'felles/komponenter/kandidatbanner/useKandidat';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
-import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
-import useKandidat from './useKandidat';
 
 type Props = {
     fnr: string;
@@ -24,7 +24,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: Props) => {
-    const { kandidat, feilmelding } = useKandidat(fnr);
+    const kandidat = useKandidat(fodselsnrTerm(fnr));
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
@@ -67,12 +67,12 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
             setSynlighetsevaluering(await synlighetPromise);
         };
 
-        if (feilmelding) {
+        if (kandidat.kind === Nettstatus.Feil) {
             evaluerSynlighet();
         }
-    }, [feilmelding, fnr]);
+    }, [kandidat.kind, fnr]);
 
-    if (feilmelding) {
+    if (kandidat.kind === Nettstatus.Feil) {
         return (
             <>
                 <Alert variant="error">Kandidaten er ikke synlig i Rekrutteringsbistand</Alert>
@@ -91,34 +91,40 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
     } else {
         return (
             <>
-                <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti}>
-                    <div className={css.knapper}>
-                        {stillingErPublisert(stilling) && (
-                            <CopyButton
-                                copyText={hentAnnonselenke(stilling.uuid)}
-                                text="Kopier annonselenke"
-                                size="small"
+                <Kandidatbanner
+                    kandidat={kandidat}
+                    brødsmulesti={brødsmulesti}
+                    nederstTilHøyre={
+                        <div className={css.knapper}>
+                            {stillingErPublisert(stilling) && (
+                                <CopyButton
+                                    copyText={hentAnnonselenke(stilling.uuid)}
+                                    text="Kopier annonselenke"
+                                    size="small"
+                                    className={css.copyButton}
+                                />
+                            )}
+                            <Kandidatlistehandlinger
+                                fnr={fnr}
+                                kandidatliste={kandidatliste}
+                                onAnbefalClick={() => {
+                                    setVisModal(true);
+                                }}
                             />
-                        )}
-                        <Kandidatlistehandlinger
+                        </div>
+                    }
+                />
+                {kandidat.kind === Nettstatus.Suksess &&
+                    kandidatliste.kind === Nettstatus.Suksess && (
+                        <AnbefalKandidatModal
                             fnr={fnr}
-                            kandidatliste={kandidatliste}
-                            onAnbefalClick={() => {
-                                setVisModal(true);
-                            }}
+                            kandidat={kandidat.data}
+                            kandidatliste={kandidatliste.data}
+                            setKandidatliste={setKandidatliste}
+                            onClose={() => setVisModal(false)}
+                            vis={visModal}
                         />
-                    </div>
-                </Kandidatbanner>
-                {kandidat && kandidatliste.kind === Nettstatus.Suksess && (
-                    <AnbefalKandidatModal
-                        fnr={fnr}
-                        kandidat={kandidat}
-                        kandidatliste={kandidatliste.data}
-                        setKandidatliste={setKandidatliste}
-                        onClose={() => setVisModal(false)}
-                        vis={visModal}
-                    />
-                )}
+                    )}
             </>
         );
     }
@@ -127,10 +133,10 @@ const KontekstAvKandidat = ({ fnr, kandidatliste, setKandidatliste, stilling }: 
 const byggBrødsmulesti = (
     fnr: string,
     stilling: Stilling,
-    kandidat?: KandidatTilStillingssøk,
+    kandidat: Nettressurs<KandidatTilBanner>,
     stillingssøk?: string
 ) => {
-    if (!kandidat) {
+    if (kandidat.kind !== Nettstatus.Suksess) {
         return undefined;
     }
 
@@ -145,8 +151,8 @@ const byggBrødsmulesti = (
             tekst: 'Kandidater',
         },
         {
-            href: `/kandidater/kandidat/${kandidat?.arenaKandidatnr}/cv?fraKandidatsok=true`,
-            tekst: `${kandidat?.fornavn} ${kandidat?.etternavn}`,
+            href: `/kandidater/kandidat/${kandidat.data.arenaKandidatnr}/cv?fraKandidatsok=true`,
+            tekst: formaterNavn(kandidat.data),
         },
         {
             tekst: 'Finn stilling',

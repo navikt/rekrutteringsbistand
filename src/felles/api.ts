@@ -11,6 +11,7 @@ export const api = {
     kandidatsøk: '/kandidatsok-proxy',
     forespørselOmDelingAvCv: '/foresporsel-om-deling-av-cv-api',
     presenterteKandidaterApi: '/presenterte-kandidater-api',
+    modiaContextHolder: '/modiacontextholder/api',
 };
 
 export const videresendTilInnlogging = () => {
@@ -35,7 +36,7 @@ export const post = async <Returtype>(
         if (response.status === 200 || response.status === 201) {
             return {
                 kind: Nettstatus.Suksess,
-                data: (await response.json()) as Returtype,
+                data: (await parseBody(response)) as Returtype,
             };
         }
 
@@ -54,5 +55,16 @@ export const post = async <Returtype>(
                 message: 'Nettverksfeil',
             },
         };
+    }
+};
+
+const parseBody = async (response: Response) => {
+    switch (response.headers.get('Content-Type')) {
+        case 'application/json':
+            return await response.json();
+        case 'application/text':
+            return await response.text();
+        default:
+            return null;
     }
 };

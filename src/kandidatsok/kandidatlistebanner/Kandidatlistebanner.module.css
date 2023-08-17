@@ -3,7 +3,7 @@
 }
 
 .banner {
-    max-width: var(--app-maksbredde);
+    max-width: var(--innhold-maksbredde);
     margin: 0 auto;
     padding: 2rem 2rem;
     grid-column: span 2;
