@@ -1,34 +1,19 @@
 .side {
-    display: flex;
-    padding: 2rem 5rem 0.625rem 5rem;
-    align-items: flex-start;
-    gap: 2.5rem;
-    align-self: stretch;
+    background-color: white;
+    width: 100%;
+    border-bottom: 2px solid var(--a-border-subtle);
+    padding: 0 2rem;
 }
 
 .wrapper {
+    margin: 0 auto;
+    max-width: var(--innhold-maksbredde);
+    padding: 1.5rem 0;
+
     display: flex;
-    width: 80rem;
-    padding-bottom: 0px;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 1.5rem;
-    align-self: stretch;
-}
-
-.mosaik {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
-    align-self: stretch;
-}
-
-.venstreSide {
-    display: flex;
-    width: 49.3125rem;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
 .høyreSide {
@@ -37,4 +22,28 @@
     align-items: flex-start;
     gap: 1.5rem;
     flex: 1 0 0;
+}
+
+.venstreSide {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1080px) {
+    .mosaik {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        align-self: stretch;
+    }
+
+    .venstreSide {
+        display: flex;
+        width: 49.3125rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
 }
