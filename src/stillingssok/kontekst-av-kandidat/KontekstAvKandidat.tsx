@@ -9,29 +9,27 @@ type Props = {
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
     const kandidat = useKandidatStillingssøk(kandidatnr);
 
-    if (kandidat.kind === Nettstatus.Feil) {
-        return null;
-    } else {
-        const brødsmulesti =
-            kandidat.kind === Nettstatus.Suksess
-                ? [
-                      {
-                          href: '/kandidatsok',
-                          tekst: 'Kandidater',
-                      },
-                      {
-                          href: `/kandidater/kandidat/${kandidat.data.arenaKandidatnr}/cv?fraKandidatsok=true`,
-                          tekst: formaterNavn(kandidat.data),
-                      },
+    let brødsmulesti = undefined;
+    if (kandidat.kind === Nettstatus.Suksess) {
+        brødsmulesti = [
+            {
+                href: '/kandidatsok',
+                tekst: 'Kandidater',
+            },
+            {
+                href: `/kandidater/kandidat/${kandidat.data.arenaKandidatnr}/cv?fraKandidatsok=true`,
+                tekst: formaterNavn(kandidat.data),
+            },
 
-                      {
-                          tekst: 'Finn stilling',
-                      },
-                  ]
-                : undefined;
-
-        return <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti} />;
+            {
+                tekst: 'Finn stilling',
+            },
+        ];
+    } else if (kandidat.kind === Nettstatus.Feil || kandidat.kind === Nettstatus.FinnesIkke) {
+        brødsmulesti = [];
     }
+
+    return <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti} />;
 };
 
 export default KontekstAvKandidat;
