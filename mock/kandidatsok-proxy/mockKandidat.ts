@@ -6,7 +6,6 @@ import {
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import { mockMeg } from '../meg/mock';
 import { Omfangenhet, Språkferdighetsnivå } from 'felles/domene/kandidat/Cv';
-import { mockStrings } from '../../src/kandidat/mock/data/kandidat/mock-strings';
 import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
 
 export const mockKandidat: Kandidat = {
@@ -117,7 +116,8 @@ export const mockKandidat: Kandidat = {
             utelukketForFremtiden: false,
             fraDato: '2012-08-02',
             tilDato: null,
-            beskrivelse: mockStrings.arbeidsbeskrivelser[0],
+            beskrivelse:
+                'Jeg har tidligere jobbet som kassadame på Kiwi Supermarked, der jeg betjente kunder på en effektiv og vennlig måte, og behandlet kassatransaksjoner nøyaktig og i samsvar med selskapets retningslinjer. Jeg fulgte sikkerhetsprosedyrer for å beskytte selskapets eiendom og ansatte, og varslet ledelsen om eventuelle avvik eller problemer.',
         },
         {
             arbeidsgiver: 'Meny Larvik sentrum',
@@ -127,7 +127,8 @@ export const mockKandidat: Kandidat = {
             utelukketForFremtiden: false,
             fraDato: null,
             tilDato: '2012-06-02',
-            beskrivelse: mockStrings.arbeidsbeskrivelser[1],
+            beskrivelse:
+                'Som kassadame var jeg ansvarlig for å utføre kassarelaterte oppgaver som å håndtere vekslepenger, administrere kreditt- og debetkortbetalinger, og opprettholde en ren og organisert kassestasjon. Jeg bidro til å skape et positivt arbeidsmiljø ved å samarbeide med andre ansatte for å sikre at butikken var velorganisert og ren til enhver tid.',
         },
         {
             arbeidsgiver: 'Lars Grimstad, Møbelringen, Larvik',
