@@ -52,7 +52,7 @@ export const post = async <Returtype>(
             kind: Nettstatus.Feil,
             error: {
                 status: undefined,
-                message: 'Nettverksfeil',
+                message: 'Nettverksfeil: ' + e,
             },
         };
     }
@@ -93,11 +93,13 @@ export const get = async <Returtype>(url: string): Promise<Nettressurs<Returtype
 const parseBody = async (response: Response) => {
     const contentType = response.headers.get('Content-Type');
 
-    if (contentType.includes('application/json')) {
-        return await response.json();
-    } else if (contentType.includes('application/text')) {
-        return await response.text();
-    } else {
-        return null;
+    if (contentType !== null) {
+        if (contentType.includes('application/json')) {
+            return await response.json();
+        } else if (contentType.includes('application/text')) {
+            return await response.text();
+        }
     }
+
+    return null;
 };

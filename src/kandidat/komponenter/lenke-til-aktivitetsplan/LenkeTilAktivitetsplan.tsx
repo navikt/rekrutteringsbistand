@@ -22,8 +22,10 @@ const LenkeTilAktivitetsplan = ({ fnr }: Props) => {
             eventType: 'NY_AKTIV_BRUKER',
         });
 
-        if (response.kind !== Nettstatus.Suksess) {
-            throw new Error('Klarte ikke å sette fnr-kontekst i modiacontextholder');
+        if (response.kind === Nettstatus.Feil) {
+            throw new Error(
+                'Klarte ikke å sette fnr-kontekst i modiacontextholder: ' + response.error.message
+            );
         }
 
         const element = event.target as HTMLAnchorElement;
