@@ -21,7 +21,7 @@ const Kurs = ({ cv }: Props) => {
                         key={`${kurs.tittel}-${kurs.fraDato}`}
                         overskrift={kurs.tittel}
                         beskrivelse={null}
-                        tidsperiode={visTidsperiode(kurs)}
+                        tidsperiode={<TidsperiodeKurs kurs={kurs} />}
                     />
                 ))}
             </div>
@@ -29,7 +29,7 @@ const Kurs = ({ cv }: Props) => {
     ) : null;
 };
 
-const visTidsperiode = (kurs: Kurstype) => {
+const TidsperiodeKurs = ({ kurs }: { kurs: Kurstype }) => {
     if (kurs.fraDato && kurs.omfang.enhet.length > 0 && kurs.omfang.verdi > 0) {
         return (
             <div className={css.tidsperiode}>

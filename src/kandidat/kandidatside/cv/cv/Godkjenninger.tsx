@@ -23,7 +23,7 @@ const Godkjenninger = ({ cv }: Props) => {
                                 key={`${godkjenning.konseptId}-${godkjenning.gjennomfoert}`}
                                 overskrift={godkjenning.tittel}
                                 beskrivelse={null}
-                                tidsperiode={visTidsperiodeGodkjenning(godkjenning)}
+                                tidsperiode={<TidsperiodeGodkjenning godkjenning={godkjenning} />}
                             />
                         );
                     })}
@@ -41,7 +41,7 @@ const Godkjenninger = ({ cv }: Props) => {
                                         : sertifikat.sertifikatKodeNavn
                                 }
                                 beskrivelse={null}
-                                tidsperiode={visTidsperiodeSertifikat(sertifikat)}
+                                tidsperiode={<TidsperiodeSertifikat sertifikat={sertifikat} />}
                             />
                         );
                     })}
@@ -50,7 +50,7 @@ const Godkjenninger = ({ cv }: Props) => {
     ) : null;
 };
 
-const visTidsperiodeGodkjenning = (godkjenning: Godkjenning) => {
+const TidsperiodeGodkjenning = ({ godkjenning }: { godkjenning: Godkjenning }) => {
     if (godkjenning.gjennomfoert && godkjenning.utloeper) {
         return (
             <BodyShort size="small" className={css.tekst}>
@@ -73,7 +73,7 @@ const visTidsperiodeGodkjenning = (godkjenning: Godkjenning) => {
     }
 };
 
-const visTidsperiodeSertifikat = (sertifikat: Sertifikat) => {
+const TidsperiodeSertifikat = ({ sertifikat }: { sertifikat: Sertifikat }) => {
     if (sertifikat.fraDato && sertifikat.tilDato) {
         return (
             <BodyShort size="small" className={css.tekst}>

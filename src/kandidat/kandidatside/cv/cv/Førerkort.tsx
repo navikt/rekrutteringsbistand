@@ -25,7 +25,7 @@ const Førerkort = ({ cv }: Props) => {
                                 : førerkort.sertifikatKodeNavn
                         }
                         beskrivelse={førerkort.sertifikatKode}
-                        tidsperiode={visTidsperiode(førerkort)}
+                        tidsperiode={<FørerkortTidsperiode førerkort={førerkort} />}
                     />
                 ))}
             </div>
@@ -33,7 +33,7 @@ const Førerkort = ({ cv }: Props) => {
     ) : null;
 };
 
-const visTidsperiode = (førerkort: Sertifikat) => {
+const FørerkortTidsperiode = ({ førerkort }: { førerkort: Sertifikat }) => {
     if (førerkort.fraDato && førerkort.tilDato) {
         return (
             <BodyShort size="small" className={css.tekst}>
