@@ -9,7 +9,7 @@
     color: var(--a-text-subtle);
 }
 
-.tekst:not(:last-child)::after {
+.tidsperiode > *:not(:last-child)::after {
     content: '·';
     font-size: 2rem;
     color: var(--a-gray-300);

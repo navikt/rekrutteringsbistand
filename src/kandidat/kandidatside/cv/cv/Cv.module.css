@@ -23,8 +23,14 @@
 .tidsperiode {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     align-self: stretch;
+}
+
+.tidsperiode > *:not(:last-child)::after {
+    content: '·';
+    font-size: 2rem;
+    color: var(--a-gray-300);
+    padding: 0 0.5rem;
 }
 
 .tekst {

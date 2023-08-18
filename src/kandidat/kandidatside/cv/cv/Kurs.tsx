@@ -5,7 +5,6 @@ import Kort from '../kort/Kort';
 import sortByDato from '../tidsperiode/sortByDato';
 import Erfaring from './erfaring/Erfaring';
 import { BodyShort } from '@navikt/ds-react';
-import ellipse from '../ikoner/ellipse.svg';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
@@ -41,9 +40,6 @@ const visTidsperiode = (kurs: Kurstype) => {
                 <BodyShort size="small" className={css.tekst}>
                     Fullført {formaterDatoHvisIkkeNull(kurs.fraDato)}
                 </BodyShort>
-                <div className={css.ikon}>
-                    <img src={ellipse} alt="" />
-                </div>
                 <BodyShort size="small" className={css.tekst}>
                     {hentKursvarighet(kurs.omfang)}
                 </BodyShort>
