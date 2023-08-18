@@ -57,7 +57,7 @@ const CvSide: FunctionComponent = () => {
             <div className={css.side}>
                 <div className={css.wrapper}>
                     <div className={css.mosaik}>
-                        <div className={css.venstreSide}>
+                        <div className={css.kolonne}>
                             <Jobbønsker cv={cv.data} />
                             <Sammendrag cv={cv.data} />
                             <Kompetanse cv={cv.data} />
@@ -65,7 +65,7 @@ const CvSide: FunctionComponent = () => {
                             <Utdanning cv={cv.data} />
                             <Fagbrev cv={cv.data} />
                         </div>
-                        <div className={css.høyreSide}>
+                        <div className={css.kolonne}>
                             <Førerkort cv={cv.data} />
                             <Språk cv={cv.data} />
                             <Godkjenninger cv={cv.data} />
