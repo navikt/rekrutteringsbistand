@@ -1,14 +1,9 @@
-.tidsperiode {
+.detaljer {
     display: flex;
     align-items: center;
 }
 
-.tekst {
-    display: flex;
-    color: var(--a-text-subtle);
-}
-
-.tidsperiode > *:not(:last-child)::after {
+.detaljer > *:not(:last-child)::after {
     content: '·';
     font-size: 2rem;
     color: var(--a-gray-300);

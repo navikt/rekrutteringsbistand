@@ -1,9 +1,9 @@
 import { SealCheckmarkIcon } from '@navikt/aksel-icons';
 import Erfaring from './erfaring/Erfaring';
-import Kort from '../kort/Kort';
+import Kort from './kort/Kort';
 import css from './Cv.module.css';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
-import sortByDato from '../tidsperiode/sortByDato';
+import sortByDato from './sortByDato';
 import { BodyShort } from '@navikt/ds-react';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { Godkjenning, Sertifikat } from 'felles/domene/kandidat/Cv';

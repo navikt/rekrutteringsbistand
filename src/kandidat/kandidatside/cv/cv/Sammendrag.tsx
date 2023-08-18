@@ -1,5 +1,5 @@
 import { InformationIcon } from '@navikt/aksel-icons';
-import Kort from '../kort/Kort';
+import Kort from './kort/Kort';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';

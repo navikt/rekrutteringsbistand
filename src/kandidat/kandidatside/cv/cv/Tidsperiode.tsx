@@ -1,6 +1,7 @@
 import { BodyShort } from '@navikt/ds-react';
-import css from './Tidsperiode.module.css';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
+import Detaljer from './detaljer/Detaljer';
+import css from './Cv.module.css';
 
 type Props = {
     fradato?: string | null;
@@ -14,7 +15,7 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
 
     if (fraDatoFormatert && tilDatoFormatert) {
         return (
-            <div className={css.tidsperiode}>
+            <Detaljer>
                 <BodyShort size="small" spacing className={css.tekst}>
                     {fraDatoFormatert} – {tilDatoFormatert}
                     {nåværende && ' nå'}
@@ -22,11 +23,11 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                 <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(fradato, tildato)}
                 </BodyShort>
-            </div>
+            </Detaljer>
         );
     } else if (fraDatoFormatert) {
         return (
-            <div className={css.tidsperiode}>
+            <Detaljer>
                 <BodyShort size="small" spacing className={css.tekst}>
                     {fraDatoFormatert}
                     {nåværende && ' – nå'}
@@ -34,11 +35,11 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                 <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(fradato, new Date().toString())}
                 </BodyShort>
-            </div>
+            </Detaljer>
         );
     } else if (tilDatoFormatert) {
         return (
-            <div className={css.tidsperiode}>
+            <Detaljer>
                 <BodyShort size="small" spacing className={css.tekst}>
                     {tilDatoFormatert}
                     {nåværende && ' nå'}
@@ -46,16 +47,16 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                 <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(tildato, tildato)}
                 </BodyShort>
-            </div>
+            </Detaljer>
         );
     }
 
     return (
-        <div className={css.tidsperiode}>
+        <Detaljer>
             <BodyShort size="small" spacing className={css.tekst}>
                 {nåværende && ' nåværende'}
             </BodyShort>
-        </div>
+        </Detaljer>
     );
 };
 

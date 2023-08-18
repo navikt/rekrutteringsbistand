@@ -1,7 +1,7 @@
 import { CarIcon } from '@navikt/aksel-icons';
-import Kort from '../kort/Kort';
+import Kort from './kort/Kort';
 import css from './Cv.module.css';
-import sortByDato from '../tidsperiode/sortByDato';
+import sortByDato from './sortByDato';
 import Erfaring from './erfaring/Erfaring';
 import { BodyShort } from '@navikt/ds-react';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';

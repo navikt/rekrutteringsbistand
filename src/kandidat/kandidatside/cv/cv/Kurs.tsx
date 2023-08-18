@@ -1,8 +1,8 @@
 import { ClipboardIcon } from '@navikt/aksel-icons';
 import css from './Cv.module.css';
 import { Kurs as Kurstype, Omfang, Omfangenhet } from 'felles/domene/kandidat/Cv';
-import Kort from '../kort/Kort';
-import sortByDato from '../tidsperiode/sortByDato';
+import Kort from './kort/Kort';
+import sortByDato from './sortByDato';
 import Erfaring from './erfaring/Erfaring';
 import { BodyShort } from '@navikt/ds-react';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';

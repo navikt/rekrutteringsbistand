@@ -1,9 +1,9 @@
-import Kort from '../kort/Kort';
+import Kort from './kort/Kort';
 import { CheckmarkCircleIcon } from '@navikt/aksel-icons';
 import css from './Cv.module.css';
-import sortByDato from '../tidsperiode/sortByDato';
+import sortByDato from './sortByDato';
 import Erfaring from './erfaring/Erfaring';
-import Tidsperiode from '../tidsperiode/Tidsperiode';
+import Tidsperiode from './Tidsperiode';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {

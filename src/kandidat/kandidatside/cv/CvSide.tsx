@@ -5,7 +5,7 @@ import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
 import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 import css from './CvSide.module.css';
-import Jobbønsker from './jobbønsker/Jobbønsker';
+import Jobbønsker from './cv/jobbønsker/Jobbønsker';
 import Erfaringer from './cv/Erfaringer';
 import Utdanning from './cv/Utdanning';
 import Fagbrev from './cv/Fagbrev';

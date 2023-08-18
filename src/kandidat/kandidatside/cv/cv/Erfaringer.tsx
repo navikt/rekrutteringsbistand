@@ -1,9 +1,9 @@
 import { Buldings2Icon } from '@navikt/aksel-icons';
 import Erfaring from './erfaring/Erfaring';
-import Kort from '../kort/Kort';
-import Tidsperiode from '../tidsperiode/Tidsperiode';
+import Kort from './kort/Kort';
+import Tidsperiode from './Tidsperiode';
 import css from './Cv.module.css';
-import sortByDato from '../tidsperiode/sortByDato';
+import sortByDato from './sortByDato';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
