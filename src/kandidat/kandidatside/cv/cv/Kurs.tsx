@@ -20,7 +20,6 @@ const Kurs = ({ cv }: Props) => {
                     <Erfaring
                         key={`${kurs.tittel}-${kurs.fraDato}`}
                         overskrift={kurs.tittel}
-                        beskrivelse={null}
                         tidsperiode={<TidsperiodeKurs kurs={kurs} />}
                     />
                 ))}

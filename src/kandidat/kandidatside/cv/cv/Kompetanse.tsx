@@ -13,17 +13,13 @@ const Kompetanse = ({ cv }: Props) => {
     return cv.kompetanse?.length > 0 ? (
         <Kort overskrift={'Kompetanse'} ikon={<PersonRectangleIcon />}>
             <div className={css.erfaringer}>
-                {
-                    <Erfaring
-                        overskrift={null}
-                        beskrivelse={
-                            <MangeTekstelementerSeparertMedKomma
-                                elementer={cv.kompetanse.map((u) => u.kompetanseKodeTekst)}
-                            />
-                        }
-                        tidsperiode={null}
-                    />
-                }
+                <Erfaring
+                    beskrivelse={
+                        <MangeTekstelementerSeparertMedKomma
+                            elementer={cv.kompetanse.map((u) => u.kompetanseKodeTekst)}
+                        />
+                    }
+                />
             </div>
         </Kort>
     ) : null;

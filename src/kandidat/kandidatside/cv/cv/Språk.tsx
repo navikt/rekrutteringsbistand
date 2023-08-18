@@ -19,7 +19,6 @@ const Språk = ({ cv }: Props) => {
                             key={`${ferdighet.sprak}${ferdighet.ferdighetMuntlig}${ferdighet.ferdighetSkriftlig}`}
                             overskrift={ferdighet.sprak}
                             beskrivelse={<Språkferdighet ferdighet={ferdighet} />}
-                            tidsperiode={null}
                         />
                     );
                 })}

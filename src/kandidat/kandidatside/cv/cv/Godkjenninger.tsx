@@ -22,7 +22,6 @@ const Godkjenninger = ({ cv }: Props) => {
                             <Erfaring
                                 key={`${godkjenning.konseptId}-${godkjenning.gjennomfoert}`}
                                 overskrift={godkjenning.tittel}
-                                beskrivelse={null}
                                 tidsperiode={<TidsperiodeGodkjenning godkjenning={godkjenning} />}
                             />
                         );
@@ -40,7 +39,6 @@ const Godkjenninger = ({ cv }: Props) => {
                                         ? sertifikat.alternativtNavn
                                         : sertifikat.sertifikatKodeNavn
                                 }
-                                beskrivelse={null}
                                 tidsperiode={<TidsperiodeSertifikat sertifikat={sertifikat} />}
                             />
                         );

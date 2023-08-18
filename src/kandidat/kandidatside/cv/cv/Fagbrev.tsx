@@ -15,14 +15,7 @@ const Fagbrev = ({ cv }: Props) => {
         <Kort overskrift={'Fagbrev/svennebrev og mesterbrev'} ikon={<BagdeIcon />}>
             <div className={css.erfaringer}>
                 {autorisasjoner.map(({ tittel }) => {
-                    return (
-                        <Erfaring
-                            key={`${tittel}`}
-                            overskrift={tittel}
-                            beskrivelse={null}
-                            tidsperiode={null}
-                        />
-                    );
+                    return <Erfaring key={`${tittel}`} overskrift={tittel} />;
                 })}
             </div>
         </Kort>

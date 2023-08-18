@@ -12,12 +12,7 @@ const Sammendrag = ({ cv }: Props) => {
     return cv.beskrivelse?.length > 0 ? (
         <Kort overskrift={'Sammendrag'} ikon={<InformationIcon />}>
             <div className={css.erfaringer}>
-                <Erfaring
-                    key={`${cv.beskrivelse}`}
-                    overskrift={null}
-                    beskrivelse={cv.beskrivelse}
-                    tidsperiode={null}
-                />
+                <Erfaring key={`${cv.beskrivelse}`} beskrivelse={cv.beskrivelse} />
             </div>
         </Kort>
     ) : null;
