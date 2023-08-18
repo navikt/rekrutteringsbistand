@@ -1,5 +1,4 @@
 import { BodyShort } from '@navikt/ds-react';
-import ellipse from '../ikoner/ellipse.svg';
 import css from './Tidsperiode.module.css';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 
@@ -16,14 +15,11 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
     if (fraDatoFormatert && tilDatoFormatert) {
         return (
             <div className={css.tidsperiode}>
-                <BodyShort size="small" className={css.tekst}>
+                <BodyShort size="small" spacing className={css.tekst}>
                     {fraDatoFormatert} – {tilDatoFormatert}
                     {nåværende && ' nå'}
                 </BodyShort>
-                <div className={css.ikon}>
-                    <img src={ellipse} alt="" />
-                </div>
-                <BodyShort size="small" className={css.tekst}>
+                <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(fradato, tildato)}
                 </BodyShort>
             </div>
@@ -31,14 +27,11 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
     } else if (fraDatoFormatert) {
         return (
             <div className={css.tidsperiode}>
-                <BodyShort size="small" className={css.tekst}>
+                <BodyShort size="small" spacing className={css.tekst}>
                     {fraDatoFormatert}
                     {nåværende && ' – nå'}
                 </BodyShort>
-                <div className={css.ikon}>
-                    <img src={ellipse} alt="" />
-                </div>
-                <BodyShort size="small" className={css.tekst}>
+                <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(fradato, new Date().toString())}
                 </BodyShort>
             </div>
@@ -46,14 +39,11 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
     } else if (tilDatoFormatert) {
         return (
             <div className={css.tidsperiode}>
-                <BodyShort size="small" className={css.tekst}>
+                <BodyShort size="small" spacing className={css.tekst}>
                     {tilDatoFormatert}
                     {nåværende && ' nå'}
                 </BodyShort>
-                <div className={css.ikon}>
-                    <img src={ellipse} alt="" />
-                </div>
-                <BodyShort size="small" className={css.tekst}>
+                <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(tildato, tildato)}
                 </BodyShort>
             </div>
@@ -62,7 +52,7 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
 
     return (
         <div className={css.tidsperiode}>
-            <BodyShort size="small" className={css.tekst}>
+            <BodyShort size="small" spacing className={css.tekst}>
                 {nåværende && ' nåværende'}
             </BodyShort>
         </div>

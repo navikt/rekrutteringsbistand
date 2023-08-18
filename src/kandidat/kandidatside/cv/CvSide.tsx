@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
-import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
+import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 import css from './CvSide.module.css';
 import Jobbønsker from './jobbønsker/Jobbønsker';
 import Erfaringer from './cv/Erfaringer';
@@ -43,7 +43,7 @@ const CvSide: FunctionComponent = () => {
                             </BodyLong>
                             <BodyLong size="medium">
                                 Hvis feilen vedvarer kan du kontakte brukerstøtte til
-                                rekrutteringsbitand for å få hjelp med feilen.
+                                rekrutteringsbistand for å få hjelp med feilen.
                             </BodyLong>
                         </div>
                     </Alert>
@@ -88,12 +88,12 @@ const CvSide: FunctionComponent = () => {
                             fått en ny status, eller på grunn av feil i systemene våre.
                         </BodyLong>
                         <BodyLong size="medium" spacing>
-                            Sjekk om kandidaten har fyllt ut CVen sin i Modia-Arbeidsrettet
+                            Sjekk om kandidaten har fylt ut CVen sin i Modia-Arbeidsrettet
                             Oppfølging. Etterpå kan du prøve å laste inn denne siden på nytt.
                         </BodyLong>
                         <BodyLong size="medium">
                             Hvis feilen vedvarer kan du kontakte brukerstøtte til
-                            rekrutteringsbitand for å få hjelp med feilen.
+                            rekrutteringsbistand for å få hjelp med feilen.
                         </BodyLong>
                     </div>
                 </Alert>

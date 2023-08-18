@@ -16,6 +16,12 @@
     gap: 2rem;
 }
 
+.mosaik {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .høyreSide {
     display: flex;
     flex-direction: column;
@@ -33,17 +39,12 @@
 
 @media (min-width: 1080px) {
     .mosaik {
-        display: flex;
         align-items: flex-start;
-        gap: 1.5rem;
+        flex-direction: row;
         align-self: stretch;
     }
 
     .venstreSide {
-        display: flex;
         width: 49.3125rem;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.5rem;
     }
 }
