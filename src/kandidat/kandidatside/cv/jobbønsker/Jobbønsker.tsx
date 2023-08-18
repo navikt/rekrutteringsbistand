@@ -1,5 +1,5 @@
 import { BodyShort } from '@navikt/ds-react';
-import { HeartIcon, PinIcon, ClockIcon, TimerStartIcon, HourglassIcon } from '@navikt/aksel-icons';
+import { ClockIcon, HeartIcon, HourglassIcon, PinIcon, TimerStartIcon } from '@navikt/aksel-icons';
 import css from './Jobbønsker.module.css';
 import Kort from '../kort/Kort';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
@@ -16,71 +16,63 @@ type Props = {
 
 const Jobbønsker = ({ cv }: Props) => {
     return (
-        <Kort
-            overskrift={'Ønsker'}
-            ikon={<HeartIcon />}
-            innhold={
-                <div className={css.innhold}>
-                    <BodyShort size="medium" className={css.jobbønsker}>
-                        {cv.yrkeJobbonsker?.length > 0 ? (
-                            <MangeTekstelementerSeparertMedKomma
-                                elementer={cv.yrkeJobbonsker.map((j) => j.styrkBeskrivelse)}
+        <Kort overskrift={'Ønsker'} ikon={<HeartIcon />}>
+            <div className={css.innhold}>
+                <BodyShort size="medium" className={css.jobbønsker}>
+                    {cv.yrkeJobbonsker?.length > 0 ? (
+                        <MangeTekstelementerSeparertMedKomma
+                            elementer={cv.yrkeJobbonsker.map((j) => j.styrkBeskrivelse)}
+                        />
+                    ) : (
+                        '-'
+                    )}
+                </BodyShort>
+                <div className={css.bunn}>
+                    <BodyShort size="small" className={css.uthevetTekstOgIkon}>
+                        <PinIcon />
+                        {cv.geografiJobbonsker?.length > 0 ? (
+                            <MangeTekstelementerSeparertMedMellomrom
+                                elementer={cv.geografiJobbonsker.map((u) => u.geografiKodeTekst)}
                             />
                         ) : (
                             '-'
                         )}
                     </BodyShort>
-                    <div className={css.bunn}>
-                        <BodyShort size="small" className={css.uthevetTekstOgIkon}>
-                            <PinIcon />
-                            {cv.geografiJobbonsker?.length > 0 ? (
-                                <MangeTekstelementerSeparertMedMellomrom
-                                    elementer={cv.geografiJobbonsker.map(
-                                        (u) => u.geografiKodeTekst
-                                    )}
-                                />
-                            ) : (
-                                '-'
-                            )}
-                        </BodyShort>
-                        <BodyShort size="small" className={css.uthevetTekstOgIkon}>
-                            <ClockIcon />
-                            {cv.omfangJobbprofil?.length > 0 ? (
-                                <MangeTekstelementerSeparertMedOg
-                                    elementer={cv.omfangJobbprofil.map(
-                                        (u) => u.heltidDeltidKodeTekst
-                                    )}
-                                />
-                            ) : (
-                                '-'
-                            )}
-                        </BodyShort>
-                        <BodyShort size="small" className={css.uthevetTekstOgIkon}>
-                            <TimerStartIcon />
-                            {cv.arbeidstidJobbprofil?.length > 0 ? (
-                                <MangeTekstelementerSeparertMedOg
-                                    elementer={cv.arbeidstidJobbprofil.map(
-                                        (u) => u.arbeidstidKodeTekst
-                                    )}
-                                />
-                            ) : (
-                                '-'
-                            )}
-                        </BodyShort>
-                        <BodyShort size="small" className={css.uthevetTekstOgIkon}>
-                            <HourglassIcon />
-                            {cv.oppstartKode ? (
-                                <MangeTekstelementerSeparertMedKomma
-                                    elementer={[oppstartskoder[cv.oppstartKode]?.label]}
-                                />
-                            ) : (
-                                '-'
-                            )}
-                        </BodyShort>
-                    </div>
+                    <BodyShort size="small" className={css.uthevetTekstOgIkon}>
+                        <ClockIcon />
+                        {cv.omfangJobbprofil?.length > 0 ? (
+                            <MangeTekstelementerSeparertMedOg
+                                elementer={cv.omfangJobbprofil.map((u) => u.heltidDeltidKodeTekst)}
+                            />
+                        ) : (
+                            '-'
+                        )}
+                    </BodyShort>
+                    <BodyShort size="small" className={css.uthevetTekstOgIkon}>
+                        <TimerStartIcon />
+                        {cv.arbeidstidJobbprofil?.length > 0 ? (
+                            <MangeTekstelementerSeparertMedOg
+                                elementer={cv.arbeidstidJobbprofil.map(
+                                    (u) => u.arbeidstidKodeTekst
+                                )}
+                            />
+                        ) : (
+                            '-'
+                        )}
+                    </BodyShort>
+                    <BodyShort size="small" className={css.uthevetTekstOgIkon}>
+                        <HourglassIcon />
+                        {cv.oppstartKode ? (
+                            <MangeTekstelementerSeparertMedKomma
+                                elementer={[oppstartskoder[cv.oppstartKode]?.label]}
+                            />
+                        ) : (
+                            '-'
+                        )}
+                    </BodyShort>
                 </div>
-            }
-        />
+            </div>
+        </Kort>
     );
 };
 

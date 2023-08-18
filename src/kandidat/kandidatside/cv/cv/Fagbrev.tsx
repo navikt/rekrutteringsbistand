@@ -12,24 +12,20 @@ const Fagbrev = ({ cv }: Props) => {
     const autorisasjoner = cv.fagdokumentasjon?.filter((f) => f.type !== 'Autorisasjon') ?? [];
 
     return autorisasjoner?.length > 0 ? (
-        <Kort
-            overskrift={'Fagbrev/svennebrev og mesterbrev'}
-            ikon={<BagdeIcon />}
-            innhold={
-                <div className={css.erfaringer}>
-                    {autorisasjoner.map(({ tittel }) => {
-                        return (
-                            <Erfaring
-                                key={`${tittel}`}
-                                overskrift={tittel}
-                                beskrivelse={null}
-                                tidsperiode={null}
-                            />
-                        );
-                    })}
-                </div>
-            }
-        />
+        <Kort overskrift={'Fagbrev/svennebrev og mesterbrev'} ikon={<BagdeIcon />}>
+            <div className={css.erfaringer}>
+                {autorisasjoner.map(({ tittel }) => {
+                    return (
+                        <Erfaring
+                            key={`${tittel}`}
+                            overskrift={tittel}
+                            beskrivelse={null}
+                            tidsperiode={null}
+                        />
+                    );
+                })}
+            </div>
+        </Kort>
     ) : null;
 };
 

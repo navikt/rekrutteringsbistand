@@ -14,45 +14,39 @@ type Props = {
 
 const Godkjenninger = ({ cv }: Props) => {
     return cv.godkjenninger?.length > 0 || cv.sertifikater?.length > 0 ? (
-        <Kort
-            overskrift={'Godkjenninger'}
-            ikon={<SealCheckmarkIcon />}
-            innhold={
-                <div className={css.erfaringer}>
-                    {cv.godkjenninger?.length > 0 &&
-                        cv.godkjenninger.map((godkjenning) => {
-                            return (
-                                <Erfaring
-                                    key={`${godkjenning.konseptId}-${godkjenning.gjennomfoert}`}
-                                    overskrift={godkjenning.tittel}
-                                    beskrivelse={null}
-                                    tidsperiode={visTidsperiodeGodkjenning(godkjenning)}
-                                />
-                            );
-                        })}
-                    {cv.godkjenninger?.length > 0 && cv.sertifikater?.length > 0 ? (
-                        <div className={css.delerPadding}>
-                            <div className={css.deler} />
-                        </div>
-                    ) : null}
-                    {cv.sertifikater?.length > 0 &&
-                        sortByDato(cv.sertifikater).map((sertifikat) => {
-                            return (
-                                <Erfaring
-                                    key={`${sertifikat.sertifikatKode}-${sertifikat.alternativtNavn}-${sertifikat.fraDato}`}
-                                    overskrift={
-                                        sertifikat.alternativtNavn
-                                            ? sertifikat.alternativtNavn
-                                            : sertifikat.sertifikatKodeNavn
-                                    }
-                                    beskrivelse={null}
-                                    tidsperiode={visTidsperiodeSertifikat(sertifikat)}
-                                />
-                            );
-                        })}
-                </div>
-            }
-        />
+        <Kort overskrift={'Godkjenninger'} ikon={<SealCheckmarkIcon />}>
+            <div className={css.erfaringer}>
+                {cv.godkjenninger?.length > 0 &&
+                    cv.godkjenninger.map((godkjenning) => {
+                        return (
+                            <Erfaring
+                                key={`${godkjenning.konseptId}-${godkjenning.gjennomfoert}`}
+                                overskrift={godkjenning.tittel}
+                                beskrivelse={null}
+                                tidsperiode={visTidsperiodeGodkjenning(godkjenning)}
+                            />
+                        );
+                    })}
+                {cv.godkjenninger?.length > 0 && cv.sertifikater?.length > 0 ? (
+                    <div className={css.deler} />
+                ) : null}
+                {cv.sertifikater?.length > 0 &&
+                    sortByDato(cv.sertifikater).map((sertifikat) => {
+                        return (
+                            <Erfaring
+                                key={`${sertifikat.sertifikatKode}-${sertifikat.alternativtNavn}-${sertifikat.fraDato}`}
+                                overskrift={
+                                    sertifikat.alternativtNavn
+                                        ? sertifikat.alternativtNavn
+                                        : sertifikat.sertifikatKodeNavn
+                                }
+                                beskrivelse={null}
+                                tidsperiode={visTidsperiodeSertifikat(sertifikat)}
+                            />
+                        );
+                    })}
+            </div>
+        </Kort>
     ) : null;
 };
 

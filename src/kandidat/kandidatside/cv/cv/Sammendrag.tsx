@@ -10,22 +10,18 @@ type Props = {
 
 const Sammendrag = ({ cv }: Props) => {
     return cv.beskrivelse?.length > 0 ? (
-        <Kort
-            overskrift={'Sammendrag'}
-            ikon={<InformationIcon />}
-            innhold={
-                <div className={css.erfaringer}>
-                    {
-                        <Erfaring
-                            key={`${cv.beskrivelse}`}
-                            overskrift={null}
-                            beskrivelse={cv.beskrivelse}
-                            tidsperiode={null}
-                        />
-                    }
-                </div>
-            }
-        />
+        <Kort overskrift={'Sammendrag'} ikon={<InformationIcon />}>
+            <div className={css.erfaringer}>
+                {
+                    <Erfaring
+                        key={`${cv.beskrivelse}`}
+                        overskrift={null}
+                        beskrivelse={cv.beskrivelse}
+                        tidsperiode={null}
+                    />
+                }
+            </div>
+        </Kort>
     ) : null;
 };
 

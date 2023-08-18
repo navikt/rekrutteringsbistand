@@ -14,26 +14,22 @@ type Props = {
 
 const Førerkort = ({ cv }: Props) => {
     return cv.forerkort?.length > 0 ? (
-        <Kort
-            overskrift={'Førerkort'}
-            ikon={<CarIcon />}
-            innhold={
-                <div className={css.erfaringer}>
-                    {fjernDuplikater(sortByDato(cv.forerkort)).map((førerkort) => (
-                        <Erfaring
-                            key={`${førerkort.sertifikatKode}-${førerkort.fraDato}`}
-                            overskrift={
-                                førerkort.alternativtNavn
-                                    ? førerkort.alternativtNavn
-                                    : førerkort.sertifikatKodeNavn
-                            }
-                            beskrivelse={førerkort.sertifikatKode}
-                            tidsperiode={visTidsperiode(førerkort)}
-                        />
-                    ))}
-                </div>
-            }
-        />
+        <Kort overskrift={'Førerkort'} ikon={<CarIcon />}>
+            <div className={css.erfaringer}>
+                {fjernDuplikater(sortByDato(cv.forerkort)).map((førerkort) => (
+                    <Erfaring
+                        key={`${førerkort.sertifikatKode}-${førerkort.fraDato}`}
+                        overskrift={
+                            førerkort.alternativtNavn
+                                ? førerkort.alternativtNavn
+                                : førerkort.sertifikatKodeNavn
+                        }
+                        beskrivelse={førerkort.sertifikatKode}
+                        tidsperiode={visTidsperiode(førerkort)}
+                    />
+                ))}
+            </div>
+        </Kort>
     ) : null;
 };
 

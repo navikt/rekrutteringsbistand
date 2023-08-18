@@ -5,10 +5,10 @@ import { ReactNode } from 'react';
 type Props = {
     overskrift: string;
     ikon: ReactNode;
-    innhold: ReactNode;
+    children: ReactNode;
 };
 
-const Kort = ({ overskrift, ikon, innhold }: Props) => {
+const Kort = ({ overskrift, ikon, children }: Props) => {
     return (
         <div className={css.kort}>
             <div className={css.innhold}>
@@ -18,7 +18,7 @@ const Kort = ({ overskrift, ikon, innhold }: Props) => {
                         {overskrift}
                     </div>
                 </Heading>
-                {innhold}
+                {children}
             </div>
         </div>
     );
