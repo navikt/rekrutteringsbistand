@@ -1,8 +1,12 @@
 import { api, videresendTilInnlogging } from 'felles/api';
-import { Query, Respons } from '../domene/elasticSearchTyper';
+import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import StandardsøkDto from '../filter/standardsøk/Standardsøk';
 
-export const søk = async (query: Query, forklarScore: boolean = false): Promise<Respons> => {
+export const søk = async (
+    query: EsQuery<EsRekrutteringsbistandstilling>,
+    forklarScore: boolean = false
+): Promise<EsResponse<EsRekrutteringsbistandstilling>> => {
     const url = `${api.stillingssøk}/stilling/_search`;
     const urlMedParams = forklarScore ? `${url}?explain=true` : url;
     const respons = await post(urlMedParams, query);

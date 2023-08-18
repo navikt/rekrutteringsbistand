@@ -1,26 +1,26 @@
-import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Alert, Heading, TextField } from '@navikt/ds-react';
 import fnrValidator from '@navikt/fnrvalidator';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { fetchKandidatMedFnr, fetchSynlighetsevaluering } from './api';
-import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
-import { getMiljø, Miljø } from '../../../utils/miljøUtils';
-import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { SearchApiError } from '../../../api/fetchUtils';
 import { sendEvent } from 'felles/amplitude';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
-import BekreftMedNotat from 'felles/komponenter/legg-til-kandidat/BekreftMedNotat';
-import InformasjonOmUsynligKandidat from './InformasjonOmUsynligKandidat';
-import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
+import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
+import BekreftMedNotat from 'felles/komponenter/legg-til-kandidat/BekreftMedNotat';
+import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
+import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
+import Sidelaster from '../../../../felles/komponenter/sidelaster/Sidelaster';
+import { SearchApiError } from '../../../api/fetchUtils';
+import Modal from '../../../komponenter/modal/Modal';
+import { Miljø, getMiljø } from '../../../utils/miljøUtils';
+import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
-import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
-import Modal from '../../../komponenter/modal/Modal';
-import Sidelaster from '../../../komponenter/sidelaster/Sidelaster';
-import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
+import InformasjonOmUsynligKandidat from './InformasjonOmUsynligKandidat';
 import css from './LeggTilKandidatModal.module.css';
+import { fetchKandidatMedFnr, fetchSynlighetsevaluering } from './api';
 
 export type FormidlingAvUsynligKandidatOutboundDto = {
     fnr: string;

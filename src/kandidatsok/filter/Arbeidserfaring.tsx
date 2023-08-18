@@ -1,6 +1,6 @@
 import { Radio, RadioGroup } from '@navikt/ds-react';
 import { Forslagsfelt } from '../api/query/byggSuggestion';
-import { FilterParam } from '../hooks/useRespons';
+import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier from '../hooks/useSøkekriterier';
 import FilterMedTypeahead from './FilterMedTypeahead';
 

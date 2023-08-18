@@ -1,4 +1,5 @@
 import { api } from 'felles/api';
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import Stilling, {
@@ -11,7 +12,7 @@ import { Miljø, getMiljø } from 'felles/miljø';
 import { HentMineStillingerQuery } from '../mine-stillinger/mineStillingerSagas';
 import { fetchGet, fetchPost, fetchPut } from './apiUtils';
 import devVirksomheter from './devVirksomheter';
-import { OpenSearchResponse, lagOpenSearchQuery } from './openSearchQuery';
+import { lagOpenSearchQuery } from './openSearchQuery';
 
 export type Side<T> = {
     content: T[];
@@ -54,7 +55,7 @@ export const hentMineStillingerOpenSearch = async (
     const sidestørrelse = 25;
 
     const openSearchQuery = lagOpenSearchQuery(query, sidestørrelse);
-    const respons: OpenSearchResponse = await fetchPost(
+    const respons: EsResponse<EsRekrutteringsbistandstilling> = await fetchPost(
         `${api.stillingssøk}/stilling/_search`,
         openSearchQuery
     );

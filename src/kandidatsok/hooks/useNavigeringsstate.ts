@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { OtherParam } from './useRespons';
+import { OtherParam } from './useQuery';
 
 export type Navigeringsstate = Partial<{
     scrollTilKandidat: boolean;

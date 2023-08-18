@@ -1,19 +1,19 @@
-import { FunctionComponent, ReactNode, useState } from 'react';
-import { Button, Label, Tabs } from '@navikt/ds-react';
 import { MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
+import { Button, Label, Tabs } from '@navikt/ds-react';
+import { FunctionComponent, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Nettstatus } from 'felles/nettressurs';
 import { lenkeTilKandidatsøk } from '../../app/paths';
-import { hentØktFraKandidatsøk } from '../søkekontekst';
+import useScrollTilToppen from '../../utils/useScrollTilToppen';
+import useCv from '../hooks/useCv';
+import useFaner from '../hooks/useFaner';
+import useNavigerbareKandidaterFraSøk from '../hooks/useNavigerbareKandidaterFraSøk';
 import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
-import useCv from '../hooks/useCv';
-import useNavigerbareKandidaterFraSøk from '../hooks/useNavigerbareKandidaterFraSøk';
-import useScrollTilToppen from '../../utils/useScrollTilToppen';
-import useFaner from '../hooks/useFaner';
-import LagreKandidaterIMineKandidatlisterModal from './lagre-kandidat-modal/LagreKandidatIMineKandidatlisterModal';
-import { Nettstatus } from 'felles/nettressurs';
+import { hentØktFraKandidatsøk } from '../søkekontekst';
 import css from './FraSøkUtenKontekst.module.css';
+import LagreKandidaterIMineKandidatlisterModal from './lagre-kandidat-modal/LagreKandidatIMineKandidatlisterModal';
 
 type Props = {
     tabs: ReactNode;
@@ -47,12 +47,12 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
                 kandidatnavigering={kandidatnavigering}
                 brødsmulesti={brødsmulesti}
             />
-            <Tabs value={fane} onChange={setFane}>
+            <Tabs value={fane} onChange={setFane as any}>
                 <Kandidatmeny tabs={tabs} cv={cv}>
                     <div className={css.knapper}>
                         {cv.kind === Nettstatus.Suksess && (
                             <Link
-                                to={`/stillingssok/${cv.data.fodselsnummer}?kandidatkriterier`}
+                                to={`/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`}
                                 className="navds-button navds-button--secondary navds-button--small"
                             >
                                 <MagnifyingGlassIcon />

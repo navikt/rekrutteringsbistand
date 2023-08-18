@@ -1,39 +1,39 @@
-import { tagsInneholderInkluderingsmuligheter } from './tags/utils';
 import { put, select, takeLatest } from 'redux-saga/effects';
-import { isValidISOString, idagMidnatt } from '../utils/datoUtils';
-import { DEFAULT_TITLE_NEW_AD, SET_KAN_INKLUDERE } from './adReducer';
-import isJson from './edit/praktiske-opplysninger/IsJson';
+import { State } from '../redux/store';
+import { SET_NOTAT } from '../stillingsinfo/stillingsinfoDataReducer';
+import { idagMidnatt, isValidISOString } from '../utils/datoUtils';
 import {
-    SET_STYRK,
+    ADD_LOCATION_AREA,
     ADD_POSTAL_CODE,
     ADD_POSTAL_CODE_BEGIN,
-    REMOVE_POSTAL_CODE,
-    ADD_LOCATION_AREA,
+    CHECK_EMPLOYMENT_WORKDAY,
+    CHECK_EMPLOYMENT_WORKHOURS,
+    CHECK_TAG,
     REMOVE_COUNTRY,
-    REMOVE_MUNICIPAL,
     REMOVE_COUNTY,
-    SET_EXPIRATION_DATE,
-    SET_PUBLISHED,
+    REMOVE_LOCATION_AREAS,
+    REMOVE_MUNICIPAL,
+    REMOVE_POSTAL_CODE,
     SET_AD_TEXT,
     SET_AD_TITLE,
     SET_APPLICATIONDUE,
     SET_EMPLOYMENT_ENGAGEMENTTYPE,
-    SET_EMPLOYMENT_POSITIONCOUNT,
     SET_EMPLOYMENT_EXTENT,
+    SET_EMPLOYMENT_POSITIONCOUNT,
     SET_EMPLOYMENT_SECTOR,
-    CHECK_EMPLOYMENT_WORKDAY,
-    UNCHECK_EMPLOYMENT_WORKDAY,
-    CHECK_EMPLOYMENT_WORKHOURS,
-    UNCHECK_EMPLOYMENT_WORKHOURS,
-    findLocationByPostalCode,
-    REMOVE_LOCATION_AREAS,
-    CHECK_TAG,
-    UNCHECK_TAG,
     SET_EMPLOYMENT_STARTTIME,
+    SET_EXPIRATION_DATE,
+    SET_PUBLISHED,
+    SET_STYRK,
+    UNCHECK_EMPLOYMENT_WORKDAY,
+    UNCHECK_EMPLOYMENT_WORKHOURS,
+    UNCHECK_TAG,
+    findLocationByPostalCode,
 } from './adDataReducer';
-import { SET_NOTAT } from '../stillingsinfo/stillingsinfoDataReducer';
-import { State } from '../redux/store';
+import { DEFAULT_TITLE_NEW_AD, SET_KAN_INKLUDERE } from './adReducer';
+import isJson from './edit/praktiske-opplysninger/IsJson';
 import { KanInkludere } from './edit/registrer-inkluderingsmuligheter/DirektemeldtStilling';
+import { tagsInneholderInkluderingsmuligheter } from './tags/utils';
 
 export type ValidertFelt =
     | 'location'
@@ -74,7 +74,7 @@ export const RESET_VALIDATION_ERROR = 'RESET_VALIDATION_ERROR';
 
 export const MAX_LENGTH_NOTAT = 500;
 
-const valueIsNotSet = (value) => value === undefined || value === null || value.length === 0;
+const valueIsNotSet = (value: any) => value === undefined || value === null || value.length === 0;
 
 function* addValidationError({ field, message }: { field: ValidertFelt; message: string }) {
     yield put({

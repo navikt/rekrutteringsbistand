@@ -1,8 +1,8 @@
-import { ToggleGroup, Tooltip } from '@navikt/ds-react';
 import { CheckmarkIcon, ClockIcon } from '@navikt/aksel-icons';
-import useSøkekriterier from '../../hooks/useSøkekriterier';
-import { FilterParam } from '../../hooks/useRespons';
+import { ToggleGroup, Tooltip } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
+import { FilterParam } from '../../hooks/useQuery';
+import useSøkekriterier from '../../hooks/useSøkekriterier';
 import css from './Sortering.module.css';
 
 export enum Sortering {

@@ -41,7 +41,7 @@ export const mockKandidat: Kandidat = {
     yrkeJobbonskerObj: [
         {
             primaertJobbonske: true,
-            sokeTitler: [],
+            sokeTitler: ['Gartner'],
             styrkBeskrivelse: 'Gartner',
             styrkKode: '01',
         },

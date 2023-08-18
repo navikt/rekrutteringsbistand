@@ -9,7 +9,6 @@ import Modal from '../../common/modal/Modal';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
 type Props = {
-    fnr: string;
     kandidat: KandidatTilBanner;
     kandidatliste: Kandidatliste;
     setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
@@ -18,7 +17,6 @@ type Props = {
 };
 
 const AnbefalKandidatModal = ({
-    fnr,
     kandidat,
     kandidatliste,
     setKandidatliste,
@@ -32,7 +30,7 @@ const AnbefalKandidatModal = ({
 
         dispatch<VarslingAction>({
             type: VarslingActionType.VisVarsling,
-            innhold: `Kandidat ${kandidat.fornavn} ${kandidat.etternavn} (${fnr}) er anbefalt til stillingen`,
+            innhold: `Kandidat ${kandidat.fornavn} ${kandidat.etternavn} (${kandidat.fodselsnummer}) er anbefalt til stillingen`,
         });
     };
 
@@ -50,7 +48,7 @@ const AnbefalKandidatModal = ({
             </Heading>
             <BekreftMedNotat
                 erAnbefaling
-                fnr={fnr}
+                fnr={kandidat.fodselsnummer}
                 kandidat={kandidat}
                 kandidatliste={kandidatliste}
                 onAvbryt={onClose}

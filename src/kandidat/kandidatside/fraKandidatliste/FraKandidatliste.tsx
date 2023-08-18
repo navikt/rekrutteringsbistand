@@ -2,33 +2,33 @@ import { Label, Tabs } from '@navikt/ds-react';
 import React, { Dispatch, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
-import { filterTilQueryParams } from '../../kandidatliste/filter/filter-utils';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import {
     KandidatIKandidatliste,
     Kandidatstatus,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { lenkeTilKandidatliste } from '../../app/paths';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import AppState from '../../state/AppState';
-import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
+import { lenkeTilKandidatliste } from '../../app/paths';
+import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
+import { filterTilQueryParams } from '../../kandidatliste/filter/filter-utils';
+import StatusOgHendelser from '../../kandidatliste/kandidatrad/status-og-hendelser/StatusOgHendelser';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
 import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
-import StatusOgHendelser from '../../kandidatliste/kandidatrad/status-og-hendelser/StatusOgHendelser';
+import AppState from '../../state/AppState';
+import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useCv from '../hooks/useCv';
 import useFaner from '../hooks/useFaner';
-import useForespørselOmDelingAvCv from './useForespørselOmDelingAvCv';
 import useKandidatliste from '../hooks/useKandidatliste';
+import Kandidatheader from '../komponenter/header/Kandidatheader';
+import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
+import css from './FraKandidatliste.module.css';
+import useForespørselOmDelingAvCv from './useForespørselOmDelingAvCv';
 import useNavigerbareKandidater from './useNavigerbareKandidater';
-import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useSendtKandidatmelding from './useSendtKandidatmelding';
 import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
-import css from './FraKandidatliste.module.css';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
     tabs: ReactNode;

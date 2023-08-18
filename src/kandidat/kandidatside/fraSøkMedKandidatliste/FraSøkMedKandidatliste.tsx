@@ -56,7 +56,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                       state: { scrollTilKandidat: true },
                   },
               ]
-            : [];
+            : undefined;
 
     return (
         <>

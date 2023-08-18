@@ -11,9 +11,10 @@ export const skalViseRedigeringslenkeTilStilling = (
     rekrutteringsbistandStilling: EsRekrutteringsbistandstilling
 ) => rekrutteringsbistandStilling.stilling.source === Kilde.Intern;
 
-export const lagUrlTilStilling = (stilling: EsStilling, fnr?: string) => {
+export const lagUrlTilStilling = (stilling: EsStilling, kandidatnr?: string) => {
     const url = `/stillinger/stilling/${stilling.uuid}`;
-    return fnr ? `${url}?fnr=${fnr}` : url;
+
+    return kandidatnr ? `${url}?kandidat=${kandidatnr}` : url;
 };
 
 export const lagUrlTilKandidatliste = (stilling: EsStilling) =>

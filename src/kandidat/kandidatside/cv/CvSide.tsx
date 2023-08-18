@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
+import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import css from './CvSide.module.css';
 import Jobbønsker from './jobbønsker/Jobbønsker';
 import Erfaringer from './cv/Erfaringer';

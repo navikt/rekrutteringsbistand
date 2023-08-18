@@ -35,79 +35,95 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilH
                         )}
                         {øverstTilHøyre}
                     </div>
+
                     {kandidat.kind === Nettstatus.LasterInn && (
                         <Skeleton>
                             <Heading size="large">Placeholder</Heading>
                         </Skeleton>
                     )}
+
                     {kandidat.kind === Nettstatus.Suksess && (
                         <Heading size="large" level="2">
                             {formaterNavn(kandidat.data)}
                         </Heading>
                     )}
+
+                    {kandidat.kind === Nettstatus.FinnesIkke && (
+                        <Heading size="large">Fant ikke kandidaten</Heading>
+                    )}
+
                     {kandidat.kind === Nettstatus.Feil && (
                         <Heading size="large">{kandidat.error.message}</Heading>
                     )}
 
-                    {kandidat.kind !== Nettstatus.Feil && (
-                        <div className={css.bunnlinje}>
+                    <div className={css.bunnlinje}>
+                        {kandidat.kind === Nettstatus.FinnesIkke && (
+                            <div className={css.personalia}>
+                                Kandidaten er ikke tilgjengelig i Rekrutteringsbistand
+                            </div>
+                        )}
+
+                        {kandidat.kind === Nettstatus.LasterInn && (
+                            <div className={css.personalia}>
+                                <div>
+                                    <CandleIcon />
+                                    <Skeleton width={180} />
+                                </div>
+                                <div>
+                                    <PinIcon />
+                                    <Skeleton width={240} />
+                                </div>
+                                <div>
+                                    <EnvelopeClosedIcon />
+                                    <Skeleton width={100} />
+                                </div>
+                                <div>
+                                    <PhoneIcon />
+                                    <Skeleton width={100} />
+                                </div>
+                                <div>
+                                    <PersonIcon />
+                                    <Skeleton width={100} />
+                                </div>
+                            </div>
+                        )}
+
+                        {kandidat.kind === Nettstatus.Suksess && (
                             <div className={css.personalia}>
                                 <BodyShort>
-                                    <CandleIcon />{' '}
-                                    {kandidat.kind === Nettstatus.Suksess ? (
-                                        `${lagFødselsdagtekst(kandidat.data.fodselsdato)} (${
-                                            kandidat.data.fodselsnummer
-                                        }) `
-                                    ) : (
-                                        <Skeleton width={180} />
-                                    )}
+                                    <CandleIcon />
+                                    {lagFødselsdagtekst(kandidat.data.fodselsdato)} (
+                                    {kandidat.data.fodselsnummer})
                                 </BodyShort>
 
                                 <BodyShort>
-                                    <PinIcon />{' '}
-                                    {kandidat.kind === Nettstatus.Suksess ? (
-                                        hentAdresse(kandidat.data) ?? '-'
-                                    ) : (
-                                        <Skeleton width={240} />
-                                    )}
+                                    <PinIcon />
+                                    {hentAdresse(kandidat.data) ?? '-'}
                                 </BodyShort>
 
                                 <BodyShort>
                                     <EnvelopeClosedIcon />
-                                    {kandidat.kind === Nettstatus.Suksess ? (
-                                        kandidat.data.epostadresse?.toLowerCase() ?? '-'
-                                    ) : (
-                                        <Skeleton width={100} />
-                                    )}
+                                    {kandidat.data.epostadresse?.toLowerCase() ?? '-'}
                                 </BodyShort>
 
                                 <BodyShort>
                                     <PhoneIcon />
-                                    {kandidat.kind === Nettstatus.Suksess ? (
-                                        kandidat.data.telefon ?? '-'
-                                    ) : (
-                                        <Skeleton width={100} />
-                                    )}
+                                    {kandidat.data.telefon ?? '-'}
                                 </BodyShort>
 
                                 <BodyShort>
                                     <PersonIcon />
-                                    {kandidat.kind === Nettstatus.Suksess ? (
-                                        kandidat.data.veileder ? (
-                                            `${kandidat.data.veileder.toUpperCase()} (Veileder)`
-                                        ) : (
-                                            '-'
-                                        )
-                                    ) : (
-                                        <Skeleton width={100} />
-                                    )}
+                                    {kandidat.data.veileder
+                                        ? `${kandidat.data.veileder.toUpperCase()} (Veileder)`
+                                        : '-'}
                                 </BodyShort>
                             </div>
-                            {nederstTilHøyre && (
-                                <div className={css.nederstTilHøyre}>{nederstTilHøyre}</div>
-                            )}
-                        </div>
-                    )}
+                        )}
+
+                        {nederstTilHøyre && (
+                            <div className={css.nederstTilHøyre}>{nederstTilHøyre}</div>
+                        )}
+                    </div>
                 </div>
             </div>
         </Grunnbanner>

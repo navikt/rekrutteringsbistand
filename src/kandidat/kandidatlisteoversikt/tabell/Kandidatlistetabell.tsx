@@ -1,17 +1,17 @@
-import { ReactNode } from 'react';
 import { BodyLong, SortState, Table } from '@navikt/ds-react';
+import classNames from 'classnames';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettstatus } from 'felles/nettressurs';
+import { ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import AppState from '../../state/AppState';
+import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import {
-    nesteSorteringsretning,
     Retning,
+    nesteSorteringsretning,
 } from '../../kandidatliste/liste-header/sorterbarKolonneheader/Retning';
+import AppState from '../../state/AppState';
 import { KandidatlisteSorteringsfelt } from '../Kandidatlistesortering';
 import { ListeoversiktActionType } from '../reducer/ListeoversiktAction';
-import { Nettstatus } from 'felles/nettressurs';
-import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
-import classNames from 'classnames';
 import css from './Kandidatlistetabell.module.css';
 
 type Props = {

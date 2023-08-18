@@ -1,7 +1,8 @@
-import { FunctionComponent } from 'react';
 import { Chips } from '@navikt/ds-react';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../utils/urlUtils';
+import { Bucket } from 'felles/domene/elastic/ElasticSearch';
+import { FunctionComponent } from 'react';
 import useNavigering from '../useNavigering';
+import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../utils/urlUtils';
 
 export enum Søkefelt {
     Arbeidsgiver = 'arbeidsgiver',
@@ -11,7 +12,7 @@ export enum Søkefelt {
 }
 
 type Props = {
-    aggregeringer?: Partial<Record<Søkefelt, { doc_count: number }>>;
+    aggregeringer?: Partial<Record<Søkefelt, Bucket>>;
 };
 
 const Søkefelter: FunctionComponent<Props> = ({ aggregeringer }) => {
