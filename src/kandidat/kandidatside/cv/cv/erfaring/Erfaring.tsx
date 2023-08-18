@@ -1,5 +1,5 @@
 import css from './Erfaring.module.css';
-import { BodyShort, Heading } from '@navikt/ds-react';
+import { BodyLong, Heading } from '@navikt/ds-react';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -14,9 +14,9 @@ const Erfaring = ({ overskrift, beskrivelse, tidsperiode }: Props) => {
                 {overskrift}
             </Heading>
             {tidsperiode}
-            <BodyShort size="small" className={css.beskrivelse}>
+            <BodyLong size="small" className={css.beskrivelse}>
                 {beskrivelse}
-            </BodyShort>
+            </BodyLong>
         </div>
     );
 };
