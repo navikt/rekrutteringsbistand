@@ -11,15 +11,13 @@ type Props = {
 const Kort = ({ overskrift, ikon, children }: Props) => {
     return (
         <div className={css.kort}>
-            <div className={css.innhold}>
-                <Heading level="2" size="small" className={css.overskrift}>
-                    <div className={css.overskriftMedIkon}>
-                        <div className={css.ikonRamme}>{ikon}</div>
-                        {overskrift}
-                    </div>
-                </Heading>
-                {children}
-            </div>
+            <Heading level="2" size="small" className={css.overskrift}>
+                <div className={css.overskriftMedIkon}>
+                    <div className={css.ikonRamme}>{ikon}</div>
+                    {overskrift}
+                </div>
+            </Heading>
+            {children}
         </div>
     );
 };

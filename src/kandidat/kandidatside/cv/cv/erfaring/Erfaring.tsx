@@ -1,5 +1,5 @@
 import css from './Erfaring.module.css';
-import { BodyShort } from '@navikt/ds-react';
+import { BodyShort, Heading } from '@navikt/ds-react';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -9,16 +9,14 @@ type Props = {
 };
 const Erfaring = ({ overskrift, beskrivelse, tidsperiode }: Props) => {
     return (
-        <div className={css.erfaring}>
-            <div className={css.innhold}>
-                <BodyShort size="small" className={css.overskrift}>
-                    {overskrift}
-                </BodyShort>
-                {tidsperiode}
-                <BodyShort size="small" className={css.beskrivelse}>
-                    {beskrivelse}
-                </BodyShort>
-            </div>
+        <div>
+            <Heading size="xsmall" level="3" className={css.overskrift}>
+                {overskrift}
+            </Heading>
+            {tidsperiode}
+            <BodyShort size="small" className={css.beskrivelse}>
+                {beskrivelse}
+            </BodyShort>
         </div>
     );
 };

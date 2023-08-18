@@ -12,39 +12,23 @@
 
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: 2rem;
 }
 
+.høyreSide,
+.venstreSide,
 .mosaik {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.høyreSide {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-    flex: 1 0 0;
-}
-
-.venstreSide {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-}
-
 @media (min-width: 1080px) {
     .mosaik {
-        align-items: flex-start;
         flex-direction: row;
-        align-self: stretch;
     }
 
     .venstreSide {
-        width: 49.3125rem;
+        width: 50rem;
     }
 }
