@@ -18,6 +18,7 @@
 .mosaik {
     display: grid;
     gap: 1.5rem;
+    width: 100%;
 }
 
 .kolonne {
