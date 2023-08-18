@@ -7,6 +7,7 @@ import Erfaring from './erfaring/Erfaring';
 import { BodyShort } from '@navikt/ds-react';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Detaljer from './detaljer/Detaljer';
 
 type Props = {
     cv: KandidatCv;
@@ -31,14 +32,14 @@ const Kurs = ({ cv }: Props) => {
 const TidsperiodeKurs = ({ kurs }: { kurs: Kurstype }) => {
     if (kurs.fraDato && kurs.omfang.enhet.length > 0 && kurs.omfang.verdi > 0) {
         return (
-            <div className={css.tidsperiode}>
+            <Detaljer>
                 <BodyShort size="small" className={css.tekst}>
                     Fullført {formaterDatoHvisIkkeNull(kurs.fraDato)}
                 </BodyShort>
                 <BodyShort size="small" className={css.tekst}>
                     {hentKursvarighet(kurs.omfang)}
                 </BodyShort>
-            </div>
+            </Detaljer>
         );
     } else if (kurs.fraDato && (kurs.omfang.enhet.length === 0 || kurs.omfang.verdi === 0)) {
         return (
