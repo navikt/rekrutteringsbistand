@@ -1,12 +1,12 @@
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { rest } from 'msw';
 import { api } from '../../src/felles/api';
-import { Respons } from '../../src/kandidatsok/kandidater/elasticSearchTyper';
 import { mockKandidat } from './mockKandidat';
 
 export const kandidatsøkMock = [
     rest.post(api.kandidatsøk, async (req, res, ctx) => {
-        const skalMockeIngenTreff = (await req.text()).includes('09043826678');
-
+        const skalMockeIngenTreff = false;
         const respons = skalMockeIngenTreff ? ingenTreff : treff;
 
         return res(ctx.json(respons));
@@ -24,7 +24,7 @@ const metainformasjon = {
     timed_out: false,
 };
 
-const treff: Respons = {
+const treff: EsResponse<Kandidat> = {
     ...metainformasjon,
     hits: {
         total: {
@@ -44,7 +44,7 @@ const treff: Respons = {
     },
 };
 
-const ingenTreff: Respons = {
+const ingenTreff: EsResponse<Kandidat> = {
     ...metainformasjon,
     hits: {
         total: {

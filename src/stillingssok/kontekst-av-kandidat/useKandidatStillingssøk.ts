@@ -1,7 +1,7 @@
 import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import useKandidat, { fodselsnrTerm } from 'felles/komponenter/kandidatbanner/useKandidat';
+import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { Nettstatus } from 'felles/nettressurs';
 import { useEffect } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
@@ -11,14 +11,16 @@ import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
 
-const useKandidatStillingssøk = (fnr: string) => {
+const useKandidatStillingssøk = (kandidatnr: string) => {
     const { searchParams, navigate } = useNavigering();
 
-    const kandidat = useKandidat(fodselsnrTerm(fnr));
+    const kandidat = useKandidat(kandidatnr);
 
     useEffect(() => {
         if (kandidat.kind === Nettstatus.Suksess) {
-            const brukKandidatkriterier = searchParams.get(QueryParam.Kandidatkriterier) !== null;
+            const brukKandidatkriterier =
+                searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
+
             const { geografiJobbonsker, yrkeJobbonskerObj } = kandidat.data;
 
             const brukKriterier = () => {
@@ -28,12 +30,13 @@ const useKandidatStillingssøk = (fnr: string) => {
 
                 const søk = new URLSearchParams();
 
-                søk.set(QueryParam.Fylker, String(fylker));
-                søk.set(QueryParam.Kommuner, String(kommuner));
+                if (fylker.length > 0) søk.set(QueryParam.Fylker, String(fylker));
+                if (kommuner.length > 0) søk.set(QueryParam.Kommuner, String(kommuner));
+                if (yrkesønsker.length > 0) søk.set(QueryParam.Tekst, String(yrkesønsker));
+
                 søk.set(QueryParam.Statuser, Status.Publisert);
                 søk.set(QueryParam.Publisert, Publisert.Intern);
                 søk.set(QueryParam.Stillingskategorier, Stillingskategori.Stilling);
-                søk.set(QueryParam.Tekst, String(yrkesønsker));
 
                 sendEvent('stillingssøk', 'kontekst_av_kandidat', {
                     antallFylker: fylker.length,
@@ -48,7 +51,7 @@ const useKandidatStillingssøk = (fnr: string) => {
                 brukKriterier();
             }
         }
-    }, [fnr, navigate, kandidat, searchParams]);
+    }, [kandidatnr, navigate, kandidat, searchParams]);
 
     return kandidat;
 };

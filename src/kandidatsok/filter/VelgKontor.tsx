@@ -1,9 +1,9 @@
+import { Nettstatus } from 'felles/nettressurs';
 import React, { FunctionComponent, useState } from 'react';
 import useFuzzySuggestions from '../hooks/useFuzzySuggestions';
-import { FilterParam } from '../hooks/useRespons';
+import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
-import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     forslagId: string;

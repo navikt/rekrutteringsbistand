@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import { søk } from '../api/api';
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useEffect, useState } from 'react';
+import { søk } from '../api/api';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
-import { Respons } from '../kandidater/elasticSearchTyper';
 import { InnloggetBruker } from './useBrukerensIdent';
 import useSøkekriterier from './useSøkekriterier';
 
@@ -35,20 +36,20 @@ export enum OtherParam {
 
 export type Param = FilterParam | OtherParam;
 
-const useRespons = (innloggetBruker: InnloggetBruker) => {
+const useQuery = (innloggetBruker: InnloggetBruker): Nettressurs<EsResponse<Kandidat>> => {
     const { søkekriterier } = useSøkekriterier();
-    const [respons, setRespons] = useState<Nettressurs<Respons>>({
+    const [response, setResponse] = useState<Nettressurs<EsResponse<Kandidat>>>({
         kind: Nettstatus.IkkeLastet,
     });
 
     const query = byggQuery(søkekriterier, innloggetBruker);
 
     const setOpptatt = () => {
-        setRespons(
-            respons.kind === Nettstatus.Suksess
+        setResponse(
+            response.kind === Nettstatus.Suksess
                 ? {
                       kind: Nettstatus.Oppdaterer,
-                      data: respons.data,
+                      data: response.data,
                   }
                 : {
                       kind: Nettstatus.LasterInn,
@@ -69,12 +70,12 @@ const useRespons = (innloggetBruker: InnloggetBruker) => {
             try {
                 let søkeresultat = await søk(query);
 
-                setRespons({
+                setResponse({
                     kind: Nettstatus.Suksess,
                     data: søkeresultat,
                 });
             } catch (e) {
-                setRespons({
+                setResponse({
                     kind: Nettstatus.Feil,
                     error: { status: (e as Response).status, message: (e as Response).statusText },
                 });
@@ -86,7 +87,7 @@ const useRespons = (innloggetBruker: InnloggetBruker) => {
         /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [JSON.stringify(query)]);
 
-    return respons;
+    return response;
 };
 
-export default useRespons;
+export default useQuery;

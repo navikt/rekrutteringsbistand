@@ -1,12 +1,19 @@
-import { Respons } from '../../src/stillingssok/domene/elasticSearchTyper';
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
+import { GlobalAggregering } from '../../src/stillingssok/domene/elasticSearchTyper';
 import { mockEsRekrutteringsbistandstilling } from './mockEsStilling';
 
-export const mockStillingssøk: Respons = {
+export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>, 'aggregations'> & {
+    aggregations: {
+        globalAggregering: GlobalAggregering;
+    };
+} = {
     took: 5,
     timed_out: false,
     _shards: { total: 3, successful: 3, skipped: 0, failed: 0 },
     hits: {
         total: {
+            relation: 'eq',
             value: 1,
         },
         max_score: 1.0,

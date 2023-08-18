@@ -5,6 +5,7 @@ import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import Banner from 'felles/komponenter/banner/Banner';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import css from './Stillingssøk.module.css';
+import { GlobalAggregering } from './domene/elasticSearchTyper';
 import Filter from './filter/Filter';
 import Filtermeny from './filter/filtermeny/Filtermeny';
 import { Status } from './filter/om-annonsen/Annonsestatus';
@@ -32,36 +33,39 @@ export type Søkekriterier = {
 };
 
 const Stillingssøk = () => {
-    const { fnr } = useParams();
+    const { kandidat: kandidatnr } = useParams<{ kandidat?: string }>();
     const respons = useSøkMedQuery();
 
-    const globalAggregering = respons?.aggregations?.globalAggregering;
+    const globalAggregering = respons?.aggregations
+        ?.globalAggregering as unknown as GlobalAggregering;
     const antallTreff = useAntallTreff(respons);
+
+    const visStandardsøk = kandidatnr === undefined;
 
     return (
         <div className={css.wrapper}>
-            {fnr ? (
-                <KontekstAvKandidat fnr={fnr} />
+            {kandidatnr !== undefined ? (
+                <KontekstAvKandidat kandidatnr={kandidatnr} />
             ) : (
                 <Banner tittel="Søk etter stilling" ikon={<Piktogram />} />
             )}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
-                    <Filter fnr={fnr} />
+                    <Filter visStandardsøk={visStandardsøk} />
                 </aside>
 
                 <main className={css.sokeresultat}>
                     {respons ? (
                         <>
-                            <Filtermeny fnr={fnr} />
+                            <Filtermeny visStandardsøk={visStandardsøk} />
                             <div className={css.beskrivelseAvSøk}>
                                 <Heading level="2" size="medium" className={css.antallStillinger}>
                                     {formaterAntallAnnonser(antallTreff)}
                                 </Heading>
-                                <Søkefelter aggregeringer={globalAggregering?.felter.buckets} />
+                                <Søkefelter aggregeringer={globalAggregering?.felter?.buckets} />
                                 <Sorter />
                             </div>
-                            <Stillingsliste esRespons={respons} fnr={fnr} />
+                            <Stillingsliste esResponse={respons} kandidatnr={kandidatnr} />
                             <Paginering totaltAntallTreff={antallTreff} />
                         </>
                     ) : (

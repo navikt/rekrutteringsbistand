@@ -32,7 +32,7 @@ const Stilling = () => {
     const { uuid } = useParams<QueryParams>();
     const { isEditingAd, isSavingAd, isLoadingAd } = useSelector((state: State) => state.ad);
     const [searchParams, setSearchParams] = useSearchParams();
-    const fnrFraStillingssøk = searchParams.get('fnr');
+    const kandidatnrFraStillingssøk = searchParams.get('kandidat');
     const navigate = useNavigate();
     const stilling = useSelector((state: State) => state.adData);
     const [kandidatliste, setKandidatliste] = useHentKandidatliste(stilling?.uuid);
@@ -133,9 +133,9 @@ const Stilling = () => {
 
     return (
         <div className={css.stilling}>
-            {fnrFraStillingssøk && (
+            {kandidatnrFraStillingssøk && (
                 <KontekstAvKandidat
-                    fnr={fnrFraStillingssøk}
+                    kandidatnr={kandidatnrFraStillingssøk}
                     kandidatliste={kandidatliste}
                     setKandidatliste={setKandidatliste}
                     stilling={stilling}
@@ -166,7 +166,7 @@ const Stilling = () => {
                             </>
                         ) : (
                             <>
-                                {!fnrFraStillingssøk && (
+                                {!kandidatnrFraStillingssøk && (
                                     <PreviewHeader kandidatliste={kandidatliste} />
                                 )}
                                 <Stillingstittel

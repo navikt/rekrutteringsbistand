@@ -1,5 +1,5 @@
 import { Forslagsfelt } from '../../api/query/byggSuggestion';
-import { FilterParam } from '../../hooks/useRespons';
+import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier, { kombinerStringsTilSearchParam } from '../../hooks/useSøkekriterier';
 import FilterMedTypeahead from '../FilterMedTypeahead';
 import ForslagBasertPåYrke from './ForslagBasertPåYrke';

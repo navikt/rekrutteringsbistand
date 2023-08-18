@@ -1,12 +1,12 @@
-import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { CheckboxGroup, Pagination } from '@navikt/ds-react';
+import { Nettstatus } from 'felles/nettressurs';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
+import Sidelaster from '../../../../felles/komponenter/sidelaster/Sidelaster';
+import css from './VelgKandidatlister.module.css';
 import VelgbarKandidatliste from './VelgbarKandidatliste';
 import useMineKandidatlister, {
     lagreIMineKandidatlisterSidestørrelse,
 } from './useMineKandidatlister';
-import { Nettstatus } from 'felles/nettressurs';
-import Sidelaster from '../../../komponenter/sidelaster/Sidelaster';
-import css from './VelgKandidatlister.module.css';
 
 type Props = {
     markerteLister: Set<string>;

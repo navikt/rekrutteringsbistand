@@ -58,6 +58,8 @@ export const stillingskategoriTilVisningsnavn = (kategori: Stillingskategori) =>
             return 'Jobbmesse';
         case Stillingskategori.Formidling:
             return 'Formidling';
+        default:
+            return '';
     }
 };
 

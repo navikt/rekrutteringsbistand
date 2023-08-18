@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Klasse } from '../api/query/queryMedFørerkort';
-import { FilterParam } from '../hooks/useRespons';
+import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
 

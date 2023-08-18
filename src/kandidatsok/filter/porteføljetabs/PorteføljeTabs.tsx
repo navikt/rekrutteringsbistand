@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
 import { Tabs } from '@navikt/ds-react';
-import { FilterParam } from '../../hooks/useRespons';
+import { ReactNode } from 'react';
+import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
-import VelgKontorTab from './VelgKontorTab';
 import css from './PorteføljeTabs.module.css';
+import VelgKontorTab from './VelgKontorTab';
 
 export enum Portefølje {
     Alle = 'alle',

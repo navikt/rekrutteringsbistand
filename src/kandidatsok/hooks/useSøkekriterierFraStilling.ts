@@ -1,12 +1,12 @@
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { suggest } from '../api/api';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import byggSuggestion, { Forslagsfelt } from '../api/query/byggSuggestion';
 import { encodeGeografiforslag } from '../filter/jobbønsker/ØnsketSted';
 import { Geografiforslag } from './useGeografiSuggestions';
 import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
-import { FilterParam, OtherParam } from './useRespons';
+import { FilterParam, OtherParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 
 const useSøkekriterierFraStilling = (

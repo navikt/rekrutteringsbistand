@@ -3,9 +3,9 @@ import Stillingssøk from './Stillingssøk';
 import { StandardsøkProvider } from './standardsøk/StandardsøkContext';
 
 export const Component = () => {
-    const { fnr } = useParams();
+    const { kandidat } = useParams();
 
-    if (fnr) {
+    if (kandidat) {
         return <Stillingssøk />;
     } else {
         return (

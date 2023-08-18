@@ -1,11 +1,11 @@
-import { FunctionComponent } from 'react';
 import { PencilIcon, TrashIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button } from '@navikt/ds-react';
+import { FunctionComponent } from 'react';
 
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Sidelaster from '../../../../felles/komponenter/sidelaster/Sidelaster';
 import { Notat } from '../../domene/Kandidatressurser';
-import { Nettstatus, Nettressurs } from 'felles/nettressurs';
 import NotatInfo from './NotatInfo';
-import Sidelaster from '../../../komponenter/sidelaster/Sidelaster';
 import css from './Notatliste.module.css';
 
 interface Props {

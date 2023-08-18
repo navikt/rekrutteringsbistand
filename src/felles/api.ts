@@ -52,6 +52,38 @@ export const post = async <Returtype>(
             kind: Nettstatus.Feil,
             error: {
                 status: undefined,
+                message: 'Nettverksfeil: ' + e,
+            },
+        };
+    }
+};
+
+export const get = async <Returtype>(url: string): Promise<Nettressurs<Returtype>> => {
+    try {
+        const response = await fetch(url);
+
+        if (response.status === 200) {
+            return {
+                kind: Nettstatus.Suksess,
+                data: (await parseBody(response)) as Returtype,
+            };
+        } else if (response.status === 404) {
+            return {
+                kind: Nettstatus.FinnesIkke,
+            };
+        } else {
+            return {
+                kind: Nettstatus.Feil,
+                error: {
+                    status: response.status,
+                    message: response.statusText,
+                },
+            };
+        }
+    } catch (e) {
+        return {
+            kind: Nettstatus.Feil,
+            error: {
                 message: 'Nettverksfeil',
             },
         };
@@ -59,12 +91,15 @@ export const post = async <Returtype>(
 };
 
 const parseBody = async (response: Response) => {
-    switch (response.headers.get('Content-Type')) {
-        case 'application/json':
+    const contentType = response.headers.get('Content-Type');
+
+    if (contentType !== null) {
+        if (contentType.includes('application/json')) {
             return await response.json();
-        case 'application/text':
+        } else if (contentType.includes('application/text')) {
             return await response.text();
-        default:
-            return null;
+        }
     }
+
+    return null;
 };

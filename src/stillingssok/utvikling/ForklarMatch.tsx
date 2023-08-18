@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
-import { Accordion, Heading } from '@navikt/ds-react';
 import { ArrowLeftIcon } from '@navikt/aksel-icons';
+import { Accordion, Heading } from '@navikt/ds-react';
+import { Hit } from 'felles/domene/elastic/ElasticSearch';
+import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
+import { useEffect, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { søk } from '../api/api';
 import { lagIndreQuery } from '../api/queries/queries';
 import { hentSøkekriterier } from '../utils/urlUtils';
-import { søk } from '../api/api';
-import { Hit } from '../domene/elasticSearchTyper';
 import css from './Utviklingsapp.module.css';
 
 const ForklarMatch = () => {
@@ -13,7 +14,7 @@ const ForklarMatch = () => {
     const [searchParams] = useSearchParams();
     const søkekriterier = hentSøkekriterier(searchParams);
 
-    const [stilling, setStilling] = useState<Hit>();
+    const [stilling, setStilling] = useState<Hit<EsRekrutteringsbistandstilling>>();
 
     useEffect(() => {
         const hentForklaringMedStillingsId = async (stillingsId: string) => {

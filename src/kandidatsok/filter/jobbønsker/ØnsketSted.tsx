@@ -1,9 +1,9 @@
+import { Nettstatus } from 'felles/nettressurs';
 import React, { useState } from 'react';
-import { FilterParam } from '../../hooks/useRespons';
+import useGeografiSuggestions, { Geografiforslag } from '../../hooks/useGeografiSuggestions';
+import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import { Typeahead } from '../typeahead/Typeahead';
-import useGeografiSuggestions, { Geografiforslag } from '../../hooks/useGeografiSuggestions';
-import { Nettstatus } from 'felles/nettressurs';
 
 export const GEOGRAFI_SEPARATOR = '.';
 

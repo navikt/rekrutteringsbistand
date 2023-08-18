@@ -1,17 +1,17 @@
-import { FunctionComponent, useEffect, useState } from 'react';
 import { BodyLong, Button, Heading } from '@navikt/ds-react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { postKandidatTilKandidatliste } from '../../api/api';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
+import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
+import { postKandidatTilKandidatliste } from '../../api/api';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
 import Modal from '../../komponenter/modal/Modal';
-import Sidelaster from '../../komponenter/sidelaster/Sidelaster';
+import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import css from './LagreKandidatIKandidatlisteModal.module.css';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     vis: boolean;
