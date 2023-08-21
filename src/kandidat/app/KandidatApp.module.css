@@ -1,6 +1,6 @@
 .app {
     height: 100%;
-    background-color: var(--a-bg-default);
+    background-color: var(--a-bg-subtle);
     position: relative;
 }
 
