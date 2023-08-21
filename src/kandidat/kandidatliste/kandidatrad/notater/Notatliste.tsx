@@ -1,5 +1,4 @@
-import { PencilIcon, TrashIcon } from '@navikt/aksel-icons';
-import { BodyLong, Button } from '@navikt/ds-react';
+import { BodyLong } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
@@ -30,7 +29,7 @@ const Notatliste: FunctionComponent<Props> = ({
                     <div className={css.rad} key={notat.notatId}>
                         <div className={css.topprad}>
                             <NotatInfo notat={notat} />
-                            {notat.kanEditere && (
+                            {/* {notat.kanEditere && (
                                 <div className={css.knapper}>
                                     <Button
                                         variant="tertiary"
@@ -47,7 +46,7 @@ const Notatliste: FunctionComponent<Props> = ({
                                         icon={<TrashIcon aria-label="Slett notat" />}
                                     />
                                 </div>
-                            )}
+                            )} */}
                         </div>
                         <BodyLong>{notat.tekst}</BodyLong>
                     </div>
