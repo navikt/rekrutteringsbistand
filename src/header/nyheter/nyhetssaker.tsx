@@ -5,6 +5,16 @@ const tilDato = (dag: number, måned: number, år: number, timer: number = 0, mi
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(21, 8, 2023),
+        tittel: 'Endre og slette notater',
+        innhold: (
+            <p>
+                Vi har deaktivert muligheten for å endre og slette notater i kandidatlistene. Denne
+                endringen er midlertidig, og mer informasjon kommer fortløpende.
+            </p>
+        ),
+    },
+    {
         dato: tilDato(14, 6, 2023),
         tittel: 'Aktive filtre i toppen av stillingssøket',
         innhold: (
