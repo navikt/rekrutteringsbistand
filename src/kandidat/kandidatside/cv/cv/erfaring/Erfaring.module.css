@@ -1,0 +1,12 @@
+.erfaring {
+    display: flex;
+    flex-direction: column;
+}
+
+.overskrift {
+    font-size: 1rem;
+}
+
+.beskrivelse {
+    color: var(--a-text-subtle);
+}

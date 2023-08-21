@@ -1,46 +1,91 @@
-import { formaterDatoTilMånedOgÅr } from '../../../utils/dateUtils';
+import { BodyShort } from '@navikt/ds-react';
+import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
+import Detaljer from './detaljer/Detaljer';
+import css from './Cv.module.css';
 
 type Props = {
     fradato?: string | null;
     tildato?: string | null;
-    navarende?: boolean;
+    nåværende?: boolean;
 };
 
-const Tidsperiode = ({ fradato, tildato, navarende }: Props) => {
-    const fradatoFormatted = formaterDatoHvisIkkeNull(fradato);
-    const tildatoFormatted = formaterDatoHvisIkkeNull(tildato);
+const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
+    const fraDatoFormatert = formaterDatoHvisIkkeNull(fradato);
+    const tilDatoFormatert = formaterDatoHvisIkkeNull(tildato);
 
-    if (fradatoFormatted && tildatoFormatted) {
+    if (fraDatoFormatert && tilDatoFormatert) {
         return (
-            <span>
-                {fradatoFormatted} – {tildatoFormatted}
-                {navarende && ' (Nåværende)'}
-            </span>
+            <Detaljer>
+                <BodyShort size="small" spacing className={css.tekst}>
+                    {fraDatoFormatert} – {tilDatoFormatert}
+                    {nåværende && ' nå'}
+                </BodyShort>
+                <BodyShort size="small" spacing className={css.tekst}>
+                    {diffMellomToDatoer(fradato, tildato)}
+                </BodyShort>
+            </Detaljer>
         );
-    } else if (fradatoFormatted) {
+    } else if (fraDatoFormatert) {
         return (
-            <span>
-                {fradatoFormatted}
-                {navarende && ' – (Nåværende)'}
-            </span>
+            <Detaljer>
+                <BodyShort size="small" spacing className={css.tekst}>
+                    {fraDatoFormatert}
+                    {nåværende && ' – nå'}
+                </BodyShort>
+                <BodyShort size="small" spacing className={css.tekst}>
+                    {diffMellomToDatoer(fradato, new Date().toString())}
+                </BodyShort>
+            </Detaljer>
         );
-    } else if (tildatoFormatted) {
+    } else if (tilDatoFormatert) {
         return (
-            <span>
-                {tildatoFormatted}
-                {navarende && ' (Nåværende)'}
-            </span>
+            <Detaljer>
+                <BodyShort size="small" spacing className={css.tekst}>
+                    {tilDatoFormatert}
+                    {nåværende && ' nå'}
+                </BodyShort>
+                <BodyShort size="small" spacing className={css.tekst}>
+                    {diffMellomToDatoer(tildato, tildato)}
+                </BodyShort>
+            </Detaljer>
         );
     }
-    return <span>{navarende && 'Nåværende'}</span>;
+
+    return (
+        <Detaljer>
+            <BodyShort size="small" spacing className={css.tekst}>
+                {nåværende && ' nåværende'}
+            </BodyShort>
+        </Detaljer>
+    );
 };
 
-const formaterDatoHvisIkkeNull = (dato?: string | null) => {
-    if (!dato) {
-        return null;
+const diffMellomToDatoer = (fraDato: string, tilDato: string): string => {
+    const startDato = new Date(fraDato);
+    const sluttDato = new Date(tilDato);
+    const månedDiff =
+        sluttDato.getMonth() -
+        startDato.getMonth() +
+        12 * (sluttDato.getFullYear() - startDato.getFullYear());
+
+    if (månedDiff === 0) {
+        return '1 måned';
     }
 
-    return formaterDatoTilMånedOgÅr(dato);
+    const antallÅr = (månedDiff / 12) | 0;
+    const antallMåneder = (månedDiff % 12) + 1;
+
+    if (antallÅr === 0 && antallMåneder < 12) {
+        return antallMåneder + ' måneder';
+    } else if (antallMåneder === 12) {
+        return antallÅr + 1 + ' år';
+    } else if (antallÅr > 0 && antallMåneder > 1) {
+        return antallÅr + ' år, ' + antallMåneder + ' måneder';
+    } else if (antallÅr > 0 && antallMåneder === 1) {
+        return antallÅr + ' år';
+    }
+
+    return '';
 };
 
 export default Tidsperiode;

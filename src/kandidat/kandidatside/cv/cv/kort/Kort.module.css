@@ -1,0 +1,25 @@
+.kort {
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--a-border-divider);
+    background: var(--a-bg-default);
+}
+
+.overskrift {
+    margin-bottom: 1.5rem;
+}
+
+.overskriftMedIkon {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.ikonRamme {
+    display: flex;
+    padding: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: var(--a-purple-100);
+}

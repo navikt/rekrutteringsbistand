@@ -1,0 +1,23 @@
+.jobbønsker {
+    font-weight: var(--a-font-weight-bold);
+    margin-bottom: 1rem;
+}
+
+.bunn {
+    color: var(--a-text-subtle);
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+}
+
+.bunn svg {
+    font-size: 1.5rem;
+}
+
+.bunn li {
+    font-weight: var(--a-font-weight-bold);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

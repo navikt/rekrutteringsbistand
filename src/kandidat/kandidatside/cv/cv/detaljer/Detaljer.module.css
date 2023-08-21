@@ -1,0 +1,11 @@
+.detaljer {
+    display: flex;
+    align-items: center;
+}
+
+.detaljer > *:not(:last-child)::after {
+    content: '·';
+    font-size: 2rem;
+    color: var(--a-gray-300);
+    padding: 0 0.5rem;
+}
