@@ -1,13 +1,13 @@
-import css from './Erfaring.module.css';
 import { BodyLong, Heading } from '@navikt/ds-react';
 import { ReactNode } from 'react';
+import css from './Erfaring.module.css';
 
 type Props = {
     overskrift?: string;
     beskrivelse?: string | ReactNode;
-    tidsperiode?: ReactNode;
+    detaljer?: ReactNode;
 };
-const Erfaring = ({ overskrift, beskrivelse, tidsperiode }: Props) => {
+const Erfaring = ({ overskrift, beskrivelse, detaljer }: Props) => {
     return (
         <div>
             {overskrift && (
@@ -15,7 +15,7 @@ const Erfaring = ({ overskrift, beskrivelse, tidsperiode }: Props) => {
                     {overskrift}
                 </Heading>
             )}
-            {tidsperiode}
+            {detaljer}
             {beskrivelse && (
                 <BodyLong size="small" className={css.beskrivelse}>
                     {beskrivelse}

@@ -1,13 +1,13 @@
 import { ClipboardIcon } from '@navikt/aksel-icons';
-import css from './Cv.module.css';
+import { BodyShort } from '@navikt/ds-react';
 import { Kurs as Kurstype, Omfang, Omfangenhet } from 'felles/domene/kandidat/Cv';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
+import css from './Cv.module.css';
+import Detaljer from './detaljer/Detaljer';
+import Erfaring from './erfaring/Erfaring';
 import Kort from './kort/Kort';
 import sortByDato from './sortByDato';
-import Erfaring from './erfaring/Erfaring';
-import { BodyShort } from '@navikt/ds-react';
-import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
-import Detaljer from './detaljer/Detaljer';
 
 type Props = {
     cv: KandidatCv;
@@ -21,7 +21,7 @@ const Kurs = ({ cv }: Props) => {
                     <Erfaring
                         key={`${kurs.tittel}-${kurs.fraDato}`}
                         overskrift={kurs.tittel}
-                        tidsperiode={<TidsperiodeKurs kurs={kurs} />}
+                        detaljer={<TidsperiodeKurs kurs={kurs} />}
                     />
                 ))}
             </div>

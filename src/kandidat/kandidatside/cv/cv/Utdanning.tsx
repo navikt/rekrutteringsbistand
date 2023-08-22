@@ -1,10 +1,10 @@
-import Kort from './kort/Kort';
 import { CheckmarkCircleIcon } from '@navikt/aksel-icons';
-import css from './Cv.module.css';
-import sortByDato from './sortByDato';
-import Erfaring from './erfaring/Erfaring';
-import Tidsperiode from './Tidsperiode';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import css from './Cv.module.css';
+import Erfaring from './erfaring/Erfaring';
+import Erfaringsdetaljer from './erfaring/Erfaringsdetaljer';
+import Kort from './kort/Kort';
+import sortByDato from './sortByDato';
 
 type Props = {
     cv: KandidatCv;
@@ -27,11 +27,12 @@ const Utdanning = ({ cv }: Props) => {
                                           : '')
                             }
                             beskrivelse={utdanning.beskrivelse}
-                            tidsperiode={
-                                <Tidsperiode
+                            detaljer={
+                                <Erfaringsdetaljer
                                     fradato={utdanning.fraDato}
                                     tildato={utdanning.tilDato}
                                     nåværende={!utdanning.tilDato}
+                                    sted={utdanning.utdannelsessted}
                                 />
                             }
                         />

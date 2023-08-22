@@ -1,12 +1,12 @@
 import { SealCheckmarkIcon } from '@navikt/aksel-icons';
+import { BodyShort } from '@navikt/ds-react';
+import { Godkjenning, Sertifikat } from 'felles/domene/kandidat/Cv';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
+import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
 import Kort from './kort/Kort';
-import css from './Cv.module.css';
-import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import sortByDato from './sortByDato';
-import { BodyShort } from '@navikt/ds-react';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
-import { Godkjenning, Sertifikat } from 'felles/domene/kandidat/Cv';
 
 type Props = {
     cv: KandidatCv;
@@ -22,7 +22,7 @@ const Godkjenninger = ({ cv }: Props) => {
                             <Erfaring
                                 key={`${godkjenning.konseptId}-${godkjenning.gjennomfoert}`}
                                 overskrift={godkjenning.tittel}
-                                tidsperiode={<TidsperiodeGodkjenning godkjenning={godkjenning} />}
+                                detaljer={<TidsperiodeGodkjenning godkjenning={godkjenning} />}
                             />
                         );
                     })}
@@ -39,7 +39,7 @@ const Godkjenninger = ({ cv }: Props) => {
                                         ? sertifikat.alternativtNavn
                                         : sertifikat.sertifikatKodeNavn
                                 }
-                                tidsperiode={<TidsperiodeSertifikat sertifikat={sertifikat} />}
+                                detaljer={<TidsperiodeSertifikat sertifikat={sertifikat} />}
                             />
                         );
                     })}

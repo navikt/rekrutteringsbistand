@@ -1,12 +1,12 @@
 import { CarIcon } from '@navikt/aksel-icons';
-import Kort from './kort/Kort';
-import css from './Cv.module.css';
-import sortByDato from './sortByDato';
-import Erfaring from './erfaring/Erfaring';
 import { BodyShort } from '@navikt/ds-react';
-import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { Sertifikat } from 'felles/domene/kandidat/Cv';
+import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
+import css from './Cv.module.css';
+import Erfaring from './erfaring/Erfaring';
+import Kort from './kort/Kort';
+import sortByDato from './sortByDato';
 
 type Props = {
     cv: KandidatCv;
@@ -25,7 +25,7 @@ const Førerkort = ({ cv }: Props) => {
                                 : førerkort.sertifikatKodeNavn
                         }
                         beskrivelse={førerkort.sertifikatKode}
-                        tidsperiode={<FørerkortTidsperiode førerkort={førerkort} />}
+                        detaljer={<FørerkortTidsperiode førerkort={førerkort} />}
                     />
                 ))}
             </div>
