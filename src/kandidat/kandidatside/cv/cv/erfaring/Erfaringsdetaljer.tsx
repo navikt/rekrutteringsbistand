@@ -1,21 +1,24 @@
 import { BodyShort } from '@navikt/ds-react';
-import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
-import Detaljer from './detaljer/Detaljer';
-import css from './Cv.module.css';
+import { formaterDatoHvisIkkeNull } from '../../../../utils/dateUtils';
+import css from '../Cv.module.css';
+import Detaljer from '../detaljer/Detaljer';
 
 type Props = {
     fradato?: string | null;
     tildato?: string | null;
     nåværende?: boolean;
+    sted?: string;
 };
 
-const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
+const Erfaringsdetaljer = ({ fradato, tildato, nåværende, sted }: Props) => {
     const fraDatoFormatert = formaterDatoHvisIkkeNull(fradato);
     const tilDatoFormatert = formaterDatoHvisIkkeNull(tildato);
 
+    let tidsperiode = null;
+
     if (fraDatoFormatert && tilDatoFormatert) {
-        return (
-            <Detaljer>
+        tidsperiode = (
+            <>
                 <BodyShort size="small" spacing className={css.tekst}>
                     {fraDatoFormatert} – {tilDatoFormatert}
                     {nåværende && ' nå'}
@@ -23,11 +26,11 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                 <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(fradato, tildato)}
                 </BodyShort>
-            </Detaljer>
+            </>
         );
     } else if (fraDatoFormatert) {
-        return (
-            <Detaljer>
+        tidsperiode = (
+            <>
                 <BodyShort size="small" spacing className={css.tekst}>
                     {fraDatoFormatert}
                     {nåværende && ' – nå'}
@@ -35,11 +38,11 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                 <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(fradato, new Date().toString())}
                 </BodyShort>
-            </Detaljer>
+            </>
         );
     } else if (tilDatoFormatert) {
-        return (
-            <Detaljer>
+        tidsperiode = (
+            <>
                 <BodyShort size="small" spacing className={css.tekst}>
                     {tilDatoFormatert}
                     {nåværende && ' nå'}
@@ -47,15 +50,24 @@ const Tidsperiode = ({ fradato, tildato, nåværende }: Props) => {
                 <BodyShort size="small" spacing className={css.tekst}>
                     {diffMellomToDatoer(tildato, tildato)}
                 </BodyShort>
-            </Detaljer>
+            </>
+        );
+    } else {
+        tidsperiode = (
+            <BodyShort size="small" spacing className={css.tekst}>
+                {nåværende && ' nåværende'}
+            </BodyShort>
         );
     }
 
     return (
         <Detaljer>
-            <BodyShort size="small" spacing className={css.tekst}>
-                {nåværende && ' nåværende'}
-            </BodyShort>
+            {sted && (
+                <BodyShort size="small" spacing className={css.tekst}>
+                    {sted}
+                </BodyShort>
+            )}
+            {tidsperiode}
         </Detaljer>
     );
 };
@@ -88,4 +100,4 @@ const diffMellomToDatoer = (fraDato: string, tilDato: string): string => {
     return '';
 };
 
-export default Tidsperiode;
+export default Erfaringsdetaljer;
