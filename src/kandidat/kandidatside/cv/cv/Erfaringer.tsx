@@ -60,7 +60,7 @@ const Erfaringer = ({ cv }: Props) => {
 
 const hentSted = (erfaring: Yrkeserfaring) => {
     if (erfaring.arbeidsgiver && erfaring.sted) {
-        return `${erfaring.arbeidsgiver} | ${erfaring.sted}`;
+        return `${erfaring.arbeidsgiver}, ${erfaring.sted}`;
     } else if (erfaring.arbeidsgiver) {
         return erfaring.arbeidsgiver;
     } else if (erfaring.sted) {

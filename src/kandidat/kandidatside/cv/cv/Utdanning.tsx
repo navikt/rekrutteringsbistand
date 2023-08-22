@@ -2,7 +2,7 @@ import { CheckmarkCircleIcon } from '@navikt/aksel-icons';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
-import Detaljer from './erfaring/Erfaringsdetaljer';
+import Erfaringsdetaljer from './erfaring/Erfaringsdetaljer';
 import Kort from './kort/Kort';
 import sortByDato from './sortByDato';
 
@@ -28,7 +28,7 @@ const Utdanning = ({ cv }: Props) => {
                             }
                             beskrivelse={utdanning.beskrivelse}
                             detaljer={
-                                <Detaljer
+                                <Erfaringsdetaljer
                                     fradato={utdanning.fraDato}
                                     tildato={utdanning.tilDato}
                                     nåværende={!utdanning.tilDato}
