@@ -79,9 +79,9 @@ const EndreArbeidsgiver = ({ stilling }: Props) => {
                 label={
                     <Skjemalabel
                         inputId="endre-stilling-navnet-bedriften-bruker"
-                        beskrivelse="Navnet bedriften bruker"
+                        beskrivelse="Navnet som vises i stillingsannonsen"
                     >
-                        Navn på bedrift
+                        Visningsnavn for bedriften
                     </Skjemalabel>
                 }
                 aria-describedby="endre-stilling-navnet-bedriften-bruker-beskrivelse"
