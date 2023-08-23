@@ -145,7 +145,7 @@ const Kandidatbanner = ({
                                             {veileder.navn} ({veileder.ident})
                                         </a>
                                     ) : (
-                                        kandidat.data.veileder
+                                        kandidat.data.veileder ?? '-'
                                     )}
                                 </BodyShort>
                             </div>
