@@ -30,7 +30,7 @@ const Jobbønsker = ({ cv }: Props) => {
                         elementer={cv.yrkeJobbonsker.map((j) => j.styrkBeskrivelse)}
                     />
                 ) : (
-                    'Ikke oppgitt'
+                    'Ingen oppgitte jobbønsker'
                 )}
             </BodyShort>
             <ul className={css.bunn}>
