@@ -5,9 +5,9 @@ import Kort from '../kort/Kort';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 
 const oppstartskoder = {
-    LEDIG_NAA: { key: 'LEDIG_NAA', label: 'Nå' },
-    ETTER_TRE_MND: { key: 'ETTER_TRE_MND', label: '3 måneders oppsigelse' },
-    ETTER_AVTALE: { key: 'ETTER_AVTALE', label: 'Etter avtale' },
+    LEDIG_NAA: { key: 'LEDIG_NAA', label: 'Ledig nå' },
+    ETTER_TRE_MND: { key: 'ETTER_TRE_MND', label: '3 måneders oppsigelsestid' },
+    ETTER_AVTALE: { key: 'ETTER_AVTALE', label: 'Oppstart etter avtale' },
 };
 
 type Props = {
