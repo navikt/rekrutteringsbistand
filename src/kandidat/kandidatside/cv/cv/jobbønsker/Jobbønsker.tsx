@@ -34,60 +34,45 @@ const Jobbønsker = ({ cv }: Props) => {
                 )}
             </BodyShort>
             <ul className={css.bunn}>
-                <Jobbønskeinformasjon
-                    label="Sted"
-                    ikon={<PinIcon aria-hidden />}
-                    children={
-                        cv.geografiJobbonsker?.length > 0 ? (
-                            <MangeTekstelementerSeparertMedMellomrom
-                                elementer={cv.geografiJobbonsker.map((u) => u.geografiKodeTekst)}
-                            />
-                        ) : (
-                            '-'
-                        )
-                    }
-                />
+                <Jobbønskeinformasjon label="Sted" ikon={<PinIcon aria-hidden />}>
+                    {cv.geografiJobbonsker?.length > 0 ? (
+                        <MangeTekstelementerSeparertMedMellomrom
+                            elementer={cv.geografiJobbonsker.map((u) => u.geografiKodeTekst)}
+                        />
+                    ) : (
+                        '-'
+                    )}
+                </Jobbønskeinformasjon>
                 <Jobbønskeinformasjon
                     label="Heltid/Deltid"
                     ikon={<BriefcaseClockIcon aria-hidden />}
-                    children={
-                        cv.omfangJobbprofil?.length > 0 ? (
-                            <MangeTekstelementerSeparertMedOg
-                                elementer={cv.omfangJobbprofil.map((u) => u.heltidDeltidKodeTekst)}
-                            />
-                        ) : (
-                            '-'
-                        )
-                    }
-                />
-                <Jobbønskeinformasjon
-                    label="Arbeidstid"
-                    ikon={<ClockIcon aria-hidden />}
-                    children={
-                        cv.arbeidstidJobbprofil?.length > 0 ? (
-                            <MangeTekstelementerSeparertMedOg
-                                elementer={cv.arbeidstidJobbprofil.map(
-                                    (u) => u.arbeidstidKodeTekst
-                                )}
-                            />
-                        ) : (
-                            '-'
-                        )
-                    }
-                />
-                <Jobbønskeinformasjon
-                    label="Kan starte"
-                    ikon={<TimerStartIcon aria-hidden />}
-                    children={
-                        cv.oppstartKode ? (
-                            <MangeTekstelementerSeparertMedKomma
-                                elementer={[oppstartskoder[cv.oppstartKode]?.label]}
-                            />
-                        ) : (
-                            '-'
-                        )
-                    }
-                />
+                >
+                    {cv.omfangJobbprofil?.length > 0 ? (
+                        <MangeTekstelementerSeparertMedOg
+                            elementer={cv.omfangJobbprofil.map((u) => u.heltidDeltidKodeTekst)}
+                        />
+                    ) : (
+                        '-'
+                    )}
+                </Jobbønskeinformasjon>
+                <Jobbønskeinformasjon label="Arbeidstid" ikon={<ClockIcon aria-hidden />}>
+                    {cv.arbeidstidJobbprofil?.length > 0 ? (
+                        <MangeTekstelementerSeparertMedOg
+                            elementer={cv.arbeidstidJobbprofil.map((u) => u.arbeidstidKodeTekst)}
+                        />
+                    ) : (
+                        '-'
+                    )}
+                </Jobbønskeinformasjon>
+                <Jobbønskeinformasjon label="Kan starte" ikon={<TimerStartIcon aria-hidden />}>
+                    {cv.oppstartKode ? (
+                        <MangeTekstelementerSeparertMedKomma
+                            elementer={[oppstartskoder[cv.oppstartKode]?.label]}
+                        />
+                    ) : (
+                        '-'
+                    )}
+                </Jobbønskeinformasjon>
             </ul>
         </Kort>
     );
