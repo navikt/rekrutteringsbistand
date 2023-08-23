@@ -1,6 +1,9 @@
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { Brødsmule } from 'felles/komponenter/kandidatbanner/Brødsmulesti';
-import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
+import Kandidatbanner, {
+    Veileder,
+    formaterNavn,
+} from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
@@ -14,7 +17,7 @@ type Props = {
     brødsmulesti: Brødsmule[];
 };
 
-const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
+const Kandidatheader = ({ cv, kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
 
     const kandidat = useKandidat(kandidatnr);
@@ -29,10 +32,20 @@ const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props
               ]
             : brødsmulesti;
 
+    const kandidatensVeileder: Veileder =
+        cv.kind === Nettstatus.Suksess && kandidat.kind === Nettstatus.Suksess
+            ? {
+                  navn: cv.data.veilederNavn,
+                  epost: cv.data.veilederEpost,
+                  ident: kandidat.data.veileder,
+              }
+            : undefined;
+
     return (
         <>
             <Kandidatbanner
                 kandidat={kandidat}
+                veileder={kandidatensVeileder}
                 brødsmulesti={brødsmulestiMedNavn}
                 øverstTilHøyre={
                     kandidatnavigering && (

@@ -5,7 +5,7 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
-import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
+import { BodyShort, CopyButton, Heading, Skeleton } from '@navikt/ds-react';
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
@@ -15,14 +15,27 @@ import Grunnbanner from '../grunnbanner/Grunnbanner';
 import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
 import css from './Kandidatbanner.module.css';
 
+export type Veileder = {
+    navn: string;
+    epost: string;
+    ident: string;
+};
+
 type Props = {
     kandidat: Nettressurs<KandidatTilBanner>;
+    veileder?: Veileder;
     brødsmulesti?: Brødsmule[];
     øverstTilHøyre?: ReactNode;
     nederstTilHøyre?: ReactNode;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilHøyre }: Props) => {
+const Kandidatbanner = ({
+    kandidat,
+    veileder,
+    brødsmulesti,
+    nederstTilHøyre,
+    øverstTilHøyre,
+}: Props) => {
     return (
         <Grunnbanner ikon={<Piktogram />}>
             <div className={css.innhold}>
@@ -90,33 +103,61 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilH
 
                         {kandidat.kind === Nettstatus.Suksess && (
                             <div className={css.personalia}>
-                                <BodyShort>
-                                    <CandleIcon />
+                                <BodyShort aria-label="Fødselsdato">
+                                    <CandleIcon title="Fødselsdato" aria-hidden />
                                     {lagFødselsdagtekst(kandidat.data.fodselsdato)} (
                                     {kandidat.data.fodselsnummer})
                                 </BodyShort>
 
-                                <BodyShort>
-                                    <PinIcon />
+                                <BodyShort aria-label="Adresse">
+                                    <PinIcon title="Adresse" aria-hidden />
                                     {hentAdresse(kandidat.data) ?? '-'}
                                 </BodyShort>
 
-                                <BodyShort>
-                                    <EnvelopeClosedIcon />
-                                    {kandidat.data.epostadresse?.toLowerCase() ?? '-'}
+                                <BodyShort aria-label="E-post">
+                                    <EnvelopeClosedIcon title="E-post" aria-hidden />
+                                    {kandidat.data.epostadresse ?? '-'}
+                                    {kandidat.data.epostadresse && (
+                                        <CopyButton
+                                            size="small"
+                                            title="Kopier e-postadresse"
+                                            className={css.kopieringsknapp}
+                                            copyText={kandidat.data.epostadresse}
+                                        />
+                                    )}
                                 </BodyShort>
 
-                                <BodyShort>
-                                    <PhoneIcon />
+                                <BodyShort aria-label="Telefon">
+                                    <PhoneIcon title="Telefon" aria-hidden />
                                     {kandidat.data.telefon ?? '-'}
                                 </BodyShort>
 
-                                <BodyShort>
-                                    <PersonIcon />
-                                    {kandidat.data.veileder
-                                        ? `${kandidat.data.veileder.toUpperCase()} (Veileder)`
-                                        : '-'}
-                                </BodyShort>
+                                {veileder ? (
+                                    <BodyShort aria-label="Veileder">
+                                        <PersonIcon title="Veileder" aria-hidden />
+                                        {veileder.ident ? (
+                                            <>
+                                                <span>
+                                                    Veileder: {veileder.navn} ({veileder.ident}){' '}
+                                                    {veileder.epost}
+                                                </span>
+                                                <CopyButton
+                                                    size="small"
+                                                    title="Kopier e-postadresse"
+                                                    className={css.kopieringsknapp}
+                                                    copyText={veileder.epost}
+                                                />
+                                            </>
+                                        ) : (
+                                            <span>-</span>
+                                        )}
+                                    </BodyShort>
+                                ) : (
+                                    <BodyShort aria-label="Veileder">
+                                        <PersonIcon title="Veileder" aria-hidden />
+                                        {kandidat.data.veileder ?? '-'}
+                                    </BodyShort>
+                                )}
                             </div>
                         )}
 
