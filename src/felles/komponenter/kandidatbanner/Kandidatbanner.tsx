@@ -15,14 +15,27 @@ import Grunnbanner from '../grunnbanner/Grunnbanner';
 import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
 import css from './Kandidatbanner.module.css';
 
+export type Veileder = {
+    navn: string;
+    epost: string;
+    ident: string;
+};
+
 type Props = {
     kandidat: Nettressurs<KandidatTilBanner>;
+    veileder?: Veileder;
     brødsmulesti?: Brødsmule[];
     øverstTilHøyre?: ReactNode;
     nederstTilHøyre?: ReactNode;
 };
 
-const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilHøyre }: Props) => {
+const Kandidatbanner = ({
+    kandidat,
+    veileder,
+    brødsmulesti,
+    nederstTilHøyre,
+    øverstTilHøyre,
+}: Props) => {
     return (
         <Grunnbanner ikon={<Piktogram />}>
             <div className={css.innhold}>
@@ -90,32 +103,50 @@ const Kandidatbanner = ({ kandidat, brødsmulesti, nederstTilHøyre, øverstTilH
 
                         {kandidat.kind === Nettstatus.Suksess && (
                             <div className={css.personalia}>
-                                <BodyShort>
-                                    <CandleIcon />
+                                <BodyShort aria-label="Fødselsdato">
+                                    <CandleIcon title="Fødselsdato" aria-hidden />
                                     {lagFødselsdagtekst(kandidat.data.fodselsdato)} (
                                     {kandidat.data.fodselsnummer})
                                 </BodyShort>
 
-                                <BodyShort>
-                                    <PinIcon />
+                                <BodyShort aria-label="Adresse">
+                                    <PinIcon title="Adresse" aria-hidden />
                                     {hentAdresse(kandidat.data) ?? '-'}
                                 </BodyShort>
 
-                                <BodyShort>
-                                    <EnvelopeClosedIcon />
-                                    {kandidat.data.epostadresse?.toLowerCase() ?? '-'}
+                                <BodyShort aria-label="E-post">
+                                    <EnvelopeClosedIcon title="E-post" aria-hidden />
+                                    {kandidat.data.epostadresse ? (
+                                        <a
+                                            title="Send e-post"
+                                            className={css.epostlenke}
+                                            href={`mailto:${kandidat.data.epostadresse}`}
+                                        >
+                                            {kandidat.data.epostadresse}
+                                        </a>
+                                    ) : (
+                                        <span>-</span>
+                                    )}
                                 </BodyShort>
 
-                                <BodyShort>
-                                    <PhoneIcon />
+                                <BodyShort aria-label="Telefon">
+                                    <PhoneIcon title="Telefon" aria-hidden />
                                     {kandidat.data.telefon ?? '-'}
                                 </BodyShort>
 
-                                <BodyShort>
-                                    <PersonIcon />
-                                    {kandidat.data.veileder
-                                        ? `${kandidat.data.veileder.toUpperCase()} (Veileder)`
-                                        : '-'}
+                                <BodyShort aria-label="Veileder">
+                                    <PersonIcon title="Veileder" aria-hidden />
+                                    {veileder ? (
+                                        <a
+                                            title="Send e-post"
+                                            className={css.epostlenke}
+                                            href={`mailto:${veileder.epost}`}
+                                        >
+                                            {veileder.navn} ({veileder.ident})
+                                        </a>
+                                    ) : (
+                                        kandidat.data.veileder
+                                    )}
                                 </BodyShort>
                             </div>
                         )}

@@ -43,6 +43,11 @@
     gap: 1.5rem;
 }
 
+.epostlenke {
+    color: var(--a-text-default);
+    text-decoration-color: var(--a-border-subtle);
+}
+
 @media (max-width: 1280px) {
     .nederstTilHøyre {
         margin-top: 1rem;
