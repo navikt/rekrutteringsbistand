@@ -30,7 +30,7 @@ const Jobbønsker = ({ cv }: Props) => {
                         elementer={cv.yrkeJobbonsker.map((j) => j.styrkBeskrivelse)}
                     />
                 ) : (
-                    '-'
+                    'Ikke oppgitt'
                 )}
             </BodyShort>
             <ul className={css.bunn}>
@@ -40,7 +40,7 @@ const Jobbønsker = ({ cv }: Props) => {
                             elementer={cv.geografiJobbonsker.map((u) => u.geografiKodeTekst)}
                         />
                     ) : (
-                        '-'
+                        'Ikke oppgitt'
                     )}
                 </Jobbønskeinformasjon>
                 <Jobbønskeinformasjon
@@ -52,7 +52,7 @@ const Jobbønsker = ({ cv }: Props) => {
                             elementer={cv.omfangJobbprofil.map((u) => u.heltidDeltidKodeTekst)}
                         />
                     ) : (
-                        '-'
+                        'Ikke oppgitt'
                     )}
                 </Jobbønskeinformasjon>
                 <Jobbønskeinformasjon label="Arbeidstid" ikon={<ClockIcon aria-hidden />}>
@@ -61,7 +61,7 @@ const Jobbønsker = ({ cv }: Props) => {
                             elementer={cv.arbeidstidJobbprofil.map((u) => u.arbeidstidKodeTekst)}
                         />
                     ) : (
-                        '-'
+                        'Ikke oppgitt'
                     )}
                 </Jobbønskeinformasjon>
                 <Jobbønskeinformasjon label="Kan starte" ikon={<TimerStartIcon aria-hidden />}>
@@ -70,7 +70,7 @@ const Jobbønsker = ({ cv }: Props) => {
                             elementer={[oppstartskoder[cv.oppstartKode]?.label]}
                         />
                     ) : (
-                        '-'
+                        'Ikke oppgitt'
                     )}
                 </Jobbønskeinformasjon>
             </ul>
