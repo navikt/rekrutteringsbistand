@@ -102,7 +102,7 @@ const Jobbønskeinformasjon = ({
     ikon: ReactNode;
     children: ReactNode;
 }) => (
-    <BodyShort as="li" size="small" aria-label={label}>
+    <BodyShort as="li" size="small">
         {ikon}
         <div>
             <BodyShort size="small">{label}</BodyShort>
