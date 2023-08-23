@@ -5,7 +5,7 @@ import {
     PhoneIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
-import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
+import { BodyShort, CopyButton, Heading, Skeleton } from '@navikt/ds-react';
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
@@ -116,16 +116,14 @@ const Kandidatbanner = ({
 
                                 <BodyShort aria-label="E-post">
                                     <EnvelopeClosedIcon title="E-post" aria-hidden />
-                                    {kandidat.data.epostadresse ? (
-                                        <a
-                                            title="Send e-post"
-                                            className={css.epostlenke}
-                                            href={`mailto:${kandidat.data.epostadresse}`}
-                                        >
-                                            {kandidat.data.epostadresse}
-                                        </a>
-                                    ) : (
-                                        <span>-</span>
+                                    {kandidat.data.epostadresse ?? '-'}
+                                    {kandidat.data.epostadresse && (
+                                        <CopyButton
+                                            size="small"
+                                            title="Kopier e-postadresse"
+                                            className={css.kopieringsknapp}
+                                            copyText={kandidat.data.epostadresse}
+                                        />
                                     )}
                                 </BodyShort>
 
@@ -134,20 +132,32 @@ const Kandidatbanner = ({
                                     {kandidat.data.telefon ?? '-'}
                                 </BodyShort>
 
-                                <BodyShort aria-label="Veileder">
-                                    <PersonIcon title="Veileder" aria-hidden />
-                                    {veileder ? (
-                                        <a
-                                            title="Send e-post"
-                                            className={css.epostlenke}
-                                            href={`mailto:${veileder.epost}`}
-                                        >
-                                            {veileder.navn} ({veileder.ident})
-                                        </a>
-                                    ) : (
-                                        kandidat.data.veileder ?? '-'
-                                    )}
-                                </BodyShort>
+                                {veileder ? (
+                                    <BodyShort aria-label="Veileder">
+                                        <PersonIcon title="Veileder" aria-hidden />
+                                        {veileder.ident ? (
+                                            <>
+                                                <span>
+                                                    Veileder: {veileder.navn} ({veileder.ident}){' '}
+                                                    {veileder.epost}
+                                                </span>
+                                                <CopyButton
+                                                    size="small"
+                                                    title="Kopier e-postadresse"
+                                                    className={css.kopieringsknapp}
+                                                    copyText={veileder.epost}
+                                                />
+                                            </>
+                                        ) : (
+                                            <span>-</span>
+                                        )}
+                                    </BodyShort>
+                                ) : (
+                                    <BodyShort aria-label="Veileder">
+                                        <PersonIcon title="Veileder" aria-hidden />
+                                        {kandidat.data.veileder ?? '-'}
+                                    </BodyShort>
+                                )}
                             </div>
                         )}
 
