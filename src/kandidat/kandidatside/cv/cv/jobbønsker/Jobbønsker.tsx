@@ -9,6 +9,7 @@ import {
 import css from './Jobbønsker.module.css';
 import Kort from '../kort/Kort';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { ReactNode } from 'react';
 
 const oppstartskoder = {
     LEDIG_NAA: { key: 'LEDIG_NAA', label: 'Nå' },
@@ -33,37 +34,37 @@ const Jobbønsker = ({ cv }: Props) => {
                 )}
             </BodyShort>
             <ul className={css.bunn}>
-                <BodyShort as="li" size="small" aria-label="Ønsket sted">
-                    <PinIcon aria-hidden />
-                    <div>
-                        <BodyShort size="small">Sted</BodyShort>
-                        {cv.geografiJobbonsker?.length > 0 ? (
+                <Jobbønskeinformasjon
+                    label="Sted"
+                    ikon={<PinIcon aria-hidden />}
+                    children={
+                        cv.geografiJobbonsker?.length > 0 ? (
                             <MangeTekstelementerSeparertMedMellomrom
                                 elementer={cv.geografiJobbonsker.map((u) => u.geografiKodeTekst)}
                             />
                         ) : (
                             '-'
-                        )}
-                    </div>
-                </BodyShort>
-                <BodyShort as="li" size="small" aria-label="Heltid/Deltid">
-                    <BriefcaseClockIcon aria-hidden />
-                    <div>
-                        <BodyShort size="small">Heltid/Deltid</BodyShort>
-                        {cv.omfangJobbprofil?.length > 0 ? (
+                        )
+                    }
+                />
+                <Jobbønskeinformasjon
+                    label="Heltid/Deltid"
+                    ikon={<BriefcaseClockIcon aria-hidden />}
+                    children={
+                        cv.omfangJobbprofil?.length > 0 ? (
                             <MangeTekstelementerSeparertMedOg
                                 elementer={cv.omfangJobbprofil.map((u) => u.heltidDeltidKodeTekst)}
                             />
                         ) : (
                             '-'
-                        )}
-                    </div>
-                </BodyShort>
-                <BodyShort as="li" size="small" aria-label="Arbeidstid">
-                    <ClockIcon aria-hidden />
-                    <div>
-                        <BodyShort size="small">Arbeidstid</BodyShort>
-                        {cv.arbeidstidJobbprofil?.length > 0 ? (
+                        )
+                    }
+                />
+                <Jobbønskeinformasjon
+                    label="Arbeidstid"
+                    ikon={<ClockIcon aria-hidden />}
+                    children={
+                        cv.arbeidstidJobbprofil?.length > 0 ? (
                             <MangeTekstelementerSeparertMedOg
                                 elementer={cv.arbeidstidJobbprofil.map(
                                     (u) => u.arbeidstidKodeTekst
@@ -71,26 +72,44 @@ const Jobbønsker = ({ cv }: Props) => {
                             />
                         ) : (
                             '-'
-                        )}
-                    </div>
-                </BodyShort>
-                <BodyShort as="li" size="small" aria-label="Kan starte">
-                    <TimerStartIcon aria-hidden />
-                    <div>
-                        <BodyShort size="small">Kan starte</BodyShort>
-                        {cv.oppstartKode ? (
+                        )
+                    }
+                />
+                <Jobbønskeinformasjon
+                    label="Kan starte"
+                    ikon={<TimerStartIcon aria-hidden />}
+                    children={
+                        cv.oppstartKode ? (
                             <MangeTekstelementerSeparertMedKomma
                                 elementer={[oppstartskoder[cv.oppstartKode]?.label]}
                             />
                         ) : (
                             '-'
-                        )}
-                    </div>
-                </BodyShort>
+                        )
+                    }
+                />
             </ul>
         </Kort>
     );
 };
+
+const Jobbønskeinformasjon = ({
+    label,
+    ikon,
+    children,
+}: {
+    label: string;
+    ikon: ReactNode;
+    children: ReactNode;
+}) => (
+    <BodyShort as="li" size="small" aria-label={label}>
+        {ikon}
+        <div>
+            <BodyShort size="small">{label}</BodyShort>
+            {children}
+        </div>
+    </BodyShort>
+);
 
 export const MangeTekstelementerSeparertMedKomma = ({
     elementer,
