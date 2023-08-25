@@ -529,6 +529,7 @@ export function* validateAll() {
         yield validateContactPersonName();
         yield validateContactPersonTitle();
         yield validateContactPersonEmailOrPhoneRequired();
+        yield validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen();
     }
 }
 
@@ -554,7 +555,8 @@ export function hasValidationErrors(validation: Record<ValidertFelt, string | un
         validation.sector !== undefined ||
         validation.workday !== undefined ||
         validation.workhours !== undefined ||
-        validation.inkluderingsmuligheter !== undefined
+        validation.inkluderingsmuligheter !== undefined ||
+        validation.søknadsmetode !== undefined
     );
 }
 
