@@ -69,7 +69,7 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
 };
 
 const hentNavKontoretsNavn = (navKontor: string) => {
-    const enhetElement = document.getElementsByClassName(
+    let enhetElement = document.getElementsByClassName(
         'dekorator__hode__enhet'
     )[0] as HTMLSpanElement;
 
@@ -77,13 +77,9 @@ const hentNavKontoretsNavn = (navKontor: string) => {
         const dropdownElement = document.getElementsByClassName('dekorator-select-container')[0];
 
         if (dropdownElement) {
-            const optionElement = Array.from(dropdownElement.getElementsByTagName('option')).find(
+            enhetElement = Array.from(dropdownElement.getElementsByTagName('option')).find(
                 (enhet) => enhet.value === navKontor
             );
-
-            if (optionElement) {
-                return optionElement.innerText.slice(5);
-            }
         }
     }
 
