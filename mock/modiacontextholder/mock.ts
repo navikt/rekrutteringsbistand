@@ -20,7 +20,7 @@ const decorator = {
     enheter: [
         { enhetId: '0239', navn: 'NAV Hurdal' },
         { enhetId: '0425', navn: 'NAV Åsnes' },
-        { enhetId: '0604', navn: 'NAV Kongsberg' },
+        { enhetId: '0501', navn: 'NAV Lillehammer-Gausdal' },
     ],
 };
 

@@ -42,8 +42,8 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
     return (
         <div className={css.statistikk}>
             <div className={css.konktekstForStatistikk}>
-                <div className={css.dittNavKontor}>
-                    <Heading level="2" size="medium" className={css.tittel}>
+                <div>
+                    <Heading level="2" size="medium">
                         Ditt NAV-kontor
                     </Heading>
                     <BodyShort>{navKontoretsNavn}</BodyShort>
@@ -69,19 +69,29 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
 };
 
 const hentNavKontoretsNavn = (navKontor: string) => {
-    const modiaElement = document.getElementsByClassName('dekorator-select-container')[0];
+    const enhetElement = document.getElementsByClassName(
+        'dekorator__hode__enhet'
+    )[0] as HTMLSpanElement;
 
-    if (modiaElement) {
-        const optionElement = Array.from(modiaElement.getElementsByTagName('option')).find(
-            (enhet) => enhet.value === navKontor
-        );
+    if (!enhetElement) {
+        const dropdownElement = document.getElementsByClassName('dekorator-select-container')[0];
 
-        if (optionElement) {
-            return optionElement.innerText.slice(5);
+        if (dropdownElement) {
+            const optionElement = Array.from(dropdownElement.getElementsByTagName('option')).find(
+                (enhet) => enhet.value === navKontor
+            );
+
+            if (optionElement) {
+                return optionElement.innerText.slice(5);
+            }
         }
     }
 
-    return `Enhet ${navKontor}`;
+    if (enhetElement) {
+        return enhetElement.innerText.slice(5);
+    } else {
+        return `Enhet ${navKontor}`;
+    }
 };
 
 export default Statistikk;
