@@ -1,5 +1,5 @@
 import { BodyShort, Heading, Select } from '@navikt/ds-react';
-import { ChangeEvent, FunctionComponent, useState } from 'react';
+import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import Forespørsler from './Forespørsler';
 import css from './Statistikk.module.css';
 import Utfallsstatistikk from './Utfallsstatistikk';
@@ -11,6 +11,13 @@ type Props = {
 
 const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
     const [startDatoPeriode, setStartDatoPeriode] = useState<Date>(førsteDagIMåned(new Date()));
+    const [navKontoretsNavn, setNavKontoretsNavn] = useState<string>(
+        hentNavKontoretsNavn(navKontor)
+    );
+
+    useEffect(() => {
+        setNavKontoretsNavn(hentNavKontoretsNavn(navKontor));
+    }, [navKontor]);
 
     const onTidsperiodeChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const startDatoPeriode = new Date(+event.target.value);
@@ -39,7 +46,7 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
                     <Heading level="2" size="medium" className={css.tittel}>
                         Ditt NAV-kontor
                     </Heading>
-                    <BodyShort>Enhet {navKontor}</BodyShort>
+                    <BodyShort>{navKontoretsNavn}</BodyShort>
                 </div>
                 <div className={css.skillelinje} />
                 <Select label="Periode" onChange={onTidsperiodeChange} className={css.tidsperiode}>
@@ -59,6 +66,22 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
             <Forespørsler navKontor={navKontor} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />
         </div>
     );
+};
+
+const hentNavKontoretsNavn = (navKontor: string) => {
+    const modiaElement = document.getElementsByClassName('dekorator-select-container')[0];
+
+    if (modiaElement) {
+        const optionElement = Array.from(modiaElement.getElementsByTagName('option')).find(
+            (enhet) => enhet.value === navKontor
+        );
+
+        if (optionElement) {
+            return optionElement.innerText.slice(5);
+        }
+    }
+
+    return `Enhet ${navKontor}`;
 };
 
 export default Statistikk;
