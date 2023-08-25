@@ -9,6 +9,7 @@ import {
     CHECK_EMPLOYMENT_WORKDAY,
     CHECK_EMPLOYMENT_WORKHOURS,
     CHECK_TAG,
+    findLocationByPostalCode,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_LOCATION_AREAS,
@@ -17,23 +18,26 @@ import {
     SET_AD_TEXT,
     SET_AD_TITLE,
     SET_APPLICATIONDUE,
+    SET_APPLICATIONEMAIL,
+    SET_APPLICATIONURL,
     SET_EMPLOYMENT_ENGAGEMENTTYPE,
     SET_EMPLOYMENT_EXTENT,
     SET_EMPLOYMENT_POSITIONCOUNT,
     SET_EMPLOYMENT_SECTOR,
     SET_EMPLOYMENT_STARTTIME,
     SET_EXPIRATION_DATE,
+    SET_PRIVACY,
     SET_PUBLISHED,
     SET_STYRK,
     UNCHECK_EMPLOYMENT_WORKDAY,
     UNCHECK_EMPLOYMENT_WORKHOURS,
     UNCHECK_TAG,
-    findLocationByPostalCode,
 } from './adDataReducer';
 import { DEFAULT_TITLE_NEW_AD, SET_KAN_INKLUDERE } from './adReducer';
 import isJson from './edit/praktiske-opplysninger/IsJson';
 import { KanInkludere } from './edit/registrer-inkluderingsmuligheter/DirektemeldtStilling';
 import { tagsInneholderInkluderingsmuligheter } from './tags/utils';
+import { Privacy } from 'felles/domene/stilling/Stilling';
 
 export type ValidertFelt =
     | 'location'
@@ -59,7 +63,8 @@ export type ValidertFelt =
     | 'sector'
     | 'workday'
     | 'workhours'
-    | 'inkluderingsmuligheter';
+    | 'inkluderingsmuligheter'
+    | 'søknadsmetode';
 
 const ADD_VALIDATION_ERROR = 'ADD_VALIDATION_ERROR';
 const REMOVE_VALIDATION_ERROR = 'REMOVE_VALIDATION_ERROR';
@@ -197,6 +202,25 @@ function* validateExpireDate() {
         });
     } else {
         yield removeValidationError({ field: 'expires' });
+    }
+}
+
+export function* validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen() {
+    const state: State = yield select();
+    const { properties, privacy } = state.adData;
+
+    if (
+        privacy === Privacy.Arbeidsplassen &&
+        valueIsNotSet(properties.applicationemail) &&
+        valueIsNotSet(properties.applicationurl)
+    ) {
+        yield addValidationError({
+            field: 'søknadsmetode',
+            message:
+                'Du må legge til minst én søknadsmetode for stillinger publisert på arbeidsplassen',
+        });
+    } else {
+        yield removeValidationError({ field: 'søknadsmetode' });
     }
 }
 
@@ -505,6 +529,7 @@ export function* validateAll() {
         yield validateContactPersonName();
         yield validateContactPersonTitle();
         yield validateContactPersonEmailOrPhoneRequired();
+        yield validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen();
     }
 }
 
@@ -530,7 +555,8 @@ export function hasValidationErrors(validation: Record<ValidertFelt, string | un
         validation.sector !== undefined ||
         validation.workday !== undefined ||
         validation.workhours !== undefined ||
-        validation.inkluderingsmuligheter !== undefined
+        validation.inkluderingsmuligheter !== undefined ||
+        validation.søknadsmetode !== undefined
     );
 }
 
@@ -627,4 +653,8 @@ export const validationSaga = function* saga() {
     yield takeLatest(CHECK_EMPLOYMENT_WORKHOURS, validateWorkhours);
     yield takeLatest(UNCHECK_EMPLOYMENT_WORKHOURS, validateWorkhours);
     yield takeLatest([CHECK_TAG, UNCHECK_TAG, SET_KAN_INKLUDERE], validateInkluderingsmuligheter);
+    yield takeLatest(
+        [SET_PRIVACY, SET_APPLICATIONEMAIL, SET_APPLICATIONURL],
+        validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen
+    );
 };
