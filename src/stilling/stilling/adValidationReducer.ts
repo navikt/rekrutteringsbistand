@@ -18,6 +18,8 @@ import {
     SET_AD_TEXT,
     SET_AD_TITLE,
     SET_APPLICATIONDUE,
+    SET_APPLICATIONEMAIL,
+    SET_APPLICATIONURL,
     SET_EMPLOYMENT_ENGAGEMENTTYPE,
     SET_EMPLOYMENT_EXTENT,
     SET_EMPLOYMENT_POSITIONCOUNT,
@@ -209,7 +211,8 @@ export function* validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen()
 
     if (
         privacy === Privacy.Arbeidsplassen &&
-        (valueIsNotSet(properties.applicationemail) || valueIsNotSet(properties.applicationurl))
+        valueIsNotSet(properties.applicationemail) &&
+        valueIsNotSet(properties.applicationurl)
     ) {
         yield addValidationError({
             field: 'søknadsmetode',
@@ -648,5 +651,8 @@ export const validationSaga = function* saga() {
     yield takeLatest(CHECK_EMPLOYMENT_WORKHOURS, validateWorkhours);
     yield takeLatest(UNCHECK_EMPLOYMENT_WORKHOURS, validateWorkhours);
     yield takeLatest([CHECK_TAG, UNCHECK_TAG, SET_KAN_INKLUDERE], validateInkluderingsmuligheter);
-    yield takeLatest(SET_PRIVACY, validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen);
+    yield takeLatest(
+        [SET_PRIVACY, SET_APPLICATIONEMAIL, SET_APPLICATIONURL],
+        validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen
+    );
 };
