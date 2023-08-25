@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react';
-import { Checkbox, Fieldset, TextField } from '@navikt/ds-react';
+import { Checkbox, ErrorMessage, Fieldset, TextField } from '@navikt/ds-react';
 import { connect } from 'react-redux';
 import { SET_APPLICATIONURL, SET_APPLICATIONEMAIL } from '../../adDataReducer';
 import { VALIDATE_APPLICATION_EMAIL, ValidertFelt } from '../../adValidationReducer';
@@ -115,6 +115,9 @@ class Application extends React.Component<Props> {
                             onChange={this.onApplicationUrlChange}
                             onBlur={this.completeLink}
                         />
+                    )}
+                    {this.props.validation.søknadsmetode && (
+                        <ErrorMessage>{this.props.validation.søknadsmetode}</ErrorMessage>
                     )}
                 </Fieldset>
             </>
