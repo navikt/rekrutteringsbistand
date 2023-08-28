@@ -1,14 +1,18 @@
-import { FunctionComponent } from 'react';
 import { Chips } from '@navikt/ds-react';
+import { FunctionComponent } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
+import { Hovedtag, Subtag, visningsnavnForFilter } from '../inkludering/tags';
 import { statusTilVisningsnavn } from '../om-annonsen/Annonsestatus';
 import { publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert';
 import { stillingskategoriTilVisningsnavn } from '../om-annonsen/VelgStillingskategori';
-import { Hovedtag, Subtag, visningsnavnForFilter } from '../inkludering/tags';
 
-const ValgteKrierier: FunctionComponent = () => {
+type Props = {
+    visStatusfilter: boolean;
+};
+
+const ValgteKrierier: FunctionComponent = ({ visStatusfilter }: Props) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
@@ -78,17 +82,18 @@ const ValgteKrierier: FunctionComponent = () => {
         <Chips>
             <Chips.Removable onDelete={handleTømFiltreClick}>Tøm alle filtre</Chips.Removable>
 
-            {Array.from(statuser).map((status) => (
-                <Chips.Removable
-                    key={status}
-                    variant="neutral"
-                    onDelete={() => {
-                        handleClick(status, statuser, QueryParam.Statuser);
-                    }}
-                >
-                    {statusTilVisningsnavn(status)}
-                </Chips.Removable>
-            ))}
+            {visStatusfilter &&
+                Array.from(statuser).map((status) => (
+                    <Chips.Removable
+                        key={status}
+                        variant="neutral"
+                        onDelete={() => {
+                            handleClick(status, statuser, QueryParam.Statuser);
+                        }}
+                    >
+                        {statusTilVisningsnavn(status)}
+                    </Chips.Removable>
+                ))}
 
             {Array.from(publisert).map((derAnnonsenErpublisert) => (
                 <Chips.Removable

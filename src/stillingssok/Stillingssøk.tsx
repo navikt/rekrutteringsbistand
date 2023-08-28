@@ -41,6 +41,7 @@ const Stillingssøk = () => {
     const antallTreff = useAntallTreff(respons);
 
     const visStandardsøk = kandidatnr === undefined;
+    const visStatusfilter = kandidatnr === undefined;
 
     return (
         <div className={css.wrapper}>
@@ -51,13 +52,16 @@ const Stillingssøk = () => {
             )}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
-                    <Filter visStandardsøk={visStandardsøk} />
+                    <Filter visStandardsøk={visStandardsøk} visStatusfilter={visStatusfilter} />
                 </aside>
 
                 <main className={css.sokeresultat}>
                     {respons ? (
                         <>
-                            <Filtermeny visStandardsøk={visStandardsøk} />
+                            <Filtermeny
+                                visStandardsøk={visStandardsøk}
+                                visStatusfilter={visStatusfilter}
+                            />
                             <div className={css.beskrivelseAvSøk}>
                                 <Heading level="2" size="medium" className={css.antallStillinger}>
                                     {formaterAntallAnnonser(antallTreff)}

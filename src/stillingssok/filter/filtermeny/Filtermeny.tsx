@@ -8,6 +8,7 @@ import css from './Filtermeny.module.css';
 
 type Props = {
     visStandardsøk: boolean;
+    visStatusfilter: boolean;
 };
 
 const Filtermeny = ({ visStandardsøk }: Props) => {
@@ -23,7 +24,7 @@ const Filtermeny = ({ visStandardsøk }: Props) => {
 
     return (
         <div className={classNames(css.wrapper, css.filtermeny)}>
-            <ValgteKrierier />
+            <ValgteKrierier visStatusfilter={visStatusfilter} />
             {visStandardsøk && <LagreStandardsøk />}
         </div>
     );
