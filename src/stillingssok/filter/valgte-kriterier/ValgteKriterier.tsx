@@ -30,8 +30,14 @@ const ValgteKrierier = ({ visStatusfilter }: Props) => {
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
 
+        const kriterierSomIkkeSkalTømmes = [QueryParam.Sortering];
+
+        if (!visStatusfilter) {
+            kriterierSomIkkeSkalTømmes.push(QueryParam.Statuser);
+        }
+
         for (const key of Array.from(parametre.keys())) {
-            if (key !== QueryParam.Sortering) {
+            if (!kriterierSomIkkeSkalTømmes.includes(key as QueryParam)) {
                 parametre.delete(key);
             }
         }
