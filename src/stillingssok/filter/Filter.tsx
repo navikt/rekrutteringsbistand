@@ -8,17 +8,16 @@ import BrukStandardsøk from './standardsøk/BrukStandardsøk';
 import Søkefelt from './søkefelt/Søkefelt';
 
 type Props = {
-    visStandardsøk: boolean;
-    visStatusfilter: boolean;
+    finnerStillingForKandidat: boolean;
 };
 
-const Filter = ({ visStandardsøk, visStatusfilter }: Props) => {
+const Filter = ({ finnerStillingForKandidat }: Props) => {
     return (
         <div className={css.filter}>
             <Søkefelt />
-            {visStandardsøk && <BrukStandardsøk />}
+            {!finnerStillingForKandidat && <BrukStandardsøk />}
             <div className={css.filtercheckbokser}>
-                {visStatusfilter && <Annonsestatus />}
+                {!finnerStillingForKandidat && <Annonsestatus />}
                 <FylkerOgKommuner />
                 <Inkludering />
                 <VelgStillingskategori />

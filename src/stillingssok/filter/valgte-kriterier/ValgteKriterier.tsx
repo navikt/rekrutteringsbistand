@@ -2,16 +2,17 @@ import { Chips } from '@navikt/ds-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
+import { hentIgnorerteFiltre } from '../filtermeny/Filtermeny';
 import { Hovedtag, Subtag, visningsnavnForFilter } from '../inkludering/tags';
 import { statusTilVisningsnavn } from '../om-annonsen/Annonsestatus';
 import { publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert';
 import { stillingskategoriTilVisningsnavn } from '../om-annonsen/VelgStillingskategori';
 
 type Props = {
-    visStatusfilter: boolean;
+    finnerStillingForKandidat: boolean;
 };
 
-const ValgteKrierier = ({ visStatusfilter }: Props) => {
+const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
@@ -30,11 +31,7 @@ const ValgteKrierier = ({ visStatusfilter }: Props) => {
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
 
-        const kriterierSomIkkeSkalTømmes = [QueryParam.Sortering];
-
-        if (!visStatusfilter) {
-            kriterierSomIkkeSkalTømmes.push(QueryParam.Statuser);
-        }
+        const kriterierSomIkkeSkalTømmes = hentIgnorerteFiltre(finnerStillingForKandidat);
 
         for (const key of Array.from(parametre.keys())) {
             if (!kriterierSomIkkeSkalTømmes.includes(key as QueryParam)) {
@@ -87,18 +84,19 @@ const ValgteKrierier = ({ visStatusfilter }: Props) => {
         <Chips>
             <Chips.Removable onDelete={handleTømFiltreClick}>Tøm alle filtre</Chips.Removable>
 
-            {visStatusfilter &&
-                Array.from(statuser).map((status) => (
-                    <Chips.Removable
-                        key={status}
-                        variant="neutral"
-                        onDelete={() => {
-                            handleClick(status, statuser, QueryParam.Statuser);
-                        }}
-                    >
-                        {statusTilVisningsnavn(status)}
-                    </Chips.Removable>
-                ))}
+            {!finnerStillingForKandidat
+                ? Array.from(statuser).map((status) => (
+                      <Chips.Removable
+                          key={status}
+                          variant="neutral"
+                          onDelete={() => {
+                              handleClick(status, statuser, QueryParam.Statuser);
+                          }}
+                      >
+                          {statusTilVisningsnavn(status)}
+                      </Chips.Removable>
+                  ))
+                : []}
 
             {Array.from(publisert).map((derAnnonsenErpublisert) => (
                 <Chips.Removable

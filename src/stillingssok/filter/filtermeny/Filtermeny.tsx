@@ -7,27 +7,40 @@ import ValgteKrierier from '../valgte-kriterier/ValgteKriterier';
 import css from './Filtermeny.module.css';
 
 type Props = {
-    visStandardsøk: boolean;
-    visStatusfilter: boolean;
+    finnerStillingForKandidat: boolean;
 };
 
-const Filtermeny = ({ visStandardsøk, visStatusfilter }: Props) => {
+const Filtermeny = ({ finnerStillingForKandidat }: Props) => {
     const [searchParams] = useSearchParams();
 
     const keys = Array.from(searchParams.keys());
     const harIngenFiltre = keys.length === 0;
-    const harKunSortering = keys.length === 1 && searchParams.has(QueryParam.Sortering);
 
-    if (harIngenFiltre || harKunSortering) {
+    const ignorerteFiltre = hentIgnorerteFiltre(finnerStillingForKandidat);
+    const ingenFiltreSkalTømmes = Array.from(searchParams.keys()).every((param) =>
+        ignorerteFiltre.includes(param as QueryParam)
+    );
+
+    if (harIngenFiltre || ingenFiltreSkalTømmes) {
         return <div className={css.wrapper} />;
     }
 
     return (
         <div className={classNames(css.wrapper, css.filtermeny)}>
-            <ValgteKrierier visStatusfilter={visStatusfilter} />
-            {visStandardsøk && <LagreStandardsøk />}
+            <ValgteKrierier finnerStillingForKandidat={finnerStillingForKandidat} />
+            {!finnerStillingForKandidat && <LagreStandardsøk />}
         </div>
     );
+};
+
+export const hentIgnorerteFiltre = (finnerStillingForKandidat: boolean) => {
+    let ignorerteFiltre = [QueryParam.Sortering];
+
+    if (finnerStillingForKandidat) {
+        ignorerteFiltre.push(QueryParam.Statuser);
+    }
+
+    return ignorerteFiltre;
 };
 
 export default Filtermeny;
