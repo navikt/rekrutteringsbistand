@@ -11,7 +11,7 @@ type Props = {
     visStatusfilter: boolean;
 };
 
-const Filtermeny = ({ visStandardsøk }: Props) => {
+const Filtermeny = ({ visStandardsøk, visStatusfilter }: Props) => {
     const [searchParams] = useSearchParams();
 
     const keys = Array.from(searchParams.keys());

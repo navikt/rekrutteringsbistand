@@ -1,5 +1,4 @@
 import { Chips } from '@navikt/ds-react';
-import { FunctionComponent } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
@@ -12,7 +11,7 @@ type Props = {
     visStatusfilter: boolean;
 };
 
-const ValgteKrierier: FunctionComponent = ({ visStatusfilter }: Props) => {
+const ValgteKrierier = ({ visStatusfilter }: Props) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
