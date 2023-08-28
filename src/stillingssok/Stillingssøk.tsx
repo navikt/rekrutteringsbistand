@@ -40,7 +40,7 @@ const Stillingssøk = () => {
         ?.globalAggregering as unknown as GlobalAggregering;
     const antallTreff = useAntallTreff(respons);
 
-    const visStandardsøk = kandidatnr === undefined;
+    const finnerStillingForKandidat = kandidatnr !== undefined;
 
     return (
         <div className={css.wrapper}>
@@ -51,13 +51,13 @@ const Stillingssøk = () => {
             )}
             <div className={css.stillingssøk}>
                 <aside className={css.sidepanel}>
-                    <Filter visStandardsøk={visStandardsøk} />
+                    <Filter finnerStillingForKandidat={finnerStillingForKandidat} />
                 </aside>
 
                 <main className={css.sokeresultat}>
                     {respons ? (
                         <>
-                            <Filtermeny visStandardsøk={visStandardsøk} />
+                            <Filtermeny finnerStillingForKandidat={finnerStillingForKandidat} />
                             <div className={css.beskrivelseAvSøk}>
                                 <Heading level="2" size="medium" className={css.antallStillinger}>
                                     {formaterAntallAnnonser(antallTreff)}
