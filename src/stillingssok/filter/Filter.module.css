@@ -24,3 +24,7 @@
 .indentertCheckboxgruppe :global(.navds-checkboxes) {
     margin-left: 2rem;
 }
+
+.filtercheckbokser {
+    margin-top: 1.5rem;
+}
