@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Forside from './Forside';
 
@@ -24,6 +24,11 @@ vi.mock('./statistikk/Statistikk', () => ({
 test('<Forside/>', () => {
     const app = render(<Forside />, { wrapper: BrowserRouter });
     app.getByTestId('mock-hurtiglenker');
-    app.getByTestId('mock-statistikk');
+    // sjekk at last indikatoren vises
+    app.getByTestId('lastIndikator');
+    // vent til lastindikatoren forsvinner  (async)
+    waitFor(() => expect(app.getByTestId('lastIndikator')).not.toBeInTheDocument());
+    // verifiser at statistikk komponenten rendrer når last indikator forsvinner
+    waitFor(() => expect(app.getByTestId('mock-statistikk')).toBeInTheDocument());
     // expect(app).toMatchSnapshot(); // for snapshot testing
 });
