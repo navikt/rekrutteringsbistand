@@ -1,7 +1,8 @@
 import { Heading, Select } from '@navikt/ds-react';
+import classNames from 'classnames';
+import { NavKontorMedNavn } from 'felles/store/navKontor';
 import { ChangeEvent, useEffect } from 'react';
 import css from './Modiadekoratør.module.css';
-import classNames from 'classnames';
 
 const enheter = [
     { enhetId: '0239', navn: 'NAV Hurdal' },
@@ -11,18 +12,28 @@ const enheter = [
 
 type Props = {
     navKontor: string | null;
-    onNavKontorChange: (navKontor: string) => void;
+    onNavKontorChange: (navKontor: NavKontorMedNavn) => void;
 };
 
 const Placeholder = ({ navKontor, onNavKontorChange }: Props) => {
     useEffect(() => {
         if (navKontor === null) {
-            onNavKontorChange(enheter[0].enhetId);
+            onNavKontorChange({
+                navKontor: enheter[0].enhetId,
+                navKontorNavn: enheter[0].navn,
+            });
         }
     }, [navKontor, onNavKontorChange]);
 
     const handleNavKontorChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        onNavKontorChange(event.target.value);
+        const kontor = enheter.find((enhet) => enhet.enhetId === event.target.value);
+
+        if (kontor) {
+            onNavKontorChange({
+                navKontor: kontor.enhetId,
+                navKontorNavn: kontor.navn,
+            });
+        }
     };
 
     return (

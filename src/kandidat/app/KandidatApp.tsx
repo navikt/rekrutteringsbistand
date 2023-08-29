@@ -1,25 +1,25 @@
 import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
 
-import { NavKontorAction, NavKontorActionTypes } from '../state/navKontorReducer';
-import { TilToppenKnapp } from '../komponenter/tilToppenKnapp/TilToppenKnapp';
-import CvSide from '../kandidatside/cv/CvSide';
-import Historikkside from '../kandidatside/historikk/Historikkside';
-import Kandidatlisteoversikt from '../kandidatlisteoversikt/Kandidatlisteoversikt';
+import useNavKontor from 'felles/store/navKontor';
 import KandidatlistesideMedStilling from '../kandidatliste/KandidatlistesideMedStilling';
 import KandidatlisteUtenStilling from '../kandidatliste/KandidatlistesideUtenStilling';
+import Kandidatlisteoversikt from '../kandidatlisteoversikt/Kandidatlisteoversikt';
 import Kandidatside from '../kandidatside/Kandidatside';
-import ManglerTilgang from './ManglerTilgang';
+import CvSide from '../kandidatside/cv/CvSide';
+import Historikkside from '../kandidatside/historikk/Historikkside';
 import NotFound from '../komponenter/errorside/NotFound';
+import { TilToppenKnapp } from '../komponenter/tilToppenKnapp/TilToppenKnapp';
+import { NavKontorAction, NavKontorActionTypes } from '../state/navKontorReducer';
 import store from '../state/reduxStore';
-import useNavKontor from 'felles/store/navKontor';
 import Varsling from '../varsling/Varsling';
 import css from './KandidatApp.module.css';
+import ManglerTilgang from './ManglerTilgang';
 
 const KandidatApp = () => {
     const dispatch = useDispatch();
-    const { navKontor } = useNavKontor();
+    const navKontor = useNavKontor((state) => state.navKontor);
 
     useEffect(() => {
         if (navKontor) {

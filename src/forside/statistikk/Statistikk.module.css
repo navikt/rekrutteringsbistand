@@ -34,12 +34,6 @@
     align-items: center;
 }
 
-.tittel {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-}
-
 .tall {
     display: flex;
     flex-direction: column;
