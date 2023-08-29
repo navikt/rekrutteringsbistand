@@ -66,7 +66,7 @@ const Søknad = ({ kilde, properties }: Props) => {
 };
 
 export function byggLenkeTilSøknad(kilde: Kilde, properties: Properties) {
-    if (kilde === Kilde.Intern) {
+    if (kilde === Kilde.Intern && !properties.applicationurl) {
         return properties.sourceurl;
     } else if (properties.applicationurl !== undefined) {
         return properties.applicationurl;

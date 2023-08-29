@@ -99,6 +99,7 @@ export const mockStilling: Stilling = {
     ],
     properties: {
         extent: Omfang.Heltid,
+        applicationurl: 'www.rekruttering.nav.dev.no',
         workhours: `["Dagtid"]`,
         employerhomepage: 'https://www.tullekontoret.no',
         applicationdue: 'Snarest',

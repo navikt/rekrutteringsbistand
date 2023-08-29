@@ -7,9 +7,10 @@ import { formaterDatoTilVisning, førsteDagIMåned, sisteDagIMåned } from './da
 
 type Props = {
     navKontor: string;
+    navKontorNavn: string | null;
 };
 
-const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
+const Statistikk: FunctionComponent<Props> = ({ navKontor, navKontorNavn }) => {
     const [startDatoPeriode, setStartDatoPeriode] = useState<Date>(førsteDagIMåned(new Date()));
 
     const onTidsperiodeChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -35,11 +36,11 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
     return (
         <div className={css.statistikk}>
             <div className={css.konktekstForStatistikk}>
-                <div className={css.dittNavKontor}>
-                    <Heading level="2" size="medium" className={css.tittel}>
+                <div>
+                    <Heading level="2" size="medium">
                         Ditt NAV-kontor
                     </Heading>
-                    <BodyShort>Enhet {navKontor}</BodyShort>
+                    <BodyShort>{navKontorNavn ?? `Enhet ${navKontor}`}</BodyShort>
                 </div>
                 <div className={css.skillelinje} />
                 <Select label="Periode" onChange={onTidsperiodeChange} className={css.tidsperiode}>
