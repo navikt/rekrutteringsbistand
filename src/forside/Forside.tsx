@@ -5,13 +5,17 @@ import Hurtiglenker from './hurtiglenker/Hurtiglenker';
 import Statistikk from './statistikk/Statistikk';
 
 const Forside = () => {
-    const navKontor = useNavKontor((state) => state.navKontor);
+    const { navKontor, navKontorNavn } = useNavKontor();
 
     return (
         <div className={css.forsideWrapper}>
             <div className={css.forside}>
                 <Hurtiglenker />
-                {navKontor ? <Statistikk navKontor={navKontor} /> : <Loader />}
+                {navKontor ? (
+                    <Statistikk navKontor={navKontor} navKontorNavn={navKontorNavn} />
+                ) : (
+                    <Loader />
+                )}
             </div>
         </div>
     );

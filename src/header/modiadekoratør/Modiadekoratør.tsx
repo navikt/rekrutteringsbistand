@@ -1,5 +1,5 @@
 import Navspa from '@navikt/navspa';
-import { NavKontor } from 'felles/store/navKontor';
+import { NavKontorMedNavn } from 'felles/store/navKontor';
 import loadjs from 'loadjs';
 import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
 import DekoratørProps, { EnhetDisplay } from './DekoratørProps';
@@ -14,8 +14,8 @@ enum Status {
 }
 
 type Props = {
-    navKontor: NavKontor | null;
-    onNavKontorChange: (navKontor: NavKontor) => void;
+    navKontor: string | null;
+    onNavKontorChange: (navKontor: NavKontorMedNavn) => void;
 };
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
@@ -51,10 +51,10 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         }
     }, []);
 
-    const handleNavKontorChange = (enhetId: string) => {
+    const handleNavKontorChange = (navKontor: string) => {
         onNavKontorChange({
-            enhetId,
-            navn: hentNavKontoretsNavn(enhetId),
+            navKontor,
+            navKontorNavn: hentNavKontoretsNavn(navKontor),
         });
     };
 
@@ -65,7 +65,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                     appname="Rekrutteringsbistand"
                     useProxy={true}
                     enhet={{
-                        initialValue: navKontor.enhetId,
+                        initialValue: navKontor,
                         display: EnhetDisplay.ENHET_VALG,
                         onChange: handleNavKontorChange,
                         ignoreWsEvents: true,
@@ -91,7 +91,7 @@ const hentHostname = () => {
     }
 };
 
-const hentNavKontoretsNavn = (enhetId: string) => {
+const hentNavKontoretsNavn = (navKontor: string) => {
     let enhetElement = document.getElementsByClassName(
         'dekorator__hode__enhet'
     )[0] as HTMLSpanElement;
@@ -101,7 +101,7 @@ const hentNavKontoretsNavn = (enhetId: string) => {
 
         if (dropdownElement) {
             enhetElement = Array.from(dropdownElement.getElementsByTagName('option')).find(
-                (enhet) => enhet.value === enhetId
+                (enhet) => enhet.value === navKontor
             );
         }
     }
@@ -109,7 +109,7 @@ const hentNavKontoretsNavn = (enhetId: string) => {
     if (enhetElement) {
         return enhetElement.innerText.slice(5);
     } else {
-        return `Enhet ${enhetId}`;
+        return null;
     }
 };
 

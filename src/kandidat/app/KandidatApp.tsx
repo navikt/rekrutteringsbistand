@@ -19,13 +19,13 @@ import ManglerTilgang from './ManglerTilgang';
 
 const KandidatApp = () => {
     const dispatch = useDispatch();
-    const { navKontor } = useNavKontor();
+    const navKontor = useNavKontor((state) => state.navKontor);
 
     useEffect(() => {
         if (navKontor) {
             dispatch<NavKontorAction>({
                 type: NavKontorActionTypes.VelgNavKontor,
-                valgtNavKontor: navKontor.enhetId,
+                valgtNavKontor: navKontor,
             });
         }
     }, [navKontor, dispatch]);

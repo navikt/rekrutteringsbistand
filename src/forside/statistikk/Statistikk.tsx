@@ -1,5 +1,4 @@
 import { BodyShort, Heading, Select } from '@navikt/ds-react';
-import { NavKontor } from 'felles/store/navKontor';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import Forespørsler from './Forespørsler';
 import css from './Statistikk.module.css';
@@ -7,10 +6,11 @@ import Utfallsstatistikk from './Utfallsstatistikk';
 import { formaterDatoTilVisning, førsteDagIMåned, sisteDagIMåned } from './datoUtils';
 
 type Props = {
-    navKontor: NavKontor;
+    navKontor: string;
+    navKontorNavn: string | null;
 };
 
-const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
+const Statistikk: FunctionComponent<Props> = ({ navKontor, navKontorNavn }) => {
     const [startDatoPeriode, setStartDatoPeriode] = useState<Date>(førsteDagIMåned(new Date()));
 
     const onTidsperiodeChange = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -40,7 +40,7 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
                     <Heading level="2" size="medium">
                         Ditt NAV-kontor
                     </Heading>
-                    <BodyShort>{navKontor.navn}</BodyShort>
+                    <BodyShort>{navKontorNavn ?? `Enhet ${navKontor}`}</BodyShort>
                 </div>
                 <div className={css.skillelinje} />
                 <Select label="Periode" onChange={onTidsperiodeChange} className={css.tidsperiode}>
@@ -56,12 +56,8 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
                     ))}
                 </Select>
             </div>
-            <Utfallsstatistikk
-                navKontor={navKontor.enhetId}
-                fraOgMed={fraOgMed}
-                tilOgMed={tilOgMed}
-            />
-            <Forespørsler navKontor={navKontor.enhetId} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />
+            <Utfallsstatistikk navKontor={navKontor} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />
+            <Forespørsler navKontor={navKontor} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />
         </div>
     );
 };

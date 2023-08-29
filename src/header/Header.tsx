@@ -11,7 +11,7 @@ const Modiadekoratør =
 const Header = () => {
     const { navKontor, setNavKontor } = useNavKontor();
 
-    useAmplitude(navKontor?.enhetId ?? null);
+    useAmplitude(navKontor);
 
     return (
         <>

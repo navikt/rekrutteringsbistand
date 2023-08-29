@@ -1,6 +1,6 @@
 import { Heading, Select } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { NavKontor } from 'felles/store/navKontor';
+import { NavKontorMedNavn } from 'felles/store/navKontor';
 import { ChangeEvent, useEffect } from 'react';
 import css from './Modiadekoratør.module.css';
 
@@ -11,14 +11,17 @@ const enheter = [
 ];
 
 type Props = {
-    navKontor: NavKontor | null;
-    onNavKontorChange: (navKontor: NavKontor) => void;
+    navKontor: string | null;
+    onNavKontorChange: (navKontor: NavKontorMedNavn) => void;
 };
 
 const Placeholder = ({ navKontor, onNavKontorChange }: Props) => {
     useEffect(() => {
         if (navKontor === null) {
-            onNavKontorChange(enheter[0]);
+            onNavKontorChange({
+                navKontor: enheter[0].enhetId,
+                navKontorNavn: enheter[0].navn,
+            });
         }
     }, [navKontor, onNavKontorChange]);
 
@@ -26,7 +29,10 @@ const Placeholder = ({ navKontor, onNavKontorChange }: Props) => {
         const kontor = enheter.find((enhet) => enhet.enhetId === event.target.value);
 
         if (kontor) {
-            onNavKontorChange(kontor);
+            onNavKontorChange({
+                navKontor: kontor.enhetId,
+                navKontorNavn: kontor.navn,
+            });
         }
     };
 
@@ -39,7 +45,7 @@ const Placeholder = ({ navKontor, onNavKontorChange }: Props) => {
                 label="Kontor"
                 size="small"
                 hideLabel
-                value={navKontor?.enhetId ?? ''}
+                value={navKontor ?? ''}
                 onChange={handleNavKontorChange}
             >
                 {enheter.map((enhet) => (
