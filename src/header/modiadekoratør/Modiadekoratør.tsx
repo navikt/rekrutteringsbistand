@@ -1,6 +1,7 @@
-import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
 import Navspa from '@navikt/navspa';
+import { NavKontor } from 'felles/store/navKontor';
 import loadjs from 'loadjs';
+import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
 import DekoratørProps, { EnhetDisplay } from './DekoratørProps';
 import css from './Modiadekoratør.module.css';
 
@@ -13,8 +14,8 @@ enum Status {
 }
 
 type Props = {
-    navKontor: string | null;
-    onNavKontorChange: (navKontor: string) => void;
+    navKontor: NavKontor | null;
+    onNavKontorChange: (navKontor: NavKontor) => void;
 };
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
@@ -50,6 +51,13 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         }
     }, []);
 
+    const handleNavKontorChange = (enhetId: string) => {
+        onNavKontorChange({
+            enhetId,
+            navn: hentNavKontoretsNavn(enhetId),
+        });
+    };
+
     return (
         <div className={css.wrapper}>
             {status === Status.Klar && (
@@ -57,9 +65,9 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                     appname="Rekrutteringsbistand"
                     useProxy={true}
                     enhet={{
-                        initialValue: navKontor,
+                        initialValue: navKontor.enhetId,
                         display: EnhetDisplay.ENHET_VALG,
-                        onChange: onNavKontorChange,
+                        onChange: handleNavKontorChange,
                         ignoreWsEvents: true,
                     }}
                     toggles={{
@@ -80,6 +88,28 @@ const hentHostname = () => {
         return 'https://internarbeidsflatedecorator.intern.nav.no';
     } else {
         return 'https://navikt.github.io';
+    }
+};
+
+const hentNavKontoretsNavn = (enhetId: string) => {
+    let enhetElement = document.getElementsByClassName(
+        'dekorator__hode__enhet'
+    )[0] as HTMLSpanElement;
+
+    if (!enhetElement) {
+        const dropdownElement = document.getElementsByClassName('dekorator-select-container')[0];
+
+        if (dropdownElement) {
+            enhetElement = Array.from(dropdownElement.getElementsByTagName('option')).find(
+                (enhet) => enhet.value === enhetId
+            );
+        }
+    }
+
+    if (enhetElement) {
+        return enhetElement.innerText.slice(5);
+    } else {
+        return `Enhet ${enhetId}`;
     }
 };
 

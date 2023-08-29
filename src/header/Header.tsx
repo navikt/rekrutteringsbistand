@@ -1,21 +1,21 @@
-import { Outlet } from 'react-router-dom';
-import Modiadekoratør from './modiadekoratør/Modiadekoratør';
-import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
 import useNavKontor from 'felles/store/navKontor';
-import useAmplitude from './useAmplitude';
+import { Outlet } from 'react-router-dom';
+import Dekoratør from './modiadekoratør/Modiadekoratør';
 import Placeholder from './modiadekoratør/Placeholder';
+import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
+import useAmplitude from './useAmplitude';
 
-const Dekoratør =
-    import.meta.env.DEV && import.meta.env.VITE_MOCK_MODIA ? Placeholder : Modiadekoratør;
+const Modiadekoratør =
+    import.meta.env.DEV && import.meta.env.VITE_MOCK_MODIA ? Placeholder : Dekoratør;
 
 const Header = () => {
     const { navKontor, setNavKontor } = useNavKontor();
 
-    useAmplitude(navKontor);
+    useAmplitude(navKontor?.enhetId ?? null);
 
     return (
         <>
-            <Dekoratør navKontor={navKontor} onNavKontorChange={setNavKontor} />
+            <Modiadekoratør navKontor={navKontor} onNavKontorChange={setNavKontor} />
             <Navigeringsmeny />
             <Outlet />
         </>

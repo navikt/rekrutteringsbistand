@@ -1,23 +1,17 @@
 import { BodyShort, Heading, Select } from '@navikt/ds-react';
-import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
+import { NavKontor } from 'felles/store/navKontor';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
 import Forespørsler from './Forespørsler';
 import css from './Statistikk.module.css';
 import Utfallsstatistikk from './Utfallsstatistikk';
 import { formaterDatoTilVisning, førsteDagIMåned, sisteDagIMåned } from './datoUtils';
 
 type Props = {
-    navKontor: string;
+    navKontor: NavKontor;
 };
 
 const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
     const [startDatoPeriode, setStartDatoPeriode] = useState<Date>(førsteDagIMåned(new Date()));
-    const [navKontoretsNavn, setNavKontoretsNavn] = useState<string>(
-        hentNavKontoretsNavn(navKontor)
-    );
-
-    useEffect(() => {
-        setNavKontoretsNavn(hentNavKontoretsNavn(navKontor));
-    }, [navKontor]);
 
     const onTidsperiodeChange = (event: ChangeEvent<HTMLSelectElement>) => {
         const startDatoPeriode = new Date(+event.target.value);
@@ -46,7 +40,7 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
                     <Heading level="2" size="medium">
                         Ditt NAV-kontor
                     </Heading>
-                    <BodyShort>{navKontoretsNavn}</BodyShort>
+                    <BodyShort>{navKontor.navn}</BodyShort>
                 </div>
                 <div className={css.skillelinje} />
                 <Select label="Periode" onChange={onTidsperiodeChange} className={css.tidsperiode}>
@@ -62,32 +56,14 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor }) => {
                     ))}
                 </Select>
             </div>
-            <Utfallsstatistikk navKontor={navKontor} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />
-            <Forespørsler navKontor={navKontor} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />
+            <Utfallsstatistikk
+                navKontor={navKontor.enhetId}
+                fraOgMed={fraOgMed}
+                tilOgMed={tilOgMed}
+            />
+            <Forespørsler navKontor={navKontor.enhetId} fraOgMed={fraOgMed} tilOgMed={tilOgMed} />
         </div>
     );
-};
-
-const hentNavKontoretsNavn = (navKontor: string) => {
-    let enhetElement = document.getElementsByClassName(
-        'dekorator__hode__enhet'
-    )[0] as HTMLSpanElement;
-
-    if (!enhetElement) {
-        const dropdownElement = document.getElementsByClassName('dekorator-select-container')[0];
-
-        if (dropdownElement) {
-            enhetElement = Array.from(dropdownElement.getElementsByTagName('option')).find(
-                (enhet) => enhet.value === navKontor
-            );
-        }
-    }
-
-    if (enhetElement) {
-        return enhetElement.innerText.slice(5);
-    } else {
-        return `Enhet ${navKontor}`;
-    }
 };
 
 export default Statistikk;

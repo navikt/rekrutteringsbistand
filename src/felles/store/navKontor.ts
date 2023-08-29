@@ -1,8 +1,13 @@
 import { create } from 'zustand';
 
+export type NavKontor = {
+    navn: string;
+    enhetId: string;
+};
+
 type NavKontorState = {
-    navKontor: string | null;
-    setNavKontor: (navKontor: string) => void;
+    navKontor: NavKontor | null;
+    setNavKontor: (navKontor: NavKontor) => void;
 };
 
 const useNavKontor = create<NavKontorState>((set) => ({
