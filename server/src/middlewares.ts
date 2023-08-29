@@ -43,7 +43,10 @@ export const setOnBehalfOfToken =
                     res.status(403).send(`Bruker har ikke tilgang til scope ${scope}`);
                 } else {
                     if (respons.status === undefined) {
-                        logger.error('Respons.status var undefined! ' + respons.statusText);
+                        logger.error(
+                            'Klarte ikke å sette OBO-token, og fikk ukjent respons: ' +
+                                respons.statusText
+                        );
                     }
 
                     res.status(respons.status).send(respons.statusText);
