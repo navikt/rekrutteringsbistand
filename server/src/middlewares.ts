@@ -1,7 +1,8 @@
-import { NextFunction, Request, RequestHandler, Response as ExpressResponse } from 'express';
+import { Response as ExpressResponse, NextFunction, Request, RequestHandler } from 'express';
 import { IncomingHttpHeaders } from 'http';
 import { Response } from 'node-fetch';
 import { tokenIsValid } from './azureAd';
+import { logger } from './logger';
 import { hentOnBehalfOfToken } from './onBehalfOfToken';
 
 export const cluster = process.env.NAIS_CLUSTER_NAME;
@@ -41,6 +42,10 @@ export const setOnBehalfOfToken =
                 if (respons.status === 400) {
                     res.status(403).send(`Bruker har ikke tilgang til scope ${scope}`);
                 } else {
+                    if (respons.status === undefined) {
+                        logger.error('Respons.status var undefined! ' + respons.statusText);
+                    }
+
                     res.status(respons.status).send(respons.statusText);
                 }
             }
