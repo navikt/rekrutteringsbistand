@@ -47,6 +47,8 @@ export const setOnBehalfOfToken =
                             'Klarte ikke å sette OBO-token, og fikk ukjent respons: ' +
                                 respons.statusText
                         );
+
+                        res.status(500).send(respons.statusText);
                     }
 
                     res.status(respons.status).send(respons.statusText);
