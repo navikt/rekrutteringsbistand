@@ -1,5 +1,5 @@
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
-import { Link } from '@navikt/ds-react';
+import { Button, Link } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
 import { erIkkeProd } from 'felles/miljø';
@@ -36,8 +36,9 @@ const LenkeTilAktivitetsplan = ({ fnr }: Props) => {
 
     return (
         <Link target="_blank" href={lenke} onClick={handleClick}>
-            Se aktivitetsplan
-            <ExternalLinkIcon />
+            <Button as="a" variant="secondary" icon={<ExternalLinkIcon aria-hidden />}>
+                Se aktivitetsplan
+            </Button>
         </Link>
     );
 };

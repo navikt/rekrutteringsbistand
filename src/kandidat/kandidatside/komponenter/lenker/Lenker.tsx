@@ -1,5 +1,5 @@
 import { DownloadIcon } from '@navikt/aksel-icons';
-import { Link as NavLink } from '@navikt/ds-react';
+import { Button, Link as NavLink } from '@navikt/ds-react';
 
 import { sendEvent } from 'felles/amplitude';
 import LenkeTilAktivitetsplan from '../../../komponenter/lenke-til-aktivitetsplan/LenkeTilAktivitetsplan';
@@ -21,8 +21,9 @@ const Lenker = ({ fødselsnummer, className }: Props) => {
                     href={`${lastNedCvUrl}${fødselsnummer}`}
                     onClick={() => sendEvent('cv_last_ned', 'klikk')}
                 >
-                    Last ned CV
-                    <DownloadIcon />
+                    <Button as="a" variant="secondary" icon={<DownloadIcon aria-hidden />}>
+                        Last ned CV
+                    </Button>
                 </NavLink>
             </div>
         </div>

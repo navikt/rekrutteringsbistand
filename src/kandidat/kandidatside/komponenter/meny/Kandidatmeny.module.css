@@ -8,11 +8,12 @@
 
 .meny {
     display: flex;
+    margin: 0 auto;
     align-items: center;
+    justify-content: flex-start;
     gap: 2rem;
-    width: 100%;
+    max-width: var(--innhold-maksbredde);
     padding: 0 1rem;
-    background-color: white;
     border-bottom: 2px solid var(--a-border-divider);
 }
 
@@ -39,7 +40,9 @@
 }
 
 .høyre {
+    display: flex;
     margin-left: auto;
+    gap: 0.5rem;
 }
 
 @media (min-width: 1000px) {
@@ -49,14 +52,5 @@
 
     .lenkerUnderMeny {
         display: none;
-    }
-
-    .wrapper {
-        margin: 2rem;
-    }
-
-    .meny {
-        max-width: var(--kandidatsokInnholdBredde);
-        margin: 0 auto;
     }
 }

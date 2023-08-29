@@ -16,10 +16,12 @@ const Kandidatmeny: FunctionComponent<Props> = ({ cv, tabs, children }) => {
         <div className={css.wrapper}>
             <div className={css.meny}>
                 <nav className={css.faner}>{tabs}</nav>
-                {cv.kind === Nettstatus.Suksess && (
-                    <Lenker className={css.lenkerIMeny} fødselsnummer={cv.data.fodselsnummer} />
-                )}
-                <div className={css.høyre}>{children}</div>
+                <div className={css.høyre}>
+                    {children}
+                    {cv.kind === Nettstatus.Suksess && (
+                        <Lenker className={css.lenkerIMeny} fødselsnummer={cv.data.fodselsnummer} />
+                    )}
+                </div>
             </div>
             {cv.kind === Nettstatus.Suksess && (
                 <Lenker className={css.lenkerUnderMeny} fødselsnummer={cv.data.fodselsnummer} />

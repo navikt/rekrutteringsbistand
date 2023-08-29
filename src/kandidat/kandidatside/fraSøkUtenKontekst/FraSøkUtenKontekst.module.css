@@ -1,5 +1,9 @@
 .knapper {
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     align-items: center;
+}
+
+.tabs {
+    background-color: white;
 }
