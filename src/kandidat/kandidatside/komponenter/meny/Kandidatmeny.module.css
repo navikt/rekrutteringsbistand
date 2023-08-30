@@ -1,20 +1,15 @@
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     margin-bottom: 1.5rem;
-    gap: 1.5rem;
+    max-width: var(--innhold-maksbredde);
+    margin: 0 auto;
 }
 
 .meny {
     display: flex;
-    margin: 0 auto;
     align-items: center;
     justify-content: flex-start;
     gap: 2rem;
-    max-width: var(--innhold-maksbredde);
-    padding: 0 1rem;
-    border-bottom: 2px solid var(--a-border-divider);
+    border-bottom: 1px solid var(--a-border-divider);
 }
 
 .faner :global(.navds-tabs__tablist-wrapper) {
