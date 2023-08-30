@@ -1,3 +1,4 @@
+import { Alert } from '@navikt/ds-react';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import { Nettstatus } from 'felles/nettressurs';
 import useKandidatStillingssøk from './useKandidatStillingssøk';
@@ -7,7 +8,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
-    const kandidat = useKandidatStillingssøk(kandidatnr);
+    const { kandidat, hentetGeografiFraBosted } = useKandidatStillingssøk(kandidatnr);
 
     let brødsmulesti = undefined;
     if (kandidat.kind === Nettstatus.Suksess) {
@@ -29,7 +30,19 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
         brødsmulesti = [];
     }
 
-    return <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti} />;
+    return (
+        <Kandidatbanner
+            kandidat={kandidat}
+            brødsmulesti={brødsmulesti}
+            nederstTilHøyre={
+                hentetGeografiFraBosted ? (
+                    <Alert fullWidth variant="info">
+                        Aner ikke!
+                    </Alert>
+                ) : undefined
+            }
+        />
+    );
 };
 
 export default KontekstAvKandidat;

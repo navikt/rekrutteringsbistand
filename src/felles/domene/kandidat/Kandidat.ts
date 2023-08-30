@@ -23,6 +23,7 @@ type Geografi = {
     postnummer: string | null;
     poststed: string | null;
     adresselinje1: string | null;
+    kommuneNavn: string;
 };
 
 type UbrukteFelter = {
@@ -36,7 +37,6 @@ type UbrukteFelter = {
     doed: boolean;
     frKode: string;
     fylkeNavn: string;
-    kommuneNavn: string;
     kommunenummerkw: number;
     fodselsdatoErDnr: boolean;
     synligForArbeidsgiverSok: boolean;
@@ -84,6 +84,8 @@ export type KandidatTilBanner = {
     veileder: Oppfølgingsinformasjon['veileder'];
     geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
     yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
+    kommunenummerstring: Geografi['kommunenummerstring'];
+    kommuneNavn: Geografi['kommuneNavn'];
 };
 
 export type KandidatTilKandidatsøk = {

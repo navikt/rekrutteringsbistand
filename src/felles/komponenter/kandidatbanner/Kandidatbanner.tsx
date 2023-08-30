@@ -27,6 +27,7 @@ type Props = {
     brødsmulesti?: Brødsmule[];
     øverstTilHøyre?: ReactNode;
     nederstTilHøyre?: ReactNode;
+    heltNederst?: ReactNode;
 };
 
 const Kandidatbanner = ({
