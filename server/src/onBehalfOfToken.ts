@@ -18,7 +18,7 @@ export type AccessToken = string;
 
 const tokenCache: Record<Scope, Record<AccessToken, CachetOboToken>> = {};
 
-export async function hentOnBehalfOfToken(accessToken: string, scope: string) {
+export async function hentOnBehalfOfToken(accessToken: string, scope: string): Promise<OboToken> {
     const cachetOboToken = tokenCache[scope]?.[accessToken];
 
     if (cachetOboToken && tokenErFremdelesGyldig(cachetOboToken)) {

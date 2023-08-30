@@ -35,18 +35,21 @@ export const setOnBehalfOfToken =
                 req.headers.authorization = `Bearer ${token.access_token}`;
                 next();
             } catch (e) {
-                const respons = e as Response;
-
                 // 400 Bad request under OBO-veksling betyr at bruker
                 // ikke tilhører gruppene som kreves for å kalle appen.
-                if (respons.status === 400) {
-                    res.status(403).send(`Bruker har ikke tilgang til scope ${scope}`);
-                } else {
-                    if (respons.status === undefined) {
-                        logger.error('Respons.status var undefined! ' + respons.statusText);
-                    }
 
-                    res.status(respons.status).send(respons.statusText);
+                if (e instanceof Response) {
+                    const respons = e as Response;
+
+                    if (respons.status === 400) {
+                        res.status(403).send(`Bruker har ikke tilgang til scope ${scope}`);
+                    } else {
+                        res.status(respons.status).send(respons.statusText);
+                    }
+                } else {
+                    logger.error('Klarte ikke å sette OBO-token, og fikk følgende feil: ' + e);
+
+                    res.status(500).send('Klarte ikke å sette OBO-token');
                 }
             }
         }

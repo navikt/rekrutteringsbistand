@@ -1,15 +1,15 @@
-import { BodyShort } from '@navikt/ds-react';
 import {
+    BriefcaseClockIcon,
     ClockIcon,
     HeartIcon,
-    TimerStartIcon,
     PinIcon,
-    BriefcaseClockIcon,
+    TimerStartIcon,
 } from '@navikt/aksel-icons';
-import css from './Jobbønsker.module.css';
-import Kort from '../kort/Kort';
+import { BodyShort } from '@navikt/ds-react';
 import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { ReactNode } from 'react';
+import Kort from '../kort/Kort';
+import css from './Jobbønsker.module.css';
 
 const oppstartskoder = {
     LEDIG_NAA: { key: 'LEDIG_NAA', label: 'Nå' },
@@ -36,7 +36,7 @@ const Jobbønsker = ({ cv }: Props) => {
             <ul className={css.bunn}>
                 <Jobbønskeinformasjon label="Sted" ikon={<PinIcon aria-hidden />}>
                     {cv.geografiJobbonsker?.length > 0 ? (
-                        <MangeTekstelementerSeparertMedMellomrom
+                        <MangeTekstelementerSeparertMedKomma
                             elementer={cv.geografiJobbonsker.map((u) => u.geografiKodeTekst)}
                         />
                     ) : (
@@ -118,21 +118,6 @@ const MangeTekstelementerSeparertMedOg = ({ elementer }: { elementer: Array<stri
                 .filter((e) => e !== null)
                 .map((element) => element)
                 .join(' og ')}
-        </span>
-    );
-};
-
-const MangeTekstelementerSeparertMedMellomrom = ({
-    elementer,
-}: {
-    elementer: Array<string | null>;
-}) => {
-    return (
-        <span>
-            {elementer
-                .filter((e) => e !== null)
-                .map((element) => element)
-                .join(' ')}
         </span>
     );
 };
