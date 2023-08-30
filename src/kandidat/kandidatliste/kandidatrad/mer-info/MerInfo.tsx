@@ -33,8 +33,8 @@ const MerInfo: FunctionComponent<Props> = ({ kandidat }) => {
                 <Label spacing as="p">
                     Innsatsgruppe:
                 </Label>
-                <span>{kandidat.innsatsgruppe}</span>
-                <LenkeTilAktivitetsplan fnr={kandidat.fodselsnr} />
+                <span>{kandidat.innsatsgruppe} </span>
+                <LenkeTilAktivitetsplan fnr={kandidat.fodselsnr} somKnapp={false} />
             </div>
         </InfoUnderKandidat>
     );

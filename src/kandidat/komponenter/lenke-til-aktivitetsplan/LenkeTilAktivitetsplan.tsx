@@ -4,15 +4,16 @@ import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
 import { erIkkeProd } from 'felles/miljø';
 import { Nettstatus } from 'felles/nettressurs';
-import { MouseEvent } from 'react';
+import { MouseEventHandler } from 'react';
 import { arbeidsrettetOppfølgingUrl } from '../../utils/eksterneUrler';
 
 type Props = {
     fnr: string;
+    somKnapp: boolean;
 };
 
-const LenkeTilAktivitetsplan = ({ fnr }: Props) => {
-    const handleClick = async (event: MouseEvent<HTMLAnchorElement>) => {
+const LenkeTilAktivitetsplan = ({ fnr, somKnapp }: Props) => {
+    const handleClick: MouseEventHandler = async (event) => {
         event.preventDefault();
 
         sendEvent('cv_aktivitetsplan_lenke', 'klikk');
@@ -33,14 +34,26 @@ const LenkeTilAktivitetsplan = ({ fnr }: Props) => {
     };
 
     const lenke = erIkkeProd ? arbeidsrettetOppfølgingUrl : `${arbeidsrettetOppfølgingUrl}/${fnr}`;
-
-    return (
-        <Link target="_blank" href={lenke} onClick={handleClick}>
-            <Button as="a" variant="secondary" icon={<ExternalLinkIcon aria-hidden />}>
+    if (somKnapp) {
+        return (
+            <Button
+                as="a"
+                href={lenke}
+                variant="secondary"
+                onClick={handleClick}
+                icon={<ExternalLinkIcon aria-hidden />}
+            >
                 Se aktivitetsplan
             </Button>
-        </Link>
-    );
+        );
+    } else {
+        return (
+            <Link target="_blank" href={lenke} onClick={handleClick}>
+                Se aktivitetsplan
+                <ExternalLinkIcon />
+            </Link>
+        );
+    }
 };
 
 export default LenkeTilAktivitetsplan;
