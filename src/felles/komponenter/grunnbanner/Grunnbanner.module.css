@@ -6,13 +6,19 @@
 }
 
 .inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
     margin: 0 auto;
     max-width: var(--innhold-maksbredde);
     padding: 1.5rem 0;
+}
 
+.piktogramOgChildren {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: start;
+    align-items: start;
     gap: 2rem;
 }
 
@@ -20,4 +26,5 @@
     flex-shrink: 0;
     height: 4rem;
     width: 4rem;
+    margin-top: 1rem;
 }

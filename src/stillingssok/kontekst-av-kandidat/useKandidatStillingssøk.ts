@@ -25,18 +25,18 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
                 kandidat.data;
 
-            const brukKriterier = () => {
-                let fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
-                let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
+            let fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
+            let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
+            const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 
-                if (fylker.length === 0 && kommuner.length === 0) {
-                    fylker = hentFylkeFraBosted(kommunenummerstring);
-                    kommuner = hentKommuneFraBosted(kommunenummerstring, kommuneNavn);
+            if (fylker.length === 0 && kommuner.length === 0) {
+                fylker = hentFylkeFraBosted(kommunenummerstring);
+                kommuner = hentKommuneFraBosted(kommunenummerstring, kommuneNavn);
 
-                    hentetGeografiFraBosted.current = true;
-                }
+                hentetGeografiFraBosted.current = true;
+            }
 
-                const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
+            if (brukKandidatkriterier) {
                 const søk = new URLSearchParams();
 
                 if (fylker.length > 0) søk.set(QueryParam.Fylker, String(fylker));
@@ -54,10 +54,6 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
                 });
 
                 navigate({ search: søk.toString() }, { replace: true });
-            };
-
-            if (brukKandidatkriterier) {
-                brukKriterier();
             }
         }
     }, [kandidatnr, navigate, kandidat, searchParams]);

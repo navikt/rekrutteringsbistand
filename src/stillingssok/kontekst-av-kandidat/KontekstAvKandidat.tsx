@@ -1,4 +1,4 @@
-import { Alert } from '@navikt/ds-react';
+import { Alert, Heading } from '@navikt/ds-react';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import { Nettstatus } from 'felles/nettressurs';
 import useKandidatStillingssøk from './useKandidatStillingssøk';
@@ -34,10 +34,15 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
         <Kandidatbanner
             kandidat={kandidat}
             brødsmulesti={brødsmulesti}
-            nederstTilHøyre={
+            nederst={
                 hentetGeografiFraBosted ? (
                     <Alert fullWidth variant="info">
-                        Aner ikke!
+                        <Heading spacing size="small" level="3">
+                            Vi vet ikke hvor kandidaten ønsker å jobbe
+                        </Heading>
+                        For å få bedre stillinger, hør med kandidaten om vedkommende kan legge til
+                        ønsket jobbsted i CV-en sin. I mellomtiden viser vi deg resultater ut i fra
+                        kommunen der kandidaten bor.
                     </Alert>
                 ) : undefined
             }
