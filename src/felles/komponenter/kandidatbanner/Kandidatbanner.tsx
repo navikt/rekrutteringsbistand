@@ -39,10 +39,7 @@ const Kandidatbanner = ({
     nederst,
 }: Props) => {
     return (
-        <Grunnbanner
-            ikon={<Piktogram />}
-            nederst={nederst ? <div className={css.nederst}>{nederst}</div> : undefined}
-        >
+        <Grunnbanner ikon={<Piktogram />} nederst={nederst}>
             <div className={css.innhold}>
                 <div className={css.hovedinnhold}>
                     <div className={css.topplinje}>

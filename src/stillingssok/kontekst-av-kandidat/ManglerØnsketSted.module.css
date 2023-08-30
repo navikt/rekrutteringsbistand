@@ -1,0 +1,20 @@
+.manglerØnsketSted :global(.navds-alert__wrapper) {
+    width: 100%;
+    max-width: 100%;
+}
+
+.innhold {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+}
+
+.innhold p {
+    max-width: 100ch;
+}
+
+.innhold a {
+    flex-shrink: 0;
+}
