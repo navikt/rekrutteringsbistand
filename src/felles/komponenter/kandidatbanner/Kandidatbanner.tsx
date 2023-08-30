@@ -138,7 +138,8 @@ const Kandidatbanner = ({
                                         {veileder.ident ? (
                                             <>
                                                 <span>
-                                                    Veileder: {veileder.navn} ({veileder.ident}){' '}
+                                                    Veileder: {veileder.navn} (
+                                                    {veileder.ident?.toUpperCase()}){' '}
                                                     {veileder.epost}
                                                 </span>
                                                 <CopyButton
