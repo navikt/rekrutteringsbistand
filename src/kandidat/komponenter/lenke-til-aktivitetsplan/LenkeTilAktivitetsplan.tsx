@@ -13,6 +13,8 @@ type Props = {
 };
 
 const LenkeTilAktivitetsplan = ({ fnr, somKnapp }: Props) => {
+    const lenke = erIkkeProd ? arbeidsrettetOppfølgingUrl : `${arbeidsrettetOppfølgingUrl}/${fnr}`;
+
     const handleClick: MouseEventHandler = async (event) => {
         event.preventDefault();
 
@@ -29,11 +31,9 @@ const LenkeTilAktivitetsplan = ({ fnr, somKnapp }: Props) => {
             );
         }
 
-        const element = event.target as HTMLAnchorElement;
-        window.open(element.href, '_blank');
+        window.open(lenke, '_blank');
     };
 
-    const lenke = erIkkeProd ? arbeidsrettetOppfølgingUrl : `${arbeidsrettetOppfølgingUrl}/${fnr}`;
     if (somKnapp) {
         return (
             <Button
