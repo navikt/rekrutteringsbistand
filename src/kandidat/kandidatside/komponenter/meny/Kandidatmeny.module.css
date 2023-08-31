@@ -7,7 +7,7 @@
 
 .meny {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 0.5rem;
     border-bottom: 1px solid var(--a-border-divider);
 }
@@ -16,16 +16,38 @@
     box-shadow: none;
 }
 
-.faner button {
-    min-height: 4rem;
+.faner :global(.navds-tabs__tablist) {
+    width: 100%;
 }
 
-.faner {
-    order: 1;
+.faner :global(.navds-tabs__tab) {
+    flex: 1;
+}
+
+.faner button {
+    min-height: 4rem;
 }
 
 .menyvalg {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+
+@media (min-width: 780px) {
+    .faner :global(.navds-tabs__tab) {
+        flex: unset;
+    }
+
+    .menyvalg {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 1000px) {
+    .meny {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
 }
