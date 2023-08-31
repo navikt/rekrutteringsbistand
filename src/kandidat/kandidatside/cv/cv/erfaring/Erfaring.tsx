@@ -16,11 +16,7 @@ const Erfaring = ({ overskrift, beskrivelse, detaljer }: Props) => {
                 </Heading>
             )}
             {detaljer}
-            {beskrivelse && (
-                <BodyLong size="small" className={css.beskrivelse}>
-                    {beskrivelse}
-                </BodyLong>
-            )}
+            {beskrivelse && <BodyLong size="small">{beskrivelse}</BodyLong>}
         </div>
     );
 };

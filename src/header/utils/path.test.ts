@@ -28,3 +28,7 @@ test('generaliserPath erstatter uuid-er med en placeholder', () => {
         '/stillinger/stilling/<uuid>'
     );
 });
+
+test('generaliserPath erstatter fødselsnumre med en placeholder', () => {
+    expect(generaliserPath('/kandidat/11063329446')).toBe('/kandidat/<fnr>');
+});
