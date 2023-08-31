@@ -1,6 +1,6 @@
 import { Button, Tabs } from '@navikt/ds-react';
-import { FunctionComponent, ReactNode, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FunctionComponent, MouseEvent, ReactNode, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Nettstatus } from 'felles/nettressurs';
 import { lenkeTilKandidatsøk } from '../../app/paths';
@@ -24,10 +24,13 @@ type Props = {
 const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, children }) => {
     useScrollTilToppen(kandidatnr);
 
+    const navigate = useNavigate();
     const [fane, setFane] = useFaner();
     const cv = useCv(kandidatnr);
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr);
     const [visKandidatlisterModal, setVisKandidatlisterModal] = useState<boolean>(false);
+
+    const finnStillingUrl = `/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`;
 
     const økt = hentØktFraKandidatsøk();
 
@@ -39,6 +42,12 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
         },
     ];
 
+    const handleFinnStillingClick = (event: MouseEvent) => {
+        event.preventDefault();
+
+        navigate(finnStillingUrl);
+    };
+
     return (
         <>
             <Kandidatheader
@@ -49,21 +58,19 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
             />
             <Tabs value={fane} onChange={setFane as any} className={css.tabs}>
                 <Kandidatmeny tabs={tabs} cv={cv}>
-                    <div className={css.knapper}>
-                        {cv.kind === Nettstatus.Suksess && (
-                            <Link to={`/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`}>
-                                <Button as="a">Finn stilling</Button>
-                            </Link>
-                        )}
-                        <Button
-                            as="a"
-                            variant="secondary"
-                            icon={<TasklistIcon aria-hidden />}
-                            onClick={() => setVisKandidatlisterModal(true)}
-                        >
-                            Legg til i lister
+                    {cv.kind === Nettstatus.Suksess && (
+                        <Button as="a" href={finnStillingUrl} onClick={handleFinnStillingClick}>
+                            Finn stilling
                         </Button>
-                    </div>
+                    )}
+                    <Button
+                        as="a"
+                        variant="secondary"
+                        icon={<TasklistIcon aria-hidden />}
+                        onClick={() => setVisKandidatlisterModal(true)}
+                    >
+                        Legg til i lister
+                    </Button>
                 </Kandidatmeny>
                 <Tabs.Panel value={fane}>{children}</Tabs.Panel>
             </Tabs>

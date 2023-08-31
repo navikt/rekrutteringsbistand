@@ -1,14 +1,14 @@
 .wrapper {
     margin-bottom: 1.5rem;
-    max-width: var(--innhold-maksbredde);
+    max-width: calc(var(--innhold-maksbredde) + 4rem);
+    padding: 0 2rem;
     margin: 0 auto;
 }
 
 .meny {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 2rem;
+    flex-direction: column;
+    gap: 0.5rem;
     border-bottom: 1px solid var(--a-border-divider);
 }
 
@@ -20,32 +20,12 @@
     min-height: 4rem;
 }
 
-.lenkerIMeny {
-    display: none;
+.faner {
+    order: 1;
 }
 
-.lenkerUnderMeny {
-    padding: 0 1rem;
-}
-
-.venstre {
+.menyvalg {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.høyre {
-    display: flex;
-    margin-left: auto;
+    flex-direction: column;
     gap: 0.5rem;
-}
-
-@media (min-width: 1000px) {
-    .lenkerIMeny {
-        display: unset;
-    }
-
-    .lenkerUnderMeny {
-        display: none;
-    }
 }

@@ -38,6 +38,7 @@ const LenkeTilAktivitetsplan = ({ fnr, somKnapp }: Props) => {
         return (
             <Button
                 as="a"
+                target="_blank"
                 href={lenke}
                 variant="secondary"
                 onClick={handleClick}
