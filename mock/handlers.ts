@@ -19,7 +19,7 @@ const mswHandlers = [
     ...presenterteKandidaterApiMock,
     ...smsApiMock,
     ...synlighetApiMock,
-    ...(import.meta.env.VITE_MOCK_MODIA ? modiaContextHolderMock : []),
+    ...modiaContextHolderMock,
     ...(import.meta.env.VITE_MOCK_AIVEN ? kandidatsøkMock : []),
     ...(import.meta.env.VITE_MOCK_AIVEN ? stillingssøkMock : []),
 ];
