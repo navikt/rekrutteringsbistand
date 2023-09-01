@@ -7,6 +7,8 @@ env:
 
 jobs:
     bygg-og-push-docker-image:
+        permissions:
+            actions: write
         name: Bygg og push
         runs-on: ubuntu-latest
         steps:
