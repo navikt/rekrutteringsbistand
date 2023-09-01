@@ -1,8 +1,8 @@
 .wrapper {
-    margin-bottom: 1.5rem;
-    max-width: calc(var(--innhold-maksbredde) + 4rem);
+    width: 100%;
     padding: 0 2rem;
-    margin: 0 auto;
+    background-color: white;
+    padding-bottom: 0.5rem;
 }
 
 .meny {
@@ -10,6 +10,8 @@
     flex-direction: column-reverse;
     gap: 0.5rem;
     border-bottom: 1px solid var(--a-border-divider);
+    max-width: var(--innhold-maksbredde);
+    margin: 0 auto;
 }
 
 .faner :global(.navds-tabs__tablist-wrapper) {
@@ -41,6 +43,7 @@
 
     .menyvalg {
         flex-direction: row;
+        align-items: center;
     }
 }
 

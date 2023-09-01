@@ -80,7 +80,6 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                         </BodyShort>
                     ) : (
                         <Button
-                            size="small"
                             icon={<PersonPlusIcon aria-hidden />}
                             onClick={() => setVisLagreKandidatModal(true)}
                         >
