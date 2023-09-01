@@ -6,9 +6,13 @@ env:
     IMAGE: ghcr.io/${{ github.repository }}/rekrutteringsbistand:${{ github.sha }}
 
 jobs:
+    action-permissions-monitor:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: GitHubSecurityLab/actions-permissions/monitor@v1
+              with:
+                  config: ${{ vars.PERMISSIONS_CONFIG }}
     bygg-og-push-docker-image:
-        permissions:
-            actions: write
         name: Bygg og push
         runs-on: ubuntu-latest
         steps:
