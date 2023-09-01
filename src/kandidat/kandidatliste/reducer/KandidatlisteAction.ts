@@ -47,26 +47,9 @@ export interface NullstillKandidatlisteAction {
     type: KandidatlisteActionType.NullstillKandidatliste;
 }
 
-export interface PresenterKandidaterAction {
-    type: KandidatlisteActionType.PresenterKandidater;
-    kandidatlisteId: string;
-    kandidatnummerListe: Array<string>;
-    beskjed?: string;
-    mailadresser: Array<string>;
-    navKontor: string;
-}
-
 export interface PresenterKandidaterSuccessAction {
     type: KandidatlisteActionType.PresenterKandidaterSuccess;
     kandidatliste: Kandidatliste;
-}
-
-export interface PresenterKandidaterFailureAction {
-    type: KandidatlisteActionType.PresenterKandidaterFailure;
-}
-
-export interface ResetDeleStatusAction {
-    type: KandidatlisteActionType.ResetDelestatus;
 }
 
 export interface OppdaterKandidatlisteMedKandidatAction {
@@ -394,10 +377,7 @@ type KandidatlisteAction =
     | HentKandidatlisteMedKandidatlisteIdSuccessAction
     | HentKandidatlisteMedKandidatlisteIdFailureAction
     | NullstillKandidatlisteAction
-    | PresenterKandidaterAction
     | PresenterKandidaterSuccessAction
-    | PresenterKandidaterFailureAction
-    | ResetDeleStatusAction
     | OppdaterKandidatlisteMedKandidatAction
     | EndreStatusKandidatAction
     | EndreStatusKandidatSuccessAction

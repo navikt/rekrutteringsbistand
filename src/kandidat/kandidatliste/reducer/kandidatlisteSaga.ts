@@ -1,59 +1,55 @@
 import { sendEvent } from 'felles/amplitude';
-import {
-    postSmsTilKandidater,
-    fetchSendteMeldinger,
-    putArkivertForFlereKandidater,
-    putUtfallKandidat,
-    putKandidatlistestatus,
-    slettCvFraArbeidsgiversKandidatliste,
-} from '../../api/api';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { ErrorActionType } from '../../state/errorReducer';
-import KandidatlisteActionType from './KandidatlisteActionType';
-import KandidatlisteAction, {
-    HentKandidatlisteMedStillingsIdAction,
-    HentKandidatlisteMedKandidatlisteIdAction,
-    PresenterKandidaterAction,
-    EndreStatusKandidatAction,
-    HentNotaterAction,
-    OpprettNotatAction,
-    EndreNotatAction,
-    SendSmsAction,
-    HentSendteMeldingerAction,
-    ToggleArkivertAction,
-    ToggleArkivertSuccessAction,
-    AngreArkiveringAction,
-    AngreArkiveringSuccessAction,
-    EndreUtfallKandidatAction,
-    EndreUtfallKandidatSuccessAction,
-    EndreFormidlingsutfallForUsynligKandidatAction,
-    EndreFormidlingsutfallForUsynligKandidatSuccessAction,
-    EndreKandidatlistestatusAction,
-    EndreKandidatlistestatusSuccessAction,
-    HentForespørslerOmDelingAvCvAction,
-    SendForespørselOmDelingAvCv,
-    SlettCvFraArbeidsgiversKandidatliste,
-} from './KandidatlisteAction';
 import {
     deleteNotat,
     fetchKandidatlisteMedKandidatlisteId,
     fetchKandidatlisteMedStillingsId,
     fetchNotater,
-    postDelteKandidater,
+    fetchSendteMeldinger,
     postNotat,
+    postSmsTilKandidater,
+    putArkivert,
+    putArkivertForFlereKandidater,
+    putFormidlingsutfallForUsynligKandidat,
     putKandidatliste,
+    putKandidatlistestatus,
     putNotat,
     putStatusKandidat,
-    putArkivert,
-    putFormidlingsutfallForUsynligKandidat,
+    putUtfallKandidat,
+    slettCvFraArbeidsgiversKandidatliste,
 } from '../../api/api';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { SearchApiError } from '../../api/fetchUtils';
 import {
-    fetchForespørslerOmDelingAvCv,
     ForespørslerForStillingInboundDto,
+    fetchForespørslerOmDelingAvCv,
     sendForespørselOmDelingAvCv,
 } from '../../api/forespørselOmDelingAvCvApi';
+import { ErrorActionType } from '../../state/errorReducer';
+import KandidatlisteAction, {
+    AngreArkiveringAction,
+    AngreArkiveringSuccessAction,
+    EndreFormidlingsutfallForUsynligKandidatAction,
+    EndreFormidlingsutfallForUsynligKandidatSuccessAction,
+    EndreKandidatlistestatusAction,
+    EndreKandidatlistestatusSuccessAction,
+    EndreNotatAction,
+    EndreStatusKandidatAction,
+    EndreUtfallKandidatAction,
+    EndreUtfallKandidatSuccessAction,
+    HentForespørslerOmDelingAvCvAction,
+    HentKandidatlisteMedKandidatlisteIdAction,
+    HentKandidatlisteMedStillingsIdAction,
+    HentNotaterAction,
+    HentSendteMeldingerAction,
+    OpprettNotatAction,
+    SendForespørselOmDelingAvCv,
+    SendSmsAction,
+    SlettCvFraArbeidsgiversKandidatliste,
+    ToggleArkivertAction,
+    ToggleArkivertSuccessAction,
+} from './KandidatlisteAction';
+import KandidatlisteActionType from './KandidatlisteActionType';
 
 const loggManglendeAktørId = (kandidatliste: Kandidatliste) => {
     const aktøridRegex = /[0-9]{13}/;
@@ -128,30 +124,6 @@ function* hentKandidatlisteMedKandidatlisteId(action: HentKandidatlisteMedKandid
                 type: KandidatlisteActionType.HentKandidatlisteMedKandidatlisteIdFailure,
                 error: e,
             });
-        } else {
-            throw e;
-        }
-    }
-}
-
-function* presenterKandidater(action: PresenterKandidaterAction) {
-    try {
-        const { beskjed, mailadresser, kandidatlisteId, kandidatnummerListe, navKontor } = action;
-        const response = yield postDelteKandidater(
-            beskjed,
-            mailadresser,
-            kandidatlisteId,
-            kandidatnummerListe,
-            navKontor
-        );
-
-        yield put({
-            type: KandidatlisteActionType.PresenterKandidaterSuccess,
-            kandidatliste: response,
-        });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: KandidatlisteActionType.PresenterKandidaterFailure, error: e });
         } else {
             throw e;
         }
@@ -484,7 +456,6 @@ function* kandidatlisteSaga() {
         KandidatlisteActionType.HentKandidatlisteMedKandidatlisteId,
         hentKandidatlisteMedKandidatlisteId
     );
-    yield takeLatest(KandidatlisteActionType.PresenterKandidater, presenterKandidater);
     yield takeLatest(KandidatlisteActionType.EndreStatusKandidat, endreKandidatstatus);
     yield takeLatest(KandidatlisteActionType.EndreUtfallKandidat, endreKandidatUtfall);
     yield takeLatest(KandidatlisteActionType.HentNotater, hentNotater);

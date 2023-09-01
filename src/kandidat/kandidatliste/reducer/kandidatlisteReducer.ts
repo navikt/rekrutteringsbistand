@@ -45,7 +45,6 @@ export type Kandidatsortering = null | {
 };
 
 export type KandidatlisteState = {
-    deleStatus: Nettstatus;
     id?: string;
     kandidatliste: Nettressurs<Kandidatliste>;
     kandidattilstander: Kandidattilstander;
@@ -86,7 +85,6 @@ export type Kandidatlistefilter = {
 };
 
 const initialState: KandidatlisteState = {
-    deleStatus: Nettstatus.IkkeLastet,
     kandidatliste: ikkeLastet(),
     kandidattilstander: {},
     kandidatnotater: {},
@@ -207,27 +205,10 @@ const reducer: Reducer<KandidatlisteState, KandidatlisteAction> = (
                     [action.formidlingId]: feil(action.error),
                 },
             };
-        case KandidatlisteActionType.PresenterKandidater:
-            return {
-                ...state,
-                deleStatus: Nettstatus.LasterInn,
-            };
         case KandidatlisteActionType.PresenterKandidaterSuccess:
             return {
                 ...state,
                 kandidatliste: suksess(action.kandidatliste),
-                deleStatus: Nettstatus.Suksess,
-            };
-        case KandidatlisteActionType.PresenterKandidaterFailure:
-            return {
-                ...state,
-                deleStatus: Nettstatus.Feil,
-            };
-
-        case KandidatlisteActionType.ResetDelestatus:
-            return {
-                ...state,
-                deleStatus: Nettstatus.IkkeLastet,
             };
         case KandidatlisteActionType.SetFodselsnummer: {
             return {

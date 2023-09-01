@@ -99,7 +99,7 @@ const opprettMockForespørselOmDelingAvCv = (
     tilstand: TilstandPåForespørsel.HarSvart,
 
     svar: {
-        harSvartJa: false,
+        harSvartJa: true,
         svarTidspunkt: startOfDay(subDays(new Date(), 1)).toISOString(),
         svartAv: {
             ident: eier.ident,
