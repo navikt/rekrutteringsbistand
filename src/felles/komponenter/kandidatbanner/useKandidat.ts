@@ -25,6 +25,8 @@ export const byggQuery = (kandidatnr: string): EsQuery<KandidatTilBanner> => ({
         'veileder',
         'geografiJobbonsker',
         'yrkeJobbonskerObj',
+        'kommunenummerstring',
+        'kommuneNavn',
     ],
 });
 

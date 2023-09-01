@@ -1,11 +1,10 @@
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { Button, Link } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
-import { api, post } from 'felles/api';
+import { arbeidsrettetOppfølgingUrl } from 'felles/komponenter/lenker-til-modia/eksterneUrler';
+import navigerMedAktivBrukerIModia from 'felles/komponenter/lenker-til-modia/navigerMedAktivBrukerIModia';
 import { erIkkeProd } from 'felles/miljø';
-import { Nettstatus } from 'felles/nettressurs';
 import { MouseEventHandler } from 'react';
-import { arbeidsrettetOppfølgingUrl } from '../../utils/eksterneUrler';
 
 type Props = {
     fnr: string;
@@ -19,19 +18,7 @@ const LenkeTilAktivitetsplan = ({ fnr, somKnapp }: Props) => {
         event.preventDefault();
 
         sendEvent('cv_aktivitetsplan_lenke', 'klikk');
-
-        const response = await post(`${api.modiaContextHolder}/context`, {
-            verdi: fnr,
-            eventType: 'NY_AKTIV_BRUKER',
-        });
-
-        if (response.kind === Nettstatus.Feil) {
-            throw new Error(
-                'Klarte ikke å sette fnr-kontekst i modiacontextholder: ' + response.error.message
-            );
-        }
-
-        window.open(lenke, '_blank');
+        navigerMedAktivBrukerIModia(lenke, fnr);
     };
 
     if (somKnapp) {

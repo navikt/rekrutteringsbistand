@@ -2,7 +2,7 @@ import { BodyShort, Label, Link } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import LenkeTilAktivitetsplan from '../../../komponenter/lenke-til-aktivitetsplan/LenkeTilAktivitetsplan';
+import LenkeTilAktivitetsplan from '../../../kandidatside/komponenter/lenker/LenkeTilAktivitetsplan';
 import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
 import css from './MerInfo.module.css';
 

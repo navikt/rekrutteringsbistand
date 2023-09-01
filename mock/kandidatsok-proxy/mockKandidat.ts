@@ -25,6 +25,7 @@ export const mockKandidat: Kandidat = {
     // Geografi
     kommunenummer: 301,
     kommunenummerstring: '0301',
+    kommuneNavn: 'Vestvågøy',
     postnummer: '0662',
     poststed: 'OSLO',
     adresselinje1: 'Sannergata 2',
@@ -59,7 +60,7 @@ export const mockKandidat: Kandidat = {
         },
     ],
     geografiJobbonsker: [
-        {
+        /*{
             geografiKodeTekst: 'Geiranger',
             geografiKode: '1000',
         },
@@ -67,6 +68,7 @@ export const mockKandidat: Kandidat = {
             geografiKodeTekst: 'Larvik',
             geografiKode: 'NO07.0712',
         },
+        */
     ],
     arbeidsdagerJobbonskerObj: [],
     oppstartKode: Oppstartkode.EtterAvtale,
@@ -536,7 +538,6 @@ export const mockKandidat: Kandidat = {
     doed: false,
     frKode: '0',
     fylkeNavn: 'Nordland',
-    kommuneNavn: 'Vestvågøy',
     kommunenummerkw: 301,
     fodselsdatoErDnr: false,
     synligForArbeidsgiverSok: true,
