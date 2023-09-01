@@ -12,6 +12,7 @@ import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/Kandidate
 import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import { Miljø, getMiljø } from 'felles/miljø';
 import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
+import useNavKontor from 'felles/store/navKontor';
 import Sidelaster from '../../../../felles/komponenter/sidelaster/Sidelaster';
 import { SearchApiError } from '../../../api/fetchUtils';
 import Modal from '../../../komponenter/modal/Modal';
@@ -34,7 +35,6 @@ type Props = {
     vis: boolean;
     stillingsId: string | null;
     kandidatliste: Kandidatliste;
-    valgtNavKontor: string | null;
     onClose: () => void;
 };
 
@@ -43,9 +43,10 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
     onClose,
     kandidatliste,
     stillingsId,
-    valgtNavKontor,
 }) => {
     const dispatch = useDispatch();
+    const valgtNavKontor = useNavKontor((state) => state.navKontor);
+
     const [fnr, setFnr] = useState<string>('');
     const [feilmelding, setFeilmelding] = useState<string | null>(null);
     const [erAlleredeLagtTil, setAlleredeLagtTil] = useState<boolean>(false);

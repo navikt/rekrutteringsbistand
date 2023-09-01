@@ -1,17 +1,16 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import kandidatlisteReducer from '../kandidatliste/reducer/kandidatlisteReducer';
+import kandidatlisteSaga from '../kandidatliste/reducer/kandidatlisteSaga';
+import listeoversiktReducer from '../kandidatlisteoversikt/reducer/listeoversiktReducer';
+import listeoversiktSaga from '../kandidatlisteoversikt/reducer/listeoversiktSaga';
 import cvReducer, { cvSaga } from '../kandidatside/cv/reducer/cvReducer';
+import { historikkReducer, historikkSaga } from '../kandidatside/historikk/historikkReducer';
 import enhetsregisterReducer, {
     enhetsregisterSaga,
 } from '../komponenter/typeahead/enhetsregisterReducer';
-import { historikkReducer, historikkSaga } from '../kandidatside/historikk/historikkReducer';
-import kandidatlisteReducer from '../kandidatliste/reducer/kandidatlisteReducer';
-import listeoversiktReducer from '../kandidatlisteoversikt/reducer/listeoversiktReducer';
-import valgtNavKontorReducer from './navKontorReducer';
-import errorReducer from './errorReducer';
-import kandidatlisteSaga from '../kandidatliste/reducer/kandidatlisteSaga';
-import listeoversiktSaga from '../kandidatlisteoversikt/reducer/listeoversiktSaga';
 import varslingReducer, { varslingSaga } from '../varsling/varslingReducer';
+import errorReducer from './errorReducer';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -24,7 +23,6 @@ const store = legacy_createStore(
         historikk: historikkReducer,
         kandidatliste: kandidatlisteReducer,
         listeoversikt: listeoversiktReducer,
-        navKontor: valgtNavKontorReducer,
         varsling: varslingReducer,
         error: errorReducer,
     }),

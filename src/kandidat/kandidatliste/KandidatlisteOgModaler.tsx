@@ -287,7 +287,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                     onClose={this.onToggleLeggTilKandidatModal}
                     stillingsId={kandidatliste.stillingId}
                     kandidatliste={kandidatliste}
-                    valgtNavKontor={this.props.valgtNavKontor}
                 />
                 {kandidatliste.stillingId &&
                     this.props.sendteMeldinger.kind === Nettstatus.Suksess && (

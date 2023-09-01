@@ -1,10 +1,9 @@
+import { KandidatlisteState } from '../kandidatliste/reducer/kandidatlisteReducer';
 import { ListeoversiktState } from '../kandidatlisteoversikt/reducer/listeoversiktReducer';
 import { CvState } from '../kandidatside/cv/reducer/cvReducer';
 import { HistorikkState } from '../kandidatside/historikk/historikkReducer';
-import { KandidatlisteState } from '../kandidatliste/reducer/kandidatlisteReducer';
-import { NavKontorState } from './navKontorReducer';
-import { ErrorState } from './errorReducer';
 import { VarslingState } from '../varsling/varslingReducer';
+import { ErrorState } from './errorReducer';
 
 type AppState = {
     cv: CvState;
@@ -12,7 +11,6 @@ type AppState = {
     historikk: HistorikkState;
     kandidatliste: KandidatlisteState;
     listeoversikt: ListeoversiktState;
-    navKontor: NavKontorState;
     varsling: VarslingState;
     error: ErrorState;
 };

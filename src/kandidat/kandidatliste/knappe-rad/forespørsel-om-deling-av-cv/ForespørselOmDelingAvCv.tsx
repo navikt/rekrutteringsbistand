@@ -1,19 +1,20 @@
-import { ChangeEvent, FunctionComponent, MouseEvent, useEffect, useState } from 'react';
-import { Alert, BodyShort, Button, Heading, Label, Popover } from '@navikt/ds-react';
 import { BeaconSignalsIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Button, Heading, Label, Popover } from '@navikt/ds-react';
+import { ChangeEvent, FunctionComponent, MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ForespørselOutboundDto } from './Forespørsel';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
+import useNavKontor from 'felles/store/navKontor';
+import Modal from '../../../komponenter/modal/Modal';
 import AppState from '../../../state/AppState';
+import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
-import Modal from '../../../komponenter/modal/Modal';
-import useIkkeForespurteKandidater from './useIkkeForespurteKandidater';
-import VelgSvarfrist, { lagSvarfristPåSekundet, Svarfrist } from './VelgSvarfrist';
+import { ForespørselOutboundDto } from './Forespørsel';
 import css from './ForespørselOmDelingAvCv.module.css';
+import VelgSvarfrist, { Svarfrist, lagSvarfristPåSekundet } from './VelgSvarfrist';
+import useIkkeForespurteKandidater from './useIkkeForespurteKandidater';
 
 type Props = {
     stillingsId: string;
@@ -22,8 +23,8 @@ type Props = {
 
 const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, markerteKandidater }) => {
     const dispatch = useDispatch();
+    const valgtNavKontor = useNavKontor((state) => state.navKontor);
 
-    const { valgtNavKontor } = useSelector((state: AppState) => state.navKontor);
     const { sendForespørselOmDelingAvCv } = useSelector((state: AppState) => state.kandidatliste);
     const [modalErÅpen, setModalErÅpen] = useState<boolean>(false);
     const [svarfrist, setSvarfrist] = useState<Svarfrist>(Svarfrist.ToDager);

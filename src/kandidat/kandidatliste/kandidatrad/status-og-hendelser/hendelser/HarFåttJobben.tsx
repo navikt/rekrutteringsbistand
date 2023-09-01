@@ -1,12 +1,12 @@
-import { FunctionComponent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import AppState from '../../../../state/AppState';
-import KandidatlisteActionType from '../../../reducer/KandidatlisteActionType';
-import FåttJobben from './FåttJobben';
 import {
     KandidatIKandidatliste,
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import useNavKontor from 'felles/store/navKontor';
+import { FunctionComponent } from 'react';
+import { useDispatch } from 'react-redux';
+import KandidatlisteActionType from '../../../reducer/KandidatlisteActionType';
+import FåttJobben from './FåttJobben';
 
 type Props = {
     kanEndre: boolean;
@@ -16,7 +16,7 @@ type Props = {
 
 const HarFåttJobben: FunctionComponent<Props> = ({ kanEndre, kandidatlisteId, kandidat }) => {
     const dispatch = useDispatch();
-    const valgtNavKontor = useSelector((state: AppState) => state.navKontor.valgtNavKontor);
+    const valgtNavKontor = useNavKontor((state) => state.navKontor);
 
     const endreUtfallForKandidat = (nyttUtfall: Kandidatutfall) => {
         dispatch({
