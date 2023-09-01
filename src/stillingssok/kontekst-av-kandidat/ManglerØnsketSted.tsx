@@ -1,8 +1,9 @@
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { Alert, BodyLong, Button, Heading } from '@navikt/ds-react';
+import { sendEvent } from 'felles/amplitude';
 import { dialogUrl } from 'felles/komponenter/lenker-til-modia/eksterneUrler';
 import navigerMedAktivBrukerIModia from 'felles/komponenter/lenker-til-modia/navigerMedAktivBrukerIModia';
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler, useEffect } from 'react';
 import css from './ManglerØnsketSted.module.css';
 
 type Props = {
@@ -13,8 +14,13 @@ const ManglerØnsketSted = ({ fnr }: Props) => {
     const handleClick: MouseEventHandler = async (event) => {
         event.preventDefault();
 
+        sendEvent('finn_stilling', 'gå_til_dialogen_i_modia');
         navigerMedAktivBrukerIModia(dialogUrl, fnr);
     };
+
+    useEffect(() => {
+        sendEvent('finn_stilling', 'mangler_ønsket_sted');
+    }, []);
 
     return (
         <Alert className={css.manglerØnsketSted} fullWidth variant="info">
