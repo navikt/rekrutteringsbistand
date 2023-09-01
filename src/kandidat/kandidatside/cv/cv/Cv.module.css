@@ -13,5 +13,5 @@
 
 .tekst {
     display: flex;
-    color: var(--a-text-subtle);
+    color: var(--a-text-default);
 }
