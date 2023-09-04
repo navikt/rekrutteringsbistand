@@ -1,5 +1,5 @@
 import { Button, TextField } from '@navikt/ds-react';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import css from './LeggTilEpostadresse.module.css';
 import { erGyldigEpost, inneholderSærnorskeBokstaver } from './epostValidering';
 
@@ -16,7 +16,9 @@ const LeggTilEpostadresse = ({ onLeggTil, feilmelding: feil }: Props) => {
         setFeilmelding(feil);
     }, [feil]);
 
-    const handleLeggTilClick = () => {
+    const handleLeggTilClick = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
         const feilmelding = validerEpostadresse(input);
 
         setFeilmelding(feilmelding);
@@ -28,7 +30,7 @@ const LeggTilEpostadresse = ({ onLeggTil, feilmelding: feil }: Props) => {
     };
 
     return (
-        <div className={css.leggTilEpostadresse}>
+        <form className={css.leggTilEpostadresse}>
             <TextField
                 type="email"
                 label="E-posten til arbeidsgiveren"
@@ -37,15 +39,17 @@ const LeggTilEpostadresse = ({ onLeggTil, feilmelding: feil }: Props) => {
                 onChange={(e) => setInput(e.target.value)}
                 error={feilmelding}
             />
-            <Button onClick={handleLeggTilClick}>Legg til</Button>
-        </div>
+            <Button type="submit" onClick={handleLeggTilClick}>
+                Legg til
+            </Button>
+        </form>
     );
 };
 
 const validerEpostadresse = (adresse: string): string | undefined => {
-    if (adresse.trim() === '') {
-        return 'Feltet er påkrevd';
-    } else if (!erGyldigEpost(adresse.trim())) {
+    const trimmet = adresse.trim();
+
+    if (trimmet.length === 0 || !erGyldigEpost(trimmet)) {
         return 'Oppgi en gyldig e-postadresse';
     } else if (inneholderSærnorskeBokstaver(adresse.trim())) {
         return 'Særnorske bokstaver i e-postadresse støttes ikke';

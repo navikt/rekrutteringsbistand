@@ -21,6 +21,7 @@ import Modal from '../../../komponenter/modal/Modal';
 import { VarslingActionType } from '../../../varsling/varslingReducer';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../domene/kandidatlisteUtils';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
+import ForhåndsvisningAvEpost from './ForhåndsvisningAvEpost';
 import LeggTilEpostadresse from './LeggTilEpostadresse';
 import css from './PresenterKandidaterModal.module.css';
 
@@ -56,6 +57,7 @@ const PresenterKandidaterModal = ({
         setMelding('');
         setDelestatus(Nettstatus.IkkeLastet);
         setEpostadresser([]);
+        setEpostFeilmelding(undefined);
     };
 
     const presenterKandidater = async (kandidatnumre: Array<string>) => {
@@ -202,7 +204,12 @@ const PresenterKandidaterModal = ({
                 <Accordion>
                     <Accordion.Item>
                         <Accordion.Header>Forhåndsvis e-posten</Accordion.Header>
-                        <Accordion.Content>TODO</Accordion.Content>
+                        <Accordion.Content className={css.forhåndsvisning}>
+                            <ForhåndsvisningAvEpost
+                                kandidatliste={kandidatliste}
+                                melding={melding}
+                            />
+                        </Accordion.Content>
                     </Accordion.Item>
                 </Accordion>
                 <div className={css.knapper}>
