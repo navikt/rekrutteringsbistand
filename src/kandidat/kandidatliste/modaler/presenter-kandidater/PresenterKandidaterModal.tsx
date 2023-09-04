@@ -195,7 +195,7 @@ const PresenterKandidaterModal = ({
                     <Textarea
                         label="Melding til arbeidsgiver (frivillig)"
                         value={melding}
-                        description="Sørg for at du ikke skriver noe sensitivt. For eksempel opplysninger om helse, soning, rus, eller informasjon om NAV-ytelser og oppfølging."
+                        description="Sørg for at du ikke skriver noe sensitivt, som opplysninger om helse, soning, rus, eller informasjon om ytelser og oppfølging i NAV."
                         onChange={(event) => setMelding(event.target.value)}
                     />
                 </div>
