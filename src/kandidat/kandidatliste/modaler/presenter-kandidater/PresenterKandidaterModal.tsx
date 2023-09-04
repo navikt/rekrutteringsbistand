@@ -62,6 +62,8 @@ const PresenterKandidaterModal = ({
     ]);
 
     const presenterKandidater = async (adresser: string[], kandidatnumre: Array<string>) => {
+        console.log('presenterKandidater');
+
         setDelestatus(Nettstatus.SenderInn);
 
         const response = await postDelteKandidater(
@@ -98,14 +100,14 @@ const PresenterKandidaterModal = ({
     const handleDelClick = () => {
         const validerteMailadresser = mailadresser.map(validerEpostadresse);
 
-        if (validerteMailadresser.some((adresse) => adresse.feilmelding)) {
-            setMailadresser(validerteMailadresser);
-        } else {
+        setMailadresser(validerteMailadresser);
+
+        if (!validerteMailadresser.some((adresse) => adresse.feilmelding)) {
             const ikkeTommeMailadresser = mailadresser
                 .map((adresse) => adresse.value)
                 .filter((mailadresse) => mailadresse.trim());
 
-            if (valgtNavKontor === null) {
+            if (valgtNavKontor !== null) {
                 const kandidaterSomSkalDeles = kandidaterMåGodkjenneDelingAvCv(kandidatliste)
                     ? kandidaterSomHarSvartJa.map((k) => k.kandidatnr)
                     : markerteKandidater.map((kandidat) => kandidat.kandidatnr);
@@ -258,8 +260,8 @@ const PresenterKandidaterModal = ({
     );
 };
 
-const validerEpostadresse = (adresse: Mailadresse) => {
-    if (adresse.id === 0 && !adresse.value.trim()) {
+const validerEpostadresse = (adresse: Mailadresse): Mailadresse => {
+    if (adresse.id === 0 && adresse.value.trim() === '') {
         return {
             ...adresse,
             feilmelding: 'Feltet er påkrevd',
@@ -276,7 +278,10 @@ const validerEpostadresse = (adresse: Mailadresse) => {
         };
     }
 
-    return adresse;
+    return {
+        id: adresse.id,
+        value: adresse.value,
+    };
 };
 
 const sendAmplitudeEventForPresentertKandidatliste = (

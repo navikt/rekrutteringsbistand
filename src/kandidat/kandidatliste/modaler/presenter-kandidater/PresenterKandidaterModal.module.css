@@ -9,29 +9,11 @@
 }
 
 .mailadresse {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     max-height: 100px;
-}
-
-.leggTilMailadressefelt {
-    color: var(--a-text-action);
-}
-
-.leggTilMailadressefelt:hover {
-    color: var(--a-text-action);
-    background-color: inherit;
-}
-
-.leggTilMailadressefelt:active:hover {
-    color: var(--a-text-action);
-    background-color: inherit;
 }
 
 .knapper {
     display: flex;
     gap: 1rem;
-}
-
-.feilmelding {
-    color: var(--a-text-danger);
 }
