@@ -2,7 +2,6 @@ import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
-import { erIkkeProd } from 'felles/miljø';
 import { Nettstatus } from 'felles/nettressurs';
 import { useEffect, useRef } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
@@ -30,7 +29,7 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
             const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 
-            if (fylker.length === 0 && kommuner.length === 0 && erIkkeProd) {
+            if (fylker.length === 0 && kommuner.length === 0) {
                 fylker = hentFylkeFraBosted(kommunenummerstring);
                 kommuner = hentKommuneFraBosted(kommunenummerstring, kommuneNavn);
 
