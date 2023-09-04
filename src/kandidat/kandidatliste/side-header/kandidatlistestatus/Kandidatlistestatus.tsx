@@ -1,19 +1,19 @@
-import { FunctionComponent } from 'react';
 import { BodyShort, Button, Label, Panel } from '@navikt/ds-react';
-import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
+import { FunctionComponent } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
-import AppState from '../../../state/AppState';
+import { PadlockLockedFillIcon, PadlockUnlockedFillIcon } from '@navikt/aksel-icons';
+import { Kandidatlistestatus as Status } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import KandidatlisteAction from '../../reducer/KandidatlisteAction';
+import AppState from '../../../state/AppState';
 import NudgeAvsluttOppdragModal from '../../modaler/NudgeAvsluttOppdragModal';
+import KandidatlisteAction from '../../reducer/KandidatlisteAction';
+import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
+import css from './Kandidatlistestatus.module.css';
 import { skalViseModal } from './skalViseAvsluttOppdragModal';
 import useLagreKandidatlisteIder from './useLagreKandidatlisteIder';
 import useSletteKandidatlisteIderFraLukkedata from './useSletteLagredeStillinger';
-import { Kandidatlistestatus as Status } from 'felles/domene/kandidatliste/Kandidatliste';
-import { PadlockLockedFillIcon, PadlockUnlockedFillIcon } from '@navikt/aksel-icons';
-import css from './Kandidatlistestatus.module.css';
 
 const kandidatlistestatusToDisplayName = (status: Status) => {
     return status === Status.Åpen ? 'Åpen' : 'Avsluttet';

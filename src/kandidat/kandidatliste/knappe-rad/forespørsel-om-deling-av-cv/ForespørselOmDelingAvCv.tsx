@@ -1,19 +1,18 @@
-import { ChangeEvent, FunctionComponent, MouseEvent, useEffect, useState } from 'react';
-import { Alert, BodyShort, Button, Heading, Label, Popover } from '@navikt/ds-react';
 import { BeaconSignalsIcon } from '@navikt/aksel-icons';
+import { Alert, BodyShort, Button, Label, Modal, Popover } from '@navikt/ds-react';
+import { ChangeEvent, FunctionComponent, MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ForespørselOutboundDto } from './Forespørsel';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import AppState from '../../../state/AppState';
+import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
-import Modal from '../../../komponenter/modal/Modal';
-import useIkkeForespurteKandidater from './useIkkeForespurteKandidater';
-import VelgSvarfrist, { lagSvarfristPåSekundet, Svarfrist } from './VelgSvarfrist';
+import { ForespørselOutboundDto } from './Forespørsel';
 import css from './ForespørselOmDelingAvCv.module.css';
+import VelgSvarfrist, { Svarfrist, lagSvarfristPåSekundet } from './VelgSvarfrist';
+import useIkkeForespurteKandidater from './useIkkeForespurteKandidater';
 
 type Props = {
     stillingsId: string;
@@ -159,40 +158,46 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
                 open={modalErÅpen}
                 aria-label="Del stillingen med de markerte kandidatene2"
                 className={css.foresporselOmDelingAvCvModal}
-                onClose={lukkModal}
+                onBeforeClose={lukkModal}
+                header={{
+                    heading: `Del med ${markerteKandidaterSomIkkeErForespurt.length} ${
+                        markerteKandidaterSomIkkeErForespurt.length === 1
+                            ? 'kandidat'
+                            : 'kandidater'
+                    } i aktivitetsplanen`,
+                }}
             >
-                <Heading size="medium" level="2" spacing>
-                    Del med {markerteKandidaterSomIkkeErForespurt.length}{' '}
-                    {markerteKandidaterSomIkkeErForespurt.length === 1 ? 'kandidat' : 'kandidater'}{' '}
-                    i aktivitetsplanen
-                </Heading>
-                {antallSpurtFraFør > 0 && (
-                    <Alert variant="warning" size="small" className={css.tidigereDelt}>
-                        Du har tidligere delt stillingen med {antallSpurtFraFør}{' '}
-                        {antallSpurtFraFør === 1 ? 'kandidat. Denne kandidaten' : 'kandidater. De'}{' '}
-                        vil ikke motta stillingen på nytt i aktivitetsplanen.
+                <Modal.Body>
+                    {antallSpurtFraFør > 0 && (
+                        <Alert variant="warning" size="small" className={css.tidigereDelt}>
+                            Du har tidligere delt stillingen med {antallSpurtFraFør}{' '}
+                            {antallSpurtFraFør === 1
+                                ? 'kandidat. Denne kandidaten'
+                                : 'kandidater. De'}{' '}
+                            vil ikke motta stillingen på nytt i aktivitetsplanen.
+                        </Alert>
+                    )}
+                    <BodyShort size="small" spacing>
+                        Det opprettes et stillingskort i Aktivitetsplanen. Kandidatene vil bli
+                        varslet på SMS, og kan svare "ja" eller "nei" til at CV-en skal bli delt med
+                        arbeidsgiver. Du vil se svaret i kandidatlisten.
+                    </BodyShort>
+                    <Alert variant="info" className={css.deltAdvarsel}>
+                        <Label size="small">
+                            Stillingsannonsen vil bli delt med kandidaten. Det er viktig at
+                            annonseteksten er informativ og lett å forstå.
+                        </Label>
                     </Alert>
-                )}
-                <BodyShort size="small" spacing>
-                    Det opprettes et stillingskort i Aktivitetsplanen. Kandidatene vil bli varslet
-                    på SMS, og kan svare "ja" eller "nei" til at CV-en skal bli delt med
-                    arbeidsgiver. Du vil se svaret i kandidatlisten.
-                </BodyShort>
-                <Alert variant="info" className={css.deltAdvarsel}>
-                    <Label size="small">
-                        Stillingsannonsen vil bli delt med kandidaten. Det er viktig at
-                        annonseteksten er informativ og lett å forstå.
-                    </Label>
-                </Alert>
-                <VelgSvarfrist
-                    svarfrist={svarfrist}
-                    onSvarfristChange={onSvarfristChange}
-                    egenvalgtFrist={egenvalgtFrist}
-                    egenvalgtFristFeilmelding={egenvalgtFristFeilmelding}
-                    onEgenvalgtFristChange={onEgenvalgtFristChange}
-                    onEgenvalgtFristFeilmeldingChange={onEgenvalgtFristFeilmeldingChange}
-                />
-                <div className={css.knapper}>
+                    <VelgSvarfrist
+                        svarfrist={svarfrist}
+                        onSvarfristChange={onSvarfristChange}
+                        egenvalgtFrist={egenvalgtFrist}
+                        egenvalgtFristFeilmelding={egenvalgtFristFeilmelding}
+                        onEgenvalgtFristChange={onEgenvalgtFristChange}
+                        onEgenvalgtFristFeilmeldingChange={onEgenvalgtFristFeilmeldingChange}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
                     <Button
                         onClick={onDelStillingMedKandidater}
                         variant="primary"
@@ -203,7 +208,7 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
                     <Button variant="secondary" onClick={lukkModal}>
                         Avbryt
                     </Button>
-                </div>
+                </Modal.Footer>
                 {sendForespørselOmDelingAvCv.kind === Nettstatus.Feil && (
                     <Alert variant="error" size="small" className={css.deltFeilmelding}>
                         <span>

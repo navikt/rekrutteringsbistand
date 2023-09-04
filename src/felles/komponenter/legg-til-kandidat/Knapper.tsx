@@ -1,6 +1,5 @@
+import { Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { Button } from '@navikt/ds-react';
-import css from './LeggTilKandidat.module.css';
 
 type Props = {
     onLeggTilClick?: () => void;
@@ -19,14 +18,14 @@ const Knapper: FunctionComponent<Props> = ({
     leggTilDisabled,
     avbrytDisabled,
 }) => (
-    <div className={css.knapper}>
+    <Modal.Footer>
         <Button onClick={onLeggTilClick} loading={leggTilSpinner} disabled={leggTilDisabled}>
             {leggTilTekst}
         </Button>
         <Button variant="secondary" onClick={onAvbrytClick} disabled={avbrytDisabled}>
             Avbryt
         </Button>
-    </div>
+    </Modal.Footer>
 );
 
 export default Knapper;

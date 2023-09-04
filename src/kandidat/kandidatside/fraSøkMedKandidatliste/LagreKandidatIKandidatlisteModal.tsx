@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -9,7 +9,6 @@ import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { postKandidatTilKandidatliste } from '../../api/api';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import Modal from '../../komponenter/modal/Modal';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import css from './LagreKandidatIKandidatlisteModal.module.css';
 
@@ -74,37 +73,43 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
     };
 
     return (
-        <Modal className={css.modal} open={vis} onClose={onClose} closeButton={false}>
-            <Heading level="1" size="medium">
-                Lagre kandidaten i kandidatlisten
-            </Heading>
-            {kandidatliste.kind === Nettstatus.LasterInn && <Sidelaster />}
-            {kandidatliste.kind === Nettstatus.Suksess && (
-                <>
-                    <BodyLong className={css.beskrivelse}>
-                        Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
-                        {kandidatliste.data.tittel}»?
-                    </BodyLong>
-                    <div className={css.knapper}>
-                        <Button
-                            loading={lagreKandidatStatus === Nettstatus.SenderInn}
-                            onClick={onBekreftClick(kandidatliste.data.kandidatlisteId)}
-                        >
-                            Lagre
-                        </Button>
-                        <Button
-                            variant="tertiary"
-                            disabled={lagreKandidatStatus === Nettstatus.SenderInn}
-                            onClick={onClose}
-                        >
-                            Avbryt
-                        </Button>
-                    </div>
-                </>
-            )}
-            {lagreKandidatStatus === Nettstatus.Feil && (
-                <BodyLong>Klarte ikke å lagre kandidat</BodyLong>
-            )}
+        <Modal
+            className={css.modal}
+            open={vis}
+            onClose={onClose}
+            header={{ heading: 'Lagre kandidaten i kandidatlisten', closeButton: false }}
+        >
+            <>
+                {kandidatliste.kind === Nettstatus.LasterInn && <Sidelaster />}
+                {kandidatliste.kind === Nettstatus.Suksess && (
+                    <>
+                        <Modal.Body>
+                            <BodyLong className={css.beskrivelse}>
+                                Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
+                                {kandidatliste.data.tittel}»?
+                            </BodyLong>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button
+                                loading={lagreKandidatStatus === Nettstatus.SenderInn}
+                                onClick={onBekreftClick(kandidatliste.data.kandidatlisteId)}
+                            >
+                                Lagre
+                            </Button>
+                            <Button
+                                variant="tertiary"
+                                disabled={lagreKandidatStatus === Nettstatus.SenderInn}
+                                onClick={onClose}
+                            >
+                                Avbryt
+                            </Button>
+                        </Modal.Footer>
+                    </>
+                )}
+                {lagreKandidatStatus === Nettstatus.Feil && (
+                    <BodyLong>Klarte ikke å lagre kandidat</BodyLong>
+                )}
+            </>
         </Modal>
     );
 };

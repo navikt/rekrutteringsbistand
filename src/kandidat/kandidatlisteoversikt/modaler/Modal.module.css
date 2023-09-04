@@ -20,9 +20,3 @@
 .feilmelding {
     margin-top: 0.25rem;
 }
-
-.knapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}

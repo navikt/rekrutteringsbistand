@@ -1,16 +1,16 @@
+import { BodyShort, Button, Detail, Modal, Textarea, TextField } from '@navikt/ds-react';
 import React, { ChangeEvent } from 'react';
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { BodyShort, Button, Detail, Textarea, TextField } from '@navikt/ds-react';
+import { Dispatch } from 'redux';
 
-import Typeahead from '../../komponenter/typeahead/Typeahead';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import {
-    FETCH_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
     CLEAR_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
+    FETCH_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
 } from '../../komponenter/typeahead/enhetsregisterReducer';
+import Typeahead from '../../komponenter/typeahead/Typeahead';
 import AppState from '../../state/AppState';
 import { capitalizeEmployerName, capitalizeLocation } from '../../utils/formateringUtils';
-import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './Modal.module.css';
 
 export type KandidatlisteDto = {
@@ -258,14 +258,14 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
                     onChange={this.onBeskrivelseChange}
                     error={this.validerBeskrivelse() ? undefined : 'Beskrivelsen er for lang'}
                 />
-                <div className={css.knapper}>
+                <Modal.Footer>
                     <Button onClick={this.validateAndSave} loading={saving} disabled={saving}>
                         {knappetekst}
                     </Button>
                     <Button variant="secondary" onClick={this.props.onClose} disabled={saving}>
                         Avbryt
                     </Button>
-                </div>
+                </Modal.Footer>
             </form>
         );
     }

@@ -1,13 +1,12 @@
+import { ErrorMessage, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ErrorMessage, Heading } from '@navikt/ds-react';
 
-import { feil, Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
-import { endreKandidatliste } from '../../api/api';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import { feil, Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { endreKandidatliste } from '../../api/api';
+import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import Kandidatlisteskjema, { KandidatlisteDto } from './Kandidatlisteskjema';
-import Modal from '../../komponenter/modal/Modal';
 import css from './Modal.module.css';
 
 type Props = {
@@ -46,18 +45,27 @@ const EndreModal: FunctionComponent<Props> = ({ kandidatliste, onClose }) => {
     };
 
     return (
-        <Modal open onClose={onClose} aria-label="Endre kandidatlisten" className={css.modal}>
-            <Heading level="2" size="medium" className={css.tittel}>
-                Endre kandidatlisten
-            </Heading>
-            <Kandidatlisteskjema
-                kandidatliste={kandidatliste}
-                onSave={oppdaterKandidatliste}
-                onClose={onClose}
-                saving={status.kind === Nettstatus.SenderInn}
-                knappetekst="Lagre endringer"
-            />
-            {status.kind === Nettstatus.Feil && <ErrorMessage>{status.error.message}</ErrorMessage>}
+        <Modal
+            open
+            onClose={() => onClose}
+            aria-label="Endre kandidatlisten"
+            className={css.modal}
+            header={{
+                heading: 'Endre kandidatlisten',
+            }}
+        >
+            <Modal.Body>
+                <Kandidatlisteskjema
+                    kandidatliste={kandidatliste}
+                    onSave={oppdaterKandidatliste}
+                    onClose={onClose}
+                    saving={status.kind === Nettstatus.SenderInn}
+                    knappetekst="Lagre endringer"
+                />
+                {status.kind === Nettstatus.Feil && (
+                    <ErrorMessage>{status.error.message}</ErrorMessage>
+                )}
+            </Modal.Body>
         </Modal>
     );
 };

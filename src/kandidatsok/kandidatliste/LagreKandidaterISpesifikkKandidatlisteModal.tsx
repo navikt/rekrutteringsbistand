@@ -1,11 +1,11 @@
-import { BodyLong, Button, Heading, Loader, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Loader, Modal } from '@navikt/ds-react';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useState } from 'react';
 import { lagreKandidaterIKandidatliste } from '../api/api';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from './LagreKandidaterIMineKandidatlisterModal';
 import css from './LagreKandidaterISpesifikkKandidatlisteModal.module.css';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     vis: boolean;
@@ -51,21 +51,27 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
     };
 
     return (
-        <Modal open={vis} onClose={onClose} closeButton={false}>
+        <Modal
+            open={vis}
+            onClose={onClose}
+            header={{
+                heading: `Lagre ${markerteKandidater.size} kandidat
+            ${markerteKandidater.size > 1 ? 'er' : ''} i kandidatlisten`,
+                closeButton: false,
+            }}
+        >
             <div className={css.innhold}>
-                <Heading level="1" size="medium">
-                    Lagre {markerteKandidater.size} kandidat
-                    {markerteKandidater.size > 1 ? 'er' : ''} i kandidatlisten
-                </Heading>
                 {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind ===
                     Nettstatus.LasterInn && <Loader />}
                 {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === Nettstatus.Suksess && (
                     <>
-                        <BodyLong className={css.beskrivelse}>
-                            Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
-                            {kontekstAvKandidatlisteEllerStilling.kandidatliste.data.tittel}»?
-                        </BodyLong>
-                        <div className={css.knapper}>
+                        <Modal.Body>
+                            <BodyLong className={css.beskrivelse}>
+                                Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
+                                {kontekstAvKandidatlisteEllerStilling.kandidatliste.data.tittel}»?
+                            </BodyLong>
+                        </Modal.Body>
+                        <Modal.Footer>
                             <Button
                                 variant="primary"
                                 onClick={onBekreftClick(
@@ -84,7 +90,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                             >
                                 Avbryt
                             </Button>
-                        </div>
+                        </Modal.Footer>
                     </>
                 )}
                 {lagreKandidater.kind === Nettstatus.Feil && (

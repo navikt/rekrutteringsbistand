@@ -1,12 +1,11 @@
+import { Button, Modal, TextField } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Button, Heading, TextField } from '@navikt/ds-react';
 
-import { RESET_STYRK_THREE, SET_STRYK_SEARCH_STRING, TOGGLE_STYRK_MODAL } from './styrkReducer';
-import StyrkThree from './StyrkThree';
-import Modal from '../../../../common/modal/Modal';
 import css from './StyrkModal.module.css';
+import StyrkThree from './StyrkThree';
+import { RESET_STYRK_THREE, SET_STRYK_SEARCH_STRING, TOGGLE_STYRK_MODAL } from './styrkReducer';
 
 class StyrkModal extends React.Component {
     onInputChange = (e) => {
@@ -24,11 +23,11 @@ class StyrkModal extends React.Component {
                 className={css.modal}
                 onClose={this.props.toggleList}
                 aria-label="Søk etter STYRK"
+                header={{
+                    heading: 'Velg STYRK',
+                }}
             >
                 <div className={css.header}>
-                    <Heading spacing level="2" size="medium" className={css.headerTitle}>
-                        Velg STYRK
-                    </Heading>
                     <div className={css.headerFlex}>
                         <TextField
                             hideLabel

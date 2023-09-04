@@ -1,4 +1,4 @@
-import { Alert, Heading, TextField } from '@navikt/ds-react';
+import { Alert, Modal, TextField } from '@navikt/ds-react';
 import fnrValidator from '@navikt/fnrvalidator';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,6 @@ import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import Sidelaster from '../../../../felles/komponenter/sidelaster/Sidelaster';
 import { SearchApiError } from '../../../api/fetchUtils';
-import Modal from '../../../komponenter/modal/Modal';
 import { Miljø, getMiljø } from '../../../utils/miljøUtils';
 import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
@@ -153,66 +152,69 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
     return (
         <Modal
             open={vis}
-            onClose={onClose}
+            onBeforeClose={onClose}
             aria-label="Legg til kandidat-modal"
             className={css.modal}
+            header={{
+                heading: 'Legg til kandidat',
+                closeButton: true,
+            }}
         >
-            <Heading spacing level="2" size="medium">
-                Legg til kandidat
-            </Heading>
-
-            <Alert variant="warning" className={css.advarsel}>
-                Før du legger en kandidat på kandidatlisten må du undersøke om personen oppfyller
-                kravene som er nevnt i stillingen.
-            </Alert>
-
-            <TextField
-                autoFocus
-                value={fnr}
-                size="medium"
-                onChange={onFnrChange}
-                placeholder="11 siffer"
-                label="Fødselsnummer på kandidaten"
-                error={feilmelding}
-                className={css.fødselsnummer}
-            />
-
-            {erAlleredeLagtTil && (
-                <Alert variant="info" className={css.advarsel}>
-                    Finner du ikke kandidaten i kandidatlisten? Husk å sjekk om kandidaten er
-                    slettet ved å huke av "Vis kun slettede".
+            <Modal.Body>
+                <Alert variant="warning" className={css.advarsel}>
+                    Før du legger en kandidat på kandidatlisten må du undersøke om personen
+                    oppfyller kravene som er nevnt i stillingen.
                 </Alert>
-            )}
 
-            {(fnrSøk.kind === Nettstatus.LasterInn ||
-                synlighetsevaluering.kind === Nettstatus.LasterInn) && <Sidelaster size="large" />}
-
-            {fnrSøk.kind === Nettstatus.Suksess && (
-                <BekreftMedNotat
-                    fnr={fnr}
-                    kandidat={fnrSøk.data}
-                    kandidatliste={kandidatliste}
-                    onAvbryt={nullstillOgLukk}
-                    onBekreft={handleBekreft}
-                    onOppdatertKandidatliste={handleOppdatertKandidatliste}
+                <TextField
+                    autoFocus
+                    value={fnr}
+                    size="medium"
+                    onChange={onFnrChange}
+                    placeholder="11 siffer"
+                    label="Fødselsnummer på kandidaten"
+                    error={feilmelding}
+                    className={css.fødselsnummer}
                 />
-            )}
 
-            {fnrSøk.kind === Nettstatus.FinnesIkke &&
-                synlighetsevaluering.kind === Nettstatus.Suksess && (
-                    <KandidatenFinnesIkke synlighetsevaluering={synlighetsevaluering.data} />
+                {erAlleredeLagtTil && (
+                    <Alert variant="info" className={css.advarsel}>
+                        Finner du ikke kandidaten i kandidatlisten? Husk å sjekk om kandidaten er
+                        slettet ved å huke av "Vis kun slettede".
+                    </Alert>
                 )}
 
-            {fnrSøk.kind === Nettstatus.FinnesIkke && (
-                <InformasjonOmUsynligKandidat
-                    fnr={fnr}
-                    kandidatliste={kandidatliste}
-                    stillingsId={stillingsId}
-                    valgtNavKontor={valgtNavKontor}
-                    onClose={onClose}
-                />
-            )}
+                {(fnrSøk.kind === Nettstatus.LasterInn ||
+                    synlighetsevaluering.kind === Nettstatus.LasterInn) && (
+                    <Sidelaster size="large" />
+                )}
 
+                {fnrSøk.kind === Nettstatus.Suksess && (
+                    <BekreftMedNotat
+                        fnr={fnr}
+                        kandidat={fnrSøk.data}
+                        kandidatliste={kandidatliste}
+                        onAvbryt={nullstillOgLukk}
+                        onBekreft={handleBekreft}
+                        onOppdatertKandidatliste={handleOppdatertKandidatliste}
+                    />
+                )}
+
+                {fnrSøk.kind === Nettstatus.FinnesIkke &&
+                    synlighetsevaluering.kind === Nettstatus.Suksess && (
+                        <KandidatenFinnesIkke synlighetsevaluering={synlighetsevaluering.data} />
+                    )}
+
+                {fnrSøk.kind === Nettstatus.FinnesIkke && (
+                    <InformasjonOmUsynligKandidat
+                        fnr={fnr}
+                        kandidatliste={kandidatliste}
+                        stillingsId={stillingsId}
+                        valgtNavKontor={valgtNavKontor}
+                        onClose={onClose}
+                    />
+                )}
+            </Modal.Body>
             {fnrSøk.kind !== Nettstatus.Suksess && fnrSøk.kind !== Nettstatus.FinnesIkke && (
                 <Knapper leggTilDisabled onAvbrytClick={onClose} />
             )}
