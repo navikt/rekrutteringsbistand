@@ -1,9 +1,10 @@
+import { PlusIcon } from '@navikt/aksel-icons';
 import {
     Alert,
     BodyLong,
     Button,
+    ErrorMessage,
     Heading,
-    Label,
     Link,
     TextField,
     Textarea,
@@ -13,7 +14,7 @@ import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandida
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
 import useNavKontor from 'felles/store/navKontor';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { postDelteKandidater } from '../../../api/api';
 import Modal from '../../../komponenter/modal/Modal';
@@ -61,9 +62,27 @@ const PresenterKandidaterModal = ({
         },
     ]);
 
-    const presenterKandidater = async (adresser: string[], kandidatnumre: Array<string>) => {
-        console.log('presenterKandidater');
+    useEffect(() => {
+        if (vis === true) {
+            setMailadresser(
+                mailadresser.filter((adresse) => adresse.id === 0 || adresse.value !== '')
+            );
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vis]);
 
+    const resetState = () => {
+        setBeskjed('');
+        setDelestatus(Nettstatus.IkkeLastet);
+        setMailadresser([
+            {
+                id: 0,
+                value: '',
+            },
+        ]);
+    };
+
+    const presenterKandidater = async (adresser: string[], kandidatnumre: Array<string>) => {
         setDelestatus(Nettstatus.SenderInn);
 
         const response = await postDelteKandidater(
@@ -74,15 +93,15 @@ const PresenterKandidaterModal = ({
             valgtNavKontor
         );
 
-        if (response.ok) {
-            setDelestatus(Nettstatus.Suksess);
+        if (response.kind === Nettstatus.Suksess) {
+            setDelestatus(Nettstatus.IkkeLastet);
 
             const prefix = markerteKandidater.length > 1 ? 'Kandidatene' : 'Kandidaten';
             const melding = prefix + ' er delt med arbeidsgiver';
 
             dispatch({
                 type: KandidatlisteActionType.PresenterKandidaterSuccess,
-                kandidatliste: response,
+                kandidatliste: response.data,
             });
 
             dispatch({
@@ -92,7 +111,12 @@ const PresenterKandidaterModal = ({
 
             sendAmplitudeEventForPresentertKandidatliste(kandidatliste, kandidatnumre);
             onClose(true);
+            resetState();
         } else {
+            if (response.kind === Nettstatus.Feil) {
+                console.error('Det skjedde en feil:', response.error.message);
+            }
+
             setDelestatus(Nettstatus.Feil);
         }
     };
@@ -226,8 +250,10 @@ const PresenterKandidaterModal = ({
                         size="small"
                         onClick={leggTilMailadressefelt}
                         className={css.leggTilMailadressefelt}
+                        aria-label="Legg til flere e-postadresser"
+                        icon={<PlusIcon aria-hidden />}
                     >
-                        + Legg til flere
+                        Legg til flere
                     </Button>
                 </div>
                 <div>
@@ -251,9 +277,7 @@ const PresenterKandidaterModal = ({
                     </Button>
                 </div>
                 {delestatus === Nettstatus.Feil && (
-                    <Label size="small" className={css.feilmelding}>
-                        Kunne ikke dele med arbeidsgiver akkurat nå
-                    </Label>
+                    <ErrorMessage>Kunne ikke dele med arbeidsgiver akkurat nå</ErrorMessage>
                 )}
             </div>
         </Modal>

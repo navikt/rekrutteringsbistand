@@ -116,7 +116,18 @@ export const kandidatApiMock = [
         todo
     ),
 
-    rest.post(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/deltekandidater`, todo),
+    rest.post(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/deltekandidater`,
+        (req, res, ctx) => {
+            const kandidatlisteUtenStilling = mockAlleKandidatlister.find(
+                (liste) => liste.kandidatlisteId === req.params.kandidatlisteId
+            );
+
+            return res(
+                kandidatlisteUtenStilling ? ctx.json(kandidatlisteUtenStilling) : ctx.status(404)
+            );
+        }
+    ),
 
     rest.get(`${api.kandidat}/veileder/kandidater/navn`, todo),
 
