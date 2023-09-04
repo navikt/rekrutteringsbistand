@@ -2,7 +2,6 @@ import { FunctionComponent } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { Tabs } from '@navikt/ds-react';
 
-import { PersonEnvelopeIcon, Chat2Icon } from '@navikt/aksel-icons';
 import FraKandidatliste from './fraKandidatliste/FraKandidatliste';
 import FraSøkUtenKontekst from './fraSøkUtenKontekst/FraSøkUtenKontekst';
 import Sidefeil from '../komponenter/sidefeil/Sidefeil';
@@ -68,8 +67,8 @@ const Kandidatside: FunctionComponent = () => {
 
 const Faner = () => (
     <Tabs.List>
-        <Tabs.Tab icon={<PersonEnvelopeIcon />} value="cv" label="CV og Jobbprofil" />
-        <Tabs.Tab icon={<Chat2Icon />} value="historikk" label="Historikk" />
+        <Tabs.Tab value="cv" label="Oversikt" />
+        <Tabs.Tab value="historikk" label="Historikk" />
     </Tabs.List>
 );
 

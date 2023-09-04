@@ -1,5 +1,6 @@
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import { Nettstatus } from 'felles/nettressurs';
+import ManglerØnsketSted from './ManglerØnsketSted';
 import useKandidatStillingssøk from './useKandidatStillingssøk';
 
 type Props = {
@@ -7,7 +8,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
-    const kandidat = useKandidatStillingssøk(kandidatnr);
+    const { kandidat, hentetGeografiFraBosted } = useKandidatStillingssøk(kandidatnr);
 
     let brødsmulesti = undefined;
     if (kandidat.kind === Nettstatus.Suksess) {
@@ -29,7 +30,17 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
         brødsmulesti = [];
     }
 
-    return <Kandidatbanner kandidat={kandidat} brødsmulesti={brødsmulesti} />;
+    return (
+        <Kandidatbanner
+            kandidat={kandidat}
+            brødsmulesti={brødsmulesti}
+            nederst={
+                hentetGeografiFraBosted && kandidat.kind === Nettstatus.Suksess ? (
+                    <ManglerØnsketSted fnr={kandidat.data.fodselsnummer} />
+                ) : undefined
+            }
+        />
+    );
 };
 
 export default KontekstAvKandidat;

@@ -1,62 +1,56 @@
 .wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    gap: 1.5rem;
+    width: 100%;
+    padding: 0 2rem;
+    background-color: white;
+    padding-bottom: 0.5rem;
 }
 
 .meny {
     display: flex;
-    align-items: center;
-    gap: 2rem;
-    width: 100%;
-    padding: 0 1rem;
-    background-color: white;
-    border-bottom: 2px solid var(--a-border-divider);
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--a-border-divider);
+    max-width: var(--innhold-maksbredde);
+    margin: 0 auto;
 }
 
 .faner :global(.navds-tabs__tablist-wrapper) {
     box-shadow: none;
 }
 
+.faner :global(.navds-tabs__tablist) {
+    width: 100%;
+}
+
+.faner :global(.navds-tabs__tab) {
+    flex: 1;
+}
+
 .faner button {
     min-height: 4rem;
 }
 
-.lenkerIMeny {
-    display: none;
-}
-
-.lenkerUnderMeny {
-    padding: 0 1rem;
-}
-
-.venstre {
+.menyvalg {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.høyre {
-    margin-left: auto;
+@media (min-width: 780px) {
+    .faner :global(.navds-tabs__tab) {
+        flex: unset;
+    }
+
+    .menyvalg {
+        flex-direction: row;
+        align-items: center;
+    }
 }
 
 @media (min-width: 1000px) {
-    .lenkerIMeny {
-        display: unset;
-    }
-
-    .lenkerUnderMeny {
-        display: none;
-    }
-
-    .wrapper {
-        margin: 2rem;
-    }
-
     .meny {
-        max-width: var(--kandidatsokInnholdBredde);
-        margin: 0 auto;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 }

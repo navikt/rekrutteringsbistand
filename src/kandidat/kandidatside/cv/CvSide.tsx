@@ -61,14 +61,14 @@ const CvSide: FunctionComponent = () => {
                             <Jobbønsker cv={cv.data} />
                             <Sammendrag cv={cv.data} />
                             <Kompetanse cv={cv.data} />
-                            <Erfaringer cv={cv.data} />
                             <Utdanning cv={cv.data} />
                             <Fagbrev cv={cv.data} />
+                            <Erfaringer cv={cv.data} />
                         </div>
                         <div className={css.kolonne}>
                             <Førerkort cv={cv.data} />
-                            <Språk cv={cv.data} />
                             <Godkjenninger cv={cv.data} />
+                            <Språk cv={cv.data} />
                             <Kurs cv={cv.data} />
                         </div>
                     </div>

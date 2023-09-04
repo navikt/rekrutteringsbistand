@@ -19,7 +19,7 @@ export const mockKandidatIKandidatliste: KandidatIKandidatliste[] = [
         fodselsdato: mockKandidat.fodselsdato,
         fodselsnr: mockKandidat.fodselsnummer,
         fornavn: mockKandidat.fornavn,
-        innsatsgruppe: mockKandidat.kvalifiseringsgruppekode,
+        innsatsgruppe: 'Situasjonsbestemt innsats',
         lagtTilAv: {
             ident: mockMeg.navIdent,
             navn: 'Varg Veileder',
