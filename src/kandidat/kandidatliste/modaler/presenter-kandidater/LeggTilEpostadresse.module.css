@@ -1,0 +1,9 @@
+.leggTilEpostadresse {
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+}
+
+.leggTilEpostadresse button {
+    margin-top: 3.6rem;
+}

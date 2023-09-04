@@ -1,12 +1,12 @@
-import { PlusIcon } from '@navikt/aksel-icons';
 import {
+    Accordion,
     Alert,
     BodyLong,
     Button,
+    Chips,
     ErrorMessage,
     Heading,
     Link,
-    TextField,
     Textarea,
 } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
@@ -14,15 +14,15 @@ import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandida
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
 import useNavKontor from 'felles/store/navKontor';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { postDelteKandidater } from '../../../api/api';
 import Modal from '../../../komponenter/modal/Modal';
 import { VarslingActionType } from '../../../varsling/varslingReducer';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../domene/kandidatlisteUtils';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
+import LeggTilEpostadresse from './LeggTilEpostadresse';
 import css from './PresenterKandidaterModal.module.css';
-import { erGyldigEpost, inneholderSærnorskeBokstaver } from './epostValidering';
 
 const rutinerForDeling =
     'https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Del-stillinger-med-kandidater-i-Aktivitetsplanen.aspx#har-du-ringt-kandidaten-istedenfor-%C3%A5-dele-i-aktivitetsplanen';
@@ -34,12 +34,6 @@ type Props = {
     kandidaterSomHarSvartJa: KandidatIKandidatliste[];
     alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere: boolean;
     kandidatliste: Kandidatliste;
-};
-
-type Mailadresse = {
-    id: number;
-    value: string;
-    feilmelding?: string;
 };
 
 const PresenterKandidaterModal = ({
@@ -54,48 +48,28 @@ const PresenterKandidaterModal = ({
     const valgtNavKontor = useNavKontor((state) => state.navKontor);
 
     const [delestatus, setDelestatus] = useState<Nettstatus>(Nettstatus.IkkeLastet);
-    const [beskjed, setBeskjed] = useState<string>('');
-    const [mailadresser, setMailadresser] = useState<Mailadresse[]>([
-        {
-            id: 0,
-            value: '',
-        },
-    ]);
-
-    useEffect(() => {
-        if (vis === true) {
-            setMailadresser(
-                mailadresser.filter((adresse) => adresse.id === 0 || adresse.value !== '')
-            );
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [vis]);
+    const [melding, setMelding] = useState<string>('');
+    const [epostadresser, setEpostadresser] = useState<string[]>([]);
+    const [epostFeilmelding, setEpostFeilmelding] = useState<string | undefined>();
 
     const resetState = () => {
-        setBeskjed('');
+        setMelding('');
         setDelestatus(Nettstatus.IkkeLastet);
-        setMailadresser([
-            {
-                id: 0,
-                value: '',
-            },
-        ]);
+        setEpostadresser([]);
     };
 
-    const presenterKandidater = async (adresser: string[], kandidatnumre: Array<string>) => {
+    const presenterKandidater = async (kandidatnumre: Array<string>) => {
         setDelestatus(Nettstatus.SenderInn);
 
         const response = await postDelteKandidater(
-            beskjed,
-            adresser,
+            melding,
+            epostadresser,
             kandidatliste.kandidatlisteId,
             kandidatnumre,
             valgtNavKontor
         );
 
         if (response.kind === Nettstatus.Suksess) {
-            setDelestatus(Nettstatus.IkkeLastet);
-
             const prefix = markerteKandidater.length > 1 ? 'Kandidatene' : 'Kandidaten';
             const melding = prefix + ' er delt med arbeidsgiver';
 
@@ -110,8 +84,9 @@ const PresenterKandidaterModal = ({
             });
 
             sendAmplitudeEventForPresentertKandidatliste(kandidatliste, kandidatnumre);
-            onClose(true);
             resetState();
+
+            onClose(true);
         } else {
             if (response.kind === Nettstatus.Feil) {
                 console.error('Det skjedde en feil:', response.error.message);
@@ -122,49 +97,29 @@ const PresenterKandidaterModal = ({
     };
 
     const handleDelClick = () => {
-        const validerteMailadresser = mailadresser.map(validerEpostadresse);
-
-        setMailadresser(validerteMailadresser);
-
-        if (!validerteMailadresser.some((adresse) => adresse.feilmelding)) {
-            const ikkeTommeMailadresser = mailadresser
-                .map((adresse) => adresse.value)
-                .filter((mailadresse) => mailadresse.trim());
-
-            if (valgtNavKontor !== null) {
+        if (valgtNavKontor !== null) {
+            if (epostadresser.length > 0) {
                 const kandidaterSomSkalDeles = kandidaterMåGodkjenneDelingAvCv(kandidatliste)
                     ? kandidaterSomHarSvartJa.map((k) => k.kandidatnr)
                     : markerteKandidater.map((kandidat) => kandidat.kandidatnr);
 
-                presenterKandidater(ikkeTommeMailadresser, kandidaterSomSkalDeles);
+                presenterKandidater(kandidaterSomSkalDeles);
+            } else {
+                setEpostFeilmelding('Oppgi minst én e-postadresse');
             }
         }
     };
 
-    const onMailadresseChange = (id: number) => (event: ChangeEvent<HTMLInputElement>) => {
-        setMailadresser(
-            mailadresser.map((mailadresseFelt) => {
-                if (mailadresseFelt.id === id) {
-                    return {
-                        ...mailadresseFelt,
-                        value: event.target.value,
-                    };
-                }
+    const handleLeggTilEpost = (adresse: string) => {
+        const adresserUtenDuplikater = new Set([...epostadresser, adresse]);
 
-                return mailadresseFelt;
-            })
-        );
+        console.log('Hey ho:', Array.from(adresserUtenDuplikater));
+
+        setEpostadresser(Array.from(adresserUtenDuplikater));
     };
 
-    const leggTilMailadressefelt = () => {
-        const id = mailadresser.length;
-
-        setMailadresser(
-            mailadresser.concat({
-                id,
-                value: '',
-            })
-        );
+    const handleSlettEpost = (index: number) => {
+        setEpostadresser(epostadresser.filter((_, searchIndex) => searchIndex !== index));
     };
 
     const antallSomSkalDeles = alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere
@@ -173,8 +128,6 @@ const PresenterKandidaterModal = ({
 
     const antallKandidaterSomIkkeKanDeles =
         markerteKandidater.length - kandidaterSomHarSvartJa.length;
-
-    const [førsteMailadresse, ...andreMailadresser] = mailadresser;
 
     return (
         <Modal
@@ -215,65 +168,54 @@ const PresenterKandidaterModal = ({
                     </Alert>
                 )}
                 <BodyLong>
-                    Arbeidsgiveren du deler listen med vil motta en e-post med navn på stilling og
-                    lenke for å logge inn. Etter innlogging kan arbeidsgiveren se kandidatlisten.
+                    Send en e-post med {antallSomSkalDeles} kandidater med arbeidsgiveren.
                 </BodyLong>
-                <div className={css.mailadresser}>
-                    <TextField
-                        type="email"
-                        className={css.mailadresse}
-                        label={'E-postadresse til arbeidsgiver (må fylles ut)'}
-                        placeholder={'For eksempel: kari.nordmann@firma.no'}
-                        value={førsteMailadresse.value}
-                        onChange={onMailadresseChange(førsteMailadresse.id)}
-                        error={
-                            førsteMailadresse.feilmelding
-                                ? førsteMailadresse.feilmelding
-                                : undefined
-                        }
+
+                <div className={css.epostadresser}>
+                    <LeggTilEpostadresse
+                        onLeggTil={handleLeggTilEpost}
+                        feilmelding={epostFeilmelding}
                     />
 
-                    {andreMailadresser.map((adressefelt) => (
-                        <TextField
-                            type="email"
-                            hideLabel
-                            label={`Mailadresse ${adressefelt.id + 1}`}
-                            className={css.mailadresse}
-                            key={adressefelt.id}
-                            value={adressefelt.value}
-                            onChange={onMailadresseChange(adressefelt.id)}
-                            error={adressefelt.feilmelding}
-                        />
-                    ))}
-                    <Button
-                        variant="secondary"
-                        size="small"
-                        onClick={leggTilMailadressefelt}
-                        className={css.leggTilMailadressefelt}
-                        aria-label="Legg til flere e-postadresser"
-                        icon={<PlusIcon aria-hidden />}
-                    >
-                        Legg til flere
-                    </Button>
+                    {epostadresser.length > 0 && (
+                        <Chips>
+                            {epostadresser.map((adresse, index) => (
+                                <Chips.Removable
+                                    key={adresse}
+                                    onDelete={() => handleSlettEpost(index)}
+                                >
+                                    {adresse}
+                                </Chips.Removable>
+                            ))}
+                        </Chips>
+                    )}
                 </div>
+
                 <div>
                     <Textarea
-                        label="Melding til arbeidsgiver"
-                        value={beskjed}
-                        onChange={(event) => setBeskjed(event.target.value)}
+                        label="Melding til arbeidsgiver (frivillig)"
+                        value={melding}
+                        description="Sørg for at du ikke skriver noe sensitivt. For eksempel opplysninger om helse, soning, rus, eller informasjon om NAV-ytelser og oppfølging."
+                        onChange={(event) => setMelding(event.target.value)}
                     />
                 </div>
+                <Accordion>
+                    <Accordion.Item>
+                        <Accordion.Header>Forhåndsvis e-posten</Accordion.Header>
+                        <Accordion.Content>TODO</Accordion.Content>
+                    </Accordion.Item>
+                </Accordion>
                 <div className={css.knapper}>
+                    <Button variant="secondary" onClick={() => onClose(false)}>
+                        Avbryt
+                    </Button>
                     <Button
                         variant="primary"
                         disabled={delestatus === Nettstatus.SenderInn}
                         loading={delestatus === Nettstatus.SenderInn}
                         onClick={handleDelClick}
                     >
-                        Del
-                    </Button>
-                    <Button variant="secondary" onClick={() => onClose(false)}>
-                        Avbryt
+                        Del kandidatene
                     </Button>
                 </div>
                 {delestatus === Nettstatus.Feil && (
@@ -282,30 +224,6 @@ const PresenterKandidaterModal = ({
             </div>
         </Modal>
     );
-};
-
-const validerEpostadresse = (adresse: Mailadresse): Mailadresse => {
-    if (adresse.id === 0 && adresse.value.trim() === '') {
-        return {
-            ...adresse,
-            feilmelding: 'Feltet er påkrevd',
-        };
-    } else if (!erGyldigEpost(adresse.value.trim())) {
-        return {
-            ...adresse,
-            feilmelding: 'Mailadressen er ugyldig',
-        };
-    } else if (inneholderSærnorskeBokstaver(adresse.value.trim())) {
-        return {
-            ...adresse,
-            feilmelding: 'Særnorske bokstaver i e-postadresse støttes ikke',
-        };
-    }
-
-    return {
-        id: adresse.id,
-        value: adresse.value,
-    };
 };
 
 const sendAmplitudeEventForPresentertKandidatliste = (

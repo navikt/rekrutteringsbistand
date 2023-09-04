@@ -8,12 +8,12 @@
     gap: 1.5rem;
 }
 
-.mailadresse {
-    margin-bottom: 1.5rem;
-    max-height: 100px;
-}
-
 .knapper {
     display: flex;
+    justify-content: end;
     gap: 1rem;
+}
+
+.epostadresser :global(.navds-chips) {
+    margin-top: 0.5rem;
 }
