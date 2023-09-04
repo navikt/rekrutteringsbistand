@@ -266,8 +266,8 @@ const PresenterKandidaterModal = ({
                 <div className={css.knapper}>
                     <Button
                         variant="primary"
-                        disabled={delestatus === Nettstatus.LasterInn}
-                        loading={delestatus === Nettstatus.LasterInn}
+                        disabled={delestatus === Nettstatus.SenderInn}
+                        loading={delestatus === Nettstatus.SenderInn}
                         onClick={handleDelClick}
                     >
                         Del
