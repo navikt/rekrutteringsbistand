@@ -14,7 +14,7 @@ const Forside = () => {
                 {navKontor ? (
                     <Statistikk navKontor={navKontor} navKontorNavn={navKontorNavn} />
                 ) : (
-                    <Loader />
+                    <Loader data-testid="lastIndikator" />
                 )}
             </div>
         </div>

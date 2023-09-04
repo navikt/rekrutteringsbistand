@@ -1,10 +1,10 @@
-import { expect, test, jest, describe, beforeEach } from '@jest/globals';
+import { beforeEach, describe, expect, jest, test } from '@jest/globals';
 import { NextFunction, Request, Response } from 'express';
+import * as azureAd from '../src/azureAd';
+import { SearchQuery } from '../src/kandidatsøk/elasticSearchTyper';
 import * as kandidatsøk from '../src/kandidatsøk/kandidatsøk';
 import * as microsoftGraphApi from '../src/microsoftGraphApi';
 import * as middlewares from '../src/middlewares';
-import * as azureAd from '../src/azureAd';
-import { SearchQuery } from '../src/kandidatsøk/elasticSearchTyper';
 
 describe('Tilgangskontroll for kandidatsøket', () => {
     let mockRequest: Partial<Request>;
