@@ -20,7 +20,7 @@ const Filter = ({ finnerStillingForKandidat }: Props) => {
                 {!finnerStillingForKandidat && <Annonsestatus />}
                 <FylkerOgKommuner />
                 <Inkludering />
-                <VelgStillingskategori />
+                {!finnerStillingForKandidat && <VelgStillingskategori />}
                 <HvorErAnnonsenPublisert />
             </div>
         </div>

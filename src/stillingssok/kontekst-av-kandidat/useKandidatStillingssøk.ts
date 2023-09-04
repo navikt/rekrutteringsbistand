@@ -1,6 +1,5 @@
 import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
-import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { Nettstatus } from 'felles/nettressurs';
 import { useEffect, useRef } from 'react';
@@ -45,7 +44,6 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
 
                 søk.set(QueryParam.Statuser, Status.Publisert);
                 søk.set(QueryParam.Publisert, Publisert.Intern);
-                søk.set(QueryParam.Stillingskategorier, Stillingskategori.Stilling);
 
                 sendEvent('stillingssøk', 'kontekst_av_kandidat', {
                     antallFylker: fylker.length,
