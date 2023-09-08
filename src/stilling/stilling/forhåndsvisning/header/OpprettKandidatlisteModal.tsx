@@ -22,7 +22,7 @@ const OpprettKandidatlisteModal: FunctionComponent<Props> = ({ åpen, onClose, o
                 Viktig: Kontakt arbeidsgiveren før du oppretter kandidatlisten. Arbeidsgiveren må
                 bekrefte at de ønsker å motta kandidater fra NAV.
             </BodyLong>
-            <BodyLong spacing>
+            <BodyLong>
                 Er du sikker på at du ønsker å opprette kandidatlisten? Svarer du ja, blir du eier
                 av stillingen og listen. Du har da ansvar for å sende kandidater til arbeidsgiveren.
             </BodyLong>
