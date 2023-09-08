@@ -64,8 +64,8 @@ export const mockKandidatCv: KandidatCv = {
     })),
 
     // Felter som er lagt til
-    veilederEpost: 'varg.veileder@dev.nav.no',
-    veilederNavn: 'Varg Veileder',
+    veilederEpost: 'varg.veileder@dev.nav.no gammel',
+    veilederNavn: 'Varg Veileder gammel',
 };
 
 export const mockAlleKandidatCv = [mockKandidatCv];

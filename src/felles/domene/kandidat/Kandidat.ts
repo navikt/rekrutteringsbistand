@@ -82,6 +82,9 @@ export type KandidatTilBanner = {
     epostadresse: Personalia['epostadresse'];
     telefon: Personalia['telefon'];
     veileder: Oppfølgingsinformasjon['veileder'];
+    veilederIdent: Oppfølgingsinformasjon['veilederIdent'];
+    veilederVisningsnavn: Oppfølgingsinformasjon['veilederVisningsnavn'];
+    veilederEpost: Oppfølgingsinformasjon['veilederEpost'];
     geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
     yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
     kommunenummerstring: Geografi['kommunenummerstring'];

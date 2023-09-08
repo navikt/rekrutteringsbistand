@@ -526,6 +526,9 @@ export const mockKandidat: Kandidat = {
     ],
     vervObj: [],
     perioderMedInaktivitet: [],
+    veilederIdent: 'Z994162',
+    veilederVisningsnavn: 'Varg Veileder',
+    veilederEpost: 'varg.veileder@dev.nav.no',
 
     // Ubrukte felter
     totalLengdeYrkeserfaring: 0,
