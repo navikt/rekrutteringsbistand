@@ -77,14 +77,14 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
             className={css.modal}
             open={vis}
             onClose={onClose}
-            header={{ heading: 'Lagre kandidaten i kandidatlisten', closeButton: false }}
+            header={{ heading: 'Lagre kandidaten i kandidatlisten' }}
         >
             <>
                 {kandidatliste.kind === Nettstatus.LasterInn && <Sidelaster />}
                 {kandidatliste.kind === Nettstatus.Suksess && (
                     <>
                         <Modal.Body>
-                            <BodyLong className={css.beskrivelse}>
+                            <BodyLong>
                                 Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
                                 {kandidatliste.data.tittel}»?
                             </BodyLong>
