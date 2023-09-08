@@ -1,9 +1,8 @@
-import React from 'react';
+import { BodyShort, Button, Modal } from '@navikt/ds-react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { connect } from 'react-redux';
-import { BodyShort, Button } from '@navikt/ds-react';
 
-import Modal from '../../common/modal/Modal';
 import { FJERN_NETTVERKSERROR_FRA_STATE } from '../adReducer';
 import css from './Error.module.css';
 

@@ -1,12 +1,10 @@
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { BodyLong, Button, Heading } from '@navikt/ds-react';
-import { useSelector, useDispatch } from 'react-redux';
-import { DELETE_AD, HIDE_DELETE_AD_MODAL } from '../../adReducer';
-import { State } from '../../../redux/store';
 import { VarslingAction, VarslingActionType } from '../../../common/varsling/varslingReducer';
-import css from './DeleteAdModal.module.css';
-import Modal from '../../../common/modal/Modal';
+import { State } from '../../../redux/store';
+import { DELETE_AD, HIDE_DELETE_AD_MODAL } from '../../adReducer';
 
 const DeleteAdModal = () => {
     const navigate = useNavigate();
@@ -42,27 +40,33 @@ const DeleteAdModal = () => {
     };
 
     return (
-        <Modal open={showDeleteAdModal} onClose={onClose} closeButton>
-            <Heading level="2" size="small" spacing>
-                Slett feilregistrert stilling og kandidatliste
-            </Heading>
-            <BodyLong spacing>
-                Denne funksjonen skal brukes når det er valgt feil bedrift. Stillinger og
-                kandidatlister som er slettet vises ikke i løsningen, og stillingen og kandidatene
-                vil ikke telles i statistikken.
-            </BodyLong>
-            <BodyLong spacing>
-                Er du sikker på at du ønsker å slette {title} og tilhørende kandidatliste?
-                Stillinger og kandidatlister som er slettet vises ikke i løsningen.
-            </BodyLong>
-            <div className={css.knapper}>
+        <Modal
+            open={showDeleteAdModal}
+            onClose={onClose}
+            header={{
+                heading: 'Slett feilregistrert stilling og kandidatliste',
+                closeButton: true,
+            }}
+        >
+            <Modal.Body>
+                <BodyLong spacing>
+                    Denne funksjonen skal brukes når det er valgt feil bedrift. Stillinger og
+                    kandidatlister som er slettet vises ikke i løsningen, og stillingen og
+                    kandidatene vil ikke telles i statistikken.
+                </BodyLong>
+                <BodyLong spacing>
+                    Er du sikker på at du ønsker å slette {title} og tilhørende kandidatliste?
+                    Stillinger og kandidatlister som er slettet vises ikke i løsningen.
+                </BodyLong>
+            </Modal.Body>
+            <Modal.Footer>
                 <Button variant="primary" onClick={onDeleteAdClick}>
                     Slett
                 </Button>
                 <Button variant="secondary" onClick={onClose}>
                     Avbryt
                 </Button>
-            </div>
+            </Modal.Footer>
         </Modal>
     );
 };

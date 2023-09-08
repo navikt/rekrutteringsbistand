@@ -1,11 +1,10 @@
-import { Alert, BodyLong, Button, Heading } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import Modal from '../common/modal/Modal';
 import { State } from '../redux/store';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../stilling/Stilling';
 import { CREATE_AD } from '../stilling/adReducer';
@@ -71,40 +70,44 @@ const OpprettNyStilling: FunctionComponent<Props> = ({ onClose }) => {
     };
 
     return (
-        <Modal open onClose={onClose} aria-label="Opprett ny stilling, velg kategori">
-            <Heading level="2" size="large" spacing>
-                Opprett ny stilling
-            </Heading>
-            <Alert variant="warning" className={css.advarsel}>
-                <BodyLong spacing>
-                    Det arbeides fremdeles med å avklare hva som er lov å registrere i
-                    Rekrutteringsbistand. Derfor kan du ikke registrere NAV-kurs, webinar,
-                    arbeidstrening og lignende. Det er kun kategoriene nedenfor som skal brukes.
-                </BodyLong>
-                <BodyLong>
-                    Du kan ikke endre stillingskategori eller arbeidsgiver etter stillingen er
-                    opprettet.
-                </BodyLong>
-            </Alert>
-            <VelgStillingskategori
-                stillingskategori={stillingskategori}
-                onChange={onStillingkategoriChange}
-                feilmelding={stillingskategorifeilmelding}
-            />
-            <VelgArbeidsgiver
-                arbeidsgiver={arbeidsgiver}
-                setArbeidsgiver={setArbeidsgiver}
-                feilmelding={arbeidsgiverfeilmelding}
-                setFeilmelding={setArbeidsgiverfeilmelding}
-            />
-            <div className={css.knapper}>
+        <Modal
+            open
+            onClose={onClose}
+            aria-label="Opprett ny stilling, velg kategori"
+            header={{ heading: 'Opprett ny stilling' }}
+        >
+            <Modal.Body>
+                <Alert variant="warning" className={css.advarsel}>
+                    <BodyLong spacing>
+                        Det arbeides fremdeles med å avklare hva som er lov å registrere i
+                        Rekrutteringsbistand. Derfor kan du ikke registrere NAV-kurs, webinar,
+                        arbeidstrening og lignende. Det er kun kategoriene nedenfor som skal brukes.
+                    </BodyLong>
+                    <BodyLong>
+                        Du kan ikke endre stillingskategori eller arbeidsgiver etter stillingen er
+                        opprettet.
+                    </BodyLong>
+                </Alert>
+                <VelgStillingskategori
+                    stillingskategori={stillingskategori}
+                    onChange={onStillingkategoriChange}
+                    feilmelding={stillingskategorifeilmelding}
+                />
+                <VelgArbeidsgiver
+                    arbeidsgiver={arbeidsgiver}
+                    setArbeidsgiver={setArbeidsgiver}
+                    feilmelding={arbeidsgiverfeilmelding}
+                    setFeilmelding={setArbeidsgiverfeilmelding}
+                />
+            </Modal.Body>
+            <Modal.Footer>
                 <Button onClick={onOpprettClick} className={css.opprettKnapp}>
                     Opprett
                 </Button>
                 <Button variant="secondary" onClick={onClose}>
                     Avbryt
                 </Button>
-            </div>
+            </Modal.Footer>
         </Modal>
     );
 };

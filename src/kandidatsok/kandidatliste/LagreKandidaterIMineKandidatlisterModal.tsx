@@ -1,11 +1,11 @@
-import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { lagreKandidaterIValgteKandidatlister } from '../api/api';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { storForbokstav } from '../utils';
-import VelgKandidatlister from './VelgKandidatlister';
 import css from './LagreKandidaterIMineKandidatlisterModal.module.css';
+import VelgKandidatlister from './VelgKandidatlister';
 
 type Props = {
     vis: boolean;
@@ -85,20 +85,25 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     };
 
     return (
-        <Modal className={css.modal} open={vis} onClose={onClose}>
-            <Heading size="medium" level="1">
-                Lagre {markerteKandidater.size} kandidat
-                {markerteKandidater.size === 1 ? '' : 'er'} i kandidatlister
-            </Heading>
-            <BodyLong>
-                {oppsummerMarkerteKandidater(kandidaterPåSiden, markerteKandidater)}
-            </BodyLong>
-            <VelgKandidatlister
-                markerteLister={markerteLister}
-                lagredeLister={lagredeLister}
-                onKandidatlisteMarkert={onKandidatlisteMarkert}
-            />
-            <div className={css.knapper}>
+        <Modal
+            className={css.modal}
+            open={vis}
+            onClose={onClose}
+            header={{
+                label: oppsummerMarkerteKandidater(kandidaterPåSiden, markerteKandidater),
+                heading: `Lagre ${markerteKandidater.size} kandidat${
+                    markerteKandidater.size === 1 ? '' : 'er'
+                } i kandidatlister`,
+            }}
+        >
+            <Modal.Body>
+                <VelgKandidatlister
+                    markerteLister={markerteLister}
+                    lagredeLister={lagredeLister}
+                    onKandidatlisteMarkert={onKandidatlisteMarkert}
+                />
+            </Modal.Body>
+            <Modal.Footer>
                 <Button
                     variant="primary"
                     onClick={onLagreKandidater}
@@ -110,7 +115,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
                 <Button variant="secondary" onClick={onClose}>
                     Avbryt
                 </Button>
-            </div>
+            </Modal.Footer>
         </Modal>
     );
 };

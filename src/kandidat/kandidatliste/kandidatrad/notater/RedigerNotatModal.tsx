@@ -1,8 +1,6 @@
+import { Button, Modal, Textarea } from '@navikt/ds-react';
 import React, { ChangeEvent } from 'react';
-import Modal from '../../../komponenter/modal/Modal';
 import { Notat } from '../../domene/Kandidatressurser';
-import { Button, Heading, Textarea } from '@navikt/ds-react';
-import css from './Modal.module.css';
 
 type Props = {
     notat: Notat;
@@ -45,11 +43,13 @@ class RedigerNotatModal extends React.Component<Props> {
         const { notatTekst, feilmelding } = this.state;
 
         return (
-            <Modal open aria-label="Rediger notat" onClose={onClose}>
-                <div className="RedigerNotatModal">
-                    <Heading spacing level="2" size="medium" className="overskrift">
-                        Rediger notat
-                    </Heading>
+            <Modal
+                open
+                aria-label="Rediger notat"
+                onClose={onClose}
+                header={{ heading: 'Rediger notat' }}
+            >
+                <Modal.Body>
                     <Textarea
                         autoFocus
                         label="Notat"
@@ -57,13 +57,13 @@ class RedigerNotatModal extends React.Component<Props> {
                         onChange={this.onTekstChange}
                         error={feilmelding}
                     />
-                    <div className={css.knapper}>
-                        <Button onClick={this.onLagreKlikk}>Lagre</Button>
-                        <Button variant="secondary" className="modalknapp" onClick={onClose}>
-                            Avbryt
-                        </Button>
-                    </div>
-                </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={this.onLagreKlikk}>Lagre</Button>
+                    <Button variant="secondary" className="modalknapp" onClick={onClose}>
+                        Avbryt
+                    </Button>
+                </Modal.Footer>
             </Modal>
         );
     }

@@ -1,14 +1,13 @@
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { BodyLong, Button, ErrorMessage, Heading } from '@navikt/ds-react';
 
-import { lenkeTilStilling } from '../../app/paths';
-import { markerKandidatlisteUtenStillingSomMin } from '../../api/api';
-import { Nettstatus } from 'felles/nettressurs';
-import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
-import Modal from '../../komponenter/modal/Modal';
+import { Nettstatus } from 'felles/nettressurs';
+import { markerKandidatlisteUtenStillingSomMin } from '../../api/api';
+import { lenkeTilStilling } from '../../app/paths';
+import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import css from './Modal.module.css';
 
 type Props = {
@@ -39,12 +38,15 @@ const MarkerSomMinModal = ({ stillingsId, kandidatliste, onClose }: Props) => {
     };
 
     return (
-        <Modal open onClose={onClose} aria-label="Marker som min" className={css.modal}>
-            <Heading level="2" size="medium" spacing>
-                Marker som min
-            </Heading>
+        <Modal
+            open
+            onClose={() => onClose}
+            header={{ heading: 'Marker som min', closeButton: true }}
+            aria-label="Marker som min"
+            className={css.modal}
+        >
             {stillingsId ? (
-                <>
+                <Modal.Body>
                     <BodyLong spacing>
                         Kandidatlisten er knyttet til en stilling. Hvis du markerer stillingen som
                         din, blir du eier av stillingen og listen. Du vil ha mulighet til å redigere
@@ -57,14 +59,16 @@ const MarkerSomMinModal = ({ stillingsId, kandidatliste, onClose }: Props) => {
                             gå til stillingen.
                         </Link>
                     </BodyLong>
-                </>
+                </Modal.Body>
             ) : (
                 <>
-                    <BodyLong spacing>
-                        Hvis du markerer kandidatlisten som din, blir du eier av listen og du vil da
-                        ha mulighet til å endre status.
-                    </BodyLong>
-                    <div className={css.knapper}>
+                    <Modal.Body>
+                        <BodyLong spacing>
+                            Hvis du markerer kandidatlisten som din, blir du eier av listen og du
+                            vil da ha mulighet til å endre status.
+                        </BodyLong>
+                    </Modal.Body>
+                    <Modal.Footer>
                         <Button
                             onClick={handleMarkerClick}
                             loading={status === Nettstatus.LasterInn}
@@ -74,11 +78,11 @@ const MarkerSomMinModal = ({ stillingsId, kandidatliste, onClose }: Props) => {
                         <Button variant="secondary" onClick={() => onClose()}>
                             Avbryt
                         </Button>
-                    </div>
+                    </Modal.Footer>
                     {status === Nettstatus.Feil && (
-                        <ErrorMessage className={css.feilmelding}>
+                        <Alert fullWidth variant="error" size="small">
                             Klarte ikke å markere kandidatlisten som din
-                        </ErrorMessage>
+                        </Alert>
                     )}
                 </>
             )}
