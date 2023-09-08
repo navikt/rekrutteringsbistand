@@ -1,13 +1,13 @@
+import { BodyShort, ErrorMessage, Modal, Textarea } from '@navikt/ds-react';
 import { ChangeEvent, useState } from 'react';
-import { BodyShort, ErrorMessage, Textarea } from '@navikt/ds-react';
 
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
-import Knapper from './Knapper';
+import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import PostKandidatTilKandidatliste from 'felles/domene/kandidatliste/PostKandidatTilKandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Knapper from './Knapper';
 import css from './LeggTilKandidat.module.css';
 
 const MAKS_NOTATLENGDE = 2000;
@@ -87,20 +87,22 @@ const BekreftMedNotat = ({
         leggTilTekst = 'Legg til';
     }
 
-    console.log('kandidat:', kandidat);
-
     return (
         <>
-            <BodyShort spacing>{`${kandidat.fornavn} ${kandidat.etternavn} (${fnr})`}</BodyShort>
-            <Textarea
-                value={notat}
-                placeholder=""
-                className={css.notat}
-                maxLength={MAKS_NOTATLENGDE}
-                onChange={onNotatChange}
-                label={label}
-                description={description}
-            />
+            <Modal.Body>
+                <BodyShort
+                    spacing
+                >{`${kandidat.fornavn} ${kandidat.etternavn} (${fnr})`}</BodyShort>
+                <Textarea
+                    value={notat}
+                    placeholder=""
+                    className={css.notat}
+                    maxLength={MAKS_NOTATLENGDE}
+                    onChange={onNotatChange}
+                    label={label}
+                    description={description}
+                />
+            </Modal.Body>
             <Knapper
                 onLeggTilClick={onLeggTilKandidat}
                 onAvbrytClick={onAvbryt}
