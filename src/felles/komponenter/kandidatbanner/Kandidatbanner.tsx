@@ -27,6 +27,7 @@ type Props = {
     brødsmulesti?: Brødsmule[];
     øverstTilHøyre?: ReactNode;
     nederstTilHøyre?: ReactNode;
+    nederst?: ReactNode;
 };
 
 const Kandidatbanner = ({
@@ -35,9 +36,10 @@ const Kandidatbanner = ({
     brødsmulesti,
     nederstTilHøyre,
     øverstTilHøyre,
+    nederst,
 }: Props) => {
     return (
-        <Grunnbanner ikon={<Piktogram />}>
+        <Grunnbanner ikon={<Piktogram />} nederst={nederst}>
             <div className={css.innhold}>
                 <div className={css.hovedinnhold}>
                     <div className={css.topplinje}>
