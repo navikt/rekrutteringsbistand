@@ -1,9 +1,7 @@
-.leggTilEpostadresse {
-    display: flex;
-    align-items: start;
-    gap: 1rem;
+.leggTilEpostadresse ul[role='listbox']:not(:has(:nth-child(2))) {
+    display: none;
 }
 
-.leggTilEpostadresse button {
-    margin-top: 3.6rem;
+.leggTilEpostadresse ul[role='listbox'] li:nth-child(2) {
+    display: none;
 }

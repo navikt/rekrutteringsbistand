@@ -1,4 +1,4 @@
-import { Accordion, Alert, BodyLong, Button, Chips, Link, Modal, Textarea } from '@navikt/ds-react';
+import { Accordion, Alert, BodyLong, Button, Link, Modal, Textarea } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
 import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
@@ -104,11 +104,12 @@ const PresenterKandidaterModal = ({
     const handleLeggTilEpost = (adresse: string) => {
         const adresserUtenDuplikater = new Set([...epostadresser, adresse]);
 
+        setEpostFeilmelding(undefined);
         setEpostadresser(Array.from(adresserUtenDuplikater));
     };
 
-    const handleSlettEpost = (index: number) => {
-        setEpostadresser(epostadresser.filter((_, searchIndex) => searchIndex !== index));
+    const handleSlettEpost = (epostadresse: string) => {
+        setEpostadresser(epostadresser.filter((adresse) => adresse !== epostadresse));
     };
 
     const antallSomSkalDeles = alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere
@@ -164,11 +165,13 @@ const PresenterKandidaterModal = ({
                     <div className={css.epostadresser}>
                         <LeggTilEpostadresse
                             onLeggTil={handleLeggTilEpost}
+                            onFjern={handleSlettEpost}
                             feilmelding={epostFeilmelding}
+                            valgteEposter={epostadresser}
                         />
 
-                        {epostadresser.length > 0 && (
-                            <Chips>
+                        {/*epostadresser.length > 0 && (
+                            <Chips className={css.chips}>
                                 {epostadresser.map((adresse, index) => (
                                     <Chips.Removable
                                         key={adresse}
@@ -178,7 +181,7 @@ const PresenterKandidaterModal = ({
                                     </Chips.Removable>
                                 ))}
                             </Chips>
-                        )}
+                        )*/}
                     </div>
 
                     <div>

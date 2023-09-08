@@ -1,48 +1,72 @@
-import { Button, TextField } from '@navikt/ds-react';
-import { MouseEvent, useEffect, useState } from 'react';
+import { UNSAFE_Combobox as Combobox } from '@navikt/ds-react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import css from './LeggTilEpostadresse.module.css';
 import { erGyldigEpost, inneholderSærnorskeBokstaver } from './epostValidering';
 
 type Props = {
     onLeggTil: (adresse: string) => void;
+    onFjern: (adresse: string) => void;
     feilmelding: string | undefined;
+    valgteEposter: string[];
 };
 
-const LeggTilEpostadresse = ({ onLeggTil, feilmelding: feil }: Props) => {
+const LeggTilEpostadresse = ({ onLeggTil, onFjern, valgteEposter, feilmelding: feil }: Props) => {
     const [input, setInput] = useState<string>('');
+    const [gyldigInput, setGyldigInput] = useState<string | undefined>();
     const [feilmelding, setFeilmelding] = useState<string | undefined>(feil);
 
     useEffect(() => {
         setFeilmelding(feil);
     }, [feil]);
 
-    const handleLeggTilClick = (event: MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const value = event?.target?.value;
 
-        const feilmelding = validerEpostadresse(input);
+        if (value) {
+            setInput(value);
 
-        setFeilmelding(feilmelding);
-
-        if (feilmelding === undefined) {
-            onLeggTil(input);
-            setInput('');
+            if (validerEpostadresse(value) === undefined) {
+                setGyldigInput(value);
+            } else {
+                setGyldigInput(undefined);
+            }
         }
     };
 
+    const handleToggle = (option: string, isSelected: boolean) => {
+        if (isSelected) {
+            onLeggTil(option);
+            setGyldigInput(undefined);
+            setInput('');
+        } else {
+            onFjern(option);
+        }
+    };
+
+    const handleClear = () => {
+        setGyldigInput(undefined);
+        setInput('');
+    };
+
     return (
-        <form className={css.leggTilEpostadresse}>
-            <TextField
-                type="email"
-                label="E-posten til arbeidsgiveren"
-                description="For eksempel: kari.nordmann@firma.no"
+        <>
+            <Combobox
+                isMultiSelect
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                allowNewValues={gyldigInput !== undefined}
+                className={css.leggTilEpostadresse}
+                label="E-posten til arbeidsgiveren"
+                description="For eksempel «kari.nordmann@firma.no». Særnoske bokstaver støttes ikke."
+                onChange={handleChange}
+                onClear={handleClear}
+                selectedOptions={valgteEposter}
+                onToggleSelected={handleToggle}
+                toggleListButton={false}
+                filteredOptions={[]}
+                options={[]}
                 error={feilmelding}
             />
-            <Button type="submit" onClick={handleLeggTilClick}>
-                Legg til
-            </Button>
-        </form>
+        </>
     );
 };
 
