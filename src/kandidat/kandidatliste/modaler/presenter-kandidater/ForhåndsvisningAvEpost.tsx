@@ -7,11 +7,23 @@ type Props = {
 };
 
 const ForhåndsvisningAvEpost = ({ kandidatliste, melding }: Props) => {
+    const handleLoad = (iFrame: HTMLIFrameElement) => {
+        const iframeDocument = iFrame.contentWindow.document;
+        const lenker = Array.from(iframeDocument.getElementsByTagName('a'));
+
+        lenker.forEach((lenke) => {
+            console.log('Preventos:', lenke.href);
+            lenke.addEventListener('click', (event) => {
+                event.preventDefault();
+            });
+        });
+    };
+
     return (
         <iframe
             title="forhåndsvisning"
-            sandbox=""
             className={css.iframe}
+            onLoad={(event) => handleLoad(event.currentTarget)}
             srcDoc={opprettHtmlTemplate(
                 kandidatliste.tittel,
                 melding,
