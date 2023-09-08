@@ -19,11 +19,10 @@ const LeggTilKandidatModal = ({ vis, onClose, kandidatliste }: Props) => {
             onBeforeClose={onClose}
             header={{
                 heading: 'Legg til kandidat',
-                closeButton: true,
             }}
         >
             <Modal.Body>
-                <Alert variant="warning" className={css.advarsel}>
+                <Alert variant="warning">
                     Før du legger en kandidat på kandidatlisten må du undersøke om personen
                     oppfyller kravene som er nevnt i stillingen.
                 </Alert>
@@ -35,10 +34,10 @@ const LeggTilKandidatModal = ({ vis, onClose, kandidatliste }: Props) => {
                         Klarte ikke å laste ned kandidatliste for stillingen.
                     </Alert>
                 )}
-                {kandidatliste.kind === Nettstatus.Suksess && (
-                    <LeggTilKandidat kandidatliste={kandidatliste.data} onClose={onClose} />
-                )}
             </Modal.Body>
+            {kandidatliste.kind === Nettstatus.Suksess && (
+                <LeggTilKandidat kandidatliste={kandidatliste.data} onClose={onClose} />
+            )}
         </Modal>
     );
 };

@@ -1,20 +1,19 @@
-import { ChangeEvent, FunctionComponent, useState } from 'react';
-import { Loader, TextField } from '@navikt/ds-react';
+import { Loader, Modal, TextField } from '@navikt/ds-react';
 import fnrValidator from '@navikt/fnrvalidator';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { fetchKandidatMedFnr } from './kandidatApi';
-import { fetchSynlighetsevaluering } from './kandidatApi';
-import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
-import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import { sendEvent } from 'felles/amplitude';
-import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
-import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
+import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
+import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
+import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
+import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 import css from './LeggTilKandidatModal.module.css';
+import { fetchKandidatMedFnr, fetchSynlighetsevaluering } from './kandidatApi';
 
 type Props = {
     kandidatliste: Kandidatliste;
@@ -110,37 +109,39 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
 
     return (
         <>
-            <TextField
-                autoFocus
-                value={fnr}
-                size="medium"
-                id="legg-til-kandidat-fnr"
-                onChange={handleFnrChange}
-                placeholder="11 siffer"
-                className={css.input}
-                label="Fødselsnummer på kandidaten"
-                error={feilmelding}
-            />
-
-            {(fnrSøk.kind === Nettstatus.LasterInn ||
-                synlighetsevaluering.kind === Nettstatus.LasterInn) && (
-                <Loader size="medium" className={css.spinner} />
-            )}
-
-            {fnrSøk.kind === Nettstatus.Suksess && (
-                <BekreftMedNotat
-                    fnr={fnr}
-                    kandidat={fnrSøk.data}
-                    kandidatliste={kandidatliste}
-                    onAvbryt={onClose}
-                    onBekreft={handleBekreft}
+            <Modal.Body>
+                <TextField
+                    autoFocus
+                    value={fnr}
+                    size="medium"
+                    id="legg-til-kandidat-fnr"
+                    onChange={handleFnrChange}
+                    placeholder="11 siffer"
+                    className={css.input}
+                    label="Fødselsnummer på kandidaten"
+                    error={feilmelding}
                 />
-            )}
 
-            {fnrSøk.kind === Nettstatus.FinnesIkke &&
-                synlighetsevaluering.kind === Nettstatus.Suksess && (
-                    <KandidatenFinnesIkke synlighetsevaluering={synlighetsevaluering.data} />
+                {(fnrSøk.kind === Nettstatus.LasterInn ||
+                    synlighetsevaluering.kind === Nettstatus.LasterInn) && (
+                    <Loader size="medium" className={css.spinner} />
                 )}
+
+                {fnrSøk.kind === Nettstatus.Suksess && (
+                    <BekreftMedNotat
+                        fnr={fnr}
+                        kandidat={fnrSøk.data}
+                        kandidatliste={kandidatliste}
+                        onAvbryt={onClose}
+                        onBekreft={handleBekreft}
+                    />
+                )}
+
+                {fnrSøk.kind === Nettstatus.FinnesIkke &&
+                    synlighetsevaluering.kind === Nettstatus.Suksess && (
+                        <KandidatenFinnesIkke synlighetsevaluering={synlighetsevaluering.data} />
+                    )}
+            </Modal.Body>
 
             {fnrSøk.kind !== Nettstatus.Suksess && (
                 <Knapper leggTilDisabled onAvbrytClick={onClose} />

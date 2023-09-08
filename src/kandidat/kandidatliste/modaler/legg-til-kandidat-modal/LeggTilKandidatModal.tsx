@@ -157,7 +157,6 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
             className={css.modal}
             header={{
                 heading: 'Legg til kandidat',
-                closeButton: true,
             }}
         >
             <Modal.Body>
