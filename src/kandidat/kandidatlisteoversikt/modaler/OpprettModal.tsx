@@ -45,7 +45,7 @@ const OpprettModal: FunctionComponent<Props> = ({ onClose }) => {
         <Modal
             open
             aria-label="Opprett kandidatliste"
-            onClose={() => onClose}
+            onBeforeClose={onClose}
             header={{ heading: 'Opprett kandidatliste' }}
             className={css.modal}
         >
