@@ -169,10 +169,6 @@ export type KandidatCv = {
         ferdighetSkriftlig: Språkferdighetsnivå;
         ferdighetMuntlig: Språkferdighetsnivå;
     }>;
-
-    // Felter som er lagt til
-    veilederEpost: string;
-    veilederNavn: string;
 };
 
 export default Kandidat;

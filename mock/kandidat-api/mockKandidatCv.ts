@@ -62,10 +62,6 @@ export const mockKandidatCv: KandidatCv = {
         ferdighetMuntlig: språk.ferdighetMuntlig,
         ferdighetSkriftlig: språk.ferdighetSkriftlig,
     })),
-
-    // Felter som er lagt til
-    veilederEpost: 'varg.veileder@dev.nav.no gammel',
-    veilederNavn: 'Varg Veileder gammel',
 };
 
 export const mockAlleKandidatCv = [mockKandidatCv];
