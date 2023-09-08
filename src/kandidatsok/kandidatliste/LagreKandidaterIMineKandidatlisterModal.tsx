@@ -1,4 +1,4 @@
-import { BodyLong, Button, Heading, Modal } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
@@ -85,15 +85,18 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     };
 
     return (
-        <Modal className={css.modal} open={vis} onClose={onClose}>
+        <Modal
+            className={css.modal}
+            open={vis}
+            onClose={onClose}
+            header={{
+                label: oppsummerMarkerteKandidater(kandidaterPåSiden, markerteKandidater),
+                heading: `Lagre ${markerteKandidater.size} kandidat${
+                    markerteKandidater.size === 1 ? '' : 'er'
+                } i kandidatlister`,
+            }}
+        >
             <Modal.Body>
-                <Heading size="medium" level="1">
-                    Lagre {markerteKandidater.size} kandidat
-                    {markerteKandidater.size === 1 ? '' : 'er'} i kandidatlister
-                </Heading>
-                <BodyLong>
-                    {oppsummerMarkerteKandidater(kandidaterPåSiden, markerteKandidater)}
-                </BodyLong>
                 <VelgKandidatlister
                     markerteLister={markerteLister}
                     lagredeLister={lagredeLister}
