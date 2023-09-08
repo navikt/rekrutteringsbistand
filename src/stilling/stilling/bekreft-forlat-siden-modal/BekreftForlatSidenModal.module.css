@@ -1,7 +1,0 @@
-.modal :global(.navds-button):not(:last-child) {
-    margin-right: 1rem;
-}
-
-.forkastStillingFeil {
-    margin-top: 1rem;
-}
