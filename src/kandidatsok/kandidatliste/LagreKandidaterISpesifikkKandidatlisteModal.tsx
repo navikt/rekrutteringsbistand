@@ -57,7 +57,6 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
             header={{
                 heading: `Lagre ${markerteKandidater.size} kandidat
             ${markerteKandidater.size > 1 ? 'er' : ''} i kandidatlisten`,
-                closeButton: false,
             }}
         >
             <div className={css.innhold}>
@@ -66,7 +65,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                 {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === Nettstatus.Suksess && (
                     <>
                         <Modal.Body>
-                            <BodyLong className={css.beskrivelse}>
+                            <BodyLong>
                                 Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
                                 {kontekstAvKandidatlisteEllerStilling.kandidatliste.data.tittel}»?
                             </BodyLong>

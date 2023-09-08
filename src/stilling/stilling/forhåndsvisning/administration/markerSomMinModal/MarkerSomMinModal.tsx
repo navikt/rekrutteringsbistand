@@ -9,20 +9,14 @@ type Props = {
 
 const MarkerSomMinModal: FunctionComponent<Props> = ({ erÅpen, onAvbryt, onMarkerSomMin }) => {
     return (
-        <Modal
-            open={erÅpen}
-            onClose={onAvbryt}
-            header={{ heading: 'Marker stillingen som min', closeButton: true }}
-        >
+        <Modal open={erÅpen} onClose={onAvbryt} header={{ heading: 'Marker stillingen som min' }}>
             <Modal.Body>
-                <BodyLong size="small" spacing>
+                <BodyLong spacing>
                     Hvis du markerer stillingen som din, blir du eier av stillingen og tilhørende
                     kandidatliste. Du vil ha ansvar for kontakt med arbeidsgiver, og kan dele CV-er
                     med arbeidsgiveren.
                 </BodyLong>
-                <BodyLong size="small" spacing>
-                    Er du sikker på at du vil markere stillingen som din?
-                </BodyLong>
+                <BodyLong>Er du sikker på at du vil markere stillingen som din?</BodyLong>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={onMarkerSomMin}>Marker som min</Button>
