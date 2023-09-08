@@ -2,6 +2,7 @@ import { Button, Tabs } from '@navikt/ds-react';
 import { FunctionComponent, MouseEvent, ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { TasklistIcon } from '@navikt/aksel-icons';
 import { Nettstatus } from 'felles/nettressurs';
 import { lenkeTilKandidatsøk } from '../../app/paths';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
@@ -13,7 +14,6 @@ import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
 import { hentØktFraKandidatsøk } from '../søkekontekst';
 import css from './FraSøkUtenKontekst.module.css';
 import LagreKandidaterIMineKandidatlisterModal from './lagre-kandidat-modal/LagreKandidatIMineKandidatlisterModal';
-import { TasklistIcon } from '@navikt/aksel-icons';
 
 type Props = {
     tabs: ReactNode;

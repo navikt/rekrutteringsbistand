@@ -23,7 +23,6 @@ export type Veileder = {
 
 type Props = {
     kandidat: Nettressurs<KandidatTilBanner>;
-    veileder?: Veileder;
     brødsmulesti?: Brødsmule[];
     øverstTilHøyre?: ReactNode;
     nederstTilHøyre?: ReactNode;
@@ -32,7 +31,6 @@ type Props = {
 
 const Kandidatbanner = ({
     kandidat,
-    veileder,
     brødsmulesti,
     nederstTilHøyre,
     øverstTilHøyre,
@@ -134,33 +132,26 @@ const Kandidatbanner = ({
                                     {kandidat.data.telefon ?? '-'}
                                 </BodyShort>
 
-                                {veileder ? (
-                                    <BodyShort aria-label="Veileder">
-                                        <PersonIcon title="Veileder" aria-hidden />
-                                        {veileder.ident ? (
-                                            <>
-                                                <span>
-                                                    Veileder: {veileder.navn} (
-                                                    {veileder.ident?.toUpperCase()}){' '}
-                                                    {veileder.epost}
-                                                </span>
-                                                <CopyButton
-                                                    size="small"
-                                                    title="Kopier e-postadresse"
-                                                    className={css.kopieringsknapp}
-                                                    copyText={veileder.epost}
-                                                />
-                                            </>
-                                        ) : (
-                                            <span>-</span>
-                                        )}
-                                    </BodyShort>
-                                ) : (
-                                    <BodyShort aria-label="Veileder">
-                                        <PersonIcon title="Veileder" aria-hidden />
-                                        {kandidat.data.veileder ?? '-'}
-                                    </BodyShort>
-                                )}
+                                <BodyShort aria-label="Veileder">
+                                    <PersonIcon title="Veileder" aria-hidden />
+                                    {kandidat.data.veilederIdent ? (
+                                        <>
+                                            <span>
+                                                Veileder: {kandidat.data.veilederVisningsnavn} (
+                                                {kandidat.data.veilederIdent?.toUpperCase()}){' '}
+                                                {kandidat.data.veilederEpost}
+                                            </span>
+                                            <CopyButton
+                                                size="small"
+                                                title="Kopier e-postadresse"
+                                                className={css.kopieringsknapp}
+                                                copyText={kandidat.data.veilederEpost}
+                                            />
+                                        </>
+                                    ) : (
+                                        <span>-</span>
+                                    )}
+                                </BodyShort>
                             </div>
                         )}
 

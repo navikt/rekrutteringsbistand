@@ -1,16 +1,16 @@
+import { BodyShort, Button, Detail, Modal, Textarea, TextField } from '@navikt/ds-react';
 import React, { ChangeEvent } from 'react';
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { BodyShort, Button, Detail, Textarea, TextField } from '@navikt/ds-react';
+import { Dispatch } from 'redux';
 
-import Typeahead from '../../komponenter/typeahead/Typeahead';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import {
-    FETCH_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
     CLEAR_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
+    FETCH_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
 } from '../../komponenter/typeahead/enhetsregisterReducer';
+import Typeahead from '../../komponenter/typeahead/Typeahead';
 import AppState from '../../state/AppState';
 import { capitalizeEmployerName, capitalizeLocation } from '../../utils/formateringUtils';
-import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import css from './Modal.module.css';
 
 export type KandidatlisteDto = {
@@ -211,61 +211,63 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
         const location = suggestion ? suggestion.location : undefined;
 
         return (
-            <form className={css.skjema}>
-                <TextField
-                    autoComplete="off"
-                    label="Navn på kandidatliste (må fylles ut)"
-                    placeholder="For eksempel: Jobbmesse, Oslo, 21.05.2019" // TODO: Ikke oppfordre til Jobbmesse?
-                    value={this.state.tittel}
-                    onChange={this.onTittelChange}
-                    error={
-                        this.state.visValideringsfeilInput
-                            ? 'Navn på kandidatliste mangler'
-                            : undefined
-                    }
-                    ref={(input) => (this.input = input)}
-                />
-
-                <div className={css.arbeidsgiver}>
-                    <Typeahead
-                        id="arbeidsgiver"
-                        label="Arbeidsgiver (bedriftens navn hentet fra Enhetsregisteret)"
-                        placeholder="Skriv inn arbeidsgivers navn eller virksomhetsnummer"
-                        onChange={this.onBedriftChange}
-                        onSelect={this.onBedriftSelect}
-                        onSubmit={this.onSuggestionSubmit}
-                        suggestions={suggestions.map((s) => ({
-                            value: s.orgnr,
-                            label: this.getEmployerSuggestionLabel(s),
-                        }))}
-                        value={this.state.typeaheadValue}
-                        onTypeAheadBlur={this.onTypeAheadBlur}
-                        shouldHighlightInput={false}
+            <form>
+                <Modal.Body className={css.skjema}>
+                    <TextField
+                        autoComplete="off"
+                        label="Navn på kandidatliste (må fylles ut)"
+                        placeholder="For eksempel: Jobbmesse, Oslo, 21.05.2019" // TODO: Ikke oppfordre til Jobbmesse?
+                        value={this.state.tittel}
+                        onChange={this.onTittelChange}
+                        error={
+                            this.state.visValideringsfeilInput
+                                ? 'Navn på kandidatliste mangler'
+                                : undefined
+                        }
+                        ref={(input) => (this.input = input)}
                     />
-                    {suggestion && location && (
-                        <Detail>
-                            {capitalizeEmployerName(suggestion.name)}, {location.address},{' '}
-                            {location.postalCode}{' '}
-                            {location.city ? capitalizeLocation(location.city) : ''}
-                        </Detail>
-                    )}
-                </div>
 
-                <Textarea
-                    label="Beskrivelse"
-                    value={this.state.beskrivelse ?? undefined}
-                    maxLength={1000}
-                    onChange={this.onBeskrivelseChange}
-                    error={this.validerBeskrivelse() ? undefined : 'Beskrivelsen er for lang'}
-                />
-                <div className={css.knapper}>
+                    <div className={css.arbeidsgiver}>
+                        <Typeahead
+                            id="arbeidsgiver"
+                            label="Arbeidsgiver (bedriftens navn hentet fra Enhetsregisteret)"
+                            placeholder="Skriv inn arbeidsgivers navn eller virksomhetsnummer"
+                            onChange={this.onBedriftChange}
+                            onSelect={this.onBedriftSelect}
+                            onSubmit={this.onSuggestionSubmit}
+                            suggestions={suggestions.map((s) => ({
+                                value: s.orgnr,
+                                label: this.getEmployerSuggestionLabel(s),
+                            }))}
+                            value={this.state.typeaheadValue}
+                            onTypeAheadBlur={this.onTypeAheadBlur}
+                            shouldHighlightInput={false}
+                        />
+                        {suggestion && location && (
+                            <Detail>
+                                {capitalizeEmployerName(suggestion.name)}, {location.address},{' '}
+                                {location.postalCode}{' '}
+                                {location.city ? capitalizeLocation(location.city) : ''}
+                            </Detail>
+                        )}
+                    </div>
+
+                    <Textarea
+                        label="Beskrivelse"
+                        value={this.state.beskrivelse ?? undefined}
+                        maxLength={1000}
+                        onChange={this.onBeskrivelseChange}
+                        error={this.validerBeskrivelse() ? undefined : 'Beskrivelsen er for lang'}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
                     <Button onClick={this.validateAndSave} loading={saving} disabled={saving}>
                         {knappetekst}
                     </Button>
                     <Button variant="secondary" onClick={this.props.onClose} disabled={saving}>
                         Avbryt
                     </Button>
-                </div>
+                </Modal.Footer>
             </form>
         );
     }

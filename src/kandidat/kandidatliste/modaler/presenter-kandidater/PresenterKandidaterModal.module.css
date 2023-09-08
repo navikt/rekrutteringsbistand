@@ -8,12 +8,6 @@
     gap: 1.5rem;
 }
 
-.knapper {
-    display: flex;
-    justify-content: end;
-    gap: 1rem;
-}
-
 .epostadresser :global(.navds-chips) {
     margin-top: 1rem;
 }

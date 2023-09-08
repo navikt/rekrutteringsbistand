@@ -1,10 +1,8 @@
+import { BodyLong, BodyShort, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 import { Notat } from '../../domene/Kandidatressurser';
 import NotatInfo from './NotatInfo';
-import Modal from '../../../komponenter/modal/Modal';
-import { BodyLong, BodyShort, Button, Heading } from '@navikt/ds-react';
 import notatlisteCss from './Notatliste.module.css';
-import css from './Modal.module.css';
 
 type SlettemodalProps = {
     notat: Notat;
@@ -22,21 +20,25 @@ const Slettemodal: FunctionComponent<SlettemodalProps> = ({
     };
 
     return (
-        <Modal open aria-label="Rediger notat" onClose={onCloseSletteModal}>
-            <Heading spacing level="2" size="medium">
-                Slett notat
-            </Heading>
-            <BodyShort spacing>Er du sikker på at du ønsker å slette notatet?</BodyShort>
-            <div className={notatlisteCss.topprad}>
-                <NotatInfo notat={notat} />
-            </div>
-            <BodyLong>{notat.tekst}</BodyLong>
-            <div className={css.knapper}>
+        <Modal
+            open
+            aria-label="Slett notat"
+            onClose={onCloseSletteModal}
+            header={{ heading: 'Slett notat' }}
+        >
+            <Modal.Body>
+                <BodyShort spacing>Er du sikker på at du ønsker å slette notatet?</BodyShort>
+                <div className={notatlisteCss.topprad}>
+                    <NotatInfo notat={notat} />
+                </div>
+                <BodyLong>{notat.tekst}</BodyLong>
+            </Modal.Body>
+            <Modal.Footer>
                 <Button onClick={onBekreft}>Slett</Button>
                 <Button variant="secondary" onClick={onCloseSletteModal}>
                     Avbryt
                 </Button>
-            </div>
+            </Modal.Footer>
         </Modal>
     );
 };

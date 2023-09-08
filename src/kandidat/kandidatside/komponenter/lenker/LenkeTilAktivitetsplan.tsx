@@ -3,7 +3,6 @@ import { Button, Link } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
 import { arbeidsrettetOppfølgingUrl } from 'felles/komponenter/lenker-til-modia/eksterneUrler';
 import navigerMedAktivBrukerIModia from 'felles/komponenter/lenker-til-modia/navigerMedAktivBrukerIModia';
-import { erIkkeProd } from 'felles/miljø';
 import { MouseEventHandler } from 'react';
 
 type Props = {
@@ -12,7 +11,7 @@ type Props = {
 };
 
 const LenkeTilAktivitetsplan = ({ fnr, somKnapp }: Props) => {
-    const lenke = erIkkeProd ? arbeidsrettetOppfølgingUrl : `${arbeidsrettetOppfølgingUrl}/${fnr}`;
+    const lenke = arbeidsrettetOppfølgingUrl;
 
     const handleClick: MouseEventHandler = async (event) => {
         event.preventDefault();

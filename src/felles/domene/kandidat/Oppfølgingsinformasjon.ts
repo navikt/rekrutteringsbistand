@@ -33,6 +33,9 @@ type Oppfølgingsinformasjon = {
     kvalifiseringsgruppekode: Kvalifiseringsgruppe;
     formidlingsgruppekode: Formidlingsgruppe;
     veileder: string | null;
+    veilederIdent: string | null;
+    veilederVisningsnavn: string | null;
+    veilederEpost: string | null;
 };
 
 export default Oppfølgingsinformasjon;

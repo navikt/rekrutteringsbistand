@@ -1,11 +1,9 @@
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HIDE_STOP_AD_MODAL, STOP_AD, STOP_AD_FROM_MY_ADS } from '../../adReducer';
-import { BodyLong, Button, Heading } from '@navikt/ds-react';
 
 import { State } from '../../../redux/store';
-import Modal from '../../../common/modal/Modal';
 import Notat from '../notat/Notat';
-import css from './StopAdModal.module.css';
 
 const StopAdModal = ({ fromMyAds }: { fromMyAds?: boolean }) => {
     const dispatch = useDispatch();
@@ -31,23 +29,28 @@ const StopAdModal = ({ fromMyAds }: { fromMyAds?: boolean }) => {
     };
 
     return (
-        <Modal open={showStopAdModal} onClose={onClose} closeButton>
-            <Heading level="2" size="small" spacing>
-                Stopp stillingen
-            </Heading>
-            <BodyLong spacing>
-                {`Er du sikker på at du ønsker å stoppe "${title}"? Stopper du stillingen
+        <Modal
+            open={showStopAdModal}
+            onClose={onClose}
+            header={{
+                heading: 'Stopp stillingen',
+            }}
+        >
+            <Modal.Body>
+                <BodyLong spacing>
+                    {`Er du sikker på at du ønsker å stoppe "${title}"? Stopper du stillingen
                     vil den ikke lenger være tilgjengelig for søk.`}
-            </BodyLong>
-            <Notat />
-            <div className={css.knapper}>
+                </BodyLong>
+                <Notat />
+            </Modal.Body>
+            <Modal.Footer>
                 <Button variant="primary" onClick={onStopAdClick}>
                     Stopp stillingen
                 </Button>
                 <Button variant="secondary" onClick={onClose}>
                     Avbryt
                 </Button>
-            </div>
+            </Modal.Footer>
         </Modal>
     );
 };

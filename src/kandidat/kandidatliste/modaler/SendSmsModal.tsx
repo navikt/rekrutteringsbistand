@@ -1,13 +1,12 @@
-import { Button } from '@navikt/ds-react';
+import { Button, Modal } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { Alert, BodyShort, Heading, Label, Link, Select } from '@navikt/ds-react';
+import { Alert, BodyShort, Label, Link, Select } from '@navikt/ds-react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { SmsStatus } from 'felles/domene/sms/Sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import Modal from '../../komponenter/modal/Modal';
 import AppState from '../../state/AppState';
 import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
@@ -95,85 +94,91 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             className={css.sendSmsModal}
             onClose={onClose}
             aria-label={`Send SMS til ${kandidater.length} kandidater`}
+            header={{
+                heading: 'Send SMS',
+            }}
         >
-            {(kandidaterSomHarFåttSms.length > 0 || harInaktiveKandidater) && (
-                <Alert variant="warning" size="small" className={css.alleredeSendtAdvarsel}>
-                    Ikke alle kandidatene vil motta SMS-en
-                    <ul className={css.alleredeSendtAdvarselListe}>
-                        {kandidaterSomHarFåttSms.length > 0 && (
-                            <li>
-                                {kandidaterSomHarFåttSms.length === 1 ? (
-                                    <>Du har allerede sendt SMS til én av kandidatene.</>
-                                ) : (
-                                    <>
-                                        Du har allerede sendt SMS til{' '}
-                                        {kandidaterSomHarFåttSms.length} av de{' '}
-                                        {markerteKandidater.length} valgte kandidatene.
-                                    </>
-                                )}
-                            </li>
-                        )}
-                        {harInaktiveKandidater && (
-                            <li>Én eller flere av kandidatene er inaktive.</li>
-                        )}
-                    </ul>
-                </Alert>
-            )}
-            <div className="send-sms-modal__innhold">
-                <Heading spacing size="medium" level="2">
-                    Send SMS
-                </Heading>
-                <BodyShort>
-                    Det vil bli sendt SMS til <b>{kandidaterSomIkkeHarFåttSms.length}</b>{' '}
-                    {kandidaterSomIkkeHarFåttSms.length === 1 ? 'kandidat' : 'kandidater'}
-                </BodyShort>
-                <BodyShort size="small">
-                    Telefonnummerene blir hentet fra Kontakt- og reservasjonsregisteret.
-                </BodyShort>
-                <Alert variant="info" className={css.kontortidAdvarsel}>
-                    <Label size="small">
-                        SMS sendes ut mellom 09:00 og 17:15 hver dag. Det kan oppstå forsinkelser.
-                    </Label>
-                </Alert>
-
-                {stillingskategori !== Stillingskategori.Jobbmesse && (
-                    <Select
-                        className={css.velgMal}
-                        label="Velg beskjed som skal vises i SMS-en*"
-                        onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                            setValgtMal(e.target.value as Meldingsmal);
-                        }}
-                    >
-                        <option value={Meldingsmal.VurdertSomAktuell}>
-                            Send stilling til en aktuell kandidat
-                        </option>
-                        <option value={Meldingsmal.FunnetPassendeStilling}>
-                            Oppfordre kandidat til å søke på stilling
-                        </option>
-                    </Select>
+            <Modal.Body>
+                {(kandidaterSomHarFåttSms.length > 0 || harInaktiveKandidater) && (
+                    <Alert variant="warning" size="small" className={css.alleredeSendtAdvarsel}>
+                        Ikke alle kandidatene vil motta SMS-en
+                        <ul className={css.alleredeSendtAdvarselListe}>
+                            {kandidaterSomHarFåttSms.length > 0 && (
+                                <li>
+                                    {kandidaterSomHarFåttSms.length === 1 ? (
+                                        <>Du har allerede sendt SMS til én av kandidatene.</>
+                                    ) : (
+                                        <>
+                                            Du har allerede sendt SMS til{' '}
+                                            {kandidaterSomHarFåttSms.length} av de{' '}
+                                            {markerteKandidater.length} valgte kandidatene.
+                                        </>
+                                    )}
+                                </li>
+                            )}
+                            {harInaktiveKandidater && (
+                                <li>Én eller flere av kandidatene er inaktive.</li>
+                            )}
+                        </ul>
+                    </Alert>
                 )}
-                <Label htmlFor="forhåndsvisning">Meldingen som vil bli sendt til kandidatene</Label>
-                <div id="forhåndsvisning" className={css.forhåndsvisning}>
+                <div className="send-sms-modal__innhold">
                     <BodyShort>
-                        <span>{genererMeldingUtenLenke(valgtMal)} </span>
-                        <Link href={lenkeMedPrefiks} target="_blank" rel="noopener noreferrer">
-                            {lenkeTilStilling}
-                        </Link>
+                        Det vil bli sendt SMS til <b>{kandidaterSomIkkeHarFåttSms.length}</b>{' '}
+                        {kandidaterSomIkkeHarFåttSms.length === 1 ? 'kandidat' : 'kandidater'}
                     </BodyShort>
+                    <BodyShort size="small">
+                        Telefonnummerene blir hentet fra Kontakt- og reservasjonsregisteret.
+                    </BodyShort>
+                    <Alert variant="info" className={css.kontortidAdvarsel}>
+                        <Label size="small">
+                            SMS sendes ut mellom 09:00 og 17:15 hver dag. Det kan oppstå
+                            forsinkelser.
+                        </Label>
+                    </Alert>
+
+                    {stillingskategori !== Stillingskategori.Jobbmesse && (
+                        <Select
+                            className={css.velgMal}
+                            label="Velg beskjed som skal vises i SMS-en*"
+                            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                                setValgtMal(e.target.value as Meldingsmal);
+                            }}
+                        >
+                            <option value={Meldingsmal.VurdertSomAktuell}>
+                                Send stilling til en aktuell kandidat
+                            </option>
+                            <option value={Meldingsmal.FunnetPassendeStilling}>
+                                Oppfordre kandidat til å søke på stilling
+                            </option>
+                        </Select>
+                    )}
+                    <Label htmlFor="forhåndsvisning">
+                        Meldingen som vil bli sendt til kandidatene
+                    </Label>
+                    <div id="forhåndsvisning" className={css.forhåndsvisning}>
+                        <BodyShort>
+                            <span>{genererMeldingUtenLenke(valgtMal)} </span>
+                            <Link href={lenkeMedPrefiks} target="_blank" rel="noopener noreferrer">
+                                {lenkeTilStilling}
+                            </Link>
+                        </BodyShort>
+                    </div>
                 </div>
-                <div className={css.knapper}>
-                    <Button
-                        variant="primary"
-                        loading={sendStatus === SmsStatus.UnderUtsending}
-                        onClick={onSendSms}
-                    >
-                        Send SMS
-                    </Button>
-                    <Button variant="secondary" onClick={onClose}>
-                        Avbryt
-                    </Button>
-                </div>
-            </div>
+            </Modal.Body>
+
+            <Modal.Footer>
+                <Button
+                    variant="primary"
+                    loading={sendStatus === SmsStatus.UnderUtsending}
+                    onClick={onSendSms}
+                >
+                    Send SMS
+                </Button>
+                <Button variant="secondary" onClick={onClose}>
+                    Avbryt
+                </Button>
+            </Modal.Footer>
         </Modal>
     );
 };

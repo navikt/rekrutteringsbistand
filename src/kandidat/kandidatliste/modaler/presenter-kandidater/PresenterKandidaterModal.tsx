@@ -1,14 +1,4 @@
-import {
-    Accordion,
-    Alert,
-    BodyLong,
-    Button,
-    Chips,
-    ErrorMessage,
-    Heading,
-    Link,
-    Textarea,
-} from '@navikt/ds-react';
+import { Accordion, Alert, BodyLong, Button, Chips, Link, Modal, Textarea } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
 import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
@@ -17,7 +7,6 @@ import useNavKontor from 'felles/store/navKontor';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { postDelteKandidater } from '../../../api/api';
-import Modal from '../../../komponenter/modal/Modal';
 import { VarslingActionType } from '../../../varsling/varslingReducer';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../domene/kandidatlisteUtils';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
@@ -115,8 +104,6 @@ const PresenterKandidaterModal = ({
     const handleLeggTilEpost = (adresse: string) => {
         const adresserUtenDuplikater = new Set([...epostadresser, adresse]);
 
-        console.log('Hey ho:', Array.from(adresserUtenDuplikater));
-
         setEpostadresser(Array.from(adresserUtenDuplikater));
     };
 
@@ -134,101 +121,105 @@ const PresenterKandidaterModal = ({
     return (
         <Modal
             open={vis}
-            onClose={() => onClose(false)}
+            onBeforeClose={() => onClose(false)}
             aria-label="Del kandidater med arbeidsgiver"
             className={css.presenterKandidaterModal}
+            header={{
+                heading:
+                    antallSomSkalDeles === 1
+                        ? 'Del 1 kandidat med arbeidsgiver'
+                        : `Del ${antallSomSkalDeles} kandidater med arbeidsgiver`,
+            }}
         >
-            <div className={css.wrapper}>
-                <Heading level="2" size="medium">
-                    <span>Del </span>
-                    <span>{antallSomSkalDeles} </span>
-                    <span>{antallSomSkalDeles === 1 ? 'kandidat' : 'kandidater'}</span>
-                    <span> med arbeidsgiver</span>
-                </Heading>
-                {alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere &&
-                    antallKandidaterSomIkkeKanDeles > 0 && (
+            <Modal.Body>
+                <div className={css.wrapper}>
+                    {alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere &&
+                        antallKandidaterSomIkkeKanDeles > 0 && (
+                            <Alert variant="warning" size="small">
+                                <BodyLong spacing>
+                                    {antallKandidaterSomIkkeKanDeles} av kandidatene har ikke svart
+                                    eller svart nei på om CV-en kan deles. Du kan derfor ikke dele
+                                    disse.
+                                </BodyLong>
+                                <BodyLong spacing>
+                                    Har du hatt dialog med kandidaten, og fått bekreftet at NAV kan
+                                    dele CV-en? Da må du registrere dette i aktivitetsplanen. Har du
+                                    ikke delt stillingen med kandidaten må du gjøre det først.{' '}
+                                    <Link href={rutinerForDeling}>Se rutiner</Link>.
+                                </BodyLong>
+                            </Alert>
+                        )}
+                    {!alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere && (
                         <Alert variant="warning" size="small">
                             <BodyLong spacing>
-                                {antallKandidaterSomIkkeKanDeles} av kandidatene har ikke svart
-                                eller svart nei på om CV-en kan deles. Du kan derfor ikke dele
-                                disse.
-                            </BodyLong>
-                            <BodyLong spacing>
-                                Har du hatt dialog med kandidaten, og fått bekreftet at NAV kan dele
-                                CV-en? Da må du registrere dette i aktivitetsplanen. Har du ikke
-                                delt stillingen med kandidaten må du gjøre det først.{' '}
-                                <Link href={rutinerForDeling}>Se rutiner</Link>.
+                                Husk at du må kontakte kandidatene og undersøke om stillingen er
+                                aktuell før du deler med arbeidsgiver.
                             </BodyLong>
                         </Alert>
                     )}
-                {!alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere && (
-                    <Alert variant="warning" size="small">
-                        <BodyLong spacing>
-                            Husk at du må kontakte kandidatene og undersøke om stillingen er aktuell
-                            før du deler med arbeidsgiver.
-                        </BodyLong>
-                    </Alert>
-                )}
-                <BodyLong>
-                    Send en e-post med {antallSomSkalDeles} kandidater med arbeidsgiveren.
-                </BodyLong>
+                    <BodyLong>
+                        Send en e-post med {antallSomSkalDeles} kandidater med arbeidsgiveren.
+                    </BodyLong>
 
-                <div className={css.epostadresser}>
-                    <LeggTilEpostadresse
-                        onLeggTil={handleLeggTilEpost}
-                        feilmelding={epostFeilmelding}
-                    />
+                    <div className={css.epostadresser}>
+                        <LeggTilEpostadresse
+                            onLeggTil={handleLeggTilEpost}
+                            feilmelding={epostFeilmelding}
+                        />
 
-                    {epostadresser.length > 0 && (
-                        <Chips>
-                            {epostadresser.map((adresse, index) => (
-                                <Chips.Removable
-                                    key={adresse}
-                                    onDelete={() => handleSlettEpost(index)}
-                                >
-                                    {adresse}
-                                </Chips.Removable>
-                            ))}
-                        </Chips>
-                    )}
-                </div>
+                        {epostadresser.length > 0 && (
+                            <Chips>
+                                {epostadresser.map((adresse, index) => (
+                                    <Chips.Removable
+                                        key={adresse}
+                                        onDelete={() => handleSlettEpost(index)}
+                                    >
+                                        {adresse}
+                                    </Chips.Removable>
+                                ))}
+                            </Chips>
+                        )}
+                    </div>
 
-                <div>
-                    <Textarea
-                        label="Melding til arbeidsgiver (frivillig)"
-                        value={melding}
-                        description="Sørg for at du ikke skriver noe sensitivt, som opplysninger om helse, soning, rus, eller informasjon om ytelser og oppfølging i NAV."
-                        onChange={(event) => setMelding(event.target.value)}
-                    />
+                    <div>
+                        <Textarea
+                            label="Melding til arbeidsgiver (frivillig)"
+                            value={melding}
+                            description="Sørg for at du ikke skriver noe sensitivt, som opplysninger om helse, soning, rus, eller informasjon om ytelser og oppfølging i NAV."
+                            onChange={(event) => setMelding(event.target.value)}
+                        />
+                    </div>
+                    <Accordion>
+                        <Accordion.Item>
+                            <Accordion.Header>Forhåndsvis e-posten</Accordion.Header>
+                            <Accordion.Content className={css.forhåndsvisning}>
+                                <ForhåndsvisningAvEpost
+                                    kandidatliste={kandidatliste}
+                                    melding={melding}
+                                />
+                            </Accordion.Content>
+                        </Accordion.Item>
+                    </Accordion>
                 </div>
-                <Accordion>
-                    <Accordion.Item>
-                        <Accordion.Header>Forhåndsvis e-posten</Accordion.Header>
-                        <Accordion.Content className={css.forhåndsvisning}>
-                            <ForhåndsvisningAvEpost
-                                kandidatliste={kandidatliste}
-                                melding={melding}
-                            />
-                        </Accordion.Content>
-                    </Accordion.Item>
-                </Accordion>
-                <div className={css.knapper}>
-                    <Button variant="secondary" onClick={() => onClose(false)}>
-                        Avbryt
-                    </Button>
-                    <Button
-                        variant="primary"
-                        disabled={delestatus === Nettstatus.SenderInn}
-                        loading={delestatus === Nettstatus.SenderInn}
-                        onClick={handleDelClick}
-                    >
-                        Del kandidatene
-                    </Button>
-                </div>
-                {delestatus === Nettstatus.Feil && (
-                    <ErrorMessage>Kunne ikke dele med arbeidsgiver akkurat nå</ErrorMessage>
-                )}
-            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => onClose(false)}>
+                    Avbryt
+                </Button>
+                <Button
+                    variant="primary"
+                    disabled={delestatus === Nettstatus.SenderInn}
+                    loading={delestatus === Nettstatus.SenderInn}
+                    onClick={handleDelClick}
+                >
+                    Del kandidatene
+                </Button>
+            </Modal.Footer>
+            {delestatus === Nettstatus.Feil && (
+                <Alert fullWidth variant="error" size="small">
+                    Kunne ikke dele med arbeidsgiver akkurat nå
+                </Alert>
+            )}
         </Modal>
     );
 };

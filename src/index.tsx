@@ -1,6 +1,5 @@
 import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
-import { Modal } from '@navikt/ds-react';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
@@ -26,8 +25,6 @@ if (import.meta.env.VITE_MOCK) {
 
 const element = document.getElementById('rekrutteringsbistand');
 const root = createRoot(element as HTMLElement);
-
-Modal.setAppElement(element);
 
 root.render(
     <React.StrictMode>
