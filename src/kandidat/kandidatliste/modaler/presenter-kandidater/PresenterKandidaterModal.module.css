@@ -33,7 +33,3 @@
     color: var(--a-text-action);
     background-color: inherit;
 }
-
-.feilmelding {
-    color: var(--a-text-danger);
-}

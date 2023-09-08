@@ -1,4 +1,4 @@
-import { Alert, ErrorMessage, Loader, Modal } from '@navikt/ds-react';
+import { Alert, Loader, Modal } from '@navikt/ds-react';
 
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
@@ -31,9 +31,9 @@ const LeggTilKandidatModal = ({ vis, onClose, kandidatliste }: Props) => {
                     <Loader size="medium" className={css.spinner} />
                 )}
                 {kandidatliste.kind === Nettstatus.Feil && (
-                    <ErrorMessage spacing>
+                    <Alert fullWidth variant="error" size="small">
                         Klarte ikke å laste ned kandidatliste for stillingen.
-                    </ErrorMessage>
+                    </Alert>
                 )}
                 {kandidatliste.kind === Nettstatus.Suksess && (
                     <LeggTilKandidat kandidatliste={kandidatliste.data} onClose={onClose} />

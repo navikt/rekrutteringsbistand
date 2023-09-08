@@ -1,4 +1,4 @@
-import { ErrorMessage, Modal } from '@navikt/ds-react';
+import { Alert, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -49,17 +49,18 @@ const OpprettModal: FunctionComponent<Props> = ({ onClose }) => {
             header={{ heading: 'Opprett kandidatliste' }}
             className={css.modal}
         >
-            <Modal.Body>
-                <Kandidatlisteskjema
-                    onSave={opprettKandidatliste}
-                    saving={status.kind === Nettstatus.SenderInn}
-                    onClose={onClose}
-                    knappetekst="Opprett"
-                />
-                {status.kind === Nettstatus.Feil && (
-                    <ErrorMessage>{status.error.message}</ErrorMessage>
-                )}
-            </Modal.Body>
+            <Kandidatlisteskjema
+                onSave={opprettKandidatliste}
+                saving={status.kind === Nettstatus.SenderInn}
+                onClose={onClose}
+                knappetekst="Opprett"
+            />
+
+            {status.kind === Nettstatus.Feil && (
+                <Alert fullWidth variant="error" size="small">
+                    {status.error.message}
+                </Alert>
+            )}
         </Modal>
     );
 };

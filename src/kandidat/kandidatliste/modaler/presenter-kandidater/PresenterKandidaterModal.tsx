@@ -3,7 +3,6 @@ import {
     BodyLong,
     BodyShort,
     Button,
-    Label,
     Link,
     Modal,
     TextField,
@@ -264,9 +263,9 @@ class PresenterKandidaterModal extends React.Component<Props, State> {
                     </Button>
                 </Modal.Footer>
                 {deleStatus === Nettstatus.Feil && (
-                    <Label size="small" className={css.feilmelding}>
+                    <Alert fullWidth variant="error" size="small">
                         Kunne ikke dele med arbeidsgiver akkurat nå
-                    </Label>
+                    </Alert>
                 )}
             </Modal>
         );

@@ -1,4 +1,4 @@
-import { BodyLong, Button, ErrorMessage, Modal } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import * as React from 'react';
 import { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
@@ -58,9 +58,9 @@ const SlettModal: FunctionComponent<Props> = ({ kandidatliste, onClose }) => {
                 </Button>
             </Modal.Footer>
             {status === Nettstatus.Feil && (
-                <ErrorMessage className={css.feilmelding}>
+                <Alert fullWidth variant="error" size="small">
                     Klarte ikke å slette kandidatlisten
-                </ErrorMessage>
+                </Alert>
             )}
         </Modal>
     );

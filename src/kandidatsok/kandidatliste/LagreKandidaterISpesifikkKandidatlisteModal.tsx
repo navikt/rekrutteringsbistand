@@ -1,4 +1,4 @@
-import { BodyLong, Button, Loader, Modal } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Loader, Modal } from '@navikt/ds-react';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useState } from 'react';
@@ -94,7 +94,9 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                     </>
                 )}
                 {lagreKandidater.kind === Nettstatus.Feil && (
-                    <BodyLong>{lagreKandidater.error.message}</BodyLong>
+                    <Alert fullWidth variant="error" size="small">
+                        {lagreKandidater.error.message}
+                    </Alert>
                 )}
             </div>
         </Modal>

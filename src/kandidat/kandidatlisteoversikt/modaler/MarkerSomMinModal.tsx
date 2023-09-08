@@ -1,4 +1,4 @@
-import { BodyLong, Button, ErrorMessage, Modal } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -80,9 +80,9 @@ const MarkerSomMinModal = ({ stillingsId, kandidatliste, onClose }: Props) => {
                         </Button>
                     </Modal.Footer>
                     {status === Nettstatus.Feil && (
-                        <ErrorMessage className={css.feilmelding}>
+                        <Alert fullWidth variant="error" size="small">
                             Klarte ikke å markere kandidatlisten som din
-                        </ErrorMessage>
+                        </Alert>
                     )}
                 </>
             )}

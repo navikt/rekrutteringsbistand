@@ -1,4 +1,4 @@
-import { BodyShort, ErrorMessage, Modal, Textarea } from '@navikt/ds-react';
+import { Alert, BodyShort, Modal, Textarea } from '@navikt/ds-react';
 import { ChangeEvent, useState } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
@@ -115,9 +115,9 @@ const BekreftMedNotat = ({
                 avbrytDisabled={leggTilKandidat.kind === Nettstatus.SenderInn}
             />
             {leggTilKandidat.kind === Nettstatus.Feil && (
-                <ErrorMessage className={css.feilmelding}>
+                <Alert fullWidth variant="error" size="small">
                     Klarte ikke å legge til kandidat
-                </ErrorMessage>
+                </Alert>
             )}
         </>
     );

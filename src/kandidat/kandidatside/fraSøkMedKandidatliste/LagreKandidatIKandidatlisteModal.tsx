@@ -1,4 +1,4 @@
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -107,7 +107,9 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
                     </>
                 )}
                 {lagreKandidatStatus === Nettstatus.Feil && (
-                    <BodyLong>Klarte ikke å lagre kandidat</BodyLong>
+                    <Alert fullWidth variant="error" size="small">
+                        Klarte ikke å lagre kandidat
+                    </Alert>
                 )}
             </>
         </Modal>
