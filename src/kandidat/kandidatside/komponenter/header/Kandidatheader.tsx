@@ -1,21 +1,19 @@
 import { Brødsmule } from 'felles/komponenter/kandidatbanner/Brødsmulesti';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
-import { Nettstatus } from 'felles/nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
+import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    kandidatnr: string;
     kandidatnavigering: Kandidatnavigering | null;
     brødsmulesti: Brødsmule[];
+    kandidat: Nettressurs<KandidatFraOpenSearch>;
 };
 
-const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
+const Kandidatheader = ({ kandidat, kandidatnavigering, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
-
-    const kandidat = useKandidat(kandidatnr);
 
     const brødsmulestiMedNavn =
         kandidat.kind === Nettstatus.Suksess

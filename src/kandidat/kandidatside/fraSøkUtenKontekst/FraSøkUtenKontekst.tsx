@@ -51,7 +51,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
     return (
         <>
             <Kandidatheader
-                kandidatnr={kandidatnr}
+                kandidat={cv}
                 kandidatnavigering={kandidatnavigering}
                 brødsmulesti={brødsmulesti}
             />

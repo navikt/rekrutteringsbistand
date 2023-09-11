@@ -121,7 +121,7 @@ const FraKandidatlisteInner = ({
     return (
         <>
             <Kandidatheader
-                kandidatnr={kandidat.kandidatnr}
+                kandidat={cv}
                 kandidatnavigering={navigering}
                 brødsmulesti={brødsmulesti}
             />
