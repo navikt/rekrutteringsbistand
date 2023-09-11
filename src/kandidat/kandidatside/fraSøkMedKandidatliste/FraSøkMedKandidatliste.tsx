@@ -61,7 +61,6 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     return (
         <>
             <Kandidatheader
-                cv={cv}
                 kandidatnr={kandidatnr}
                 kandidatnavigering={kandidatnavigering}
                 brødsmulesti={brødsmulesti}

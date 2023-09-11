@@ -1,20 +1,18 @@
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { Brødsmule } from 'felles/komponenter/kandidatbanner/Brødsmulesti';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
 
 type Props = {
-    cv: Nettressurs<KandidatCv>;
     kandidatnr: string;
     kandidatnavigering: Kandidatnavigering | null;
     brødsmulesti: Brødsmule[];
 };
 
-const Kandidatheader = ({ cv, kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
+const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
 
     const kandidat = useKandidat(kandidatnr);
