@@ -49,24 +49,22 @@ const LeggTilEpostadresse = ({ onLeggTil, onFjern, valgteEposter, feilmelding: f
     };
 
     return (
-        <>
-            <Combobox
-                isMultiSelect
-                value={input}
-                allowNewValues={gyldigInput !== undefined}
-                className={css.leggTilEpostadresse}
-                label="E-posten til arbeidsgiveren"
-                description="For eksempel «kari.nordmann@firma.no». Særnorske bokstaver støttes ikke."
-                onChange={handleChange}
-                onClear={handleClear}
-                selectedOptions={valgteEposter}
-                onToggleSelected={handleToggle}
-                toggleListButton={false}
-                filteredOptions={[]}
-                options={[]}
-                error={feilmelding}
-            />
-        </>
+        <Combobox
+            isMultiSelect
+            value={input}
+            allowNewValues={gyldigInput !== undefined}
+            className={css.leggTilEpostadresse}
+            label="E-posten til arbeidsgiveren"
+            description="For eksempel «kari.nordmann@firma.no». Særnorske bokstaver støttes ikke."
+            onChange={handleChange}
+            onClear={handleClear}
+            selectedOptions={valgteEposter}
+            onToggleSelected={handleToggle}
+            toggleListButton={false}
+            filteredOptions={[]}
+            options={[]}
+            error={feilmelding}
+        />
     );
 };
 
