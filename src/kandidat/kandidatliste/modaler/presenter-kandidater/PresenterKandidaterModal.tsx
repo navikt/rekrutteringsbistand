@@ -169,19 +169,6 @@ const PresenterKandidaterModal = ({
                             feilmelding={epostFeilmelding}
                             valgteEposter={epostadresser}
                         />
-
-                        {/*epostadresser.length > 0 && (
-                            <Chips className={css.chips}>
-                                {epostadresser.map((adresse, index) => (
-                                    <Chips.Removable
-                                        key={adresse}
-                                        onDelete={() => handleSlettEpost(index)}
-                                    >
-                                        {adresse}
-                                    </Chips.Removable>
-                                ))}
-                            </Chips>
-                        )*/}
                     </div>
 
                     <div>
