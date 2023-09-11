@@ -1,5 +1,5 @@
 .presenterKandidaterModal {
-    max-width: 40rem;
+    max-width: 45rem;
 }
 
 .wrapper {
@@ -8,28 +8,10 @@
     gap: 1.5rem;
 }
 
-.mailadresse {
-    transition: all 0.4s ease-in-out;
-    margin-bottom: 0;
-    max-height: 0;
-    opacity: 0;
-}
-.mailadresseshow {
-    margin-bottom: 1rem;
-    max-height: 100px;
-    opacity: 1;
+.chips {
+    margin-top: 1rem;
 }
 
-.leggTilMailadressefelt {
-    color: var(--a-text-action);
-}
-
-.leggTilMailadressefelt:hover {
-    color: var(--a-text-action);
-    background-color: inherit;
-}
-
-.leggTilMailadressefelt:active:hover {
-    color: var(--a-text-action);
-    background-color: inherit;
+.forhåndsvisning {
+    padding: 0;
 }

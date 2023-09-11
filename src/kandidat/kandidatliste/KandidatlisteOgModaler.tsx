@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { sendEvent } from 'felles/amplitude';
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
 import { SmsStatus } from 'felles/domene/sms/Sms';
@@ -28,15 +27,6 @@ type OwnProps = {
 
 type ConnectedProps = {
     endreStatusKandidat: any;
-    presenterKandidater: (
-        beskjed: string,
-        mailadresser: Array<string>,
-        kandidatlisteId: string,
-        kandidatnummerListe: Array<string>,
-        navKontor: string
-    ) => void;
-    resetDeleStatus: () => void;
-    deleStatus: Nettstatus;
     smsSendStatus: SmsStatus;
     resetSmsSendStatus: () => void;
     fodselsnummer?: string;
@@ -44,7 +34,6 @@ type ConnectedProps = {
     angreArkiveringForKandidater: (kandidatlisteId: string, kandidatnumre: string[]) => void;
     statusArkivering: Nettstatus;
     statusDearkivering: Nettstatus;
-    valgtNavKontor: string | null;
     toggleMarkeringAvKandidat: (kandidatnr: string) => void;
     endreMarkeringAvKandidater: (kandidatnumre: string[]) => void;
     kandidattilstander: Kandidattilstander;
@@ -72,10 +61,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
     }
 
     componentDidUpdate(prevProps: Props) {
-        const kandidaterHarNettoppBlittPresentert =
-            this.props.deleStatus !== prevProps.deleStatus &&
-            this.props.deleStatus === Nettstatus.Suksess;
-
         const smsErNettoppSendtTilKandidater =
             this.props.smsSendStatus !== prevProps.smsSendStatus &&
             this.props.smsSendStatus === SmsStatus.Sendt;
@@ -99,25 +84,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         const dearkiveringFeiletNettopp =
             prevProps.statusDearkivering === Nettstatus.LasterInn &&
             this.props.statusDearkivering === Nettstatus.Feil;
-
-        if (kandidaterHarNettoppBlittPresentert) {
-            this.props.resetDeleStatus();
-
-            const antallMarkerteKandidater = Object.values(this.props.kandidattilstander).filter(
-                (tilstand) => tilstand?.markert
-            ).length;
-
-            this.fjernAllMarkering();
-            this.setState({
-                deleModalOpen: false,
-            });
-
-            this.visInfobanner(
-                `${
-                    antallMarkerteKandidater > 1 ? 'Kandidatene' : 'Kandidaten'
-                } er delt med arbeidsgiver`
-            );
-        }
 
         if (enKandidatErNettoppArkivert) {
             this.visInfobanner(`Kandidaten ble slettet`);
@@ -174,6 +140,16 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         });
     };
 
+    onCloseDeleModal = (fjernMarkering: boolean) => {
+        this.setState({
+            deleModalOpen: false,
+        });
+
+        if (fjernMarkering) {
+            this.fjernAllMarkering();
+        }
+    };
+
     onToggleLeggTilKandidatModal = () => {
         this.setState({
             leggTilModalOpen: !this.state.leggTilModalOpen,
@@ -194,10 +170,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         );
     };
 
-    hentKandidatnumrePåMarkerteKandidater = () => {
-        return this.hentMarkerteKandidater().map((kandidat) => kandidat.kandidatnr);
-    };
-
     hentMarkerteKandidaterSomHarSvartJa = () => {
         const forespørsler = this.props.forespørslerOmDelingAvCv;
 
@@ -209,43 +181,8 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         );
     };
 
-    onDelMedArbeidsgiver = (beskjed: string, mailadresser: string[]) => {
-        const { kandidatliste, valgtNavKontor } = this.props;
-        if (valgtNavKontor === null) {
-            return;
-        }
-
-        const kandidaterSomSkalDeles = kandidaterMåGodkjenneDelingAvCv(kandidatliste)
-            ? this.hentMarkerteKandidaterSomHarSvartJa().map((k) => k.kandidatnr)
-            : this.hentKandidatnumrePåMarkerteKandidater();
-
-        this.sendAmplitudeEventForPresentertKandidatliste(kandidaterSomSkalDeles);
-
-        this.props.presenterKandidater(
-            beskjed,
-            mailadresser,
-            this.props.kandidatliste.kandidatlisteId,
-            kandidaterSomSkalDeles,
-            valgtNavKontor
-        );
-    };
-
-    sendAmplitudeEventForPresentertKandidatliste = (kandidaterSomSkalDeles: string[]) => {
-        const { kandidatliste } = this.props;
-
-        const opprettetDato = new Date(kandidatliste.opprettetTidspunkt);
-        const forskjellMs = new Date().getTime() - opprettetDato.getTime();
-        const antallDagerSidenOpprettelse = Math.round(forskjellMs / 1000 / 60 / 60 / 24);
-
-        sendEvent('kandidatliste', 'presenter_kandidater', {
-            antallKandidater: kandidaterSomSkalDeles.length,
-            totaltAntallKandidater: kandidatliste.kandidater.length,
-            antallDagerSidenOpprettelse,
-            erFørstePresentering: kandidatliste.kandidater.every(
-                (kandidat) => kandidat.utfallsendringer.length === 0
-            ),
-            stillingskategori: kandidatliste.stillingskategori,
-        });
+    hentKandidatnumrePåMarkerteKandidater = () => {
+        return this.hentMarkerteKandidater().map((kandidat) => kandidat.kandidatnr);
     };
 
     onKandidaterAngreArkivering = () => {
@@ -263,8 +200,9 @@ class KandidatlisteOgModaler extends React.Component<Props> {
 
     render() {
         const { deleModalOpen, leggTilModalOpen } = this.state;
-        const { deleStatus, kandidatliste, endreStatusKandidat, toggleArkivert } = this.props;
+        const { kandidatliste, endreStatusKandidat, toggleArkivert } = this.props;
         const { kandidater } = kandidatliste;
+
         const markerteKandidater = this.hentMarkerteKandidater();
         const kandidaterSomHarSvartJa = this.hentMarkerteKandidaterSomHarSvartJa();
 
@@ -272,11 +210,10 @@ class KandidatlisteOgModaler extends React.Component<Props> {
             <div>
                 <PresenterKandidaterModal
                     vis={deleModalOpen}
-                    deleStatus={deleStatus}
-                    onClose={this.onToggleDeleModal}
-                    onSubmit={this.onDelMedArbeidsgiver}
-                    antallMarkerteKandidater={markerteKandidater.length}
-                    antallKandidaterSomHarSvartJa={kandidaterSomHarSvartJa.length}
+                    onClose={this.onCloseDeleModal}
+                    kandidatliste={kandidatliste}
+                    markerteKandidater={markerteKandidater}
+                    kandidaterSomHarSvartJa={kandidaterSomHarSvartJa}
                     alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere={
                         erKobletTilStilling(kandidatliste) &&
                         kandidaterMåGodkjenneDelingAvCv(kandidatliste)
@@ -287,7 +224,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                     onClose={this.onToggleLeggTilKandidatModal}
                     stillingsId={kandidatliste.stillingId}
                     kandidatliste={kandidatliste}
-                    valgtNavKontor={this.props.valgtNavKontor}
                 />
                 {kandidatliste.stillingId &&
                     this.props.sendteMeldinger.kind === Nettstatus.Suksess && (
@@ -321,13 +257,11 @@ class KandidatlisteOgModaler extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-    deleStatus: state.kandidatliste.deleStatus,
     smsSendStatus: state.kandidatliste.sms.sendStatus,
     fodselsnummer: state.kandidatliste.fodselsnummer,
     sendteMeldinger: state.kandidatliste.sms.sendteMeldinger,
     statusArkivering: state.kandidatliste.arkivering.statusArkivering,
     statusDearkivering: state.kandidatliste.arkivering.statusDearkivering,
-    valgtNavKontor: state.navKontor.valgtNavKontor,
     kandidattilstander: state.kandidatliste.kandidattilstander,
     forespørslerOmDelingAvCv: state.kandidatliste.forespørslerOmDelingAvCv,
 });
@@ -347,25 +281,6 @@ const mapDispatchToProps = (dispatch: Dispatch<KandidatlisteAction | VarslingAct
             kandidatlisteId,
             kandidatnr,
         });
-    },
-    presenterKandidater: (
-        beskjed: string,
-        mailadresser: Array<string>,
-        kandidatlisteId: string,
-        kandidatnummerListe: Array<string>,
-        navKontor: string
-    ) => {
-        dispatch({
-            type: KandidatlisteActionType.PresenterKandidater,
-            beskjed,
-            mailadresser,
-            kandidatlisteId,
-            kandidatnummerListe,
-            navKontor,
-        });
-    },
-    resetDeleStatus: () => {
-        dispatch({ type: KandidatlisteActionType.ResetDelestatus });
     },
     resetSmsSendStatus: () => {
         dispatch({ type: KandidatlisteActionType.ResetSendSmsStatus });

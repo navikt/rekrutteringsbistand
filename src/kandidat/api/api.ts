@@ -1,16 +1,16 @@
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
-import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
-import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
-import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
-import { api } from 'felles/api';
-import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import { api, post } from 'felles/api';
+import Cv from 'felles/domene/kandidat/Cv';
 import {
     Kandidatstatus,
     Kandidatutfall,
     UsynligKandidat,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import Cv from 'felles/domene/kandidat/Cv';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
+import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
+import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
+import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
@@ -107,20 +107,20 @@ export const fetchNotater = (kandidatlisteId, kandidatnr) =>
     );
 
 export const postDelteKandidater = (
-    beskjed,
-    mailadresser,
-    kandidatlisteId,
-    kandidatnummerListe,
-    navKontor
+    beskjed: string,
+    mailadresser: string[],
+    kandidatlisteId: string,
+    kandidatnummerListe: string[],
+    navKontor: string
 ) =>
-    postJson(
+    post<Kandidatliste>(
         `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/deltekandidater`,
-        JSON.stringify({
+        {
             epostMottakere: mailadresser,
             epostTekst: beskjed,
             kandidater: kandidatnummerListe,
             navKontor: navKontor,
-        })
+        }
     );
 
 export const postKandidatTilKandidatliste = async (

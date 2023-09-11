@@ -1,275 +1,236 @@
-import {
-    Alert,
-    BodyLong,
-    BodyShort,
-    Button,
-    Link,
-    Modal,
-    TextField,
-    Textarea,
-} from '@navikt/ds-react';
-import classNames from 'classnames';
+import { Accordion, Alert, BodyLong, Button, Link, Modal, Textarea } from '@navikt/ds-react';
+import { sendEvent } from 'felles/amplitude';
+import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import React, { ChangeEvent } from 'react';
+import useNavKontor from 'felles/store/navKontor';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { postDelteKandidater } from '../../../api/api';
+import { VarslingActionType } from '../../../varsling/varslingReducer';
+import { kandidaterMåGodkjenneDelingAvCv } from '../../domene/kandidatlisteUtils';
+import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
+import ForhåndsvisningAvEpost from './ForhåndsvisningAvEpost';
+import LeggTilEpostadresse from './LeggTilEpostadresse';
 import css from './PresenterKandidaterModal.module.css';
-import { erGyldigEpost, inneholderSærnorskeBokstaver } from './epostValidering';
+
+const rutinerForDeling =
+    'https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Del-stillinger-med-kandidater-i-Aktivitetsplanen.aspx#har-du-ringt-kandidaten-istedenfor-%C3%A5-dele-i-aktivitetsplanen';
 
 type Props = {
-    vis?: boolean; // Default true
-    deleStatus: Nettstatus;
-    onSubmit: (beskjed: string, mailadresser: string[]) => void;
-    onClose: () => void;
-    antallMarkerteKandidater: number;
-    antallKandidaterSomHarSvartJa: number;
+    vis?: boolean;
+    onClose: (fjernMarkering: boolean) => void;
+    markerteKandidater: KandidatIKandidatliste[];
+    kandidaterSomHarSvartJa: KandidatIKandidatliste[];
     alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere: boolean;
+    kandidatliste: Kandidatliste;
 };
 
-type State = {
-    beskjed: string;
-    mailadresser: Array<{
-        id: number;
-        value: string;
-        errorTekst?: string;
-        show: boolean;
-    }>;
-};
+const PresenterKandidaterModal = ({
+    vis = true,
+    onClose,
+    markerteKandidater,
+    kandidaterSomHarSvartJa,
+    alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere,
+    kandidatliste,
+}: Props) => {
+    const dispatch = useDispatch();
+    const valgtNavKontor = useNavKontor((state) => state.navKontor);
 
-class PresenterKandidaterModal extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            beskjed: '',
-            mailadresser: [
-                {
-                    id: 0,
-                    value: '',
-                    errorTekst: undefined,
-                    show: true,
-                },
-            ],
-        };
-    }
+    const [delestatus, setDelestatus] = useState<Nettstatus>(Nettstatus.IkkeLastet);
+    const [melding, setMelding] = useState<string>('');
+    const [epostadresser, setEpostadresser] = useState<string[]>([]);
+    const [epostFeilmelding, setEpostFeilmelding] = useState<string | undefined>();
 
-    onMailadresseChange = (id: number) => (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            mailadresser: this.state.mailadresser.map((mailadresseFelt) => {
-                if (mailadresseFelt.id === id) {
-                    return {
-                        ...mailadresseFelt,
-                        value: e.target.value,
-                        errorTekst: undefined,
-                    };
-                }
-                return mailadresseFelt;
-            }),
-        });
+    const resetState = () => {
+        setMelding('');
+        setDelestatus(Nettstatus.IkkeLastet);
+        setEpostadresser([]);
+        setEpostFeilmelding(undefined);
     };
 
-    onBeskjedChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        this.setState({
-            beskjed: e.target.value,
-        });
-    };
+    const presenterKandidater = async (kandidatnumre: Array<string>) => {
+        setDelestatus(Nettstatus.SenderInn);
 
-    showInputFelt = (id: number) => {
-        this.setState({
-            mailadresser: this.state.mailadresser.map((mailadresseFelt) => {
-                if (mailadresseFelt.id === id) {
-                    return {
-                        ...mailadresseFelt,
-                        show: true,
-                    };
-                }
-                return mailadresseFelt;
-            }),
-        });
-    };
+        const response = await postDelteKandidater(
+            melding,
+            epostadresser,
+            kandidatliste.kandidatlisteId,
+            kandidatnumre,
+            valgtNavKontor
+        );
 
-    leggTilMailadressefelt = () => {
-        const id = this.state.mailadresser.length;
-        this.setState({
-            mailadresser: this.state.mailadresser.concat({
-                id,
-                value: '',
-                errorTekst: undefined,
-                show: false,
-            }),
-        });
-        setTimeout(() => {
-            this.showInputFelt(id);
-        }, 10);
-    };
+        if (response.kind === Nettstatus.Suksess) {
+            const prefix = markerteKandidater.length > 1 ? 'Kandidatene' : 'Kandidaten';
+            const melding = prefix + ' er delt med arbeidsgiver';
 
-    validerOgLagre = () => {
-        // TODO: Verifiser at NAV-kontor er valgt, send med i onSubmit
-        const validerteMailadresser = this.state.mailadresser.map((mailadresseFelt) => {
-            if (mailadresseFelt.id === 0 && !mailadresseFelt.value.trim()) {
-                return {
-                    ...mailadresseFelt,
-                    errorTekst: 'Feltet er påkrevd',
-                };
-            } else if (!erGyldigEpost(mailadresseFelt.value.trim())) {
-                return {
-                    ...mailadresseFelt,
-                    errorTekst: 'Mailadressen er ugyldig',
-                };
-            } else if (inneholderSærnorskeBokstaver(mailadresseFelt.value.trim())) {
-                return {
-                    ...mailadresseFelt,
-                    errorTekst: 'Særnorske bokstaver i e-postadresse støttes ikke',
-                };
-            }
-            return mailadresseFelt;
-        });
-
-        if (
-            validerteMailadresser.filter((mailadresseFelt) => mailadresseFelt.errorTekst).length !==
-            0
-        ) {
-            this.setState({
-                mailadresser: validerteMailadresser,
+            dispatch({
+                type: KandidatlisteActionType.PresenterKandidaterSuccess,
+                kandidatliste: response.data,
             });
-        } else {
-            const ikkeTommeMailadresser = this.state.mailadresser
-                .map((mailadresseFelt) => mailadresseFelt.value)
-                .filter((mailadresse) => mailadresse.trim());
 
-            this.props.onSubmit(this.state.beskjed, ikkeTommeMailadresser);
+            dispatch({
+                type: VarslingActionType.VisVarsling,
+                innhold: melding,
+            });
+
+            sendAmplitudeEventForPresentertKandidatliste(kandidatliste, kandidatnumre);
+            resetState();
+
+            onClose(true);
+        } else {
+            if (response.kind === Nettstatus.Feil) {
+                console.error('Det skjedde en feil:', response.error.message);
+            }
+
+            setDelestatus(Nettstatus.Feil);
         }
     };
 
-    render() {
-        const {
-            vis = true,
-            deleStatus,
-            antallMarkerteKandidater,
-            antallKandidaterSomHarSvartJa,
-            alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere,
-        } = this.props;
+    const handleDelClick = () => {
+        if (valgtNavKontor !== null) {
+            if (epostadresser.length > 0) {
+                const kandidaterSomSkalDeles = kandidaterMåGodkjenneDelingAvCv(kandidatliste)
+                    ? kandidaterSomHarSvartJa.map((k) => k.kandidatnr)
+                    : markerteKandidater.map((kandidat) => kandidat.kandidatnr);
 
-        const antallSomSkalDeles = alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere
-            ? antallKandidaterSomHarSvartJa
-            : antallMarkerteKandidater;
+                presenterKandidater(kandidaterSomSkalDeles);
+            } else {
+                setEpostFeilmelding('Oppgi minst én e-postadresse');
+            }
+        }
+    };
 
-        const antallKandidaterSomIkkeKanDeles =
-            antallMarkerteKandidater - antallKandidaterSomHarSvartJa;
+    const handleLeggTilEpost = (adresse: string) => {
+        const adresserUtenDuplikater = new Set([...epostadresser, adresse]);
 
-        return (
-            <Modal
-                open={vis}
-                onBeforeClose={this.props.onClose}
-                aria-label="Del kandidater med arbeidsgiver"
-                className={css.presenterKandidaterModal}
-                header={{
-                    heading:
-                        antallSomSkalDeles === 1
-                            ? 'Del 1 kandidat med arbeidsgiver'
-                            : `Del ${antallSomSkalDeles} kandidater med arbeidsgiver`,
-                }}
-            >
-                <Modal.Body>
-                    <div className={css.wrapper}>
-                        {alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere &&
-                            antallKandidaterSomIkkeKanDeles > 0 && (
-                                <Alert variant="warning" size="small" className={css.maaGodkjenne}>
-                                    <BodyLong size="small" spacing>
-                                        {antallKandidaterSomIkkeKanDeles} av kandidatene har ikke
-                                        svart eller svart nei på om CV-en kan deles. Du kan derfor
-                                        ikke dele disse.
-                                    </BodyLong>
-                                    <BodyLong size="small" spacing>
-                                        Har du hatt dialog med kandidaten, og fått bekreftet at NAV
-                                        kan dele CV-en? Da må du registrere dette i
-                                        aktivitetsplanen. Har du ikke delt stillingen med kandidaten
-                                        må du gjøre det først.{' '}
-                                        <Link href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Del-stillinger-med-kandidater-i-Aktivitetsplanen.aspx#har-du-ringt-kandidaten-istedenfor-%C3%A5-dele-i-aktivitetsplanen">
-                                            Se rutiner
-                                        </Link>
-                                        .
-                                    </BodyLong>
-                                </Alert>
-                            )}
-                        {!alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere && (
-                            <Alert variant="warning" size="small" className={css.maaGodkjenne}>
-                                <BodyLong size="small" spacing>
-                                    Husk at du må kontakte kandidatene og undersøke om stillingen er
-                                    aktuell før du deler med arbeidsgiver.
+        setEpostFeilmelding(undefined);
+        setEpostadresser(Array.from(adresserUtenDuplikater));
+    };
+
+    const handleSlettEpost = (epostadresse: string) => {
+        setEpostadresser(epostadresser.filter((adresse) => adresse !== epostadresse));
+    };
+
+    const antallSomSkalDeles = alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere
+        ? kandidaterSomHarSvartJa.length
+        : markerteKandidater.length;
+
+    const antallKandidaterSomIkkeKanDeles =
+        markerteKandidater.length - kandidaterSomHarSvartJa.length;
+
+    return (
+        <Modal
+            open={vis}
+            onBeforeClose={() => onClose(false)}
+            aria-label="Del kandidater med arbeidsgiver"
+            className={css.presenterKandidaterModal}
+            header={{
+                heading:
+                    antallSomSkalDeles === 1
+                        ? 'Del 1 kandidat med arbeidsgiver'
+                        : `Del ${antallSomSkalDeles} kandidater med arbeidsgiver`,
+            }}
+        >
+            <Modal.Body>
+                <div className={css.wrapper}>
+                    {alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere &&
+                        antallKandidaterSomIkkeKanDeles > 0 && (
+                            <Alert variant="warning" size="small">
+                                <BodyLong spacing>
+                                    {antallKandidaterSomIkkeKanDeles} av kandidatene har ikke svart
+                                    eller svart nei på om CV-en kan deles. Du kan derfor ikke dele
+                                    disse.
+                                </BodyLong>
+                                <BodyLong spacing>
+                                    Har du hatt dialog med kandidaten, og fått bekreftet at NAV kan
+                                    dele CV-en? Da må du registrere dette i aktivitetsplanen. Har du
+                                    ikke delt stillingen med kandidaten må du gjøre det først.{' '}
+                                    <Link href={rutinerForDeling}>Se rutiner</Link>.
                                 </BodyLong>
                             </Alert>
                         )}
-                        <BodyShort size="small" spacing>
-                            * er obligatoriske felter du må fylle ut
-                        </BodyShort>
-                        <BodyLong size="small">
-                            Arbeidsgiveren du deler listen med vil motta en e-post med navn på
-                            stilling og lenke for å logge inn. Etter innlogging kan arbeidsgiveren
-                            se kandidatlisten.
-                        </BodyLong>
-                        <div className={css.mailadresser}>
-                            {this.state.mailadresser.map((mailadresseFelt) => (
-                                <TextField
-                                    className={classNames(css.mailadresse, {
-                                        [css.mailadresseshow]: mailadresseFelt.show,
-                                    })}
-                                    size="small"
-                                    key={`mailadressefelt_${mailadresseFelt.id}`}
-                                    label={
-                                        mailadresseFelt.id === 0
-                                            ? 'E-postadresse til arbeidsgiver*'
-                                            : ''
-                                    }
-                                    placeholder={
-                                        mailadresseFelt.id === 0
-                                            ? 'For eksempel: kari.nordmann@firma.no'
-                                            : undefined
-                                    }
-                                    value={mailadresseFelt.value}
-                                    onChange={this.onMailadresseChange(mailadresseFelt.id)}
-                                    error={
-                                        mailadresseFelt.errorTekst
-                                            ? mailadresseFelt.errorTekst
-                                            : undefined
-                                    }
-                                />
-                            ))}
-                            <Button
-                                variant="tertiary-neutral"
-                                onClick={this.leggTilMailadressefelt}
-                                className={css.leggTilMailadressefelt}
-                            >
-                                + Legg til flere
-                            </Button>
-                        </div>
-                        <div>
-                            <Textarea
-                                label="Melding til arbeidsgiver"
-                                value={this.state.beskjed}
-                                onChange={this.onBeskjedChange}
-                            />
-                        </div>
+                    {!alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere && (
+                        <Alert variant="warning" size="small">
+                            <BodyLong spacing>
+                                Husk at du må kontakte kandidatene og undersøke om stillingen er
+                                aktuell før du deler med arbeidsgiver.
+                            </BodyLong>
+                        </Alert>
+                    )}
+                    <BodyLong>
+                        Send en e-post med {antallSomSkalDeles} kandidater med arbeidsgiveren.
+                    </BodyLong>
+
+                    <div className={css.epostadresser}>
+                        <LeggTilEpostadresse
+                            onLeggTil={handleLeggTilEpost}
+                            onFjern={handleSlettEpost}
+                            feilmelding={epostFeilmelding}
+                            valgteEposter={epostadresser}
+                        />
                     </div>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button
-                        variant="primary"
-                        disabled={deleStatus === Nettstatus.LasterInn}
-                        loading={deleStatus === Nettstatus.LasterInn}
-                        onClick={this.validerOgLagre}
-                    >
-                        Del
-                    </Button>
-                    <Button variant="secondary" onClick={this.props.onClose}>
-                        Avbryt
-                    </Button>
-                </Modal.Footer>
-                {deleStatus === Nettstatus.Feil && (
-                    <Alert fullWidth variant="error" size="small">
-                        Kunne ikke dele med arbeidsgiver akkurat nå
-                    </Alert>
-                )}
-            </Modal>
-        );
-    }
-}
+
+                    <div>
+                        <Textarea
+                            label="Melding til arbeidsgiver (frivillig)"
+                            value={melding}
+                            description="Sørg for at du ikke skriver noe sensitivt, som opplysninger om helse, soning, rus, eller informasjon om ytelser og oppfølging i NAV."
+                            onChange={(event) => setMelding(event.target.value)}
+                        />
+                    </div>
+                    <Accordion>
+                        <Accordion.Item>
+                            <Accordion.Header>Forhåndsvis e-posten</Accordion.Header>
+                            <Accordion.Content className={css.forhåndsvisning}>
+                                <ForhåndsvisningAvEpost
+                                    kandidatliste={kandidatliste}
+                                    melding={melding}
+                                />
+                            </Accordion.Content>
+                        </Accordion.Item>
+                    </Accordion>
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => onClose(false)}>
+                    Avbryt
+                </Button>
+                <Button
+                    variant="primary"
+                    disabled={delestatus === Nettstatus.SenderInn}
+                    loading={delestatus === Nettstatus.SenderInn}
+                    onClick={handleDelClick}
+                >
+                    Del kandidatene
+                </Button>
+            </Modal.Footer>
+            {delestatus === Nettstatus.Feil && (
+                <Alert fullWidth variant="error" size="small">
+                    Kunne ikke dele med arbeidsgiver akkurat nå
+                </Alert>
+            )}
+        </Modal>
+    );
+};
+
+const sendAmplitudeEventForPresentertKandidatliste = (
+    kandidatliste: Kandidatliste,
+    kandidaterSomSkalDeles: string[]
+) => {
+    const opprettetDato = new Date(kandidatliste.opprettetTidspunkt);
+    const forskjellMs = new Date().getTime() - opprettetDato.getTime();
+    const antallDagerSidenOpprettelse = Math.round(forskjellMs / 1000 / 60 / 60 / 24);
+
+    sendEvent('kandidatliste', 'presenter_kandidater', {
+        antallKandidater: kandidaterSomSkalDeles.length,
+        totaltAntallKandidater: kandidatliste.kandidater.length,
+        antallDagerSidenOpprettelse,
+        erFørstePresentering: kandidatliste.kandidater.every(
+            (kandidat) => kandidat.utfallsendringer.length === 0
+        ),
+        stillingskategori: kandidatliste.stillingskategori,
+    });
+};
 
 export default PresenterKandidaterModal;

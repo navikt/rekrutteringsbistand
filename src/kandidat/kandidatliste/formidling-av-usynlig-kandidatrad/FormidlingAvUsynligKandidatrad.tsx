@@ -1,25 +1,25 @@
-import { FunctionComponent, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Heading, Popover } from '@navikt/ds-react';
 import { XMarkIcon } from '@navikt/aksel-icons';
+import { Button, Heading, Popover } from '@navikt/ds-react';
+import { FunctionComponent, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { formaterDatoNaturlig } from '../../utils/dateUtils';
-import AppState from '../../state/AppState';
-import DelingAvCv from '../kandidatrad/status-og-hendelser/hendelser/DelingAvCv';
+import statusOgHendelsercss from '../kandidatrad/status-og-hendelser/StatusOgHendelser.module.css';
+import endreStatusOgHendelserCss from '../kandidatrad/status-og-hendelser/endre-status-og-hendelser/EndreStatusOgHendelser.module.css';
 import StatusOgHendelserKnapp from '../kandidatrad/status-og-hendelser/endre-status-og-hendelser/StatusOgHendelserKnapp';
+import Hendelsesetikett from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
+import DelingAvCv from '../kandidatrad/status-og-hendelser/hendelser/DelingAvCv';
 import FåttJobben from '../kandidatrad/status-og-hendelser/hendelser/FåttJobben';
 import Hendelse, { Hendelsesstatus } from '../kandidatrad/status-og-hendelser/hendelser/Hendelse';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
-import Hendelsesetikett from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
-import endreStatusOgHendelserCss from '../kandidatrad/status-og-hendelser/endre-status-og-hendelser/EndreStatusOgHendelser.module.css';
-import statusOgHendelsercss from '../kandidatrad/status-og-hendelser/StatusOgHendelser.module.css';
 
-import css from './FormidlingAvUsynligKandidatrad.module.css';
 import classNames from 'classnames';
 import {
     FormidlingAvUsynligKandidat,
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import useNavKontor from 'felles/store/navKontor';
+import css from './FormidlingAvUsynligKandidatrad.module.css';
 
 type Props = {
     kandidatlisteId: string;
@@ -35,7 +35,7 @@ const FormidlingAvUsynligKandidatrad: FunctionComponent<Props> = ({
     kandidatlisteId,
 }) => {
     const dispatch = useDispatch();
-    const valgtNavKontor = useSelector((state: AppState) => state.navKontor.valgtNavKontor);
+    const valgtNavKontor = useNavKontor((state) => state.navKontor);
     const popoverRef = useRef<HTMLButtonElement | null>(null);
     const [visPopover, setVisPopover] = useState<boolean>(false);
 

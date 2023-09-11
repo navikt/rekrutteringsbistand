@@ -1,21 +1,21 @@
-import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { Button, ErrorMessage } from '@navikt/ds-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { sendEvent } from 'felles/amplitude';
+import useNavKontor from 'felles/store/navKontor';
+import { SearchApiError } from '../../../../../api/fetchUtils';
 import { resendForespørselOmDelingAvCv } from '../../../../../api/forespørselOmDelingAvCvApi';
 import {
     ForespørselOmDelingAvCv,
     ResendForespørselOutboundDto,
 } from '../../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import VelgSvarfrist, {
-    lagSvarfristPåSekundet,
     Svarfrist,
+    lagSvarfristPåSekundet,
 } from '../../../../knappe-rad/forespørsel-om-deling-av-cv/VelgSvarfrist';
-import Hendelse, { Hendelsesstatus } from '../Hendelse';
 import KandidatlisteActionType from '../../../../reducer/KandidatlisteActionType';
-import { SearchApiError } from '../../../../../api/fetchUtils';
-import { sendEvent } from 'felles/amplitude';
-import AppState from '../../../../../state/AppState';
+import Hendelse, { Hendelsesstatus } from '../Hendelse';
 import css from './SendForespørselPåNytt.module.css';
 
 type Props = {
@@ -30,8 +30,7 @@ const SendForespørselPåNytt: FunctionComponent<Props> = ({
     onLukk,
 }) => {
     const dispatch = useDispatch();
-
-    const { valgtNavKontor } = useSelector((state: AppState) => state.navKontor);
+    const valgtNavKontor = useNavKontor((state) => state.navKontor);
     const [svarfrist, setSvarfrist] = useState<Svarfrist>(Svarfrist.ToDager);
     const [egenvalgtFrist, setEgenvalgtFrist] = useState<Date | undefined>();
     const [egenvalgtFristFeilmelding, setEgenvalgtFristFeilmelding] = useState<
