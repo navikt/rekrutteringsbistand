@@ -1,7 +1,9 @@
-.leggTilEpostadresse ul[role='listbox']:not(:has(:nth-child(2))) {
+/* Ikke vis elementet "Ingen søketreff" i dropdown */
+.leggTilEpostadresse ul[role='listbox'] li:nth-child(2) {
     display: none;
 }
 
-.leggTilEpostadresse ul[role='listbox'] li:nth-child(2) {
+/* Ikke vis dropdown hvis det bare står "Ingen søketreff" */
+.leggTilEpostadresse ul[role='listbox']:not(:has(:nth-child(2))) {
     display: none;
 }
