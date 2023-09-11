@@ -12,7 +12,7 @@ type Props = {
 
 const LeggTilEpostadresse = ({ onLeggTil, onFjern, valgteEposter, feilmelding: feil }: Props) => {
     const [input, setInput] = useState<string>('');
-    const [gyldigInput, setGyldigInput] = useState<string | undefined>();
+    const [inputErGyldig, setInputErGyldig] = useState<boolean>(false);
     const [feilmelding, setFeilmelding] = useState<string | undefined>(feil);
 
     useEffect(() => {
@@ -24,27 +24,24 @@ const LeggTilEpostadresse = ({ onLeggTil, onFjern, valgteEposter, feilmelding: f
 
         if (value) {
             setInput(value);
-
-            if (validerEpostadresse(value) === undefined) {
-                setGyldigInput(value);
-            } else {
-                setGyldigInput(undefined);
-            }
+            setInputErGyldig(validerEpostadresse(value) === undefined);
+        } else {
+            setInput('');
         }
     };
 
-    const handleToggle = (option: string, isSelected: boolean) => {
-        if (isSelected) {
-            onLeggTil(option);
-            setGyldigInput(undefined);
+    const handleToggle = (adresse: string, harBlittValgt: boolean) => {
+        if (harBlittValgt) {
+            onLeggTil(adresse);
+            setInputErGyldig(false);
             setInput('');
         } else {
-            onFjern(option);
+            onFjern(adresse);
         }
     };
 
     const handleClear = () => {
-        setGyldigInput(undefined);
+        setInputErGyldig(false);
         setInput('');
     };
 
@@ -52,7 +49,7 @@ const LeggTilEpostadresse = ({ onLeggTil, onFjern, valgteEposter, feilmelding: f
         <Combobox
             isMultiSelect
             value={input}
-            allowNewValues={gyldigInput !== undefined}
+            allowNewValues={inputErGyldig}
             className={css.leggTilEpostadresse}
             label="E-posten til arbeidsgiveren"
             description="For eksempel «kari.nordmann@firma.no». Særnorske bokstaver støttes ikke."
