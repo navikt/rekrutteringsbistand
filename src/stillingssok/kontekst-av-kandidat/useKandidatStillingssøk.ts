@@ -1,6 +1,6 @@
 import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
+import useKandidat from 'felles/komponenter/useKandidat';
 import { Nettstatus } from 'felles/nettressurs';
 import { useEffect, useRef } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';

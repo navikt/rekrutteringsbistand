@@ -28,7 +28,7 @@ import useForespørselOmDelingAvCv from './useForespørselOmDelingAvCv';
 import useNavigerbareKandidater from './useNavigerbareKandidater';
 import useSendtKandidatmelding from './useSendtKandidatmelding';
 import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
+import useKandidat from 'felles/komponenter/useKandidat';
 
 type Props = {
     tabs: ReactNode;

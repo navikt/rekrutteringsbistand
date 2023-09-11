@@ -13,7 +13,7 @@ import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
 import { hentØktFraKandidatsøk } from '../søkekontekst';
 import LagreKandidatIKandidatlisteModal from './LagreKandidatIKandidatlisteModal';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
+import useKandidat from 'felles/komponenter/useKandidat';
 import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {

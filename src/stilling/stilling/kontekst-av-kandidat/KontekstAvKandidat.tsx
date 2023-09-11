@@ -6,7 +6,7 @@ import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling from 'felles/domene/stilling/Stilling';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
+import useKandidat from 'felles/komponenter/useKandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';

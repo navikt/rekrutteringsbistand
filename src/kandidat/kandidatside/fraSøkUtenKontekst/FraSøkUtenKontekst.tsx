@@ -13,7 +13,7 @@ import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
 import { hentØktFraKandidatsøk } from '../søkekontekst';
 import css from './FraSøkUtenKontekst.module.css';
 import LagreKandidaterIMineKandidatlisterModal from './lagre-kandidat-modal/LagreKandidatIMineKandidatlisterModal';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
+import useKandidat from 'felles/komponenter/useKandidat';
 
 type Props = {
     tabs: ReactNode;
