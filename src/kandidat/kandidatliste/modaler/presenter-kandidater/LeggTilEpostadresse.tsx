@@ -56,7 +56,7 @@ const LeggTilEpostadresse = ({ onLeggTil, onFjern, valgteEposter, feilmelding: f
                 allowNewValues={gyldigInput !== undefined}
                 className={css.leggTilEpostadresse}
                 label="E-posten til arbeidsgiveren"
-                description="For eksempel «kari.nordmann@firma.no». Særnoske bokstaver støttes ikke."
+                description="For eksempel «kari.nordmann@firma.no». Særnorske bokstaver støttes ikke."
                 onChange={handleChange}
                 onClear={handleClear}
                 selectedOptions={valgteEposter}
