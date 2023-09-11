@@ -6,7 +6,6 @@ import { TasklistIcon } from '@navikt/aksel-icons';
 import { Nettstatus } from 'felles/nettressurs';
 import { lenkeTilKandidatsøk } from '../../app/paths';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
-import useCv from '../hooks/useCv';
 import useFaner from '../hooks/useFaner';
 import useNavigerbareKandidaterFraSøk from '../hooks/useNavigerbareKandidaterFraSøk';
 import Kandidatheader from '../komponenter/header/Kandidatheader';
@@ -14,6 +13,7 @@ import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
 import { hentØktFraKandidatsøk } from '../søkekontekst';
 import css from './FraSøkUtenKontekst.module.css';
 import LagreKandidaterIMineKandidatlisterModal from './lagre-kandidat-modal/LagreKandidatIMineKandidatlisterModal';
+import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 
 type Props = {
     tabs: ReactNode;
@@ -26,7 +26,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
 
     const navigate = useNavigate();
     const [fane, setFane] = useFaner();
-    const cv = useCv(kandidatnr);
+    const cv = useKandidat(kandidatnr);
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr);
     const [visKandidatlisterModal, setVisKandidatlisterModal] = useState<boolean>(false);
 

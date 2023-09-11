@@ -1,8 +1,6 @@
 import { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
-import AppState from '../../state/AppState';
 import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 import css from './CvSide.module.css';
 import Jobbønsker from './cv/jobbønsker/Jobbønsker';
@@ -16,9 +14,12 @@ import Kurs from './cv/Kurs';
 import Sammendrag from './cv/Sammendrag';
 import Kompetanse from './cv/Kompetanse';
 import { Alert, BodyLong, Heading } from '@navikt/ds-react';
+import { useParams } from 'react-router-dom';
+import useCv from '../hooks/useCv';
 
 const CvSide: FunctionComponent = () => {
-    const { cv } = useSelector((state: AppState) => state.cv);
+    const { kandidatnr } = useParams<{ kandidatnr: string }>();
+    const cv = useCv(kandidatnr!);
 
     if (cv.kind === Nettstatus.LasterInn || cv.kind === Nettstatus.IkkeLastet) {
         return <Sidelaster />;

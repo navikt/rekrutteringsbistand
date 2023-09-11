@@ -70,7 +70,7 @@ export type KandidatLookup = {
 };
 
 /* Brukes i Kandidatbanneret. */
-export type KandidatTilBanner = {
+export type KandidatFraOpenSearch = {
     fornavn: Personalia['fornavn'];
     etternavn: Personalia['etternavn'];
     fodselsnummer: Id['fodselsnummer'];

@@ -1,14 +1,14 @@
 import { Modal } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
+import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
 type Props = {
-    kandidat: KandidatTilBanner;
+    kandidat: KandidatFraOpenSearch;
     kandidatliste: Kandidatliste;
     setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     vis: boolean;

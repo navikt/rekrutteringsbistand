@@ -1,10 +1,10 @@
 import { api, post } from 'felles/api';
 import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
+import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 
-export const byggQuery = (kandidatnr: string): EsQuery<KandidatTilBanner> => ({
+export const byggQuery = (kandidatnr: string): EsQuery<KandidatFraOpenSearch> => ({
     query: {
         term: {
             kandidatnr: kandidatnr,
@@ -33,14 +33,14 @@ export const byggQuery = (kandidatnr: string): EsQuery<KandidatTilBanner> => ({
     ],
 });
 
-const useKandidat = (kandidatnr: string): Nettressurs<KandidatTilBanner> => {
-    const [kandidat, setKandidat] = useState<Nettressurs<KandidatTilBanner>>({
+const useKandidat = (kandidatnr: string): Nettressurs<KandidatFraOpenSearch> => {
+    const [kandidat, setKandidat] = useState<Nettressurs<KandidatFraOpenSearch>>({
         kind: Nettstatus.LasterInn,
     });
 
     useEffect(() => {
         const hentKandidat = async () => {
-            const response = await post<EsResponse<KandidatTilBanner>>(
+            const response = await post<EsResponse<KandidatFraOpenSearch>>(
                 api.kandidatsøk,
                 byggQuery(kandidatnr)
             );

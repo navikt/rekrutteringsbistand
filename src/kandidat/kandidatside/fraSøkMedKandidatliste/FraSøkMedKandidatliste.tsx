@@ -3,10 +3,9 @@ import { BodyShort, Button, Tabs } from '@navikt/ds-react';
 import { FunctionComponent, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Nettstatus } from 'felles/nettressurs';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { lenkeTilKandidatliste, lenkeTilKandidatsøk } from '../../app/paths';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
-import useCv from '../hooks/useCv';
 import useFaner from '../hooks/useFaner';
 import useKandidatliste from '../hooks/useKandidatliste';
 import useNavigerbareKandidaterFraSøk from '../hooks/useNavigerbareKandidaterFraSøk';
@@ -14,6 +13,8 @@ import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
 import { hentØktFraKandidatsøk } from '../søkekontekst';
 import LagreKandidatIKandidatlisteModal from './LagreKandidatIKandidatlisteModal';
+import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
+import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
     tabs: ReactNode;
@@ -33,7 +34,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     const [fane, setFane] = useFaner();
     const [visLagreKandidatModal, setVisLagreKandidatModal] = useState<boolean>(false);
 
-    const cv = useCv(kandidatnr);
+    const cv: Nettressurs<KandidatFraOpenSearch> = useKandidat(kandidatnr);
     const kandidatliste = useKandidatliste(kandidatlisteId);
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, kandidatlisteId);
 

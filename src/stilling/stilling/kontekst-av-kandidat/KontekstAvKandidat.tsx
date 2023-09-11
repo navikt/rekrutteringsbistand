@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { CopyButton } from '@navikt/ds-react';
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
+import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling from 'felles/domene/stilling/Stilling';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
@@ -69,7 +69,7 @@ const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, still
 const byggBrødsmulesti = (
     kandidatnr: string,
     stilling: Stilling,
-    kandidat: Nettressurs<KandidatTilBanner>,
+    kandidat: Nettressurs<KandidatFraOpenSearch>,
     stillingssøk?: string
 ) => {
     if (kandidat.kind !== Nettstatus.Suksess) {

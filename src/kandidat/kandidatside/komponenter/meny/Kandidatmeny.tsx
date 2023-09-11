@@ -3,14 +3,14 @@ import { Button } from '@navikt/ds-react';
 import { FunctionComponent, ReactNode } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 import { Miljø, getMiljø } from 'felles/miljø';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import LenkeTilAktivitetsplan from '../lenker/LenkeTilAktivitetsplan';
 import css from './Kandidatmeny.module.css';
 
 type Props = {
-    cv: Nettressurs<KandidatCv>;
+    cv: Nettressurs<KandidatFraOpenSearch>;
     tabs: ReactNode;
     children?: ReactNode;
 };

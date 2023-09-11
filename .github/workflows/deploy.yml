@@ -48,7 +48,7 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/aksel-v5'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kandidatmeny-nytt-kandiatkall-fra-opensearch'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3

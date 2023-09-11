@@ -6,7 +6,7 @@ import {
     PinIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort, CopyButton, Heading, Skeleton } from '@navikt/ds-react';
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
+import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
@@ -22,7 +22,7 @@ export type Veileder = {
 };
 
 type Props = {
-    kandidat: Nettressurs<KandidatTilBanner>;
+    kandidat: Nettressurs<KandidatFraOpenSearch>;
     brødsmulesti?: Brødsmule[];
     øverstTilHøyre?: ReactNode;
     nederstTilHøyre?: ReactNode;
@@ -188,7 +188,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
     return `Født: ${fødselsdagString} (${alder} år)`;
 };
 
-const hentAdresse = (kandidat: KandidatTilBanner) => {
+const hentAdresse = (kandidat: KandidatFraOpenSearch) => {
     const { poststed, postnummer, adresselinje1 } = kandidat;
 
     if (!poststed && !postnummer && !adresselinje1) {
@@ -202,7 +202,7 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-export const formaterNavn = (kandidat: KandidatTilBanner) => {
+export const formaterNavn = (kandidat: KandidatFraOpenSearch) => {
     const fornavn = brukStorForbokstav(kandidat.fornavn);
     const etternavn = brukStorForbokstav(kandidat.etternavn);
 

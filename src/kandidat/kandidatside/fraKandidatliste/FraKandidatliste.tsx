@@ -2,7 +2,7 @@ import { Label, Tabs } from '@navikt/ds-react';
 import React, { Dispatch, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { KandidatFraOpenSearch } from 'felles/domene/kandidat/Kandidat';
 import {
     KandidatIKandidatliste,
     Kandidatstatus,
@@ -19,7 +19,6 @@ import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteAc
 import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
 import AppState from '../../state/AppState';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
-import useCv from '../hooks/useCv';
 import useFaner from '../hooks/useFaner';
 import useKandidatliste from '../hooks/useKandidatliste';
 import Kandidatheader from '../komponenter/header/Kandidatheader';
@@ -29,6 +28,7 @@ import useForespørselOmDelingAvCv from './useForespørselOmDelingAvCv';
 import useNavigerbareKandidater from './useNavigerbareKandidater';
 import useSendtKandidatmelding from './useSendtKandidatmelding';
 import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
+import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 
 type Props = {
     tabs: ReactNode;
@@ -41,7 +41,7 @@ const FraKandidatliste = ({ tabs, kandidatnr, kandidatlisteId, children, ...prop
     useScrollTilToppen(kandidatnr);
     useValgtKandidatIKandidatliste(kandidatnr, kandidatlisteId);
 
-    const cv = useCv(kandidatnr);
+    const cv = useKandidat(kandidatnr);
     const kandidatliste = useKandidatliste(kandidatlisteId);
 
     if (kandidatliste.kind === Nettstatus.LasterInn) {
@@ -84,7 +84,7 @@ const FraKandidatlisteInner = ({
     children,
 }: {
     tabs: ReactNode;
-    cv: Nettressurs<KandidatCv>;
+    cv: Nettressurs<KandidatFraOpenSearch>;
     kandidat: KandidatIKandidatliste;
     kandidatliste: Kandidatliste;
     children: React.ReactNode;
