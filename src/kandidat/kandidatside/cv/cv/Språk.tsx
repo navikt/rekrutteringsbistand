@@ -2,24 +2,24 @@ import { LanguageIcon } from '@navikt/aksel-icons';
 import Kort from './kort/Kort';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { BodyShort } from '@navikt/ds-react';
 import { Språkferdighetsnivå } from 'felles/domene/kandidat/Cv';
 import Detaljer from './detaljer/Detaljer';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: KandidatCv;
+    cv: Kandidat;
 };
 
 const Språk = ({ cv }: Props) => {
-    return cv.sprakferdigheter?.length > 0 ? (
+    return cv.sprak?.length > 0 ? (
         <Kort overskrift={'Språk'} ikon={<LanguageIcon />}>
             <div className={css.erfaringer}>
-                {cv.sprakferdigheter.map((ferdighet) => {
+                {cv.sprak.map((ferdighet) => {
                     return (
                         <Erfaring
-                            key={`${ferdighet.sprak}${ferdighet.ferdighetMuntlig}${ferdighet.ferdighetSkriftlig}`}
-                            overskrift={ferdighet.sprak}
+                            key={`${ferdighet.sprakKodeTekst}${ferdighet.ferdighetMuntlig}${ferdighet.ferdighetSkriftlig}`}
+                            overskrift={ferdighet.sprakKodeTekst} // TODO: Sjekk at det er riktig med beskrivelse, og ikke alternativtnavn
                             beskrivelse={
                                 <Detaljer>
                                     <BodyShort size="small" className={css.tekst}>

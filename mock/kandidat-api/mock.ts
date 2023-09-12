@@ -1,7 +1,6 @@
 import { ResponseFunction, RestContext, RestRequest, rest } from 'msw';
 import { api } from '../../src/felles/api';
 import { LagreKandidaterDto } from '../../src/kandidatsok/kandidatliste/LagreKandidaterIMineKandidatlisterModal';
-import { mockAlleKandidatCv } from './mockKandidatCv';
 import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
 
@@ -61,13 +60,6 @@ export const kandidatApiMock = [
     ),
 
     rest.post(`${api.kandidat}/veileder/me/kandidatlister`, (_, res, ctx) => res(ctx.status(201))),
-
-    rest.get(`${api.kandidat}/veileder/kandidatsok/hentcv`, (req, res, ctx) => {
-        const kandidatNr = req.url.searchParams.get('kandidatnr');
-        const kandidatCv = mockAlleKandidatCv.find((cv) => cv.kandidatnummer === kandidatNr);
-
-        return res(kandidatCv ? ctx.json(kandidatCv) : ctx.status(404));
-    }),
 
     rest.get(`${api.kandidat}/veileder/kandidater/:kandidatnr/listeoversikt`, (req, res, ctx) => {
         const kandidatlister = mockAlleKandidatlister.filter((liste) =>

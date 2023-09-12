@@ -1,18 +1,18 @@
 import { Buldings2Icon } from '@navikt/aksel-icons';
 import { AnnenErfaring, Yrkeserfaring } from 'felles/domene/kandidat/Cv';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
 import Erfaringsdetaljer from './erfaring/Erfaringsdetaljer';
 import Kort from './kort/Kort';
 import sortByDato from './sortByDato';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: KandidatCv;
+    cv: Kandidat;
 };
 
 const Erfaringer = ({ cv }: Props) => {
-    return cv.yrkeserfaring?.length > 0 || cv.annenErfaring?.length > 0 ? (
+    return cv.yrkeserfaring?.length > 0 || cv.annenerfaringObj?.length > 0 ? (
         <Kort overskrift={'Erfaring'} ikon={<Buldings2Icon />}>
             <div className={css.erfaringer}>
                 {cv.yrkeserfaring?.length > 0 &&
@@ -32,12 +32,12 @@ const Erfaringer = ({ cv }: Props) => {
                         />
                     ))}
 
-                {cv.yrkeserfaring?.length > 0 && cv.annenErfaring?.length > 0 ? (
+                {cv.yrkeserfaring?.length > 0 && cv.annenerfaringObj?.length > 0 ? (
                     <div className={css.deler} />
                 ) : null}
 
-                {cv.annenErfaring?.length > 0 &&
-                    sortByDato(cv.annenErfaring).map((erfaring) => {
+                {cv.annenerfaringObj?.length > 0 &&
+                    sortByDato(cv.annenerfaringObj).map((erfaring) => {
                         return (
                             <Erfaring
                                 key={`${erfaring.rolle}-${erfaring.fraDato}`}

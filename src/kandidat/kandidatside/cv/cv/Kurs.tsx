@@ -1,7 +1,7 @@
 import { ClipboardIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import { Kurs as Kurstype, Omfang, Omfangenhet } from 'felles/domene/kandidat/Cv';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import css from './Cv.module.css';
 import Detaljer from './detaljer/Detaljer';
@@ -10,14 +10,14 @@ import Kort from './kort/Kort';
 import sortByDato from './sortByDato';
 
 type Props = {
-    cv: KandidatCv;
+    cv: Kandidat;
 };
 
 const Kurs = ({ cv }: Props) => {
-    return cv.kurs?.length > 0 ? (
+    return cv.kursObj?.length > 0 ? (
         <Kort overskrift={'Kurs'} ikon={<ClipboardIcon />}>
             <div className={css.erfaringer}>
-                {sortByDato(cv.kurs).map((kurs) => (
+                {sortByDato(cv.kursObj).map((kurs) => (
                     <Erfaring
                         key={`${kurs.tittel}-${kurs.fraDato}`}
                         overskrift={kurs.tittel}

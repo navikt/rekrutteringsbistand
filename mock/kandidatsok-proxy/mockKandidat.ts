@@ -554,3 +554,5 @@ export const mockKandidat: Kandidat = {
     fritattAgKandidatsok: null,
     fritattKandidatsok: null,
 };
+
+export const mockAlleKandidater = [mockKandidat];

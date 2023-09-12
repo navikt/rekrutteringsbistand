@@ -1,15 +1,15 @@
 import { CarIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import { Sertifikat } from 'felles/domene/kandidat/Cv';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
 import Kort from './kort/Kort';
 import sortByDato from './sortByDato';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: KandidatCv;
+    cv: Kandidat;
 };
 
 const Førerkort = ({ cv }: Props) => {

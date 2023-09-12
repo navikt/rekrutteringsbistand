@@ -1,15 +1,15 @@
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { capitalizePoststed } from '../../../utils/formateringUtils';
 
-type Props = { cv: KandidatCv };
+type Props = { cv: Kandidat };
 
 const Personalia = ({ cv }: Props) => (
     <>
-        {cv.epost && (
+        {cv.epostadresse && (
             <span>
                 E-post:{' '}
-                <a className="lenke" href={`mailto:${cv.epost}`}>
-                    {cv.epost}
+                <a className="lenke" href={`mailto:${cv.epostadresse}`}>
+                    {cv.epostadresse}
                 </a>
             </span>
         )}
@@ -18,16 +18,10 @@ const Personalia = ({ cv }: Props) => (
                 Telefon: <strong>{formaterMobiltelefonnummer(cv.telefon)}</strong>
             </span>
         )}
-        {cv.adresse && cv.adresse.adrlinje1 && (
+        {cv.adresselinje1 && (
             <span>
                 Adresse:{' '}
-                <strong>
-                    {formaterAdresse(
-                        cv.adresse.adrlinje1,
-                        cv.adresse.postnr,
-                        cv.adresse.poststednavn
-                    )}
-                </strong>
+                <strong>{formaterAdresse(cv.adresselinje1, cv.postnummer, cv.poststed)}</strong>
             </span>
         )}
     </>
