@@ -1,4 +1,4 @@
-import { Alert, BodyShort, Modal, Textarea } from '@navikt/ds-react';
+import { Alert, BodyShort, Modal } from '@navikt/ds-react';
 import { ChangeEvent, useState } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
@@ -9,6 +9,7 @@ import PostKandidatTilKandidatliste from 'felles/domene/kandidatliste/PostKandid
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Knapper from './Knapper';
 import css from './LeggTilKandidat.module.css';
+import SensitivTextarea from './SensitivTextarea';
 
 const MAKS_NOTATLENGDE = 2000;
 
@@ -93,7 +94,7 @@ const BekreftMedNotat = ({
                 <BodyShort
                     spacing
                 >{`${kandidat.fornavn} ${kandidat.etternavn} (${fnr})`}</BodyShort>
-                <Textarea
+                <SensitivTextarea
                     value={notat}
                     placeholder=""
                     className={css.notat}

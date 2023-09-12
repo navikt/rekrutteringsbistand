@@ -51,7 +51,7 @@ export const mockKandidatlisteMedStilling: Kandidatliste = {
     organisasjonNavn: mockStilling.employer.publicName,
 
     formidlingerAvUsynligKandidat: [],
-    kandidater: mockKandidatIKandidatliste,
+    kandidater: [], // mockKandidatIKandidatliste,
 
     opprettetAv: {
         ident: mockMeg.navIdent,
