@@ -19,9 +19,9 @@ const Utdanning = ({ cv }: Props) => {
                         <Erfaring
                             key={`${utdanning.nusKode}${utdanning.fraDato}`}
                             overskrift={
-                                utdanning.alternativtUtdanningsnavn
-                                    ? utdanning.alternativtUtdanningsnavn
-                                    : utdanning.nusKodeUtdanningsnavn +
+                                utdanning.alternativGrad
+                                    ? utdanning.alternativGrad
+                                    : utdanning.beskrivelse +
                                       (utdanning.utdannelsessted
                                           ? ', ' + utdanning.utdannelsessted
                                           : '')

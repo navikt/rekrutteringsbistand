@@ -72,13 +72,12 @@ export type Kompetanse = {
 };
 
 export type Utdanning = {
-    utdannelsessted: string | null;
-    alternativtUtdanningsnavn: string | null;
-    nusKode: string;
-    nusKodeUtdanningsnavn: string | null;
-    nusKodeGrad?: string | null;
     fraDato: string | null;
     tilDato: string | null;
+    utdannelsessted: string | null;
+    nusKode: string;
+    alternativGrad: string | null;
+    yrkestatus: string | null;
     beskrivelse: string | null;
 };
 
