@@ -54,11 +54,12 @@ export type Yrkeserfaring = {
 };
 
 export type Kompetanse = {
-    kompetanseKode: string | null;
-    kompetanseKodeTekst: string | null;
-    alternativTekst: string | null;
-    beskrivelse: string | null;
     fraDato: string | null;
+    kompKode: string | null;
+    kompKodeNavn: string | null;
+    sokeNavn: string[];
+    alternativtNavn: string | null;
+    beskrivelse: string | null;
 };
 
 export type Utdanning = {

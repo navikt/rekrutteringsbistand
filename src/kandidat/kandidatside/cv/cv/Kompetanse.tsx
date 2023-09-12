@@ -16,7 +16,7 @@ const Kompetanse = ({ cv }: Props) => {
                 <Erfaring
                     beskrivelse={
                         <MangeTekstelementerSeparertMedKomma
-                            elementer={cv.kompetanseObj.map((u) => u.kompetanseKodeTekst)}
+                            elementer={cv.kompetanseObj.map((u) => u.kompKodeNavn)}
                         />
                     }
                 />

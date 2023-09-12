@@ -414,20 +414,22 @@ export const mockKandidat: Kandidat = {
     ],
     kompetanseObj: [
         {
-            kompetanseKode: null,
-            kompetanseKodeTekst: 'Altmuligarbeid langs slakteprosedyren',
-            alternativTekst: 'Altmuligarbeid langs slakteprosedyren',
-            beskrivelse: '',
             fraDato: null,
+            kompKode: null,
+            kompKodeNavn: 'Altmuligarbeid langs slakteprosedyren',
+            sokeNavn: ['Slakting', 'Flåing'],
+            alternativtNavn: 'Altmuligarbeid langs slakteprosedyren',
+            beskrivelse: '',
         },
         {
-            kompetanseKode: null,
-            kompetanseKodeTekst:
+            fraDato: null,
+            kompKode: null,
+            kompKodeNavn:
                 'I stand til å legge til, subtrahere, multiplisere og dividere for kassering',
-            alternativTekst:
+            sokeNavn: ['Matematikk', 'Summering'],
+            alternativtNavn:
                 'I stand til å legge til, subtrahere, multiplisere og dividere for kassering',
             beskrivelse: '',
-            fraDato: null,
         },
     ],
     samletKompetanseObj: [],
