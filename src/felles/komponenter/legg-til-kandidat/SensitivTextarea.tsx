@@ -18,7 +18,7 @@ const SensitivTextarea = ({ className, ...textareaProps }: TextareaProps) => {
                     <div className={css.overskrift}>
                         <ExclamationmarkTriangleIcon aria-hidden />
                         <BodyLong>
-                            Vi fant {sensitiveOrdITekst.length + 1} ord som kan være sensitive
+                            Vi fant {sensitiveOrdITekst.length} ord som kan være sensitive
                         </BodyLong>
                     </div>
                     <ul>
