@@ -49,7 +49,7 @@ const Jobbønsker = ({ cv }: Props) => {
                 >
                     {cv.omfangJobbonskerObj?.length > 0 ? (
                         <MangeTekstelementerSeparertMedOg
-                            elementer={cv.omfangJobbonskerObj.map((u) => u.heltidDeltidKodeTekst)}
+                            elementer={cv.omfangJobbonskerObj.map((u) => u.omfangKodeTekst)}
                         />
                     ) : (
                         'Ikke oppgitt'

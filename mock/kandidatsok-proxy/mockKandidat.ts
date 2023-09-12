@@ -82,8 +82,8 @@ export const mockKandidat: Kandidat = {
         { ansettelsesformKode: 'VIKARIAT', ansettelsesformKodeTekst: 'Vikariat' },
     ],
     omfangJobbonskerObj: [
-        { heltidDeltidKode: 'HELTID', heltidDeltidKodeTekst: 'Heltid' },
-        { heltidDeltidKode: 'DELTID', heltidDeltidKodeTekst: 'Deltid' },
+        { omfangKode: 'HELTID', omfangKodeTekst: 'Heltid' },
+        { omfangKode: 'DELTID', omfangKodeTekst: 'Deltid' },
     ],
 
     // Cv
