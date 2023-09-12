@@ -11,6 +11,8 @@ import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler
 import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
+import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
@@ -45,12 +47,18 @@ const employerNameCompletionQueryTemplate = (match) => ({
     size: 50,
 });
 
-export function fetchCv(kandidatnr: string): Promise<Cv> {
-    return fetchJson(
-        `${api.kandidat}/veileder/kandidatsok/hentcv?${convertToUrlParams({ kandidatnr })}`,
-        true
-    );
+export function fetchCv(kandidatnr: string): Promise<EsResponse<Kandidat>> {
+    return postJson(`${api.kandidatsøk}`, JSON.stringify(byggQuery(kandidatnr)));
 }
+
+const byggQuery = (kandidatnr: string): EsQuery<Cv> => ({
+    query: {
+        term: {
+            kandidatnr: kandidatnr,
+        },
+    },
+    size: 1,
+});
 
 export const fetchKandidatlisteMedStillingsId = (stillingsId: string) =>
     fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`, true);

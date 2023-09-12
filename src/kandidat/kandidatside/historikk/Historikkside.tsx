@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { sendEvent } from 'felles/amplitude';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Sms } from 'felles/domene/sms/Sms';
 import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from 'felles/nettressurs';
@@ -105,7 +105,7 @@ const formaterNavn = (fornavn: string, etternavn: string) => {
 };
 
 export const hentKandidatensNavnFraCvEllerKandidatlister = (
-    cv: Nettressurs<KandidatCv>,
+    cv: Nettressurs<Kandidat>,
     kandidatlister: KandidatlisteForKandidat[]
 ) => {
     if (cv.kind === Nettstatus.Suksess) {

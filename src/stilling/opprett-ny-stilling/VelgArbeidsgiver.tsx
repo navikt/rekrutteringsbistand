@@ -47,8 +47,6 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
                     response = await fetchEmployerNameCompletionHits(navn);
                 }
 
-                console.log('Hey:', response);
-
                 setAlleForslag({
                     kind: Nettstatus.Suksess,
                     data: response,

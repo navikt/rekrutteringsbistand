@@ -1,15 +1,15 @@
 import { CarIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
-import { Sertifikat } from 'felles/domene/kandidat/Cv';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import { Førerkort as FørerkortType } from 'felles/domene/kandidat/Cv';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
 import Kort from './kort/Kort';
 import sortByDato from './sortByDato';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 type Props = {
-    cv: KandidatCv;
+    cv: Kandidat;
 };
 
 const Førerkort = ({ cv }: Props) => {
@@ -18,13 +18,13 @@ const Førerkort = ({ cv }: Props) => {
             <div className={css.erfaringer}>
                 {fjernDuplikater(sortByDato(cv.forerkort)).map((førerkort) => (
                     <Erfaring
-                        key={`${førerkort.sertifikatKode}-${førerkort.fraDato}`}
+                        key={`${førerkort.forerkortKode}-${førerkort.fraDato}`}
                         overskrift={
                             førerkort.alternativtNavn
                                 ? førerkort.alternativtNavn
-                                : førerkort.sertifikatKodeNavn
+                                : førerkort.forerkortKodeKlasse
                         }
-                        beskrivelse={førerkort.sertifikatKode}
+                        beskrivelse={førerkort.forerkortKode}
                         detaljer={<FørerkortTidsperiode førerkort={førerkort} />}
                     />
                 ))}
@@ -33,7 +33,7 @@ const Førerkort = ({ cv }: Props) => {
     ) : null;
 };
 
-const FørerkortTidsperiode = ({ førerkort }: { førerkort: Sertifikat }) => {
+const FørerkortTidsperiode = ({ førerkort }: { førerkort: FørerkortType }) => {
     if (førerkort.fraDato && førerkort.tilDato) {
         return (
             <BodyShort size="small" className={css.tekst}>
@@ -46,15 +46,15 @@ const FørerkortTidsperiode = ({ førerkort }: { førerkort: Sertifikat }) => {
     }
 };
 
-const fjernDuplikater = (forerkortListe: Sertifikat[]) => {
+const fjernDuplikater = (forerkortListe: FørerkortType[]) => {
     const forerkortAlleredeILista = new Set();
 
     return forerkortListe.filter((forerkort) => {
         const forerkortetErIkkeAlleredeLagtTil = !forerkortAlleredeILista.has(
-            forerkort.sertifikatKodeNavn
+            forerkort.forerkortKodeKlasse
         );
 
-        forerkortAlleredeILista.add(forerkort.sertifikatKodeNavn);
+        forerkortAlleredeILista.add(forerkort.forerkortKodeKlasse);
         return forerkortetErIkkeAlleredeLagtTil;
     });
 };

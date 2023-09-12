@@ -2,7 +2,7 @@ import { Label, Tabs } from '@navikt/ds-react';
 import React, { Dispatch, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import {
     KandidatIKandidatliste,
     Kandidatstatus,
@@ -84,7 +84,7 @@ const FraKandidatlisteInner = ({
     children,
 }: {
     tabs: ReactNode;
-    cv: Nettressurs<KandidatCv>;
+    cv: Nettressurs<Kandidat>;
     kandidat: KandidatIKandidatliste;
     kandidatliste: Kandidatliste;
     children: React.ReactNode;

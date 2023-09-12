@@ -1,5 +1,4 @@
 import { addDays, startOfDay, subDays } from 'date-fns';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
 import { AktørId } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { rest } from 'msw';
@@ -11,10 +10,11 @@ import {
     IdentType,
     TilstandPåForespørsel,
 } from '../../src/kandidat/kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { mockAlleKandidatCv } from '../kandidat-api/mockKandidatCv';
 import { mockAlleKandidatlister } from '../kandidat-api/mockKandidatliste';
 import { mockVeileder } from '../meg/mock';
 import { mockStilling } from '../stilling-api/mockStilling';
+import { mockAlleKandidater } from '../kandidatsok-proxy/mockKandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export const forespørselOmDelingAvCvMock = [
     rest.get(`${api.forespørselOmDelingAvCv}/foresporsler/:stillingsId`, (req, res, ctx) => {
@@ -35,7 +35,7 @@ export const forespørselOmDelingAvCvMock = [
     }),
 
     rest.get(`${api.forespørselOmDelingAvCv}/foresporsler/kandidat/:aktorId`, (req, res, ctx) => {
-        const kandidat = mockAlleKandidatCv.find((cv) => cv.aktorId === req.params.aktorId);
+        const kandidat = mockAlleKandidater.find((cv) => cv.aktorId === req.params.aktorId);
 
         if (!kandidat) {
             return res(ctx.status(404));
@@ -77,7 +77,7 @@ export const opprettMockForespørslerOmDelingAvCv = (
 });
 
 export const opprettMockForespørslerOmDelingAvCvForKandidat = (
-    kandidat: KandidatCv,
+    kandidat: Kandidat,
     stillingsId: string,
     eier: any
 ): ForespørselOmDelingAvCv[] => [

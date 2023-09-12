@@ -5,15 +5,11 @@ export enum Omfangenhet {
     Måned = 'MND',
 }
 
-export type Omfang = {
-    verdi: number;
-    enhet: Omfangenhet | '';
-};
-
 export type Kurs = {
     arrangor: string;
     tittel: string;
-    omfang: Omfang;
+    omfangEnhet: string | null;
+    omfangVerdi: number | null;
     fraDato: string | null;
     tilDato: string | null;
 };
@@ -45,6 +41,15 @@ export type Sertifikat = {
     tilDato: string | null;
 };
 
+export type Førerkort = {
+    fraDato: string | null;
+    tilDato: string | null;
+    forerkortKode: string | null;
+    forerkortKodeKlasse: string | null;
+    alternativtNavn: string | null;
+    utsteder: string | null;
+};
+
 export type Yrkeserfaring = {
     arbeidsgiver: string | null;
     alternativStillingstittel: string | null;
@@ -58,11 +63,12 @@ export type Yrkeserfaring = {
 };
 
 export type Kompetanse = {
-    kompetanseKode: string | null;
-    kompetanseKodeTekst: string | null;
-    alternativTekst: string | null;
-    beskrivelse: string | null;
     fraDato: string | null;
+    kompKode: string | null;
+    kompKodeNavn: string | null;
+    sokeNavn: string[];
+    alternativtNavn: string | null;
+    beskrivelse: string | null;
 };
 
 export type Utdanning = {
@@ -102,7 +108,7 @@ type Cv = {
     sprak: Språkferdighet[];
     yrkeserfaring: Yrkeserfaring[];
     utdanning: Utdanning[];
-    forerkort: Sertifikat[];
+    forerkort: Førerkort[];
     fagdokumentasjon: Fagdokumentasjon[];
     godkjenninger: Godkjenning[];
     kursObj: Kurs[];

@@ -1,7 +1,7 @@
 import { SealCheckmarkIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
 import { Godkjenning, Sertifikat } from 'felles/domene/kandidat/Cv';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
@@ -9,11 +9,11 @@ import Kort from './kort/Kort';
 import sortByDato from './sortByDato';
 
 type Props = {
-    cv: KandidatCv;
+    cv: Kandidat;
 };
 
 const Godkjenninger = ({ cv }: Props) => {
-    return cv.godkjenninger?.length > 0 || cv.sertifikater?.length > 0 ? (
+    return cv.godkjenninger?.length > 0 || cv.sertifikatObj?.length > 0 ? (
         <Kort overskrift={'Godkjenninger'} ikon={<SealCheckmarkIcon />}>
             <div className={css.erfaringer}>
                 {cv.godkjenninger?.length > 0 &&
@@ -26,11 +26,11 @@ const Godkjenninger = ({ cv }: Props) => {
                             />
                         );
                     })}
-                {cv.godkjenninger?.length > 0 && cv.sertifikater?.length > 0 ? (
+                {cv.godkjenninger?.length > 0 && cv.sertifikatObj?.length > 0 ? (
                     <div className={css.deler} />
                 ) : null}
-                {cv.sertifikater?.length > 0 &&
-                    sortByDato(cv.sertifikater).map((sertifikat) => {
+                {cv.sertifikatObj?.length > 0 &&
+                    sortByDato(cv.sertifikatObj).map((sertifikat) => {
                         return (
                             <Erfaring
                                 key={`${sertifikat.sertifikatKode}-${sertifikat.alternativtNavn}-${sertifikat.fraDato}`}
