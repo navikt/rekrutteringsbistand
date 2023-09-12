@@ -5,15 +5,11 @@ export enum Omfangenhet {
     Måned = 'MND',
 }
 
-export type Omfang = {
-    verdi: number;
-    enhet: Omfangenhet | '';
-};
-
 export type Kurs = {
     arrangor: string;
     tittel: string;
-    omfang: Omfang;
+    omfangEnhet: string;
+    omfangVerdi: number;
     fraDato: string | null;
     tilDato: string | null;
 };

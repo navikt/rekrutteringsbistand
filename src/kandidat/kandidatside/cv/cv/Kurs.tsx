@@ -1,6 +1,6 @@
 import { ClipboardIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
-import { Kurs as Kurstype, Omfang, Omfangenhet } from 'felles/domene/kandidat/Cv';
+import { Kurs as Kurstype, Omfangenhet } from 'felles/domene/kandidat/Cv';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import css from './Cv.module.css';
@@ -30,27 +30,27 @@ const Kurs = ({ cv }: Props) => {
 };
 
 const TidsperiodeKurs = ({ kurs }: { kurs: Kurstype }) => {
-    if (kurs.fraDato && kurs.omfang.enhet.length > 0 && kurs.omfang.verdi > 0) {
+    if (kurs.fraDato && kurs.omfangEnhet.length > 0 && kurs.omfangVerdi > 0) {
         return (
             <Detaljer>
                 <BodyShort size="small" className={css.tekst}>
                     Fullført {formaterDatoHvisIkkeNull(kurs.fraDato)}
                 </BodyShort>
                 <BodyShort size="small" className={css.tekst}>
-                    {hentKursvarighet(kurs.omfang)}
+                    {hentKursvarighet(kurs.omfangEnhet, kurs.omfangVerdi)}
                 </BodyShort>
             </Detaljer>
         );
-    } else if (kurs.fraDato && (kurs.omfang.enhet.length === 0 || kurs.omfang.verdi === 0)) {
+    } else if (kurs.fraDato && (kurs.omfangEnhet.length === 0 || kurs.omfangVerdi === 0)) {
         return (
             <BodyShort size="small" className={css.tekst}>
                 Fullført {formaterDatoHvisIkkeNull(kurs.fraDato)}
             </BodyShort>
         );
-    } else if (!kurs.fraDato && kurs.omfang.enhet.length > 0 && kurs.omfang.verdi > 0) {
+    } else if (!kurs.fraDato && kurs.omfangEnhet.length > 0 && kurs.omfangVerdi > 0) {
         return (
             <BodyShort size="small" className={css.tekst}>
-                {hentKursvarighet(kurs.omfang)}
+                {hentKursvarighet(kurs.omfangEnhet, kurs.omfangVerdi)}
             </BodyShort>
         );
     } else {
@@ -58,16 +58,16 @@ const TidsperiodeKurs = ({ kurs }: { kurs: Kurstype }) => {
     }
 };
 
-const hentKursvarighet = (omfang: Omfang) => {
-    switch (omfang.enhet) {
+const hentKursvarighet = (omfangEnhet: string, omfangVerdi: number) => {
+    switch (omfangEnhet) {
         case Omfangenhet.Time:
-            return `${omfang.verdi} ${omfang.verdi > 1 ? 'timer' : 'time'}`;
+            return `${omfangVerdi} ${omfangVerdi > 1 ? 'timer' : 'time'}`;
         case Omfangenhet.Dag:
-            return `${omfang.verdi} ${omfang.verdi > 1 ? 'dager' : 'dag'}`;
+            return `${omfangVerdi} ${omfangVerdi > 1 ? 'dager' : 'dag'}`;
         case Omfangenhet.Uke:
-            return `${omfang.verdi} ${omfang.verdi > 1 ? 'uker' : 'uke'}`;
+            return `${omfangVerdi} ${omfangVerdi > 1 ? 'uker' : 'uke'}`;
         case Omfangenhet.Måned:
-            return `${omfang.verdi} ${omfang.verdi > 1 ? 'måneder' : 'måned'}`;
+            return `${omfangVerdi} ${omfangVerdi > 1 ? 'måneder' : 'måned'}`;
         default:
             return '';
     }
