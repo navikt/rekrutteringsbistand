@@ -19,7 +19,7 @@ const Språk = ({ cv }: Props) => {
                     return (
                         <Erfaring
                             key={`${ferdighet.sprakKodeTekst}${ferdighet.ferdighetMuntlig}${ferdighet.ferdighetSkriftlig}`}
-                            overskrift={ferdighet.sprakKodeTekst} // TODO: Sjekk at det er riktig med beskrivelse, og ikke alternativtnavn
+                            overskrift={ferdighet.sprakKodeTekst}
                             beskrivelse={
                                 <Detaljer>
                                     <BodyShort size="small" className={css.tekst}>
