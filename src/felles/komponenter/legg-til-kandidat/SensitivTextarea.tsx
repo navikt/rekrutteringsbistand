@@ -5,9 +5,9 @@ import css from './SensitivTextarea.module.css';
 
 const SensitivTextarea = ({ className, ...textareaProps }: TextareaProps) => {
     const sensitiveOrdITekst = sensitiveOrd.filter((sensitivtOrd) => {
-        const regex = new RegExp(`\\s${sensitivtOrd.ord}\\s`);
+        const regex = new RegExp(`\\s${sensitivtOrd.ord.toLowerCase()}\\s`);
 
-        return regex.test(textareaProps.value);
+        return regex.test(textareaProps.value.toLowerCase());
     });
 
     return (
@@ -45,7 +45,7 @@ const sensitiveOrd: Array<{ ord: string; kategori: Kategori }> = [
         kategori: 'helseopplysning',
     },
     {
-        ord: 'kvp',
+        ord: 'KVP',
         kategori: 'ytelse',
     },
 ];
