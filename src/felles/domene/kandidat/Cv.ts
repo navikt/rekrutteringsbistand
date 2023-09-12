@@ -41,6 +41,15 @@ export type Sertifikat = {
     tilDato: string | null;
 };
 
+export type Førerkort = {
+    fraDato: string | null;
+    tilDato: string | null;
+    forerkortKode: string | null;
+    forerkortKodeKlasse: string | null;
+    alternativtNavn: string | null;
+    utsteder: string | null;
+};
+
 export type Yrkeserfaring = {
     arbeidsgiver: string | null;
     alternativStillingstittel: string | null;
@@ -99,7 +108,7 @@ type Cv = {
     sprak: Språkferdighet[];
     yrkeserfaring: Yrkeserfaring[];
     utdanning: Utdanning[];
-    forerkort: Sertifikat[];
+    forerkort: Førerkort[];
     fagdokumentasjon: Fagdokumentasjon[];
     godkjenninger: Godkjenning[];
     kursObj: Kurs[];
