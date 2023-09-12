@@ -1,7 +1,7 @@
 export type SensitivtOrd = {
     ord: string;
     match: string;
-    kategori: 'helseopplysning' | 'ytelse';
+    kategori: 'helseopplysning' | 'ytelse' | 'sensitiv informasjon';
 };
 
 export const hentSensitiveOrd = (tekst: string) =>
@@ -20,12 +20,44 @@ const sensitiveOrd: SensitivtOrd[] = [
     },
     {
         ord: 'rus',
-        match: '\\b(r|R)(u|U)(s|S)',
+        match: '\\b(r|R)(u|U)(s|S)\\b',
         kategori: 'helseopplysning',
     },
+
+    {
+        ord: 'soning',
+        match: 'soning',
+        kategori: 'sensitiv informasjon',
+    },
+    {
+        ord: 'fengsel',
+        match: 'fengsel',
+        kategori: 'sensitiv informasjon',
+    },
+    {
+        ord: 'gravid',
+        match: '\\bgravid\\b',
+        kategori: 'sensitiv informasjon',
+    },
+
     {
         ord: 'KVP',
         match: '\\b(k|K)(v|V)(p|P)\\b',
+        kategori: 'ytelse',
+    },
+    {
+        ord: 'IPS',
+        match: '\\b(i|I)(p|P)(s|S)\\b',
+        kategori: 'ytelse',
+    },
+    {
+        ord: 'AAP',
+        match: '\\b(a|A)(a|A)(p|P)\\b',
+        kategori: 'ytelse',
+    },
+    {
+        ord: 'arbeidsavklaringspenger',
+        match: '\\barbeidsavklaringspenger\\b',
         kategori: 'ytelse',
     },
 ];
