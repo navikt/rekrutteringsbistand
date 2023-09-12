@@ -9,7 +9,7 @@ import PostKandidatTilKandidatliste from 'felles/domene/kandidatliste/PostKandid
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Knapper from './Knapper';
 import css from './LeggTilKandidat.module.css';
-import SensitivTextarea from './SensitivTextarea';
+import SensitivTextarea from './sensitiv-textarea/SensitivTextarea';
 
 const MAKS_NOTATLENGDE = 2000;
 
