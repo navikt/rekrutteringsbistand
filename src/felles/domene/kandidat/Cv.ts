@@ -8,8 +8,8 @@ export enum Omfangenhet {
 export type Kurs = {
     arrangor: string;
     tittel: string;
-    omfangEnhet: string;
-    omfangVerdi: number;
+    omfangEnhet: string | null;
+    omfangVerdi: number | null;
     fraDato: string | null;
     tilDato: string | null;
 };

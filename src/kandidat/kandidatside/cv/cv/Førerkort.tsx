@@ -1,6 +1,6 @@
 import { CarIcon } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
-import { Førerkort as Forerkort } from 'felles/domene/kandidat/Cv';
+import { Førerkort as FørerkortType } from 'felles/domene/kandidat/Cv';
 import { formaterDatoHvisIkkeNull } from '../../../utils/dateUtils';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
@@ -33,7 +33,7 @@ const Førerkort = ({ cv }: Props) => {
     ) : null;
 };
 
-const FørerkortTidsperiode = ({ førerkort }: { førerkort: Forerkort }) => {
+const FørerkortTidsperiode = ({ førerkort }: { førerkort: FørerkortType }) => {
     if (førerkort.fraDato && førerkort.tilDato) {
         return (
             <BodyShort size="small" className={css.tekst}>
@@ -46,7 +46,7 @@ const FørerkortTidsperiode = ({ førerkort }: { førerkort: Forerkort }) => {
     }
 };
 
-const fjernDuplikater = (forerkortListe: Forerkort[]) => {
+const fjernDuplikater = (forerkortListe: FørerkortType[]) => {
     const forerkortAlleredeILista = new Set();
 
     return forerkortListe.filter((forerkort) => {
