@@ -2,6 +2,10 @@
     margin-bottom: 1rem;
 }
 
+.typeahead ul {
+    position: relative;
+}
+
 .velgKategori {
     margin-bottom: 1rem;
 }

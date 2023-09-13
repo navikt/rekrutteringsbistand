@@ -100,6 +100,7 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
                 Søk etter virksomheten fra enhetsregisteret
             </BodyShort>
             <Typeahead
+                className={css.typeahead}
                 value={input}
                 onBlur={onInputBlur}
                 onSelect={onForslagValgt}
