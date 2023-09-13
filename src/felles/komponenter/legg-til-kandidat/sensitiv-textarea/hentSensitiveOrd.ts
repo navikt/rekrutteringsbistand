@@ -4,8 +4,22 @@ export type SensitivtOrd = {
     kategori: 'helseopplysning' | 'ytelse' | 'sensitiv informasjon';
 };
 
-export const hentSensitiveOrd = (tekst: string) =>
-    sensitiveOrd.filter((sensitivtOrd) => new RegExp(sensitivtOrd.match).test(tekst));
+export const hentSensitiveOrd = (tekst: string) => {
+    const ordSomForekommerITekst = sensitiveOrd.filter((sensitivtOrd) =>
+        new RegExp(sensitivtOrd.match).test(tekst)
+    );
+
+    return ordSomForekommerITekst.reduce(
+        (utenDuplicater: SensitivtOrd[], nesteOrd: SensitivtOrd) => {
+            if (!utenDuplicater.some((ord) => ord.ord === nesteOrd.ord)) {
+                utenDuplicater.push(nesteOrd);
+            }
+
+            return utenDuplicater;
+        },
+        []
+    );
+};
 
 const sensitiveOrd: SensitivtOrd[] = [
     {
@@ -21,6 +35,11 @@ const sensitiveOrd: SensitivtOrd[] = [
     {
         ord: 'rus',
         match: '\\b(r|R)(u|U)(s|S)\\b',
+        kategori: 'helseopplysning',
+    },
+    {
+        ord: 'rus',
+        match: '\\b(r|R)(u|U)(s|S)(p|P)',
         kategori: 'helseopplysning',
     },
 
