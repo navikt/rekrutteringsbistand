@@ -10,6 +10,7 @@
         "start:faro": "cross-env VITE_MOCK=true VITE_MOCK_MODIA=true VITE_LOKAL_FARO=true vite",
         "build": "vite build",
         "test": "vitest --dir src",
+        "test:print": "DEBUG_PRINT_LIMIT=10000 vitest --dir src",
         "test:coverage": "vitest run --coverage --dir src",
         "prepare": "husky install"
     },

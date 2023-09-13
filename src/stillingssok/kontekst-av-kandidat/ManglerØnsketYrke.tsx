@@ -10,7 +10,7 @@ type Props = {
     fnr: string;
 };
 
-const ManglerØnsketSted = ({ fnr }: Props) => {
+const ManglerØnsketYrke = ({ fnr }: Props) => {
     const handleClick: MouseEventHandler = async (event) => {
         event.preventDefault();
 
@@ -19,7 +19,7 @@ const ManglerØnsketSted = ({ fnr }: Props) => {
     };
 
     useEffect(() => {
-        sendEvent('finn_stilling', 'mangler_ønsket_sted');
+        sendEvent('finn_stilling', 'mangler_ønsket_yrke');
     }, []);
 
     return (
@@ -27,12 +27,12 @@ const ManglerØnsketSted = ({ fnr }: Props) => {
             <div className={css.innhold}>
                 <div>
                     <Heading spacing size="small" level="3">
-                        Vi vet ikke hvor kandidaten ønsker å jobbe
+                        Vi vet ikke hva kandidaten ønsker å jobbe med
                     </Heading>
                     <BodyLong>
-                        For å få bedre stillinger, hør med kandidaten om vedkommende kan legge til
-                        ønsket jobbsted i CV-en sin. I mellomtiden viser vi deg resultater ut i fra
-                        kommunen der kandidaten bor.
+                        For å få bedre stillinger, hør med kandidaten om hen kan legge til
+                        jobbønsker i CV-sin. I mellomtiden viser vi deg resultater ut i fra hvor
+                        kandidaten ønsker å jobbe.
                     </BodyLong>
                 </div>
                 <Button
@@ -51,4 +51,4 @@ const ManglerØnsketSted = ({ fnr }: Props) => {
     );
 };
 
-export default ManglerØnsketSted;
+export default ManglerØnsketYrke;

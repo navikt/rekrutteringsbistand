@@ -1,6 +1,8 @@
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import { Nettstatus } from 'felles/nettressurs';
 import ManglerØnsketSted from './ManglerØnsketSted';
+import ManglerØnsketStedOgYrke from './ManglerØnsketStedOgYrke';
+import ManglerØnsketYrke from './ManglerØnsketYrke';
 import useKandidatStillingssøk from './useKandidatStillingssøk';
 
 type Props = {
@@ -8,7 +10,8 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
-    const { kandidat, hentetGeografiFraBosted } = useKandidatStillingssøk(kandidatnr);
+    const { kandidat, hentetGeografiFraBosted, manglerØnsketYrke } =
+        useKandidatStillingssøk(kandidatnr);
 
     let brødsmulesti = undefined;
     if (kandidat.kind === Nettstatus.Suksess) {
@@ -30,15 +33,23 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
         brødsmulesti = [];
     }
 
+    const utledBannerelement = () => {
+        if (kandidat.kind === Nettstatus.Suksess) {
+            if (manglerØnsketYrke && hentetGeografiFraBosted) {
+                return <ManglerØnsketStedOgYrke fnr={kandidat.data.fodselsnummer} />;
+            } else if (manglerØnsketYrke) {
+                return <ManglerØnsketYrke fnr={kandidat.data.fodselsnummer} />;
+            } else if (hentetGeografiFraBosted) {
+                return <ManglerØnsketSted fnr={kandidat.data.fodselsnummer} />;
+            }
+        }
+    };
+
     return (
         <Kandidatbanner
             kandidat={kandidat}
             brødsmulesti={brødsmulesti}
-            nederst={
-                hentetGeografiFraBosted && kandidat.kind === Nettstatus.Suksess ? (
-                    <ManglerØnsketSted fnr={kandidat.data.fodselsnummer} />
-                ) : undefined
-            }
+            nederst={utledBannerelement()}
         />
     );
 };

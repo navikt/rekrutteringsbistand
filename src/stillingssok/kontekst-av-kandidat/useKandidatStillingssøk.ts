@@ -2,7 +2,7 @@ import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { Nettstatus } from 'felles/nettressurs';
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
 import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
@@ -12,7 +12,8 @@ import { QueryParam } from '../utils/urlUtils';
 
 const useKandidatStillingssøk = (kandidatnr: string) => {
     const { searchParams, navigate } = useNavigering();
-    const hentetGeografiFraBosted = useRef<boolean>(false);
+    const [hentetGeografiFraBosted, setHentetGeografiFraBosted] = useState<boolean>(false);
+    const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
 
     const kandidat = useKandidat(kandidatnr);
 
@@ -28,11 +29,15 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
             const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 
+            if (yrkesønsker.length === 0) {
+                setManglerØnsketYrke(true);
+            }
+
             if (fylker.length === 0 && kommuner.length === 0) {
                 fylker = hentFylkeFraBosted(kommunenummerstring);
                 kommuner = hentKommuneFraBosted(kommunenummerstring, kommuneNavn);
 
-                hentetGeografiFraBosted.current = true;
+                setHentetGeografiFraBosted(true);
             }
 
             if (brukKandidatkriterier) {
@@ -56,7 +61,7 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
         }
     }, [kandidatnr, navigate, kandidat, searchParams]);
 
-    return { kandidat, hentetGeografiFraBosted: hentetGeografiFraBosted.current };
+    return { kandidat, hentetGeografiFraBosted, manglerØnsketYrke };
 };
 
 const hentFylkestekstFraGeografiKode = (geografiKode: string) => {
