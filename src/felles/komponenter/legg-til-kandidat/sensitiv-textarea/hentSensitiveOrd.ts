@@ -34,7 +34,7 @@ const sensitiveOrd: SensitivtOrd[] = [
     },
     {
         ord: 'rus',
-        match: '\\b(r|R)(u|U)(s|S)\\b',
+        match: '\\b(r|R)(u|U)(s|S)\\s',
         kategori: 'helseopplysning',
     },
     {
