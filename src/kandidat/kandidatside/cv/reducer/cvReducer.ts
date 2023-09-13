@@ -2,7 +2,8 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { Error, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError } from '../../../api/fetchUtils';
 import { fetchCv } from '../../../api/api';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 
 export enum CvActionType {
     NullstillCv = 'NULLSTILL_CV',
@@ -28,7 +29,7 @@ export type FetchCvBeginAction = {
 
 export type FetchCvSuccessAction = {
     type: CvActionType.FetchCvSuccess;
-    response: KandidatCv;
+    response: Kandidat;
 };
 
 export type FetchCvNotFoundAction = {
@@ -49,7 +50,7 @@ export type CvAction =
     | FetchCvFailureAction;
 
 export type CvState = {
-    cv: Nettressurs<KandidatCv>;
+    cv: Nettressurs<Kandidat>;
 };
 
 const initialState: CvState = {
@@ -105,16 +106,19 @@ const cvReducer = (state: CvState = initialState, action: CvAction): CvState => 
 
 function* fetchCvForKandidat(action: FetchCvAction) {
     try {
-        const response = yield call(fetchCv, action.arenaKandidatnr);
+        const response: EsResponse<Kandidat> = yield call(fetchCv, action.arenaKandidatnr);
 
-        yield put({ type: CvActionType.FetchCvSuccess, response });
+        const hits = response.hits.hits;
+        if (hits.length === 0) {
+            yield put({ type: CvActionType.FetchCvNotFound });
+        }
+
+        const cv = response.hits.hits[0]._source;
+
+        yield put({ type: CvActionType.FetchCvSuccess, response: cv });
     } catch (e) {
         if (e instanceof SearchApiError) {
-            if (e.status === 404) {
-                yield put({ type: CvActionType.FetchCvNotFound });
-            } else {
-                yield put({ type: CvActionType.FetchCvFailure, error: e });
-            }
+            yield put({ type: CvActionType.FetchCvFailure, error: e });
         } else {
             throw e;
         }

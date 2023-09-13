@@ -1,5 +1,5 @@
 import { CheckmarkCircleIcon } from '@navikt/aksel-icons';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import css from './Cv.module.css';
 import Erfaring from './erfaring/Erfaring';
 import Erfaringsdetaljer from './erfaring/Erfaringsdetaljer';
@@ -7,7 +7,7 @@ import Kort from './kort/Kort';
 import sortByDato from './sortByDato';
 
 type Props = {
-    cv: KandidatCv;
+    cv: Kandidat;
 };
 
 const Utdanning = ({ cv }: Props) => {
@@ -19,9 +19,9 @@ const Utdanning = ({ cv }: Props) => {
                         <Erfaring
                             key={`${utdanning.nusKode}${utdanning.fraDato}`}
                             overskrift={
-                                utdanning.alternativtUtdanningsnavn
-                                    ? utdanning.alternativtUtdanningsnavn
-                                    : utdanning.nusKodeUtdanningsnavn +
+                                utdanning.alternativGrad
+                                    ? utdanning.alternativGrad
+                                    : utdanning.beskrivelse +
                                       (utdanning.utdannelsessted
                                           ? ', ' + utdanning.utdannelsessted
                                           : '')

@@ -31,8 +31,8 @@ type Jobbprofil = {
         ansettelsesformKodeTekst: string;
     }>;
     omfangJobbonskerObj: Array<{
-        heltidDeltidKode: 'HELTID' | 'DELTID' | string;
-        heltidDeltidKodeTekst: string;
+        omfangKode: 'HELTID' | 'DELTID' | string;
+        omfangKodeTekst: string;
     }>;
 };
 

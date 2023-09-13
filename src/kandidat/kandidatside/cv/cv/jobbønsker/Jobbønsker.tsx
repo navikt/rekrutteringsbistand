@@ -6,7 +6,7 @@ import {
     TimerStartIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort } from '@navikt/ds-react';
-import { KandidatCv } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { ReactNode } from 'react';
 import Kort from '../kort/Kort';
 import css from './Jobbønsker.module.css';
@@ -18,16 +18,16 @@ const oppstartskoder = {
 };
 
 type Props = {
-    cv: KandidatCv;
+    cv: Kandidat;
 };
 
 const Jobbønsker = ({ cv }: Props) => {
     return (
         <Kort overskrift="Ønsker" ikon={<HeartIcon />}>
             <BodyShort size="medium" className={css.jobbønsker}>
-                {cv.yrkeJobbonsker?.length > 0 ? (
+                {cv.yrkeJobbonskerObj?.length > 0 ? (
                     <MangeTekstelementerSeparertMedKomma
-                        elementer={cv.yrkeJobbonsker.map((j) => j.styrkBeskrivelse)}
+                        elementer={cv.yrkeJobbonskerObj.map((j) => j.styrkBeskrivelse)}
                     />
                 ) : (
                     'Ingen oppgitte jobbønsker'
@@ -47,18 +47,18 @@ const Jobbønsker = ({ cv }: Props) => {
                     label="Heltid/Deltid"
                     ikon={<BriefcaseClockIcon aria-hidden />}
                 >
-                    {cv.omfangJobbprofil?.length > 0 ? (
+                    {cv.omfangJobbonskerObj?.length > 0 ? (
                         <MangeTekstelementerSeparertMedOg
-                            elementer={cv.omfangJobbprofil.map((u) => u.heltidDeltidKodeTekst)}
+                            elementer={cv.omfangJobbonskerObj.map((u) => u.omfangKodeTekst)}
                         />
                     ) : (
                         'Ikke oppgitt'
                     )}
                 </Jobbønskeinformasjon>
                 <Jobbønskeinformasjon label="Arbeidstid" ikon={<ClockIcon aria-hidden />}>
-                    {cv.arbeidstidJobbprofil?.length > 0 ? (
+                    {cv.arbeidstidJobbonskerObj?.length > 0 ? (
                         <MangeTekstelementerSeparertMedOg
-                            elementer={cv.arbeidstidJobbprofil.map((u) => u.arbeidstidKodeTekst)}
+                            elementer={cv.arbeidstidJobbonskerObj.map((u) => u.arbeidstidKodeTekst)}
                         />
                     ) : (
                         'Ikke oppgitt'
