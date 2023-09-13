@@ -72,7 +72,6 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
 
         try {
             const fnrSøkResponse = await fetchKandidatMedFnr(fnr);
-            console.log('fnrSøkResponse', fnrSøkResponse);
             setFnrSøk(fnrSøkResponse);
 
             if (fnrSøkResponse.kind === Nettstatus.FinnesIkke) {
