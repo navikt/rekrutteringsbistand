@@ -9,16 +9,17 @@ export const hentSensitiveOrd = (tekst: string) => {
         new RegExp(sensitivtOrd.match).test(tekst)
     );
 
-    return ordSomForekommerITekst.reduce(
-        (utenDuplicater: SensitivtOrd[], nesteOrd: SensitivtOrd) => {
-            if (!utenDuplicater.some((ord) => ord.ord === nesteOrd.ord)) {
-                utenDuplicater.push(nesteOrd);
-            }
+    return fjernDuplikater(ordSomForekommerITekst);
+};
 
-            return utenDuplicater;
-        },
-        []
-    );
+const fjernDuplikater = (alleOrd: SensitivtOrd[]) => {
+    return alleOrd.reduce((utenDuplicater: SensitivtOrd[], nesteOrd: SensitivtOrd) => {
+        if (!utenDuplicater.some((ord) => ord.ord === nesteOrd.ord)) {
+            utenDuplicater.push(nesteOrd);
+        }
+
+        return utenDuplicater;
+    }, []);
 };
 
 const sensitiveOrd: SensitivtOrd[] = [
