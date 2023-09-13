@@ -54,12 +54,12 @@ export const fetchKandidatMedFnr = async (fnr: string): Promise<Nettressurs<Kand
             const data = response.data.hits.hits[0]?._source;
             if (data) {
                 return {
-                    kind: Nettstatus.FinnesIkke,
+                    kind: Nettstatus.Suksess,
+                    data,
                 };
             } else {
                 return {
-                    kind: Nettstatus.Suksess,
-                    data,
+                    kind: Nettstatus.FinnesIkke,
                 };
             }
         } else {

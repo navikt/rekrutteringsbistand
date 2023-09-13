@@ -102,6 +102,7 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
 
         try {
             const fnrSøkResponse = await fetchKandidatMedFnr(fnr);
+            console.log('fetchKandidatMedFnr', fetchKandidatMedFnr);
             setFnrSøk(fnrSøkResponse);
 
             if (fnrSøkResponse.kind === Nettstatus.FinnesIkke) {
