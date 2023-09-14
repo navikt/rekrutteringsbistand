@@ -1,13 +1,13 @@
+import { RequestHandler } from 'express';
 import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
-import { respondUnauthorizedIfNotLoggedIn, tomMiddleware, setOnBehalfOfToken } from './middlewares';
 import {
     harTilgangTilKandidatsøk,
     leggTilAuthorizationForKandidatsøkEs,
     loggSøkPåFnrEllerAktørId,
 } from './kandidatsøk/kandidatsøk';
-import { app } from './server';
-import { RequestHandler } from 'express';
 import { logger } from './logger';
+import { respondUnauthorizedIfNotLoggedIn, setOnBehalfOfToken, tomMiddleware } from './middlewares';
+import { app } from './server';
 
 // Krever ekstra miljøvariabler, se nais.yaml
 export const setupProxy = (fraPath: string, tilTarget: string): RequestHandler =>
@@ -37,6 +37,9 @@ export const proxyMedOboToken = (
         setupProxy(path, apiUrl)
     );
 };
+
+export const proxyUtenToken = (path: string, apiUrl: string) =>
+    app.use(path, setupProxy(path, apiUrl));
 
 export const proxyTilKandidatsøkEs = (
     path: string,

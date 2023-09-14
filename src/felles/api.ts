@@ -12,6 +12,7 @@ export const api = {
     forespørselOmDelingAvCv: '/foresporsel-om-deling-av-cv-api',
     presenterteKandidaterApi: '/presenterte-kandidater-api',
     modiaContextHolder: '/modiacontextholder/api',
+    arbeidsgiverNotifikasjon: '/arbeidsgiver-notifikasjon-api',
 };
 
 export const videresendTilInnlogging = () => {
