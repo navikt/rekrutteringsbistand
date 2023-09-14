@@ -66,7 +66,7 @@ const request = async (url: string, options?: RequestInit) => {
     }
 
     if (response.status === 400) {
-        console.log(await response.text());
+        throw new ApiError(await response.text(), response.status);
     }
 
     if (response.status === 401) {
