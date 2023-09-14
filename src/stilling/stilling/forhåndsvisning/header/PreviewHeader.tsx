@@ -17,6 +17,7 @@ import OpprettKandidatlisteModal from './OpprettKandidatlisteModal';
 type Props = {
     stilling: Stilling;
     stillingsinfoData: Stillingsinfo;
+    error?: any;
     stillingsinfo: StillingsinfoState;
     kandidatliste: Nettressurs<Kandidatliste>;
     limitedAccess: boolean;
@@ -63,10 +64,12 @@ class PreviewMenu extends React.Component<Props> {
     };
 
     render() {
-        const { stilling, limitedAccess, stillingsinfoData } = this.props;
+        const { stilling, limitedAccess, stillingsinfoData, error } = this.props;
 
         const kanOverfoereStilling =
             stillingsinfoData && limitedAccess && !stillingsinfoData.eierNavident;
+
+        console.log('error: ', error);
 
         return (
             <>
@@ -111,6 +114,7 @@ class PreviewMenu extends React.Component<Props> {
 
 const mapStateToProps = (state: State) => ({
     stillingsinfoData: state.stillingsinfoData,
+    error: state.error,
     stillingsinfo: state.stillingsinfo,
     stilling: state.adData,
     limitedAccess: state.adData?.createdBy !== System.Rekrutteringsbistand,
