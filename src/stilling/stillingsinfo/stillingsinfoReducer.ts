@@ -133,7 +133,10 @@ function* opprettStillingsinfo() {
         yield put({ type: FETCH_AD, uuid: stillingsid });
     } catch (e) {
         if (e instanceof ApiError) {
-            console.log('Inni catch blokka inni opprettStillingsinfo() med error: ', e);
+            console.log(
+                'Inni catch blokka inni opprettStillingsinfo() med errormessage: ',
+                e.message
+            );
             yield put({ type: OPPRETT_STILLINGSINFO_FAILURE, error: e.message });
         } else {
             console.log('Inni catch else blokka inni opprettStillingsinfo() med error: ', e);
