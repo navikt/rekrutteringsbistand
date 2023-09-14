@@ -1,9 +1,9 @@
-import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { CheckboxGroup, Loader, Pagination } from '@navikt/ds-react';
+import { Nettstatus } from 'felles/nettressurs';
+import { ChangeEvent, FunctionComponent, useState } from 'react';
+import css from './VelgKandidatlister.module.css';
 import VelgbarKandidatliste from './VelgbarKandidatliste';
 import useMineKandidatlister from './useMineKandidatlister';
-import css from './VelgKandidatlister.module.css';
-import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     markerteLister: Set<string>;
@@ -33,6 +33,7 @@ const VelgKandidatlister: FunctionComponent<Props> = ({
         mineKandidatlister.kind === Nettstatus.Suksess ||
         mineKandidatlister.kind === Nettstatus.Oppdaterer
     ) {
+        const pageCount = Math.floor(mineKandidatlister.data.antall / pageSize);
         return (
             <>
                 <CheckboxGroup
@@ -54,7 +55,7 @@ const VelgKandidatlister: FunctionComponent<Props> = ({
                     page={side}
                     className={css.paginering}
                     onPageChange={hentFlereKandidatlister}
-                    count={Math.floor(mineKandidatlister.data.antall / pageSize)}
+                    count={pageCount > 0 ? pageCount : 1}
                 />
             </>
         );
