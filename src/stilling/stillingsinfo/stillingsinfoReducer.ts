@@ -61,12 +61,14 @@ export default function stillingsinfoReducer(state: StillingsinfoState = initial
             };
         case OPPRETT_STILLINGSINFO_FAILURE:
         case UPDATE_STILLINGSINFO_FAILURE:
-            return {
+            const a = {
                 ...state,
                 isSavingStillingsinfo: false,
                 hasSavedStillingsinfo: false,
                 error: action.error,
             };
+            console.log('a: ', a);
+            return a;
         case OPPRETT_STILLINGSINFO_SUCCESS:
             return {
                 ...state,
@@ -173,7 +175,7 @@ function* updateStillingsinfo() {
     } catch (e) {
         if (e instanceof ApiError) {
             console.log('Her er feilmeldingen hvis ApiError: ', e);
-            yield put({ type: UPDATE_STILLINGSINFO_FAILURE, error: e });
+            yield put({ type: UPDATE_STILLINGSINFO_FAILURE, error: e.message });
         } else {
             console.log('Her er feilmleding som ikke er ApiFeil: ', e);
             throw e;
