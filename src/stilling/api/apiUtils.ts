@@ -66,7 +66,7 @@ const request = async (url: string, options?: RequestInit) => {
     }
 
     if (response.status === 400) {
-        console.log(response.text());
+        console.log(await response.text());
     }
 
     if (response.status === 401) {
