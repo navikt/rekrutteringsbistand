@@ -59,6 +59,7 @@ class PreviewMenu extends React.Component<Props> {
     };
 
     bekreftOpprettKandidatliste = () => {
+        console.log('bekreftOpprettetKandidatliste: ', this.props.error);
         this.props.leggTilIMineStillinger();
         this.lukkOpprettKandidatlisteModal();
     };
