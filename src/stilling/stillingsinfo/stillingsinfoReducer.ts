@@ -162,8 +162,10 @@ function* updateStillingsinfo() {
         yield put({ type: FETCH_AD, uuid: stillingsid });
     } catch (e) {
         if (e instanceof ApiError) {
+            console.log('Her er feilmeldingen hvis ApiError: ', e);
             yield put({ type: UPDATE_STILLINGSINFO_FAILURE, error: e });
         } else {
+            console.log('Her er feilmleding som ikke er ApiFeil: ', e);
             throw e;
         }
     }
