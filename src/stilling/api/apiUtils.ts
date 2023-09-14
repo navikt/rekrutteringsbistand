@@ -59,8 +59,16 @@ const request = async (url: string, options?: RequestInit) => {
 
     try {
         response = await fetch(url, options);
+        console.log('inni request er response: ', response);
     } catch (e) {
+        console.log('inni request kaster feil: ', e);
         throw new ApiError('Network Error', 0);
+    }
+
+    if (response.status === 400) {
+        const json = await response.json();
+        console.log('json: ', json);
+        throw new ApiError(json.message, response.status);
     }
 
     if (response.status === 401) {

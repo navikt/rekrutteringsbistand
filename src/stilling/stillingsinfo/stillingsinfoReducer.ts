@@ -61,12 +61,14 @@ export default function stillingsinfoReducer(state: StillingsinfoState = initial
             };
         case OPPRETT_STILLINGSINFO_FAILURE:
         case UPDATE_STILLINGSINFO_FAILURE:
-            return {
+            const a = {
                 ...state,
                 isSavingStillingsinfo: false,
                 hasSavedStillingsinfo: false,
                 error: action.error,
             };
+            console.log('a: ', a);
+            return a;
         case OPPRETT_STILLINGSINFO_SUCCESS:
             return {
                 ...state,
@@ -115,12 +117,14 @@ function* opprettStillingsinfo() {
         let state = yield select();
 
         const { stillingsid, eierNavident, eierNavn } = state.stillingsinfoData;
+        console.log('Inni try blokka inni opprettStillingsinfo()');
         const response = yield opprettKandidatlisteForEksternStilling({
             stillingsid,
             eierNavident,
             eierNavn,
         });
 
+        console.log('Inni try blokka inni opprettStillingsinfo() med response: ', response);
         yield put({ type: OPPRETT_STILLINGSINFO_SUCCESS, response });
         yield put<VarslingAction>({
             type: VarslingActionType.VisVarsling,
@@ -131,8 +135,13 @@ function* opprettStillingsinfo() {
         yield put({ type: FETCH_AD, uuid: stillingsid });
     } catch (e) {
         if (e instanceof ApiError) {
-            yield put({ type: OPPRETT_STILLINGSINFO_FAILURE, error: e });
+            console.log(
+                'Inni catch blokka inni opprettStillingsinfo() med errormessage: ',
+                e.message
+            );
+            yield put({ type: OPPRETT_STILLINGSINFO_FAILURE, error: e.message });
         } else {
+            console.log('Inni catch else blokka inni opprettStillingsinfo() med error: ', e);
             throw e;
         }
     }
@@ -142,6 +151,7 @@ function* updateStillingsinfo() {
     yield put({ type: UPDATE_STILLINGSINFO_BEGIN });
 
     try {
+        console.log('kom inn i try-blokka');
         let state = yield select();
 
         const { stillingsid, eierNavident, eierNavn } = state.stillingsinfoData;
@@ -150,6 +160,8 @@ function* updateStillingsinfo() {
             eierNavident,
             eierNavn,
         });
+
+        console.log('Kom inn i try-blokka med respons: ', response);
 
         yield put({ type: UPDATE_STILLINGSINFO_SUCCESS, response });
         yield put<VarslingAction>({
@@ -162,8 +174,10 @@ function* updateStillingsinfo() {
         yield put({ type: FETCH_AD, uuid: stillingsid });
     } catch (e) {
         if (e instanceof ApiError) {
-            yield put({ type: UPDATE_STILLINGSINFO_FAILURE, error: e });
+            console.log('Her er feilmeldingen hvis ApiError: ', e);
+            yield put({ type: UPDATE_STILLINGSINFO_FAILURE, error: e.message });
         } else {
+            console.log('Her er feilmleding som ikke er ApiFeil: ', e);
             throw e;
         }
     }
