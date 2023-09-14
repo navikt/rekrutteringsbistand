@@ -115,12 +115,14 @@ function* opprettStillingsinfo() {
         let state = yield select();
 
         const { stillingsid, eierNavident, eierNavn } = state.stillingsinfoData;
+        console.log('Inni try blokka inni opprettStillingsinfo()');
         const response = yield opprettKandidatlisteForEksternStilling({
             stillingsid,
             eierNavident,
             eierNavn,
         });
 
+        console.log('Inni try blokka inni opprettStillingsinfo() med response: ', response);
         yield put({ type: OPPRETT_STILLINGSINFO_SUCCESS, response });
         yield put<VarslingAction>({
             type: VarslingActionType.VisVarsling,
@@ -131,8 +133,10 @@ function* opprettStillingsinfo() {
         yield put({ type: FETCH_AD, uuid: stillingsid });
     } catch (e) {
         if (e instanceof ApiError) {
+            console.log('Inni catch blokka inni opprettStillingsinfo() med error: ', e);
             yield put({ type: OPPRETT_STILLINGSINFO_FAILURE, error: e });
         } else {
+            console.log('Inni catch else blokka inni opprettStillingsinfo() med error: ', e);
             throw e;
         }
     }
