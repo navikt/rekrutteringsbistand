@@ -142,6 +142,7 @@ function* updateStillingsinfo() {
     yield put({ type: UPDATE_STILLINGSINFO_BEGIN });
 
     try {
+        console.log('kom inn i try-blokka');
         let state = yield select();
 
         const { stillingsid, eierNavident, eierNavn } = state.stillingsinfoData;
@@ -150,6 +151,8 @@ function* updateStillingsinfo() {
             eierNavident,
             eierNavn,
         });
+
+        console.log('Kom inn i try-blokka med respons: ', response);
 
         yield put({ type: UPDATE_STILLINGSINFO_SUCCESS, response });
         yield put<VarslingAction>({
