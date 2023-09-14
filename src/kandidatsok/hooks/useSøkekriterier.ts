@@ -9,7 +9,7 @@ import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/Priorite
 import { Sortering } from '../kandidater/sortering/Sortering';
 import { FilterParam } from './useQuery';
 
-export const LISTEPARAMETER_SEPARATOR = '.';
+export const LISTEPARAMETER_SEPARATOR = ';';
 export const LISTEPARAMETER_SEPARATOR_REPLACEMENT = '·';
 
 export type Søkekriterier = {
