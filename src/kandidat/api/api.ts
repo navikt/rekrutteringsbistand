@@ -320,10 +320,6 @@ export const fetchFerdigutfylteStillinger = () => {
     return fetchJson(`${api.kandidat}/veileder/ferdigutfyltesok`, true);
 };
 
-export const hentKandidatnr = (fnr: string): Promise<{ kandidatnr: string }> => {
-    return postJson(`${api.kandidat}/fnr-til-kandidatnr`, JSON.stringify({ fnr }));
-};
-
 export const putKandidatlistestatus = (
     kandidatlisteId: string,
     status: Kandidatlistestatus
