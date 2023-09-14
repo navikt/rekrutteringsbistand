@@ -65,6 +65,10 @@ const request = async (url: string, options?: RequestInit) => {
         throw new ApiError('Network Error', 0);
     }
 
+    if (response.status === 400) {
+        console.log(response.text());
+    }
+
     if (response.status === 401) {
         window.location.href = `/oauth2/login?redirect=${window.location.pathname}`;
     }
