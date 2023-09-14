@@ -59,7 +59,9 @@ const request = async (url: string, options?: RequestInit) => {
 
     try {
         response = await fetch(url, options);
+        console.log('inni request er response: ', response);
     } catch (e) {
+        console.log('inni request kaster feil: ', e);
         throw new ApiError('Network Error', 0);
     }
 
