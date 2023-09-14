@@ -134,7 +134,7 @@ function* opprettStillingsinfo() {
     } catch (e) {
         if (e instanceof ApiError) {
             console.log('Inni catch blokka inni opprettStillingsinfo() med error: ', e);
-            yield put({ type: OPPRETT_STILLINGSINFO_FAILURE, error: e });
+            yield put({ type: OPPRETT_STILLINGSINFO_FAILURE, error: e.message });
         } else {
             console.log('Inni catch else blokka inni opprettStillingsinfo() med error: ', e);
             throw e;
