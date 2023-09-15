@@ -40,6 +40,7 @@ export type Stilling = Stillingbase & {
 export enum System {
     Rekrutteringsbistand = 'pam-rekrutteringsbistand',
     NssAdmin = 'nss-admin',
+    ImportApi = 'import-api',
 }
 
 export enum Status {
@@ -63,6 +64,7 @@ export enum Medium {
 export enum Kilde {
     Intern = 'DIR',
     Finn = 'FINN',
+    ImportApi = 'IMPORTAPI',
 }
 
 export type Stillingsinfo = {

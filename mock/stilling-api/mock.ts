@@ -12,15 +12,20 @@ import {
 } from './mockGeografi';
 import { mockPutStandardsøk, mockStandardsøk } from './mockStandardsøk';
 import {
+    mockAlleRekrutteringsbistandstillinger,
     mockNyRekrutteringsbistandstilling,
     mockRekrutteringsbistandstilling,
     mockStillingsinfo,
 } from './mockStilling';
 
 export const stillingApiMock = [
-    rest.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, (_, res, ctx) =>
-        res(ctx.json(mockRekrutteringsbistandstilling))
-    ),
+    rest.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, (req, res, ctx) => {
+        const stilling = mockAlleRekrutteringsbistandstillinger.find(
+            (stilling) => stilling.stilling.uuid === req.params.stillingsId
+        );
+
+        return res(stilling ? ctx.json(stilling) : ctx.status(404));
+    }),
 
     rest.delete(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, (_, res, ctx) =>
         res(ctx.status(200))

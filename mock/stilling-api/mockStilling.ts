@@ -16,6 +16,7 @@ import Stilling, {
 import { mockVeileder } from '../meg/mock';
 
 const stillingsId = '1ea746af-66be-4cf8-a051-9e815f77b1d1';
+const annenStillingsId = '581187f2-3f5e-49d9-8972-d07753f85699';
 const iDag = new Date().toISOString();
 
 export const mockArbeidsgiver: Arbeidsgiver = {
@@ -117,6 +118,18 @@ export const mockStilling: Stilling = {
     },
 };
 
+export const mockEksternStilling: Stilling = {
+    ...mockStilling,
+    id: 101,
+    uuid: annenStillingsId,
+    createdBy: System.ImportApi,
+    source: Kilde.ImportApi,
+    privacy: Privacy.Arbeidsplassen,
+    medium: 'talentech',
+    employer: null,
+    title: 'Eksempel på ekstern stilling',
+};
+
 export const mockStillingsinfo: Stillingsinfo = {
     stillingsid: stillingsId,
     stillingsinfoid: '8e74803e-6973-4115-befe-6ee1e0f28533',
@@ -130,6 +143,12 @@ export const mockRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
     stilling: mockStilling,
     stillingsinfo: mockStillingsinfo,
 };
+
+export const mockEksternRekrutteringsbistandStillingUtenKandidatliste: Rekrutteringsbistandstilling =
+    {
+        stilling: mockEksternStilling,
+        stillingsinfo: null,
+    };
 
 export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
     stilling: {
@@ -161,3 +180,8 @@ export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = 
         stillingskategori: Stillingskategori.Stilling,
     },
 };
+
+export const mockAlleRekrutteringsbistandstillinger = [
+    mockRekrutteringsbistandstilling,
+    mockEksternRekrutteringsbistandStillingUtenKandidatliste,
+];
