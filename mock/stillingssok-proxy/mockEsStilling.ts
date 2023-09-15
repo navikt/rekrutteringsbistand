@@ -1,27 +1,36 @@
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { mockRekrutteringsbistandstilling, mockStilling } from '../stilling-api/mockStilling';
+import { Rekrutteringsbistandstilling } from 'felles/domene/stilling/Stilling';
+import { mockAlleRekrutteringsbistandstillinger } from '../stilling-api/mockStilling';
 
-export const mockEsRekrutteringsbistandstilling: EsRekrutteringsbistandstilling = {
-    ...mockRekrutteringsbistandstilling,
+const mapTilEsRekrutteringsbistandstilling = (
+    rekrutteringsbistandstilling: Rekrutteringsbistandstilling
+) => ({
+    ...rekrutteringsbistandstilling,
     stilling: {
-        ...mockStilling,
-        annonsenr: String(mockStilling.id),
-        categories: mockStilling.categoryList,
-        locations: mockStilling.locationList,
-        contacts: mockStilling.contactList,
-        employer: {
-            name: mockStilling.employer.name,
-            publicName: mockStilling.employer.publicName,
-            orgnr: mockStilling.employer.orgnr,
-            parentOrgnr: mockStilling.employer.parentOrgnr,
-            orgform: mockStilling.employer.orgform,
-        },
+        ...rekrutteringsbistandstilling.stilling,
+        annonsenr: String(rekrutteringsbistandstilling.stilling.id),
+        categories: rekrutteringsbistandstilling.stilling.categoryList,
+        locations: rekrutteringsbistandstilling.stilling.locationList,
+        contacts: rekrutteringsbistandstilling.stilling.contactList,
+        employer:
+            rekrutteringsbistandstilling.stilling.employer === null
+                ? null
+                : {
+                      name: rekrutteringsbistandstilling.stilling.employer.name,
+                      publicName: rekrutteringsbistandstilling.stilling.employer.publicName,
+                      orgnr: rekrutteringsbistandstilling.stilling.employer.orgnr,
+                      parentOrgnr: rekrutteringsbistandstilling.stilling.employer.parentOrgnr,
+                      orgform: rekrutteringsbistandstilling.stilling.employer.orgform,
+                  },
         properties: {
-            ...mockStilling.properties,
-            positioncount: Number(mockStilling.properties.positioncount),
-            tags: JSON.parse(mockStilling.properties.tags),
-            workday: JSON.parse(mockStilling.properties.workday),
-            workhours: JSON.parse(mockStilling.properties.workhours),
+            ...rekrutteringsbistandstilling.stilling.properties,
+            positioncount: Number(rekrutteringsbistandstilling.stilling.properties.positioncount),
+            tags: JSON.parse(rekrutteringsbistandstilling.stilling.properties.tags),
+            workday: JSON.parse(rekrutteringsbistandstilling.stilling.properties.workday),
+            workhours: JSON.parse(rekrutteringsbistandstilling.stilling.properties.workhours),
         },
     },
-};
+});
+
+export const mockAlleEsRekrutteringsbistandstillinger: EsRekrutteringsbistandstilling[] =
+    mockAlleRekrutteringsbistandstillinger.map(mapTilEsRekrutteringsbistandstilling);

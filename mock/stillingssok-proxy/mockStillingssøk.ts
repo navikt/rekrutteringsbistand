@@ -1,7 +1,7 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import { GlobalAggregering } from '../../src/stillingssok/domene/elasticSearchTyper';
-import { mockEsRekrutteringsbistandstilling } from './mockEsStilling';
+import { mockAlleEsRekrutteringsbistandstillinger } from './mockEsStilling';
 
 export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>, 'aggregations'> & {
     aggregations: {
@@ -14,18 +14,16 @@ export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>,
     hits: {
         total: {
             relation: 'eq',
-            value: 1,
+            value: mockAlleEsRekrutteringsbistandstillinger.length,
         },
         max_score: 1.0,
-        hits: [
-            {
-                _index: 'stilling_7',
-                _type: '_doc',
-                _score: 1.0,
-                _id: mockEsRekrutteringsbistandstilling.stilling.uuid,
-                _source: mockEsRekrutteringsbistandstilling,
-            },
-        ],
+        hits: mockAlleEsRekrutteringsbistandstillinger.map((stilling) => ({
+            _index: 'stilling_7',
+            _type: '_doc',
+            _score: 1.0,
+            _id: stilling.stilling.uuid,
+            _source: stilling,
+        })),
     },
     aggregations: {
         globalAggregering: {
