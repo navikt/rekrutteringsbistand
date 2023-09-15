@@ -39,7 +39,24 @@ export const proxyMedOboToken = (
 };
 
 export const proxyUtenToken = (path: string, apiUrl: string) => {
-    app.use(path, setupProxy(path, apiUrl));
+    console.log('Proxying from', path, 'to', `${apiUrl}${path}`);
+
+    app.use(
+        path,
+        createProxyMiddleware({
+            target: apiUrl,
+            secure: true,
+            changeOrigin: true,
+            followRedirects: false,
+            pathRewrite: (currentPath) => currentPath.replace(path, ''),
+            logger,
+            on: {
+                proxyReq: () => {
+                    console.log('Apekatt');
+                },
+            },
+        })
+    );
 };
 
 export const proxyTilKandidatsøkEs = (

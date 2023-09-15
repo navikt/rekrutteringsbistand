@@ -13,3 +13,5 @@ coverage
 .vscode
 .idea
 .history
+
+secure.log

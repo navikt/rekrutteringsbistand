@@ -1,4 +1,5 @@
 import compression from 'compression';
+import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 
@@ -6,6 +7,9 @@ import { initializeAzureAd, responderMedBrukerinfo } from './azureAd';
 import { logger } from './logger';
 import { redirectIfUnauthorized, respondUnauthorizedIfNotLoggedIn } from './middlewares';
 import { proxyMedOboToken, proxyTilKandidatsøkEs, proxyUtenToken } from './proxy';
+
+// Last inn miljøvariabler for lokal utvikling
+dotenv.config({ path: `.env.local` });
 
 export const app = express();
 
@@ -92,13 +96,16 @@ const startServer = () => {
     });
 
     app.listen(port, () => {
-        logger.info('Server kjører på port', port);
+        logger.info('Server kjører på port ' + port);
     });
 };
 
 const initializeServer = async () => {
     try {
-        await initializeAzureAd();
+        if (!process.env.LOKALT) {
+            await initializeAzureAd();
+        }
+
         startServer();
     } catch (e) {
         logger.error(`Klarte ikke å starte server: ${e}`);
