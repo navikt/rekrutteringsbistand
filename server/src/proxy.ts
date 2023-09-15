@@ -39,8 +39,6 @@ export const proxyMedOboToken = (
 };
 
 export const proxyUtenToken = (path: string, apiUrl: string) => {
-    console.log('Proxying from', path, 'to', `${apiUrl}${path}`);
-
     app.use(
         path,
         createProxyMiddleware({
@@ -50,11 +48,6 @@ export const proxyUtenToken = (path: string, apiUrl: string) => {
             followRedirects: false,
             pathRewrite: (currentPath) => currentPath.replace(path, ''),
             logger,
-            on: {
-                proxyReq: () => {
-                    console.log('Apekatt');
-                },
-            },
         })
     );
 };
