@@ -38,8 +38,9 @@ export const proxyMedOboToken = (
     );
 };
 
-export const proxyUtenToken = (path: string, apiUrl: string) =>
+export const proxyUtenToken = (path: string, apiUrl: string) => {
     app.use(path, setupProxy(path, apiUrl));
+};
 
 export const proxyTilKandidatsøkEs = (
     path: string,
