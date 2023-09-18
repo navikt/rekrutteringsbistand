@@ -35,7 +35,9 @@ const ForhåndsvisningAvEpost = ({ kandidatliste, melding }: Props) => {
     };
 
     useEffect(() => {
-        replacePlaceholders(iframeRef.current);
+        if (iframeRef.current) {
+            replacePlaceholders(iframeRef.current);
+        }
     }, [replacePlaceholders]);
 
     return (
