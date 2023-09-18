@@ -38,6 +38,7 @@ spec:
           - application: rekrutteringsbistand-stilling-api
           - application: rekrutteringsbistand-stillingssok-proxy
           - application: toi-synlighetsmotor
+          - application: toi-arbeidsgiver-notifikasjon
           - application: presenterte-kandidater-api
         external:
           - host: {{ statistikkApiHost }}
@@ -68,6 +69,8 @@ spec:
           value: {{ foresporselOmDelingAvCvApi }}
         - name: SYNLIGHETSMOTOR_API
           value: http://toi-synlighetsmotor
+        - name: ARBEIDSGIVER_NOTIFIKASJON_API
+          value: http://toi-arbeidsgiver-notifikasjon
         - name: PRESENTERTE_KANDIDATER_API
           value: http://presenterte-kandidater-api
         - name: MODIA_CONTEXT_HOLDER_API
