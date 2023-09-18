@@ -1,6 +1,6 @@
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Loader } from '@navikt/ds-react';
-import { FunctionComponent, useMemo } from 'react';
+import { FunctionComponent, useEffect, useMemo } from 'react';
 
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { Nettstatus } from 'felles/nettressurs';
@@ -38,24 +38,28 @@ const Kandidater: FunctionComponent<Props> = ({
 }) => {
     const response = useQuery(innloggetBruker);
 
-    const { kandidater, totaltAntallKandidater } = useMemo(() => {
+    const totaltAntallKandidater = useMemo(() => {
+        if (response.kind === Nettstatus.Suksess || response.kind === Nettstatus.Oppdaterer) {
+            const hits = response.data.hits;
+            return hits.total.value;
+        } else {
+            return 0;
+        }
+    }, [response]);
+
+    const kandidater = useMemo(() => {
         if (response.kind === Nettstatus.Suksess || response.kind === Nettstatus.Oppdaterer) {
             const hits = response.data.hits;
             const kandidater = hits.hits.map((t) => t._source);
-
-            setKandidaterPåSiden(kandidater);
-
-            return {
-                kandidater,
-                totaltAntallKandidater: hits.total.value,
-            };
+            return kandidater;
         } else {
-            return {
-                kandidater: [],
-                totaltAntallKandidater: 0,
-            };
+            return [];
         }
-    }, [response, setKandidaterPåSiden]);
+    }, [response]);
+
+    useEffect(() => {
+        setKandidaterPåSiden(kandidater);
+    }, [kandidater, setKandidaterPåSiden]);
 
     return (
         <div className={css.kandidater}>
