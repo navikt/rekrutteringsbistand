@@ -46,6 +46,11 @@ export const proxyEpostTemplate = (path: string, apiUrl: string) => {
             followRedirects: true,
             changeOrigin: true,
             pathRewrite: (newPath) => newPath.replace(path, ''),
+            on: {
+                error: (error) => {
+                    logger.info('Klarte ikke å proxy:' + error);
+                },
+            },
             logger,
         })
     );
