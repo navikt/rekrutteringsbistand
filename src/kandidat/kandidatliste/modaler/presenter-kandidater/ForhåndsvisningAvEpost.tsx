@@ -12,18 +12,20 @@ const ForhåndsvisningAvEpost = ({ kandidatliste, melding }: Props) => {
     const iframeRef = useRef<HTMLIFrameElement>();
 
     const replacePlaceholders = useCallback(
-        (iframe: HTMLIFrameElement) => {
-            const iframeDocument = iframe.contentWindow.document;
+        (iframe: HTMLIFrameElement | null) => {
+            if (iframe) {
+                const iframeDocument = iframe.contentWindow.document;
 
-            const tittelElement = iframeDocument.getElementById('tittel');
-            const stillingstittelElement = iframeDocument.getElementById('stillingstittel');
-            const tekstElement = iframeDocument.getElementById('tekst');
-            const avsenderElement = iframeDocument.getElementById('avsender');
+                const tittelElement = iframeDocument.getElementById('tittel');
+                const stillingstittelElement = iframeDocument.getElementById('stillingstittel');
+                const tekstElement = iframeDocument.getElementById('tekst');
+                const avsenderElement = iframeDocument.getElementById('avsender');
 
-            if (tittelElement) tittelElement.innerText = kandidatliste.tittel;
-            if (stillingstittelElement) stillingstittelElement.innerText = kandidatliste.tittel;
-            if (tekstElement) tekstElement.innerHTML = melding;
-            if (avsenderElement) avsenderElement.innerHTML = kandidatliste.opprettetAv.navn;
+                if (tittelElement) tittelElement.innerText = kandidatliste.tittel;
+                if (stillingstittelElement) stillingstittelElement.innerText = kandidatliste.tittel;
+                if (tekstElement) tekstElement.innerHTML = melding;
+                if (avsenderElement) avsenderElement.innerHTML = kandidatliste.opprettetAv.navn;
+            }
         },
         [kandidatliste.opprettetAv.navn, kandidatliste.tittel, melding]
     );
@@ -35,9 +37,7 @@ const ForhåndsvisningAvEpost = ({ kandidatliste, melding }: Props) => {
     };
 
     useEffect(() => {
-        if (iframeRef.current) {
-            replacePlaceholders(iframeRef.current);
-        }
+        replacePlaceholders(iframeRef.current);
     }, [replacePlaceholders]);
 
     return (
