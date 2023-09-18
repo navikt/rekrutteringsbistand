@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import { createProxyMiddleware, fixRequestBody } from 'http-proxy-middleware';
+import fetch from 'node-fetch';
 import {
     harTilgangTilKandidatsøk,
     leggTilAuthorizationForKandidatsøkEs,
@@ -38,18 +39,14 @@ export const proxyMedOboToken = (
     );
 };
 
-export const proxyUtenToken = (path: string, apiUrl: string) => {
-    app.use(
-        path,
-        createProxyMiddleware({
-            target: apiUrl,
-            secure: true,
-            changeOrigin: true,
-            followRedirects: false,
-            pathRewrite: (currentPath) => currentPath.replace(path, ''),
-            logger,
-        })
-    );
+export const proxyEpostTemplate = (path: string, apiUrl: string) => {
+    app.use(path, async (req, res) => {
+        const url = apiUrl + req.url.replace(path, '');
+        const response = await fetch(url);
+        const data = await response.text();
+
+        res.status(response.status).send(data);
+    });
 };
 
 export const proxyTilKandidatsøkEs = (
