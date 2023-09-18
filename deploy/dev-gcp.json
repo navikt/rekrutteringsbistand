@@ -15,5 +15,5 @@
     "smsApi": "https://rekrutteringsbistand-sms.dev-fss-pub.nais.io/rekrutteringsbistand-sms/sms",
     "foresporselOmDelingAvCvApi": "https://foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io",
     "modiaContextHolderApi": "https://modiacontextholder-q1.dev-fss-pub.nais.io/modiacontextholder",
-    "arbeidsgiverNotifikasjonApi": "https://toi-arbeidsgiver-notifikasjon.intern.dev.nav.no"
+    "arbeidsgiverNotifikasjonApi": "http://toi-arbeidsgiver-notifikasjon"
 }
