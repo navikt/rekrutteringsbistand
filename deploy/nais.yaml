@@ -70,7 +70,7 @@ spec:
         - name: SYNLIGHETSMOTOR_API
           value: http://toi-synlighetsmotor
         - name: ARBEIDSGIVER_NOTIFIKASJON_API
-          value: {{ arbeidsgiverNotifikasjonApi }}
+          value: http://toi-arbeidsgiver-notifikasjon
         - name: PRESENTERTE_KANDIDATER_API
           value: http://presenterte-kandidater-api
         - name: MODIA_CONTEXT_HOLDER_API

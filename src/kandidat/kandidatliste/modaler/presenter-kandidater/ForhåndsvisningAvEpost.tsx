@@ -11,7 +11,7 @@ type Props = {
 const ForhåndsvisningAvEpost = ({ kandidatliste, melding }: Props) => {
     const iframeRef = useRef<HTMLIFrameElement>();
 
-    const replacePlaceholders = useCallback(
+    const erstattPlaceholders = useCallback(
         (iframe: HTMLIFrameElement | null) => {
             if (iframe) {
                 const iframeDocument = iframe.contentWindow.document;
@@ -30,15 +30,15 @@ const ForhåndsvisningAvEpost = ({ kandidatliste, melding }: Props) => {
         [kandidatliste.opprettetAv.navn, kandidatliste.tittel, melding]
     );
 
+    useEffect(() => {
+        erstattPlaceholders(iframeRef.current);
+    }, [erstattPlaceholders]);
+
     const handleFerdigLastet = (iframe: HTMLIFrameElement) => {
         iframeRef.current = iframe;
 
-        replacePlaceholders(iframe);
+        erstattPlaceholders(iframe);
     };
-
-    useEffect(() => {
-        replacePlaceholders(iframeRef.current);
-    }, [replacePlaceholders]);
 
     return (
         <iframe
