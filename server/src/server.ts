@@ -6,7 +6,7 @@ import path from 'path';
 import { initializeAzureAd, responderMedBrukerinfo } from './azureAd';
 import { logger } from './logger';
 import { redirectIfUnauthorized, respondUnauthorizedIfNotLoggedIn } from './middlewares';
-import { proxyEpostTemplate, proxyMedOboToken, proxyTilKandidatsøkEs } from './proxy';
+import { proxyMedOboToken, proxyTilKandidatsøkEs, proxyUtenToken } from './proxy';
 
 // Last inn miljøvariabler for lokal utvikling
 dotenv.config({ path: `.env.local` });
@@ -57,7 +57,7 @@ const startServer = () => {
 
     app.get('/meg', respondUnauthorizedIfNotLoggedIn, responderMedBrukerinfo);
 
-    proxyEpostTemplate('/arbeidsgiver-notifikasjon-api', ARBEIDSGIVER_NOTIFIKASJON_API);
+    proxyUtenToken('/arbeidsgiver-notifikasjon-api', ARBEIDSGIVER_NOTIFIKASJON_API);
 
     proxyMedOboToken('/modiacontextholder', MODIA_CONTEXT_HOLDER_API, scopes.modiaContextHolder);
     proxyMedOboToken('/statistikk-api', STATISTIKK_API_URL, scopes.statistikk);

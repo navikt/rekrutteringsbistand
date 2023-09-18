@@ -38,22 +38,8 @@ export const proxyMedOboToken = (
     );
 };
 
-export const proxyEpostTemplate = (path: string, apiUrl: string) => {
-    app.use(
-        path,
-        createProxyMiddleware({
-            target: apiUrl,
-            followRedirects: true,
-            changeOrigin: true,
-            pathRewrite: (newPath) => newPath.replace(path, ''),
-            on: {
-                error: (error) => {
-                    logger.info('Klarte ikke å proxy:' + error);
-                },
-            },
-            logger,
-        })
-    );
+export const proxyUtenToken = (path: string, apiUrl: string) => {
+    app.use(path, setupProxy(path, apiUrl));
 };
 
 export const proxyTilKandidatsøkEs = (
