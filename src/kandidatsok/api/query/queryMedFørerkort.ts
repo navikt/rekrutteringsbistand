@@ -53,12 +53,7 @@ export const queryMedFørerkort = (førerkort: Set<Klasse>) => {
 
 const implisitteKlasser = {
     [Klasse.Snøscooter]: [],
-    [Klasse.Traktor]: [
-        Klasse.LettLastebil,
-        Klasse.LettLastebilMedTilhenger,
-        Klasse.Lastebil,
-        Klasse.LastebilMedTilhenger,
-    ],
+    [Klasse.Traktor]: [],
     [Klasse.LettMotorsykkel]: [Klasse.MellomtungMotorsykkel, Klasse.TungMotorsykkel],
     [Klasse.MellomtungMotorsykkel]: [Klasse.TungMotorsykkel],
     [Klasse.TungMotorsykkel]: [],
