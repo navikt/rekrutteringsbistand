@@ -50,8 +50,8 @@ const AntallPrioriterte = ({ antall }: { antall?: Antall }) => {
     if (antall !== undefined) {
         return (
             <BodyShort size="small" className={statistikkCss.talldetaljer}>
-                {antall.under30år} under 30 år, {antall.innsatsgruppeIkkeStandard} ikke
-                standardinnsats
+                {antall.under30år} var under 30 år &nbsp;&bull;&nbsp;{' '}
+                {antall.innsatsgruppeIkkeStandard} hadde ikke standardinnsats
             </BodyShort>
         );
     } else {
