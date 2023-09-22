@@ -14,10 +14,6 @@ export const hentAntallFormidlinger = (navKontor: string) => {
                   under30år: 444,
                   innsatsgruppeIkkeStandard: 222,
               },
-              antallFåttJobben: 26,
-              antallFåttJobbenIPrioritertMålgruppe: 21,
-              antallPresentert: 108,
-              antallPresentertIPrioritertMålgruppe: 99,
           }
         : {
               antFåttJobben: {
@@ -30,10 +26,6 @@ export const hentAntallFormidlinger = (navKontor: string) => {
                   under30år: 5,
                   innsatsgruppeIkkeStandard: 8,
               },
-              antallFåttJobben: 13,
-              antallFåttJobbenIPrioritertMålgruppe: 9,
-              antallPresentert: 78,
-              antallPresentertIPrioritertMålgruppe: 67,
           };
 };
 
