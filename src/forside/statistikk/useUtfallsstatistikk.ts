@@ -3,11 +3,14 @@ import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 import { formaterDatoTilApi } from './datoUtils';
 
+export type Antall = {
+    totalt: number;
+    under30år: number;
+    innsatsgruppeIkkeStandard: number;
+};
 export type Utfallsstatistikk = {
-    antallPresentert: number;
-    antallPresentertIPrioritertMålgruppe: number;
-    antallFåttJobben: number;
-    antallFåttJobbenIPrioritertMålgruppe: number;
+    antPresentasjoner: Antall;
+    antFåttJobben: Antall;
 };
 
 const useUtfallsstatistikk = (
