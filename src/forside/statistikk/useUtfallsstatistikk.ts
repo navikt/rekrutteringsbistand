@@ -11,10 +11,6 @@ export type Antall = {
 export type Utfallsstatistikk = {
     antPresentasjoner: Antall;
     antFåttJobben: Antall;
-    antallPresentert: number; // TODO Are: Slettes
-    antallPresentertIPrioritertMålgruppe: number; // TODO Are: Slettes
-    antallFåttJobben: number; // TODO Are: Slettes
-    antallFåttJobbenIPrioritertMålgruppe: number; // TODO Are: Slettes
 };
 
 const useUtfallsstatistikk = (
