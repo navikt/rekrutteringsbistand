@@ -36,7 +36,7 @@ const byggIndreQuery = (query: HentMineStillingerQuery) => {
     };
 };
 
-const kunMineStillinger = (navIdent: string) => [
+export const kunMineStillinger = (navIdent: string) => [
     {
         bool: {
             should: [

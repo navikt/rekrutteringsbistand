@@ -17,8 +17,7 @@ const Hovedmål = () => {
 
     return (
         <CheckboxGroup
-            hideLegend
-            legend="Velg kandidatens hovedmål"
+            legend="Velg kandidatens mål"
             value={Array.from(søkekriterier.hovedmål)}
             onChange={onChange}
         >

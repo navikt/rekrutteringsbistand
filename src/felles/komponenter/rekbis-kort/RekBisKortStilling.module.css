@@ -1,0 +1,32 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.innhold {
+    margin-top: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.utløptTag {
+    margin-right: 0.5rem;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-direction: row;
+}
+
+@media (max-width: 767px) {
+    .footer {
+        flex-direction: column;
+        justify-content: start;
+    }
+    .header {
+        flex-direction: column;
+        justify-content: start;
+    }
+}

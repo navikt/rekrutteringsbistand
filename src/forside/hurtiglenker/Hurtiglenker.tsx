@@ -6,9 +6,12 @@ import { ReactComponent as OpprettNyStillingIkon } from 'felles/komponenter/pikt
 import { ReactComponent as SeMineStillingerIkon } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
 import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import useInnloggetBruker from '../../felles/hooks/useBrukerensIdent';
 import css from './Hurtiglenker.module.css';
 
 const Hurtiglenker: FunctionComponent = () => {
+    const innloggetBruker = useInnloggetBruker();
+    console.log('🎺 innloggetBruker', innloggetBruker);
     return (
         <nav className={css.hurtiglenker}>
             <LenkepanelMedIkon
@@ -17,17 +20,17 @@ const Hurtiglenker: FunctionComponent = () => {
                 ikon={<FinnKandidaterIkon />}
             />
             <LenkepanelMedIkon
-                href="/stillingssok?brukStandardsok=true"
+                href="/stillinger/stillingssok?brukStandardsok=true"
                 tittel="Finn stillinger"
                 ikon={<FinnStillinger />}
             />
             <LenkepanelMedIkon
-                href="/stillinger/minestillinger"
+                href={`/stillinger/stillingssok?visMine=${innloggetBruker}`}
                 tittel="Se mine stillinger"
                 ikon={<SeMineStillingerIkon />}
             />
             <LenkepanelMedIkon
-                href="/stillinger/minestillinger?visOpprettStillingModal"
+                href="/stillinger/stillingssok?modal=opprettStillingModal"
                 tittel="Opprett ny stilling"
                 ikon={<OpprettNyStillingIkon />}
             />

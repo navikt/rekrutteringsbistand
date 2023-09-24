@@ -1,4 +1,4 @@
-import { Accordion, Checkbox, CheckboxGroup, Radio, RadioGroup } from '@navikt/ds-react';
+import { Checkbox, CheckboxGroup, Radio, RadioGroup } from '@navikt/ds-react';
 import { Status } from 'felles/domene/stilling/Stilling';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../redux/store';
@@ -34,29 +34,24 @@ const Filter = ({ className }: Props) => {
     };
 
     return (
-        <Accordion className={className}>
-            <Accordion.Item defaultOpen>
-                <Accordion.Header>Filter</Accordion.Header>
-                <Accordion.Content className={css.wrapper}>
-                    <RadioGroup
-                        className={css.synlighet}
-                        legend="Synlighet"
-                        onChange={onExpiredChange}
-                        value={deactivatedByExpiry}
-                    >
-                        <Radio value={Synlighet.Aktive}>Aktive</Radio>
-                        <Radio value={Synlighet.Utløpte}>Utløpte</Radio>
-                    </RadioGroup>
-                    {!deactivatedByExpiry && (
-                        <CheckboxGroup legend="Status" onChange={onStatusToggle} value={status}>
-                            <Checkbox value={Status.Aktiv}>Publisert</Checkbox>
-                            <Checkbox value={Status.Inaktiv}>Ikke Publisert</Checkbox>
-                            <Checkbox value={Status.Stoppet}>Stoppet</Checkbox>
-                        </CheckboxGroup>
-                    )}
-                </Accordion.Content>
-            </Accordion.Item>
-        </Accordion>
+        <>
+            <RadioGroup
+                className={css.synlighet}
+                legend="Synlighet"
+                onChange={onExpiredChange}
+                value={deactivatedByExpiry}
+            >
+                <Radio value={Synlighet.Aktive}>Aktive</Radio>
+                <Radio value={Synlighet.Utløpte}>Utløpte</Radio>
+            </RadioGroup>
+            {!deactivatedByExpiry && (
+                <CheckboxGroup legend="Status" onChange={onStatusToggle} value={status}>
+                    <Checkbox value={Status.Aktiv}>Publisert</Checkbox>
+                    <Checkbox value={Status.Inaktiv}>Ikke Publisert</Checkbox>
+                    <Checkbox value={Status.Stoppet}>Stoppet</Checkbox>
+                </CheckboxGroup>
+            )}
+        </>
     );
 };
 

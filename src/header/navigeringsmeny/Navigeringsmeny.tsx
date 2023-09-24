@@ -10,13 +10,9 @@ const appPrefiks = '';
 
 const tabs: TabConfig[] = [
     {
-        tittel: 'Søk etter stilling',
-        path: '/stillingssok',
+        tittel: 'Stillinger',
+        path: '/stillinger/stillingssok',
         queryParam: '?brukStandardsok=true',
-    },
-    {
-        tittel: 'Mine stillinger',
-        path: '/stillinger/minestillinger',
     },
     {
         tittel: 'Kandidatsøk',

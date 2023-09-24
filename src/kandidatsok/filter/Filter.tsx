@@ -1,5 +1,4 @@
 import Arbeidserfaring from './Arbeidserfaring';
-import Filtergruppe from './Filtergruppe';
 import Fritekstsøk from './Fritekstsøk';
 import Førerkort from './Førerkort';
 import Hovedmål from './Hovedmål';
@@ -14,30 +13,20 @@ import Utdanningsnivå from './Utdanningsnivå';
 
 const Filter = () => {
     return (
-        <>
+        <div style={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}>
             <Fritekstsøk />
-            <Filtergruppe tittel="Jobbønske">
-                <ØnsketYrke />
-                <ØnsketSted />
-                <BorPåØnsketSted />
-            </Filtergruppe>
-            <Filtergruppe tittel="Jobbmuligheter">
-                <Jobbmuligheter />
-            </Filtergruppe>
-            <Filtergruppe tittel="Hovedmål">
-                <Hovedmål />
-            </Filtergruppe>
-            <Filtergruppe tittel="Krav til kandidaten">
-                <Kompetanse />
-                <Førerkort />
-                <Språk />
-                <Arbeidserfaring />
-                <Utdanningsnivå />
-            </Filtergruppe>
-            <Filtergruppe tittel="Prioriterte målgrupper">
-                <PrioriterteMålgrupper />
-            </Filtergruppe>
-        </>
+            <ØnsketYrke />
+            <ØnsketSted />
+            <BorPåØnsketSted />
+            <Jobbmuligheter />
+            <Hovedmål />
+            <Kompetanse />
+            <Førerkort />
+            <Språk />
+            <Arbeidserfaring />
+            <Utdanningsnivå />
+            <PrioriterteMålgrupper />
+        </div>
     );
 };
 

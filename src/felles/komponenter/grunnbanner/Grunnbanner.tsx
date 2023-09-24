@@ -10,13 +10,11 @@ type Props = {
 const Grunnbanner = ({ ikon, children, nederst }: Props) => {
     return (
         <div className={css.grunnbanner}>
-            <div className={css.inner}>
-                <div className={css.piktogramOgChildren}>
-                    <div className={css.piktogram}>{ikon}</div>
-                    {children}
-                </div>
-                {nederst}
+            <div className={css.piktogramOgChildren}>
+                <div className={css.piktogram}>{ikon}</div>
+                {children}
             </div>
+            {nederst}
         </div>
     );
 };

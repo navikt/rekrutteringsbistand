@@ -1,11 +1,11 @@
+import { Tabs } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import { Tabs } from '@navikt/ds-react';
 
-import FraKandidatliste from './fraKandidatliste/FraKandidatliste';
-import FraSøkUtenKontekst from './fraSøkUtenKontekst/FraSøkUtenKontekst';
 import Sidefeil from '../komponenter/sidefeil/Sidefeil';
+import FraKandidatliste from './fraKandidatliste/FraKandidatliste';
 import FraSøkMedKandidatliste from './fraSøkMedKandidatliste/FraSøkMedKandidatliste';
+import FraSøkUtenKontekst from './fraSøkUtenKontekst/FraSøkUtenKontekst';
 
 export enum KandidatQueryParam {
     KandidatlisteId = 'kandidatlisteId',

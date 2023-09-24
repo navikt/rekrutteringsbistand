@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import Banner from 'felles/komponenter/banner/Banner';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import Layout from '../felles/layout/Layout';
 import css from './Kandidatsøk.module.css';
 import Filter from './filter/Filter';
-import TømFiltre from './filter/TømFiltre';
 import PorteføljeTabs from './filter/porteføljetabs/PorteføljeTabs';
 import { InnloggetBruker } from './hooks/useBrukerensIdent';
 import { KontekstAvKandidatlisteEllerStilling } from './hooks/useKontekstAvKandidatlisteEllerStilling';
@@ -68,35 +67,31 @@ const Kandidatsøk = ({
     };
 
     return (
-        <>
-            {kontekstAvKandidatlisteEllerStilling !== null && (
-                <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
-            )}
-            {kontekstAvKandidatlisteEllerStilling === null && (
-                <Banner tittel="Kandidatsøk" ikon={<Piktogram />} />
-            )}
-            <div className={css.container}>
-                <TømFiltre />
-                <aside className={css.filter}>
-                    <Filter />
-                </aside>
-                <PorteføljeTabs>
-                    <main className={css.hovedinnhold}>
-                        <Kandidater
-                            innloggetBruker={innloggetBruker}
-                            kontekstAvKandidatlisteEllerStilling={
-                                kontekstAvKandidatlisteEllerStilling
-                            }
-                            onLagreIKandidatlisteClick={onLagreIKandidatlisteClick}
-                            markerteKandidater={markerteKandidater}
-                            onMarkerKandidat={onMarkerKandidat}
-                            fjernMarkering={fjernMarkering}
-                            forrigeØkt={forrigeØkt}
-                            setKandidaterPåSiden={setKandidaterPåSiden}
-                        />
-                    </main>
-                </PorteføljeTabs>
-            </div>
+        <Layout
+            tittel="Kandidatsøk"
+            ikon={<Piktogram />}
+            altBanner={
+                kontekstAvKandidatlisteEllerStilling && (
+                    <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
+                )
+            }
+            sidepanel={<Filter />}
+        >
+            <PorteføljeTabs>
+                {/* <TømFiltre />  //TODO Sjekk denne */}
+                <div className={css.hovedinnhold}>
+                    <Kandidater
+                        innloggetBruker={innloggetBruker}
+                        kontekstAvKandidatlisteEllerStilling={kontekstAvKandidatlisteEllerStilling}
+                        onLagreIKandidatlisteClick={onLagreIKandidatlisteClick}
+                        markerteKandidater={markerteKandidater}
+                        onMarkerKandidat={onMarkerKandidat}
+                        fjernMarkering={fjernMarkering}
+                        forrigeØkt={forrigeØkt}
+                        setKandidaterPåSiden={setKandidaterPåSiden}
+                    />
+                </div>
+            </PorteføljeTabs>
             {kontekstAvKandidatlisteEllerStilling === null ? (
                 <LagreKandidaterIMineKandidatlisterModal
                     vis={aktivModal === Modal.LagreIMineKandidatlister}
@@ -113,7 +108,7 @@ const Kandidatsøk = ({
                     onSuksess={onSuccessLagretKandidaterISpesifikkKandidatliste}
                 />
             )}
-        </>
+        </Layout>
     );
 };
 

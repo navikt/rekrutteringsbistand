@@ -8,7 +8,7 @@ import Kandidatside from '../kandidatside/Kandidatside';
 import CvSide from '../kandidatside/cv/CvSide';
 import Historikkside from '../kandidatside/historikk/Historikkside';
 import NotFound from '../komponenter/errorside/NotFound';
-import { TilToppenKnapp } from '../komponenter/tilToppenKnapp/TilToppenKnapp';
+import { TilToppenKnapp } from '../../felles/komponenter/tilToppenKnapp/TilToppenKnapp';
 import store from '../state/reduxStore';
 import Varsling from '../varsling/Varsling';
 import css from './KandidatApp.module.css';

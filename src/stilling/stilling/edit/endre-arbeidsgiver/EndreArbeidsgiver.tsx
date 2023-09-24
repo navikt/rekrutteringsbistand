@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { adjustUrl } from '../../../common/urlUtils';
 import { formaterDataFraEnhetsregisteret } from '../../../opprett-ny-stilling/VelgArbeidsgiver';
 import {
+    SET_EMPLOYERDESCRIPTION,
     SET_EMPLOYER_HOMEPAGE,
     SET_EMPLOYER_NAME,
-    SET_EMPLOYERDESCRIPTION,
     SET_FACEBOOK_PAGE,
     SET_LINKEDIN_PAGE,
     SET_TWITTER_ADDRESS,

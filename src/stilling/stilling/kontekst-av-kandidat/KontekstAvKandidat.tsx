@@ -76,7 +76,7 @@ const byggBrødsmulesti = (
         return undefined;
     }
 
-    let urlTilFinnStilling = `/stillingssok/${kandidatnr}`;
+    let urlTilFinnStilling = `/stillingssok/kandidat/${kandidatnr}`;
     if (stillingssøk) {
         urlTilFinnStilling += `?${stillingssøk}`;
     }

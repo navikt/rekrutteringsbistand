@@ -1,19 +1,18 @@
-import { FunctionComponent } from 'react';
+import { ErrorMessage, Ingress, SortState, Table } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { Ingress, SortState, Table } from '@navikt/ds-react';
+import { FunctionComponent } from 'react';
 
-import { MineStillingerResultat } from '../mineStillingerReducer';
-import { nesteSorteringsretning, Retning } from './Retning';
-import { MineStillingerActionType } from '../MineStillingerAction';
-import { useDispatch, useSelector } from 'react-redux';
-import { State } from '../../redux/store';
-import { MineStillingerSorteringsfelt } from '../MineStillingerSortering';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import TabellHeader from './TabellHeader';
-import TabellBody from './TabellBody';
-import css from './MineStillingerTabell.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 import Sidelaster from '../../common/sidelaster/Sidelaster';
-
+import { State } from '../../redux/store';
+import { MineStillingerActionType } from '../MineStillingerAction';
+import { MineStillingerSorteringsfelt } from '../MineStillingerSortering';
+import { MineStillingerResultat } from '../mineStillingerReducer';
+import css from './MineStillingerTabell.module.css';
+import { Retning, nesteSorteringsretning } from './Retning';
+import TabellBody from './TabellBody';
+import TabellHeader from './TabellHeader';
 type Props = {
     resultat: Nettressurs<MineStillingerResultat>;
     className?: string;
@@ -55,18 +54,28 @@ const MineStillingerTabell: FunctionComponent<Props> = ({ resultat, className })
             <Ingress className={className}>Fant ingen stillinger der du er saksbehandler.</Ingress>
         );
     }
-
     return (
-        <Table
-            zebraStripes
-            size="medium"
-            sort={sort as SortState}
-            onSortChange={onSortChange}
-            className={classNames(css.tabell, className)}
-        >
-            <TabellHeader />
-            <TabellBody resultat={resultat} />
-        </Table>
+        <>
+            {resultat.kind === Nettstatus.Feil && (
+                <ErrorMessage className={css.feilmelding}>
+                    Klarte ikke hente mine stillinger
+                </ErrorMessage>
+            )}
+            {resultat.kind === Nettstatus.Suksess &&
+                resultat.data.content.map((rekrutteringsbistandstilling) => (
+                    <div key={rekrutteringsbistandstilling.stilling.uuid}>TODO</div>
+                ))}
+            <Table
+                zebraStripes
+                size="medium"
+                sort={sort as SortState}
+                onSortChange={onSortChange}
+                className={classNames(css.tabell, className)}
+            >
+                <TabellHeader />
+                <TabellBody resultat={resultat} />
+            </Table>
+        </>
     );
 };
 

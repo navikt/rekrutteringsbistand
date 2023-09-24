@@ -24,7 +24,6 @@ const PrioriterteMålgrupper: FunctionComponent = () => {
 
     return (
         <CheckboxGroup
-            hideLegend
             legend="Velg prioriterte målgrupper"
             onChange={onChange}
             value={Array.from(søkekriterier.prioritertMålgruppe)}

@@ -1,5 +1,5 @@
 import { RestRequest } from 'msw';
-import StandardsøkDto from '../../src/stillingssok/filter/standardsøk/Standardsøk';
+import StandardsøkDto from '../../src/stilling/stillingssok/filter/standardsøk/Standardsøk';
 
 export const mockStandardsøk: StandardsøkDto = {
     søk: 'statuser=publisert%2Cutl%C3%B8pt&q=Rektor',

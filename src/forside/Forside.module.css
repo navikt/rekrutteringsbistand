@@ -7,6 +7,6 @@
     flex-direction: column;
     align-items: center;
     max-width: var(--innhold-maksbredde);
-    padding: 3rem 1rem;
+    padding-top: 3rem;
     margin: 0 auto;
 }

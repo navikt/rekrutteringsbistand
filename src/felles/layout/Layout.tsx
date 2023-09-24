@@ -1,9 +1,10 @@
 import { Accordion, Heading, Hide, Show } from '@navikt/ds-react';
 import * as React from 'react';
 
+import { TilToppenKnapp } from '../komponenter/tilToppenKnapp/TilToppenKnapp';
 import stil from './Layout.module.css';
 export interface ILayout {
-    hovedside: React.ReactNode | undefined;
+    children: React.ReactNode | undefined;
     tittel?: string;
     ikon?: React.ReactNode;
     altBanner?: React.ReactNode;
@@ -14,10 +15,10 @@ export interface ILayout {
 const Layout: React.FC<ILayout> = ({
     tittel,
     ikon,
-    hovedside,
     sidepanel,
     altBanner,
     bannerKnapp,
+    children,
 }) => {
     return (
         <div className={stil.wrapper}>
@@ -51,7 +52,10 @@ const Layout: React.FC<ILayout> = ({
                             </Hide>
                         </aside>
                     )}
-                    <main className={stil.sideinnhold}>{hovedside}</main>
+                    <main className={stil.sideinnhold}>
+                        {children}
+                        <TilToppenKnapp />
+                    </main>
                 </div>
             </div>
         </div>

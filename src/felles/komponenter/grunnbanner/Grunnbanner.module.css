@@ -1,17 +1,7 @@
 .grunnbanner {
     background-color: white;
     width: 100%;
-    padding: 0 2rem;
-}
-
-.inner {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-
-    margin: 0 auto;
-    max-width: var(--innhold-maksbredde);
-    padding: 1.5rem 0;
+    margin: 3.5rem 0 1.5rem 0;
 }
 
 .piktogramOgChildren {

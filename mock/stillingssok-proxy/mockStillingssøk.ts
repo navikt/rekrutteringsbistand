@@ -1,6 +1,6 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { GlobalAggregering } from '../../src/stillingssok/domene/elasticSearchTyper';
+import { GlobalAggregering } from '../../src/stilling/stillingssok/domene/elasticSearchTyper';
 import { mockEsRekrutteringsbistandstilling } from './mockEsStilling';
 
 export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>, 'aggregations'> & {

@@ -1,6 +1,6 @@
 .navigeringsmeny {
-    padding: 0 2.5rem;
-    background-color: white;
+    display: flex;
+    align-items: center;
 }
 
 @media print {
@@ -10,8 +10,9 @@
 }
 
 .inner {
+    max-width: var(--innhold-maksbredde);
     margin: 0 auto;
-    max-width: 1920px;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;

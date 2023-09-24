@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
-import Banner from 'felles/komponenter/banner/Banner';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { Nettstatus } from 'felles/nettressurs';
+import Layout from '../../felles/layout/Layout';
 import KandidatlisteAction from '../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../kandidatliste/reducer/KandidatlisteActionType';
 import AppState from '../state/AppState';
@@ -241,7 +241,36 @@ class Kandidatlisteoversikt extends React.Component<Props> {
         } kandidatliste${totaltAntallKandidatlister === 1 ? '' : 'r'}`;
 
         return (
-            <div>
+            <Layout
+                tittel={'Kandidatlister'}
+                bannerKnapp={
+                    <Button
+                        variant="secondary"
+                        icon={<PlusCircleIcon />}
+                        onClick={this.onOpprettClick}
+                    >
+                        Opprett ny
+                    </Button>
+                }
+                ikon={<Piktogram />}
+                sidepanel={
+                    <div className={css.venstreKolonne}>
+                        <Kandidatlistesøk
+                            søkeOrd={søkeOrd}
+                            onSøkeOrdChange={this.onSøkeOrdChange}
+                            onSubmitSøkKandidatlister={this.onSubmitSøkKandidatlister}
+                            nullstillSøk={this.onNullstillSøkClick}
+                        />
+                        <Filter
+                            className={css.filter}
+                            søkekriterier={søkekriterier}
+                            onVisMineKandidatlister={this.onVisMineKandidatlister}
+                            onVisAlleKandidatlister={this.onVisAlleKandidatlister}
+                            onFilterChange={this.onFilterChange}
+                        />
+                    </div>
+                }
+            >
                 {modal.visning === Modalvisning.Opprett && (
                     <OpprettModal onClose={this.handleLukkModal} />
                 )}
@@ -264,60 +293,33 @@ class Kandidatlisteoversikt extends React.Component<Props> {
                         onClose={this.handleLukkModal}
                     />
                 )}
-                <Banner tittel="Kandidatlister" ikon={<Piktogram />}>
-                    <Button
-                        variant="secondary"
-                        icon={<PlusCircleIcon />}
-                        onClick={this.onOpprettClick}
-                    >
-                        Opprett ny
-                    </Button>
-                </Banner>
-                <div className={css.wrapper}>
-                    <div className={css.venstreKolonne}>
-                        <Kandidatlistesøk
-                            søkeOrd={søkeOrd}
-                            onSøkeOrdChange={this.onSøkeOrdChange}
-                            onSubmitSøkKandidatlister={this.onSubmitSøkKandidatlister}
-                            nullstillSøk={this.onNullstillSøkClick}
-                        />
-                        <Filter
-                            className={css.filter}
-                            søkekriterier={søkekriterier}
-                            onVisMineKandidatlister={this.onVisMineKandidatlister}
-                            onVisAlleKandidatlister={this.onVisAlleKandidatlister}
-                            onFilterChange={this.onFilterChange}
-                        />
-                    </div>
-
-                    <div className={css.overTabell}>
-                        <Heading level="1" size="medium">
-                            {tittel}
-                        </Heading>
-                    </div>
-                    <Kandidatlistetabell
-                        className={css.tabell}
-                        nettstatus={kandidatlisterStatus}
-                        kandidatlister={kandidatlister}
-                    >
-                        <TabellHeader />
-                        <TabellBody
-                            kandidatlister={kandidatlister}
-                            onRedigerClick={this.handleRedigerClick}
-                            onMarkerSomMinClick={this.handleMarkerSomMinClick}
-                            onSlettClick={this.handleSlettClick}
-                        />
-                    </Kandidatlistetabell>
-                    {kandidatlisterStatus === Nettstatus.Suksess && (
-                        <Pagination
-                            page={søkekriterier.pagenumber + 1}
-                            count={Math.ceil(totaltAntallKandidatlister / SIDESTØRRELSE)}
-                            onPageChange={this.onPageChange}
-                            className={classNames(css.underTabell, css.paginering)}
-                        />
-                    )}
+                <div className={css.overTabell}>
+                    <Heading level="1" size="medium">
+                        {tittel}
+                    </Heading>
                 </div>
-            </div>
+                <Kandidatlistetabell
+                    className={css.tabell}
+                    nettstatus={kandidatlisterStatus}
+                    kandidatlister={kandidatlister}
+                >
+                    <TabellHeader />
+                    <TabellBody
+                        kandidatlister={kandidatlister}
+                        onRedigerClick={this.handleRedigerClick}
+                        onMarkerSomMinClick={this.handleMarkerSomMinClick}
+                        onSlettClick={this.handleSlettClick}
+                    />
+                </Kandidatlistetabell>
+                {kandidatlisterStatus === Nettstatus.Suksess && (
+                    <Pagination
+                        page={søkekriterier.pagenumber + 1}
+                        count={Math.ceil(totaltAntallKandidatlister / SIDESTØRRELSE)}
+                        onPageChange={this.onPageChange}
+                        className={classNames(css.underTabell, css.paginering)}
+                    />
+                )}
+            </Layout>
         );
     }
 }
