@@ -42,6 +42,17 @@
 
 .talldetaljer {
     color: var(--a-text-subtle);
+    padding: 0;
+}
+
+.talldetaljer > *:not(:last-child)::after {
+    content: '·';
+    font-size: 2rem;
+    padding: 0 0.5rem;
+}
+
+.talldetaljer li {
+    display: inline-flex;
 }
 
 @media (min-width: 768px) {

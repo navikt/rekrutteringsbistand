@@ -33,14 +33,14 @@ const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilO
                 tall={data?.antPresentasjoner.totalt}
                 beskrivelse="Delt med arbeidsgiver"
                 ikon={<EyeIcon aria-hidden />}
-                detaljer={erIkkeProd && <AntallPrioriterte antall={data?.antPresentasjoner} />}
+                detaljer={<AntallPrioriterte antall={data?.antPresentasjoner} />}
             />
 
             <Telling
                 tall={data?.antFåttJobben.totalt}
                 beskrivelse="Fikk jobb"
                 ikon={<HandshakeIcon aria-hidden />}
-                detaljer={erIkkeProd && <AntallPrioriterte antall={data?.antFåttJobben} />}
+                detaljer={<AntallPrioriterte antall={data?.antFåttJobben} />}
             />
         </div>
     );
@@ -49,9 +49,9 @@ const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilO
 const AntallPrioriterte = ({ antall }: { antall?: Antall }) => {
     if (antall !== undefined) {
         return (
-            <BodyShort size="small" className={statistikkCss.talldetaljer}>
-                {antall.under30år} var under 30 år &nbsp;&bull;&nbsp;{' '}
-                {antall.innsatsgruppeIkkeStandard} hadde ikke standardinnsats
+            <BodyShort size="small" as="ul" className={statistikkCss.talldetaljer}>
+                <li>{antall.under30år} var under 30 år</li>
+                <li>{antall.innsatsgruppeIkkeStandard} hadde ikke standardinnsats</li>
             </BodyShort>
         );
     } else {
