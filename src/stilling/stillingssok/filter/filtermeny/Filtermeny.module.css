@@ -1,8 +1,6 @@
 .wrapper {
     width: 100%;
     min-height: 3.5rem;
-    border-bottom: 2px solid var(--a-gray-200);
-    margin-bottom: 1rem;
 }
 
 .filtermeny {
