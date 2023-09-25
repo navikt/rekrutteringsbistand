@@ -30,7 +30,7 @@ export type Søkekriterier = {
     subinkluderingstags: Set<string>;
     sortering: Sortering;
     felter: Set<Søkefelt>;
-    visTab: Set<string>;
+    portefolje: Set<string>;
 };
 
 enum TabVisning {
@@ -51,11 +51,11 @@ const Stillingssøk = () => {
         oppdaterUrlMedParam({
             searchParams,
             navigate,
-            parameter: QueryParam.VisTab,
+            parameter: QueryParam.Portofølje,
             verdi: tab === TabVisning.VIS_MINE ? TabVisning.VIS_MINE : null,
         });
 
-    const visTab = queryParams.get('visTab') ?? TabVisning.VIS_ALLE;
+    const portefolje = queryParams.get('portefolje') ?? TabVisning.VIS_ALLE;
 
     const [visOpprettStillingModal, setVisOpprettStillingModal] = useState(
         skalViseOpprettStillingModal()
@@ -93,7 +93,7 @@ const Stillingssøk = () => {
             altBanner={kandidatnr !== undefined && <KontekstAvKandidat kandidatnr={kandidatnr} />}
             sidepanel={<Filter finnerStillingForKandidat={finnerStillingForKandidat} />}
         >
-            <Tabs defaultValue={visTab} onChange={(e) => oppdaterTab(e as TabVisning)}>
+            <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
                 <Tabs.List>
                     <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle Stillinger" />
                     <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine Stillinger" />

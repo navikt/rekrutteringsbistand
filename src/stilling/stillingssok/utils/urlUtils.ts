@@ -23,7 +23,7 @@ export enum QueryParam {
     // Valgmuligheter
     BrukStandardsøk = 'brukStandardsok',
     BrukKriterierFraKandidat = 'brukKriterierFraKandidat',
-    VisTab = 'visTab',
+    Portofølje = 'portefolje',
     Modal = 'modal',
 }
 
@@ -59,7 +59,7 @@ export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterie
         ) as Set<Stillingskategori>,
         sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
         felter: hentSøkekriterie(QueryParam.Felter) as Set<Søkefelt>,
-        visTab: hentSøkekriterie(QueryParam.VisTab),
+        portefolje: hentSøkekriterie(QueryParam.Portofølje),
     };
 };
 

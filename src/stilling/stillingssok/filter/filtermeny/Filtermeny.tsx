@@ -34,7 +34,7 @@ const Filtermeny = ({ finnerStillingForKandidat }: Props) => {
 };
 
 export const hentIgnorerteFiltre = (finnerStillingForKandidat: boolean) => {
-    let ignorerteFiltre = [QueryParam.Sortering, QueryParam.Modal, QueryParam.VisTab];
+    let ignorerteFiltre = [QueryParam.Sortering, QueryParam.Modal, QueryParam.Portofølje];
 
     if (finnerStillingForKandidat) {
         ignorerteFiltre.push(QueryParam.Statuser);
