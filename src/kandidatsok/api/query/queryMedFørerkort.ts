@@ -12,6 +12,8 @@ export enum Klasse {
     MinibussMedTilhenger = 'D1E - Minibuss med tilhenger',
     Buss = 'D - Buss',
     BussMedTilhenger = 'DE - Buss med tilhenger',
+    Traktor = 'T - Traktor',
+    Snøscooter = 'S - Snøscooter',
 }
 
 export const queryMedFørerkort = (førerkort: Set<Klasse>) => {
@@ -50,6 +52,8 @@ export const queryMedFørerkort = (førerkort: Set<Klasse>) => {
 };
 
 const implisitteKlasser = {
+    [Klasse.Snøscooter]: [],
+    [Klasse.Traktor]: [],
     [Klasse.LettMotorsykkel]: [Klasse.MellomtungMotorsykkel, Klasse.TungMotorsykkel],
     [Klasse.MellomtungMotorsykkel]: [Klasse.TungMotorsykkel],
     [Klasse.TungMotorsykkel]: [],

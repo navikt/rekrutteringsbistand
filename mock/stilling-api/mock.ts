@@ -76,7 +76,7 @@ export const stillingApiMock = [
         (_, res, ctx) => res(ctx.json(mockCategoriesWithAltnames))
     ),
 
-    rest.get(`${api.stilling}/rekrutteringsbistand/api/v1/postdata`, (_, res, ctx) =>
+    rest.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/postdata`, (_, res, ctx) =>
         res(ctx.json(mockPostdata))
     ),
 ];

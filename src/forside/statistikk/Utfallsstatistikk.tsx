@@ -6,6 +6,7 @@ import { FunctionComponent } from 'react';
 import statistikkCss from './Statistikk.module.css';
 import Telling from './Telling';
 import useUtfallsstatistikk, {
+    Antall,
     Utfallsstatistikk as UtfallsstatistikkType,
 } from './useUtfallsstatistikk';
 
@@ -29,35 +30,28 @@ const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilO
     return (
         <div className={statistikkCss.tall}>
             <Telling
-                tall={data?.antallPresentert}
+                tall={data?.antPresentasjoner.totalt}
                 beskrivelse="Delt med arbeidsgiver"
                 ikon={<EyeIcon aria-hidden />}
-                detaljer={
-                    erIkkeProd && (
-                        <AntallPrioriterte antall={data?.antallPresentertIPrioritertMålgruppe} />
-                    )
-                }
+                detaljer={erIkkeProd && <AntallPrioriterte antall={data?.antPresentasjoner} />}
             />
 
             <Telling
-                tall={data?.antallFåttJobben}
+                tall={data?.antFåttJobben.totalt}
                 beskrivelse="Fikk jobb"
                 ikon={<HandshakeIcon aria-hidden />}
-                detaljer={
-                    erIkkeProd && (
-                        <AntallPrioriterte antall={data?.antallFåttJobbenIPrioritertMålgruppe} />
-                    )
-                }
+                detaljer={erIkkeProd && <AntallPrioriterte antall={data?.antFåttJobben} />}
             />
         </div>
     );
 };
 
-const AntallPrioriterte = ({ antall }: { antall?: number }) => {
+const AntallPrioriterte = ({ antall }: { antall?: Antall }) => {
     if (antall !== undefined) {
         return (
             <BodyShort size="small" className={statistikkCss.talldetaljer}>
-                {antall} er prioriterte
+                {antall.under30år} var under 30 år &nbsp;&bull;&nbsp;{' '}
+                {antall.innsatsgruppeIkkeStandard} hadde ikke standardinnsats
             </BodyShort>
         );
     } else {

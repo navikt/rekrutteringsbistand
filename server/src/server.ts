@@ -1,11 +1,15 @@
 import compression from 'compression';
+import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 
 import { initializeAzureAd, responderMedBrukerinfo } from './azureAd';
 import { logger } from './logger';
 import { redirectIfUnauthorized, respondUnauthorizedIfNotLoggedIn } from './middlewares';
-import { proxyMedOboToken, proxyTilKandidatsøkEs } from './proxy';
+import { proxyMedOboToken, proxyTilKandidatsøkEs, proxyUtenToken } from './proxy';
+
+// Last inn miljøvariabler for lokal utvikling
+dotenv.config({ path: `.env.local` });
 
 export const app = express();
 
@@ -37,6 +41,7 @@ const {
     SMS_API,
     FORESPORSEL_OM_DELING_AV_CV_API,
     SYNLIGHETSMOTOR_API,
+    ARBEIDSGIVER_NOTIFIKASJON_API,
     PRESENTERTE_KANDIDATER_API,
     OPEN_SEARCH_URI,
     OPEN_SEARCH_USERNAME,
@@ -51,6 +56,8 @@ const startServer = () => {
     app.get([`/internal/isAlive`, `/internal/isReady`], (_, res) => res.sendStatus(200));
 
     app.get('/meg', respondUnauthorizedIfNotLoggedIn, responderMedBrukerinfo);
+
+    proxyUtenToken('/arbeidsgiver-notifikasjon-api', ARBEIDSGIVER_NOTIFIKASJON_API);
 
     proxyMedOboToken('/modiacontextholder', MODIA_CONTEXT_HOLDER_API, scopes.modiaContextHolder);
     proxyMedOboToken('/statistikk-api', STATISTIKK_API_URL, scopes.statistikk);
@@ -89,13 +96,16 @@ const startServer = () => {
     });
 
     app.listen(port, () => {
-        logger.info('Server kjører på port', port);
+        logger.info('Server kjører på port ' + port);
     });
 };
 
 const initializeServer = async () => {
     try {
-        await initializeAzureAd();
+        if (!process.env.LOKALT) {
+            await initializeAzureAd();
+        }
+
         startServer();
     } catch (e) {
         logger.error(`Klarte ikke å starte server: ${e}`);
