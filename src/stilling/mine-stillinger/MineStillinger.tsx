@@ -86,8 +86,6 @@ const MineStillinger = () => {
                 </div>
                 <MineStillingerTabell resultat={resultat} className={css.tabell} />
 
-                <div></div>
-
                 {resultat.kind === Nettstatus.Suksess && (
                     <>
                         {resultat.data.content.length > 0 ? (

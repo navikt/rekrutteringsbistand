@@ -61,21 +61,21 @@ const MineStillingerTabell: FunctionComponent<Props> = ({ resultat, className })
                     Klarte ikke hente mine stillinger
                 </ErrorMessage>
             )}
-            {resultat.kind === Nettstatus.Suksess &&
+            {/* // TODO Brukes denne? */}
+            {/* {resultat.kind === Nettstatus.Suksess &&
                 resultat.data.content.map((rekrutteringsbistandstilling) => (
-                    <div key={rekrutteringsbistandstilling.stilling.uuid}>
-                        <Table
-                            zebraStripes
-                            size="medium"
-                            sort={sort as SortState}
-                            onSortChange={onSortChange}
-                            className={classNames(css.tabell, className)}
-                        >
-                            <TabellHeader />
-                            <TabellBody resultat={resultat} />
-                        </Table>
-                    </div>
-                ))}
+                    <div key={rekrutteringsbistandstilling.stilling.uuid}></div>
+                ))} */}
+            <Table
+                zebraStripes
+                size="medium"
+                sort={sort as SortState}
+                onSortChange={onSortChange}
+                className={classNames(css.tabell, className)}
+            >
+                <TabellHeader />
+                <TabellBody resultat={resultat} />
+            </Table>
         </>
     );
 };
