@@ -52,7 +52,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
 
     const kake = true;
 
-    console.log('🎺 kandidat', kandidat);
     if (kake) {
         return (
             <RekBisKortKandidat
@@ -73,11 +72,13 @@ const Kandidatrad: FunctionComponent<Props> = ({
                         {hentKandidatensNavn(kandidat)}
                     </Link>
                 }
-                ønsker={alleØnskedeYrker}
-                lokasjon={alleØnskedeSteder}
+                ønsker={alleØnskedeYrker ?? '-'}
+                lokasjon={alleØnskedeSteder ?? '-'}
                 innsatsgruppe={alleInnsatsgrupper[kandidat.kvalifiseringsgruppekode].label}
-                bosted={`${kandidat.adresselinje1}, ${kandidat.postnummer} ${kandidat.poststed}`}
-                veilder={kandidat.veilederVisningsnavn}
+                bosted={`${kandidat.adresselinje1 ?? '-'}, ${kandidat.postnummer ?? '-'} ${
+                    kandidat.poststed ?? '-'
+                }`}
+                veilder={kandidat.veilederVisningsnavn ?? '-'}
             />
         );
     }

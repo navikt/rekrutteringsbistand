@@ -1,20 +1,20 @@
-import { FunctionComponent } from 'react';
-import { BodyLong, BodyShort, Heading, Label, ReadMore } from '@navikt/ds-react';
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
+import { BodyLong, BodyShort, Heading, Label, ReadMore } from '@navikt/ds-react';
+import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 
-import { lenkeTilKandidatlisteoversikt, lenkeTilStilling } from '../../app/paths';
-import { capitalizeEmployerName } from '../../utils/formateringUtils';
-import Kandidatlistestatus from './kandidatlistestatus/Kandidatlistestatus';
-import { erKobletTilStilling, erKobletTilArbeidsgiver } from '../domene/kandidatlisteUtils';
 import {
+    FormidlingAvUsynligKandidat,
     KandidatIKandidatliste,
     Kandidatstatus,
     Kandidatutfall,
-    FormidlingAvUsynligKandidat,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { lenkeTilKandidatlisteoversikt, lenkeTilStilling } from '../../app/paths';
+import { capitalizeEmployerName } from '../../utils/formateringUtils';
+import { erKobletTilArbeidsgiver, erKobletTilStilling } from '../domene/kandidatlisteUtils';
 import css from './SideHeader.module.css';
+import Kandidatlistestatus from './kandidatlistestatus/Kandidatlistestatus';
 
 type Props = {
     kandidatliste: Kandidatliste;

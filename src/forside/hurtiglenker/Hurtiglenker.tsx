@@ -6,12 +6,9 @@ import { ReactComponent as OpprettNyStillingIkon } from 'felles/komponenter/pikt
 import { ReactComponent as SeMineStillingerIkon } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
 import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import useInnloggetBruker from '../../felles/hooks/useBrukerensIdent';
 import css from './Hurtiglenker.module.css';
 
 const Hurtiglenker: FunctionComponent = () => {
-    const innloggetBruker = useInnloggetBruker();
-    console.log('🎺 innloggetBruker', innloggetBruker);
     return (
         <nav className={css.hurtiglenker}>
             <LenkepanelMedIkon
