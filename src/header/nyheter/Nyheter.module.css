@@ -18,12 +18,8 @@
 }
 
 .knapp {
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0.25rem;
     position: relative;
-    border-radius: 0.125rem;
+    color: var(--a-text-default);
 }
 
 .knapp:focus {
@@ -34,7 +30,7 @@
 .notifikasjon {
     position: absolute;
     top: 0.25rem;
-    right: -1rem;
+    right: 0;
     height: 0.9rem;
     width: 0.9rem;
     border-radius: 50%;

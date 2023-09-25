@@ -1,5 +1,5 @@
 import { MegaphoneSpeakingIcon } from '@navikt/aksel-icons';
-import { Heading, Popover } from '@navikt/ds-react';
+import { Button, Heading, Popover } from '@navikt/ds-react';
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
 import Artikkel from './Artikkel';
 import css from './Nyheter.module.css';
@@ -33,10 +33,17 @@ const Nyheter: FunctionComponent = () => {
 
     return (
         <div className={css.nyheter}>
-            <button ref={buttonRef} onClick={() => setÅpen(!åpen)} className={css.knapp}>
-                <MegaphoneSpeakingIcon /> Hva er nytt
+            <Button
+                ref={buttonRef}
+                className={css.knapp}
+                onClick={() => setÅpen(!åpen)}
+                variant="tertiary"
+                icon={<MegaphoneSpeakingIcon aria-hidden />}
+            >
+                Hva er nytt
                 {antallUlesteNyheter > 0 && <div className={css.notifikasjon} />}
-            </button>
+            </Button>
+
             <Popover
                 open={åpen}
                 anchorEl={buttonRef.current}

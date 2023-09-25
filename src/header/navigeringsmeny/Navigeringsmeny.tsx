@@ -2,22 +2,19 @@ import { FunctionComponent } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Nyheter from '../nyheter/Nyheter';
-import Forsidelenke from './Forsidelenke';
 import css from './Navigeringsmeny.module.css';
 import Tab, { TabConfig } from './Tab';
 
-const appPrefiks = '';
-
 const tabs: TabConfig[] = [
+    {
+        tittel: 'Oversikt',
+        path: '/',
+    },
     {
         tittel: 'Stillinger',
         path: '/stillinger/stillingssok',
         queryParam: '?brukStandardsok=true',
     },
-    // {
-    //     tittel: 'Mine stillinger',
-    //     path: '/stillinger/minestillinger',
-    // },
     {
         tittel: 'Kandidatsøk',
         path: '/kandidatsok',
@@ -36,7 +33,6 @@ const Navigeringsmeny: FunctionComponent = () => {
         <div className={css.navigeringsmeny}>
             <div className={css.inner}>
                 <nav className={css.tabs}>
-                    <Forsidelenke href={`${appPrefiks}/`} erAktiv={pathname === `${appPrefiks}/`} />
                     {tabs.map((tab) => (
                         <Tab
                             key={tab.path}
