@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Loader } from '@navikt/ds-react';
+import { useEffect, useState } from 'react';
 
 const DelayedSpinner = () => {
     const [showSpinner, setShowSpinner] = useState<boolean>(false);
@@ -18,7 +18,7 @@ const DelayedSpinner = () => {
         return null;
     }
 
-    return <Loader size="xlarge" />;
+    return <Loader variant="interaction" size="2xlarge" />;
 };
 
 export default DelayedSpinner;

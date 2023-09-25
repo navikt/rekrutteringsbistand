@@ -1,4 +1,4 @@
-import { LightBulbIcon } from '@navikt/aksel-icons';
+import { MegaphoneSpeakingIcon } from '@navikt/aksel-icons';
 import { Heading, Popover } from '@navikt/ds-react';
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
 import Artikkel from './Artikkel';
@@ -34,7 +34,7 @@ const Nyheter: FunctionComponent = () => {
     return (
         <div className={css.nyheter}>
             <button ref={buttonRef} onClick={() => setÅpen(!åpen)} className={css.knapp}>
-                <LightBulbIcon /> Hva er nytt
+                <MegaphoneSpeakingIcon /> Hva er nytt
                 {antallUlesteNyheter > 0 && <div className={css.notifikasjon} />}
             </button>
             <Popover

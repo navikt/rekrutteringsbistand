@@ -61,7 +61,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         >
             <div className={css.innhold}>
                 {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind ===
-                    Nettstatus.LasterInn && <Loader />}
+                    Nettstatus.LasterInn && <Loader variant="interaction" size="2xlarge" />}
                 {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === Nettstatus.Suksess && (
                     <>
                         <Modal.Body>

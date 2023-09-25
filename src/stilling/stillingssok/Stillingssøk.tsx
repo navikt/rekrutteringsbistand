@@ -107,7 +107,7 @@ const Stillingssøk = () => {
                 </div>
             ) : (
                 <div className={css.spinner}>
-                    <Loader size="xlarge" />
+                    <Loader variant="interaction" size="2xlarge" />
                 </div>
             )}
         </Layout>

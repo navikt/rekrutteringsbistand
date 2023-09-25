@@ -1,5 +1,6 @@
 .antallStillinger {
     grid-area: over-tabell;
+    margin-bottom: 1rem;
 }
 
 .paginering {

@@ -63,10 +63,3 @@ const Layout: React.FC<ILayout> = ({
 };
 
 export default Layout;
-
-// Margins:
-// >1280dp -> 2,5rem = 40px
-// >1024 = 32px
-// >768 = 24px
-// <767 = 20px
-// Bunn 80px
