@@ -26,7 +26,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
         hovedinkluderingstags,
         subinkluderingstags,
         tekst,
-        visMine,
     } = hentSøkekriterier(searchParams);
 
     const handleTømFiltreClick = () => {
@@ -84,7 +83,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
     return (
         <Chips>
             <Chips.Removable onDelete={handleTømFiltreClick}>Tøm alle filtre</Chips.Removable>
-
             {!finnerStillingForKandidat
                 ? Array.from(statuser).map((status) => (
                       <Chips.Removable
@@ -98,7 +96,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                       </Chips.Removable>
                   ))
                 : []}
-
             {Array.from(publisert).map((derAnnonsenErpublisert) => (
                 <Chips.Removable
                     key={derAnnonsenErpublisert}
@@ -110,7 +107,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                     {publisertTilVisningsnavn(derAnnonsenErpublisert)}
                 </Chips.Removable>
             ))}
-
             {Array.from(stillingskategorier).map((kategori) => (
                 <Chips.Removable
                     key={kategori}
@@ -122,7 +118,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                     {stillingskategoriTilVisningsnavn(kategori)}
                 </Chips.Removable>
             ))}
-
             {fylkerUtenValgteKommuner.map((fylke) => (
                 <Chips.Removable
                     key={fylke}
@@ -134,7 +129,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                     {fylke}
                 </Chips.Removable>
             ))}
-
             {valgteKommuner.map((kommune) => (
                 <Chips.Removable
                     key={kommune}
@@ -146,7 +140,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                     {kommune.split('.')[1]}
                 </Chips.Removable>
             ))}
-
             {hovedInkluderingstagsUtenValgteSubinkluderingtags.map((hovedinkluderingtag) => (
                 <Chips.Removable
                     key={hovedinkluderingtag}
@@ -162,7 +155,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                     {visningsnavnForFilter[hovedinkluderingtag as Hovedtag]}
                 </Chips.Removable>
             ))}
-
             {valgteSubinkluderingstags.map((subinkluderingtag) => (
                 <Chips.Removable
                     key={subinkluderingtag}
@@ -178,7 +170,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                     {visningsnavnForFilter[subinkluderingtag as Subtag]}
                 </Chips.Removable>
             ))}
-
             {Array.from(tekst).map((term) => (
                 <Chips.Removable
                     key={term}
@@ -188,18 +179,6 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                     }}
                 >
                     {term}
-                </Chips.Removable>
-            ))}
-
-            {Array.from(visMine).map((val) => (
-                <Chips.Removable
-                    key={val}
-                    variant="neutral"
-                    onDelete={() => {
-                        handleClick(val, tekst, QueryParam.VisMine);
-                    }}
-                >
-                    {`Vis kun mine`}
                 </Chips.Removable>
             ))}
         </Chips>

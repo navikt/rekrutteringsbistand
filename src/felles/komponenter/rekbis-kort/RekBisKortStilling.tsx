@@ -11,6 +11,7 @@ export interface IRekBisKortStilling {
     stillingsinfo?: React.ReactNode;
     knapper?: React.ReactNode;
     status?: string;
+    erEier?: boolean;
 }
 
 const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
@@ -21,12 +22,18 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
     stillingsinfo,
     knapper,
     status,
+    erEier,
 }) => {
     return (
         <RekBisKort
             header={
                 <div className={css.header}>
                     <div className={css.header}>
+                        {erEier && (
+                            <Tag size="small" variant="neutral" className={css.utløptTag}>
+                                Min stilling
+                            </Tag>
+                        )}
                         {status === 'INACTIVE' && (
                             <Tag size="small" variant="warning" className={css.utløptTag}>
                                 Utløpt

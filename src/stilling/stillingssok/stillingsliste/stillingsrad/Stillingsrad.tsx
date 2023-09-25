@@ -8,6 +8,7 @@ import { EsRekrutteringsbistandstilling, EsStilling } from 'felles/domene/stilli
 import { Geografi, Privacy } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from '../../../../felles/hooks/useBrukerensIdent';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
+import { REDIGERINGSMODUS_QUERY_PARAM } from '../../../stilling/Stilling';
 import { hentHovedtags } from '../../filter/inkludering/tags';
 import {
     lagUrlTilKandidatliste,
@@ -17,7 +18,6 @@ import {
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import css from './Stillingsrad.module.css';
 import { konverterTilPresenterbarDato } from './datoUtils';
-import EierValg from './eiervalg/EierValg';
 
 type Props = {
     rekrutteringsbistandstilling: EsRekrutteringsbistandstilling;
@@ -54,6 +54,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
 
     return (
         <RekBisKortStilling
+            erEier={erEier}
             publisertDato={konverterTilPresenterbarDato(stilling.published)}
             arbeidsgiversNavn={arbeidsgiversNavn}
             status={rekrutteringsbistandstilling.stilling.status}
@@ -96,7 +97,18 @@ const Stillingsrad: FunctionComponent<Props> = ({
             }
             knapper={
                 <div>
-                    {erEier && <EierValg stilling={stilling} />}
+                    {erEier && (
+                        <Button
+                            onClick={() =>
+                                navigate(
+                                    `/stillinger/stilling/${stilling.uuid}?${REDIGERINGSMODUS_QUERY_PARAM}=true`
+                                )
+                            }
+                            variant="tertiary"
+                        >
+                            Rediger
+                        </Button>
+                    )}
                     {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                         <Button
                             onClick={() => navigate(lagUrlTilKandidatliste(stilling))}

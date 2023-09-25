@@ -1,5 +1,4 @@
 import css from './Filter.module.css';
-import VisMine from './VisMine';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import Inkludering from './inkludering/Inkludering';
 import Annonsestatus from './om-annonsen/Annonsestatus';
@@ -19,7 +18,6 @@ const Filter = ({ finnerStillingForKandidat }: Props) => {
             {!finnerStillingForKandidat && <BrukStandardsøk />}
 
             <div className={css.filtercheckbokser}>
-                <VisMine />
                 {!finnerStillingForKandidat && <Annonsestatus />}
                 <FylkerOgKommuner />
                 <Inkludering />

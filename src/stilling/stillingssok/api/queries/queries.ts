@@ -13,22 +13,28 @@ import søkefelt from './søkefelt';
 
 export const maksAntallTreffPerSøk = 40;
 
-export const lagQuery = (søkekriterier: Søkekriterier): EsQuery<EsRekrutteringsbistandstilling> => {
+export const lagQuery = (
+    søkekriterier: Søkekriterier,
+    navIdent?: string
+): EsQuery<EsRekrutteringsbistandstilling> => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
         track_total_hits: true,
-        query: lagIndreQuery(søkekriterier),
+        query: lagIndreQuery({ søkekriterier, navIdent }),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
         ...aggregeringer(søkekriterier),
     };
 };
 
-export const lagIndreQuery = (søkekriterier: Søkekriterier, alternativtFelt?: Søkefelt) => {
+interface IlagIndreQuery {
+    søkekriterier: Søkekriterier;
+    alternativtFelt?: Søkefelt;
+    navIdent?: string;
+}
+export const lagIndreQuery = ({ søkekriterier, alternativtFelt, navIdent }: IlagIndreQuery) => {
     const minimum_should_match = søkekriterier.tekst.size === 0 ? '0' : '1';
-
-    const navIdent = Array.from(søkekriterier.visMine).join(', ');
-    const identSøk = navIdent.length > 0 ? kunMineStillinger(navIdent) : '';
+    const identSøk = navIdent ? kunMineStillinger(navIdent) : '';
 
     return {
         bool: {
@@ -60,10 +66,13 @@ const aggregeringer = (søkekriterier: Søkekriterier) => {
     if (søkekriterier.tekst.size > 0) {
         queriesForFeltaggregering = {
             ...queriesForFeltaggregering,
-            arbeidsgiver: lagIndreQuery(søkekriterier, Søkefelt.Arbeidsgiver),
-            tittel: lagIndreQuery(søkekriterier, Søkefelt.Tittel),
-            annonsetekst: lagIndreQuery(søkekriterier, Søkefelt.Annonsetekst),
-            annonsenummer: lagIndreQuery(søkekriterier, Søkefelt.Annonsenummer),
+            arbeidsgiver: lagIndreQuery({ søkekriterier, alternativtFelt: Søkefelt.Arbeidsgiver }),
+            tittel: lagIndreQuery({ søkekriterier, alternativtFelt: Søkefelt.Tittel }),
+            annonsetekst: lagIndreQuery({ søkekriterier, alternativtFelt: Søkefelt.Annonsetekst }),
+            annonsenummer: lagIndreQuery({
+                søkekriterier,
+                alternativtFelt: Søkefelt.Annonsenummer,
+            }),
         };
     } else {
         return {};

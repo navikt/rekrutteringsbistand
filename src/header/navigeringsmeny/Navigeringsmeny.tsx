@@ -14,10 +14,10 @@ const tabs: TabConfig[] = [
         path: '/stillinger/stillingssok',
         queryParam: '?brukStandardsok=true',
     },
-    {
-        tittel: 'Mine stillinger',
-        path: '/stillinger/minestillinger',
-    },
+    // {
+    //     tittel: 'Mine stillinger',
+    //     path: '/stillinger/minestillinger',
+    // },
     {
         tittel: 'Kandidatsøk',
         path: '/kandidatsok',

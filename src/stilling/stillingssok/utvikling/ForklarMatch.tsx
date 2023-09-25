@@ -19,7 +19,7 @@ const ForklarMatch = () => {
     useEffect(() => {
         const hentForklaringMedStillingsId = async (stillingsId: string) => {
             const query = {
-                query: lagIndreQuery(søkekriterier),
+                query: lagIndreQuery({ søkekriterier }),
             };
 
             const respons = await søk(query, true);

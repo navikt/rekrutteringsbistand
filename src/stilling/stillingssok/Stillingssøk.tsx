@@ -1,25 +1,21 @@
 import { PlusCircleIcon } from '@navikt/aksel-icons';
-import { Button, Heading, Loader } from '@navikt/ds-react';
+import { Button, Tabs } from '@navikt/ds-react';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import useInnloggetBruker from '../../felles/hooks/useBrukerensIdent';
 import Layout from '../../felles/layout/Layout';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
-import css from './Stillingssøk.module.css';
-import { GlobalAggregering } from './domene/elasticSearchTyper';
+import AlleStillinger from './AlleStillinger';
+import MineStillinger from './MineStillinger';
 import Filter from './filter/Filter';
-import Filtermeny from './filter/filtermeny/Filtermeny';
 import { Status } from './filter/om-annonsen/Annonsestatus';
 import { Publisert } from './filter/om-annonsen/HvorErAnnonsenPublisert';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
-import Paginering from './paginering/Paginering';
-import Sorter, { Sortering } from './sorter/Sorter';
-import Stillingsliste from './stillingsliste/Stillingsliste';
-import Søkefelter, { Søkefelt } from './søkefelter/Søkefelter';
-import useAntallTreff from './useAntallTreff';
+import { Sortering } from './sorter/Sorter';
+import { Søkefelt } from './søkefelter/Søkefelter';
 import useNavigering from './useNavigering';
-import useSøkMedQuery from './useSøkMedQuery';
 import { QueryParam, oppdaterUrlMedParam } from './utils/urlUtils';
 
 export type Søkekriterier = {
@@ -34,26 +30,36 @@ export type Søkekriterier = {
     subinkluderingstags: Set<string>;
     sortering: Sortering;
     felter: Set<Søkefelt>;
-    visMine: Set<string>;
+    visTab: Set<string>;
 };
 
+enum TabVisning {
+    VIS_ALLE = 'visAlle',
+    VIS_MINE = 'visMine',
+}
+
 const Stillingssøk = () => {
+    const innloggetBruker = useInnloggetBruker();
     const { searchParams, navigate } = useNavigering();
     const { kandidat: kandidatnr } = useParams<{ kandidat?: string }>();
     const { search } = useLocation();
+    const queryParams = new URLSearchParams(search);
     const skalViseOpprettStillingModal = () => {
-        const queryParams = new URLSearchParams(search);
         return queryParams.get('modal') === 'opprettStillingModal';
     };
+    const oppdaterTab = (tab: TabVisning) =>
+        oppdaterUrlMedParam({
+            searchParams,
+            navigate,
+            parameter: QueryParam.VisTab,
+            verdi: tab === TabVisning.VIS_MINE ? TabVisning.VIS_MINE : null,
+        });
+
+    const visTab = queryParams.get('visTab') ?? TabVisning.VIS_ALLE;
 
     const [visOpprettStillingModal, setVisOpprettStillingModal] = useState(
         skalViseOpprettStillingModal()
     );
-    const respons = useSøkMedQuery();
-
-    const globalAggregering = respons?.aggregations
-        ?.globalAggregering as unknown as GlobalAggregering;
-    const antallTreff = useAntallTreff(respons);
 
     const finnerStillingForKandidat = kandidatnr !== undefined;
 
@@ -87,34 +93,31 @@ const Stillingssøk = () => {
             altBanner={kandidatnr !== undefined && <KontekstAvKandidat kandidatnr={kandidatnr} />}
             sidepanel={<Filter finnerStillingForKandidat={finnerStillingForKandidat} />}
         >
-            {respons ? (
-                <div>
-                    <Filtermeny finnerStillingForKandidat={finnerStillingForKandidat} />
-                    <div className={css.beskrivelseAvSøk}>
-                        <Heading level="2" size="medium" className={css.antallStillinger}>
-                            {formaterAntallAnnonser(antallTreff)}
-                        </Heading>
-                        <Søkefelter aggregeringer={globalAggregering?.felter?.buckets} />
-                        <Sorter />
-                    </div>
-                    <Stillingsliste esResponse={respons} kandidatnr={kandidatnr} />
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
-                        <Paginering totaltAntallTreff={antallTreff} />
-                    </div>
-                    {visOpprettStillingModal && (
-                        <OpprettNyStilling onClose={onOpprettNyStillingClose} />
-                    )}
-                </div>
-            ) : (
-                <div className={css.spinner}>
-                    <Loader variant="interaction" size="2xlarge" />
-                </div>
-            )}
+            <Tabs defaultValue={visTab} onChange={(e) => oppdaterTab(e as TabVisning)}>
+                <Tabs.List>
+                    <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle Stillinger" />
+                    <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine Stillinger" />
+                </Tabs.List>
+                <Tabs.Panel value={TabVisning.VIS_ALLE}>
+                    <AlleStillinger
+                        kandidatnr={kandidatnr}
+                        finnerStillingForKandidat={finnerStillingForKandidat}
+                    />
+                </Tabs.Panel>
+                <Tabs.Panel value={TabVisning.VIS_MINE}>
+                    <MineStillinger
+                        navIdent={innloggetBruker}
+                        kandidatnr={kandidatnr}
+                        finnerStillingForKandidat={finnerStillingForKandidat}
+                    />
+                </Tabs.Panel>
+            </Tabs>
+            {visOpprettStillingModal && <OpprettNyStilling onClose={onOpprettNyStillingClose} />}
         </Layout>
     );
 };
 
-const formaterAntallAnnonser = (antallAnnonser: number) => {
+export const formaterAntallAnnonser = (antallAnnonser: number) => {
     const suffiks = antallAnnonser === 1 ? ' annonse' : ' annonser';
     return antallAnnonser.toLocaleString('nb-NO') + suffiks;
 };
