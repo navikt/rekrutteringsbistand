@@ -59,7 +59,7 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
         >
             <div className={css.innhold}>
                 {arbeidsgiversNavn && <Heading size="xsmall">{arbeidsgiversNavn}</Heading>}
-                {lenkeTilStilling}
+                <Heading size="small">{lenkeTilStilling}</Heading>
             </div>
         </RekBisKort>
     );

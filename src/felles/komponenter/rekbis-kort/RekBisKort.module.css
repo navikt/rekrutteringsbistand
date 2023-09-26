@@ -7,3 +7,7 @@
     border-color: lightgray;
     margin-bottom: 1rem;
 }
+
+.fremhevet {
+    box-shadow: inset 0 0 0 3px var(--a-purple-400);
+}

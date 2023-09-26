@@ -35,7 +35,7 @@
 
 .sidebar {
     flex-grow: 0;
-    width: 22.5rem;
+    width: 100%;
 }
 
 .sideinnhold {
@@ -45,5 +45,8 @@
 @media (min-width: 768px) {
     .container {
         flex-direction: row;
+    }
+    .sidebar {
+        width: 22.5rem;
     }
 }

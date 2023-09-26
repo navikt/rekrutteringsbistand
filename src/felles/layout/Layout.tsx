@@ -45,7 +45,7 @@ const Layout: React.FC<ILayout> = ({
                             <Hide above="md">
                                 <Accordion>
                                     <Accordion.Item>
-                                        <Accordion.Header>Sidepanel</Accordion.Header>
+                                        <Accordion.Header>Filtrer</Accordion.Header>
                                         <Accordion.Content>{sidepanel}</Accordion.Content>
                                     </Accordion.Item>
                                 </Accordion>

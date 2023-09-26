@@ -21,6 +21,9 @@ export interface IRekBisKortKandidat {
     bosted?: string;
     innsatsgruppe?: string;
     veilder?: string;
+    fremhevet?: boolean;
+    kandidatPåListe?: React.ReactNode;
+    markert?: boolean;
 }
 
 const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
@@ -32,10 +35,14 @@ const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
     innsatsgruppe,
     veilder,
     kandidatnummer,
+    fremhevet,
+    kandidatPåListe,
+    markert,
 }) => {
     const navigate = useNavigate();
     return (
         <RekBisKort
+            fremhevet={fremhevet}
             footer={
                 <div className={css.footer}>
                     <div className={css.footerTekst}>
@@ -66,7 +73,8 @@ const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
                 </div>
             }
         >
-            <div className={css.innhold}>
+            <div className={css.innhold} aria-selected={markert}>
+                {kandidatPåListe}
                 <div className={css.checkbox}>{checkbox}</div>
                 <div className={css.omKandidat}>
                     <Heading size="small">{kandidat}</Heading>

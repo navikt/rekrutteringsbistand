@@ -1,12 +1,12 @@
 .forsideWrapper {
     background-color: var(--a-bg-default);
-}
-
-.forside {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.forside {
     max-width: var(--innhold-maksbredde);
     padding-top: 3rem;
-    margin: 0 auto;
+    margin: 0 2.5rem 5rem 2.5rem;
 }

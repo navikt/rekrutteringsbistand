@@ -60,7 +60,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
             status={rekrutteringsbistandstilling.stilling.status}
             lenkeTilStilling={
                 <Link
-                    className={classNames(css.lenkeTilStilling)}
+                    className="navds-link"
                     to={urlTilStilling}
                     state={{
                         stillingssøk: searchParams.toString(),
