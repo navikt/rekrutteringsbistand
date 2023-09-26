@@ -44,6 +44,9 @@ export const lagIndreQuery = ({
     const identSøk = navIdent ? kunMineStillinger(navIdent) : '';
 
     const visMine = ikkePubliserte ? kunMineStillinger(navIdent) : [];
+    const visMineTyper = ikkePubliserte
+        ? ['ACTIVE', 'STOPPED', 'INACTIVE', 'REJECTED', 'DELETED']
+        : [];
     return {
         bool: {
             should: [
@@ -64,6 +67,7 @@ export const lagIndreQuery = ({
                     søkekriterier.subinkluderingstags
                 ),
                 ...visMine,
+                ...visMineTyper,
             ],
         },
     };
