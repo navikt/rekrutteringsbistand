@@ -23,7 +23,6 @@ const MineStillinger: React.FC<IMineStillinger> = ({
     finnerStillingForKandidat,
 }) => {
     const respons = useSøkMedQuery({ navIdent, ikkePubliserte: true });
-
     const globalAggregering = respons?.aggregations
         ?.globalAggregering as unknown as GlobalAggregering;
 

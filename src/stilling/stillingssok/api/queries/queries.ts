@@ -1,6 +1,6 @@
 import { EsQuery } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { kunMineStillinger } from '../../../api/openSearchQuery';
+import { byggSynlighetQuery, kunMineStillinger } from '../../../api/openSearchQuery';
 import { Søkekriterier } from '../../Stillingssøk';
 import { Søkefelt } from '../../søkefelter/Søkefelter';
 import geografi from './geografi';
@@ -45,8 +45,9 @@ export const lagIndreQuery = ({
 
     const visMine = ikkePubliserte ? kunMineStillinger(navIdent) : [];
     const visMineTyper = ikkePubliserte
-        ? ['ACTIVE', 'STOPPED', 'INACTIVE', 'REJECTED', 'DELETED']
+        ? byggSynlighetQuery(false, ['ACTIVE', 'STOPPED', 'INACTIVE', 'REJECTED', 'DELETED'])
         : [];
+
     return {
         bool: {
             should: [

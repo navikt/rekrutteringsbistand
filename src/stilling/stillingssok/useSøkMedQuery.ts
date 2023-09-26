@@ -18,7 +18,6 @@ interface IuseSøkMedQuery {
 const useSøkMedQuery = ({ navIdent, ikkePubliserte }: IuseSøkMedQuery) => {
     const { navigate, searchParams, state } = useNavigering();
     const { standardsøk } = useStandardsøk();
-
     const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);
 
     useEffect(() => {
@@ -30,7 +29,7 @@ const useSøkMedQuery = ({ navIdent, ikkePubliserte }: IuseSøkMedQuery) => {
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
         const søkMedQuery = async () => {
-            let respons = await søk(lagQuery(søkekriterier, navIdent));
+            let respons = await søk(lagQuery(søkekriterier, navIdent, ikkePubliserte));
             setRespons(respons);
         };
 
