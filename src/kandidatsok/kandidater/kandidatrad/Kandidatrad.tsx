@@ -48,7 +48,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
         kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === Nettstatus.Suksess
             ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.kandidatlisteId
             : undefined;
-
     return (
         <RekBisKortKandidat
             markert={markert}
@@ -85,9 +84,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
             ønsker={alleØnskedeYrker ?? '-'}
             lokasjon={alleØnskedeSteder ?? '-'}
             innsatsgruppe={alleInnsatsgrupper[kandidat.kvalifiseringsgruppekode].label}
-            bosted={`${kandidat.adresselinje1 ?? '-'}, ${kandidat.postnummer ?? '-'} ${
-                kandidat.poststed ?? '-'
-            }`}
+            bosted={`${kandidat.kommunenummerstring ?? '-'} ${kandidat.kommuneNavn ?? '-'}`}
             veilder={kandidat.veilederVisningsnavn ?? '-'}
         />
     );

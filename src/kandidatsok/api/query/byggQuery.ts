@@ -28,6 +28,8 @@ const interessanteKandidatfelter: Array<keyof Kandidat> = [
     'kvalifiseringsgruppekode',
     'yrkeJobbonskerObj',
     'geografiJobbonsker',
+    'kommunenummerstring',
+    'kommuneNavn',
 ];
 
 export const byggQuery = (
