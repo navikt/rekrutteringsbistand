@@ -15,13 +15,14 @@ export const maksAntallTreffPerSøk = 40;
 
 export const lagQuery = (
     søkekriterier: Søkekriterier,
-    navIdent?: string
+    navIdent?: string,
+    ikkePubliserte?: boolean
 ): EsQuery<EsRekrutteringsbistandstilling> => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
         track_total_hits: true,
-        query: lagIndreQuery({ søkekriterier, navIdent }),
+        query: lagIndreQuery({ søkekriterier, navIdent, ikkePubliserte }),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
         ...aggregeringer(søkekriterier),
     };
@@ -31,8 +32,14 @@ interface IlagIndreQuery {
     søkekriterier: Søkekriterier;
     alternativtFelt?: Søkefelt;
     navIdent?: string;
+    ikkePubliserte?: boolean;
 }
-export const lagIndreQuery = ({ søkekriterier, alternativtFelt, navIdent }: IlagIndreQuery) => {
+export const lagIndreQuery = ({
+    søkekriterier,
+    alternativtFelt,
+    navIdent,
+    ikkePubliserte,
+}: IlagIndreQuery) => {
     const minimum_should_match = søkekriterier.tekst.size === 0 ? '0' : '1';
     const identSøk = navIdent ? kunMineStillinger(navIdent) : '';
 
@@ -49,7 +56,7 @@ export const lagIndreQuery = ({ søkekriterier, alternativtFelt, navIdent }: Ila
                 ...identSøk,
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
-                ...status(søkekriterier.statuser),
+                ...status(ikkePubliserte ? null : søkekriterier.statuser),
                 ...stillingskategori(søkekriterier.stillingskategorier),
                 ...inkludering(
                     søkekriterier.hovedinkluderingstags,

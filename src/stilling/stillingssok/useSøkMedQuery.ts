@@ -10,7 +10,12 @@ import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from './utils/url
 
 export const DEFAULT_VALGTE_KRITERIER = '?publisert=intern&statuser=publisert';
 
-const useSøkMedQuery = (navIdent?: string) => {
+interface IuseSøkMedQuery {
+    navIdent?: string;
+    ikkePubliserte?: boolean;
+}
+
+const useSøkMedQuery = ({ navIdent, ikkePubliserte }: IuseSøkMedQuery) => {
     const { navigate, searchParams, state } = useNavigering();
     const { standardsøk } = useStandardsøk();
 
@@ -25,8 +30,7 @@ const useSøkMedQuery = (navIdent?: string) => {
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
         const søkMedQuery = async () => {
-            let respons = await søk(lagQuery(søkekriterier, navIdent));
-
+            let respons = await søk(lagQuery(søkekriterier, navIdent, ikkePubliserte));
             setRespons(respons);
         };
 
@@ -40,7 +44,7 @@ const useSøkMedQuery = (navIdent?: string) => {
         } else {
             søkMedQuery();
         }
-    }, [searchParams, navigate, state, navIdent]);
+    }, [searchParams, navigate, state, navIdent, ikkePubliserte]);
 
     useEffect(() => {
         const skalBrukeStandardsøk = searchParams.has(QueryParam.BrukStandardsøk);

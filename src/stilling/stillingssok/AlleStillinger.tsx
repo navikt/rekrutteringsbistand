@@ -17,7 +17,7 @@ export interface IAlleStillinger {
 }
 
 const AlleStillinger: React.FC<IAlleStillinger> = ({ kandidatnr, finnerStillingForKandidat }) => {
-    const respons = useSøkMedQuery();
+    const respons = useSøkMedQuery({});
 
     const globalAggregering = respons?.aggregations
         ?.globalAggregering as unknown as GlobalAggregering;
