@@ -43,6 +43,7 @@ export const lagIndreQuery = ({
     const minimum_should_match = søkekriterier.tekst.size === 0 ? '0' : '1';
     const identSøk = navIdent ? kunMineStillinger(navIdent) : '';
 
+    const visMine = ikkePubliserte ? kunMineStillinger(navIdent) : [];
     return {
         bool: {
             should: [
@@ -56,12 +57,13 @@ export const lagIndreQuery = ({
                 ...identSøk,
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
-                ...status(ikkePubliserte ? null : søkekriterier.statuser),
+                ...status(søkekriterier.statuser),
                 ...stillingskategori(søkekriterier.stillingskategorier),
                 ...inkludering(
                     søkekriterier.hovedinkluderingstags,
                     søkekriterier.subinkluderingstags
                 ),
+                ...visMine,
             ],
         },
     };

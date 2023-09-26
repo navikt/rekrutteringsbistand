@@ -30,7 +30,7 @@ const useSøkMedQuery = ({ navIdent, ikkePubliserte }: IuseSøkMedQuery) => {
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
         const søkMedQuery = async () => {
-            let respons = await søk(lagQuery(søkekriterier, navIdent, ikkePubliserte));
+            let respons = await søk(lagQuery(søkekriterier, navIdent));
             setRespons(respons);
         };
 
