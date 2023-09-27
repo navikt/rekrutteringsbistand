@@ -45,7 +45,7 @@ const MineStillinger: React.FC<IMineStillinger> = ({
                 <Søkefelter aggregeringer={globalAggregering?.felter?.buckets} />
                 <Sorter />
             </div>
-            <Stillingsliste esResponse={respons} kandidatnr={kandidatnr} />
+            <Stillingsliste esResponse={respons} kandidatnr={kandidatnr} navIdent={navIdent} />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Paginering totaltAntallTreff={antallTreff} />
             </div>

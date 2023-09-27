@@ -13,6 +13,7 @@ export interface IRekBisKortStilling {
     status?: string;
     erEier?: boolean;
     erUtløpt?: boolean;
+    score?: number;
 }
 
 const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
@@ -25,6 +26,7 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
     status,
     erEier,
     erUtløpt,
+    score,
 }) => {
     return (
         <RekBisKort
@@ -66,8 +68,17 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
             }
         >
             <div className={css.innhold}>
-                {arbeidsgiversNavn && <Heading size="xsmall">{arbeidsgiversNavn}</Heading>}
-                <Heading size="small">{lenkeTilStilling}</Heading>
+                <div>
+                    {arbeidsgiversNavn && <Heading size="xsmall">{arbeidsgiversNavn}</Heading>}
+                    <Heading size="small">{lenkeTilStilling}</Heading>
+                </div>
+                {import.meta.env.DEV && score !== null && (
+                    <div>
+                        <code className={css.score} title="Score">
+                            {score.toFixed(2)}
+                        </code>
+                    </div>
+                )}
             </div>
         </RekBisKort>
     );

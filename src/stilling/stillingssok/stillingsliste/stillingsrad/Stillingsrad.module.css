@@ -117,7 +117,6 @@
     }
 
     .score {
-        position: absolute;
         right: 1rem;
         align-self: unset;
     }

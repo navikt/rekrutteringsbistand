@@ -10,7 +10,6 @@ import {
     stillingErUtløpt,
 } from 'felles/domene/stilling/EsStilling';
 import { Geografi, Privacy } from 'felles/domene/stilling/Stilling';
-import useInnloggetBruker from '../../../../felles/hooks/useBrukerensIdent';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../../../stilling/Stilling';
 import { hentHovedtags } from '../../filter/inkludering/tags';
@@ -27,16 +26,17 @@ type Props = {
     rekrutteringsbistandstilling: EsRekrutteringsbistandstilling;
     score: number | null;
     kandidatnr?: string;
+    navIdent?: string;
 };
 
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,
     kandidatnr,
+    navIdent,
     score,
 }) => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const navId = useInnloggetBruker();
 
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
@@ -54,7 +54,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
 
     let urlTilStilling = lagUrlTilStilling(stilling, kandidatnr);
 
-    const erEier = hentEierId(rekrutteringsbistandstilling) === navId;
+    const erEier = hentEierId(rekrutteringsbistandstilling) === navIdent;
 
     const erUtløpt = stillingErUtløpt(rekrutteringsbistandstilling.stilling);
     return (
@@ -64,6 +64,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
             publisertDato={konverterTilPresenterbarDato(stilling.published)}
             arbeidsgiversNavn={arbeidsgiversNavn}
             status={rekrutteringsbistandstilling.stilling.status}
+            score={score}
             lenkeTilStilling={
                 <Link
                     className="navds-link"
