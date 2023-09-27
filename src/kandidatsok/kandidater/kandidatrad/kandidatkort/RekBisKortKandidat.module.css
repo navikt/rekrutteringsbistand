@@ -6,46 +6,20 @@
     margin-right: 1.25rem;
 }
 
-.omKandidat {
+.hovedinnhold {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     width: 100%;
 }
 
-.footer {
-    margin-top: 1rem;
+.omKandidat {
+    flex: 1;
+}
+
+.tekstLinje {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-}
-.footerTekst {
-    display: flex;
-
-    gap: 1rem;
-}
-
-/*
-.innhold {
-    margin-top: 1.25rem;
-    margin-bottom: 1rem;
-}
-
-.utløptTag {
-    margin-right: 0.5rem;
-}
-
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
     flex-direction: row;
+    gap: 1.5rem;
 }
-
-@media (max-width: 767px) {
-    .footer {
-        flex-direction: column;
-        justify-content: start;
-    }
-    .header {
-        flex-direction: column;
-        justify-content: start;
-    }
-} */

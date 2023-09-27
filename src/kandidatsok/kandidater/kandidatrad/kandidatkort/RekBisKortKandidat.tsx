@@ -41,22 +41,38 @@ const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
 }) => {
     const navigate = useNavigate();
     return (
-        <RekBisKort
-            fremhevet={fremhevet}
-            footer={
-                <div className={css.footer}>
-                    <div className={css.footerTekst}>
-                        <TekstlinjeMedIkon label="Bosted" ikon={<HouseIcon />} tekst={bosted} />
-                        <TekstlinjeMedIkon
-                            label="Ønsket yrke"
-                            ikon={<HandHeartIcon />}
-                            tekst={innsatsgruppe}
-                        />
-                        <TekstlinjeMedIkon
-                            label="Ønsket yrke"
-                            ikon={<PersonIcon />}
-                            tekst={veilder}
-                        />
+        <RekBisKort fremhevet={fremhevet}>
+            <div className={css.innhold} aria-selected={markert}>
+                {kandidatPåListe}
+                <div className={css.checkbox}>{checkbox}</div>
+                <div className={css.hovedinnhold}>
+                    <div className={css.omKandidat}>
+                        <Heading size="small">{kandidat}</Heading>
+                        <div className={css.tekstLinje}>
+                            <TekstlinjeMedIkon
+                                label="Ønsket sted"
+                                ikon={<PinIcon />}
+                                tekst={lokasjon}
+                            />
+                            <TekstlinjeMedIkon
+                                label="Ønsket yrke"
+                                ikon={<HandShakeHeartIcon />}
+                                tekst={ønsker}
+                            />
+                        </div>
+                        <div className={css.tekstLinje}>
+                            <TekstlinjeMedIkon label="Bosted" ikon={<HouseIcon />} tekst={bosted} />
+                            <TekstlinjeMedIkon
+                                label="Ønsket yrke"
+                                ikon={<HandHeartIcon />}
+                                tekst={innsatsgruppe}
+                            />
+                            <TekstlinjeMedIkon
+                                label="Ønsket yrke"
+                                ikon={<PersonIcon />}
+                                tekst={veilder}
+                            />
+                        </div>
                     </div>
                     <div>
                         <Button
@@ -70,20 +86,6 @@ const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
                             Finn stilling
                         </Button>
                     </div>
-                </div>
-            }
-        >
-            <div className={css.innhold} aria-selected={markert}>
-                {kandidatPåListe}
-                <div className={css.checkbox}>{checkbox}</div>
-                <div className={css.omKandidat}>
-                    <Heading size="small">{kandidat}</Heading>
-                    <TekstlinjeMedIkon
-                        label="Ønsket yrke"
-                        ikon={<HandShakeHeartIcon />}
-                        tekst={ønsker}
-                    />
-                    <TekstlinjeMedIkon label="Ønsket sted" ikon={<PinIcon />} tekst={lokasjon} />
                 </div>
             </div>
         </RekBisKort>

@@ -48,7 +48,11 @@ const AdPublishedModal = ({ stillingId }) => {
                     <MagnifyingGlassIcon />
                     Finn kandidater
                 </Link>
-                <Link to="/stillinger/minestillinger" className="navds-link" onClick={onClose}>
+                <Link
+                    to="/stillinger/stillingssok?portefolje=visMine"
+                    className="navds-link"
+                    onClick={onClose}
+                >
                     <BriefcaseIcon />
                     Til mine stillinger
                 </Link>

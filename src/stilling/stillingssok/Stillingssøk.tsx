@@ -105,11 +105,13 @@ const Stillingssøk = () => {
                     />
                 </Tabs.Panel>
                 <Tabs.Panel value={TabVisning.VIS_MINE}>
-                    <MineStillinger
-                        navIdent={innloggetBruker}
-                        kandidatnr={kandidatnr}
-                        finnerStillingForKandidat={finnerStillingForKandidat}
-                    />
+                    {innloggetBruker ? (
+                        <MineStillinger
+                            navIdent={innloggetBruker}
+                            kandidatnr={kandidatnr}
+                            finnerStillingForKandidat={finnerStillingForKandidat}
+                        />
+                    ) : null}
                 </Tabs.Panel>
             </Tabs>
             {visOpprettStillingModal && <OpprettNyStilling onClose={onOpprettNyStillingClose} />}

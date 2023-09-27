@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Appfeil from '../felles/komponenter/feilmelding/Appfeil';
 import Varsling from './common/varsling/Varsling';
-import MineStillinger from './mine-stillinger/MineStillinger';
 import { ReporteeAction, ReporteeActionType } from './reportee/ReporteeAction';
 import Stilling from './stilling/Stilling';
 import Stillingssøk from './stillingssok/Stillingssøk';
@@ -32,12 +31,16 @@ const App = () => {
                     element={<InngangFraArbop />}
                     errorElement={<Appfeil />}
                 />
-                <Route path="minestillinger" element={<MineStillinger />} />
+                <Route
+                    path="minestillinger"
+                    element={<Navigate to="/stillingssok?portefolje=visMine" />}
+                />
+
+                {/* <Route path="minestillinger" element={<MineStillinger />} /> */}
                 <Route path="stillingssok" element={<StillingsSøkIndex />} />
                 <Route path="stilling/:uuid" element={<Stilling />} />
 
                 {/* Redirect gamle ruter */}
-                {/* <Route path="minestillinger" element={<Navigate to="/stillingssok" />} /> */}
             </Routes>
         </>
     );
