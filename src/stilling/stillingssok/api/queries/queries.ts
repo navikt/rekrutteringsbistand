@@ -1,6 +1,6 @@
 import { EsQuery } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { byggSynlighetQuery, kunMineStillinger } from '../../../api/openSearchQuery';
+import { kunMineStillinger } from '../../../api/openSearchQuery';
 import { Søkekriterier } from '../../Stillingssøk';
 import { Søkefelt } from '../../søkefelter/Søkefelter';
 import geografi from './geografi';
@@ -43,11 +43,6 @@ export const lagIndreQuery = ({
     const minimum_should_match = søkekriterier.tekst.size === 0 ? '0' : '1';
     const identSøk = navIdent ? kunMineStillinger(navIdent) : '';
 
-    const visMine = ikkePubliserte ? kunMineStillinger(navIdent) : [];
-    const visMineTyper = ikkePubliserte
-        ? byggSynlighetQuery(false, ['ACTIVE', 'STOPPED', 'INACTIVE', 'REJECTED', 'DELETED'])
-        : [];
-
     return {
         bool: {
             should: [
@@ -61,14 +56,12 @@ export const lagIndreQuery = ({
                 ...identSøk,
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
-                ...status(søkekriterier.statuser),
+                ...status(søkekriterier.statuser, ikkePubliserte),
                 ...stillingskategori(søkekriterier.stillingskategorier),
                 ...inkludering(
                     søkekriterier.hovedinkluderingstags,
                     søkekriterier.subinkluderingstags
                 ),
-                ...visMine,
-                ...visMineTyper,
             ],
         },
     };

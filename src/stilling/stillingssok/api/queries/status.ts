@@ -1,10 +1,13 @@
 import { Status } from '../../filter/om-annonsen/Annonsestatus';
 
-export const status = (statuser: Set<Status>) => {
+export const status = (statuser: Set<Status>, ikkePubliserte: boolean) => {
     const ingenFiltreValgt = statuser.size === 0;
     const alleFiltreValgt = statuser.size === Object.keys(Status).length;
 
     if (ingenFiltreValgt || alleFiltreValgt) {
+        if (ikkePubliserte) {
+            return [innaktiv];
+        }
         return alleStillinger;
     }
 
@@ -65,6 +68,11 @@ export const alleStillinger = [
 const publisert = {
     term: {
         'stilling.status': 'ACTIVE',
+    },
+};
+const innaktiv = {
+    term: {
+        'stilling.status': 'INACTIVE',
     },
 };
 

@@ -4,7 +4,11 @@ import classNames from 'classnames';
 import { FunctionComponent } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
-import { EsRekrutteringsbistandstilling, EsStilling } from 'felles/domene/stilling/EsStilling';
+import {
+    EsRekrutteringsbistandstilling,
+    EsStilling,
+    stillingErUtløpt,
+} from 'felles/domene/stilling/EsStilling';
 import { Geografi, Privacy } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from '../../../../felles/hooks/useBrukerensIdent';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
@@ -52,8 +56,10 @@ const Stillingsrad: FunctionComponent<Props> = ({
 
     const erEier = hentEierId(rekrutteringsbistandstilling) === navId;
 
+    const erUtløpt = stillingErUtløpt(rekrutteringsbistandstilling.stilling);
     return (
         <RekBisKortStilling
+            erUtløpt={erUtløpt}
             erEier={erEier}
             publisertDato={konverterTilPresenterbarDato(stilling.published)}
             arbeidsgiversNavn={arbeidsgiversNavn}
