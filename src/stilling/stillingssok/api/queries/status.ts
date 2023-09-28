@@ -6,7 +6,7 @@ export const status = (statuser: Set<Status>, ikkePubliserte: boolean) => {
 
     if (ingenFiltreValgt || alleFiltreValgt) {
         if (ikkePubliserte) {
-            return [innaktiv];
+            return [];
         }
         return alleStillinger;
     }
@@ -68,11 +68,6 @@ export const alleStillinger = [
 const publisert = {
     term: {
         'stilling.status': 'ACTIVE',
-    },
-};
-const innaktiv = {
-    term: {
-        'stilling.status': 'INACTIVE',
     },
 };
 
