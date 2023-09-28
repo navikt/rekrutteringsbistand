@@ -5,10 +5,10 @@ import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils
 
 export enum Status {
     Publisert = 'publisert',
-    Stoppet = 'stoppet',
     Utløpt = 'utløpt',
-    IkkePublisert = 'ikkePublisert',
+    Stoppet = 'stoppet',
     Utkast = 'utkast',
+    IkkePublisert = 'ikkePublisert',
 }
 
 const Annonsestatus: FunctionComponent = () => {
@@ -60,7 +60,7 @@ export const statusTilVisningsnavn = (status: Status) => {
         case Status.Utløpt:
             return 'Utløpt';
         case Status.IkkePublisert:
-            return 'Ikke publisert';
+            return 'Venter på publisering';
         case Status.Utkast:
             return 'Utkast';
     }
