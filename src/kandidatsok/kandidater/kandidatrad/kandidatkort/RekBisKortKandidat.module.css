@@ -2,6 +2,14 @@
     display: flex;
 }
 
+.lenke {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.lenke:hover {
+    text-decoration: underline;
+}
 .checkbox {
     margin-right: 1.25rem;
 }
@@ -20,6 +28,12 @@
 .tekstLinje {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .tekstLinje {
+        flex-direction: row;
+    }
 }

@@ -1,8 +1,8 @@
-import { ClockIcon, PersonIcon, PinIcon } from '@navikt/aksel-icons';
-import { Button, Tag } from '@navikt/ds-react';
+import { BriefcaseIcon, ClockIcon, PersonIcon, PinIcon } from '@navikt/aksel-icons';
+import { Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { FunctionComponent } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import {
     EsRekrutteringsbistandstilling,
@@ -11,6 +11,7 @@ import {
 } from 'felles/domene/stilling/EsStilling';
 import { Geografi, Privacy } from 'felles/domene/stilling/Stilling';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
+import TekstlinjeMedIkon from '../../../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../../../stilling/Stilling';
 import { hentHovedtags } from '../../filter/inkludering/tags';
 import {
@@ -36,7 +37,6 @@ const Stillingsrad: FunctionComponent<Props> = ({
     score,
 }) => {
     const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
 
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
@@ -60,6 +60,9 @@ const Stillingsrad: FunctionComponent<Props> = ({
 
     const status = rekrutteringsbistandstilling.stilling.status;
 
+    const publisertDato = konverterTilPresenterbarDato(stilling.published);
+    const utløpsDato = konverterTilPresenterbarDato(stilling.expires);
+
     return (
         <RekBisKortStilling
             erEier={erEier}
@@ -69,10 +72,15 @@ const Stillingsrad: FunctionComponent<Props> = ({
             erUtkast={!rekrutteringsbistandstilling.stilling.publishedByAdmin}
             erUtløpt={status === 'INACTIVE' && erUtløptStilling}
             erStoppet={status === 'STOPPED' || status === 'REJECTED'}
-            publisertDato={`${konverterTilPresenterbarDato(stilling.published)} -
-                ${konverterTilPresenterbarDato(stilling.expires)}`}
+            publisertDato={
+                rekrutteringsbistandstilling.stilling.publishedByAdmin
+                    ? publisertDato !== utløpsDato
+                        ? `${publisertDato} -
+                ${utløpsDato}`
+                        : `Publisert ${publisertDato}`
+                    : null
+            }
             arbeidsgiversNavn={arbeidsgiversNavn}
-            status={rekrutteringsbistandstilling.stilling.status}
             score={score}
             lenkeTilStilling={
                 <Link
@@ -86,53 +94,50 @@ const Stillingsrad: FunctionComponent<Props> = ({
                 </Link>
             }
             stillingsinfo={
-                <span className={css.stillingsinfo}>
-                    <span>
-                        <PinIcon className={css.ikon} />
-                        {formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
-                            'Ingen arbeidssted'}
-                    </span>
-                    {antallStillinger && (
-                        <span>
-                            {antallStillinger} {antallStillingerSuffix}
-                        </span>
+                <div className={css.tekstRad}>
+                    <TekstlinjeMedIkon
+                        ikon={<PinIcon />}
+                        tekst={
+                            formaterMedStoreOgSmåBokstaver(hentArbeidssted(stilling.locations)) ||
+                            '-'
+                        }
+                    />
+                    <TekstlinjeMedIkon
+                        ikon={<BriefcaseIcon />}
+                        tekst={
+                            antallStillinger ? `${antallStillinger} ${antallStillingerSuffix}` : '-'
+                        }
+                    />
+
+                    <TekstlinjeMedIkon
+                        ikon={<ClockIcon />}
+                        tekst={
+                            stilling.properties.applicationdue
+                                ? konverterTilPresenterbarDato(stilling.properties.applicationdue)
+                                : '-'
+                        }
+                    />
+
+                    {erInternStilling && (
+                        <TekstlinjeMedIkon ikon={<PersonIcon />} tekst={eierNavn || '-'} />
                     )}
-                    {stilling.properties.applicationdue && (
-                        <span>
-                            <ClockIcon className={css.ikon} />
-                            {konverterTilPresenterbarDato(stilling.properties.applicationdue)}
-                        </span>
-                    )}
-                    {erInternStilling && eierNavn && (
-                        <span>
-                            <PersonIcon className={css.ikon} />
-                            {eierNavn}
-                        </span>
-                    )}
-                </span>
+                </div>
             }
             knapper={
-                <div>
+                <div className={css.lenker}>
                     {erEier && (
-                        <Button
-                            onClick={() =>
-                                navigate(
-                                    `/stillinger/stilling/${stilling.uuid}?${REDIGERINGSMODUS_QUERY_PARAM}=true`
-                                )
-                            }
-                            variant="tertiary"
+                        <Link
+                            className={css.lenke}
+                            to={`/stillinger/stilling/${stilling.uuid}?${REDIGERINGSMODUS_QUERY_PARAM}=true`}
                         >
                             Rediger
-                        </Button>
+                        </Link>
                     )}
                     {rekrutteringsbistandstilling.stilling.publishedByAdmin &&
                         skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
-                            <Button
-                                onClick={() => navigate(lagUrlTilKandidatliste(stilling))}
-                                variant="tertiary"
-                            >
+                            <Link className={css.lenke} to={lagUrlTilKandidatliste(stilling)}>
                                 Vis kandidater
-                            </Button>
+                            </Link>
                         )}
                 </div>
             }

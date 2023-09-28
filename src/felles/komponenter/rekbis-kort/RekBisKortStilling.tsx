@@ -10,7 +10,6 @@ export interface IRekBisKortStilling {
     lenkeTilStilling?: React.ReactNode;
     stillingsinfo?: React.ReactNode;
     knapper?: React.ReactNode;
-    status?: string;
     erEier?: boolean;
     erUtløpt?: boolean;
     score?: number;
@@ -26,7 +25,6 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
     lenkeTilStilling,
     stillingsinfo,
     knapper,
-    status,
     erEier,
     erUtløpt,
     score,
@@ -40,7 +38,7 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
                 <div className={css.header}>
                     <div className={css.header}>
                         {erEier && (
-                            <Tag size="small" variant="neutral" className={css.utløptTag}>
+                            <Tag size="small" variant="info" className={css.utløptTag}>
                                 Min stilling
                             </Tag>
                         )}
@@ -57,7 +55,7 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
                         )}
 
                         {erUtkast && (
-                            <Tag size="small" variant="info" className={css.utløptTag}>
+                            <Tag size="small" variant="alt1" className={css.utløptTag}>
                                 Utkast
                             </Tag>
                         )}
@@ -67,7 +65,6 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
                                 Stoppet
                             </Tag>
                         )}
-
                         <Detail> {publisertDato}</Detail>
                     </div>
                     {etiketter}

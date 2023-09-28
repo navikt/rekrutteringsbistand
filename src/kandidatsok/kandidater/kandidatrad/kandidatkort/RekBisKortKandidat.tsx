@@ -5,9 +5,9 @@ import {
     PersonIcon,
     PinIcon,
 } from '@navikt/aksel-icons';
-import { Button, Heading } from '@navikt/ds-react';
+import { Heading } from '@navikt/ds-react';
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import RekBisKort from '../../../../felles/komponenter/rekbis-kort/RekBisKort';
 import TekstlinjeMedIkon from '../TekstlinjeMedIkon';
 import css from './RekBisKortKandidat.module.css';
@@ -39,7 +39,6 @@ const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
     kandidatPåListe,
     markert,
 }) => {
-    const navigate = useNavigate();
     return (
         <RekBisKort fremhevet={fremhevet}>
             <div className={css.innhold} aria-selected={markert}>
@@ -75,16 +74,12 @@ const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
                         </div>
                     </div>
                     <div>
-                        <Button
-                            variant={'tertiary'}
-                            onClick={() =>
-                                navigate(
-                                    `/stillinger/stillingssok/kandidat/${kandidatnummer}?brukKriterierFraKandidat=true`
-                                )
-                            }
+                        <Link
+                            className={css.lenke}
+                            to={`/stillinger/stillingssok/kandidat/${kandidatnummer}?brukKriterierFraKandidat=true`}
                         >
                             Finn stilling
-                        </Button>
+                        </Link>
                     </div>
                 </div>
             </div>

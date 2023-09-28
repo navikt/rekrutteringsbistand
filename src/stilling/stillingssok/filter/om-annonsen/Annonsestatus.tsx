@@ -1,12 +1,14 @@
-import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import useNavigering from '../../useNavigering';
+import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils/urlUtils';
 
 export enum Status {
     Publisert = 'publisert',
     Stoppet = 'stoppet',
     Utløpt = 'utløpt',
+    IkkePublisert = 'ikkePublisert',
+    Utkast = 'utkast',
 }
 
 const Annonsestatus: FunctionComponent = () => {
@@ -57,6 +59,10 @@ export const statusTilVisningsnavn = (status: Status) => {
             return 'Stoppet';
         case Status.Utløpt:
             return 'Utløpt';
+        case Status.IkkePublisert:
+            return 'Ikke publisert';
+        case Status.Utkast:
+            return 'Utkast';
     }
 };
 

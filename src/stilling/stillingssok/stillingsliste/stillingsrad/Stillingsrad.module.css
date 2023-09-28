@@ -8,10 +8,6 @@
     border-radius: var(--a-border-radius-xlarge);
 }
 
-.stillingsrad:nth-child(odd) {
-    background: white;
-}
-
 .info {
     display: flex;
     flex-direction: column;
@@ -102,6 +98,26 @@
     top: 0.1875rem;
 }
 
+.tekstRad {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.lenker {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.lenke {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.lenke:hover {
+    text-decoration: underline;
+}
+
 @media (min-width: 768px) {
     .stillingsrad {
         flex-direction: row;
@@ -119,5 +135,8 @@
     .score {
         right: 1rem;
         align-self: unset;
+    }
+    .tekstRad {
+        flex-direction: row;
     }
 }
