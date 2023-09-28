@@ -194,7 +194,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
     const kanArkivereKandidater = !filter.visArkiverte && kandidatlistenErÅpen;
 
     return (
-        <>
+        <div className={css.innhold}>
             <SideHeader kandidatliste={kandidatliste} />
             {listenInneholderKandidater ? (
                 <>
@@ -309,7 +309,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
                     )}
                 </TomListe>
             )}
-        </>
+        </div>
     );
 };
 

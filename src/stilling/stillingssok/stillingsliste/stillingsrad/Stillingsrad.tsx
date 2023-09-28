@@ -56,12 +56,21 @@ const Stillingsrad: FunctionComponent<Props> = ({
 
     const erEier = hentEierId(rekrutteringsbistandstilling) === navIdent;
 
-    const erUtløpt = stillingErUtløpt(rekrutteringsbistandstilling.stilling);
+    const erUtløptStilling = stillingErUtløpt(rekrutteringsbistandstilling.stilling);
+
+    const status = rekrutteringsbistandstilling.stilling.status;
+
     return (
         <RekBisKortStilling
-            erUtløpt={erUtløpt}
             erEier={erEier}
-            publisertDato={konverterTilPresenterbarDato(stilling.published)}
+            erIkkePublisert={
+                stilling.publishedByAdmin && status === 'INACTIVE' && !erUtløptStilling
+            }
+            erUtkast={!rekrutteringsbistandstilling.stilling.publishedByAdmin}
+            erUtløpt={status === 'INACTIVE' && erUtløptStilling}
+            erStoppet={status === 'STOPPED' || status === 'REJECTED'}
+            publisertDato={`${konverterTilPresenterbarDato(stilling.published)} -
+                ${konverterTilPresenterbarDato(stilling.expires)}`}
             arbeidsgiversNavn={arbeidsgiversNavn}
             status={rekrutteringsbistandstilling.stilling.status}
             score={score}
@@ -116,14 +125,15 @@ const Stillingsrad: FunctionComponent<Props> = ({
                             Rediger
                         </Button>
                     )}
-                    {skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
-                        <Button
-                            onClick={() => navigate(lagUrlTilKandidatliste(stilling))}
-                            variant="tertiary"
-                        >
-                            Vis kandidater
-                        </Button>
-                    )}
+                    {rekrutteringsbistandstilling.stilling.publishedByAdmin &&
+                        skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
+                            <Button
+                                onClick={() => navigate(lagUrlTilKandidatliste(stilling))}
+                                variant="tertiary"
+                            >
+                                Vis kandidater
+                            </Button>
+                        )}
                 </div>
             }
             etiketter={

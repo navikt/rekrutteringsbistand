@@ -14,6 +14,9 @@ export interface IRekBisKortStilling {
     erEier?: boolean;
     erUtløpt?: boolean;
     score?: number;
+    erIkkePublisert?: boolean;
+    erUtkast?: boolean;
+    erStoppet?: boolean;
 }
 
 const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
@@ -27,6 +30,9 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
     erEier,
     erUtløpt,
     score,
+    erIkkePublisert,
+    erUtkast,
+    erStoppet,
 }) => {
     return (
         <RekBisKort
@@ -38,23 +44,30 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
                                 Min stilling
                             </Tag>
                         )}
-                        {status === 'INACTIVE' && !erUtløpt && (
-                            <Tag size="small" variant="warning" className={css.utløptTag}>
-                                Ikke publisert
-                            </Tag>
-                        )}
-
-                        {status === 'INACTIVE' && erUtløpt && (
+                        {erUtløpt && (
                             <Tag size="small" variant="warning" className={css.utløptTag}>
                                 Utløpt
                             </Tag>
                         )}
 
-                        {(status === 'STOPPED' || status === 'REJECTED') && (
+                        {erIkkePublisert && (
+                            <Tag size="small" variant="warning" className={css.utløptTag}>
+                                Ikke publisert
+                            </Tag>
+                        )}
+
+                        {erUtkast && (
+                            <Tag size="small" variant="info" className={css.utløptTag}>
+                                Utkast
+                            </Tag>
+                        )}
+
+                        {erStoppet && (
                             <Tag size="small" variant="error" className={css.utløptTag}>
                                 Stoppet
                             </Tag>
                         )}
+
                         <Detail> {publisertDato}</Detail>
                     </div>
                     {etiketter}
