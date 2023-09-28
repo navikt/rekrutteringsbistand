@@ -22,6 +22,10 @@
     color: var(--a-text-default);
 }
 
+.knapp:hover {
+    color: var(--a-white);
+}
+
 .knapp:focus {
     outline: none;
     box-shadow: var(--nav-fokus);

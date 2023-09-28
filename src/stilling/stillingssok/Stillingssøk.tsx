@@ -95,8 +95,8 @@ const Stillingssøk = () => {
         >
             <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
                 <Tabs.List>
-                    <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle Stillinger" />
-                    <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine Stillinger" />
+                    <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle stillinger" />
+                    <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine stillinger" />
                 </Tabs.List>
                 <Tabs.Panel value={TabVisning.VIS_ALLE}>
                     <AlleStillinger

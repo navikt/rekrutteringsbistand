@@ -34,6 +34,7 @@ const Nyheter: FunctionComponent = () => {
     return (
         <div className={css.nyheter}>
             <Button
+                size="small"
                 ref={buttonRef}
                 className={css.knapp}
                 onClick={() => setÅpen(!åpen)}
