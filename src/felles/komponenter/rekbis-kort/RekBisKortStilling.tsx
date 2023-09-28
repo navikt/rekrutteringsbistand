@@ -1,4 +1,4 @@
-import { Detail, Heading, Tag } from '@navikt/ds-react';
+import { BodyShort, Detail, Heading, Tag } from '@navikt/ds-react';
 import * as React from 'react';
 import RekBisKort from './RekBisKort';
 import css from './RekBisKortStilling.module.css';
@@ -69,8 +69,8 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
         >
             <div className={css.innhold}>
                 <div>
-                    {arbeidsgiversNavn && <Heading size="xsmall">{arbeidsgiversNavn}</Heading>}
                     <Heading size="small">{lenkeTilStilling}</Heading>
+                    {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
                 </div>
                 {import.meta.env.DEV && score !== null && (
                     <div>
