@@ -6,6 +6,7 @@ import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/fin
 import Layout from '../felles/layout/Layout';
 import css from './Kandidatsøk.module.css';
 import Filter from './filter/Filter';
+import TømFiltre from './filter/TømFiltre';
 import PorteføljeTabs from './filter/porteføljetabs/PorteføljeTabs';
 import { InnloggetBruker } from './hooks/useBrukerensIdent';
 import { KontekstAvKandidatlisteEllerStilling } from './hooks/useKontekstAvKandidatlisteEllerStilling';
@@ -78,7 +79,7 @@ const Kandidatsøk = ({
             sidepanel={<Filter />}
         >
             <PorteføljeTabs>
-                {/* <TømFiltre />  //TODO Sjekk denne */}
+                <TømFiltre />
                 <div className={css.hovedinnhold}>
                     <Kandidater
                         innloggetBruker={innloggetBruker}

@@ -61,11 +61,6 @@ const MineStillingerTabell: FunctionComponent<Props> = ({ resultat, className })
                     Klarte ikke hente mine stillinger
                 </ErrorMessage>
             )}
-            {/* // TODO Brukes denne? */}
-            {/* {resultat.kind === Nettstatus.Suksess &&
-                resultat.data.content.map((rekrutteringsbistandstilling) => (
-                    <div key={rekrutteringsbistandstilling.stilling.uuid}></div>
-                ))} */}
             <Table
                 zebraStripes
                 size="medium"
