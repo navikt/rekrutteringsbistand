@@ -7,8 +7,8 @@ export enum Status {
     Publisert = 'publisert',
     Utløpt = 'utløpt',
     Stoppet = 'stoppet',
-    Utkast = 'utkast',
-    IkkePublisert = 'ikkePublisert',
+    // Utkast = 'utkast',
+    // IkkePublisert = 'ikkePublisert',
 }
 
 const Annonsestatus: FunctionComponent = () => {
@@ -59,10 +59,10 @@ export const statusTilVisningsnavn = (status: Status) => {
             return 'Stoppet';
         case Status.Utløpt:
             return 'Utløpt';
-        case Status.IkkePublisert:
-            return 'Venter på publisering';
-        case Status.Utkast:
-            return 'Utkast';
+        // case Status.IkkePublisert:
+        //     return 'Venter på publisering';
+        // case Status.Utkast:
+        //     return 'Utkast';
     }
 };
 

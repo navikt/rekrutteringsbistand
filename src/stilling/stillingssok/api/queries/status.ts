@@ -15,8 +15,10 @@ export const status = (statuser: Set<Status>, ikkePubliserte: boolean) => {
     if (statuser.has(Status.Publisert)) statusSpørringer.push(publisert);
     if (statuser.has(Status.Stoppet)) statusSpørringer.push(stoppet);
     if (statuser.has(Status.Utløpt)) statusSpørringer.push(utløpt);
-    if (statuser.has(Status.IkkePublisert)) statusSpørringer.push(ikkePublisert);
-    if (statuser.has(Status.Utkast)) statusSpørringer.push(utkast);
+
+    //Kan implementeres senere his vi vil ha checkboxer for statusene
+    // if (statuser.has(Status.IkkePublisert)) statusSpørringer.push(ikkePubliserteStillinger);
+    // if (statuser.has(Status.Utkast)) statusSpørringer.push(utkast);
 
     return [
         {
@@ -47,36 +49,36 @@ const stillingenErEllerHarVærtPublisert = [
     },
 ];
 
-const ikkePublisert = {
-    bool: {
-        must: [
-            { term: { 'stilling.status': 'INACTIVE' } },
-            {
-                exists: {
-                    field: 'stilling.publishedByAdmin',
-                },
-            },
-        ],
-        must_not: {
-            range: {
-                'stilling.expires': {
-                    lt: 'now/d',
-                },
-            },
-        },
-    },
-};
+// const ikkePubliserteStillinger = {
+//     bool: {
+//         must: [
+//             { term: { 'stilling.status': 'INACTIVE' } },
+//             {
+//                 exists: {
+//                     field: 'stilling.publishedByAdmin',
+//                 },
+//             },
+//         ],
+//         must_not: {
+//             range: {
+//                 'stilling.expires': {
+//                     lt: 'now/d',
+//                 },
+//             },
+//         },
+//     },
+// };
 
-const utkast = {
-    bool: {
-        must: [{ term: { 'stilling.status': 'INACTIVE' } }],
-        must_not: {
-            exists: {
-                field: 'stilling.publishedByAdmin',
-            },
-        },
-    },
-};
+// const utkast = {
+//     bool: {
+//         must: [{ term: { 'stilling.status': 'INACTIVE' } }],
+//         must_not: {
+//             exists: {
+//                 field: 'stilling.publishedByAdmin',
+//             },
+//         },
+//     },
+// };
 
 export const alleStillinger = [
     {
