@@ -7,7 +7,7 @@ import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { Nettstatus } from 'felles/nettressurs';
-import Layout from '../../felles/layout/Layout';
+import Layout from '../../felles/komponenter/layout/Layout';
 import KandidatlisteAction from '../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../kandidatliste/reducer/KandidatlisteActionType';
 import AppState from '../state/AppState';
@@ -242,8 +242,8 @@ class Kandidatlisteoversikt extends React.Component<Props> {
 
         return (
             <Layout
-                tittel={'Kandidatlister'}
-                bannerKnapp={
+                tittel="Kandidatlister"
+                knappIBanner={
                     <Button
                         variant="secondary"
                         icon={<PlusCircleIcon />}

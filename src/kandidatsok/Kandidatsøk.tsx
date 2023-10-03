@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
-import Layout from '../felles/layout/Layout';
+import Layout from '../felles/komponenter/layout/Layout';
 import css from './Kandidatsøk.module.css';
 import Filter from './filter/Filter';
 import TømFiltre from './filter/TømFiltre';
@@ -71,7 +71,7 @@ const Kandidatsøk = ({
         <Layout
             tittel="Kandidatsøk"
             ikon={<Piktogram />}
-            altBanner={
+            banner={
                 kontekstAvKandidatlisteEllerStilling && (
                     <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
                 )

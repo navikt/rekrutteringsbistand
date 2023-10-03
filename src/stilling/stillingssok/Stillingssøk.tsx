@@ -5,7 +5,7 @@ import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/fin
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import useInnloggetBruker from '../../felles/hooks/useBrukerensIdent';
-import Layout from '../../felles/layout/Layout';
+import Layout from '../../felles/komponenter/layout/Layout';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
 import AlleStillinger from './AlleStillinger';
 import MineStillinger from './MineStillinger';
@@ -81,7 +81,7 @@ const Stillingssøk = () => {
         <Layout
             tittel="Stillinger"
             ikon={<Piktogram />}
-            bannerKnapp={
+            knappIBanner={
                 <Button
                     variant="secondary"
                     onClick={onOpprettNyClick}
@@ -90,7 +90,7 @@ const Stillingssøk = () => {
                     Opprett ny
                 </Button>
             }
-            altBanner={kandidatnr !== undefined && <KontekstAvKandidat kandidatnr={kandidatnr} />}
+            banner={kandidatnr !== undefined && <KontekstAvKandidat kandidatnr={kandidatnr} />}
             sidepanel={<Filter finnerStillingForKandidat={finnerStillingForKandidat} />}
         >
             <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>

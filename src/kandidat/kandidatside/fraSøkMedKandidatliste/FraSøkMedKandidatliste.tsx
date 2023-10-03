@@ -4,7 +4,7 @@ import { FunctionComponent, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Nettstatus } from 'felles/nettressurs';
-import Layout from '../../../felles/layout/Layout';
+import Layout from '../../../felles/komponenter/layout/Layout';
 import { lenkeTilKandidatliste, lenkeTilKandidatsøk } from '../../app/paths';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useCv from '../hooks/useCv';
@@ -61,7 +61,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
 
     return (
         <Layout
-            altBanner={
+            banner={
                 <Kandidatheader
                     kandidatnr={kandidatnr}
                     kandidatnavigering={kandidatnavigering}

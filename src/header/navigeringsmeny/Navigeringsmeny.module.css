@@ -12,6 +12,7 @@
 
 .inner {
     max-width: var(--innhold-maksbredde);
+    padding: 0 1rem;
     margin: 0 auto;
     flex: 1;
     display: flex;
@@ -64,4 +65,10 @@
 
 .tabFremhevet {
     margin-left: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .inner {
+        padding: 0 2.5rem;
+    }
 }

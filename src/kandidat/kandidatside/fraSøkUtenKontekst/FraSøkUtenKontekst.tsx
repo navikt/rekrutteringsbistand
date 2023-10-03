@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { TasklistIcon } from '@navikt/aksel-icons';
 import { Nettstatus } from 'felles/nettressurs';
-import Layout from '../../../felles/layout/Layout';
+import Layout from '../../../felles/komponenter/layout/Layout';
 import { lenkeTilKandidatsøk } from '../../app/paths';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useCv from '../hooks/useCv';
@@ -51,7 +51,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
 
     return (
         <Layout
-            altBanner={
+            banner={
                 <Kandidatheader
                     kandidatnr={kandidatnr}
                     kandidatnavigering={kandidatnavigering}

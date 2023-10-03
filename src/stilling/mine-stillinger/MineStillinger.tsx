@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
 import { useNavigationType } from 'react-router-dom';
-import Layout from '../../felles/layout/Layout';
+import Layout from '../../felles/komponenter/layout/Layout';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
 import { State } from '../redux/store';
 import { CLEAR_COPIED_ADS } from '../stilling/adReducer';
@@ -67,7 +67,7 @@ const MineStillinger = () => {
         <Layout
             tittel="Mine stillinger"
             ikon={<Piktogram />}
-            bannerKnapp={
+            knappIBanner={
                 <Button
                     variant="secondary"
                     onClick={onOpprettNyClick}

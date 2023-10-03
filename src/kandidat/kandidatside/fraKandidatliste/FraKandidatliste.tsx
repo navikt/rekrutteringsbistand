@@ -9,8 +9,8 @@ import {
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Layout from '../../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
-import Layout from '../../../felles/layout/Layout';
 import { lenkeTilKandidatliste } from '../../app/paths';
 import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
 import { filterTilQueryParams } from '../../kandidatliste/filter/filter-utils';
@@ -121,7 +121,7 @@ const FraKandidatlisteInner = ({
 
     return (
         <Layout
-            altBanner={
+            banner={
                 <Kandidatheader
                     kandidatnr={kandidat.kandidatnr}
                     kandidatnavigering={navigering}

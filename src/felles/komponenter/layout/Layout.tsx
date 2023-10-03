@@ -1,42 +1,29 @@
-import { Accordion, Heading, Hide, Show } from '@navikt/ds-react';
+import { Accordion, Hide, Show } from '@navikt/ds-react';
 import * as React from 'react';
 
-import { TilToppenKnapp } from '../komponenter/tilToppenKnapp/TilToppenKnapp';
+import Banner from '../banner/Banner';
+import { TilToppenKnapp } from '../tilToppenKnapp/TilToppenKnapp';
 import stil from './Layout.module.css';
-export interface ILayout {
+
+export type Props = {
     children: React.ReactNode | undefined;
     tittel?: string;
     ikon?: React.ReactNode;
-    altBanner?: React.ReactNode;
+    banner?: React.ReactNode;
     sidepanel?: React.ReactNode | undefined;
-    bannerKnapp?: React.ReactNode | undefined;
-}
+    knappIBanner?: React.ReactNode | undefined;
+};
 
-const Layout: React.FC<ILayout> = ({
-    tittel,
-    ikon,
-    sidepanel,
-    altBanner,
-    bannerKnapp,
-    children,
-}) => {
+const Layout = ({ tittel, ikon, sidepanel, banner, knappIBanner, children }: Props) => {
     return (
         <div className={stil.wrapper}>
             <div className={stil.layout}>
-                {altBanner ? (
-                    altBanner
+                {banner ? (
+                    banner
                 ) : (
-                    <header>
-                        <div className={stil.banner}>
-                            <div className={stil.bannerTittel}>
-                                <div className={stil.ikon}>{ikon}</div>
-                                <Heading level="2" size="large">
-                                    {tittel}
-                                </Heading>
-                            </div>
-                            {bannerKnapp}
-                        </div>
-                    </header>
+                    <Banner ikon={ikon} tittel={tittel}>
+                        {knappIBanner}
+                    </Banner>
                 )}
                 <div className={stil.container}>
                     {sidepanel && (
