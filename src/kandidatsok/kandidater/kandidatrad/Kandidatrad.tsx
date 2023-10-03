@@ -1,5 +1,6 @@
 import { CheckmarkIcon } from '@navikt/aksel-icons';
 import { Checkbox } from '@navikt/ds-react';
+import classNames from 'classnames';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
@@ -77,7 +78,10 @@ const Kandidatrad: FunctionComponent<Props> = ({
                 </Checkbox>
             }
             kandidat={
-                <Link to={lenkeTilKandidat(kandidat.arenaKandidatnr, kandidatlisteId)}>
+                <Link
+                    className={classNames(css.lenke, 'navds-link')}
+                    to={lenkeTilKandidat(kandidat.arenaKandidatnr, kandidatlisteId)}
+                >
                     {hentKandidatensNavn(kandidat)}
                 </Link>
             }

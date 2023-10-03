@@ -21,6 +21,10 @@
     width: 100%;
 }
 
+.sidebar :global(.navds-accordion__content) {
+    padding: 1rem;
+}
+
 .sideinnhold {
     width: 100%;
 }

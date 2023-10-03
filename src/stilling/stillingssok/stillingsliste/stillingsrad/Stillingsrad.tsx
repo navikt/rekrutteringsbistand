@@ -84,7 +84,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
             score={score}
             lenkeTilStilling={
                 <Link
-                    className="navds-link"
+                    className={classNames(css.stillingslenke, 'navds-link')}
                     to={urlTilStilling}
                     state={{
                         stillingssøk: searchParams.toString(),

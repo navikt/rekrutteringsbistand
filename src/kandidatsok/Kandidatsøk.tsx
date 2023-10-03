@@ -76,10 +76,10 @@ const Kandidatsøk = ({
                     <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
                 )
             }
+            knappIBanner={<TømFiltre />}
             sidepanel={<Filter />}
         >
             <PorteføljeTabs>
-                <TømFiltre />
                 <div className={css.hovedinnhold}>
                     <Kandidater
                         innloggetBruker={innloggetBruker}

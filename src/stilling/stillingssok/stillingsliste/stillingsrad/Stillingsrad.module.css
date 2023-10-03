@@ -118,6 +118,10 @@
     text-decoration: underline;
 }
 
+.stillingslenke:visited:not(:active):not(:focus) {
+    color: var(--a-text-visited);
+}
+
 @media (min-width: 768px) {
     .stillingsrad {
         flex-direction: row;

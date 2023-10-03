@@ -41,10 +41,11 @@ const Søkefelt: FunctionComponent = () => {
     return (
         <form className={css.form} onSubmit={onSubmit}>
             <Search
-                label="Søk etter stillinger"
-                placeholder="Søk i stillinger"
-                value={input}
+                label="Søk i stillinger"
                 hideLabel={true}
+                type="text"
+                value={input}
+                placeholder="Søk i stillinger"
                 onChange={onInputChange}
                 onClear={() => onInputChange('')}
             />

@@ -25,6 +25,10 @@
     flex: 1;
 }
 
+.omKandidat h1 {
+    margin-bottom: 0.5rem;
+}
+
 .tekstLinje {
     width: 100%;
     display: flex;
