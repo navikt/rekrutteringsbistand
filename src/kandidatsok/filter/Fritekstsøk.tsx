@@ -32,13 +32,12 @@ const Fritekstsøk: FunctionComponent = () => {
     };
 
     return (
-        <form role="search" onSubmit={onFormSubmit}>
+        <form className={css.søk} role="search" onSubmit={onFormSubmit}>
             <Search
                 label="Søk i kandidater"
                 hideLabel={true}
                 type="text"
                 value={query}
-                className={css.søk}
                 placeholder="Søk i kandidater"
                 onChange={onSearchChange}
                 onClear={onClear}

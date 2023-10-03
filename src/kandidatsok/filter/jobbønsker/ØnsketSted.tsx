@@ -57,6 +57,7 @@ const ØnsketSted = () => {
     return (
         <Typeahead
             label="Sted"
+            description="Hvor ønsker kandidaten å jobbe?"
             allowUnmatchedInputs={false}
             value={input}
             suggestions={suggestions}
