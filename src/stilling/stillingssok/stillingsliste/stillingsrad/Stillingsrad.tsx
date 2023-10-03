@@ -94,7 +94,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
                 </Link>
             }
             stillingsinfo={
-                <div className={css.tekstRad}>
+                <div className={css.tekstrad}>
                     <TekstlinjeMedIkon
                         ikon={<PinIcon />}
                         tekst={

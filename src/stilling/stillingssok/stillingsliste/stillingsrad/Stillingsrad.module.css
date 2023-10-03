@@ -98,15 +98,15 @@
     top: 0.1875rem;
 }
 
-.tekstRad {
+.tekstrad {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
 }
 
 .lenker {
     display: flex;
     gap: 1.5rem;
+    margin-top: 1rem;
 }
 
 .lenke {
@@ -136,7 +136,13 @@
         right: 1rem;
         align-self: unset;
     }
-    .tekstRad {
+    .tekstrad {
         flex-direction: row;
+        gap: 1.5rem;
+    }
+
+    .lenker {
+        margin-top: 0rem;
+        margin-left: 1rem;
     }
 }
