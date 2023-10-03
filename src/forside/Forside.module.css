@@ -7,13 +7,12 @@
 
 .forside {
     max-width: var(--innhold-maksbredde);
-    padding-top: 3rem;
     margin: 2rem 0 5rem;
-    padding: 0 1rem;
+    padding: 1.5rem 1rem 0;
 }
 
 @media (min-width: 768px) {
     .forside {
-        padding: 0 2.5rem;
+        padding: 2.5rem 2.5rem 0;
     }
 }
