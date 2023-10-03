@@ -72,9 +72,9 @@ const Kandidatsøk = ({
             tittel="Kandidatsøk"
             ikon={<Piktogram />}
             banner={
-                kontekstAvKandidatlisteEllerStilling && (
+                kontekstAvKandidatlisteEllerStilling ? (
                     <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
-                )
+                ) : undefined
             }
             knappIBanner={<TømFiltre />}
             sidepanel={<Filter />}

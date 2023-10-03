@@ -1,12 +1,14 @@
+import { Buldings2Icon, PersonGroupIcon } from '@navikt/aksel-icons';
+import { BodyShort, Heading } from '@navikt/ds-react';
+import Grunnbanner from 'felles/komponenter/grunnbanner/Grunnbanner';
+import { ReactComponent as FinnKandidaterIkon } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import { Buldings2Icon, PersonGroupIcon } from '@navikt/aksel-icons';
-import { lenkeTilKandidatliste, lenkeTilStilling } from '../utils';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
+import { lenkeTilKandidatliste, lenkeTilStilling } from '../utils';
 import css from './Kandidatlistebanner.module.css';
-import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     kontekst: KontekstAvKandidatlisteEllerStilling;
@@ -24,11 +26,11 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
     const { tittel, opprettetAv, kandidatlisteId } = kandidatliste.data;
 
     return (
-        <div role="banner" className={css.container}>
+        <Grunnbanner ikon={<FinnKandidaterIkon />}>
             <div className={css.banner}>
-                <div>
+                <div className={css.hovedinnhold}>
                     <BodyShort>Finn kandidater til kandidatliste:</BodyShort>
-                    <Heading level="1" size="medium">
+                    <Heading size="large" level="2">
                         {tittel}
                     </Heading>
                     <BodyShort>
@@ -41,17 +43,17 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                             className="navds-link"
                             to={lenkeTilStilling(kandidatliste.data.stillingId)}
                         >
-                            <Buldings2Icon />
+                            <Buldings2Icon aria-hidden />
                             Se stilling
                         </Link>
                     )}
                     <Link className="navds-link" to={lenkeTilKandidatliste(kandidatlisteId)}>
-                        <PersonGroupIcon />
+                        <PersonGroupIcon aria-hidden />
                         Se kandidatliste
                     </Link>
                 </div>
             </div>
-        </div>
+        </Grunnbanner>
     );
 };
 
