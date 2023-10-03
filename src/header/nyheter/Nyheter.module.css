@@ -19,11 +19,6 @@
 
 .knapp {
     position: relative;
-    color: var(--a-text-default);
-}
-
-.knapp:hover {
-    color: var(--a-white);
 }
 
 .knapp:focus {
@@ -35,8 +30,8 @@
     position: absolute;
     top: 0.25rem;
     right: 0;
-    height: 0.9rem;
-    width: 0.9rem;
+    height: 0.75rem;
+    width: 0.75rem;
     border-radius: 50%;
     background-color: #0067c5;
 }

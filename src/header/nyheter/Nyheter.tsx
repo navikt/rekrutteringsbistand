@@ -1,4 +1,4 @@
-import { MegaphoneSpeakingIcon } from '@navikt/aksel-icons';
+import { LightBulbIcon } from '@navikt/aksel-icons';
 import { Button, Heading, Popover } from '@navikt/ds-react';
 import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
 import Artikkel from './Artikkel';
@@ -38,8 +38,8 @@ const Nyheter: FunctionComponent = () => {
                 ref={buttonRef}
                 className={css.knapp}
                 onClick={() => setÅpen(!åpen)}
-                variant="tertiary"
-                icon={<MegaphoneSpeakingIcon aria-hidden />}
+                variant="tertiary-neutral"
+                icon={<LightBulbIcon aria-hidden />}
             >
                 Hva er nytt
                 {antallUlesteNyheter > 0 && <div className={css.notifikasjon} />}
