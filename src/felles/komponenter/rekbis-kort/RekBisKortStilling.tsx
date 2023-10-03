@@ -3,7 +3,7 @@ import * as React from 'react';
 import RekBisKort from './RekBisKort';
 import css from './RekBisKortStilling.module.css';
 
-export interface IRekBisKortStilling {
+type Props = {
     publisertDato?: string;
     etiketter?: React.ReactNode;
     arbeidsgiversNavn?: string;
@@ -16,9 +16,9 @@ export interface IRekBisKortStilling {
     erIkkePublisert?: boolean;
     erUtkast?: boolean;
     erStoppet?: boolean;
-}
+};
 
-const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
+const RekBisKortStilling = ({
     publisertDato,
     etiketter,
     arbeidsgiversNavn,
@@ -31,7 +31,7 @@ const RekBisKortStilling: React.FC<IRekBisKortStilling> = ({
     erIkkePublisert,
     erUtkast,
     erStoppet,
-}) => {
+}: Props) => {
     return (
         <RekBisKort
             header={

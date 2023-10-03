@@ -10,12 +10,12 @@ import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from './utils/url
 
 export const DEFAULT_VALGTE_KRITERIER = '?publisert=intern&statuser=publisert';
 
-interface IuseSøkMedQuery {
+type Returverdi = {
     navIdent?: string;
     ikkePubliserte?: boolean;
-}
+};
 
-const useSøkMedQuery = ({ navIdent, ikkePubliserte }: IuseSøkMedQuery) => {
+const useSøkMedQuery = ({ navIdent, ikkePubliserte }: Returverdi) => {
     const { navigate, searchParams, state } = useNavigering();
     const { standardsøk } = useStandardsøk();
     const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);

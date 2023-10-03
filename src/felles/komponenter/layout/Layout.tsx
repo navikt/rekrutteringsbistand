@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import Banner from '../banner/Banner';
 import { TilToppenKnapp } from '../tilToppenKnapp/TilToppenKnapp';
-import stil from './Layout.module.css';
+import css from './Layout.module.css';
 
 export type Props = {
     children: React.ReactNode | undefined;
@@ -16,8 +16,8 @@ export type Props = {
 
 const Layout = ({ tittel, ikon, sidepanel, banner, knappIBanner, children }: Props) => {
     return (
-        <div className={stil.wrapper}>
-            <div className={stil.layout}>
+        <div className={css.wrapper}>
+            <div className={css.layout}>
                 {banner ? (
                     banner
                 ) : (
@@ -25,9 +25,9 @@ const Layout = ({ tittel, ikon, sidepanel, banner, knappIBanner, children }: Pro
                         {knappIBanner}
                     </Banner>
                 )}
-                <div className={stil.container}>
+                <div className={css.container}>
                     {sidepanel && (
-                        <aside className={stil.sidebar}>
+                        <aside className={css.sidebar}>
                             <Show above="md">{sidepanel}</Show>
                             <Hide above="md">
                                 <Accordion>
@@ -39,7 +39,7 @@ const Layout = ({ tittel, ikon, sidepanel, banner, knappIBanner, children }: Pro
                             </Hide>
                         </aside>
                     )}
-                    <main className={stil.sideinnhold}>
+                    <main className={css.sideinnhold}>
                         {children}
                         <TilToppenKnapp />
                     </main>

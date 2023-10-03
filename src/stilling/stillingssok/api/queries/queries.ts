@@ -28,18 +28,17 @@ export const lagQuery = (
     };
 };
 
-interface IlagIndreQuery {
-    søkekriterier: Søkekriterier;
-    alternativtFelt?: Søkefelt;
-    navIdent?: string;
-    ikkePubliserte?: boolean;
-}
 export const lagIndreQuery = ({
     søkekriterier,
     alternativtFelt,
     navIdent,
     ikkePubliserte,
-}: IlagIndreQuery) => {
+}: {
+    søkekriterier: Søkekriterier;
+    alternativtFelt?: Søkefelt;
+    navIdent?: string;
+    ikkePubliserte?: boolean;
+}) => {
     const minimum_should_match = søkekriterier.tekst.size === 0 ? '0' : '1';
     const identSøk = navIdent ? kunMineStillinger(navIdent) : '';
 

@@ -1,5 +1,4 @@
 import { Heading, Loader } from '@navikt/ds-react';
-import * as React from 'react';
 import { formaterAntallAnnonser } from './Stillingssøk';
 import css from './Stillingssøk.module.css';
 import { GlobalAggregering } from './domene/elasticSearchTyper';
@@ -11,12 +10,12 @@ import Søkefelter from './søkefelter/Søkefelter';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
 
-export interface IAlleStillinger {
+export type Props = {
     kandidatnr: string;
     finnerStillingForKandidat?: boolean;
-}
+};
 
-const AlleStillinger: React.FC<IAlleStillinger> = ({ kandidatnr, finnerStillingForKandidat }) => {
+const AlleStillinger = ({ kandidatnr, finnerStillingForKandidat }: Props) => {
     const respons = useSøkMedQuery({});
 
     const globalAggregering = respons?.aggregations

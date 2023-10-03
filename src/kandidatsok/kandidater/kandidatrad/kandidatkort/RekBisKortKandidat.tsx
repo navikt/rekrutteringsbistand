@@ -12,7 +12,7 @@ import RekBisKort from '../../../../felles/komponenter/rekbis-kort/RekBisKort';
 import TekstlinjeMedIkon from '../TekstlinjeMedIkon';
 import css from './RekBisKortKandidat.module.css';
 
-export interface IRekBisKortKandidat {
+type Props = {
     kandidatnummer: string;
     kandidat?: React.ReactNode;
     checkbox?: React.ReactNode;
@@ -24,9 +24,9 @@ export interface IRekBisKortKandidat {
     fremhevet?: boolean;
     kandidatPåListe?: React.ReactNode;
     markert?: boolean;
-}
+};
 
-const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
+const RekBisKortKandidat = ({
     checkbox,
     kandidat,
     ønsker,
@@ -38,7 +38,7 @@ const RekBisKortKandidat: React.FC<IRekBisKortKandidat> = ({
     fremhevet,
     kandidatPåListe,
     markert,
-}) => {
+}: Props) => {
     return (
         <RekBisKort fremhevet={fremhevet}>
             <div className={css.innhold} aria-selected={markert}>
