@@ -16,8 +16,8 @@ export type Props = {
 
 const Layout = ({ tittel, ikon, sidepanel, banner, knappIBanner, children }: Props) => {
     return (
-        <div className={css.wrapper}>
-            <div className={css.layout}>
+        <div className={css.layout}>
+            <div className={css.layoutInner}>
                 {banner ? (
                     banner
                 ) : (

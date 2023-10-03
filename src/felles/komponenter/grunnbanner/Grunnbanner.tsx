@@ -9,7 +9,7 @@ type Props = {
 
 const Grunnbanner = ({ ikon, children, nederst }: Props) => {
     return (
-        <div className={css.grunnbanner}>
+        <div role="banner" className={css.grunnbanner}>
             <div className={css.piktogramOgChildren}>
                 <div className={css.piktogram}>{ikon}</div>
                 {children}

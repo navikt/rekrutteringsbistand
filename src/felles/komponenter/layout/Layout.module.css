@@ -1,13 +1,14 @@
-.wrapper {
+.layout {
     display: flex;
     justify-content: center;
     margin: 0 auto;
 }
 
-.layout {
+.layoutInner {
     max-width: var(--innhold-maksbredde);
     width: 100%;
     padding: 0 1rem;
+    margin-bottom: 5rem;
 }
 
 .container {
@@ -29,8 +30,15 @@
     width: 100%;
 }
 
+.footer {
+    margin-top: 5rem;
+    padding: 3rem 0;
+    text-align: center;
+    color: var(--a-text-subtle);
+}
+
 @media (min-width: 768px) {
-    .layout {
+    .layoutInner {
         padding: 0 2.5rem;
     }
 
