@@ -1,18 +1,17 @@
 import { api } from 'felles/api';
 import { useEffect, useState } from 'react';
 
-const get = (url: string) =>
-    fetch(url, {
-        method: 'GET',
-        credentials: 'include',
-    });
+export type InnloggetBruker = {
+    navIdent: string | null;
+    navKontor: string | null;
+};
 
-const useInnloggetBruker = (): string => {
+const useInnloggetBruker = (navKontor: string | null): InnloggetBruker => {
     const [navIdent, setNavIdent] = useState<string | null>(null);
 
     useEffect(() => {
         const hentNavIdent = async () => {
-            const response = await get(api.innloggetBruker);
+            const response = await fetch(api.innloggetBruker, { credentials: 'include' });
             const { navIdent } = await response.json();
 
             setNavIdent(navIdent);
@@ -21,7 +20,10 @@ const useInnloggetBruker = (): string => {
         hentNavIdent();
     }, []);
 
-    return navIdent;
+    return {
+        navIdent,
+        navKontor,
+    };
 };
 
 export default useInnloggetBruker;

@@ -1,6 +1,6 @@
 import { EsQuery, Sorteringsrekkefølge } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
-import { InnloggetBruker } from '../../hooks/useBrukerensIdent';
+import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import { Sortering } from '../../kandidater/sortering/Sortering';
 import { queryMedArbeidserfaring } from './queryMedArbeidserfaring';

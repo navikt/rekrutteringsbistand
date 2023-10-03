@@ -1,11 +1,11 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 import { søk } from '../api/api';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
-import { InnloggetBruker } from './useBrukerensIdent';
 import useSøkekriterier from './useSøkekriterier';
 
 export enum FilterParam {

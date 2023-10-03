@@ -1,8 +1,8 @@
 import '@reach/combobox/styles.css';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import useNavKontor from 'felles/store/navKontor';
 import { useContext } from 'react';
 import Kandidatsøk from './Kandidatsøk';
-import useInnloggetBruker from './hooks/useBrukerensIdent';
 import useKontekstAvKandidatlisteEllerStilling from './hooks/useKontekstAvKandidatlisteEllerStilling';
 import useNavigeringsstate from './hooks/useNavigeringsstate';
 import { ØktContext, ØktContextProvider } from './Økt';
