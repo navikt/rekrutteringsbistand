@@ -1,6 +1,5 @@
 import { EyeIcon, HandshakeIcon } from '@navikt/aksel-icons';
 import { BodyShort, ErrorMessage, Skeleton } from '@navikt/ds-react';
-import { erIkkeProd } from 'felles/miljø';
 import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import statistikkCss from './Statistikk.module.css';
