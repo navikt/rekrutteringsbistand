@@ -1,10 +1,4 @@
-import {
-    HandHeartIcon,
-    HandShakeHeartIcon,
-    HouseIcon,
-    PersonIcon,
-    PinIcon,
-} from '@navikt/aksel-icons';
+import { HandHeartIcon, HandShakeHeartIcon, HouseIcon, PinIcon } from '@navikt/aksel-icons';
 import { Heading } from '@navikt/ds-react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -68,11 +62,6 @@ const RekBisKortKandidat = ({
                                 label="Innsatsgruppe"
                                 ikon={<HandHeartIcon />}
                                 tekst={innsatsgruppe}
-                            />
-                            <TekstlinjeMedIkon
-                                label="Veileder"
-                                ikon={<PersonIcon />}
-                                tekst={veilder}
                             />
                         </div>
                     </div>
