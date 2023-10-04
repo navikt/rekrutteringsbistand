@@ -43,10 +43,13 @@ const Stillingssøk = () => {
     const { searchParams, navigate } = useNavigering();
     const { kandidat: kandidatnr } = useParams<{ kandidat?: string }>();
     const { search } = useLocation();
+
     const queryParams = new URLSearchParams(search);
+
     const skalViseOpprettStillingModal = () => {
         return queryParams.get('modal') === 'opprettStillingModal';
     };
+
     const oppdaterTab = (tab: TabVisning) =>
         oppdaterUrlMedParam({
             searchParams,

@@ -1,5 +1,4 @@
 import {
-    Navigate,
     Route,
     RouterProvider,
     createBrowserRouter,
@@ -28,9 +27,6 @@ const App = () => {
                     element={<InngangFraArbop />}
                     errorElement={<Appfeil />}
                 />
-
-                {/* Redirect gammel route */}
-                <Route path="/stillingssok" element={<Navigate to="/stillinger/stillingssok" />} />
             </Route>
         )
     );
