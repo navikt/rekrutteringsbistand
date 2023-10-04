@@ -1,10 +1,10 @@
 import { EsQuery } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { kunMineStillinger } from '../../../api/openSearchQuery';
 import { Søkekriterier } from '../../Stillingssøk';
 import { Søkefelt } from '../../søkefelter/Søkefelter';
 import geografi from './geografi';
 import inkludering from './inkludering';
+import { kunMineStillinger } from './mine-stillinger';
 import publisert from './publisert';
 import sorterTreff from './sortering';
 import { status } from './status';

@@ -1,6 +1,6 @@
 import deepEqual from 'deep-equal';
 import { put, select, takeLatest } from 'redux-saga/effects';
-import { hentRekrutteringsbistandstilling, kopierStilling, postStilling } from '../api/api';
+import { hentRekrutteringsbistandstilling, postStilling } from '../api/api';
 import { getReportee } from '../reportee/reporteeReducer';
 import {
     SET_NAV_IDENT_STILLINGSINFO,
@@ -41,7 +41,6 @@ import Stilling, {
 import { Nettstatus } from 'felles/nettressurs';
 import { ApiError, fetchDelete, fetchPut } from '../api/apiUtils';
 import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
-import { MineStillingerActionType } from '../mine-stillinger/MineStillingerAction';
 import { State } from '../redux/store';
 import { formatISOString } from '../utils/datoUtils';
 
@@ -498,11 +497,6 @@ function* stopAd() {
     yield saveRekrutteringsbistandStilling();
 }
 
-function* stopAdFromMyAds() {
-    yield stopAd();
-    yield put({ type: MineStillingerActionType.FetchMyAds });
-}
-
 function* saveAd(action) {
     yield validateBeforeSave();
     const state: State = yield select();
@@ -587,27 +581,6 @@ function* showDeleteModal(action) {
     yield put({ type: SHOW_DELETE_AD_MODAL });
 }
 
-function* copyAdFromMyAds(action) {
-    try {
-        const response: Rekrutteringsbistandstilling = yield kopierStilling(action.uuid);
-
-        // Mark copied ad in mineStillinger
-        yield put({ type: ADD_COPIED_ADS, adUuid: response.stilling.uuid });
-        // Update list with the new ad
-        yield put({ type: MineStillingerActionType.FetchMyAds });
-        yield put<VarslingAction>({
-            type: VarslingActionType.VisVarsling,
-            innhold: `Stillingen er kopiert, og vil snart være synlig i listen etter du oppdaterer siden.`,
-            varighetMs: 8000,
-        });
-    } catch (e) {
-        if (e instanceof ApiError) {
-            yield put({ type: CREATE_AD_FAILURE, error: e });
-        }
-        throw e;
-    }
-}
-
 function* leggTilIMineStillinger(action) {
     let state = yield select();
 
@@ -644,9 +617,7 @@ export const adSaga = function* saga() {
     yield takeLatest(FORKAST_NY_STILLING, forkastNyStilling);
     yield takeLatest(SHOW_STOP_MODAL_MY_ADS, showStopModalMyAds);
     yield takeLatest(SHOW_DELETE_MODAL, showDeleteModal);
-    yield takeLatest(STOP_AD_FROM_MY_ADS, stopAdFromMyAds);
     yield takeLatest(DELETE_AD, deleteAd);
-    yield takeLatest(COPY_AD_FROM_MY_ADS, copyAdFromMyAds);
     yield takeLatest(LEGG_TIL_I_MINE_STILLINGER, leggTilIMineStillinger);
     yield takeLatest(MARKER_INTERN_STILLING_SOM_MIN, markerInternStillingSomMin);
     yield takeLatest(MARKER_EKSTERN_STILLING_SOM_MIN, markerEksternStillingSomMin);
