@@ -211,7 +211,7 @@ const hentArbeidssted = (locations: Geografi[]): string | null => {
 
 const hentArbeidsgiversNavn = (stilling: EsStilling) =>
     stilling.businessName && stilling.businessName.length > 0
-        ? stilling.businessName
+        ? formaterMedStoreOgSmåBokstaver(stilling.businessName)
         : formaterMedStoreOgSmåBokstaver(stilling.employer?.name);
 
 export default Stillingsrad;
