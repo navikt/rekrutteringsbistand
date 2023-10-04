@@ -62,12 +62,12 @@ const RekBisKortKandidat = ({
                         <div className={css.tekstLinje}>
                             <TekstlinjeMedIkon label="Bosted" ikon={<HouseIcon />} tekst={bosted} />
                             <TekstlinjeMedIkon
-                                label="Ønsket yrke"
+                                label="Innsatsgruppe"
                                 ikon={<HandHeartIcon />}
                                 tekst={innsatsgruppe}
                             />
                             <TekstlinjeMedIkon
-                                label="Ønsket yrke"
+                                label="Veileder"
                                 ikon={<PersonIcon />}
                                 tekst={veilder}
                             />
