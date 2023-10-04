@@ -31,7 +31,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr);
     const [visKandidatlisterModal, setVisKandidatlisterModal] = useState<boolean>(false);
 
-    const finnStillingUrl = `/stillinger/stillingssok/kandidat/${kandidatnr}?brukKriterierFraKandidat=true`;
+    const finnStillingUrl = `/stillinger/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`;
 
     const økt = hentØktFraKandidatsøk();
 
