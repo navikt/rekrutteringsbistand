@@ -100,6 +100,8 @@ export type KandidatTilKandidatsøk = {
     kvalifiseringsgruppekode: Oppfølgingsinformasjon['kvalifiseringsgruppekode'];
     yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
     geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
+    kommuneNavn: Geografi['kommuneNavn'];
+    postnummer: Geografi['postnummer'];
 };
 
 export default Kandidat;

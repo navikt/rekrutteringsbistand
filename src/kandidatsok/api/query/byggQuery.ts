@@ -1,5 +1,5 @@
 import { EsQuery, Sorteringsrekkefølge } from 'felles/domene/elastic/ElasticSearch';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import { Sortering } from '../../kandidater/sortering/Sortering';
@@ -20,7 +20,7 @@ import { queryMedØnsketYrke } from './queryMedØnsketYrke';
 
 export const PAGE_SIZE = 25;
 
-const interessanteKandidatfelter: Array<keyof Kandidat> = [
+const interessanteKandidatfelter: Array<keyof KandidatTilKandidatsøk> = [
     'fodselsnummer',
     'fornavn',
     'etternavn',
@@ -28,14 +28,14 @@ const interessanteKandidatfelter: Array<keyof Kandidat> = [
     'kvalifiseringsgruppekode',
     'yrkeJobbonskerObj',
     'geografiJobbonsker',
-    'kommunenummerstring',
     'kommuneNavn',
+    'postnummer',
 ];
 
 export const byggQuery = (
     søkekriterier: Søkekriterier,
     innloggetBruker: InnloggetBruker
-): EsQuery<Kandidat> => {
+): EsQuery<KandidatTilKandidatsøk> => {
     const { side, sortering } = søkekriterier;
 
     return {

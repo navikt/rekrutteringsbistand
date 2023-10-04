@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
@@ -39,7 +39,7 @@ const Kandidatsøk = ({
     kontekstAvKandidatlisteEllerStilling,
 }: KandidatsøkProps) => {
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
-    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<Kandidat[]>([]);
+    const [kandidaterPåSiden, setKandidaterPåSiden] = useState<KandidatTilKandidatsøk[]>([]);
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
         forrigeØkt?.markerteKandidater
     );

@@ -1,11 +1,11 @@
 import { Heading } from '@navikt/ds-react';
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 
 type Props = {
-    response: Nettressurs<EsResponse<Kandidat>>;
+    response: Nettressurs<EsResponse<KandidatTilKandidatsøk>>;
 };
 
 const AntallKandidater: FunctionComponent<Props> = ({ response }) => {

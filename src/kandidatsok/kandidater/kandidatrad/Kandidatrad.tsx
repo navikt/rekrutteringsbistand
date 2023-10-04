@@ -1,7 +1,7 @@
 import { CheckmarkIcon } from '@navikt/aksel-icons';
 import { Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
@@ -15,7 +15,7 @@ import css from './Kandidatrad.module.css';
 import RekBisKortKandidat from './kandidatkort/RekBisKortKandidat';
 
 type Props = {
-    kandidat: Kandidat;
+    kandidat: KandidatTilKandidatsøk;
     markerteKandidater: Set<string>;
     onMarker: () => void;
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
@@ -65,7 +65,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
                     </div>
                 )
             }
-            kandidatnummer={kandidat.kandidatnr}
+            kandidatnummer={kandidat.arenaKandidatnr}
             checkbox={
                 <Checkbox
                     hideLabel
@@ -88,27 +88,29 @@ const Kandidatrad: FunctionComponent<Props> = ({
             ønsker={alleØnskedeYrker ?? '-'}
             lokasjon={alleØnskedeSteder ?? '-'}
             innsatsgruppe={alleInnsatsgrupper[kandidat.kvalifiseringsgruppekode].label}
-            bosted={`${kandidat.kommunenummerstring ?? '-'} ${kandidat.kommuneNavn ?? '-'}`}
-            veilder={kandidat.veilederVisningsnavn ?? '-'}
+            bosted={`${kandidat.postnummer ?? '-'} ${kandidat.kommuneNavn ?? '-'}`}
         />
     );
 };
 
-const kandidatenErPåKandidatlista = (kandidat: Kandidat, kandidatliste: Kandidatliste): boolean => {
+const kandidatenErPåKandidatlista = (
+    kandidat: KandidatTilKandidatsøk,
+    kandidatliste: Kandidatliste
+): boolean => {
     return kandidatliste.kandidater.some((kandidatPåLista) => {
         return kandidatPåLista.kandidatnr === kandidat.arenaKandidatnr;
     });
 };
 
-export const hentKandidatensNavn = (kandidat: Kandidat) =>
+export const hentKandidatensNavn = (kandidat: KandidatTilKandidatsøk) =>
     `${storForbokstav(kandidat.etternavn)}, ${storForbokstav(kandidat.fornavn)}`;
 
-const hentKandidatensØnskedeYrker = (kandidat: Kandidat) =>
+const hentKandidatensØnskedeYrker = (kandidat: KandidatTilKandidatsøk) =>
     kandidat.yrkeJobbonskerObj.length === 0
         ? undefined
         : kandidat.yrkeJobbonskerObj.map((jobbønske) => jobbønske.styrkBeskrivelse).join(', ');
 
-const hentKandidatensØnskedeSteder = (kandidat: Kandidat) =>
+const hentKandidatensØnskedeSteder = (kandidat: KandidatTilKandidatsøk) =>
     kandidat.geografiJobbonsker.length === 0
         ? undefined
         : kandidat.geografiJobbonsker.map((jobbønske) => jobbønske.geografiKodeTekst).join(', ');

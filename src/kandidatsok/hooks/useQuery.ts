@@ -1,5 +1,5 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import Kandidat, { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
@@ -36,7 +36,9 @@ export enum OtherParam {
 
 export type Param = FilterParam | OtherParam;
 
-const useQuery = (innloggetBruker: InnloggetBruker): Nettressurs<EsResponse<Kandidat>> => {
+const useQuery = (
+    innloggetBruker: InnloggetBruker
+): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
     const { søkekriterier } = useSøkekriterier();
     const [response, setResponse] = useState<Nettressurs<EsResponse<Kandidat>>>({
         kind: Nettstatus.IkkeLastet,
