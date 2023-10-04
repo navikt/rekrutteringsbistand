@@ -8,7 +8,6 @@ import { ReporteeAction, ReporteeActionType } from './reportee/ReporteeAction';
 import Stilling from './stilling/Stilling';
 import Stillingssøk from './stillingssok/Stillingssøk';
 import { Component as StillingsSøkIndex } from './stillingssok/index';
-import InngangFraArbop from './stillingssok/inngang-fra-arbop/InngangFraArbop';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -26,21 +25,14 @@ const App = () => {
                     element={<Stillingssøk />}
                     errorElement={<Appfeil />}
                 />
-                <Route
-                    path="stillingssok/personbruker"
-                    element={<InngangFraArbop />}
-                    errorElement={<Appfeil />}
-                />
+
                 <Route
                     path="minestillinger"
                     element={<Navigate to="/stillingssok?portefolje=visMine" />}
                 />
 
-                {/* <Route path="minestillinger" element={<MineStillinger />} /> */}
                 <Route path="stillingssok" element={<StillingsSøkIndex />} />
                 <Route path="stilling/:uuid" element={<Stilling />} />
-
-                {/* Redirect gamle ruter */}
             </Routes>
         </>
     );
