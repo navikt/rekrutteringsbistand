@@ -2,10 +2,6 @@ import { Stillingsinfo } from 'felles/domene/stilling/Stilling';
 import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import varslingReducer, { VarslingState, varslingSaga } from '../common/varsling/varslingReducer';
-import mineStillingerReducer, {
-    MineStillingerState,
-} from '../mine-stillinger/mineStillingerReducer';
-import { mineStillingerSaga } from '../mine-stillinger/mineStillingerSagas';
 import reporteeReducer, { ReporteeState, reporteeSaga } from '../reportee/reporteeReducer';
 import adDataReducer, { AdDataState, adDataSaga } from '../stilling/adDataReducer';
 import adReducer, { AdState, adSaga } from '../stilling/adReducer';
@@ -30,7 +26,6 @@ export type State = {
     ad: AdState;
     adData: AdDataState;
     adValidation: AdValidationState;
-    mineStillinger: MineStillingerState;
     stillingsinfoData: Stillingsinfo;
     stillingsinfo: StillingsinfoState;
     varsling: VarslingState;
@@ -52,7 +47,6 @@ const createReduxStore = () => {
             adValidation: adValidationReducer,
             locationCode: locationCodeReducer,
             locationArea: locationAreaReducer,
-            mineStillinger: mineStillingerReducer,
             reportee: reporteeReducer,
             styrk: styrkReducer,
             stillingsinfo: stillingsinfoReducer,
@@ -67,7 +61,6 @@ const createReduxStore = () => {
     sagaMiddleware.run(locationCodeSaga);
     sagaMiddleware.run(styrkSaga);
     sagaMiddleware.run(reporteeSaga);
-    sagaMiddleware.run(mineStillingerSaga);
     sagaMiddleware.run(adDataSaga);
     sagaMiddleware.run(locationAreaSaga);
     sagaMiddleware.run(stillingsinfoSaga);

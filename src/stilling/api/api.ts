@@ -1,7 +1,5 @@
 import { api } from 'felles/api';
-import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
-import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import Stilling, {
     AdminStatus,
     Rekrutteringsbistandstilling,
@@ -9,10 +7,8 @@ import Stilling, {
     Stillingskategori,
 } from 'felles/domene/stilling/Stilling';
 import { Miljø, getMiljø } from 'felles/miljø';
-import { HentMineStillingerQuery } from '../mine-stillinger/mineStillingerSagas';
 import { fetchGet, fetchPost, fetchPut } from './apiUtils';
 import devVirksomheter from './devVirksomheter';
-import { lagOpenSearchQuery } from './openSearchQuery';
 
 export type Side<T> = {
     content: T[];
@@ -47,25 +43,6 @@ export const hentRekrutteringsbistandstilling = async (
     }
 
     return rekrutteringsbistandstilling;
-};
-
-export const hentMineStillingerOpenSearch = async (
-    query: HentMineStillingerQuery
-): Promise<Side<EsRekrutteringsbistandstilling>> => {
-    const sidestørrelse = 25;
-
-    const openSearchQuery = lagOpenSearchQuery(query, sidestørrelse);
-    const respons: EsResponse<EsRekrutteringsbistandstilling> = await fetchPost(
-        `${api.stillingssøk}/stilling/_search`,
-        openSearchQuery
-    );
-
-    // TODO: fixMissingAdministration?
-    return {
-        content: respons.hits.hits.map((hit) => hit._source),
-        totalElements: respons.hits.total.value,
-        totalPages: Math.ceil(respons.hits.total.value / sidestørrelse),
-    };
 };
 
 export const kopierStilling = async (
