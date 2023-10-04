@@ -1,6 +1,7 @@
 import { Buldings2Icon, PersonGroupIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import Grunnbanner from 'felles/komponenter/grunnbanner/Grunnbanner';
+import Brødsmulesti from 'felles/komponenter/kandidatbanner/Brødsmulesti';
 import { ReactComponent as FinnKandidaterIkon } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
 import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
@@ -23,7 +24,21 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
         <Grunnbanner ikon={<FinnKandidaterIkon />}>
             <div className={css.banner}>
                 <div className={css.hovedinnhold}>
-                    <BodyShort>Finn kandidater til kandidatliste:</BodyShort>
+                    {kandidatliste.kind === Nettstatus.Suksess ? (
+                        <Brødsmulesti
+                            brødsmulesti={[
+                                {
+                                    tekst: kandidatliste.data.tittel,
+                                    href: lenkeTilKandidatliste(kandidatliste.data.kandidatlisteId),
+                                },
+                                {
+                                    tekst: 'Finn kandidater',
+                                },
+                            ]}
+                        />
+                    ) : (
+                        <Skeleton width={220} />
+                    )}
                     <Heading size="large" level="2">
                         {kandidatliste.kind === Nettstatus.Suksess ? (
                             kandidatliste.data.tittel
