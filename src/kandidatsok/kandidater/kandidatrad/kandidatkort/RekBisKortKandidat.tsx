@@ -47,12 +47,15 @@ const RekBisKortKandidat = ({
                 <div className={css.hovedinnhold}>
                     <div className={css.omKandidat}>
                         <Heading size="small">{kandidat}</Heading>
+
                         <div className={css.tekstLinje}>
                             <TekstlinjeMedIkon
                                 label="Ønsket sted"
                                 ikon={<PinIcon />}
                                 tekst={lokasjon}
                             />
+                        </div>
+                        <div className={css.tekstLinje}>
                             <TekstlinjeMedIkon
                                 label="Ønsket yrke"
                                 ikon={<HandShakeHeartIcon />}

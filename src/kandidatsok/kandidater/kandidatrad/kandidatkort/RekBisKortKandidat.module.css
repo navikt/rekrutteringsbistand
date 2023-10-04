@@ -32,8 +32,9 @@
 .tekstLinje {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0rem 1.5rem;
 }
 
 @media (min-width: 768px) {
