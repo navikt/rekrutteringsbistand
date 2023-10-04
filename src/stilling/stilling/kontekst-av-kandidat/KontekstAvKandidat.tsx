@@ -29,40 +29,43 @@ const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, still
     const brødsmulesti = byggBrødsmulesti(kandidatnr, stilling, kandidat, state?.stillingssøk);
 
     return (
-        <>
-            <Kandidatbanner
-                kandidat={kandidat}
-                brødsmulesti={brødsmulesti}
-                nederstTilHøyre={
-                    <div className={css.knapper}>
-                        {stillingErPublisert(stilling) && (
-                            <CopyButton
-                                copyText={hentAnnonselenke(stilling.uuid)}
-                                text="Kopier annonselenke"
-                                size="small"
-                                className={css.copyButton}
+        <div className={css.wrapperTilBanner}>
+            <div className={css.innerWrapperTilBanner}>
+                <Kandidatbanner
+                    kandidat={kandidat}
+                    brødsmulesti={brødsmulesti}
+                    nederstTilHøyre={
+                        <div className={css.knapper}>
+                            {stillingErPublisert(stilling) && (
+                                <CopyButton
+                                    copyText={hentAnnonselenke(stilling.uuid)}
+                                    text="Kopier annonselenke"
+                                    size="small"
+                                    className={css.copyButton}
+                                />
+                            )}
+                            <Kandidatlistehandlinger
+                                kandidatnr={kandidatnr}
+                                kandidatliste={kandidatliste}
+                                onAnbefalClick={() => {
+                                    setVisModal(true);
+                                }}
                             />
-                        )}
-                        <Kandidatlistehandlinger
-                            kandidatnr={kandidatnr}
-                            kandidatliste={kandidatliste}
-                            onAnbefalClick={() => {
-                                setVisModal(true);
-                            }}
-                        />
-                    </div>
-                }
-            />
-            {kandidat.kind === Nettstatus.Suksess && kandidatliste.kind === Nettstatus.Suksess && (
-                <AnbefalKandidatModal
-                    kandidat={kandidat.data}
-                    kandidatliste={kandidatliste.data}
-                    setKandidatliste={setKandidatliste}
-                    onClose={() => setVisModal(false)}
-                    vis={visModal}
+                        </div>
+                    }
                 />
-            )}
-        </>
+                {kandidat.kind === Nettstatus.Suksess &&
+                    kandidatliste.kind === Nettstatus.Suksess && (
+                        <AnbefalKandidatModal
+                            kandidat={kandidat.data}
+                            kandidatliste={kandidatliste.data}
+                            setKandidatliste={setKandidatliste}
+                            onClose={() => setVisModal(false)}
+                            vis={visModal}
+                        />
+                    )}
+            </div>
+        </div>
     );
 };
 
@@ -76,7 +79,7 @@ const byggBrødsmulesti = (
         return undefined;
     }
 
-    let urlTilFinnStilling = `/stillingssok/kandidat/${kandidatnr}`;
+    let urlTilFinnStilling = `/stillinger/stillingssok/kandidat/${kandidatnr}`;
     if (stillingssøk) {
         urlTilFinnStilling += `?${stillingssøk}`;
     }
