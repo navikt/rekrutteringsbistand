@@ -8,7 +8,7 @@ import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling
 import { Nettressurs } from 'felles/nettressurs';
 import { State } from '../../../redux/store';
 import { StillingsinfoState } from '../../../stillingsinfo/stillingsinfoReducer';
-import { EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
+import { COPY_AD_FROM_MY_ADS, EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
 import { hentAnnonselenke, stillingErPublisert } from '../../adUtils';
 import Stillingsheader from '../../header/Stillingsheader';
 import EksternStillingAdvarsel from './EksternStillingAdvarsel';
@@ -20,7 +20,7 @@ type Props = {
     stillingsinfo: StillingsinfoState;
     kandidatliste: Nettressurs<Kandidatliste>;
     limitedAccess: boolean;
-
+    copyAd: (uuid: string) => void;
     editAd: () => void;
     leggTilIMineStillinger: () => void;
 };
@@ -39,6 +39,10 @@ class PreviewMenu extends React.Component<Props> {
 
     onEditAdClick = () => {
         this.props.editAd();
+    };
+
+    onCopyAdClick = () => {
+        this.props.copyAd(this.props.stilling.uuid);
     };
 
     onPrintClick = () => {
@@ -80,7 +84,12 @@ class PreviewMenu extends React.Component<Props> {
                     )}
                     {!limitedAccess && (
                         <Button onClick={this.onEditAdClick} size="small" icon={<DocPencilIcon />}>
-                            Rediger stillingen
+                            Rediger
+                        </Button>
+                    )}
+                    {!limitedAccess && (
+                        <Button onClick={this.onCopyAdClick} size="small" icon={<DocPencilIcon />}>
+                            Kopier
                         </Button>
                     )}
                     {kanOverfoereStilling && (
@@ -118,6 +127,7 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: (action: any) => void) => ({
     editAd: () => dispatch({ type: EDIT_AD }),
+    copyAd: (uuid: string) => dispatch({ type: COPY_AD_FROM_MY_ADS, uuid }),
     leggTilIMineStillinger: () => dispatch({ type: LEGG_TIL_I_MINE_STILLINGER }),
 });
 

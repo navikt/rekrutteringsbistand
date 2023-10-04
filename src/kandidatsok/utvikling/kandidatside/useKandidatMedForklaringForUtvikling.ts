@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
+import { useEffect, useState } from 'react';
 import { get, post } from '../../api/api';
 import { byggIndreQuery } from '../../api/query/byggQuery';
-import useInnloggetBruker from '../../hooks/useBrukerensIdent';
 import { searchParamsTilSøkekriterier } from '../../hooks/useSøkekriterier';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 const useKandidatMedForklaringForUtvikling = (
     kandidatNr: string | undefined,

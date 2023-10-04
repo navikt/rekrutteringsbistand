@@ -1,3 +1,8 @@
+.innhold {
+    background-color: #eceef0;
+    padding-bottom: 5rem;
+}
+
 .grid {
     display: grid;
     grid-template-rows: 1fr auto;

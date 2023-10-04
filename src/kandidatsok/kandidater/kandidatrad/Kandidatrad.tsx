@@ -1,18 +1,18 @@
+import { CheckmarkIcon } from '@navikt/aksel-icons';
+import { Checkbox } from '@navikt/ds-react';
+import classNames from 'classnames';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { Checkbox, Detail } from '@navikt/ds-react';
-
 import { alleInnsatsgrupper } from '../../filter/Jobbmuligheter';
-import { CheckmarkIcon, HeartIcon, PinIcon } from '@navikt/aksel-icons';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { KontekstAvKandidatlisteEllerStilling } from '../../hooks/useKontekstAvKandidatlisteEllerStilling';
-import { lenkeTilKandidat, storForbokstav } from '../../utils';
-import { Nettstatus } from 'felles/nettressurs';
-import { Økt } from '../../Økt';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import TekstlinjeMedIkon from './TekstlinjeMedIkon';
 import useScrollTilKandidat from '../../hooks/useScrollTilKandidat';
+import { lenkeTilKandidat, storForbokstav } from '../../utils';
+import { Økt } from '../../Økt';
 import css from './Kandidatrad.module.css';
+import RekBisKortKandidat from './kandidatkort/RekBisKortKandidat';
 
 type Props = {
     kandidat: Kandidat;
@@ -49,63 +49,48 @@ const Kandidatrad: FunctionComponent<Props> = ({
         kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === Nettstatus.Suksess
             ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.kandidatlisteId
             : undefined;
-
     return (
-        <div
-            id={`kandidatrad-${kandidat.arenaKandidatnr}`}
-            className={css.kandidatrad + (fremhevet ? ' ' + css.fremhevetKandidatrad : '')}
-            key={kandidat.fodselsnummer}
-            aria-selected={markert}
-        >
-            <Checkbox
-                hideLabel
-                value={kandidat}
-                checked={markert}
-                onChange={onMarker}
-                disabled={kandidatAlleredeLagtTilPåKandidatlista}
-            >
-                Valgt
-            </Checkbox>
-            <div className={css.kandidatinformasjon}>
-                <div className={css.navn}>
-                    <Link
-                        className="navds-link"
-                        to={lenkeTilKandidat(kandidat.arenaKandidatnr, kandidatlisteId)}
-                    >
-                        {hentKandidatensNavn(kandidat)}
-                    </Link>
-                </div>
-                <Detail className={css.innsatsgruppe}>
-                    {alleInnsatsgrupper[kandidat.kvalifiseringsgruppekode].label}
-                </Detail>
-                {(alleØnskedeYrker || alleØnskedeSteder) && (
-                    <div className={css.jobbønske}>
-                        {alleØnskedeYrker && (
-                            <TekstlinjeMedIkon
-                                label="Ønsket yrke"
-                                ikon={<HeartIcon />}
-                                tekst={alleØnskedeYrker}
-                            />
-                        )}
-                        {alleØnskedeSteder && (
-                            <TekstlinjeMedIkon
-                                label="Ønsket sted"
-                                ikon={<PinIcon />}
-                                tekst={alleØnskedeSteder}
-                            />
-                        )}
+        <RekBisKortKandidat
+            markert={markert}
+            fremhevet={fremhevet}
+            kandidatPåListe={
+                kandidatAlleredeLagtTilPåKandidatlista && (
+                    <div className={css.kandidatPåListeWrapper}>
+                        <div
+                            title="Kandidater er allerede lagt til på kandidatlisten"
+                            className={css.kandidatPåListe}
+                        >
+                            <CheckmarkIcon />
+                        </div>
                     </div>
-                )}
-                {kandidatAlleredeLagtTilPåKandidatlista && (
-                    <div
-                        title="Kandidater er allerede lagt til på kandidatlisten"
-                        className={css.kandidatPåListe}
-                    >
-                        <CheckmarkIcon />
-                    </div>
-                )}
-            </div>
-        </div>
+                )
+            }
+            kandidatnummer={kandidat.kandidatnr}
+            checkbox={
+                <Checkbox
+                    hideLabel
+                    value={kandidat}
+                    checked={markert}
+                    onChange={onMarker}
+                    disabled={kandidatAlleredeLagtTilPåKandidatlista}
+                >
+                    Valgt
+                </Checkbox>
+            }
+            kandidat={
+                <Link
+                    className={classNames(css.lenke, 'navds-link')}
+                    to={lenkeTilKandidat(kandidat.arenaKandidatnr, kandidatlisteId)}
+                >
+                    {hentKandidatensNavn(kandidat)}
+                </Link>
+            }
+            ønsker={alleØnskedeYrker ?? '-'}
+            lokasjon={alleØnskedeSteder ?? '-'}
+            innsatsgruppe={alleInnsatsgrupper[kandidat.kvalifiseringsgruppekode].label}
+            bosted={`${kandidat.kommunenummerstring ?? '-'} ${kandidat.kommuneNavn ?? '-'}`}
+            veilder={kandidat.veilederVisningsnavn ?? '-'}
+        />
     );
 };
 

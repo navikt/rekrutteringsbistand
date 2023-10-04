@@ -210,7 +210,7 @@ const AvbrytKnapp = () => (
             css.avbrytLink,
             css.knapp
         )}
-        to="/stillinger/minestillinger"
+        to="/stillinger/stillingssok?portefolje=visMine"
     >
         Avbryt
     </Link>

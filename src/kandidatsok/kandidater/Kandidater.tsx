@@ -3,9 +3,9 @@ import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useMemo } from 'react';
 
 import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Nettstatus } from 'felles/nettressurs';
 import Paginering from '../filter/Paginering';
-import { InnloggetBruker } from '../hooks/useBrukerensIdent';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useQuery from '../hooks/useQuery';
 import { Økt } from '../Økt';

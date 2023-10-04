@@ -28,7 +28,7 @@ const VelgKandidatlister: FunctionComponent<Props> = ({
     const avhukedeLister = [...Array.from(markerteLister), ...Array.from(lagredeLister)];
 
     if (mineKandidatlister.kind === Nettstatus.LasterInn) {
-        return <Loader />;
+        return <Loader variant="interaction" size="2xlarge" />;
     } else if (
         mineKandidatlister.kind === Nettstatus.Suksess ||
         mineKandidatlister.kind === Nettstatus.Oppdaterer

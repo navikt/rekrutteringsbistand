@@ -36,7 +36,7 @@ const byggIndreQuery = (query: HentMineStillingerQuery) => {
     };
 };
 
-const kunMineStillinger = (navIdent: string) => [
+export const kunMineStillinger = (navIdent: string) => [
     {
         bool: {
             should: [
@@ -55,7 +55,10 @@ const kunMineStillinger = (navIdent: string) => [
     },
 ];
 
-const byggSynlighetQuery = (visUtløpteStillinger: boolean, stillingStatuser: string | string[]) => {
+export const byggSynlighetQuery = (
+    visUtløpteStillinger: boolean,
+    stillingStatuser: string | string[]
+) => {
     if (visUtløpteStillinger) {
         return [
             {

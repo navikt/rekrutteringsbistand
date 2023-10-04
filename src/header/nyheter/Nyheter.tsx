@@ -1,11 +1,10 @@
-import { FunctionComponent, ReactNode, useState, useEffect, useRef } from 'react';
-import { Heading, Popover } from '@navikt/ds-react';
-
+import { LightBulbIcon } from '@navikt/aksel-icons';
+import { Button, Heading, Popover } from '@navikt/ds-react';
+import { FunctionComponent, ReactNode, useEffect, useRef, useState } from 'react';
 import Artikkel from './Artikkel';
-import Ikon from './Ikon';
-import useAntallUlesteNyheter from './useAntallUlesteNyheter';
-import nyhetssaker from './nyhetssaker';
 import css from './Nyheter.module.css';
+import nyhetssaker from './nyhetssaker';
+import useAntallUlesteNyheter from './useAntallUlesteNyheter';
 
 export type Nyhet = {
     dato: Date;
@@ -34,10 +33,18 @@ const Nyheter: FunctionComponent = () => {
 
     return (
         <div className={css.nyheter}>
-            <button ref={buttonRef} onClick={() => setÅpen(!åpen)} className={css.knapp}>
-                <Ikon />
+            <Button
+                size="small"
+                ref={buttonRef}
+                className={css.knapp}
+                onClick={() => setÅpen(!åpen)}
+                variant="tertiary-neutral"
+                icon={<LightBulbIcon aria-hidden />}
+            >
+                Hva er nytt
                 {antallUlesteNyheter > 0 && <div className={css.notifikasjon} />}
-            </button>
+            </Button>
+
             <Popover
                 open={åpen}
                 anchorEl={buttonRef.current}

@@ -1,11 +1,10 @@
 .app {
     height: 100%;
-    background-color: var(--a-bg-subtle);
+    /* background-color: var(--a-bg-subtle); */
     position: relative;
 }
 
 .main {
     margin-bottom: -105px;
     padding-bottom: 105px;
-    min-height: 100vh;
 }

@@ -121,7 +121,7 @@ const Stilling = () => {
             <div className={css.slettet}>
                 <BodyLong spacing>Stillingen er slettet</BodyLong>
                 <Link to="/stillinger" className="navds-link">
-                    Søk etter stillinger
+                    Stillinger
                 </Link>
             </div>
         );

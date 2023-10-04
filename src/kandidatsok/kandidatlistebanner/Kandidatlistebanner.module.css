@@ -1,37 +1,20 @@
-.container {
-    background-color: var(--a-deepblue-100);
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1.5rem;
 }
 
-.banner {
-    max-width: var(--innhold-maksbredde);
-    margin: 0 auto;
-    padding: 2rem 2rem;
-    grid-column: span 2;
-
+.hovedinnhold {
+    margin-bottom: 0.5rem;
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
 
 .lenker {
-    margin-top: 1rem;
-}
-
-.lenker a:first-child {
-    margin-right: 1.5rem;
-}
-
-@media (min-width: 900px) {
-    .banner {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .lenker {
-        margin-top: 0rem;
-    }
-}
-
-.banner h1 {
-    margin-bottom: 1rem;
+    display: flex;
+    gap: 1.5rem;
 }

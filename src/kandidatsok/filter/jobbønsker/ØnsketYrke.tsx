@@ -13,7 +13,7 @@ const ØnsketYrke: FunctionComponent = () => {
 
     return (
         <FilterMedTypeahead
-            label="Ønsket yrke"
+            label="Arbeidsønsker"
             description="Hva ønsker kandidaten å jobbe med?"
             suggestionField={Forslagsfelt.ØnsketYrke}
             value={søkekriterier.ønsketYrke}

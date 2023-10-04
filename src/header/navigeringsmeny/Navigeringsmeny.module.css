@@ -1,6 +1,7 @@
 .navigeringsmeny {
-    padding: 0 2.5rem;
-    background-color: white;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--a-border-divider);
 }
 
 @media print {
@@ -10,8 +11,10 @@
 }
 
 .inner {
+    max-width: var(--innhold-maksbredde);
+    padding: 0 1rem;
     margin: 0 auto;
-    max-width: 1920px;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -62,4 +65,10 @@
 
 .tabFremhevet {
     margin-left: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .inner {
+        padding: 0 2.5rem;
+    }
 }

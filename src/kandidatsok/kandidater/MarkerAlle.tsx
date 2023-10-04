@@ -1,8 +1,8 @@
 import { Checkbox } from '@navikt/ds-react';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
-import { Nettstatus } from 'felles/nettressurs';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 import css from './Kandidater.module.css';
 
 type Props = {

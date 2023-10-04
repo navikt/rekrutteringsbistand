@@ -1,32 +1,13 @@
-.mineStillinger {
-    background-color: var(--a-bg-subtle);
-    min-height: 100vh;
-}
-
 .antallStillinger {
     grid-area: over-tabell;
+    margin-bottom: 1rem;
 }
 
 .paginering {
     display: flex;
     justify-content: center;
     grid-area: under-tabell;
-}
-
-.wrapper {
-    max-width: calc(var(--innhold-maksbredde-utvidet) + 4rem);
-
-    display: grid;
-    align-items: start;
-    grid-template-areas:
-        'filter'
-        'over-tabell'
-        'tabell'
-        'under-filter'
-        'under-tabell';
-    gap: 2rem;
-    margin: 2.5rem auto 0;
-    padding: 0 1rem 2.5rem;
+    margin-top: 2rem;
 }
 
 .feilmelding {
@@ -39,16 +20,4 @@
 
 .filter {
     grid-area: filter;
-}
-
-@media (min-width: 1280px) {
-    .wrapper {
-        grid-template-columns: minmax(14rem, 19rem) auto;
-        grid-template-areas:
-            'over-filter over-tabell'
-            'filter tabell'
-            'under-filter under-tabell';
-        gap: 2rem;
-        padding: 0 2rem 2.5rem;
-    }
 }

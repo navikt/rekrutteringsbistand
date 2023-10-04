@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { TasklistIcon } from '@navikt/aksel-icons';
 import { Nettstatus } from 'felles/nettressurs';
+import Layout from '../../../felles/komponenter/layout/Layout';
 import { lenkeTilKandidatsøk } from '../../app/paths';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useCv from '../hooks/useCv';
@@ -30,7 +31,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr);
     const [visKandidatlisterModal, setVisKandidatlisterModal] = useState<boolean>(false);
 
-    const finnStillingUrl = `/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`;
+    const finnStillingUrl = `/stillinger/stillingssok/kandidat/${kandidatnr}?brukKriterierFraKandidat=true`;
 
     const økt = hentØktFraKandidatsøk();
 
@@ -49,12 +50,15 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
     };
 
     return (
-        <>
-            <Kandidatheader
-                kandidatnr={kandidatnr}
-                kandidatnavigering={kandidatnavigering}
-                brødsmulesti={brødsmulesti}
-            />
+        <Layout
+            banner={
+                <Kandidatheader
+                    kandidatnr={kandidatnr}
+                    kandidatnavigering={kandidatnavigering}
+                    brødsmulesti={brødsmulesti}
+                />
+            }
+        >
             <Tabs value={fane} onChange={setFane as any} className={css.tabs}>
                 <Kandidatmeny tabs={tabs} cv={cv}>
                     {cv.kind === Nettstatus.Suksess && (
@@ -78,7 +82,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
                 kandidatnr={kandidatnr}
                 onClose={() => setVisKandidatlisterModal(false)}
             />
-        </>
+        </Layout>
     );
 };
 

@@ -1,14 +1,14 @@
-import { FunctionComponent, ReactNode } from 'react';
 import { Checkbox, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
+import { FunctionComponent, ReactNode } from 'react';
 
-import { erKobletTilStilling } from '../domene/kandidatlisteUtils';
-import { KandidatSorteringsfelt } from '../kandidatsortering';
-import { nesteSorteringsretning, Retning } from './sorterbarKolonneheader/Retning';
-import { Kandidatsortering } from '../reducer/kandidatlisteReducer';
-import SorterbarKolonneheader from './sorterbarKolonneheader/SorterbarKolonneheader';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import { erKobletTilStilling } from '../domene/kandidatlisteUtils';
 import css from '../kandidatrad/Kandidatrad.module.css';
+import { KandidatSorteringsfelt } from '../kandidatsortering';
+import { Kandidatsortering } from '../reducer/kandidatlisteReducer';
+import { nesteSorteringsretning, Retning } from './sorterbarKolonneheader/Retning';
+import SorterbarKolonneheader from './sorterbarKolonneheader/SorterbarKolonneheader';
 
 interface Props {
     kandidatliste: Kandidatliste;

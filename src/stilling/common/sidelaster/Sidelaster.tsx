@@ -1,6 +1,6 @@
 import { Loader, LoaderProps } from '@navikt/ds-react';
-import css from './Sidelaster.module.css';
 import classNames from 'classnames';
+import css from './Sidelaster.module.css';
 
 const Sidelaster = ({ size, className }: LoaderProps) => (
     <div className={classNames(css.wrapper, className)}>

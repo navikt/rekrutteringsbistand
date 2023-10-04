@@ -1,0 +1,17 @@
+.wrapper {
+    width: 100%;
+    min-height: 3.5rem;
+}
+
+.filtermeny {
+    display: flex;
+    padding-top: 0.25rem;
+    padding-bottom: 1.25rem;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.filtermeny > button {
+    flex-shrink: 0;
+}

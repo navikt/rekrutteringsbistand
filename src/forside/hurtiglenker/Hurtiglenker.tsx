@@ -17,17 +17,17 @@ const Hurtiglenker: FunctionComponent = () => {
                 ikon={<FinnKandidaterIkon />}
             />
             <LenkepanelMedIkon
-                href="/stillingssok?brukStandardsok=true"
+                href="/stillinger/stillingssok?brukStandardsok=true"
                 tittel="Finn stillinger"
                 ikon={<FinnStillinger />}
             />
             <LenkepanelMedIkon
-                href="/stillinger/minestillinger"
+                href={'/stillinger/stillingssok?portefolje=visMine'}
                 tittel="Se mine stillinger"
                 ikon={<SeMineStillingerIkon />}
             />
             <LenkepanelMedIkon
-                href="/stillinger/minestillinger?visOpprettStillingModal"
+                href="/stillinger/stillingssok?modal=opprettStillingModal"
                 tittel="Opprett ny stilling"
                 ikon={<OpprettNyStillingIkon />}
             />

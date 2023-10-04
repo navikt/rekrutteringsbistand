@@ -1,0 +1,152 @@
+.stillingsrad {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 0.5rem 0rem;
+    align-items: center;
+    flex-direction: column;
+    border-radius: var(--a-border-radius-xlarge);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    border-radius: 12px;
+    border-color: lightgray;
+}
+
+.lenkeTilStilling {
+    align-self: flex-start;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    max-width: 35rem;
+    color: var(--a-text-action);
+}
+
+.lenkeTilStilling:hover {
+    text-decoration: underline;
+}
+
+.lenkeTilStilling:focus {
+    box-shadow: var(--a-shadow-focus);
+}
+
+.lenkeTilStilling:visited {
+    color: var(--a-text-visited);
+}
+
+.etiketterOgDato {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.75rem;
+}
+
+.etiketter {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.etikett:not(:last-of-type) {
+    margin-right: 0.5rem;
+}
+
+.etikettInkludering:global(.navds-tag) {
+    background-color: var(--a-green-100);
+    border-color: var(--a-green-500);
+}
+
+.etikettIntern:global(.navds-tag) {
+    background-color: var(--a-purple-100);
+    border-color: var(--a-purple-400);
+}
+
+.etikettArbeidsplassen:global(.navds-tag) {
+    background-color: var(--a-lightblue-100);
+    border-color: var(--a-lightblue-500);
+}
+
+.stillingsinfo > span:not(:last-child)::after {
+    content: '•';
+    color: lightgray;
+    margin: 0 0.5rem;
+}
+
+.stillingsinfolink {
+    float: right;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 2rem;
+}
+
+.stillingsinfolink:hover {
+    text-decoration: underline;
+}
+
+.score {
+    padding: 0.25rem 0.5rem;
+    border-radius: 1rem;
+    background-color: var(--a-blue-100);
+}
+
+.ikon {
+    margin-right: 0.5rem;
+    position: relative;
+    top: 0.1875rem;
+}
+
+.tekstrad {
+    display: flex;
+    flex-direction: column;
+}
+
+.lenker {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.lenke {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.lenke:hover {
+    text-decoration: underline;
+}
+
+.stillingslenke:visited:not(:active):not(:focus) {
+    color: var(--a-text-visited);
+}
+
+@media (min-width: 768px) {
+    .stillingsrad {
+        flex-direction: row;
+    }
+
+    .etiketterOgDato {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+    }
+
+    .etiketter {
+        margin-bottom: 0;
+    }
+
+    .score {
+        right: 1rem;
+        align-self: unset;
+    }
+    .tekstrad {
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+
+    .lenker {
+        margin-top: 0rem;
+        margin-left: 1rem;
+    }
+}

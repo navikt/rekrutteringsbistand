@@ -32,6 +32,7 @@
 }
 
 .paginering {
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
     grid-area: under-tabell;

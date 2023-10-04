@@ -1,0 +1,72 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.stillingssøk {
+    --filter-bredde: 19rem;
+    --gap-bredde: 2.5rem;
+
+    display: grid;
+    row-gap: 2rem;
+    overflow: hidden;
+
+    margin: 3rem auto;
+    padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+    .stillingssøk {
+        padding: 0 2rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .stillingssøk {
+        display: grid;
+        grid-template-columns: var(--filter-bredde) minmax(
+                10rem,
+                calc(var(--innhold-maksbredde) - var(--filter-bredde) - var(--gap-bredde) - 2rem)
+            );
+        place-content: center;
+        column-gap: var(--gap-bredde);
+    }
+}
+
+@media (min-width: 1200px) {
+    .stillingssøk {
+        column-gap: 4rem;
+    }
+}
+
+.sidepanel {
+    flex-grow: 0;
+    min-width: 18rem;
+}
+
+.sokeresultat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.beskrivelseAvSøk {
+    align-self: stretch;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.spinner {
+    margin-top: 10rem;
+    display: flex;
+    justify-content: center;
+    /* Gjør siden kjempehøy under innlasting av stillinger */
+    /* slik at nettleseren klarer å scrolle til dit du var. */
+    margin-bottom: 500rem;
+}

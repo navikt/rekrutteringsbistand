@@ -1,12 +1,15 @@
+import { Buldings2Icon, PersonGroupIcon } from '@navikt/aksel-icons';
+import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
+import Grunnbanner from 'felles/komponenter/grunnbanner/Grunnbanner';
+import Brødsmulesti from 'felles/komponenter/kandidatbanner/Brødsmulesti';
+import { ReactComponent as FinnKandidaterIkon } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { BodyShort, Heading } from '@navikt/ds-react';
-import { Buldings2Icon, PersonGroupIcon } from '@navikt/aksel-icons';
-import { lenkeTilKandidatliste, lenkeTilStilling } from '../utils';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
+import { lenkeTilKandidatliste, lenkeTilStilling } from '../utils';
 import css from './Kandidatlistebanner.module.css';
-import { Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     kontekst: KontekstAvKandidatlisteEllerStilling;
@@ -17,41 +20,69 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
 
     useSøkekriterierFraStilling(stilling, brukKriterierFraStillingen);
 
-    if (kandidatliste.kind !== Nettstatus.Suksess) {
-        return null;
-    }
-
-    const { tittel, opprettetAv, kandidatlisteId } = kandidatliste.data;
-
     return (
-        <div role="banner" className={css.container}>
+        <Grunnbanner ikon={<FinnKandidaterIkon />}>
             <div className={css.banner}>
-                <div>
-                    <BodyShort>Finn kandidater til kandidatliste:</BodyShort>
-                    <Heading level="1" size="medium">
-                        {tittel}
+                <div className={css.hovedinnhold}>
+                    {kandidatliste.kind === Nettstatus.Suksess ? (
+                        <Brødsmulesti
+                            brødsmulesti={[
+                                {
+                                    tekst: kandidatliste.data.tittel,
+                                    href: lenkeTilKandidatliste(kandidatliste.data.kandidatlisteId),
+                                },
+                                {
+                                    tekst: 'Finn kandidater',
+                                },
+                            ]}
+                        />
+                    ) : (
+                        <Skeleton width={220} />
+                    )}
+                    <Heading size="large" level="2">
+                        {kandidatliste.kind === Nettstatus.Suksess ? (
+                            kandidatliste.data.tittel
+                        ) : (
+                            <Skeleton>Placeholder</Skeleton>
+                        )}
                     </Heading>
                     <BodyShort>
-                        Opprettet av {opprettetAv.navn} ({opprettetAv.ident})
+                        {kandidatliste.kind === Nettstatus.Suksess ? (
+                            <span>
+                                Opprettet av {kandidatliste.data.opprettetAv.navn} (
+                                {kandidatliste.data.opprettetAv.ident})
+                            </span>
+                        ) : (
+                            <Skeleton width={100} />
+                        )}
                     </BodyShort>
                 </div>
                 <div className={css.lenker}>
-                    {kandidatliste.data.stillingId && (
-                        <Link
-                            className="navds-link"
-                            to={lenkeTilStilling(kandidatliste.data.stillingId)}
-                        >
-                            <Buldings2Icon />
-                            Se stilling
-                        </Link>
+                    {kandidatliste.kind === Nettstatus.Suksess ? (
+                        <>
+                            {kandidatliste.data.stillingId && (
+                                <Link
+                                    className="navds-link"
+                                    to={lenkeTilStilling(kandidatliste.data.stillingId)}
+                                >
+                                    <Buldings2Icon aria-hidden />
+                                    Se stilling
+                                </Link>
+                            )}
+                            <Link
+                                className="navds-link"
+                                to={lenkeTilKandidatliste(kandidatliste.data.kandidatlisteId)}
+                            >
+                                <PersonGroupIcon aria-hidden />
+                                Se kandidatliste
+                            </Link>
+                        </>
+                    ) : (
+                        <Skeleton width={100} />
                     )}
-                    <Link className="navds-link" to={lenkeTilKandidatliste(kandidatlisteId)}>
-                        <PersonGroupIcon />
-                        Se kandidatliste
-                    </Link>
                 </div>
             </div>
-        </div>
+        </Grunnbanner>
     );
 };
 

@@ -9,6 +9,7 @@ import {
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Layout from '../../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { lenkeTilKandidatliste } from '../../app/paths';
 import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
@@ -119,12 +120,15 @@ const FraKandidatlisteInner = ({
     ];
 
     return (
-        <>
-            <Kandidatheader
-                kandidatnr={kandidat.kandidatnr}
-                kandidatnavigering={navigering}
-                brødsmulesti={brødsmulesti}
-            />
+        <Layout
+            banner={
+                <Kandidatheader
+                    kandidatnr={kandidat.kandidatnr}
+                    kandidatnavigering={navigering}
+                    brødsmulesti={brødsmulesti}
+                />
+            }
+        >
             <Tabs value={fane} onChange={setFane}>
                 <Kandidatmeny tabs={tabs} cv={cv}>
                     <div className={css.velgStatus}>
@@ -145,7 +149,7 @@ const FraKandidatlisteInner = ({
                 </Kandidatmeny>
                 <Tabs.Panel value={fane}>{children}</Tabs.Panel>
             </Tabs>
-        </>
+        </Layout>
     );
 };
 

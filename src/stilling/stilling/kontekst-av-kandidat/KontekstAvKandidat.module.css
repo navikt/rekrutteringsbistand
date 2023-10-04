@@ -1,3 +1,13 @@
+.wrapperTilBanner {
+    background-color: white;
+}
+
+.innerWrapperTilBanner {
+    max-width: var(--innhold-maksbredde);
+    padding: 0 1rem 1rem;
+    margin: 0 auto;
+}
+
 .knapper {
     display: flex;
     flex-direction: row;
@@ -5,4 +15,10 @@
 
 .synlighetsevalueringfeil {
     margin: 1.5rem 0;
+}
+
+@media (min-width: 768px) {
+    .innerWrapperTilBanner {
+        padding: 0 2.5rem 1rem;
+    }
 }
