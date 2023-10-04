@@ -79,8 +79,8 @@ const RekBisKortStilling = ({
         >
             <div className={css.innhold}>
                 <div>
-                    <Heading size="small">{lenkeTilStilling}</Heading>
                     {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
+                    <Heading size="small">{lenkeTilStilling}</Heading>
                 </div>
                 {import.meta.env.DEV && score !== null && (
                     <div>
