@@ -29,11 +29,8 @@ const App = () => {
                     errorElement={<Appfeil />}
                 />
 
-                {/* Redirect gamle ruter */}
-                <Route
-                    path="/stillingssok/*"
-                    element={<Navigate to="/stillinger/stillingssok?brukStandardsok=true" />}
-                />
+                {/* Redirect gammel route */}
+                <Route path="/stillingssok" element={<Navigate to="/stillinger/stillingssok" />} />
             </Route>
         )
     );
