@@ -19,7 +19,7 @@ const App = () => {
             <Varsling />
             <Routes>
                 <Route path="stillingssok/*" element={<StillingsSøkIndex />} />
-                <Route path="stillingssok/:kandidat" element={<StillingsSøkIndex />} />
+                <Route path="stillingssok/kandidat/:kandidat" element={<StillingsSøkIndex />} />
                 <Route path="stilling/:uuid" element={<Stilling />} />
             </Routes>
         </>

@@ -69,7 +69,7 @@ const InngangFraArbop = () => {
 
                 if (kandidatnr) {
                     return navigate(
-                        `/stillinger/stillingssok/${kandidatnr}?brukKriterierFraKandidat=true`
+                        `/stillinger/stillingssok/kandidat/${kandidatnr}?brukKriterierFraKandidat=true`
                     );
                 }
             }

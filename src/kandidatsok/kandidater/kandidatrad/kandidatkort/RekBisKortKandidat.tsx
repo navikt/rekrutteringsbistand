@@ -76,7 +76,7 @@ const RekBisKortKandidat = ({
                     <div>
                         <Link
                             className={css.lenke}
-                            to={`/stillinger/stillingssok/kandidat/${kandidatnummer}?brukKriterierFraKandidat=true`}
+                            to={`/stillinger/stillingssok/kandidat${kandidatnummer}?brukKriterierFraKandidat=true`}
                         >
                             Finn stilling
                         </Link>
