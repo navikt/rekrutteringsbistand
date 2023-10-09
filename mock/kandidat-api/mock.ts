@@ -1,6 +1,7 @@
 import { ResponseFunction, RestContext, RestRequest, rest } from 'msw';
 import { api } from '../../src/felles/api';
 import { LagreKandidaterDto } from '../../src/kandidatsok/kandidatliste/LagreKandidaterIMineKandidatlisterModal';
+import { mockAvviksrapport } from './mockAvviksrapport';
 import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
 
@@ -139,4 +140,6 @@ export const kandidatApiMock = [
         `${api.kandidat}/veileder/kandidat/arbeidsgiverliste/:kandidatlisteId/:kandidatnummer`,
         todo
     ),
+
+    rest.all(`${api.kandidat}/avvik`, (_, res, ctx) => res(ctx.json(mockAvviksrapport))),
 ];
