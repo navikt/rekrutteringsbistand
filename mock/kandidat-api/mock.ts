@@ -144,6 +144,7 @@ export const kandidatApiMock = [
     rest.post(`${api.kandidat}/avvik`, (_, res, ctx) => res(ctx.json(mockAvviksrapport))),
 
     rest.get(`${api.kandidat}/avvik/:kandidatlisteId`, (_, res, ctx) =>
-        res(ctx.json(mockAvviksrapport))
+        //res(ctx.json(mockAvviksrapport))
+        res(ctx.status(404))
     ),
 ];
