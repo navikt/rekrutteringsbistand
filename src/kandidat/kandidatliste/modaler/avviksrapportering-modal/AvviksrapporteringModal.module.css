@@ -1,0 +1,13 @@
+.avviksrapportering {
+    min-width: 43.75rem;
+}
+
+.knapper {
+    width: fit-content;
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+}
+.knapperad {
+    width: 100%;
+}
