@@ -1,5 +1,10 @@
-import { HikingTrailSignIcon, MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
-import { Button } from '@navikt/ds-react';
+import {
+    HikingTrailSignIcon,
+    MagnifyingGlassIcon,
+    PersonPlusIcon,
+    CheckmarkCircleIcon,
+} from '@navikt/aksel-icons';
+import { BodyShort, Button, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { erIkkeProd } from 'felles/miljø';
 import { FunctionComponent, useEffect, useState } from 'react';
@@ -9,6 +14,7 @@ import css from './Meny.module.css';
 import { api, get } from 'felles/api';
 import { Avviksrapport } from 'felles/domene/kandidatliste/Avviksrapport';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { formaterDatoNaturlig } from '../../utils/dateUtils';
 
 interface Props {
     border?: boolean;
@@ -36,8 +42,6 @@ const Meny: FunctionComponent<Props> = ({
         if (erIkkeProd) hentAvviksrapport();
     }, [kandidatlisteId]);
 
-    console.log(avviksrapport);
-
     return (
         <div
             className={classNames(css.meny, {
@@ -59,13 +63,23 @@ const Meny: FunctionComponent<Props> = ({
             </Button>
             {erIkkeProd && onRapporterAvvik && (
                 <>
-                    {avviksrapport.kind === Nettstatus.Suksess && <>TODO</>}
+                    {avviksrapport.kind === Nettstatus.Suksess && (
+                        <div className={css.gjennomgått}>
+                            <CheckmarkCircleIcon aria-hidden />
+                            <div>
+                                <Label as="span">Listen ble gjennomgått for personvernsbrudd</Label>
+                                <BodyShort>
+                                    {formaterDatoNaturlig(avviksrapport.data.tidspunkt)}
+                                </BodyShort>
+                            </div>
+                        </div>
+                    )}
                     {avviksrapport.kind === Nettstatus.FinnesIkke && (
                         <Button
                             variant="secondary"
                             onClick={onRapporterAvvik}
                             icon={<HikingTrailSignIcon aria-hidden />}
-                            className={css.rapporterAvvikKnapp}
+                            className={css.rapporterAvvik}
                         >
                             Rapporter avvik
                         </Button>

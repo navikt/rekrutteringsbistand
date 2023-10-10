@@ -8,8 +8,18 @@
     background-color: white;
 }
 
-.rapporterAvvikKnapp {
+.rapporterAvvik,
+.gjennomgått {
     margin-left: auto;
+}
+
+.gjennomgått {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.gjennomgått svg {
+    font-size: 1.5rem;
 }
 
 .border {
