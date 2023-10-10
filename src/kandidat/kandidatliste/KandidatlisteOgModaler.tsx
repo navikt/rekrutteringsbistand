@@ -16,6 +16,7 @@ import {
     hentForespørslerForKandidatForStilling,
 } from './knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import SendSmsModal from './modaler/SendSmsModal';
+import AvviksrapporteringModal from './modaler/avviksrapportering-modal/AvviksrapporteringModal';
 import LeggTilKandidatModal from './modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
 import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
 import KandidatlisteAction from './reducer/KandidatlisteAction';
@@ -49,6 +50,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         deleModalOpen: boolean;
         leggTilModalOpen: boolean;
         sendSmsModalOpen: boolean;
+        avviksrapporteringModalOpen: boolean;
     };
 
     constructor(props: Props) {
@@ -57,6 +59,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
             deleModalOpen: false,
             leggTilModalOpen: false,
             sendSmsModalOpen: false,
+            avviksrapporteringModalOpen: false,
         };
     }
 
@@ -162,6 +165,12 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         });
     };
 
+    onToggleRapporterAvvikModal = (vis: boolean = !this.state.avviksrapporteringModalOpen) => {
+        this.setState({
+            avviksrapporteringModalOpen: vis,
+        });
+    };
+
     hentMarkerteKandidater = () => {
         const { kandidatliste, kandidattilstander } = this.props;
 
@@ -199,7 +208,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
     };
 
     render() {
-        const { deleModalOpen, leggTilModalOpen } = this.state;
+        const { deleModalOpen, leggTilModalOpen, avviksrapporteringModalOpen } = this.state;
         const { kandidatliste, endreStatusKandidat, toggleArkivert } = this.props;
         const { kandidater } = kandidatliste;
 
@@ -225,6 +234,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                     stillingsId={kandidatliste.stillingId}
                     kandidatliste={kandidatliste}
                 />
+                <AvviksrapporteringModal vis={avviksrapporteringModalOpen} />
                 {kandidatliste.stillingId &&
                     this.props.sendteMeldinger.kind === Nettstatus.Suksess && (
                         <>
@@ -250,6 +260,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                     onSendSmsClick={() => this.onToggleSendSmsModal(true)}
                     onLeggTilKandidat={this.onToggleLeggTilKandidatModal}
                     onToggleArkivert={toggleArkivert}
+                    onRapporterAvvik={() => this.onToggleRapporterAvvikModal(true)}
                 />
             </div>
         );

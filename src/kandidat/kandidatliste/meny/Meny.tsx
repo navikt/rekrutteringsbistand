@@ -1,16 +1,18 @@
-import { FunctionComponent } from 'react';
-import { MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
+import { HikingTrailSignIcon, MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
+import classNames from 'classnames';
+import { erIkkeProd } from 'felles/miljø';
+import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { lenkeTilFinnKandidater } from '../../app/paths';
 import css from './Meny.module.css';
-import classNames from 'classnames';
 
 interface Props {
     border?: boolean;
     kandidatlisteId: string;
     stillingId: string | null;
     onLeggTilKandidat: () => void;
+    onRapporterAvvik?: () => void;
 }
 
 const Meny: FunctionComponent<Props> = ({
@@ -18,6 +20,7 @@ const Meny: FunctionComponent<Props> = ({
     kandidatlisteId,
     stillingId,
     onLeggTilKandidat,
+    onRapporterAvvik,
 }) => {
     return (
         <div
@@ -38,6 +41,17 @@ const Meny: FunctionComponent<Props> = ({
             >
                 Legg til kandidat
             </Button>
+
+            {erIkkeProd && onRapporterAvvik && (
+                <Button
+                    variant="secondary"
+                    onClick={onRapporterAvvik}
+                    icon={<HikingTrailSignIcon aria-hidden />}
+                    className={css.rapporterAvvikKnapp}
+                >
+                    Rapporter avvik
+                </Button>
+            )}
         </div>
     );
 };

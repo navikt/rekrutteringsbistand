@@ -8,6 +8,10 @@
     background-color: white;
 }
 
+.rapporterAvvikKnapp {
+    margin-left: auto;
+}
+
 .border {
     border-bottom: 2px solid var(--a-border-divider);
 }
