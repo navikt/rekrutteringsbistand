@@ -11,6 +11,7 @@ import {
 import {
     AvvikIFritekstfelt,
     avvikIFritekstfeltTilVisningsnavn,
+    avvikMedVisningsnavnTilEnum,
 } from 'felles/domene/kandidatliste/Avviksrapport';
 import { useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
@@ -23,18 +24,30 @@ type Props = {
 const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
     const [detHarVærtBrudd, setDetHarVærtBrudd] = useState<boolean | null>(null);
     const [typerBrudd, setTyperBrudd] = useState<string[]>([]);
-    const [valgteAvvikIFritekstfelt, setValgteAvvikIFritekstfelt] = useState<string[]>([]);
+    const [valgteAvvikIFritekstfelt, setValgteAvvikIFritekstfelt] = useState<AvvikIFritekstfelt[]>(
+        []
+    );
 
-    const onToggleAvvikIFritekstfelt = (avvik: string, erValgt: boolean) => {
+    const onLagreOgSendClick = () => {
+        console.log('Todo!');
+    };
+
+    const onToggleAvvikIFritekstfelt = (avvikMedVisningsnavn: string, erValgt: boolean) => {
+        const avvikSomEnum = avvikMedVisningsnavnTilEnum(avvikMedVisningsnavn);
+
         if (erValgt) {
-            setValgteAvvikIFritekstfelt([...valgteAvvikIFritekstfelt, avvik]);
+            setValgteAvvikIFritekstfelt([...valgteAvvikIFritekstfelt, avvikSomEnum]);
         } else {
-            setValgteAvvikIFritekstfelt(valgteAvvikIFritekstfelt.filter((a) => a !== avvik));
+            setValgteAvvikIFritekstfelt(valgteAvvikIFritekstfelt.filter((a) => a !== avvikSomEnum));
         }
     };
 
-    const muligeAvvikIFritekstfelt = Object.values(AvvikIFritekstfelt).map((avvikskategori) =>
-        avvikIFritekstfeltTilVisningsnavn(avvikskategori)
+    const muligeAvvikIFritekstfeltMedVisningsnavn = Object.values(AvvikIFritekstfelt).map(
+        (avvikskategori) => avvikIFritekstfeltTilVisningsnavn(avvikskategori)
+    );
+
+    const valgteAvvikIFritekstfeltMedVisningsnavn = valgteAvvikIFritekstfelt.map((valgtAvvik) =>
+        avvikIFritekstfeltTilVisningsnavn(valgtAvvik)
     );
 
     return (
@@ -77,8 +90,8 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                                         shouldAutocomplete
                                         className={css.avvikComboboks}
                                         label="Velg hvilke avvik som har skjedd i listen"
-                                        options={muligeAvvikIFritekstfelt}
-                                        selectedOptions={valgteAvvikIFritekstfelt}
+                                        options={muligeAvvikIFritekstfeltMedVisningsnavn}
+                                        selectedOptions={valgteAvvikIFritekstfeltMedVisningsnavn}
                                         onToggleSelected={onToggleAvvikIFritekstfelt}
                                     />
                                 </div>
@@ -93,7 +106,7 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                 <Button onClick={onClose} variant="secondary">
                     Avbryt
                 </Button>
-                <Button>Lagre og send</Button>
+                <Button onClick={onLagreOgSendClick}>Lagre og send</Button>
             </Modal.Footer>
         </Modal>
     );

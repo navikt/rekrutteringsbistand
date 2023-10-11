@@ -20,27 +20,29 @@ export enum AvvikIFritekstfelt {
     SubjektiveNegativeRefleksjoner = 'SUBJEKTIVE_NEGATIVE_REFLEKSJONER',
 }
 
-export const avvikIFritekstfeltTilVisningsnavn = (
-    avvikIFritekstfelt: AvvikIFritekstfelt
-): string => {
-    switch (avvikIFritekstfelt) {
-        case AvvikIFritekstfelt.Etnisitet:
-            return 'Etnisitet (f.eks. nasjonalitet, opprinnelse)';
-        case AvvikIFritekstfelt.Religion:
-            return 'Religion';
-        case AvvikIFritekstfelt.SeksuellLegning:
-            return 'Seksuell legning';
-        case AvvikIFritekstfelt.Helseopplysninger:
-            return 'Helseopplysninger';
-        case AvvikIFritekstfelt.Straffehistorikk:
-            return 'Straffehistorikk (f.eks. fengselsopphold)';
-        case AvvikIFritekstfelt.SosialeEllerØkonomiskeForhold:
-            return 'Sosiale eller økonomiske forhold (f.eks. gjeld)';
-        case AvvikIFritekstfelt.PersonopplysningerOmTredjepersoner:
-            return 'Personopplysninger om tredjepersoner';
-        case AvvikIFritekstfelt.SubjektiveNegativeRefleksjoner:
-            return 'Subjektive negative refleksjoner ';
-        default:
-            return avvikIFritekstfelt;
-    }
+const mapFraAvvikIFritekstfeltTilVisningsnavn: Record<AvvikIFritekstfelt, string> = {
+    [AvvikIFritekstfelt.Etnisitet]: 'Etnisitet (f.eks. nasjonalitet, opprinnelse)',
+    [AvvikIFritekstfelt.Religion]: 'Religion',
+    [AvvikIFritekstfelt.SeksuellLegning]: 'Seksuell legning',
+    [AvvikIFritekstfelt.Helseopplysninger]: 'Helseopplysninger',
+    [AvvikIFritekstfelt.Straffehistorikk]: 'Straffehistorikk (f.eks. fengselsopphold)',
+    [AvvikIFritekstfelt.SosialeEllerØkonomiskeForhold]:
+        'Sosiale eller økonomiske forhold (f.eks. gjeld)',
+    [AvvikIFritekstfelt.PersonopplysningerOmTredjepersoner]: 'Personopplysninger om tredjepersoner',
+    [AvvikIFritekstfelt.SubjektiveNegativeRefleksjoner]: 'Subjektive negative refleksjoner ',
+};
+
+export const avvikIFritekstfeltTilVisningsnavn = (avvikIFritekstfelt: AvvikIFritekstfelt): string =>
+    mapFraAvvikIFritekstfeltTilVisningsnavn[avvikIFritekstfelt] ?? avvikIFritekstfelt;
+
+export const avvikMedVisningsnavnTilEnum = (
+    visningsnavn: string
+): AvvikIFritekstfelt | undefined => {
+    const [somEnum] = Object.entries(mapFraAvvikIFritekstfeltTilVisningsnavn).find(
+        ([_, avvikSittVisningsnavn]) => {
+            return avvikSittVisningsnavn === visningsnavn;
+        }
+    );
+
+    return somEnum as AvvikIFritekstfelt;
 };
