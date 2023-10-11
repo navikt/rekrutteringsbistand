@@ -30,7 +30,7 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                 heading: 'Rapporter avvik',
             }}
         >
-            <Modal.Body>
+            <Modal.Body className={css.avvikModalBody}>
                 <BodyLong spacing>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                     incididunt ut labore et dolore magna aliqua.
