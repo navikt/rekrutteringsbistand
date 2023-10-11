@@ -1,4 +1,5 @@
 import {
+    Alert,
     BodyLong,
     Button,
     Checkbox,
@@ -44,7 +45,11 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
         };
         setPostsvar(lasterInn());
 
-        setPostsvar(await post<Avviksrapport>(`${api.kandidat}/avvik`, body));
+        const svar = await post<Avviksrapport>(`${api.kandidat}/avvik`, body);
+        setPostsvar(svar);
+        if (svar.kind === Nettstatus.Suksess) {
+            onClose();
+        }
     };
 
     const onToggleAvvikIFritekstfelt = (avvikMedVisningsnavn: string, erValgt: boolean) => {
@@ -128,6 +133,12 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                     Lagre og send
                 </Button>
             </Modal.Footer>
+            {postSvar.kind === Nettstatus.Feil && (
+                <Alert variant="error" size="small">
+                    <span>Kunne ikke lagre avvik. Prøv igjen senere.</span>
+                    <span> Feilmelding: {postSvar.error.message}</span>
+                </Alert>
+            )}
         </Modal>
     );
 };
