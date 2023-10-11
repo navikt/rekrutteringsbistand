@@ -165,7 +165,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         });
     };
 
-    onToggleRapporterAvvikModal = (vis: boolean = !this.state.avviksrapporteringModalOpen) => {
+    onToggleAvviksrapporteringModal = (vis: boolean = !this.state.avviksrapporteringModalOpen) => {
         this.setState({
             avviksrapporteringModalOpen: vis,
         });
@@ -234,7 +234,10 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                     stillingsId={kandidatliste.stillingId}
                     kandidatliste={kandidatliste}
                 />
-                <AvviksrapporteringModal vis={avviksrapporteringModalOpen} />
+                <AvviksrapporteringModal
+                    vis={avviksrapporteringModalOpen}
+                    onClose={() => this.onToggleAvviksrapporteringModal(false)}
+                />
                 {kandidatliste.stillingId &&
                     this.props.sendteMeldinger.kind === Nettstatus.Suksess && (
                         <>
@@ -260,7 +263,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                     onSendSmsClick={() => this.onToggleSendSmsModal(true)}
                     onLeggTilKandidat={this.onToggleLeggTilKandidatModal}
                     onToggleArkivert={toggleArkivert}
-                    onRapporterAvvik={() => this.onToggleRapporterAvvikModal(true)}
+                    onRapporterAvvik={() => this.onToggleAvviksrapporteringModal(true)}
                 />
             </div>
         );

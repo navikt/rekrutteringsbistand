@@ -1,22 +1,30 @@
-import { Button, Modal } from '@navikt/ds-react';
+import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import css from './AvviksrapporteringModal.module.css';
 
 type Props = {
     vis: boolean;
+    onClose: () => void;
 };
 
-const AvviksrapporteringModal = ({ vis }: Props) => {
+const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
     return (
-        <Modal className={css.avviksrapportering} open={vis} onClose={() => {}}>
-            <Modal.Header>Rapporter avvik</Modal.Header>
+        <Modal
+            className={css.avviksrapportering}
+            open={vis}
+            onClose={onClose}
+            header={{
+                heading: 'Rapporter avvik',
+            }}
+        >
             <Modal.Body>
-                <div className={css.knapperad}>
-                    <div className={css.knapper}>
-                        <Button variant="secondary">Avbryt</Button>
-                        <Button>Lagre og send</Button>
-                    </div>
-                </div>
+                <BodyLong>Har du oppdaget et avvik? ...</BodyLong>
             </Modal.Body>
+            <Modal.Footer>
+                <Button onClick={onClose} variant="secondary">
+                    Avbryt
+                </Button>
+                <Button>Lagre og send</Button>
+            </Modal.Footer>
         </Modal>
     );
 };
