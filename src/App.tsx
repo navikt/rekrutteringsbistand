@@ -1,4 +1,5 @@
 import {
+    Navigate,
     Route,
     RouterProvider,
     createBrowserRouter,
@@ -26,6 +27,11 @@ const App = () => {
                     path="stillingssok/personbruker"
                     element={<InngangFraArbop />}
                     errorElement={<Appfeil />}
+                />
+
+                <Route
+                    path="stillingssok"
+                    element={<Navigate to="/stillinger/stillingssok?brukStandardsok" />}
                 />
             </Route>
         )
