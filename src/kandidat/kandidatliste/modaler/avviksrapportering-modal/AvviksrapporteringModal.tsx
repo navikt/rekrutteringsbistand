@@ -12,9 +12,14 @@ import {
     AvvikIFritekstfelt,
     avvikIFritekstfeltTilVisningsnavn,
     avvikMedVisningsnavnTilEnum,
+    Avviksrapport,
+    AvviksrapportOutboundDto,
 } from 'felles/domene/kandidatliste/Avviksrapport';
 import { useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
+import { api, post } from 'felles/api';
+import useNavKontor from 'felles/store/navKontor';
+import { ikkeLastet, lasterInn, Nettressurs } from 'felles/nettressurs';
 
 type Props = {
     vis: boolean;
@@ -27,9 +32,18 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
     const [valgteAvvikIFritekstfelt, setValgteAvvikIFritekstfelt] = useState<AvvikIFritekstfelt[]>(
         []
     );
+    const { navKontor } = useNavKontor();
+    const [postSvar, setPostsvar] = useState<Nettressurs<Avviksrapport>>(ikkeLastet());
 
-    const onLagreOgSendClick = () => {
-        console.log('Todo!');
+    const onLagreOgSendClick = async () => {
+        let body: AvviksrapportOutboundDto = {
+            avvikIFritekstfelt: typerBrudd.includes('avvikIFritekstfelt'),
+            bruktTilFeilFormål: typerBrudd.includes('bruktTilFeilFormål'),
+            forNavkontor: navKontor,
+            listeOverAvvikIFritekstfelt: valgteAvvikIFritekstfelt,
+        };
+        setPostsvar(lasterInn());
+        setPostsvar(await post<Avviksrapport>(`${api.kandidat}/avvik`, body));
     };
 
     const onToggleAvvikIFritekstfelt = (avvikMedVisningsnavn: string, erValgt: boolean) => {
