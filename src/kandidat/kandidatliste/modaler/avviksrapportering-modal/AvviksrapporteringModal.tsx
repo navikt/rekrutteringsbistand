@@ -24,10 +24,11 @@ import css from './AvviksrapporteringModal.module.css';
 
 type Props = {
     vis: boolean;
+    onLagreAvvik: (avvik: Nettressurs<Avviksrapport>) => void;
     onClose: () => void;
 };
 
-const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
+const AvviksrapporteringModal = ({ vis, onLagreAvvik, onClose }: Props) => {
     const [detHarVærtBrudd, setDetHarVærtBrudd] = useState<boolean | null>(null);
     const [typerBrudd, setTyperBrudd] = useState<string[]>([]);
     const [valgteAvvikIFritekstfelt, setValgteAvvikIFritekstfelt] = useState<AvvikIFritekstfelt[]>(
@@ -89,7 +90,9 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
 
         const svar = await post<Avviksrapport>(`${api.kandidat}/avvik`, outboundDto);
         setPostsvar(svar);
+
         if (svar.kind === Nettstatus.Suksess) {
+            onLagreAvvik(svar);
             onClose();
         }
     };
@@ -126,7 +129,7 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
         <Modal
             className={css.avviksrapportering}
             open={vis}
-            onClose={onClose}
+            onClose={() => onClose()}
             header={{
                 heading: 'Rapporter avvik',
             }}

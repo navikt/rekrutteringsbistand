@@ -90,6 +90,7 @@ const Meny: FunctionComponent<Props> = ({
             )}
             <AvviksrapporteringModal
                 vis={visAvviksrapporteringModal}
+                onLagreAvvik={setAvviksrapport}
                 onClose={() => setVisAvviksrapporteringModal(false)}
             />
         </div>
