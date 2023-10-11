@@ -1,36 +1,38 @@
 import {
+    CheckmarkCircleIcon,
     HikingTrailSignIcon,
     MagnifyingGlassIcon,
     PersonPlusIcon,
-    CheckmarkCircleIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort, Button, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
+import { api, get } from 'felles/api';
+import { Avviksrapport } from 'felles/domene/kandidatliste/Avviksrapport';
 import { erIkkeProd } from 'felles/miljø';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { lenkeTilFinnKandidater } from '../../app/paths';
-import css from './Meny.module.css';
-import { api, get } from 'felles/api';
-import { Avviksrapport } from 'felles/domene/kandidatliste/Avviksrapport';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { formaterDatoNaturlig } from '../../utils/dateUtils';
+import AvviksrapporteringModal from '../modaler/avviksrapportering-modal/AvviksrapporteringModal';
+import css from './Meny.module.css';
 
-interface Props {
+type Props = {
     border?: boolean;
     kandidatlisteId: string;
     stillingId: string | null;
     onLeggTilKandidat: () => void;
-    onRapporterAvvik?: () => void;
-}
+    visAvviksrapportering?: boolean;
+};
 
 const Meny: FunctionComponent<Props> = ({
     border,
     kandidatlisteId,
     stillingId,
     onLeggTilKandidat,
-    onRapporterAvvik,
+    visAvviksrapportering,
 }) => {
+    const [visAvviksrapporteringModal, setVisAvviksrapporteringModal] = useState<boolean>(false);
     const [avviksrapport, setAvviksrapport] = useState<Nettressurs<Avviksrapport>>({
         kind: Nettstatus.IkkeLastet,
     });
@@ -61,7 +63,7 @@ const Meny: FunctionComponent<Props> = ({
             >
                 Legg til kandidat
             </Button>
-            {erIkkeProd && onRapporterAvvik && (
+            {erIkkeProd && visAvviksrapportering && (
                 <>
                     {avviksrapport.kind === Nettstatus.Suksess && (
                         <div className={css.gjennomgått}>
@@ -77,7 +79,7 @@ const Meny: FunctionComponent<Props> = ({
                     {avviksrapport.kind === Nettstatus.FinnesIkke && (
                         <Button
                             variant="secondary"
-                            onClick={onRapporterAvvik}
+                            onClick={() => setVisAvviksrapporteringModal(true)}
                             icon={<HikingTrailSignIcon aria-hidden />}
                             className={css.rapporterAvvik}
                         >
@@ -86,6 +88,10 @@ const Meny: FunctionComponent<Props> = ({
                     )}
                 </>
             )}
+            <AvviksrapporteringModal
+                vis={visAvviksrapporteringModal}
+                onClose={() => setVisAvviksrapporteringModal(false)}
+            />
         </div>
     );
 };

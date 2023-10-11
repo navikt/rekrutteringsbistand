@@ -49,7 +49,6 @@ type Props = {
     onSendSmsClick: any;
     onLeggTilKandidat: any;
     onToggleArkivert: any;
-    onRapporterAvvik: () => void;
 };
 
 const Kandidatliste: FunctionComponent<Props> = ({
@@ -63,7 +62,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
     onKandidatStatusChange,
     onToggleMarkert,
     onToggleArkivert,
-    onRapporterAvvik,
 }) => {
     useEffect(() => {
         /*const hentArbeidsgiversVurderinger = async (stillingId: string) => {
@@ -206,7 +204,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
                             kandidatlisteId={kandidatliste.kandidatlisteId}
                             stillingId={kandidatliste.stillingId}
                             onLeggTilKandidat={onLeggTilKandidat}
-                            onRapporterAvvik={onRapporterAvvik}
+                            visAvviksrapportering
                         />
                     )}
                     <div className={css.grid}>
