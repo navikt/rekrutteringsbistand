@@ -6,7 +6,7 @@ import {
     Modal,
     Radio,
     RadioGroup,
-    UNSAFE_Combobox,
+    UNSAFE_Combobox as Combobox,
 } from '@navikt/ds-react';
 import { useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
@@ -56,7 +56,7 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                             <Checkbox value="avvikIFritekstfelt">Feil i innhold</Checkbox>
                             {typerBrudd.includes('avvikIFritekstfelt') && (
                                 <div className={css.intendert}>
-                                    <UNSAFE_Combobox
+                                    <Combobox
                                         className={css.avvikComboboks}
                                         label="Velg hvilke avvik som har skjedd i listen"
                                         options={Object.keys(AvvikIFritekstfelt)}
