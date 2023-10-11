@@ -141,7 +141,9 @@ export const kandidatApiMock = [
         todo
     ),
 
-    rest.post(`${api.kandidat}/avvik`, (_, res, ctx) => res(ctx.json(mockAvviksrapport))),
+    rest.post(`${api.kandidat}/avvik`, (_, res, ctx) =>
+        res(ctx.delay(1000), ctx.json(mockAvviksrapport))
+    ),
 
     rest.get(`${api.kandidat}/avvik/:kandidatlisteId`, (_, res, ctx) =>
         //res(ctx.json(mockAvviksrapport))

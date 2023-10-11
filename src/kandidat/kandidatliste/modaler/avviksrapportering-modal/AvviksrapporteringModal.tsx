@@ -19,7 +19,7 @@ import { useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
 import { api, post } from 'felles/api';
 import useNavKontor from 'felles/store/navKontor';
-import { ikkeLastet, lasterInn, Nettressurs } from 'felles/nettressurs';
+import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     vis: boolean;
@@ -43,6 +43,7 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
             listeOverAvvikIFritekstfelt: valgteAvvikIFritekstfelt,
         };
         setPostsvar(lasterInn());
+
         setPostsvar(await post<Avviksrapport>(`${api.kandidat}/avvik`, body));
     };
 
@@ -120,7 +121,12 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                 <Button onClick={onClose} variant="secondary">
                     Avbryt
                 </Button>
-                <Button onClick={onLagreOgSendClick}>Lagre og send</Button>
+                <Button
+                    onClick={onLagreOgSendClick}
+                    loading={postSvar.kind === Nettstatus.LasterInn}
+                >
+                    Lagre og send
+                </Button>
             </Modal.Footer>
         </Modal>
     );
