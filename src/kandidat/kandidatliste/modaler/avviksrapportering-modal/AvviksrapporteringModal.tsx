@@ -35,8 +35,38 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
     );
     const { navKontor } = useNavKontor();
     const [postSvar, setPostsvar] = useState<Nettressurs<Avviksrapport>>(ikkeLastet());
+    const [valideringsfeilDetHarVærtBrudd, setValideringsfeilDetHarVærtBruddDetHarVærtBrudd] =
+        useState<string | null>(null);
+    const [valideringsfeilTyperBrudd, setValideringsfeilTyperBrudd] = useState<string | null>(null);
+    const [valideringsfeilBruddIFritekst, setValideringsfeilBruddIFritekst] = useState<
+        string | null
+    >(null);
 
     const onLagreOgSendClick = async () => {
+        if (detHarVærtBrudd === null) {
+            setValideringsfeilDetHarVærtBruddDetHarVærtBrudd(
+                'Du må først svare på om det har vært brudd'
+            );
+            return;
+        } else if (
+            detHarVærtBrudd === true &&
+            !typerBrudd.includes('avvikIFritekstfelt') &&
+            !typerBrudd.includes('bruktTilFeilFormål')
+        ) {
+            setValideringsfeilTyperBrudd(
+                'Du må først svare på om det har vært feil formål eller feil i innhold'
+            );
+            return;
+        } else if (
+            detHarVærtBrudd === true &&
+            typerBrudd.includes('avvikIFritekstfelt') &&
+            valgteAvvikIFritekstfelt.length === 0
+        ) {
+            setValideringsfeilBruddIFritekst(
+                'Du må først svare på hvilke typer brudd det har vært'
+            );
+            return;
+        }
         let body: AvviksrapportOutboundDto = {
             avvikIFritekstfelt: typerBrudd.includes('avvikIFritekstfelt'),
             bruktTilFeilFormål: typerBrudd.includes('bruktTilFeilFormål'),
@@ -53,6 +83,7 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
     };
 
     const onToggleAvvikIFritekstfelt = (avvikMedVisningsnavn: string, erValgt: boolean) => {
+        setValideringsfeilBruddIFritekst(null);
         const avvikSomEnum = avvikMedVisningsnavnTilEnum(avvikMedVisningsnavn);
 
         if (erValgt) {
@@ -69,6 +100,15 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
     const valgteAvvikIFritekstfeltMedVisningsnavn = valgteAvvikIFritekstfelt.map((valgtAvvik) =>
         avvikIFritekstfeltTilVisningsnavn(valgtAvvik)
     );
+
+    const handleDetHarVærtBruddChange = (verdi: boolean) => {
+        setDetHarVærtBrudd(verdi);
+        setValideringsfeilDetHarVærtBruddDetHarVærtBrudd(null);
+    };
+    const handleTyperBruddChange = (verdi: string[]) => {
+        setTyperBrudd(verdi);
+        setValideringsfeilTyperBrudd(null);
+    };
 
     return (
         <Modal
@@ -90,13 +130,15 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                     name="detHarVærtBrudd"
                     legend="Har det vært avvik i listen?"
                     value={detHarVærtBrudd}
-                    onChange={setDetHarVærtBrudd}
+                    onChange={handleDetHarVærtBruddChange}
+                    error={valideringsfeilDetHarVærtBrudd}
                 >
                     <Radio value={true}>Ja, det har vært avvik</Radio>
                     {detHarVærtBrudd === true && (
                         <CheckboxGroup
                             value={typerBrudd}
-                            onChange={setTyperBrudd}
+                            onChange={handleTyperBruddChange}
+                            error={valideringsfeilTyperBrudd}
                             className={css.intendert}
                             legend="Hvilke typer brudd har det vært?"
                             hideLegend
@@ -113,6 +155,7 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                                         options={muligeAvvikIFritekstfeltMedVisningsnavn}
                                         selectedOptions={valgteAvvikIFritekstfeltMedVisningsnavn}
                                         onToggleSelected={onToggleAvvikIFritekstfelt}
+                                        error={valideringsfeilBruddIFritekst}
                                     />
                                 </div>
                             )}
