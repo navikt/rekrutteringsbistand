@@ -10,7 +10,10 @@ import {
 } from '@navikt/ds-react';
 import { useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
-import { AvvikIFritekstfelt } from 'felles/domene/kandidatliste/Avviksrapport';
+import {
+    AvvikIFritekstfelt,
+    avvikIFritekstfeltTilVisningsnavn,
+} from 'felles/domene/kandidatliste/Avviksrapport';
 
 type Props = {
     vis: boolean;
@@ -20,6 +23,10 @@ type Props = {
 const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
     const [detHarVærtBrudd, setDetHarVærtBrudd] = useState<boolean | null>(null);
     const [typerBrudd, setTyperBrudd] = useState<string[]>([]);
+
+    const muligeAvvikIFritekstfelt = Object.values(AvvikIFritekstfelt).map((avvikskategori) =>
+        avvikIFritekstfeltTilVisningsnavn(avvikskategori)
+    );
 
     return (
         <Modal
@@ -57,9 +64,10 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                             {typerBrudd.includes('avvikIFritekstfelt') && (
                                 <div className={css.intendert}>
                                     <Combobox
+                                        isMultiSelect
                                         className={css.avvikComboboks}
                                         label="Velg hvilke avvik som har skjedd i listen"
-                                        options={Object.keys(AvvikIFritekstfelt)}
+                                        options={muligeAvvikIFritekstfelt}
                                         shouldAutocomplete={true}
                                     />
                                 </div>
