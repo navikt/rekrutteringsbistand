@@ -37,11 +37,11 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                 <RadioGroup
                     required
                     name="detHarVærtBrudd"
-                    legend="Avvik?"
+                    legend="Har det vært avvik i listen?"
                     value={detHarVærtBrudd}
                     onChange={setDetHarVærtBrudd}
                 >
-                    <Radio value={true}>Ja</Radio>
+                    <Radio value={true}>Ja, det har vært avvik</Radio>
                     {detHarVærtBrudd === true && (
                         <CheckboxGroup
                             value={typerBrudd}
@@ -50,15 +50,15 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                             legend="Hvilke typer brudd har det vært?"
                             hideLegend
                         >
-                            <Checkbox value="bruktTilFeilFormål">Hele listen</Checkbox>
-                            <Checkbox value="avvikIFritekstfelt">Innholdet i listen</Checkbox>
+                            <Checkbox value="bruktTilFeilFormål">Feil formål</Checkbox>
+                            <Checkbox value="avvikIFritekstfelt">Feil i innhold</Checkbox>
                             {typerBrudd.includes('avvikIFritekstfelt') && (
                                 <div className={css.intendert}>Placeholder for Combobox</div>
                             )}
                         </CheckboxGroup>
                     )}
 
-                    <Radio value={false}>Nei</Radio>
+                    <Radio value={false}>Nei, det har ikke vært avvik</Radio>
                 </RadioGroup>
             </Modal.Body>
             <Modal.Footer>
