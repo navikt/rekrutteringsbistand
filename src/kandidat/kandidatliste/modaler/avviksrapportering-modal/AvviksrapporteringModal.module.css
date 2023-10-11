@@ -5,3 +5,7 @@
 .intendert {
     margin-left: 2rem;
 }
+
+.avvikComboboks {
+    z-index: -1;
+}

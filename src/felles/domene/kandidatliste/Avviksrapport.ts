@@ -9,7 +9,7 @@ export type AvviksrapportOutboundDto = {
     forNavkontor: String;
 };
 
-enum AvvikIFritekstfelt {
+export enum AvvikIFritekstfelt {
     Etnisitet = 'ETNISITET',
     Religion = 'RELIGION',
     SeksuellLegning = 'SEKSUELL_LEGNING',
