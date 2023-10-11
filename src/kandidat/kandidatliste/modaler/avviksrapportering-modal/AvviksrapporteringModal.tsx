@@ -1,4 +1,13 @@
-import { BodyLong, Button, Modal } from '@navikt/ds-react';
+import {
+    BodyLong,
+    Button,
+    Checkbox,
+    CheckboxGroup,
+    Modal,
+    Radio,
+    RadioGroup,
+} from '@navikt/ds-react';
+import { useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
 
 type Props = {
@@ -7,6 +16,9 @@ type Props = {
 };
 
 const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
+    const [detHarVærtBrudd, setDetHarVærtBrudd] = useState<boolean | null>(null);
+    const [typerBrudd, setTyperBrudd] = useState<string[]>([]);
+
     return (
         <Modal
             className={css.avviksrapportering}
@@ -17,7 +29,37 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
             }}
         >
             <Modal.Body>
-                <BodyLong>Har du oppdaget et avvik? ...</BodyLong>
+                <BodyLong spacing>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.
+                </BodyLong>
+
+                <RadioGroup
+                    required
+                    name="detHarVærtBrudd"
+                    legend="Avvik?"
+                    value={detHarVærtBrudd}
+                    onChange={setDetHarVærtBrudd}
+                >
+                    <Radio value={true}>Ja</Radio>
+                    {detHarVærtBrudd === true && (
+                        <CheckboxGroup
+                            value={typerBrudd}
+                            onChange={setTyperBrudd}
+                            className={css.intendert}
+                            legend="Hvilke typer brudd har det vært?"
+                            hideLegend
+                        >
+                            <Checkbox value="bruktTilFeilFormål">Hele listen</Checkbox>
+                            <Checkbox value="avvikIFritekstfelt">Innholdet i listen</Checkbox>
+                            {typerBrudd.includes('avvikIFritekstfelt') && (
+                                <div className={css.intendert}>Placeholder for Combobox</div>
+                            )}
+                        </CheckboxGroup>
+                    )}
+
+                    <Radio value={false}>Nei</Radio>
+                </RadioGroup>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={onClose} variant="secondary">
