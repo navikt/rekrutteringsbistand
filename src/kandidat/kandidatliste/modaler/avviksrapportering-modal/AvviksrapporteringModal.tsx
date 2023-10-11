@@ -9,18 +9,18 @@ import {
     Radio,
     RadioGroup,
 } from '@navikt/ds-react';
+import { api, post } from 'felles/api';
 import {
     AvvikIFritekstfelt,
-    avvikIFritekstfeltTilVisningsnavn,
-    avvikMedVisningsnavnTilEnum,
     Avviksrapport,
     AvviksrapportOutboundDto,
+    avvikIFritekstfeltTilVisningsnavn,
+    avvikMedVisningsnavnTilEnum,
 } from 'felles/domene/kandidatliste/Avviksrapport';
+import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
+import useNavKontor from 'felles/store/navKontor';
 import { useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
-import { api, post } from 'felles/api';
-import useNavKontor from 'felles/store/navKontor';
-import { ikkeLastet, lasterInn, Nettressurs, Nettstatus } from 'felles/nettressurs';
 
 type Props = {
     vis: boolean;
@@ -42,47 +42,59 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
         string | null
     >(null);
 
-    const onLagreOgSendClick = async () => {
+    const validerRapport = (): boolean => {
+        const detErAvvikIFritekstfelt = typerBrudd.includes('avvikIFritekstfelt');
+        const listenErBruktTilFeilFormål = typerBrudd.includes('bruktTilFeilFormål');
+
         if (detHarVærtBrudd === null) {
             setValideringsfeilDetHarVærtBruddDetHarVærtBrudd(
                 'Du må først svare på om det har vært brudd'
             );
-            return;
         } else if (
             detHarVærtBrudd === true &&
-            !typerBrudd.includes('avvikIFritekstfelt') &&
-            !typerBrudd.includes('bruktTilFeilFormål')
+            !detErAvvikIFritekstfelt &&
+            !listenErBruktTilFeilFormål
         ) {
             setValideringsfeilTyperBrudd(
                 'Du må først svare på om det har vært feil formål eller feil i innhold'
             );
-            return;
         } else if (
             detHarVærtBrudd === true &&
-            typerBrudd.includes('avvikIFritekstfelt') &&
+            detErAvvikIFritekstfelt &&
             valgteAvvikIFritekstfelt.length === 0
         ) {
             setValideringsfeilBruddIFritekst(
                 'Du må først svare på hvilke typer brudd det har vært'
             );
+        } else {
+            return true;
+        }
+
+        return false;
+    };
+
+    const onLagreOgSendClick = async () => {
+        if (validerRapport() === false) {
             return;
         }
-        let body: AvviksrapportOutboundDto = {
+
+        let outboundDto: AvviksrapportOutboundDto = {
             avvikIFritekstfelt: typerBrudd.includes('avvikIFritekstfelt'),
             bruktTilFeilFormål: typerBrudd.includes('bruktTilFeilFormål'),
             forNavkontor: navKontor,
             listeOverAvvikIFritekstfelt: valgteAvvikIFritekstfelt,
         };
+
         setPostsvar(lasterInn());
 
-        const svar = await post<Avviksrapport>(`${api.kandidat}/avvik`, body);
+        const svar = await post<Avviksrapport>(`${api.kandidat}/avvik`, outboundDto);
         setPostsvar(svar);
         if (svar.kind === Nettstatus.Suksess) {
             onClose();
         }
     };
 
-    const onToggleAvvikIFritekstfelt = (avvikMedVisningsnavn: string, erValgt: boolean) => {
+    const handleAvvikIFritekstfeltToggle = (avvikMedVisningsnavn: string, erValgt: boolean) => {
         setValideringsfeilBruddIFritekst(null);
         const avvikSomEnum = avvikMedVisningsnavnTilEnum(avvikMedVisningsnavn);
 
@@ -93,14 +105,6 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
         }
     };
 
-    const muligeAvvikIFritekstfeltMedVisningsnavn = Object.values(AvvikIFritekstfelt).map(
-        (avvikskategori) => avvikIFritekstfeltTilVisningsnavn(avvikskategori)
-    );
-
-    const valgteAvvikIFritekstfeltMedVisningsnavn = valgteAvvikIFritekstfelt.map((valgtAvvik) =>
-        avvikIFritekstfeltTilVisningsnavn(valgtAvvik)
-    );
-
     const handleDetHarVærtBruddChange = (verdi: boolean) => {
         setDetHarVærtBrudd(verdi);
         setValideringsfeilDetHarVærtBruddDetHarVærtBrudd(null);
@@ -109,6 +113,14 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
         setTyperBrudd(verdi);
         setValideringsfeilTyperBrudd(null);
     };
+
+    const muligeAvvikIFritekstfeltMedVisningsnavn = Object.values(AvvikIFritekstfelt).map(
+        (avvikskategori) => avvikIFritekstfeltTilVisningsnavn(avvikskategori)
+    );
+
+    const valgteAvvikIFritekstfeltMedVisningsnavn = valgteAvvikIFritekstfelt.map((valgtAvvik) =>
+        avvikIFritekstfeltTilVisningsnavn(valgtAvvik)
+    );
 
     return (
         <Modal
@@ -154,7 +166,7 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                                         label="Velg hvilke avvik som har skjedd i listen"
                                         options={muligeAvvikIFritekstfeltMedVisningsnavn}
                                         selectedOptions={valgteAvvikIFritekstfeltMedVisningsnavn}
-                                        onToggleSelected={onToggleAvvikIFritekstfelt}
+                                        onToggleSelected={handleAvvikIFritekstfeltToggle}
                                         error={valideringsfeilBruddIFritekst}
                                     />
                                 </div>
