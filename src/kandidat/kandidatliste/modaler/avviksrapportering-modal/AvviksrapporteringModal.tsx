@@ -3,17 +3,17 @@ import {
     Button,
     Checkbox,
     CheckboxGroup,
+    UNSAFE_Combobox as Combobox,
     Modal,
     Radio,
     RadioGroup,
-    UNSAFE_Combobox as Combobox,
 } from '@navikt/ds-react';
-import { useState } from 'react';
-import css from './AvviksrapporteringModal.module.css';
 import {
     AvvikIFritekstfelt,
     avvikIFritekstfeltTilVisningsnavn,
 } from 'felles/domene/kandidatliste/Avviksrapport';
+import { useState } from 'react';
+import css from './AvviksrapporteringModal.module.css';
 
 type Props = {
     vis: boolean;
@@ -23,6 +23,15 @@ type Props = {
 const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
     const [detHarVærtBrudd, setDetHarVærtBrudd] = useState<boolean | null>(null);
     const [typerBrudd, setTyperBrudd] = useState<string[]>([]);
+    const [valgteAvvikIFritekstfelt, setValgteAvvikIFritekstfelt] = useState<string[]>([]);
+
+    const onToggleAvvikIFritekstfelt = (avvik: string, erValgt: boolean) => {
+        if (erValgt) {
+            setValgteAvvikIFritekstfelt([...valgteAvvikIFritekstfelt, avvik]);
+        } else {
+            setValgteAvvikIFritekstfelt(valgteAvvikIFritekstfelt.filter((a) => a !== avvik));
+        }
+    };
 
     const muligeAvvikIFritekstfelt = Object.values(AvvikIFritekstfelt).map((avvikskategori) =>
         avvikIFritekstfeltTilVisningsnavn(avvikskategori)
@@ -65,10 +74,12 @@ const AvviksrapporteringModal = ({ vis, onClose }: Props) => {
                                 <div className={css.intendert}>
                                     <Combobox
                                         isMultiSelect
+                                        shouldAutocomplete
                                         className={css.avvikComboboks}
                                         label="Velg hvilke avvik som har skjedd i listen"
                                         options={muligeAvvikIFritekstfelt}
-                                        shouldAutocomplete={true}
+                                        selectedOptions={valgteAvvikIFritekstfelt}
+                                        onToggleSelected={onToggleAvvikIFritekstfelt}
                                     />
                                 </div>
                             )}
