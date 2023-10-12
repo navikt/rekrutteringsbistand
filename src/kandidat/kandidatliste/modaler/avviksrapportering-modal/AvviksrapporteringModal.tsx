@@ -22,13 +22,19 @@ import useNavKontor from 'felles/store/navKontor';
 import { useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
 
-type Props = {
+type IAvviksrapporteringModal = {
+    kandidatlisteId: string;
     vis: boolean;
     onLagreAvvik: (avvik: Nettressurs<Avviksrapport>) => void;
     onClose: () => void;
 };
 
-const AvviksrapporteringModal = ({ vis, onLagreAvvik, onClose }: Props) => {
+const AvviksrapporteringModal = ({
+    vis,
+    onLagreAvvik,
+    onClose,
+    kandidatlisteId,
+}: IAvviksrapporteringModal) => {
     const [detHarVærtBrudd, setDetHarVærtBrudd] = useState<boolean | null>(null);
     const [typerBrudd, setTyperBrudd] = useState<string[]>([]);
     const [valgteAvvikIFritekstfelt, setValgteAvvikIFritekstfelt] = useState<AvvikIFritekstfelt[]>(
@@ -80,6 +86,7 @@ const AvviksrapporteringModal = ({ vis, onLagreAvvik, onClose }: Props) => {
         }
 
         let outboundDto: AvviksrapportOutboundDto = {
+            kandidatlisteId: kandidatlisteId,
             avvikIFritekstfelt: typerBrudd.includes('avvikIFritekstfelt'),
             bruktTilFeilFormål: typerBrudd.includes('bruktTilFeilFormål'),
             forNavkontor: navKontor,
@@ -135,6 +142,7 @@ const AvviksrapporteringModal = ({ vis, onLagreAvvik, onClose }: Props) => {
             }}
         >
             <Modal.Body className={css.avvikModalBody}>
+                {/* //TODO Husk å endre */}
                 <BodyLong spacing>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                     incididunt ut labore et dolore magna aliqua.

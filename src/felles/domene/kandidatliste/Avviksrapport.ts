@@ -3,10 +3,11 @@ export type Avviksrapport = {
 };
 
 export type AvviksrapportOutboundDto = {
+    kandidatlisteId: string;
     bruktTilFeilFormål: boolean;
     avvikIFritekstfelt: boolean;
     listeOverAvvikIFritekstfelt: AvvikIFritekstfelt[];
-    forNavkontor: String;
+    forNavkontor: string;
 };
 
 export enum AvvikIFritekstfelt {

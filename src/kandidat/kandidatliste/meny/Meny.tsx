@@ -89,6 +89,7 @@ const Meny: FunctionComponent<Props> = ({
                 </>
             )}
             <AvviksrapporteringModal
+                kandidatlisteId={kandidatlisteId}
                 vis={visAvviksrapporteringModal}
                 onLagreAvvik={setAvviksrapport}
                 onClose={() => setVisAvviksrapporteringModal(false)}
