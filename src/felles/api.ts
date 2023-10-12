@@ -34,6 +34,8 @@ export const post = async <Returtype>(
             },
         });
 
+        console.log('response: ', response);
+
         if (response.status === 200 || response.status === 201) {
             return {
                 kind: Nettstatus.Suksess,
