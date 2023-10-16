@@ -35,7 +35,6 @@ const AvviksrapporteringModal = ({
     onClose,
     kandidatlisteId,
 }: IAvviksrapporteringModal) => {
-    const [senderData, setSenderData] = useState<boolean>(false);
     const [detHarVærtBrudd, setDetHarVærtBrudd] = useState<boolean | null>(null);
     const [typerBrudd, setTyperBrudd] = useState<string[]>([]);
     const [valgteAvvikIFritekstfelt, setValgteAvvikIFritekstfelt] = useState<AvvikIFritekstfelt[]>(
@@ -95,16 +94,12 @@ const AvviksrapporteringModal = ({
         };
 
         setPostsvar(lasterInn());
-        setSenderData(true);
         const svar = await post<Avviksrapport>(`${api.kandidat}/avvik`, outboundDto);
         setPostsvar(svar);
 
         if (svar.kind === Nettstatus.Suksess) {
             onLagreAvvik(svar);
-            setSenderData(false);
             onClose();
-        } else {
-            setSenderData(false);
         }
     };
 
@@ -193,12 +188,16 @@ const AvviksrapporteringModal = ({
                 </RadioGroup>
             </Modal.Body>
             <Modal.Footer>
-                <Button disabled={senderData} onClick={onClose} variant="secondary">
+                <Button
+                    disabled={postSvar.kind === Nettstatus.LasterInn}
+                    onClick={onClose}
+                    variant="secondary"
+                >
                     Avbryt
                 </Button>
                 <Button
-                    disabled={senderData}
                     onClick={onLagreOgSendClick}
+                    disabled={postSvar.kind === Nettstatus.LasterInn}
                     loading={postSvar.kind === Nettstatus.LasterInn}
                 >
                     Lagre og send
