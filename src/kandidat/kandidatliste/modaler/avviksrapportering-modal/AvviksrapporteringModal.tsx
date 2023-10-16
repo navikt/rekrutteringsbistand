@@ -9,6 +9,7 @@ import {
     Radio,
     RadioGroup,
 } from '@navikt/ds-react';
+import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
 import {
     AvvikIFritekstfelt,
@@ -19,7 +20,7 @@ import {
 } from 'felles/domene/kandidatliste/Avviksrapport';
 import { Nettressurs, Nettstatus, ikkeLastet, lasterInn } from 'felles/nettressurs';
 import useNavKontor from 'felles/store/navKontor';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import css from './AvviksrapporteringModal.module.css';
 
 type IAvviksrapporteringModal = {
@@ -48,6 +49,12 @@ const AvviksrapporteringModal = ({
     const [valideringsfeilBruddIFritekst, setValideringsfeilBruddIFritekst] = useState<
         string | null
     >(null);
+
+    useEffect(() => {
+        if (vis === true) {
+            sendEvent('avviksrapportering', 'åpne_modal');
+        }
+    }, [vis]);
 
     const validerRapport = (): boolean => {
         const detErAvvikIFritekstfelt = typerBrudd.includes('avvikIFritekstfelt');
@@ -98,6 +105,8 @@ const AvviksrapporteringModal = ({
         setPostsvar(svar);
 
         if (svar.kind === Nettstatus.Suksess) {
+            sendEvent('avviksrapportering', 'rapporterte_avvik');
+
             onLagreAvvik(svar);
             onClose();
         }
