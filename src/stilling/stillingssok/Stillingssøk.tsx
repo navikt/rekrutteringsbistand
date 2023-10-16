@@ -4,6 +4,7 @@ import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { sendEvent } from '../../felles/amplitude';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
 import Layout from '../../felles/komponenter/layout/Layout';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
@@ -50,13 +51,17 @@ const Stillingssøk = () => {
         return queryParams.get('modal') === 'opprettStillingModal';
     };
 
-    const oppdaterTab = (tab: TabVisning) =>
+    const oppdaterTab = (tab: TabVisning) => {
+        if (tab === TabVisning.VIS_MINE) {
+            sendEvent('stillinger', 'vis_mine_stillinger_tab');
+        }
         oppdaterUrlMedParam({
             searchParams,
             navigate,
             parameter: QueryParam.Portofølje,
             verdi: tab === TabVisning.VIS_MINE ? TabVisning.VIS_MINE : null,
         });
+    };
 
     const portefolje = queryParams.get('portefolje') ?? TabVisning.VIS_ALLE;
 

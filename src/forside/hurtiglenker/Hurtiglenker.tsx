@@ -6,6 +6,7 @@ import { ReactComponent as OpprettNyStillingIkon } from 'felles/komponenter/pikt
 import { ReactComponent as SeMineStillingerIkon } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
 import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { sendEvent } from '../../felles/amplitude';
 import css from './Hurtiglenker.module.css';
 
 const Hurtiglenker: FunctionComponent = () => {
@@ -25,6 +26,7 @@ const Hurtiglenker: FunctionComponent = () => {
                 href={'/stillinger/stillingssok?portefolje=visMine'}
                 tittel="Se mine stillinger"
                 ikon={<SeMineStillingerIkon />}
+                onClick={() => sendEvent('oversikt', 'vis_mine_stillinger_knapp')}
             />
             <LenkepanelMedIkon
                 href="/stillinger/stillingssok?modal=opprettStillingModal"
@@ -39,8 +41,9 @@ const LenkepanelMedIkon: FunctionComponent<{
     tittel: string;
     href: string;
     ikon: ReactNode;
-}> = ({ tittel, href, ikon }) => (
-    <Link to={href} className={classNames('navds-link-panel', css.lenkepanel)}>
+    onClick?: () => void;
+}> = ({ tittel, href, ikon, onClick }) => (
+    <Link to={href} className={classNames('navds-link-panel', css.lenkepanel)} onClick={onClick}>
         <div className={css.lenkeinnhold}>
             {ikon}
             <BodyShort as="span">{tittel}</BodyShort>
