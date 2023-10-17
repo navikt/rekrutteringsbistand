@@ -64,24 +64,20 @@ const AvviksrapporteringModal = ({
 
         if (detHarVærtBrudd === null) {
             setValideringsfeilDetHarVærtBruddDetHarVærtBrudd(
-                'Du må først svare på om det har vært brudd'
+                'Du må først svare på om det har vært personvernavvik'
             );
         } else if (
             detHarVærtBrudd === true &&
             !detErAvvikIFritekstfelt &&
             !listenErBruktTilFeilFormål
         ) {
-            setValideringsfeilTyperBrudd(
-                'Du må først svare på om det har vært feil formål eller feil i innhold'
-            );
+            setValideringsfeilTyperBrudd('Du må først velge hvilke(t) type avvik');
         } else if (
             detHarVærtBrudd === true &&
             detErAvvikIFritekstfelt &&
             valgteAvvikIFritekstfelt.length === 0
         ) {
-            setValideringsfeilBruddIFritekst(
-                'Du må først svare på hvilke typer brudd det har vært'
-            );
+            setValideringsfeilBruddIFritekst('Du må først velge hvilke(t) type avvik');
         } else {
             return true;
         }
