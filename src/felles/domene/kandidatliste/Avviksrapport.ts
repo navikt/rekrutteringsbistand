@@ -17,20 +17,24 @@ export enum AvvikIFritekstfelt {
     Helseopplysninger = 'HELSEOPPLYSNINGER',
     Straffehistorikk = 'STRAFFEHISTORIKK',
     SosialeEllerØkonomiskeForhold = 'SOSIALE_ELLER_ØKONOMISKE_FORHOLD',
-    PersonopplysningerOmTredjepersoner = 'PERSONOPPLYSNINGER_OM_TREDJEPERSONER',
     SubjektiveNegativeRefleksjoner = 'SUBJEKTIVE_NEGATIVE_REFLEKSJONER',
+    PersonopplysningerOmTredjepersoner = 'PERSONOPPLYSNINGER_OM_TREDJEPERSONER',
 }
 
 const mapFraAvvikIFritekstfeltTilVisningsnavn: Record<AvvikIFritekstfelt, string> = {
-    [AvvikIFritekstfelt.Etnisitet]: 'Etnisitet (f.eks. nasjonalitet, opprinnelse)',
+    [AvvikIFritekstfelt.Etnisitet]: 'Etnisitet (f.eks. nasjonalitet, kulturell tilhørighet)',
     [AvvikIFritekstfelt.Religion]: 'Religion',
     [AvvikIFritekstfelt.SeksuellLegning]: 'Seksuell legning',
-    [AvvikIFritekstfelt.Helseopplysninger]: 'Helseopplysninger',
-    [AvvikIFritekstfelt.Straffehistorikk]: 'Straffehistorikk (f.eks. fengselsopphold)',
+    [AvvikIFritekstfelt.Helseopplysninger]:
+        'Helseopplysninger (f.eks. diagnose, sykdomshistorikk, funksjonsnedsettelse)',
+    [AvvikIFritekstfelt.Straffehistorikk]:
+        'Straffehistorikk (f.eks. soningshistorikk, domfellelse)',
     [AvvikIFritekstfelt.SosialeEllerØkonomiskeForhold]:
-        'Sosiale eller økonomiske forhold (f.eks. gjeld)',
-    [AvvikIFritekstfelt.PersonopplysningerOmTredjepersoner]: 'Personopplysninger om tredjepersoner',
-    [AvvikIFritekstfelt.SubjektiveNegativeRefleksjoner]: 'Subjektive negative refleksjoner ',
+        'Sosiale og økonomiske forhold (f.eks. sosial tilpasningsdyktighet, offentlige ytelser)',
+    [AvvikIFritekstfelt.SubjektiveNegativeRefleksjoner]:
+        'Subjektive negative refleksjoner angående bruker',
+    [AvvikIFritekstfelt.PersonopplysningerOmTredjepersoner]:
+        'Sensitive personopplysninger om tredjepersoner (f.eks. barn, ektefelle)',
 };
 
 export const avvikIFritekstfeltTilVisningsnavn = (avvikIFritekstfelt: AvvikIFritekstfelt): string =>
