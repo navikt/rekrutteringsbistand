@@ -48,6 +48,10 @@ const SlettModal: FunctionComponent<Props> = ({ kandidatliste, onClose }) => {
                     Er du sikker på at du vil slette kandidatlisten med alt innhold? Du kan ikke
                     angre handlingen.
                 </BodyLong>
+                <BodyLong>
+                    Husk å flytte evt. journalpliktige opplysninger fra listen inn i riktig
+                    fagsystem.
+                </BodyLong>
             </Modal.Body>
             <Modal.Footer>
                 <Button onClick={handleSlettClick} loading={status === Nettstatus.LasterInn}>

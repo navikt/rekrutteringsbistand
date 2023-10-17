@@ -83,7 +83,7 @@ const Meny: FunctionComponent<Props> = ({
                             icon={<HikingTrailSignIcon aria-hidden />}
                             className={css.rapporterAvvik}
                         >
-                            Rapporter avvik
+                            Rapporter personvernavvik
                         </Button>
                     )}
                 </>
