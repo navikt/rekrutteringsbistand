@@ -49,7 +49,7 @@ const SlettModal: FunctionComponent<Props> = ({ kandidatliste, onClose }) => {
                     angre handlingen.
                 </BodyLong>
                 <BodyLong>
-                    Husk å flytte evt. journalpliktige opplysninger fra listen inn i riktig
+                    Husk å flytte evt. arkiveringspliktige opplysninger fra listen inn i riktig
                     fagsystem.
                 </BodyLong>
             </Modal.Body>
