@@ -41,7 +41,7 @@ const Meny: FunctionComponent<Props> = ({
         const hentAvviksrapport = async () => {
             setAvviksrapport(await get<Avviksrapport>(`${api.kandidat}/avvik/${kandidatlisteId}`));
         };
-        if (erIkkeProd) hentAvviksrapport();
+        if (visAvviksrapportering) hentAvviksrapport();
     }, [kandidatlisteId]);
 
     return (
@@ -63,7 +63,7 @@ const Meny: FunctionComponent<Props> = ({
             >
                 Legg til kandidat
             </Button>
-            {erIkkeProd && visAvviksrapportering && (
+            {visAvviksrapportering && (
                 <>
                     {avviksrapport.kind === Nettstatus.Suksess && (
                         <div className={css.gjennomgått}>

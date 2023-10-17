@@ -37,6 +37,8 @@ import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
 import SideHeader from './side-header/SideHeader';
 import SmsFeilAlertStripe from './smsFeilAlertStripe/SmsFeilAlertStripe';
 import TomListe from './tom-liste/TomListe';
+import useNavKontor from 'felles/store/navKontor';
+import { erIkkeProd } from 'felles/miljø';
 
 type Props = {
     kandidatliste: Kandidatlistetype;
@@ -107,6 +109,8 @@ const Kandidatliste: FunctionComponent<Props> = ({
         filtrerteKandidater,
         forespørslerOmDelingAvCv
     );
+
+    const { navKontor } = useNavKontor();
 
     const antallFiltertreff = useAntallFiltertreff(
         kandidatliste.kandidater,
@@ -204,7 +208,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
                             kandidatlisteId={kandidatliste.kandidatlisteId}
                             stillingId={kandidatliste.stillingId}
                             onLeggTilKandidat={onLeggTilKandidat}
-                            visAvviksrapportering
+                            visAvviksrapportering={erIkkeProd || navKontor === '2990'}
                         />
                     )}
                     <div className={css.grid}>
