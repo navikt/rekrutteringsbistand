@@ -1,6 +1,5 @@
 .avviksrapportering {
     min-width: 43.75rem;
-    overflow: visible;
 }
 
 .intendert {
@@ -11,10 +10,11 @@
     z-index: -1;
 }
 
-.avvikModalBody {
-    overflow: visible;
-}
-
 .lesMer {
     margin-bottom: 1.5rem;
+}
+
+.footer {
+    padding: 0;
+    padding-top: 1.5rem;
 }

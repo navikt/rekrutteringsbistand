@@ -265,23 +265,23 @@ begge alternativer hukes av."
 
                     <Radio value={false}>Nei, listen utgjør ikke et personvernavvik</Radio>
                 </RadioGroup>
+                <Modal.Footer className={css.footer}>
+                    <Button
+                        disabled={postSvar.kind === Nettstatus.LasterInn}
+                        onClick={onClose}
+                        variant="secondary"
+                    >
+                        Avbryt
+                    </Button>
+                    <Button
+                        onClick={onLagreOgSendClick}
+                        disabled={postSvar.kind === Nettstatus.LasterInn}
+                        loading={postSvar.kind === Nettstatus.LasterInn}
+                    >
+                        Lagre og send
+                    </Button>
+                </Modal.Footer>
             </Modal.Body>
-            <Modal.Footer>
-                <Button
-                    disabled={postSvar.kind === Nettstatus.LasterInn}
-                    onClick={onClose}
-                    variant="secondary"
-                >
-                    Avbryt
-                </Button>
-                <Button
-                    onClick={onLagreOgSendClick}
-                    disabled={postSvar.kind === Nettstatus.LasterInn}
-                    loading={postSvar.kind === Nettstatus.LasterInn}
-                >
-                    Lagre og send
-                </Button>
-            </Modal.Footer>
             {postSvar.kind === Nettstatus.Feil && (
                 <Alert variant="error" size="small">
                     <span>Kunne ikke lagre avvik. Prøv igjen senere.</span>
