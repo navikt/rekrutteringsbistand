@@ -6,7 +6,9 @@ import { Search } from '@navikt/ds-react';
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatlistetype, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { erIkkeProd } from 'felles/miljø';
 import { Nettstatus } from 'felles/nettressurs';
+import useNavKontor from 'felles/store/navKontor';
 import useMaskerFødselsnumre from '../app/useMaskerFødselsnumre';
 import AppState from '../state/AppState';
 import css from './Kandidatliste.module.css';
@@ -37,8 +39,6 @@ import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
 import SideHeader from './side-header/SideHeader';
 import SmsFeilAlertStripe from './smsFeilAlertStripe/SmsFeilAlertStripe';
 import TomListe from './tom-liste/TomListe';
-import useNavKontor from 'felles/store/navKontor';
-import { erIkkeProd } from 'felles/miljø';
 
 type Props = {
     kandidatliste: Kandidatlistetype;
@@ -208,7 +208,9 @@ const Kandidatliste: FunctionComponent<Props> = ({
                             kandidatlisteId={kandidatliste.kandidatlisteId}
                             stillingId={kandidatliste.stillingId}
                             onLeggTilKandidat={onLeggTilKandidat}
-                            visAvviksrapportering={erIkkeProd || navKontor === '2990'}
+                            visAvviksrapportering={
+                                erIkkeProd || navKontor === '2990' || navKontor === '1001'
+                            }
                         />
                     )}
                     <div className={css.grid}>
