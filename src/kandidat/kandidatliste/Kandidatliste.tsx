@@ -29,6 +29,7 @@ import useFiltrerteKandidater from './hooks/useFiltrerteKandidater';
 import useHentForespørslerOmDelingAvCv from './hooks/useHentForespørslerOmDelingAvCv';
 import useHentSendteMeldinger from './hooks/useHentSendteMeldinger';
 import useSorterteKandidater from './hooks/useSorterteKandidater';
+import HvitBoks from './hvit-boks/HvitBoks';
 import IngenKandidater from './ingen-kandidater/IngenKandidater';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import { Hendelse } from './kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
@@ -179,23 +180,20 @@ const Kandidatliste: FunctionComponent<Props> = ({
             <SideHeader kandidatliste={kandidatliste} />
             {listenInneholderKandidater ? (
                 <>
-                    {kandidatlistenErÅpen && (
-                        <Meny
-                            border
-                            kandidatlisteId={kandidatliste.kandidatlisteId}
-                            stillingId={kandidatliste.stillingId}
-                            onLeggTilKandidat={onLeggTilKandidat}
-                        >
-                            {visAvviksrapportering && (
-                                <Avviksrapportering
-                                    kandidatlisteId={kandidatliste.kandidatlisteId}
-                                />
-                            )}
-                        </Meny>
-                    )}
-                    {!kandidatlistenErÅpen && visAvviksrapportering && (
-                        <Avviksrapportering kandidatlisteId={kandidatliste.kandidatlisteId} />
-                    )}
+                    <HvitBoks border>
+                        {kandidatlistenErÅpen ? (
+                            <Meny
+                                kandidatlisteId={kandidatliste.kandidatlisteId}
+                                stillingId={kandidatliste.stillingId}
+                                onLeggTilKandidat={onLeggTilKandidat}
+                            />
+                        ) : (
+                            <span />
+                        )}
+                        {visAvviksrapportering && (
+                            <Avviksrapportering kandidatlisteId={kandidatliste.kandidatlisteId} />
+                        )}
+                    </HvitBoks>
                     <div className={css.grid}>
                         <div className={css.knapperad}>
                             {kandidatliste.kanEditere &&
@@ -291,11 +289,13 @@ const Kandidatliste: FunctionComponent<Props> = ({
             ) : (
                 <TomListe kandidatlistenErLukket={!kandidatlistenErÅpen}>
                     {kandidatlistenErÅpen && (
-                        <Meny
-                            kandidatlisteId={kandidatliste.kandidatlisteId}
-                            stillingId={kandidatliste.stillingId}
-                            onLeggTilKandidat={onLeggTilKandidat}
-                        />
+                        <HvitBoks>
+                            <Meny
+                                kandidatlisteId={kandidatliste.kandidatlisteId}
+                                stillingId={kandidatliste.stillingId}
+                                onLeggTilKandidat={onLeggTilKandidat}
+                            />
+                        </HvitBoks>
                     )}
                 </TomListe>
             )}
