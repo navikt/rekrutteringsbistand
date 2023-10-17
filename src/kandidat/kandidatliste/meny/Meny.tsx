@@ -1,55 +1,19 @@
-import {
-    CheckmarkCircleIcon,
-    HikingTrailSignIcon,
-    MagnifyingGlassIcon,
-    PersonPlusIcon,
-} from '@navikt/aksel-icons';
-import { BodyShort, Button, Label } from '@navikt/ds-react';
-import classNames from 'classnames';
-import { api, get } from 'felles/api';
-import { Avviksrapport } from 'felles/domene/kandidatliste/Avviksrapport';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
+import { Button } from '@navikt/ds-react';
+import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { lenkeTilFinnKandidater } from '../../app/paths';
-import { formaterDatoNaturlig } from '../../utils/dateUtils';
-import AvviksrapporteringModal from '../modaler/avviksrapportering-modal/AvviksrapporteringModal';
 import css from './Meny.module.css';
 
 type Props = {
-    border?: boolean;
     kandidatlisteId: string;
     stillingId: string | null;
     onLeggTilKandidat: () => void;
-    visAvviksrapportering?: boolean;
 };
 
-const Meny: FunctionComponent<Props> = ({
-    border,
-    kandidatlisteId,
-    stillingId,
-    onLeggTilKandidat,
-    visAvviksrapportering,
-}) => {
-    const [visAvviksrapporteringModal, setVisAvviksrapporteringModal] = useState<boolean>(false);
-    const [avviksrapport, setAvviksrapport] = useState<Nettressurs<Avviksrapport>>({
-        kind: Nettstatus.IkkeLastet,
-    });
-
-    useEffect(() => {
-        const hentAvviksrapport = async () => {
-            setAvviksrapport(await get<Avviksrapport>(`${api.kandidat}/avvik/${kandidatlisteId}`));
-        };
-
-        if (visAvviksrapportering) hentAvviksrapport();
-    }, [kandidatlisteId, visAvviksrapportering]);
-
+const Meny: FunctionComponent<Props> = ({ kandidatlisteId, stillingId, onLeggTilKandidat }) => {
     return (
-        <div
-            className={classNames(css.meny, {
-                [css.border]: border,
-            })}
-        >
+        <div className={css.meny}>
             <Link to={lenkeTilFinnKandidater(stillingId, kandidatlisteId, true)}>
                 <Button variant="tertiary" as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
                     Finn kandidater
@@ -63,37 +27,6 @@ const Meny: FunctionComponent<Props> = ({
             >
                 Legg til kandidat
             </Button>
-            {visAvviksrapportering && (
-                <>
-                    {avviksrapport.kind === Nettstatus.Suksess && (
-                        <div className={css.gjennomgått}>
-                            <CheckmarkCircleIcon aria-hidden />
-                            <div>
-                                <Label as="span">Listen ble gjennomgått for personveravvik</Label>
-                                <BodyShort>
-                                    {formaterDatoNaturlig(avviksrapport.data.tidspunkt)}
-                                </BodyShort>
-                            </div>
-                        </div>
-                    )}
-                    {avviksrapport.kind === Nettstatus.FinnesIkke && (
-                        <Button
-                            variant="secondary"
-                            onClick={() => setVisAvviksrapporteringModal(true)}
-                            icon={<HikingTrailSignIcon aria-hidden />}
-                            className={css.rapporterAvvik}
-                        >
-                            Rapporter personvernavvik
-                        </Button>
-                    )}
-                </>
-            )}
-            <AvviksrapporteringModal
-                kandidatlisteId={kandidatlisteId}
-                vis={visAvviksrapporteringModal}
-                onLagreAvvik={setAvviksrapport}
-                onClose={() => setVisAvviksrapporteringModal(false)}
-            />
         </div>
     );
 };
