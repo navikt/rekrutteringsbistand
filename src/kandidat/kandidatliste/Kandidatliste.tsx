@@ -6,10 +6,13 @@ import { Search } from '@navikt/ds-react';
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatlistetype, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { erIkkeProd } from 'felles/miljø';
 import { Nettstatus } from 'felles/nettressurs';
+import useNavKontor from 'felles/store/navKontor';
 import useMaskerFødselsnumre from '../app/useMaskerFødselsnumre';
 import AppState from '../state/AppState';
 import css from './Kandidatliste.module.css';
+import Avviksrapportering from './avviksrapportering/Avviksrapportering';
 import { erInaktiv } from './domene/kandidatUtils';
 import {
     erEierAvKandidatlisten,
@@ -37,8 +40,6 @@ import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
 import SideHeader from './side-header/SideHeader';
 import SmsFeilAlertStripe from './smsFeilAlertStripe/SmsFeilAlertStripe';
 import TomListe from './tom-liste/TomListe';
-import useNavKontor from 'felles/store/navKontor';
-import { erIkkeProd } from 'felles/miljø';
 
 type Props = {
     kandidatliste: Kandidatlistetype;
@@ -65,31 +66,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
     onToggleMarkert,
     onToggleArkivert,
 }) => {
-    useEffect(() => {
-        /*const hentArbeidsgiversVurderinger = async (stillingId: string) => {
-            try {
-                const respons = await fetch(
-                    `${api.presenterteKandidaterApi}/kandidatliste/${stillingId}/vurdering`,
-                    {
-                        method: 'GET',
-                        headers: { 'Content-Type': 'application/json' },
-                    }
-                );
-                const vurderingerJson = await respons.json();
-                console.log(
-                    'Arbeidsgivers vurderinger: ',
-                    vurderingerJson,
-                    JSON.stringify(vurderingerJson)
-                );
-            } catch (e) {
-                console.log('Kall mot arbeidsgivers vurderinger feilet: ' + e);
-            }
-        };
-        if (kandidatliste.stillingId !== null) {
-            hentArbeidsgiversVurderinger(kandidatliste.stillingId);
-        }*/
-    }, [kandidatliste.stillingId]);
-
     useMaskerFødselsnumre();
     useHentSendteMeldinger(kandidatliste.kandidatlisteId);
     useHentForespørslerOmDelingAvCv(kandidatliste.stillingId);
@@ -97,6 +73,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
+    const { navKontor } = useNavKontor();
 
     const { filter, sms, forespørslerOmDelingAvCv } = useSelector(
         (state: AppState) => state.kandidatliste
@@ -109,8 +86,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
         filtrerteKandidater,
         forespørslerOmDelingAvCv
     );
-
-    const { navKontor } = useNavKontor();
 
     const antallFiltertreff = useAntallFiltertreff(
         kandidatliste.kandidater,
@@ -197,6 +172,8 @@ const Kandidatliste: FunctionComponent<Props> = ({
     const kandidatlistenErÅpen = kandidatliste.status === Kandidatlistestatus.Åpen;
     const kanArkivereKandidater = !filter.visArkiverte && kandidatlistenErÅpen;
 
+    const visAvviksrapportering = erIkkeProd || navKontor === '2990';
+
     return (
         <div className={css.innhold}>
             <SideHeader kandidatliste={kandidatliste} />
@@ -208,8 +185,16 @@ const Kandidatliste: FunctionComponent<Props> = ({
                             kandidatlisteId={kandidatliste.kandidatlisteId}
                             stillingId={kandidatliste.stillingId}
                             onLeggTilKandidat={onLeggTilKandidat}
-                            visAvviksrapportering={erIkkeProd || navKontor === '2990'}
-                        />
+                        >
+                            {visAvviksrapportering && (
+                                <Avviksrapportering
+                                    kandidatlisteId={kandidatliste.kandidatlisteId}
+                                />
+                            )}
+                        </Meny>
+                    )}
+                    {!kandidatlistenErÅpen && visAvviksrapportering && (
+                        <Avviksrapportering kandidatlisteId={kandidatliste.kandidatlisteId} />
                     )}
                     <div className={css.grid}>
                         <div className={css.knapperad}>
