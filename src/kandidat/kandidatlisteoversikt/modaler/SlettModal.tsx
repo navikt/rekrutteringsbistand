@@ -44,7 +44,7 @@ const SlettModal: FunctionComponent<Props> = ({ kandidatliste, onClose }) => {
             className={css.modal}
         >
             <Modal.Body>
-                <BodyLong>
+                <BodyLong spacing>
                     Er du sikker på at du vil slette kandidatlisten med alt innhold? Du kan ikke
                     angre handlingen.
                 </BodyLong>
