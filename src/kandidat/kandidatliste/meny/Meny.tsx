@@ -69,7 +69,7 @@ const Meny: FunctionComponent<Props> = ({
                         <div className={css.gjennomgått}>
                             <CheckmarkCircleIcon aria-hidden />
                             <div>
-                                <Label as="span">Listen ble gjennomgått for personvernsbrudd</Label>
+                                <Label as="span">Listen ble gjennomgått for personveravvik</Label>
                                 <BodyShort>
                                     {formaterDatoNaturlig(avviksrapport.data.tidspunkt)}
                                 </BodyShort>
