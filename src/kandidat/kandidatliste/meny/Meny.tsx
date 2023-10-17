@@ -8,7 +8,6 @@ import { BodyShort, Button, Label } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { api, get } from 'felles/api';
 import { Avviksrapport } from 'felles/domene/kandidatliste/Avviksrapport';
-import { erIkkeProd } from 'felles/miljø';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -41,8 +40,9 @@ const Meny: FunctionComponent<Props> = ({
         const hentAvviksrapport = async () => {
             setAvviksrapport(await get<Avviksrapport>(`${api.kandidat}/avvik/${kandidatlisteId}`));
         };
+
         if (visAvviksrapportering) hentAvviksrapport();
-    }, [kandidatlisteId]);
+    }, [kandidatlisteId, visAvviksrapportering]);
 
     return (
         <div
