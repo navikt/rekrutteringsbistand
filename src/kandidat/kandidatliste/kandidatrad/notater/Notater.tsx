@@ -112,8 +112,7 @@ const Notater: FunctionComponent<Props> = ({
             </BodyLong>
             <BodyLong spacing>
                 Notatene blir vanligvis slettet 12 måneder etter at kandidaten ble lagt til i
-                kandidatlisten, men dette er midlertidig deaktivert pga. den pågående
-                personvernsaken.
+                kandidatlisten, men dette er midlertidig deaktivert.
             </BodyLong>
             {nyttNotatVises ? (
                 <>
