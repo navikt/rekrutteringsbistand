@@ -1,19 +1,19 @@
-import { ChangeEvent, FunctionComponent, useState, useEffect, useCallback } from 'react';
-import { Dispatch } from 'redux';
-import { useDispatch } from 'react-redux';
 import { BodyLong, Button, Heading, Textarea } from '@navikt/ds-react';
+import { ChangeEvent, FunctionComponent, useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Notat } from '../../domene/Kandidatressurser';
-import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
+import InfoUnderKandidat from '../info-under-kandidat/InfoUnderKandidat';
+import css from './Notater.module.css';
 import Notatliste from './Notatliste';
 import RedigerNotatModal from './RedigerNotatModal';
 import Slettemodal from './Slettemodal';
-import css from './Notater.module.css';
 
 type Props = {
     kandidat: KandidatIKandidatliste;
@@ -111,8 +111,8 @@ const Notater: FunctionComponent<Props> = ({
                 tilgjengelig via stillingen. Notatene vil være synlige for alle veiledere.
             </BodyLong>
             <BodyLong spacing>
-                Notatene blir automatisk slettet 12 måneder etter at kandidaten ble lagt til i
-                kandidatlisten.
+                Notatene blir vanligvis slettet 12 måneder etter at kandidaten ble lagt til i
+                kandidatlisten, men dette er midlertidig deaktivert.
             </BodyLong>
             {nyttNotatVises ? (
                 <>

@@ -173,7 +173,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
     const kandidatlistenErÅpen = kandidatliste.status === Kandidatlistestatus.Åpen;
     const kanArkivereKandidater = !filter.visArkiverte && kandidatlistenErÅpen;
 
-    const visAvviksrapportering = erIkkeProd || navKontor === '2990';
+    const visAvviksrapportering = erIkkeProd || navKontor === '2990' || navKontor === '1001';
 
     return (
         <div className={css.innhold}>

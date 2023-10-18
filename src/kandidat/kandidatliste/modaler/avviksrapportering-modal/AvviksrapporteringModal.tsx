@@ -64,24 +64,20 @@ const AvviksrapporteringModal = ({
 
         if (detHarVærtBrudd === null) {
             setValideringsfeilDetHarVærtBruddDetHarVærtBrudd(
-                'Du må først svare på om det har vært brudd'
+                'Du må først svare på om det har vært personvernavvik'
             );
         } else if (
             detHarVærtBrudd === true &&
             !detErAvvikIFritekstfelt &&
             !listenErBruktTilFeilFormål
         ) {
-            setValideringsfeilTyperBrudd(
-                'Du må først svare på om det har vært feil formål eller feil i innhold'
-            );
+            setValideringsfeilTyperBrudd('Du må først velge hvilke(t) type avvik');
         } else if (
             detHarVærtBrudd === true &&
             detErAvvikIFritekstfelt &&
             valgteAvvikIFritekstfelt.length === 0
         ) {
-            setValideringsfeilBruddIFritekst(
-                'Du må først svare på hvilke typer brudd det har vært'
-            );
+            setValideringsfeilBruddIFritekst('Du må først velge hvilke(t) type avvik');
         } else {
             return true;
         }
@@ -170,9 +166,9 @@ const AvviksrapporteringModal = ({
                 </BodyLong>
                 <BodyLong spacing>
                     Dersom listen identifiserer mottakere av sosiale tjenester, må dette rapporteres
-                    til NAV-leder for videre håndtering. Opplysninger som er journalføringspliktige
-                    må flyttes til riktig fagsystem. Vær oppmerksom på at kommunale opplysninger
-                    ikke skal i statlige fagsystem og omvendt.
+                    til NAV-leder for videre håndtering. Opplysninger som er arkivverdige må flyttes
+                    til riktig fagsystem. Vær oppmerksom på at kommunale opplysninger ikke skal i
+                    statlige fagsystem og omvendt.
                 </BodyLong>
                 <Label as="p" spacing>
                     Alle lister som innebærer personvernavvik, skal slettes i sin helhet etter at
