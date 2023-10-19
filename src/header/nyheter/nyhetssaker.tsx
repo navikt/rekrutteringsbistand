@@ -5,6 +5,24 @@ const tilDato = (dag: number, måned: number, år: number, timer: number = 0, mi
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(19, 10, 2023),
+        tittel: 'Ny funksjonalitet for lukking av personvernavvik',
+        innhold: (
+            <p>
+                Direktoratet har oppdaget personvernavvik i Rekrutteringsbistand. For å lukke
+                avviket er det laget en ny funksjonalitet som NAV-kontorene skal benytte for å gå
+                igjennom egne lister og rapportere til Arbeids- og velferdsdirektoratet.&nbsp;
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Rekrutteringsbistand--slik-rydder-vi-op.aspx"
+                >
+                    Steg for steg veiledning finner du på Navet.
+                </a>
+            </p>
+        ),
+    },
+    {
         dato: tilDato(21, 8, 2023),
         tittel: 'Endre og slette notater',
         innhold: (
