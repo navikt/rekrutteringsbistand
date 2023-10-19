@@ -11,13 +11,13 @@ const nyhetssaker: Nyhet[] = [
             <p>
                 Direktoratet har oppdaget personvernavvik i Rekrutteringsbistand. For å lukke
                 avviket er det laget en ny funksjonalitet som NAV-kontorene skal benytte for å gå
-                igjennom egne lister og rapportere til Arbeids- og velferdsdirektoratet.
+                igjennom egne lister og rapportere til Arbeids- og velferdsdirektoratet.&nbsp;
                 <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Rekrutteringsbistand--slik-rydder-vi-op.aspx"
                 >
-                    &nbsp;Steg for steg veiledning finner du på Navet.
+                    Steg for steg veiledning finner du på Navet.
                 </a>
             </p>
         ),
