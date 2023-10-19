@@ -5,6 +5,26 @@ const tilDato = (dag: number, måned: number, år: number, timer: number = 0, mi
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(19, 10, 2023),
+        tittel: 'Ny funksjonalitet for lukking av personvernavvik',
+        innhold: (
+            <p>
+                Direktoratet har oppdaget personvernavvik i Rekrutteringsbistand. For å lukke
+                avviket er det laget en ny funksjonalitet som NAV-kontorene skal benytte for å gå
+                igjennom egne lister og rapportere til Arbeids- og velferdsdirektoratet. Du finner
+                mer informasjon og steg for steg&nbsp;
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Rekrutteringsbistand--slik-rydder-vi-op.aspx?xsdata=MDV8MDF8fDg5NzUwYmFjZGQyMjRkYWY5MzJiMDhkYmNmYjI4YjVifDYyMzY2NTM0MWVjMzQ5NjI4ODY5OWI1NTM1Mjc5ZDBifDB8MHw2MzgzMzIxMzc5NTIyMTk5NDd8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxMMk5vWVhSekx6RTVPakJoWlRsa1pqY3hMV0kwWkdFdE5EbGhaaTFoTkRoa0xUWXlOemRsTnpRd1lXTTVZMTh5WWpjNE16STRNeTB3WVdOakxUUXdOalF0WWpVeU1TMDFaVGMzWmpaaE5EVTVOemxBZFc1eExtZGliQzV6Y0dGalpYTXZiV1Z6YzJGblpYTXZNVFk1TnpZeE5qazVORGN6TVE9PXw2MDJhMzYxYTQ5NzE0Yzg2OTMyYjA4ZGJjZmIyOGI1YnwyOGI0YmNjNTY3MDY0YTdkOTQ5NDMyYzRmZmU3MTZhNA%3D%3D&sdata=ZDcrQUN3RkxjY2lkOHppOGdhZ0tCcnZ1bXdKMzhHMlNMTjBTejJXR2hIYz0%3D&ovuser=62366534-1ec3-4962-8869-9b5535279d0b%2CChristina.Mendicino.Gronli%40nav.no&OR=Teams-HL&CT=1697708915657&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzA5MDExMjI3OCIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D"
+                >
+                    veiledning
+                </a>
+                &nbsp;på Navet.
+            </p>
+        ),
+    },
+    {
         dato: tilDato(21, 8, 2023),
         tittel: 'Endre og slette notater',
         innhold: (

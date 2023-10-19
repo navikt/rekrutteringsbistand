@@ -6,9 +6,7 @@ import { Search } from '@navikt/ds-react';
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatlistetype, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import { erIkkeProd } from 'felles/miljø';
 import { Nettstatus } from 'felles/nettressurs';
-import useNavKontor from 'felles/store/navKontor';
 import useMaskerFødselsnumre from '../app/useMaskerFødselsnumre';
 import AppState from '../state/AppState';
 import css from './Kandidatliste.module.css';
@@ -74,7 +72,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const { navKontor } = useNavKontor();
 
     const { filter, sms, forespørslerOmDelingAvCv } = useSelector(
         (state: AppState) => state.kandidatliste
@@ -175,7 +172,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
 
     const erKnyttetTilStilling = erKobletTilStilling(kandidatliste);
 
-    const visAvviksrapportering = !erKnyttetTilStilling && (erIkkeProd || navKontor === '2990');
+    const visAvviksrapportering = !erKnyttetTilStilling;
 
     return (
         <div className={css.innhold}>
