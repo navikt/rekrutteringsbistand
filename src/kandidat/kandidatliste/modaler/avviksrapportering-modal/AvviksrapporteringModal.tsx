@@ -165,10 +165,11 @@ const AvviksrapporteringModal = ({
                     </li>
                 </BodyLong>
                 <BodyLong spacing>
-                    Dersom listen identifiserer mottakere av sosiale tjenester, må dette rapporteres
-                    til NAV-leder for videre håndtering. Opplysninger som er arkivverdige må flyttes
-                    til riktig fagsystem. Vær oppmerksom på at kommunale opplysninger ikke skal i
-                    statlige fagsystem og omvendt.
+                    Hvis du finner lister som er laget knyttet til tjenester eller oppgaver etter
+                    sosialtjenesteloven, skal du ta kontakt med din NAV-leder for videre
+                    fremgangsmåte. Opplysninger som er arkivverdige må flyttes til riktig fagsystem.
+                    Vær oppmerksom på at kommunale opplysninger ikke skal i statlige fagsystem og
+                    omvendt.
                 </BodyLong>
                 <Label as="p" spacing>
                     Alle lister som innebærer personvernavvik, skal slettes i sin helhet etter at
