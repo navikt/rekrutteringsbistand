@@ -148,7 +148,6 @@ const AvviksrapporteringModal = ({
             }}
         >
             <Modal.Body className={css.avvikModalBody}>
-                {/* //TODO Husk å endre */}
                 <BodyLong>Listen innebærer et personvernavvik dersom:</BodyLong>
                 <BodyLong as="ul" spacing>
                     <li>
