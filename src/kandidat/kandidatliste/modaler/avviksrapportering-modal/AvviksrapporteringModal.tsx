@@ -157,14 +157,14 @@ const AvviksrapporteringModal = ({
 
                     <li>
                         <div className={css.punktMedHjelpetekst}>
-                            Og/eller notatfeltet eller listenavnet inneholder personopplysninger med
-                            høy sensitivitetsgrad, for eksempel særlige kategorier av
-                            personopplysninger.
+                            Og/eller notatfeltet, listenavnet eller listebeskrivelsen inneholder
+                            personopplysninger med høy sensitivitetsgrad, for eksempel særlige
+                            kategorier av personopplysninger.
                         </div>
                     </li>
                 </BodyLong>
                 <BodyLong spacing>
-                    Hvis du finner lister som er laget knyttet til tjenester eller oppgaver etter
+                    Hvis du finner lister som er knyttet til tjenester eller oppgaver etter
                     sosialtjenesteloven, skal du ta kontakt med din NAV-leder for videre
                     fremgangsmåte. Opplysninger som er arkivverdige må flyttes til riktig fagsystem.
                     Vær oppmerksom på at kommunale opplysninger ikke skal i statlige fagsystem og
@@ -240,7 +240,7 @@ begge alternativer hukes av."
                             </Checkbox>
                             <Checkbox value="avvikIFritekstfelt">
                                 Listen inneholder personopplysninger med høy sensitivitetsgrad i
-                                notatfelt eller navnet på listen
+                                notatfelt, navnet eller beskrivelsen til listen
                             </Checkbox>
                             {typerBrudd.includes('avvikIFritekstfelt') && (
                                 <div className={css.intendert}>
@@ -248,7 +248,7 @@ begge alternativer hukes av."
                                         isMultiSelect
                                         shouldAutocomplete
                                         className={css.avvikComboboks}
-                                        label="Velg hvilke personopplysninger som er delt i listen eller listenavnet"
+                                        label="Velg hvilke personopplysninger som er delt i listen, listenavnet eller listebeskrivelsen"
                                         options={muligeAvvikIFritekstfeltMedVisningsnavn}
                                         selectedOptions={valgteAvvikIFritekstfeltMedVisningsnavn}
                                         onToggleSelected={handleAvvikIFritekstfeltToggle}
