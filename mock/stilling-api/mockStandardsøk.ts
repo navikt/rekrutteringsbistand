@@ -1,4 +1,3 @@
-import { RestRequest } from 'msw';
 import StandardsøkDto from '../../src/stilling/stillingssok/filter/standardsøk/Standardsøk';
 
 export const mockStandardsøk: StandardsøkDto = {
@@ -7,7 +6,7 @@ export const mockStandardsøk: StandardsøkDto = {
     tidspunkt: '2021-03-26T10:19:50.601956',
 };
 
-export const mockPutStandardsøk = async (request: RestRequest): Promise<StandardsøkDto> => {
+export const mockPutStandardsøk = async (request): Promise<StandardsøkDto> => {
     const nyttSøk = await request.json();
 
     return {

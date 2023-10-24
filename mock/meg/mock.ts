@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 
 export const mockVeileder = {
@@ -13,5 +13,5 @@ export const mockMeg = {
 };
 
 export const innloggetBrukerMock = [
-    rest.get(api.innloggetBruker, (_, res, ctx) => res(ctx.json(mockMeg))),
+    http.get(api.innloggetBruker, (_) => HttpResponse.json(mockMeg)),
 ];

@@ -1,10 +1,9 @@
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 
 export const presenterteKandidaterApiMock = [
-    rest.get(
-        `${api.presenterteKandidaterApi}/kandidatliste/:stillingsId/vurdering`,
-        (_, res, ctx) => res(ctx.json(mockArbeidsgiversVurderinger))
+    http.get(`${api.presenterteKandidaterApi}/kandidatliste/:stillingsId/vurdering`, () =>
+        HttpResponse.json(mockArbeidsgiversVurderinger)
     ),
 ];
 const mockArbeidsgiversVurderinger: any = [

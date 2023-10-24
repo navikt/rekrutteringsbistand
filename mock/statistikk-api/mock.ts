@@ -1,5 +1,5 @@
-import { rest } from 'msw';
 import { api } from 'felles/api';
+import { HttpResponse, http } from 'msw';
 
 export const hentAntallFormidlinger = (navKontor: string) => {
     return navKontor === '0239'
@@ -30,10 +30,10 @@ export const hentAntallFormidlinger = (navKontor: string) => {
 };
 
 export const statistikkApiMock = [
-    rest.get(`${api.statistikk}/statistikk`, (req, res, ctx) => {
-        const searchParams = req.url.searchParams;
-        const navKontor = searchParams.get('navKontor');
+    http.get(`${api.statistikk}/statistikk`, ({ request }) => {
+        const url = new URL(request.url);
+        const navKontor = url.searchParams.get('navKontor');
 
-        return res(ctx.json(hentAntallFormidlinger(navKontor)));
+        return HttpResponse.json(hentAntallFormidlinger(navKontor));
     }),
 ];

@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 
 const minIdent = 'A123456';
 
@@ -25,10 +25,10 @@ const decorator = {
 };
 
 export const modiaContextHolderMock = [
-    rest.get(url.modiaDecorator, (_, res, ctx) => res(ctx.json(decorator))),
-    rest.get(url.modiaAktivEnhet, (_, res, ctx) => res(ctx.json(aktivEnhet))),
-    rest.get(url.modiaAktivBruker, (_, res, ctx) => res(ctx.json(aktivBruker))),
+    http.get(url.modiaDecorator, () => HttpResponse.json(decorator)),
+    http.get(url.modiaAktivEnhet, () => HttpResponse.json(aktivEnhet)),
+    http.get(url.modiaAktivBruker, () => HttpResponse.json(aktivBruker)),
 
-    rest.post(url.modiaContext, (_, res, ctx) => res(ctx.status(201))),
-    rest.delete(url.modiaAktivBruker, (_, res, ctx) => res(ctx.status(200))),
+    http.post(url.modiaContext, () => new HttpResponse(null, { status: 201 })),
+    http.delete(url.modiaAktivBruker, () => new HttpResponse(null, { status: 200 })),
 ];

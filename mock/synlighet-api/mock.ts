@@ -1,11 +1,9 @@
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 
 export const synlighetApiMock = [
-    rest.get(`${api.synlighet}/evaluering/:fnr`, (_, res, ctx) =>
-        res(ctx.json(mockSynlighetsevaluering))
-    ),
+    http.get(`${api.synlighet}/evaluering/:fnr`, () => HttpResponse.json(mockSynlighetsevaluering)),
 ];
 
 const mockSynlighetsevaluering: Synlighetsevaluering = {

@@ -1,9 +1,7 @@
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 import { mockStillingssøk } from './mockStillingssøk';
 
 export const stillingssøkMock = [
-    rest.post(`${api.stillingssøk}/stilling/_search`, (_, res, ctx) =>
-        res(ctx.json(mockStillingssøk))
-    ),
+    http.post(`${api.stillingssøk}/stilling/_search`, () => HttpResponse.json(mockStillingssøk)),
 ];

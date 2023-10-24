@@ -1,15 +1,15 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 import { mockKandidat } from './mockKandidat';
 
 export const kandidatsøkMock = [
-    rest.post(api.kandidatsøk, async (req, res, ctx) => {
+    http.post(api.kandidatsøk, () => {
         const skalMockeIngenTreff = false;
         const respons = skalMockeIngenTreff ? ingenTreff : treff;
 
-        return res(ctx.json(respons));
+        return HttpResponse.json(respons);
     }),
 ];
 
