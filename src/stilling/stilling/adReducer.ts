@@ -1,6 +1,6 @@
 import deepEqual from 'deep-equal';
 import { put, select, takeLatest } from 'redux-saga/effects';
-import { hentRekrutteringsbistandstilling, postStilling } from '../api/api';
+import { hentRekrutteringsbistandstilling, kopierStilling, postStilling } from '../api/api';
 import { getReportee } from '../reportee/reporteeReducer';
 import {
     SET_NAV_IDENT_STILLINGSINFO,
@@ -607,6 +607,26 @@ function* markerInternStillingSomMin(action) {
     yield saveRekrutteringsbistandStilling();
 }
 
+function* copyAdFromMyAds(action) {
+    try {
+        const response: Rekrutteringsbistandstilling = yield kopierStilling(action.uuid);
+
+        // Mark copied ad in mineStillinger
+        yield put({ type: ADD_COPIED_ADS, adUuid: response.stilling.uuid });
+        // Update list with the new ad
+        yield put<VarslingAction>({
+            type: VarslingActionType.VisVarsling,
+            innhold: `Stillingen er kopiert, og vil snart være synlig i listen etter du oppdaterer siden.`,
+            varighetMs: 8000,
+        });
+    } catch (e) {
+        if (e instanceof ApiError) {
+            yield put({ type: CREATE_AD_FAILURE, error: e });
+        }
+        throw e;
+    }
+}
+
 export const adSaga = function* saga() {
     yield takeLatest(PUBLISH_AD, publishAd);
     yield takeLatest(STOP_AD, stopAd);
@@ -618,6 +638,7 @@ export const adSaga = function* saga() {
     yield takeLatest(SHOW_STOP_MODAL_MY_ADS, showStopModalMyAds);
     yield takeLatest(SHOW_DELETE_MODAL, showDeleteModal);
     yield takeLatest(DELETE_AD, deleteAd);
+    yield takeLatest(COPY_AD_FROM_MY_ADS, copyAdFromMyAds);
     yield takeLatest(LEGG_TIL_I_MINE_STILLINGER, leggTilIMineStillinger);
     yield takeLatest(MARKER_INTERN_STILLING_SOM_MIN, markerInternStillingSomMin);
     yield takeLatest(MARKER_EKSTERN_STILLING_SOM_MIN, markerEksternStillingSomMin);
