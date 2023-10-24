@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 import { Reportee } from '../../src/stilling/reportee/reporteeReducer';
 import { mockVeileder } from '../meg/mock';
@@ -18,65 +18,65 @@ import {
 } from './mockStilling';
 
 export const stillingApiMock = [
-    rest.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, (_, res, ctx) =>
-        res(ctx.json(mockRekrutteringsbistandstilling))
+    http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, () =>
+        HttpResponse.json(mockRekrutteringsbistandstilling)
     ),
 
-    rest.delete(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, (_, res, ctx) =>
-        res(ctx.status(200))
+    http.delete(
+        `${api.stilling}/rekrutteringsbistandstilling/:stillingsId`,
+        () => new HttpResponse(null, { status: 200 })
     ),
 
-    rest.put(`${api.stilling}/rekrutteringsbistandstilling`, (_, res, ctx) =>
-        res(ctx.json(mockRekrutteringsbistandstilling))
+    http.put(`${api.stilling}/rekrutteringsbistandstilling`, () =>
+        HttpResponse.json(mockRekrutteringsbistandstilling)
     ),
 
-    rest.put(`${api.stilling}/stillingsinfo`, (_, res, ctx) => res(ctx.json(mockStillingsinfo))),
+    http.put(`${api.stilling}/stillingsinfo`, () => HttpResponse.json(mockStillingsinfo)),
 
-    rest.get(`${api.stilling}/standardsok`, (_, res, ctx) => res(ctx.json(mockStandardsøk))),
+    http.get(`${api.stilling}/standardsok`, () => HttpResponse.json(mockStandardsøk)),
 
-    rest.put(`${api.stilling}/standardsok`, (req, res, ctx) =>
-        res(ctx.json(mockPutStandardsøk(req)))
+    http.put(`${api.stilling}/standardsok`, ({ request }) =>
+        HttpResponse.json(mockPutStandardsøk(request))
     ),
 
-    rest.get(`${api.stilling}/rekrutteringsbistand/api/v1/reportee`, (req, res, ctx) => {
+    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/reportee`, () => {
         const innloggetBruker: Reportee = {
             displayName: `${mockVeileder.fornavn} ${mockVeileder.etternavn}`,
             navIdent: mockVeileder.navIdent,
         };
 
-        return res(ctx.json(innloggetBruker));
+        return HttpResponse.json(innloggetBruker);
     }),
 
-    rest.post(`${api.stilling}/search-api/underenhet/_search`, (_, res, ctx) =>
-        res(ctx.json(mockEnhetsregistersøk))
+    http.post(`${api.stilling}/search-api/underenhet/_search`, () =>
+        HttpResponse.json(mockEnhetsregistersøk)
     ),
 
-    rest.post(`${api.stilling}/rekrutteringsbistandstilling`, (_, res, ctx) =>
-        res(ctx.status(201), ctx.json(mockNyRekrutteringsbistandstilling))
+    http.post(`${api.stilling}/rekrutteringsbistandstilling`, () =>
+        HttpResponse.json(mockNyRekrutteringsbistandstilling)
     ),
 
-    rest.post(`${api.stilling}/rekrutteringsbistandstilling/kopier/:stillingsId`, (_, res, ctx) =>
-        res(ctx.status(201), ctx.json(mockRekrutteringsbistandstilling))
+    http.post(`${api.stilling}/rekrutteringsbistandstilling/kopier/:stillingsId`, () =>
+        HttpResponse.json(mockRekrutteringsbistandstilling)
     ),
 
-    rest.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/counties`, (_, res, ctx) =>
-        res(ctx.json(mockCounties))
+    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/counties`, () =>
+        HttpResponse.json(mockCounties)
     ),
 
-    rest.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/countries`, (_, res, ctx) =>
-        res(ctx.json(mockCountries))
+    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/countries`, () =>
+        HttpResponse.json(mockCountries)
     ),
 
-    rest.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/municipals`, (_, res, ctx) =>
-        res(ctx.json(mockMunicipals))
+    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/municipals`, () =>
+        HttpResponse.json(mockMunicipals)
     ),
 
-    rest.get(
-        `${api.stilling}/rekrutteringsbistand/api/v1/categories-with-altnames`,
-        (_, res, ctx) => res(ctx.json(mockCategoriesWithAltnames))
+    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/categories-with-altnames`, () =>
+        HttpResponse.json(mockCategoriesWithAltnames)
     ),
 
-    rest.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/postdata`, (_, res, ctx) =>
-        res(ctx.json(mockPostdata))
+    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/postdata`, () =>
+        HttpResponse.json(mockPostdata)
     ),
 ];

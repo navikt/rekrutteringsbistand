@@ -1,7 +1,8 @@
 import { addDays, startOfDay, subDays } from 'date-fns';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { AktørId } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { rest } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 import { Svarstatistikk } from '../../src/forside/statistikk/useSvarstatistikk';
 import {
@@ -11,34 +12,36 @@ import {
     TilstandPåForespørsel,
 } from '../../src/kandidat/kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { mockAlleKandidatlister } from '../kandidat-api/mockKandidatliste';
+import { mockAlleKandidater } from '../kandidatsok-proxy/mockKandidat';
 import { mockVeileder } from '../meg/mock';
 import { mockStilling } from '../stilling-api/mockStilling';
-import { mockAlleKandidater } from '../kandidatsok-proxy/mockKandidat';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export const forespørselOmDelingAvCvMock = [
-    rest.get(`${api.forespørselOmDelingAvCv}/foresporsler/:stillingsId`, (req, res, ctx) => {
+    http.get(`${api.forespørselOmDelingAvCv}/foresporsler/:stillingsId`, ({ params }) => {
+        const { stillingsId } = params;
         const kandidatliste = mockAlleKandidatlister.find(
-            (liste) => liste.stillingId === req.params.stillingsId
+            (liste) => liste.stillingId === stillingsId
         );
 
         if (!kandidatliste) {
-            return res(ctx.json([]));
+            return new HttpResponse(null, { status: 200 });
         }
 
         const forespørslerForKandidatliste = opprettMockForespørslerOmDelingAvCv(
             kandidatliste,
             mockVeileder
         );
-
-        return res(ctx.json(forespørslerForKandidatliste));
+        return HttpResponse.json(forespørslerForKandidatliste);
     }),
 
-    rest.get(`${api.forespørselOmDelingAvCv}/foresporsler/kandidat/:aktorId`, (req, res, ctx) => {
-        const kandidat = mockAlleKandidater.find((cv) => cv.aktorId === req.params.aktorId);
+    http.get(`${api.forespørselOmDelingAvCv}/foresporsler/kandidat/:aktorId`, ({ params }) => {
+        const { aktorId } = params;
+        const kandidat = mockAlleKandidater.find((cv) => cv.aktorId === aktorId);
 
         if (!kandidat) {
-            return res(ctx.status(404));
+            return new HttpResponse(null, {
+                status: 404,
+            });
         }
 
         const forespørslerForKandidat = opprettMockForespørslerOmDelingAvCvForKandidat(
@@ -47,19 +50,25 @@ export const forespørselOmDelingAvCvMock = [
             mockVeileder
         );
 
-        return res(ctx.json(forespørslerForKandidat));
+        return HttpResponse.json(forespørslerForKandidat);
     }),
 
-    rest.post(`${api.forespørselOmDelingAvCv}/foresporsler`, (_, res, ctx) => res(ctx.status(201))),
-    rest.post(`${api.forespørselOmDelingAvCv}/foresporsler/kandidat/:aktorId`, (_, res, ctx) =>
-        res(ctx.status(201))
+    http.post(
+        `${api.forespørselOmDelingAvCv}/foresporsler`,
+        (_) => new HttpResponse(null, { status: 201 })
     ),
 
-    rest.get(`${api.forespørselOmDelingAvCv}/statistikk`, (req, res, ctx) => {
-        const searchParams = req.url.searchParams;
+    http.post(
+        `${api.forespørselOmDelingAvCv}/foresporsler/kandidat/:aktorId`,
+        (_) => new HttpResponse(null, { status: 201 })
+    ),
+
+    http.get(`${api.forespørselOmDelingAvCv}/statistikk`, ({ request }) => {
+        const url = new URL(request.url);
+        const searchParams = url.searchParams;
         const navKontor = searchParams.get('navKontor');
 
-        return res(ctx.json(hentForespørslerstatistikk(navKontor)));
+        return HttpResponse.json(hentForespørslerstatistikk(navKontor));
     }),
 ];
 

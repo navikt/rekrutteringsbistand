@@ -1,51 +1,57 @@
-import { ResponseFunction, RestContext, RestRequest, rest } from 'msw';
+import { HttpResponse, delay, http } from 'msw';
 import { api } from '../../src/felles/api';
 import { LagreKandidaterDto } from '../../src/kandidatsok/kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { mockAvviksrapport } from './mockAvviksrapport';
 import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
 
-const todo = (req: RestRequest, res: ResponseFunction, ctx: RestContext) =>
-    res(ctx.status(500, 'Mock er ikke implementert'));
+const todo = (info) => new HttpResponse('Mock er ikke implementert', { status: 500 });
 
 export const kandidatApiMock = [
-    rest.get(`${api.kandidat}/veileder/kandidatlister`, (_, res, ctx) =>
-        res(ctx.json(mockMineKandidatlister))
+    http.get(`${api.kandidat}/veileder/kandidatlister`, (_) =>
+        HttpResponse.json(mockMineKandidatlister)
     ),
 
-    rest.get(`${api.kandidat}/veileder/stilling/:stillingsId/kandidatliste`, (req, res, ctx) => {
+    http.get(`${api.kandidat}/veileder/stilling/:stillingsId/kandidatliste`, ({ params }) => {
+        const { stillingsId } = params;
         const kandidatlisteMedStilling = mockAlleKandidatlister.find(
-            (liste) => liste.stillingId === req.params.stillingsId
+            (liste) => liste.stillingId === stillingsId
         );
 
-        return res(kandidatlisteMedStilling ? ctx.json(kandidatlisteMedStilling) : ctx.status(404));
+        return kandidatlisteMedStilling
+            ? HttpResponse.json(kandidatlisteMedStilling)
+            : new HttpResponse(null, { status: 404 });
     }),
 
-    rest.get(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId`, (req, res, ctx) => {
+    http.get(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId`, ({ params }) => {
+        const { kandidatlisteId } = params;
         const kandidatlisteUtenStilling = mockAlleKandidatlister.find(
-            (liste) => liste.kandidatlisteId === req.params.kandidatlisteId
+            (liste) => liste.kandidatlisteId === kandidatlisteId
         );
 
-        return res(
-            kandidatlisteUtenStilling ? ctx.json(kandidatlisteUtenStilling) : ctx.status(404)
-        );
+        return kandidatlisteUtenStilling
+            ? HttpResponse.json(kandidatlisteUtenStilling)
+            : new HttpResponse(null, { status: 404 });
     }),
 
-    rest.delete(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId`, (_, res, ctx) =>
-        res(ctx.status(200))
+    http.delete(
+        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId`,
+        (_) => new HttpResponse(null, { status: 200 })
     ),
 
-    rest.post(
+    http.post(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater`,
-        async (req, res, ctx) => {
-            const lagreKandidaterDto: LagreKandidaterDto = await req.json();
+        async ({ request, params }) => {
+            const lagreKandidaterDto: LagreKandidaterDto =
+                (await request.json()) as LagreKandidaterDto;
+            const { kandidatlisteId } = params;
 
             const kandidatliste = mockAlleKandidatlister.find(
-                (liste) => liste.kandidatlisteId === req.params.kandidatlisteId
+                (liste) => liste.kandidatlisteId === kandidatlisteId
             );
 
             if (!kandidatliste) {
-                return res(ctx.status(404));
+                return new HttpResponse(null, { status: 404 });
             }
 
             const oppdatertListe = {
@@ -56,97 +62,103 @@ export const kandidatApiMock = [
                 ] as any,
             };
 
-            return res(ctx.json(oppdatertListe));
+            return HttpResponse.json(oppdatertListe);
         }
     ),
 
-    rest.post(`${api.kandidat}/veileder/me/kandidatlister`, (_, res, ctx) => res(ctx.status(201))),
+    http.post(
+        `${api.kandidat}/veileder/me/kandidatlister`,
+        (_) => new HttpResponse(null, { status: 201 })
+    ),
 
-    rest.get(`${api.kandidat}/veileder/kandidater/:kandidatnr/listeoversikt`, (req, res, ctx) => {
+    http.get(`${api.kandidat}/veileder/kandidater/:kandidatnr/listeoversikt`, ({ params }) => {
+        const { kandidatnr } = params;
         const kandidatlister = mockAlleKandidatlister.filter((liste) =>
-            liste.kandidater.some((kandidat) => kandidat.kandidatnr === req.params.kandidatnr)
+            liste.kandidater.some((kandidat) => kandidat.kandidatnr === kandidatnr)
         );
 
         const kandidatlisterMedKandidaten = kandidatlister.map((liste) =>
             opprettMockKandidatlisteForKandidat(
                 liste,
-                liste.kandidater.find((kandidat) => kandidat.kandidatnr === req.params.kandidatnr)
+                liste.kandidater.find((kandidat) => kandidat.kandidatnr === kandidatnr)
             )
         );
 
-        return res(ctx.json(kandidatlisterMedKandidaten));
+        return HttpResponse.json(kandidatlisterMedKandidaten);
     }),
 
-    rest.put(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/eierskap`, todo),
+    http.put(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/eierskap`, todo),
 
-    rest.get(
+    http.get(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
         todo
     ),
 
-    rest.post(
+    http.post(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
         todo
     ),
 
-    rest.all(
+    http.all(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater/:notatId`,
         todo
     ),
 
-    rest.put(
+    http.put(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/status`,
         todo
     ),
 
-    rest.put(
+    http.put(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/utfall`,
         todo
     ),
 
-    rest.put(
+    http.put(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/arkivert`,
         todo
     ),
 
-    rest.post(
+    http.post(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/deltekandidater`,
-        (req, res, ctx) => {
+        ({ params }) => {
+            const { kandidatlisteId } = params;
             const kandidatlisteUtenStilling = mockAlleKandidatlister.find(
-                (liste) => liste.kandidatlisteId === req.params.kandidatlisteId
+                (liste) => liste.kandidatlisteId === kandidatlisteId
             );
 
-            return res(
-                kandidatlisteUtenStilling ? ctx.json(kandidatlisteUtenStilling) : ctx.status(404)
-            );
+            return kandidatlisteUtenStilling
+                ? HttpResponse.json(kandidatlisteUtenStilling)
+                : new HttpResponse(null, { status: 404 });
         }
     ),
 
-    rest.get(`${api.kandidat}/veileder/kandidater/navn`, todo),
+    http.get(`${api.kandidat}/veileder/kandidater/navn`, todo),
 
-    rest.post(
+    http.post(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat`,
         todo
     ),
 
-    rest.put(
+    http.put(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat/:formidlingId/utfall`,
         todo
     ),
 
-    rest.put(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/status`, todo),
+    http.put(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/status`, todo),
 
-    rest.put(
+    http.put(
         `${api.kandidat}/veileder/kandidat/arbeidsgiverliste/:kandidatlisteId/:kandidatnummer`,
         todo
     ),
 
-    rest.post(`${api.kandidat}/avvik`, (_, res, ctx) =>
-        res(ctx.delay(1000), ctx.json(mockAvviksrapport))
-    ),
+    http.post(`${api.kandidat}/avvik`, async () => {
+        await delay(1000);
+        return HttpResponse.json(mockAvviksrapport);
+    }),
 
-    rest.get(`${api.kandidat}/avvik/:kandidatlisteId`, (_, res, ctx) =>
-        //res(ctx.json(mockAvviksrapport))
-        res(ctx.status(404))
+    http.get(
+        `${api.kandidat}/avvik/:kandidatlisteId`,
+        () => new HttpResponse(null, { status: 404 })
     ),
 ];
