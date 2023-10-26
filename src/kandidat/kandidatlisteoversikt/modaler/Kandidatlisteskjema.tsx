@@ -1,4 +1,4 @@
-import { BodyShort, Button, Detail, Modal, Textarea, TextField } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Detail, Modal, Textarea, TextField } from '@navikt/ds-react';
 import React, { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -213,13 +213,20 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
         return (
             <>
                 <Modal.Body>
+                    <BodyLong spacing>
+                        Lister skal kun opprettes til formål formidling, det vil si at formålet er å
+                        koble en arbeidssøker til en stilling. I tillegg er det tillatt å opprette
+                        lister knyttet til stilling/yrke, for å kunne jobbe med flere konkrete
+                        stillinger samtidig. Du kan ikke opprette lister til andre formål, for
+                        eksempel lister for kurs eller arbeidstrening.
+                    </BodyLong>
                     <form className={css.skjema}>
                         <TextField
                             autoComplete="off"
                             label="Navn på kandidatliste (må fylles ut)"
-                            placeholder="For eksempel: Jobbmesse, Oslo, 21.05.2019" // TODO: Ikke oppfordre til Jobbmesse?
                             value={this.state.tittel}
                             onChange={this.onTittelChange}
+                            description="Navn på kandidatliste skal si noe om stillingen. Det kan ikke inneholde tekst som sier noe om kandidatens oppfølging i NAV, helse, tiltak, eller noe som kategoriserer personen ut over det aktuelle yrke som listen er opprettet for."
                             error={
                                 this.state.visValideringsfeilInput
                                     ? 'Navn på kandidatliste mangler'
@@ -258,6 +265,7 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
                             value={this.state.beskrivelse ?? undefined}
                             maxLength={1000}
                             onChange={this.onBeskrivelseChange}
+                            description="Beskrivelsen på kandidatliste skal si noe om stillingen. Det kan ikke inneholde tekst som sier noe om kandidatens oppfølging i NAV, helse, tiltak, eller noe som kategoriserer personen ut over det aktuelle yrke som listen er opprettet for."
                             error={
                                 this.validerBeskrivelse() ? undefined : 'Beskrivelsen er for lang'
                             }
