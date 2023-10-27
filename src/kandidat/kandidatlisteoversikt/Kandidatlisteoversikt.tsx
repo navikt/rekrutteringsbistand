@@ -98,7 +98,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
 
         if (verdi !== type) {
             this.props.hentKandidatlister({
-                query,
+                query: this.state.søkeOrd || query,
                 type: verdi,
                 kunEgne,
                 pagenumber: 0,
@@ -191,7 +191,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
         const { query, type, kunEgne } = this.props.søkekriterier;
         if (!kunEgne) {
             this.props.hentKandidatlister({
-                query,
+                query: this.state.søkeOrd || query,
                 type,
                 kunEgne: true,
                 pagenumber: 0,
@@ -204,7 +204,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
         const { query, type, kunEgne } = this.props.søkekriterier;
         if (kunEgne) {
             this.props.hentKandidatlister({
-                query,
+                query: this.state.søkeOrd || query,
                 type,
                 kunEgne: false,
                 pagenumber: 0,
@@ -216,7 +216,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
     onPageChange = (nyttSidenummer: number) => {
         const { query, type, kunEgne } = this.props.søkekriterier;
         this.props.hentKandidatlister({
-            query,
+            query: this.state.søkeOrd || query,
             type,
             kunEgne,
             pagenumber: nyttSidenummer - 1,
