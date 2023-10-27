@@ -2,6 +2,20 @@ import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
 
 const devVirksomheter: Enhetsregistertreff[] = [
     {
+        orgnr: '314067134',
+        name: 'DIVERSE GNIEN APE',
+        location: {
+            address: 'Apeveien',
+            postalCode: '5555',
+            city: 'Jungelen',
+            municipal: 'NORDRE FOLLO',
+            country: 'Norge',
+            county: null,
+            latitude: null,
+            longitude: null,
+        },
+    },
+    {
         orgnr: '312113341',
         name: 'ORDKNAPP BLOMSTRETE TIGER AS',
         location: {
