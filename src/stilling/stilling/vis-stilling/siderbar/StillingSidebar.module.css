@@ -1,0 +1,16 @@
+.sidebarWrapper {
+    display: flex;
+    gap: 3rem;
+    flex-direction: column;
+}
+
+.fullWidthButton {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+.flexButtonBox {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+}

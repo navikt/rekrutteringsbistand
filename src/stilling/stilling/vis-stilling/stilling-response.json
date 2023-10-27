@@ -1,0 +1,173 @@
+{
+    "stillingsinfo": {
+        "stillingsid": "9ce48f6e-3437-4468-b1b1-e509ef346b59",
+        "stillingsinfoid": "ff723542-9082-4a81-81df-22718c27fdda",
+        "notat": "Interne notater",
+        "eierNavident": null,
+        "eierNavn": null,
+        "stillingskategori": "STILLING"
+    },
+    "stilling": {
+        "id": 866684,
+        "uuid": "9ce48f6e-3437-4468-b1b1-e509ef346b59",
+        "created": "2023-10-26T08:34:41.702174",
+        "createdBy": "pam-rekrutteringsbistand",
+        "updated": "2023-10-26T08:37:46.229079",
+        "updatedBy": "pam-rekrutteringsbistand",
+        "title": "Overskrift på annonsen",
+        "status": "ACTIVE",
+        "administration": {
+            "id": 642690,
+            "status": "DONE",
+            "comments": null,
+            "reportee": "F_Z994320 E_Z994320",
+            "remarks": [],
+            "navIdent": "Z994320"
+        },
+        "mediaList": [],
+        "contactList": [
+            {
+                "name": "Kontakt person",
+                "email": "kontakt@person.com",
+                "phone": "99999999",
+                "role": null,
+                "title": "Tittel på kontaktperson"
+            }
+        ],
+        "privacy": "INTERNAL_NOT_SHOWN",
+        "source": "DIR",
+        "medium": "DIR",
+        "reference": "9ce48f6e-3437-4468-b1b1-e509ef346b59",
+        "published": "2023-10-26T08:37:45.593795",
+        "expires": "2023-10-31T11:00:00",
+        "employer": {
+            "id": 769294,
+            "uuid": "31c42c49-f6bf-4152-8eda-baf57b14e7b0",
+            "created": "2022-11-30T13:24:08.526224",
+            "createdBy": "pam-rekrutteringsbistand",
+            "updated": "2023-10-23T16:36:00.239731",
+            "updatedBy": "pam-ad",
+            "mediaList": [],
+            "contactList": [],
+            "location": {
+                "address": "",
+                "postalCode": "",
+                "county": null,
+                "municipal": null,
+                "municipalCode": null,
+                "city": "",
+                "country": "",
+                "latitude": null,
+                "longitude": null
+            },
+            "locationList": [
+                {
+                    "address": "",
+                    "postalCode": "",
+                    "county": null,
+                    "municipal": null,
+                    "municipalCode": null,
+                    "city": "",
+                    "country": "",
+                    "latitude": null,
+                    "longitude": null
+                }
+            ],
+            "properties": { "nace2": "[]" },
+            "name": "ORDKNAPP BLOMSTRETE TIGER AS",
+            "orgnr": "312113341",
+            "status": "ACTIVE",
+            "parentOrgnr": "311185268",
+            "publicName": "ORDKNAPP BLOMSTRETE TIGER AS",
+            "deactivated": null,
+            "orgform": "BEDR",
+            "employees": 4
+        },
+        "location": {
+            "address": "gateadresse her",
+            "postalCode": "1112",
+            "county": "OSLO",
+            "municipal": "OSLO",
+            "municipalCode": "0301",
+            "city": "OSLO",
+            "country": "NORGE",
+            "latitude": null,
+            "longitude": null
+        },
+        "locationList": [
+            {
+                "address": "gateadresse her",
+                "postalCode": "1112",
+                "county": "OSLO",
+                "municipal": "OSLO",
+                "municipalCode": "0301",
+                "city": "OSLO",
+                "country": "NORGE",
+                "latitude": null,
+                "longitude": null
+            }
+        ],
+        "categoryList": [
+            {
+                "id": 2111523,
+                "code": "106186",
+                "categoryType": "STYRK08NAV",
+                "name": "Lønnskonsulent",
+                "description": null,
+                "parentId": null
+            },
+            {
+                "id": 2111524,
+                "code": "106186",
+                "categoryType": "JANZZ",
+                "name": "Lønnskonsulent",
+                "description": "",
+                "parentId": null
+            },
+            {
+                "id": 2111525,
+                "code": "http://data.europa.eu/esco/occupation/ade351da-7bda-424e-8682-bbdcab2a25be",
+                "categoryType": "ESCO",
+                "name": "lønningsassistent",
+                "description": "JANZZ-106186",
+                "parentId": null
+            },
+            {
+                "id": 2111526,
+                "code": "4313",
+                "categoryType": "STYRK08",
+                "name": "Lønningsmedarbeidere",
+                "description": "JANZZ-106186",
+                "parentId": null
+            }
+        ],
+        "properties": {
+            "extent": "Heltid",
+            "workhours": "[\"Dagtid\"]",
+            "employerhomepage": "https://www.internett.com",
+            "applicationdue": "2023-10-31T11:00:00.000Z",
+            "workday": "[\"Ukedager\"]",
+            "jobtitle": "Lønnskonsulent",
+            "positioncount": "3",
+            "engagementtype": "Fast",
+            "classification_styrk08_score": "0.9586195624007148",
+            "employerdescription": "<p>Kort om bedriften her</p>",
+            "starttime": "2023-11-15T11:00:00.000Z",
+            "jobarrangement": "Skift",
+            "adtext": "<p>Annonsetekst kommer nedover her</p><p></p><p>med <strong>bold</strong> og greier</p>",
+            "classification_styrk08_code": "4313",
+            "tags": "[\"INKLUDERING\",\"INKLUDERING__ARBEIDSTID\",\"TILTAK_ELLER_VIRKEMIDDEL\",\"TILTAK_ELLER_VIRKEMIDDEL__LØNNSTILSKUDD\",\"PRIORITERT_MÅLGRUPPE\",\"PRIORITERT_MÅLGRUPPE__SENIORER_OVER_45\",\"STATLIG_INKLUDERINGSDUGNAD\"]",
+            "applicationemail": "mail@epost.com",
+            "searchtags": "[{\"label\":\"Lønnskonsulent\",\"score\":0.95861953},{\"label\":\"lønningsassistent\",\"score\":0.95861953},{\"label\":\"Lønningsmedarbeidere\",\"score\":0.95861953},{\"label\":\"Hyreansvarlig\",\"score\":0.8},{\"label\":\"Hyremedarbeider\",\"score\":0.8},{\"label\":\"Lønnsmedarbeider\",\"score\":0.8},{\"label\":\"Regnskapsmedarbeider\",\"score\":0.8}]",
+            "applicationurl": "https://www.lenke-til-stilling.com",
+            "classification_esco_code": "http://data.europa.eu/esco/occupation/ade351da-7bda-424e-8682-bbdcab2a25be",
+            "classification_input_source": "jobtitle",
+            "sector": "Privat"
+        },
+        "publishedByAdmin": "2023-10-26T08:37:45.593795",
+        "businessName": "ORDKNAPP BLOMSTRETE TIGER AS",
+        "firstPublished": true,
+        "deactivatedByExpiry": false,
+        "activationOnPublishingDate": false
+    }
+}

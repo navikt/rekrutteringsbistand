@@ -1,0 +1,12 @@
+.definitionList {
+    display: grid;
+}
+.definitionList dt {
+    margin-top: 1.5rem;
+    font-weight: bold;
+}
+
+.definitionList dd {
+    margin: 0;
+    padding: 0;
+}

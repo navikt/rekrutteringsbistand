@@ -1,0 +1,26 @@
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 1.5rem;
+}
+
+.hovedinnhold {
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.lenker {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.innholdsLinje {
+    display: flex;
+
+    gap: 1.5rem;
+}

@@ -1,0 +1,96 @@
+{
+    "kandidatlisteId": "fd446aef-34ed-4477-ad66-2fc9d185f2ce",
+    "tittel": "Fremtidens tenker",
+    "beskrivelse": "",
+    "organisasjonReferanse": "312328712",
+    "organisasjonNavn": "OMTENKSOM LOJAL STRUTS PLC",
+    "stillingId": "78398c17-5e66-4018-b99a-9934b33b489f",
+    "opprettetAv": {
+        "ident": "Z994320",
+        "navn": "F_Z994320 E_Z994320"
+    },
+    "opprettetTidspunkt": "2023-09-01T08:51:50.2",
+    "kandidater": [
+        {
+            "kandidatId": "9d65f1fc-cd30-497d-8392-8ceeb9ec19e3",
+            "kandidatnr": "PAM0vqis3m2n",
+            "status": "VURDERES",
+            "lagtTilTidspunkt": "2023-09-28T10:23:55.483",
+            "lagtTilAv": {
+                "ident": "Z994320",
+                "navn": "F_Z994320 E_Z994320"
+            },
+            "fornavn": "Robust",
+            "etternavn": "Journalist",
+            "fodselsdato": "1989-12-29",
+            "fodselsnr": "29528910708",
+            "utfall": "IKKE_PRESENTERT",
+            "telefon": "+4789456321",
+            "epost": null,
+            "innsatsgruppe": "Spesielt tilpasset innsats",
+            "antallNotater": 0,
+            "arkivert": false,
+            "arkivertTidspunkt": null,
+            "arkivertAv": null,
+            "aktørid": "2043300676293",
+            "utfallsendringer": []
+        },
+        {
+            "kandidatId": "ba8e869b-3387-4c92-9960-717de841f108",
+            "kandidatnr": "PAM0xtfrwli5",
+            "status": "VURDERES",
+            "lagtTilTidspunkt": "2023-09-28T10:23:55.483",
+            "lagtTilAv": {
+                "ident": "Z994320",
+                "navn": "F_Z994320 E_Z994320"
+            },
+            "fornavn": "Uklar",
+            "etternavn": "Klippfisk",
+            "fodselsdato": "1985-05-07",
+            "fodselsnr": "07858597719",
+            "utfall": "IKKE_PRESENTERT",
+            "telefon": null,
+            "epost": null,
+            "innsatsgruppe": "Spesielt tilpasset innsats",
+            "antallNotater": 0,
+            "arkivert": false,
+            "arkivertTidspunkt": null,
+            "arkivertAv": null,
+            "aktørid": "2177336243360",
+            "utfallsendringer": []
+        },
+        {
+            "kandidatId": "6fa02bc3-efc4-4ddc-836b-9074a2f2c6be",
+            "kandidatnr": "PAM0xngui6g6",
+            "status": "VURDERES",
+            "lagtTilTidspunkt": "2023-09-01T14:51:52.333",
+            "lagtTilAv": {
+                "ident": "Z994241",
+                "navn": "F_Z994241 E_Z994241"
+            },
+            "fornavn": "Gul",
+            "etternavn": "Knapp",
+            "fodselsdato": "1991-08-06",
+            "fodselsnr": "06889198689",
+            "utfall": "IKKE_PRESENTERT",
+            "telefon": null,
+            "epost": null,
+            "innsatsgruppe": "Standardinnsats",
+            "antallNotater": 0,
+            "arkivert": false,
+            "arkivertTidspunkt": null,
+            "arkivertAv": null,
+            "aktørid": "2166363054666",
+            "utfallsendringer": []
+        }
+    ],
+    "kanEditere": true,
+    "erMedeier": false,
+    "erEier": true,
+    "kanSlette": "HAR_STILLING",
+    "medeiere": [],
+    "formidlingerAvUsynligKandidat": [],
+    "status": "LUKKET",
+    "antallStillinger": 8,
+    "stillingskategori": "STILLING"
+}
