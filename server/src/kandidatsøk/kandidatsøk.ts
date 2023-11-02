@@ -1,10 +1,10 @@
 import { RequestHandler } from 'express';
-import { hentNavIdent } from '../azureAd';
+import { hentGrupper, hentNavIdent } from '../azureAd';
+import { auditLog, logger, opprettLoggmeldingForAuditlogg, secureLog } from '../logger';
 import { hentBrukerensAdGrupper } from '../microsoftGraphApi';
 import { retrieveToken } from '../middlewares';
-import { auditLog, logger, opprettLoggmeldingForAuditlogg, secureLog } from '../logger';
-import { SearchQuery } from './elasticSearchTyper';
 import TilgangCache from './cache';
+import { SearchQuery } from './elasticSearchTyper';
 
 export const { AD_GRUPPE_MODIA_GENERELL_TILGANG, AD_GRUPPE_MODIA_OPPFOLGING } = process.env;
 
@@ -18,7 +18,12 @@ export const cache = new TilgangCache();
 const sjekkTilgang = async (
     accessToken: string
 ): Promise<{ harTilgang: boolean; brukerensAdGrupper: string[] }> => {
-    const brukerensAdGrupper = await hentBrukerensAdGrupper(accessToken);
+    const brukerensAdGrupper = hentGrupper(accessToken);
+    const brukerensAdGrupperFraGraphApi = await hentBrukerensAdGrupper(accessToken);
+
+    secureLog.info('Brukerens AD-grupper fra tokenet: ' + brukerensAdGrupper.join(', '));
+    secureLog.info('Brukerens AD-grupper fra AzureAD: ' + brukerensAdGrupperFraGraphApi.join(', '));
+
     const harTilgang = brukerensAdGrupper.some((adGruppeBrukerErMedlemAv) =>
         adGrupperMedTilgangTilKandidatsøket.includes(adGruppeBrukerErMedlemAv)
     );

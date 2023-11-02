@@ -23,6 +23,9 @@ spec:
             enabled: true
             allowAllUsers: true
             claims:
+                groups:
+                    - id: {{ adGruppeModiaGenerellTilgang }}
+                    - id: {{ adGruppeModiaOppfolging }}
                 extra:
                     - NAVident
         sidecar:

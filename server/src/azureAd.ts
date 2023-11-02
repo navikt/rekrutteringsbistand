@@ -1,9 +1,9 @@
 import { RequestHandler } from 'express';
 import { createRemoteJWKSet, decodeJwt, jwtVerify } from 'jose';
 import { FlattenedJWSInput, GetKeyFunction, JWSHeaderParameters } from 'jose/dist/types/types';
-import { Issuer, Client } from 'openid-client';
-import { retrieveToken } from './middlewares';
+import { Client, Issuer } from 'openid-client';
 import { logger } from './logger';
+import { retrieveToken } from './middlewares';
 
 const discoveryUrl = process.env.AZURE_APP_WELL_KNOWN_URL;
 const clientId = process.env.AZURE_APP_CLIENT_ID;
@@ -52,6 +52,11 @@ export const tokenIsValid = async (token: string) => {
 export const hentNavIdent = (token: string) => {
     const claims = decodeJwt(token);
     return String(claims[navIdentClaim]) || '';
+};
+
+export const hentGrupper = (token: string): string[] => {
+    const claims = decodeJwt(token);
+    return (claims.groups as string[]) || [];
 };
 
 export const responderMedBrukerinfo: RequestHandler = async (req, res) => {
