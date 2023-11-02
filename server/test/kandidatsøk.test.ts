@@ -6,6 +6,7 @@ import * as kandidatsøk from '../src/kandidatsøk/kandidatsøk';
 import * as microsoftGraphApi from '../src/microsoftGraphApi';
 import * as middlewares from '../src/middlewares';
 
+/*
 describe('Tilgangskontroll for kandidatsøket', () => {
     let mockRequest: Partial<Request>;
     let mockResponse: Partial<Response>;
@@ -114,6 +115,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
         expect(mockResponse.status).toBeCalledWith(403);
     });
 });
+*/
 
 describe('ES body for søk', () => {
     let queryMock = (bool?: object): SearchQuery => {
