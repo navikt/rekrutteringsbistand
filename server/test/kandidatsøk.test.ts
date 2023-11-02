@@ -24,7 +24,6 @@ describe('Tilgangskontroll for kandidatsøket', () => {
         };
 
         nextFunction = jest.fn();
-        kandidatsøk.cache.clear();
     });
 
     test('En bruker med ModiaGenerellTilgang skal få tilgang til kandidatsøket', async () => {
@@ -55,24 +54,6 @@ describe('Tilgangskontroll for kandidatsøket', () => {
         );
 
         expect(nextFunction).toBeCalled();
-    });
-
-    test('En bruker der tilgang er cachet skal få tilgang til kandidatsøket', async () => {
-        jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue('A123456');
-
-        await kandidatsøk.harTilgangTilKandidatsøk(
-            mockRequest as Request,
-            mockResponse as Response,
-            nextFunction
-        );
-
-        await kandidatsøk.harTilgangTilKandidatsøk(
-            mockRequest as Request,
-            mockResponse as Response,
-            nextFunction
-        );
-
-        expect(nextFunction).toBeCalledTimes(2);
     });
 
     test('En bruker med andre tilganger skal ikke få tilgang til kandidatsøket', async () => {
