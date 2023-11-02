@@ -15,8 +15,6 @@ const sjekkTilgang = (
     accessToken: string
 ): { harTilgang: boolean; brukerensAdGrupper: string[] } => {
     const brukerensAdGrupper = hentGrupper(accessToken);
-    secureLog.info('Brukerens AD-grupper fra token: ' + brukerensAdGrupper.join(', '));
-
     const harTilgang = brukerensAdGrupper.some((adGruppeBrukerErMedlemAv) =>
         adGrupperMedTilgangTilKandidatsøket.includes(adGruppeBrukerErMedlemAv)
     );
@@ -32,18 +30,21 @@ export const harTilgangTilKandidatsøk: RequestHandler = async (request, respons
     const navIdent = hentNavIdent(brukerensAccessToken);
     const tilgang = sjekkTilgang(brukerensAccessToken);
 
-    const forklaring = `Kandidatsøket krever medlemskap i en av følgende AD-grupper: ${adGrupperMedTilgangTilKandidatsøket}.`;
     if (tilgang.harTilgang) {
-        logger.info(`Bruker ${navIdent} fikk tilgang til kandidatsøket. \n${forklaring}`);
         next();
     } else {
-        logger.info(`Bruker ${navIdent} har ikke tilgang til kandidatsøket. \n${forklaring}`);
+        const brukerensGrupper = tilgang.brukerensAdGrupper.join(', ');
+        const grupperSomGirTilgang = adGrupperMedTilgangTilKandidatsøket.join(', ');
+
+        secureLog.info(
+            `Bruker ${navIdent} har ikke tilgang til kandidatsøket. \nBruker har følgende AD-grupper: ${brukerensGrupper}. \nKandidatsøket krever en av følgende AD-grupper: ${grupperSomGirTilgang}.`
+        );
 
         response
             .status(403)
             .send(
                 'Du har ikke tilgang til kandidatsøket fordi det krever én av følgende AD-grupper: ' +
-                    adGrupperMedTilgangTilKandidatsøket
+                    grupperSomGirTilgang
             );
     }
 };
