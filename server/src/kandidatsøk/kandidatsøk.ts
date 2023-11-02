@@ -19,9 +19,9 @@ const sjekkTilgang = async (
     accessToken: string
 ): Promise<{ harTilgang: boolean; brukerensAdGrupper: string[] }> => {
     const brukerensAdGrupper = hentGrupper(accessToken);
-    const brukerensAdGrupperFraGraphApi = await hentBrukerensAdGrupper(accessToken);
-
     secureLog.info('Brukerens AD-grupper fra tokenet: ' + brukerensAdGrupper.join(', '));
+
+    const brukerensAdGrupperFraGraphApi = await hentBrukerensAdGrupper(accessToken);
     secureLog.info('Brukerens AD-grupper fra AzureAD: ' + brukerensAdGrupperFraGraphApi.join(', '));
 
     const harTilgang = brukerensAdGrupper.some((adGruppeBrukerErMedlemAv) =>
@@ -38,10 +38,12 @@ export const harTilgangTilKandidatsøk: RequestHandler = async (request, respons
     const brukerensAccessToken = retrieveToken(request.headers);
     const navIdent = hentNavIdent(brukerensAccessToken);
 
+    /*
     if (cache.hentTilgang(navIdent)) {
         logger.info(`Bruker ${navIdent} fikk tilgang til kandidatsøket, tilgang er cachet`);
         return next();
     }
+    */
 
     try {
         const { harTilgang } = await sjekkTilgang(brukerensAccessToken);
