@@ -1,10 +1,8 @@
 import { RequestHandler } from 'express';
-import { hentNavIdent } from '../azureAd';
-import { hentBrukerensAdGrupper } from '../microsoftGraphApi';
-import { retrieveToken } from '../middlewares';
+import { hentGrupper, hentNavIdent } from '../azureAd';
 import { auditLog, logger, opprettLoggmeldingForAuditlogg, secureLog } from '../logger';
+import { retrieveToken } from '../middlewares';
 import { SearchQuery } from './elasticSearchTyper';
-import TilgangCache from './cache';
 
 export const { AD_GRUPPE_MODIA_GENERELL_TILGANG, AD_GRUPPE_MODIA_OPPFOLGING } = process.env;
 
@@ -13,12 +11,10 @@ export const adGrupperMedTilgangTilKandidatsøket = [
     AD_GRUPPE_MODIA_OPPFOLGING,
 ];
 
-export const cache = new TilgangCache();
-
-const sjekkTilgang = async (
+const sjekkTilgang = (
     accessToken: string
-): Promise<{ harTilgang: boolean; brukerensAdGrupper: string[] }> => {
-    const brukerensAdGrupper = await hentBrukerensAdGrupper(accessToken);
+): { harTilgang: boolean; brukerensAdGrupper: string[] } => {
+    const brukerensAdGrupper = hentGrupper(accessToken);
     const harTilgang = brukerensAdGrupper.some((adGruppeBrukerErMedlemAv) =>
         adGrupperMedTilgangTilKandidatsøket.includes(adGruppeBrukerErMedlemAv)
     );
@@ -32,34 +28,24 @@ const sjekkTilgang = async (
 export const harTilgangTilKandidatsøk: RequestHandler = async (request, response, next) => {
     const brukerensAccessToken = retrieveToken(request.headers);
     const navIdent = hentNavIdent(brukerensAccessToken);
+    const tilgang = sjekkTilgang(brukerensAccessToken);
 
-    if (cache.hentTilgang(navIdent)) {
-        logger.info(`Bruker ${navIdent} fikk tilgang til kandidatsøket, tilgang er cachet`);
-        return next();
-    }
+    if (tilgang.harTilgang) {
+        next();
+    } else {
+        const brukerensGrupper = tilgang.brukerensAdGrupper.join(', ');
+        const grupperSomGirTilgang = adGrupperMedTilgangTilKandidatsøket.join(', ');
 
-    try {
-        const { harTilgang } = await sjekkTilgang(brukerensAccessToken);
-        const forklaring = `Kandidatsøket krever medlemskap i en av følgende AD-grupper: ${adGrupperMedTilgangTilKandidatsøket}.`;
+        secureLog.info(
+            `Bruker ${navIdent} har ikke tilgang til kandidatsøket. \nBruker har følgende AD-grupper: ${brukerensGrupper}. \nKandidatsøket krever en av følgende AD-grupper: ${grupperSomGirTilgang}.`
+        );
 
-        if (harTilgang) {
-            logger.info(`Bruker ${navIdent} fikk tilgang til kandidatsøket.\n${forklaring}`);
-            cache.lagreTilgang(navIdent);
-            next();
-        } else {
-            logger.info(`Bruker ${navIdent} har ikke tilgang til kandidatsøket.\n${forklaring}`);
-
-            response
-                .status(403)
-                .send(
-                    'Du har ikke tilgang til kandidatsøket fordi det krever én av følgende AD-grupper: ' +
-                        adGrupperMedTilgangTilKandidatsøket
-                );
-        }
-    } catch (e) {
-        const feilmelding = 'Klarte ikke å sjekke brukerens tilgang til kandidatsøket:';
-        logger.error(feilmelding + ': ' + e);
-        response.status(500).send(feilmelding);
+        response
+            .status(403)
+            .send(
+                'Du har ikke tilgang til kandidatsøket fordi det krever én av følgende AD-grupper: ' +
+                    grupperSomGirTilgang
+            );
     }
 };
 
