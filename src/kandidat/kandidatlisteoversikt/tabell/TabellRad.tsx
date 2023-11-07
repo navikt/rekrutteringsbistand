@@ -1,5 +1,5 @@
 import { MenuElipsisHorizontalCircleIcon, PersonPlusIcon } from '@navikt/aksel-icons';
-import { BodyShort, Button, Dropdown, Table } from '@navikt/ds-react';
+import { BodyShort, Button, Dropdown, Table, Tooltip } from '@navikt/ds-react';
 import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -57,16 +57,26 @@ const TabellRad: FunctionComponent<Props> = ({
                 <BodyShort>{`${kandidatlisteSammendrag.opprettetAv.navn} (${kandidatlisteSammendrag.opprettetAv.ident})`}</BodyShort>
             </Table.DataCell>
             <Table.DataCell align="center">
-                <Link
-                    aria-label={`Finn kandidater til listen «${kandidatlisteSammendrag.tittel}»`}
-                    to={lenkeTilFinnKandidater(
-                        kandidatlisteSammendrag.stillingId,
-                        kandidatlisteSammendrag.kandidatlisteId,
-                        true
-                    )}
-                >
-                    <Button variant="tertiary" as="div" icon={<PersonPlusIcon />} />
-                </Link>
+                {harTilgang ? (
+                    <Link
+                        aria-label={`Finn kandidater til listen «${kandidatlisteSammendrag.tittel}»`}
+                        to={lenkeTilFinnKandidater(
+                            kandidatlisteSammendrag.stillingId,
+                            kandidatlisteSammendrag.kandidatlisteId,
+                            true
+                        )}
+                    >
+                        <Button variant="tertiary" as="div" icon={<PersonPlusIcon />} />
+                    </Link>
+                ) : (
+                    <Tooltip content="Du kan ikke finne kandidater for en kandidatliste som ikke er din.">
+                        <Button
+                            variant="tertiary"
+                            className={css.disabledValg}
+                            icon={<PersonPlusIcon />}
+                        />
+                    </Tooltip>
+                )}
             </Table.DataCell>
             <Table.DataCell align="center">
                 <Redigerknapp kandidatliste={kandidatlisteSammendrag} onClick={onRedigerClick} />
