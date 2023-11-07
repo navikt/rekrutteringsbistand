@@ -45,6 +45,8 @@ export type KandidatlisteForKandidat = {
     slettet?: boolean;
     antallStillinger?: number;
     utfallsendringer: Utfallsendring[];
+    stillingskategori: Stillingskategori | null;
+    opprettetAvIdent: string;
 };
 
 export enum KanSletteKandidatliste {

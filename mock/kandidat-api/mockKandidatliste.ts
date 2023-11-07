@@ -86,6 +86,8 @@ export const opprettMockKandidatlisteForKandidat = (
     lagtTilAvNavn: kandidat.lagtTilAv.navn,
     utfallsendringer: kandidat.utfallsendringer,
     slettet: kandidat.arkivert,
+    stillingskategori: kandidatliste.stillingskategori,
+    opprettetAvIdent: kandidatliste.opprettetAv.ident,
 });
 
 export const mockAlleKandidatlister = [mockKandidatlisteMedStilling, mockKandidatlisteUtenStilling];
