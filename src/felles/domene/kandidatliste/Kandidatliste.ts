@@ -10,7 +10,6 @@ import {
 type Kandidatliste = {
     kandidatlisteId: string;
     tittel: string;
-    beskrivelse: string | null;
     organisasjonReferanse: string | null;
     organisasjonNavn: string | null;
     stillingId: string | null;

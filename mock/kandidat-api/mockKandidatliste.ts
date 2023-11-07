@@ -18,7 +18,6 @@ const enAnnenVeileder: OpprettetAv = {
 export const mockKandidatlisteUtenStilling: Kandidatliste = {
     kandidatlisteId: 'bf6877fa-5c82-4610-8cf7-ff7a0df18e29',
     tittel: 'Volleyballskuespiller på Pescara Beach',
-    beskrivelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
 
     erEier: false,
     kanEditere: false,
@@ -41,7 +40,6 @@ export const mockKandidatlisteUtenStilling: Kandidatliste = {
 export const mockKandidatlisteMedStilling: Kandidatliste = {
     kandidatlisteId: 'e793b0e0-14e6-450b-a0cb-ef7e50ba2385',
     tittel: 'Er du en bedreviter?',
-    beskrivelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
 
     erEier: true,
     kanEditere: true,

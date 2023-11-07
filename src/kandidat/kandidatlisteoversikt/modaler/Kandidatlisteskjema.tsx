@@ -1,21 +1,20 @@
-import { BodyLong, BodyShort, Button, Detail, Modal, Textarea, TextField } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Detail, Modal, TextField } from '@navikt/ds-react';
 import React, { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import Typeahead from '../../komponenter/typeahead/Typeahead';
 import {
     CLEAR_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
     FETCH_TYPE_AHEAD_SUGGESTIONS_ENHETSREGISTER,
 } from '../../komponenter/typeahead/enhetsregisterReducer';
-import Typeahead from '../../komponenter/typeahead/Typeahead';
 import AppState from '../../state/AppState';
 import { capitalizeEmployerName, capitalizeLocation } from '../../utils/formateringUtils';
 import css from './Modal.module.css';
 
 export type KandidatlisteDto = {
     tittel: string;
-    beskrivelse: string | null;
     orgNr?: string;
     orgNavn?: string;
 };
@@ -47,7 +46,6 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
 
     declare state: {
         tittel: string;
-        beskrivelse: string | null;
         suggestion?: Suggestion;
         typeaheadValue: string;
         visValideringsfeilInput: boolean;
@@ -72,7 +70,6 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
         this.state = {
             suggestion,
             tittel: props.kandidatliste?.tittel || '',
-            beskrivelse: props.kandidatliste?.beskrivelse ?? null,
             visValideringsfeilInput: false,
             typeaheadValue: suggestion?.name ? capitalizeEmployerName(suggestion?.name) : '',
         };
@@ -88,14 +85,6 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
         this.setState({
             tittel: value,
             visValideringsfeilInput: this.state.visValideringsfeilInput && value === '',
-        });
-    };
-
-    onBeskrivelseChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        const { value } = event.target;
-
-        this.setState({
-            beskrivelse: value,
         });
     };
 
@@ -179,10 +168,9 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
         );
 
     validateAndSave = () => {
-        if (this.validerTittel() && this.validerBeskrivelse()) {
+        if (this.validerTittel()) {
             const dto: KandidatlisteDto = {
                 tittel: this.state.tittel,
-                beskrivelse: this.state.beskrivelse,
                 orgNavn: this.state.suggestion?.name,
                 orgNr: this.state.suggestion?.orgnr,
             };
@@ -195,15 +183,10 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
                 },
                 () => this.input?.focus()
             );
-        } else if (!this.validerBeskrivelse()) {
-            this.textArea?.focus();
         }
     };
 
     validerTittel = () => this.state.tittel !== '';
-
-    validerBeskrivelse = () =>
-        this.state.beskrivelse === null || this.state.beskrivelse.length <= 1000;
 
     render() {
         const { saving, knappetekst, suggestions } = this.props;
@@ -259,17 +242,6 @@ class OpprettKandidatlisteForm extends React.Component<Props> {
                                 </Detail>
                             )}
                         </div>
-
-                        <Textarea
-                            label="Beskrivelse"
-                            value={this.state.beskrivelse ?? undefined}
-                            maxLength={1000}
-                            onChange={this.onBeskrivelseChange}
-                            description="Beskrivelsen på kandidatliste skal si noe om stillingen. Det kan ikke inneholde tekst som sier noe om kandidatens oppfølging i NAV, helse, tiltak, eller noe som kategoriserer personen ut over det aktuelle yrke som listen er opprettet for."
-                            error={
-                                this.validerBeskrivelse() ? undefined : 'Beskrivelsen er for lang'
-                            }
-                        />
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
