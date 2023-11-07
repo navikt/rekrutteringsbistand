@@ -20,7 +20,8 @@ export const mockKandidatlisteUtenStilling: Kandidatliste = {
     tittel: 'Volleyballskuespiller på Pescara Beach',
     beskrivelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
 
-    kanEditere: true,
+    erEier: false,
+    kanEditere: false,
     kanSlette: KanSletteKandidatliste.KanSlettes,
     opprettetTidspunkt: new Date().toISOString(),
     status: Kandidatlistestatus.Åpen,
@@ -42,6 +43,7 @@ export const mockKandidatlisteMedStilling: Kandidatliste = {
     tittel: 'Er du en bedreviter?',
     beskrivelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
 
+    erEier: true,
     kanEditere: true,
     kanSlette: KanSletteKandidatliste.KanSlettes,
     opprettetTidspunkt: new Date().toISOString(),

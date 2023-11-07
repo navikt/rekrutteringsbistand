@@ -16,6 +16,7 @@ type Kandidatliste = {
     stillingId: string | null;
     opprettetAv: OpprettetAv;
     opprettetTidspunkt: string;
+    erEier: boolean;
     kanEditere: boolean;
     kanSlette: KanSletteKandidatliste;
     kandidater: KandidatIKandidatliste[];
