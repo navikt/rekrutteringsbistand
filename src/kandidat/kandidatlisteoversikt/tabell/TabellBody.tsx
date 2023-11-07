@@ -1,7 +1,8 @@
 import { Table } from '@navikt/ds-react';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import { FunctionComponent } from 'react';
 import TabellRad from './TabellRad';
-import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 
 type Props = {
     kandidatlister: KandidatlisteSammendrag[];
@@ -16,6 +17,8 @@ const TabellBody: FunctionComponent<Props> = ({
     onMarkerSomMinClick,
     onSlettClick,
 }) => {
+    const { navIdent } = useInnloggetBruker(null);
+
     return (
         <Table.Body>
             {kandidatlister.map((kandidatliste) => (
@@ -25,6 +28,7 @@ const TabellBody: FunctionComponent<Props> = ({
                     onRedigerClick={() => onRedigerClick(kandidatliste)}
                     onMarkerSomMinClick={() => onMarkerSomMinClick(kandidatliste)}
                     onSlettClick={() => onSlettClick(kandidatliste)}
+                    harTilgang={navIdent === kandidatliste.opprettetAv.ident}
                 />
             ))}
         </Table.Body>

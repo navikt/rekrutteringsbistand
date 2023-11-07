@@ -3,11 +3,17 @@ import Kandidatliste, {
     KanSletteKandidatliste,
     KandidatlisteForKandidat,
     Kandidatlistestatus,
+    OpprettetAv,
 } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { mockMeg } from '../meg/mock';
 import { mockStilling } from '../stilling-api/mockStilling';
 import { mockKandidatIKandidatliste } from './mockKandidatIKandidatliste';
+
+const enAnnenVeileder: OpprettetAv = {
+    ident: 'Z999999',
+    navn: 'Vilde Veileder',
+};
 
 export const mockKandidatlisteUtenStilling: Kandidatliste = {
     kandidatlisteId: 'bf6877fa-5c82-4610-8cf7-ff7a0df18e29',
@@ -28,10 +34,7 @@ export const mockKandidatlisteUtenStilling: Kandidatliste = {
     kandidater: mockKandidatIKandidatliste,
     formidlingerAvUsynligKandidat: [],
 
-    opprettetAv: {
-        ident: mockMeg.navIdent,
-        navn: 'Varg Veileder',
-    },
+    opprettetAv: enAnnenVeileder,
 };
 
 export const mockKandidatlisteMedStilling: Kandidatliste = {

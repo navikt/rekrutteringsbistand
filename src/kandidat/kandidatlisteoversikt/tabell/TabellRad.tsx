@@ -1,14 +1,14 @@
-import { FunctionComponent, ReactNode } from 'react';
+import { MenuElipsisHorizontalCircleIcon, PersonPlusIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Dropdown, Table } from '@navikt/ds-react';
+import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { PersonPlusIcon, MenuElipsisHorizontalCircleIcon } from '@navikt/aksel-icons';
 
-import { formaterDato } from '../../utils/dateUtils';
-import { lenkeTilFinnKandidater, lenkeTilKandidatliste } from '../../app/paths';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import { lenkeTilFinnKandidater, lenkeTilKandidatliste } from '../../app/paths';
+import { formaterDato } from '../../utils/dateUtils';
 import Dropdownmeny from './Dropdownmeny';
-import Redigerknapp from './Redigerknapp';
 import css from './Kandidatlistetabell.module.css';
+import Redigerknapp from './Redigerknapp';
 
 export type FeilmeldingIMeny = {
     anker?: HTMLElement;
@@ -20,6 +20,7 @@ type Props = {
     onRedigerClick: () => void;
     onMarkerSomMinClick: () => void;
     onSlettClick: () => void;
+    harTilgang: boolean;
 };
 
 const TabellRad: FunctionComponent<Props> = ({
@@ -27,6 +28,7 @@ const TabellRad: FunctionComponent<Props> = ({
     onRedigerClick,
     onMarkerSomMinClick,
     onSlettClick,
+    harTilgang,
 }) => {
     return (
         <Table.Row shadeOnHover={false} className={css.rad}>
@@ -37,12 +39,16 @@ const TabellRad: FunctionComponent<Props> = ({
                 )}`}</BodyShort>
             </Table.DataCell>
             <Table.DataCell>
-                <Link
-                    to={lenkeTilKandidatliste(kandidatlisteSammendrag.kandidatlisteId)}
-                    className="navds-link"
-                >
-                    {kandidatlisteSammendrag.tittel}
-                </Link>
+                {harTilgang ? (
+                    <Link
+                        to={lenkeTilKandidatliste(kandidatlisteSammendrag.kandidatlisteId)}
+                        className="navds-link"
+                    >
+                        {kandidatlisteSammendrag.tittel}
+                    </Link>
+                ) : (
+                    <BodyShort>{kandidatlisteSammendrag.tittel}</BodyShort>
+                )}
             </Table.DataCell>
             <Table.DataCell align="right" className={css.antallKandidater}>
                 <BodyShort>{kandidatlisteSammendrag.antallKandidater}</BodyShort>
