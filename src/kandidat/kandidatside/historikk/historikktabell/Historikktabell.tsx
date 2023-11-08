@@ -6,8 +6,6 @@ import { Sms } from 'felles/domene/sms/Sms';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { ForespørselOmDelingAvCv } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Historikkrad } from './Historikkrad/Historikkrad';
-import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 
 interface Props {
     kandidatlister: KandidatlisteForKandidat[];
@@ -22,7 +20,6 @@ export const Historikktabell: FunctionComponent<Props> = ({
     forespørslerOmDelingAvCvForKandidat,
     smser,
 }) => {
-    const { navIdent } = useInnloggetBruker(null);
     return (
         <Table zebraStripes>
             <Table.Header>
@@ -36,24 +33,18 @@ export const Historikktabell: FunctionComponent<Props> = ({
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-                {kandidatlister
-                    .filter(
-                        (liste, i) =>
-                            liste.stillingskategori !== Stillingskategori.Formidling ||
-                            liste.opprettetAvIdent === navIdent
-                    )
-                    .map((liste, i) => (
-                        <Historikkrad
-                            key={liste.uuid}
-                            kandidatliste={liste}
-                            aktiv={liste.uuid === aktivKandidatlisteId}
-                            forespørselOmDelingAvCv={finnForespørselOmDelingAvCv(
-                                forespørslerOmDelingAvCvForKandidat,
-                                liste
-                            )}
-                            sms={finnSms(smser, liste.uuid)}
-                        />
-                    ))}
+                {kandidatlister.map((liste, i) => (
+                    <Historikkrad
+                        key={liste.uuid}
+                        kandidatliste={liste}
+                        aktiv={liste.uuid === aktivKandidatlisteId}
+                        forespørselOmDelingAvCv={finnForespørselOmDelingAvCv(
+                            forespørslerOmDelingAvCvForKandidat,
+                            liste
+                        )}
+                        sms={finnSms(smser, liste.uuid)}
+                    />
+                ))}
             </Table.Body>
         </Table>
     );
