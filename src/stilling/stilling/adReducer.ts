@@ -237,6 +237,7 @@ export default function adReducer(state = initialState, action: any) {
                 isSavingAd: false,
                 hasSavedChanges: true,
                 originalData: { ...action.response },
+                forrigeIdent: undefined,
             };
         case CREATE_AD_FAILURE:
         case SAVE_AD_FAILURE:
@@ -438,7 +439,7 @@ function* createAd(action) {
     }
 }
 
-function* saveRekrutteringsbistandStilling() {
+function* saveRekrutteringsbistandStilling(forrigeIdent?: string) {
     let state = yield select();
     yield put({ type: SAVE_AD_BEGIN });
     try {
@@ -446,15 +447,21 @@ function* saveRekrutteringsbistandStilling() {
 
         state = yield select();
 
-        let forrigeEier = state.adData.administration.navIdent;
-
         // Modified category list requires store/PUT with (re)classification
-        let putUrl = `${api.stilling}/rekrutteringsbistandstilling?forrigeeier=${forrigeEier}`;
+        let searchParams = new URLSearchParams();
+
         if (
             typeof state.ad.originalData === 'undefined' ||
             needClassify(state.ad.originalData, state.adData)
         ) {
-            putUrl += '&classify=true';
+            searchParams.append('classify', 'true');
+        }
+        if (forrigeIdent) {
+            searchParams.append('forrigeident', forrigeIdent);
+        }
+        let putUrl = `${api.stilling}/rekrutteringsbistandstilling`;
+        if (searchParams.size > 0) {
+            putUrl += `?${searchParams.toString()}`;
         }
 
         const data = {
@@ -602,11 +609,12 @@ function* markerEksternStillingSomMin(action) {
 function* markerInternStillingSomMin(action) {
     let state = yield select();
 
+    const forrigeIdent = state.adData.administration.navIdent;
     const { navIdent, displayName } = state.reportee.data;
     yield put({ type: SET_NAV_IDENT, navIdent });
     yield put({ type: SET_REPORTEE, reportee: displayName });
 
-    yield saveRekrutteringsbistandStilling();
+    yield saveRekrutteringsbistandStilling(forrigeIdent);
 }
 
 function* copyAdFromMyAds(action) {
