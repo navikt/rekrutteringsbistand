@@ -237,7 +237,6 @@ export default function adReducer(state = initialState, action: any) {
                 isSavingAd: false,
                 hasSavedChanges: true,
                 originalData: { ...action.response },
-                forrigeIdent: undefined,
             };
         case CREATE_AD_FAILURE:
         case SAVE_AD_FAILURE:
