@@ -12,9 +12,6 @@ spec:
     port: 8080
     ingresses:
         - {{ ingress }}
-    replicas: # Fjern meg for å lansere
-      max: 0  # Fjern meg for å lansere
-      min: 0  # Fjern meg for å lansere
     liveness:
         initialDelay: 5
         path: /internal/isAlive
