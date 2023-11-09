@@ -446,8 +446,10 @@ function* saveRekrutteringsbistandStilling() {
 
         state = yield select();
 
+        let forrigeEier = state.stilling.administration.navIdent;
+
         // Modified category list requires store/PUT with (re)classification
-        let putUrl = `${api.stilling}/rekrutteringsbistandstilling`;
+        let putUrl = `${api.stilling}/rekrutteringsbistandstilling?forrigeeier=${forrigeEier}`;
         if (
             typeof state.ad.originalData === 'undefined' ||
             needClassify(state.ad.originalData, state.adData)
