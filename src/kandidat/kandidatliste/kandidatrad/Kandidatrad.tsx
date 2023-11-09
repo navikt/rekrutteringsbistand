@@ -1,33 +1,33 @@
+import { InformationSquareIcon, TrashIcon } from '@navikt/aksel-icons';
+import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
+import classNames from 'classnames';
 import { FunctionComponent, useEffect, useRef } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
-import { InformationSquareIcon, TasklistIcon, TrashIcon } from '@navikt/aksel-icons';
-import classNames from 'classnames';
 
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
+import { Nettstatus } from 'felles/nettressurs';
+import { lenkeTilCv } from '../../app/paths';
+import AppState from '../../state/AppState';
+import { formaterDato } from '../../utils/dateUtils';
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
+import { Visningsstatus } from '../domene/Kandidatressurser';
 import { erInaktiv } from '../domene/kandidatUtils';
 import { erKobletTilStilling } from '../domene/kandidatlisteUtils';
-import { formaterDato } from '../../utils/dateUtils';
-import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { lenkeTilCv } from '../../app/paths';
+import useForespørselOmDelingAvCv from '../hooks/useForespørselOmDelingAvCv';
+import useKandidatnotater from '../hooks/useKandidatnotater';
+import useKandidattilstand from '../hooks/useKandidattilstand';
+import useSendtKandidatmelding from '../hooks/useSendtKandidatmelding';
 import { modifierTilListeradGrid } from '../liste-header/ListeHeader';
-import { Nettstatus } from 'felles/nettressurs';
-import { Visningsstatus } from '../domene/Kandidatressurser';
-import AppState from '../../state/AppState';
-import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
+import css from './Kandidatrad.module.css';
 import MerInfo from './mer-info/MerInfo';
 import Notater from './notater/Notater';
 import SmsStatusPopup from './smsstatus/SmsStatusPopup';
 import StatusOgHendelser from './status-og-hendelser/StatusOgHendelser';
 import StatusPåForespørselOmDelingAvCv from './status-på-forespørsel/StatusPåForespørselOmDelingAvCv';
-import useForespørselOmDelingAvCv from '../hooks/useForespørselOmDelingAvCv';
-import useKandidatnotater from '../hooks/useKandidatnotater';
-import useKandidattilstand from '../hooks/useKandidattilstand';
-import useSendtKandidatmelding from '../hooks/useSendtKandidatmelding';
-import css from './Kandidatrad.module.css';
 
 type Props = {
     kandidat: KandidatIKandidatliste;
@@ -79,14 +79,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
             kandidatnr: kandidat.kandidatnr,
             visningsstatus,
         });
-    };
-
-    const toggleNotater = () => {
-        endreVisningsstatus(
-            tilstand?.visningsstatus === Visningsstatus.VisNotater
-                ? Visningsstatus.SkjulPanel
-                : Visningsstatus.VisNotater
-        );
     };
 
     const toggleMerInfo = () => {
@@ -211,18 +203,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
                         );
                     }}
                 />
-
-                <div role="cell">
-                    <Button
-                        size="small"
-                        variant="tertiary"
-                        onClick={toggleNotater}
-                        className={css.visNotaterKnapp}
-                        icon={<TasklistIcon aria-label="Notat" />}
-                    >
-                        {antallNotater}
-                    </Button>
-                </div>
                 <div role="cell" className={css.kolonneMidtstilt}>
                     {!erInaktiv(kandidat) && (
                         <Button

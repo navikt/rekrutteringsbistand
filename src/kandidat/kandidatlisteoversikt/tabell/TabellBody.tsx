@@ -1,7 +1,8 @@
 import { Table } from '@navikt/ds-react';
-import { FunctionComponent } from 'react';
-import TabellRad from './TabellRad';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import { FunctionComponent } from 'react';
+import { harTilgangTilkandidatliste } from '../../kandidatliste/domene/kandidatlisteUtils';
+import TabellRad from './TabellRad';
 
 type Props = {
     kandidatlister: KandidatlisteSammendrag[];
@@ -25,6 +26,7 @@ const TabellBody: FunctionComponent<Props> = ({
                     onRedigerClick={() => onRedigerClick(kandidatliste)}
                     onMarkerSomMinClick={() => onMarkerSomMinClick(kandidatliste)}
                     onSlettClick={() => onSlettClick(kandidatliste)}
+                    harTilgang={harTilgangTilkandidatliste(kandidatliste)}
                 />
             ))}
         </Table.Body>

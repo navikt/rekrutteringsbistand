@@ -16,5 +16,19 @@ export const erKobletTilStilling = (
 export const erKobletTilArbeidsgiver = (kandidatliste: Kandidatliste): boolean =>
     kandidatliste.organisasjonReferanse !== null;
 
-export const erEierAvKandidatlisten = (kandidatliste: Kandidatliste): boolean =>
-    kandidatliste.kanEditere;
+export const erEierAvKandidatlisten = (
+    kandidatliste: Kandidatliste | KandidatlisteSammendrag
+): boolean => kandidatliste.erEier;
+
+export const harTilgangTilkandidatliste = (
+    kandidatliste: Kandidatliste | KandidatlisteSammendrag
+) => {
+    const erFormidling = kandidatliste.stillingskategori === Stillingskategori.Formidling;
+
+    if (erKobletTilStilling(kandidatliste) && !erFormidling) {
+        return true;
+    } else if (erEierAvKandidatlisten(kandidatliste)) {
+        return true;
+    }
+    return false;
+};

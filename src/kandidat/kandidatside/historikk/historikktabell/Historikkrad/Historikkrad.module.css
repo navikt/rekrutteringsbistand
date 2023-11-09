@@ -3,7 +3,7 @@
     white-space: nowrap;
 }
 
-.slettet {
+.slettetEllerMaskert {
     color: var(--a-text-danger);
 }
 

@@ -1,4 +1,4 @@
-import { Accordion, Alert, BodyLong, Button, Link, Modal, Textarea } from '@navikt/ds-react';
+import { Accordion, Alert, BodyLong, Button, Link, Modal } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
 import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
@@ -38,7 +38,7 @@ const PresenterKandidaterModal = ({
     const valgtNavKontor = useNavKontor((state) => state.navKontor);
 
     const [delestatus, setDelestatus] = useState<Nettstatus>(Nettstatus.IkkeLastet);
-    const [melding, setMelding] = useState<string>('');
+    const [melding, setMelding] = useState<string>(''); // TODO Fjern funksjonalitet
     const [epostadresser, setEpostadresser] = useState<string[]>([]);
     const [epostFeilmelding, setEpostFeilmelding] = useState<string | undefined>();
 
@@ -171,14 +171,6 @@ const PresenterKandidaterModal = ({
                         />
                     </div>
 
-                    <div>
-                        <Textarea
-                            label="Melding til arbeidsgiver (frivillig)"
-                            value={melding}
-                            description="Sørg for at du ikke skriver noe sensitivt, som opplysninger om helse, soning, rus, eller informasjon om ytelser og oppfølging i NAV."
-                            onChange={(event) => setMelding(event.target.value)}
-                        />
-                    </div>
                     <Accordion>
                         <Accordion.Item>
                             <Accordion.Header>Forhåndsvis e-posten</Accordion.Header>

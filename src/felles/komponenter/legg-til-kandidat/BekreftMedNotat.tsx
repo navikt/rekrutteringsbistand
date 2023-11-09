@@ -1,5 +1,5 @@
-import { Alert, BodyShort, Modal, Textarea } from '@navikt/ds-react';
-import { ChangeEvent, useState } from 'react';
+import { Alert, BodyLong, BodyShort, Label, Modal } from '@navikt/ds-react';
+import { useState } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
 import { api, post } from 'felles/api';
@@ -8,9 +8,6 @@ import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import PostKandidatTilKandidatliste from 'felles/domene/kandidatliste/PostKandidatTilKandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Knapper from './Knapper';
-import css from './LeggTilKandidat.module.css';
-
-const MAKS_NOTATLENGDE = 2000;
 
 type Props = {
     fnr: string;
@@ -31,15 +28,9 @@ const BekreftMedNotat = ({
     onBekreft,
     erAnbefaling = false,
 }: Props) => {
-    const [notat, setNotat] = useState<string>('');
-
     const [leggTilKandidat, setLeggTilKandidat] = useState<Nettressurs<Kandidatliste>>({
         kind: Nettstatus.IkkeLastet,
     });
-
-    const onNotatChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setNotat(event.target.value);
-    };
 
     const onLeggTilKandidat = async () => {
         setLeggTilKandidat({
@@ -54,7 +45,7 @@ const BekreftMedNotat = ({
         const data: PostKandidatTilKandidatliste[] = [
             {
                 kandidatnr: kandidat.arenaKandidatnr,
-                notat,
+                notat: '',
             },
         ];
 
@@ -74,16 +65,10 @@ const BekreftMedNotat = ({
         }
     };
 
-    let label: string, description: string, leggTilTekst: string;
+    let leggTilTekst: string;
     if (erAnbefaling) {
-        label = 'Hvorfor egner kandidaten seg til stillingen?';
-        description =
-            'Ikke skriv sensitive opplysninger. Anbefalingen er synlig for alle veiledere.';
         leggTilTekst = 'Anbefal';
     } else {
-        label = 'Notat om kandidat';
-        description =
-            'Du skal ikke skrive sensitive opplysninger her. Notatet er synlig for alle veiledere.';
         leggTilTekst = 'Legg til';
     }
 
@@ -93,25 +78,22 @@ const BekreftMedNotat = ({
                 <BodyShort
                     spacing
                 >{`${kandidat.fornavn} ${kandidat.etternavn} (${fnr})`}</BodyShort>
-                <Textarea
-                    value={notat}
-                    placeholder=""
-                    className={css.notat}
-                    maxLength={MAKS_NOTATLENGDE}
-                    onChange={onNotatChange}
-                    label={label}
-                    description={description}
-                />
+                <Alert variant="info">
+                    <Label as="p" spacing>
+                        Vi tar bort fritekstfeltet for å hindre personvernsavvik.
+                    </Label>
+                    <BodyLong>
+                        Frykt ikke. Vi jobber på spreng med å finne nye måter for å hjelpe deg med å
+                        få oversikt over, og avklare kandidatene.
+                    </BodyLong>
+                </Alert>
             </Modal.Body>
             <Knapper
                 onLeggTilClick={onLeggTilKandidat}
                 onAvbrytClick={onAvbryt}
                 leggTilSpinner={leggTilKandidat.kind === Nettstatus.SenderInn}
                 leggTilTekst={leggTilTekst}
-                leggTilDisabled={
-                    leggTilKandidat.kind === Nettstatus.SenderInn ||
-                    (!!notat && notat.length > MAKS_NOTATLENGDE)
-                }
+                leggTilDisabled={leggTilKandidat.kind === Nettstatus.SenderInn}
                 avbrytDisabled={leggTilKandidat.kind === Nettstatus.SenderInn}
             />
             {leggTilKandidat.kind === Nettstatus.Feil && (

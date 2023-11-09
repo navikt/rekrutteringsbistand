@@ -120,7 +120,6 @@ const ListeHeader: FunctionComponent<Props> = ({
                     aktivSorteringsretning={aktivSorteringsretning}
                     onClick={endreSortering}
                 />
-                <Kolonne tekst="Notater" />
                 <Kolonne tekst="Info" className={css.kolonneMidtstilt} />
                 {visArkiveringskolonne && (
                     <Kolonne tekst="Slett" className={css.kolonneHøyrestilt} />
