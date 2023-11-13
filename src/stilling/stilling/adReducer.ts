@@ -438,7 +438,7 @@ function* createAd(action) {
     }
 }
 
-function* saveRekrutteringsbistandStilling(forrigeIdent?: string) {
+function* saveRekrutteringsbistandStilling() {
     let state = yield select();
     yield put({ type: SAVE_AD_BEGIN });
     try {
@@ -447,20 +447,12 @@ function* saveRekrutteringsbistandStilling(forrigeIdent?: string) {
         state = yield select();
 
         // Modified category list requires store/PUT with (re)classification
-        let searchParams = new URLSearchParams();
-
+        let putUrl = `${api.stilling}/rekrutteringsbistandstilling`;
         if (
             typeof state.ad.originalData === 'undefined' ||
             needClassify(state.ad.originalData, state.adData)
         ) {
-            searchParams.append('classify', 'true');
-        }
-        if (forrigeIdent) {
-            searchParams.append('forrigeident', forrigeIdent);
-        }
-        let putUrl = `${api.stilling}/rekrutteringsbistandstilling`;
-        if (searchParams.size > 0) {
-            putUrl += `?${searchParams.toString()}`;
+            putUrl += '?classify=true';
         }
 
         const data = {
@@ -608,12 +600,11 @@ function* markerEksternStillingSomMin(action) {
 function* markerInternStillingSomMin(action) {
     let state = yield select();
 
-    const forrigeIdent = state.adData.administration.navIdent;
     const { navIdent, displayName } = state.reportee.data;
     yield put({ type: SET_NAV_IDENT, navIdent });
     yield put({ type: SET_REPORTEE, reportee: displayName });
 
-    yield saveRekrutteringsbistandStilling(forrigeIdent);
+    yield saveRekrutteringsbistandStilling();
 }
 
 function* copyAdFromMyAds(action) {
