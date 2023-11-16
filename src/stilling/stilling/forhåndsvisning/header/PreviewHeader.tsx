@@ -23,6 +23,7 @@ type Props = {
     copyAd: (uuid: string) => void;
     editAd: () => void;
     leggTilIMineStillinger: () => void;
+    erEier: boolean;
 };
 
 class PreviewMenu extends React.Component<Props> {
@@ -82,7 +83,7 @@ class PreviewMenu extends React.Component<Props> {
                             size="small"
                         />
                     )}
-                    {!limitedAccess && (
+                    {!limitedAccess && this.props.erEier && (
                         <Button onClick={this.onEditAdClick} size="small" icon={<DocPencilIcon />}>
                             Rediger
                         </Button>

@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 
 import { Status, System } from 'felles/domene/stilling/Stilling';
 import { Nettstatus } from 'felles/nettressurs';
+import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
 import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
@@ -36,6 +37,8 @@ const Stilling = () => {
     const navigate = useNavigate();
     const stilling = useSelector((state: State) => state.adData);
     const [kandidatliste, setKandidatliste] = useHentKandidatliste(stilling?.uuid);
+    const { navIdent: innloggetBruker } = useInnloggetBruker(null);
+    const erEier = stilling?.administration?.navIdent === innloggetBruker;
 
     const getStilling = (uuid: string, edit: boolean) => {
         dispatch({ type: FETCH_AD, uuid, edit });
@@ -60,6 +63,7 @@ const Stilling = () => {
         });
     };
 
+    console.log('🎺 stilling', stilling);
     const fjernRedigeringsmodusFraUrl = () => {
         const newSearchParams = new URLSearchParams(searchParams.toString());
         newSearchParams.delete(REDIGERINGSMODUS_QUERY_PARAM);
@@ -149,7 +153,10 @@ const Stilling = () => {
                             <>
                                 {erEksternStilling ? (
                                     <>
-                                        <PreviewHeader kandidatliste={kandidatliste} />
+                                        <PreviewHeader
+                                            kandidatliste={kandidatliste}
+                                            erEier={erEier}
+                                        />
                                         <Stillingstittel
                                             tittel={stilling.title}
                                             employer={stilling.properties.employer}
@@ -167,7 +174,7 @@ const Stilling = () => {
                         ) : (
                             <>
                                 {!kandidatnrFraStillingssøk && (
-                                    <PreviewHeader kandidatliste={kandidatliste} />
+                                    <PreviewHeader kandidatliste={kandidatliste} erEier={erEier} />
                                 )}
                                 <Stillingstittel
                                     tittel={stilling.title}
