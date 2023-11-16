@@ -2,7 +2,8 @@
     "scripts": {
         "build": "tsc --build",
         "start": "nodemon src/server.ts",
-        "test": "jest"
+        "test": "jest",
+        "test:watch": "jest --watch"
     },
     "dependencies": {
         "compression": "^1.7.4",
