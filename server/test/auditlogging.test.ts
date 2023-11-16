@@ -27,7 +27,7 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         nextFunction = jest.fn();
     });
 
-    test('Kall mot kandidatsøk med spesifikk person-query på fødselsnummer skal logges til AuditLog', async () => {
+    test('Kall mot kandidatsøk med spesifikk person-query på fødselsnummer skal logges', async () => {
         const dateNow = 1;
         const navIdent = 'A123456';
         const personId = '12345678910';
