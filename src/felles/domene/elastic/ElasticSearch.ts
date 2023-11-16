@@ -21,9 +21,7 @@ export type EsQuery<IndexedItem> = {
                 query: string;
             }
         >;
-        bool?: {
-            must?: any;
-        };
+        bool?: any;
         match_all?: object;
         multi_match?: {
             query: string;
