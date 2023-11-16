@@ -68,10 +68,12 @@ export const loggSøkPåFnrEllerAktørId: RequestHandler = async (request, respo
             const navIdent = hentNavIdent(brukerensAccessToken);
 
             const melding = opprettLoggmeldingForAuditlogg(
-                requestOmSpesifikkPerson.meldingTilAuditlogg,
+                requestOmSpesifikkPerson.melding,
                 requestOmSpesifikkPerson.fnrEllerAktørId,
                 navIdent
             );
+
+            console.log('Melding:', melding);
 
             auditLog.info(melding);
             secureLog.info(`Auditlogget handling: ${melding}`);
@@ -87,15 +89,17 @@ export const loggSøkPåFnrEllerAktørId: RequestHandler = async (request, respo
     next();
 };
 
+type MeldingTilAuditlog = {
+    melding: string;
+    fnrEllerAktørId: string;
+};
+
 const requestBerOmSpesifikkPerson = (
     request: Request<unknown, unknown, EsQuery<Kandidat>>
-): null | {
-    meldingTilAuditlogg: string;
-    fnrEllerAktørId: string;
-} => {
+): null | MeldingTilAuditlog => {
     const berOmData = request.body && request.body._source !== false;
 
-    if (berOmData) {
+    if (!berOmData) {
         return null;
     }
 
@@ -109,12 +113,12 @@ const requestBerOmSpesifikkPerson = (
 
     if (idInniSpesifikkPersonQuery) {
         return {
-            meldingTilAuditlogg: 'NAV-ansatt har gjort spesifikt kandidatsøk på brukeren',
+            melding: 'NAV-ansatt har gjort spesifikt kandidatsøk på brukeren',
             fnrEllerAktørId: idInniSpesifikkPersonQuery,
         };
     } else if (idInniHentKandidatQuery) {
         return {
-            meldingTilAuditlogg: 'NAV-ansatt har åpnet CV-en til bruker',
+            melding: 'NAV-ansatt har åpnet CV-en til bruker',
             fnrEllerAktørId: idInniSpesifikkPersonQuery,
         };
     } else if (idInniFinnStillingQuery) {
@@ -140,19 +144,23 @@ export const erSpesifikkPersonQuery = (request: EsQuery<Kandidat>): string | nul
 
 export const erHentKandidatQuery = (request: EsQuery<Kandidat>): string | null => {
     if (
+        request.size === 1 &&
         request._source === undefined &&
-        request.query?.term['kandidatnr'] !== undefined &&
-        request.size === 1
+        request.query?.term?.['kandidatnr'] !== undefined
     ) {
-        return request.query?.term['kandidatnr'];
+        return request.query.term['kandidatnr'];
     }
 
     return null;
 };
 
 export const erFinnStillingQuery = (request: EsQuery<Kandidat>): string | null => {
-    if (request._source && request.query?.term['kandidatnr'] !== undefined && request.size === 1) {
-        return request.query?.term['kandidatnr'];
+    if (
+        request.size === 1 &&
+        request._source &&
+        request.query?.term?.['kandidatnr'] !== undefined
+    ) {
+        return request.query.term['kandidatnr'];
     }
 
     return null;

@@ -4,6 +4,7 @@ import { EsQuery } from '../../src/felles/domene/elastic/ElasticSearch';
 import Kandidat from '../../src/felles/domene/kandidat/Kandidat';
 import * as azureAd from '../src/azureAd';
 import * as kandidatsøk from '../src/kandidatsøk/kandidatsøk';
+import * as logger from '../src/logger';
 import * as queries from './queriesMotSpesifikkPerson';
 
 describe('Auditlogging av personspesifikt kandidatsøk', () => {
@@ -29,13 +30,15 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         };
 
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue('A123456');
+        const spy = jest.spyOn(logger.auditLog, 'info');
 
-        const resultat = await kandidatsøk.loggSøkPåFnrEllerAktørId(
+        kandidatsøk.loggSøkPåFnrEllerAktørId(
             mockRequest as Request,
             mockResponse as Response,
             nextFunction
         );
 
         expect(nextFunction).toBeCalled();
+        expect(spy).toBeCalledTimes(1);
     });
 });
