@@ -1,8 +1,9 @@
-import { RequestHandler } from 'express';
+import { Request, RequestHandler } from 'express';
+import { EsQuery } from '../../../src/felles/domene/elastic/ElasticSearch';
+import Kandidat from '../../../src/felles/domene/kandidat/Kandidat';
 import { hentGrupper, hentNavIdent } from '../azureAd';
 import { auditLog, logger, opprettLoggmeldingForAuditlogg, secureLog } from '../logger';
 import { retrieveToken } from '../middlewares';
-import { SearchQuery } from './elasticSearchTyper';
 
 export const { AD_GRUPPE_MODIA_GENERELL_TILGANG, AD_GRUPPE_MODIA_OPPFOLGING } = process.env;
 
@@ -58,34 +59,68 @@ export const leggTilAuthorizationForKandidatsøkEs =
         next();
     };
 
-export const loggSøkPåFnrEllerAktørId: RequestHandler = async (request, _, next) => {
-    const erSøkPåKandidater = request.body && request.body._source !== false;
+export const loggSøkPåFnrEllerAktørId: RequestHandler = async (request, response, next) => {
+    try {
+        const requestOmSpesifikkPerson = requestBerOmSpesifikkPerson(request);
 
-    if (erSøkPåKandidater) {
-        try {
-            const fnrEllerAktørId = hentFnrEllerAktørIdFraESBody(request.body);
+        if (requestBerOmSpesifikkPerson !== null) {
+            const brukerensAccessToken = retrieveToken(request.headers);
+            const navIdent = hentNavIdent(brukerensAccessToken);
 
-            if (fnrEllerAktørId) {
-                const brukerensAccessToken = retrieveToken(request.headers);
-                const navIdent = hentNavIdent(brukerensAccessToken);
+            const melding = opprettLoggmeldingForAuditlogg(
+                requestOmSpesifikkPerson.meldingTilAuditlogg, //'NAV-ansatt har gjort spesifikt kandidatsøk på brukeren',
+                requestOmSpesifikkPerson.fnrEllerAktørId,
+                navIdent
+            );
 
-                const melding = opprettLoggmeldingForAuditlogg(
-                    'NAV-ansatt har gjort spesifikt kandidatsøk på brukeren',
-                    fnrEllerAktørId,
-                    navIdent
-                );
-
-                auditLog.info(melding);
-            }
-        } catch (e) {
-            logger.error('Klarte ikke å logge søk på fnr eller aktørId:', e);
+            auditLog.info(melding);
+            secureLog.info(`Auditlogget handling: ${melding}`);
         }
+    } catch (e) {
+        const feilmelding =
+            'Klarte ikke å verifisere eller logge henting av persondata via kandidatsøk-proxy:';
+        logger.error(feilmelding, e);
+
+        return response.status(500).send(feilmelding);
     }
 
     next();
 };
 
-export const hentFnrEllerAktørIdFraESBody = (request: SearchQuery): string | null => {
+const requestBerOmSpesifikkPerson = (
+    request: Request<unknown, unknown, EsQuery<Kandidat>>
+): null | {
+    meldingTilAuditlogg: string;
+    fnrEllerAktørId: string;
+} => {
+    const berOmData = request.body && request.body._source !== false;
+
+    if (berOmData === false) {
+        return null;
+    }
+
+    const idInniSpesifikkPersonQuery = erSpesifikkPersonQuery(request.body);
+    const idInniHentKandidatQuery = erHentKandidatQuery(request.body);
+    const idInniFinnStillingQuery = erFinnStillingQuery(request.body);
+
+    if (idInniSpesifikkPersonQuery) {
+        return {
+            meldingTilAuditlogg: 'NAV-ansatt har gjort spesifikt kandidatsøk på brukeren',
+            fnrEllerAktørId: idInniSpesifikkPersonQuery,
+        };
+    } else if (idInniHentKandidatQuery) {
+        return {
+            meldingTilAuditlogg: 'NAV-ansatt har åpnet CV-en til bruker',
+            fnrEllerAktørId: idInniSpesifikkPersonQuery,
+        };
+    } else if (idInniFinnStillingQuery) {
+        return null; // TODO: Bør audit-logges?
+    }
+
+    return null;
+};
+
+export const erSpesifikkPersonQuery = (request: EsQuery<Kandidat>): string | null => {
     let fnrEllerAktørId = null;
 
     request.query?.bool?.must?.forEach((mustQuery) =>
@@ -97,4 +132,24 @@ export const hentFnrEllerAktørIdFraESBody = (request: SearchQuery): string | nu
     );
 
     return fnrEllerAktørId;
+};
+
+export const erHentKandidatQuery = (request: EsQuery<Kandidat>): string | null => {
+    if (
+        request._source === undefined &&
+        request.query?.term['kandidatnr'] !== undefined &&
+        request.size === 1
+    ) {
+        return request.query?.term['kandidatnr'];
+    }
+
+    return null;
+};
+
+export const erFinnStillingQuery = (request: EsQuery<Kandidat>): string | null => {
+    if (request._source && request.query?.term['kandidatnr'] !== undefined && request.size === 1) {
+        return request.query?.term['kandidatnr'];
+    }
+
+    return null;
 };
