@@ -42,8 +42,10 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         jest.spyOn(logger, 'currentTimeForAuditlogg').mockReturnValue(1);
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue(navIdent);
         const auditLog = jest.spyOn(logger.auditLog, 'info');
+        const secureLog = jest.spyOn(logger.secureLog, 'info');
 
         auditLog.mockImplementation(() => logger.auditLog);
+        secureLog.mockImplementation(() => logger.secureLog);
 
         kandidatsøk.loggSøkPåFnrEllerAktørId(
             mockRequest as Request,
@@ -54,6 +56,8 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         expect(nextFunction).toBeCalled();
         expect(auditLog).toBeCalledTimes(1);
         expect(auditLog).toHaveBeenCalledWith(melding);
+        expect(secureLog).toBeCalledTimes(1);
+        expect(secureLog).toHaveBeenCalledWith('Auditlogget handling: ' + melding);
     });
 
     test('Kall mot kandidatsøk med hent person-query på fødselsnummer skal logges', async () => {
@@ -67,8 +71,10 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         jest.spyOn(logger, 'currentTimeForAuditlogg').mockReturnValue(1);
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue(navIdent);
         const auditLog = jest.spyOn(logger.auditLog, 'info');
+        const secureLog = jest.spyOn(logger.secureLog, 'info');
 
         auditLog.mockImplementation((_) => logger.auditLog);
+        secureLog.mockImplementation(() => logger.secureLog);
 
         kandidatsøk.loggSøkPåFnrEllerAktørId(
             mockRequest as Request,
@@ -79,5 +85,7 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         expect(nextFunction).toBeCalled();
         expect(auditLog).toBeCalledTimes(1);
         expect(auditLog).toHaveBeenCalledWith(melding);
+        expect(secureLog).toBeCalledTimes(1);
+        expect(secureLog).toHaveBeenCalledWith('Auditlogget handling: ' + melding);
     });
 });
