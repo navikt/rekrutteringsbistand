@@ -59,7 +59,7 @@ export const leggTilAuthorizationForKandidatsøkEs =
         next();
     };
 
-export const loggSøkPåFnrEllerAktørId: RequestHandler = async (request, response, next) => {
+export const loggSøkPåFnrEllerAktørId: RequestHandler = (request, response, next) => {
     try {
         const requestOmSpesifikkPerson = requestBerOmSpesifikkPerson(request);
 
@@ -105,10 +105,6 @@ const requestBerOmSpesifikkPerson = (
     const idInniHentKandidatQuery = erHentKandidatQuery(request.body);
     const idInniFinnStillingQuery = erFinnStillingQuery(request.body);
 
-    console.log('idInniSpesifikkPersonQuery', idInniSpesifikkPersonQuery);
-    console.log('idInniHentKandidatQuery', idInniHentKandidatQuery);
-    console.log('idInniFinnStillingQuery', idInniFinnStillingQuery);
-
     if (idInniSpesifikkPersonQuery) {
         return {
             melding: 'NAV-ansatt har gjort spesifikt kandidatsøk på brukeren',
@@ -117,7 +113,7 @@ const requestBerOmSpesifikkPerson = (
     } else if (idInniHentKandidatQuery) {
         return {
             melding: 'NAV-ansatt har åpnet CV-en til bruker',
-            fnrEllerAktørId: idInniSpesifikkPersonQuery,
+            fnrEllerAktørId: idInniHentKandidatQuery,
         };
     } else if (idInniFinnStillingQuery) {
         return null; // TODO: Bør audit-logges?

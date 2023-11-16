@@ -45,7 +45,7 @@ export const opprettLoggmeldingForAuditlogg = (
     melding: string,
     fnrEllerAktørId: string,
     navIdent: string,
-    end = Date.now()
+    end = currentTimeForAuditlogg()
 ): string => {
     const header = `CEF:0|Rekrutteringsbistand|${NAIS_APP_NAME}|1.0|audit:access|Sporingslogg|INFO`;
 
@@ -58,3 +58,5 @@ export const opprettLoggmeldingForAuditlogg = (
 
     return `${header}|${extension}`;
 };
+
+export const currentTimeForAuditlogg = () => Date.now();

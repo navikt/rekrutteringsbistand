@@ -31,7 +31,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
             kandidatsøk.AD_GRUPPE_MODIA_GENERELL_TILGANG!,
         ]);
 
-        await kandidatsøk.harTilgangTilKandidatsøk(
+        kandidatsøk.harTilgangTilKandidatsøk(
             mockRequest as Request,
             mockResponse as Response,
             nextFunction
@@ -46,7 +46,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
             kandidatsøk.AD_GRUPPE_MODIA_OPPFOLGING!,
         ]);
 
-        await kandidatsøk.harTilgangTilKandidatsøk(
+        kandidatsøk.harTilgangTilKandidatsøk(
             mockRequest as Request,
             mockResponse as Response,
             nextFunction
@@ -61,7 +61,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue('A123456');
         jest.spyOn(azureAd, 'hentGrupper').mockReturnValue(andreTilganger);
 
-        await kandidatsøk.harTilgangTilKandidatsøk(
+        kandidatsøk.harTilgangTilKandidatsøk(
             mockRequest as Request,
             mockResponse as Response,
             nextFunction
@@ -76,7 +76,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue('A123456');
         jest.spyOn(azureAd, 'hentGrupper').mockReturnValue([]);
 
-        await kandidatsøk.harTilgangTilKandidatsøk(
+        kandidatsøk.harTilgangTilKandidatsøk(
             mockRequest as Request,
             mockResponse as Response,
             nextFunction

@@ -27,6 +27,10 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         nextFunction = jest.fn();
     });
 
+    afterEach(() => {
+        jest.restoreAllMocks();
+    });
+
     test('Kall mot kandidatsøk med spesifikk person-query på fødselsnummer skal logges', async () => {
         const dateNow = 1;
         const navIdent = 'A123456';
@@ -35,11 +39,13 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
 
         mockRequest.body = queries.queryTilKandidatsøkMedAktørIdOgFødselsnummer(personId);
 
-        jest.spyOn(Date, 'now').mockReturnValue(dateNow);
+        jest.spyOn(logger, 'currentTimeForAuditlogg').mockReturnValue(1);
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue(navIdent);
         const auditLog = jest.spyOn(logger.auditLog, 'info');
 
-        await kandidatsøk.loggSøkPåFnrEllerAktørId(
+        auditLog.mockImplementation(() => logger.auditLog);
+
+        kandidatsøk.loggSøkPåFnrEllerAktørId(
             mockRequest as Request,
             mockResponse as Response,
             nextFunction
@@ -50,7 +56,7 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         expect(auditLog).toHaveBeenCalledWith(melding);
     });
 
-    test('Kall mot kandidatsøk med spesifikk person-query på fødselsnummer skal logges', async () => {
+    test('Kall mot kandidatsøk med hent person-query på fødselsnummer skal logges', async () => {
         const dateNow = 1;
         const navIdent = 'A123456';
         const personId = '12345678910';
@@ -58,11 +64,13 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
 
         mockRequest.body = queries.queryTilHentKandidat(personId);
 
-        jest.spyOn(Date, 'now').mockReturnValue(dateNow);
+        jest.spyOn(logger, 'currentTimeForAuditlogg').mockReturnValue(1);
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue(navIdent);
         const auditLog = jest.spyOn(logger.auditLog, 'info');
 
-        await kandidatsøk.loggSøkPåFnrEllerAktørId(
+        auditLog.mockImplementation((_) => logger.auditLog);
+
+        kandidatsøk.loggSøkPåFnrEllerAktørId(
             mockRequest as Request,
             mockResponse as Response,
             nextFunction
