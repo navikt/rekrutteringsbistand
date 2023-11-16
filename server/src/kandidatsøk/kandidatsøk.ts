@@ -73,8 +73,6 @@ export const loggSøkPåFnrEllerAktørId: RequestHandler = async (request, respo
                 navIdent
             );
 
-            console.log('Melding:', melding);
-
             auditLog.info(melding);
             secureLog.info(`Auditlogget handling: ${melding}`);
         }
@@ -106,10 +104,6 @@ const requestBerOmSpesifikkPerson = (
     const idInniSpesifikkPersonQuery = erSpesifikkPersonQuery(request.body);
     const idInniHentKandidatQuery = erHentKandidatQuery(request.body);
     const idInniFinnStillingQuery = erFinnStillingQuery(request.body);
-
-    console.log('idInniSpesifikkPersonQuery', idInniSpesifikkPersonQuery);
-    console.log('idInniHentKandidatQuery', idInniHentKandidatQuery);
-    console.log('idInniFinnStillingQuery', idInniFinnStillingQuery);
 
     if (idInniSpesifikkPersonQuery) {
         return {

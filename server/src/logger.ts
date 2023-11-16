@@ -1,7 +1,7 @@
 import fs from 'fs';
+import os from 'os';
 import winston from 'winston';
 import winstonSyslog from 'winston-syslog';
-import os from 'os';
 
 // Sett tidssonen eksplisitt for å sikre riktig timestamp i logging til archsight
 process.env.TZ = 'Europe/Oslo';
@@ -44,7 +44,8 @@ export const auditLog = winston.createLogger({
 export const opprettLoggmeldingForAuditlogg = (
     melding: string,
     fnrEllerAktørId: string,
-    navIdent: string
+    navIdent: string,
+    end = Date.now()
 ): string => {
     const header = `CEF:0|Rekrutteringsbistand|${NAIS_APP_NAME}|1.0|audit:access|Sporingslogg|INFO`;
 
@@ -52,7 +53,7 @@ export const opprettLoggmeldingForAuditlogg = (
             msg=${melding}\
             duid=${fnrEllerAktørId}
             flexString1Label=Decision\
-            end=${Date.now()}\
+            end=${end}\
             suid=${navIdent}`.replace(/\s+/g, ' ');
 
     return `${header}|${extension}`;

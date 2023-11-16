@@ -1,15 +1,17 @@
 import { EsQuery } from '../../src/felles/domene/elastic/ElasticSearch';
 import Kandidat from '../../src/felles/domene/kandidat/Kandidat';
 
-export const queryTilKandidatsøkMedAktørIdOgFødselsnummer: EsQuery<Kandidat> = {
+export const queryTilKandidatsøkMedAktørIdOgFødselsnummer = (
+    personId: string
+): EsQuery<Kandidat> => ({
     query: {
         bool: {
             must: [
                 {
                     bool: {
                         should: [
-                            { term: { aktorId: '19418638896' } },
-                            { term: { fodselsnummer: '19418638896' } },
+                            { term: { aktorId: personId } },
+                            { term: { fodselsnummer: personId } },
                         ],
                     },
                 },
@@ -32,4 +34,4 @@ export const queryTilKandidatsøkMedAktørIdOgFødselsnummer: EsQuery<Kandidat> 
         'kommuneNavn',
         'postnummer',
     ],
-};
+});
