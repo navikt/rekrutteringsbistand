@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals';
 import { NextFunction, Request, Response } from 'express';
+import { EsQuery } from '../../src/felles/domene/elastic/ElasticSearch';
+import Kandidat from '../../src/felles/domene/kandidat/Kandidat';
 import * as azureAd from '../src/azureAd';
-import { SearchQuery } from '../src/kandidatsøk/elasticSearchTyper';
 import * as kandidatsøk from '../src/kandidatsøk/kandidatsøk';
 import * as middlewares from '../src/middlewares';
 
@@ -89,7 +90,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
 });
 
 describe('ES body for søk', () => {
-    let queryMock = (bool?: object): SearchQuery => {
+    let queryMock = (bool?: object): EsQuery<Kandidat> => {
         return {
             query: {
                 bool: {
@@ -113,7 +114,7 @@ describe('ES body for søk', () => {
     };
 
     test('Er ES body med søk på fødselsnummer og aktørId', async () => {
-        const resultat = kandidatsøk.hentFnrEllerAktørIdFraESBody(
+        const resultat = kandidatsøk.erSpesifikkPersonQuery(
             queryMock({
                 should: [
                     {
@@ -129,11 +130,12 @@ describe('ES body for søk', () => {
                 ],
             })
         );
+
         expect(resultat).toBeTruthy();
     });
 
     test('Er ES body med søk på fødselsnummer', async () => {
-        const resultat = kandidatsøk.hentFnrEllerAktørIdFraESBody(
+        const resultat = kandidatsøk.erSpesifikkPersonQuery(
             queryMock({
                 should: [
                     {
@@ -148,7 +150,7 @@ describe('ES body for søk', () => {
     });
 
     test('Er ES body med søk på aktørId', async () => {
-        const resultat = kandidatsøk.hentFnrEllerAktørIdFraESBody(
+        const resultat = kandidatsøk.erSpesifikkPersonQuery(
             queryMock({
                 should: [
                     {
@@ -163,12 +165,12 @@ describe('ES body for søk', () => {
     });
 
     test('Er ES body uten søk på fødselsnummer eller aktørId', async () => {
-        const resultat = kandidatsøk.hentFnrEllerAktørIdFraESBody(queryMock());
+        const resultat = kandidatsøk.erSpesifikkPersonQuery(queryMock());
         expect(resultat).toBeFalsy();
     });
 
     test('Henter fnr fra ES body når det finnes', async () => {
-        const resultat = kandidatsøk.hentFnrEllerAktørIdFraESBody(
+        const resultat = kandidatsøk.erSpesifikkPersonQuery(
             queryMock({
                 should: [
                     {
@@ -188,7 +190,7 @@ describe('ES body for søk', () => {
     });
 
     test('Henter aktørid fra ES body når fnr ikke finnes', async () => {
-        const resultat = kandidatsøk.hentFnrEllerAktørIdFraESBody(
+        const resultat = kandidatsøk.erSpesifikkPersonQuery(
             queryMock({
                 should: [
                     {
