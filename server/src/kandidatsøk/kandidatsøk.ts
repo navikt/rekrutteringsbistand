@@ -65,16 +65,22 @@ export const loggSøkPåFnrEllerAktørId: RequestHandler = async (request, respo
 
         if (requestBerOmSpesifikkPerson !== null) {
             const brukerensAccessToken = retrieveToken(request.headers);
+            console.log('1...');
             const navIdent = hentNavIdent(brukerensAccessToken);
+            console.log('2...');
 
             const melding = opprettLoggmeldingForAuditlogg(
                 requestOmSpesifikkPerson.meldingTilAuditlogg, //'NAV-ansatt har gjort spesifikt kandidatsøk på brukeren',
                 requestOmSpesifikkPerson.fnrEllerAktørId,
                 navIdent
             );
+            console.log('3...');
 
             auditLog.info(melding);
+            console.log('4...');
+
             secureLog.info(`Auditlogget handling: ${melding}`);
+            console.log('5...');
         }
     } catch (e) {
         const feilmelding =
@@ -102,6 +108,10 @@ const requestBerOmSpesifikkPerson = (
     const idInniSpesifikkPersonQuery = erSpesifikkPersonQuery(request.body);
     const idInniHentKandidatQuery = erHentKandidatQuery(request.body);
     const idInniFinnStillingQuery = erFinnStillingQuery(request.body);
+
+    console.log('idInniSpesifikkPersonQuery', idInniSpesifikkPersonQuery);
+    console.log('idInniHentKandidatQuery', idInniHentKandidatQuery);
+    console.log('idInniFinnStillingQuery', idInniFinnStillingQuery);
 
     if (idInniSpesifikkPersonQuery) {
         return {

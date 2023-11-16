@@ -204,3 +204,42 @@ describe('ES body for søk', () => {
         expect(resultat).toBe('21909899211');
     });
 });
+
+describe('Auditlogging av personspesifikt kandidatsøk', () => {
+    let mockRequest: Partial<Request>;
+    let mockResponse: Partial<Response>;
+    let nextFunction: NextFunction = jest.fn();
+
+    beforeEach(() => {
+        mockResponse = {
+            status: jest.fn(() => mockResponse),
+            send: jest.fn(),
+        } as Partial<Response>;
+
+        mockRequest = {
+            headers: {
+                authorization: '',
+            },
+            body: {},
+        };
+
+        nextFunction = jest.fn();
+    });
+
+    test('Kall mot spesifikk person skal logges', async () => {
+        mockRequest = {
+            headers: {
+                authorization: '',
+            },
+            body: {},
+        };
+
+        const resultat = await kandidatsøk.loggSøkPåFnrEllerAktørId(
+            mockRequest as Request,
+            mockResponse as Response,
+            nextFunction
+        );
+
+        expect(nextFunction).toBeCalled();
+    });
+});
