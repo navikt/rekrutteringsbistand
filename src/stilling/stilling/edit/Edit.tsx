@@ -4,7 +4,11 @@ import classNames from 'classnames';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import Stilling, { System } from 'felles/domene/stilling/Stilling';
+import Stilling, {
+    Stillingsinfo,
+    Stillingskategori,
+    System,
+} from 'felles/domene/stilling/Stilling';
 import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import { RESET_VALIDATION_ERROR } from '../adValidationReducer';
@@ -20,20 +24,26 @@ import PraktiskeOpplysninger from './praktiske-opplysninger/PraktiskeOpplysninge
 import RegistrerInkluderingsmuligheter from './registrer-inkluderingsmuligheter/DirektemeldtStilling';
 import Seksjon from './seksjon/Seksjon';
 
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettressurs } from 'felles/nettressurs';
 import css from './Edit.module.css';
 
 type Props = {
     onPreviewAdClick: () => void;
-    kandidatliste: Nettressurs<Kandidatliste>;
-
+    erEier: boolean;
     resetValidation: () => void;
     stilling: Stilling;
     hasChanges: boolean;
+    stillingsinfoData: Stillingsinfo;
+    kandidatlisteId: string;
 };
 
-const Edit = ({ stilling, onPreviewAdClick, resetValidation, kandidatliste }: Props) => {
+const Edit = ({
+    stilling,
+    onPreviewAdClick,
+    resetValidation,
+    erEier,
+    stillingsinfoData,
+    kandidatlisteId,
+}: Props) => {
     const stillingenErEkstern = stilling.createdBy !== System.Rekrutteringsbistand;
     const stillingsLenke = hentAnnonselenke(stilling.uuid);
 
@@ -45,7 +55,11 @@ const Edit = ({ stilling, onPreviewAdClick, resetValidation, kandidatliste }: Pr
 
     return (
         <>
-            <Stillingsheader kandidatliste={kandidatliste}>
+            <Stillingsheader
+                kandidatlisteId={kandidatlisteId}
+                erEier={erEier}
+                erFormidling={stillingsinfoData.stillingskategori === Stillingskategori.Formidling}
+            >
                 {stillingErPublisert(stilling) && (
                     <CopyButton
                         copyText={stillingsLenke}
@@ -113,6 +127,7 @@ const mapDispatchToProps = (dispatch: (action: any) => void) => ({
 });
 
 const mapStateToProps = (state: State) => ({
+    stillingsinfoData: state.stillingsinfoData,
     stilling: state.adData,
     hasChanges: state.ad.hasChanges,
 });

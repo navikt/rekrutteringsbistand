@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Status, System } from 'felles/domene/stilling/Stilling';
-import { Nettstatus } from 'felles/nettressurs';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import useKandidatlisteId from '../api/useKandidatlisteId';
 import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
@@ -32,12 +32,18 @@ const Stilling = () => {
     const location = useLocation();
     const { uuid } = useParams<QueryParams>();
     const { isEditingAd, isSavingAd, isLoadingAd } = useSelector((state: State) => state.ad);
+
     const [searchParams, setSearchParams] = useSearchParams();
     const kandidatnrFraStillingssøk = searchParams.get('kandidat');
     const navigate = useNavigate();
     const stilling = useSelector((state: State) => state.adData);
+
+    const { kandidatlisteId } = useKandidatlisteId(uuid);
+
     const [kandidatliste, setKandidatliste] = useHentKandidatliste(stilling?.uuid);
+
     const { navIdent: innloggetBruker } = useInnloggetBruker(null);
+
     const erEier = stilling?.administration?.navIdent === innloggetBruker;
 
     const getStilling = (uuid: string, edit: boolean) => {
@@ -63,7 +69,6 @@ const Stilling = () => {
         });
     };
 
-    console.log('🎺 stilling', stilling);
     const fjernRedigeringsmodusFraUrl = () => {
         const newSearchParams = new URLSearchParams(searchParams.toString());
         newSearchParams.delete(REDIGERINGSMODUS_QUERY_PARAM);
@@ -132,13 +137,12 @@ const Stilling = () => {
     }
 
     const erEksternStilling = stilling?.createdBy !== System.Rekrutteringsbistand;
-    const kandidatlisteId =
-        kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.kandidatlisteId : '';
 
     return (
         <div className={css.stilling}>
             {kandidatnrFraStillingssøk && (
                 <KontekstAvKandidat
+                    kandidatlisteId={kandidatlisteId}
                     kandidatnr={kandidatnrFraStillingssøk}
                     kandidatliste={kandidatliste}
                     setKandidatliste={setKandidatliste}
@@ -154,7 +158,7 @@ const Stilling = () => {
                                 {erEksternStilling ? (
                                     <>
                                         <PreviewHeader
-                                            kandidatliste={kandidatliste}
+                                            kandidatlisteId={kandidatlisteId}
                                             erEier={erEier}
                                         />
                                         <Stillingstittel
@@ -166,15 +170,19 @@ const Stilling = () => {
                                     </>
                                 ) : (
                                     <Edit
-                                        kandidatliste={kandidatliste}
+                                        erEier={erEier}
                                         onPreviewAdClick={onPreviewAdClick}
+                                        kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
                             </>
                         ) : (
                             <>
                                 {!kandidatnrFraStillingssøk && (
-                                    <PreviewHeader kandidatliste={kandidatliste} erEier={erEier} />
+                                    <PreviewHeader
+                                        erEier={erEier}
+                                        kandidatlisteId={kandidatlisteId}
+                                    />
                                 )}
                                 <Stillingstittel
                                     tittel={stilling.title}

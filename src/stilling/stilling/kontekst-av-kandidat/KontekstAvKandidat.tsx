@@ -18,9 +18,16 @@ type Props = {
     kandidatliste: Nettressurs<Kandidatliste>;
     setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     stilling: Stilling;
+    kandidatlisteId: string;
 };
 
-const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, stilling }: Props) => {
+const KontekstAvKandidat = ({
+    kandidatnr,
+    kandidatliste,
+    setKandidatliste,
+    stilling,
+    kandidatlisteId,
+}: Props) => {
     const kandidat = useKandidat(kandidatnr);
 
     const { state } = useLocation();
@@ -46,7 +53,7 @@ const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, still
                             )}
                             <Kandidatlistehandlinger
                                 kandidatnr={kandidatnr}
-                                kandidatliste={kandidatliste}
+                                stillingsId={stilling.uuid}
                                 onAnbefalClick={() => {
                                     setVisModal(true);
                                 }}
@@ -58,7 +65,7 @@ const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, still
                     kandidatliste.kind === Nettstatus.Suksess && (
                         <AnbefalKandidatModal
                             kandidat={kandidat.data}
-                            kandidatliste={kandidatliste.data}
+                            kandidatlisteId={kandidatlisteId}
                             setKandidatliste={setKandidatliste}
                             onClose={() => setVisModal(false)}
                             vis={visModal}

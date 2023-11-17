@@ -9,7 +9,7 @@ import { VarslingAction, VarslingActionType } from '../../common/varsling/varsli
 
 type Props = {
     kandidat: KandidatTilBanner;
-    kandidatliste: Kandidatliste;
+    kandidatlisteId: string;
     setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     vis: boolean;
     onClose: () => void;
@@ -17,7 +17,7 @@ type Props = {
 
 const AnbefalKandidatModal = ({
     kandidat,
-    kandidatliste,
+    kandidatlisteId,
     setKandidatliste,
     vis,
     onClose,
@@ -46,7 +46,7 @@ const AnbefalKandidatModal = ({
                 erAnbefaling
                 fnr={kandidat.fodselsnummer}
                 kandidat={kandidat}
-                kandidatliste={kandidatliste}
+                kandidatlisteId={kandidatlisteId}
                 onAvbryt={onClose}
                 onOppdatertKandidatliste={handleOppdatertKandidatliste}
                 onBekreft={handleBekreft}
