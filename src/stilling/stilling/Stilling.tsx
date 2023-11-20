@@ -63,7 +63,6 @@ const Stilling = () => {
         });
     };
 
-    console.log('🎺 stilling', stilling);
     const fjernRedigeringsmodusFraUrl = () => {
         const newSearchParams = new URLSearchParams(searchParams.toString());
         newSearchParams.delete(REDIGERINGSMODUS_QUERY_PARAM);
