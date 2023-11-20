@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { Hit } from './domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from './domene/stilling/EsStilling';
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 
 export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[]) => {
     let antallFiltrertBort = 0;
@@ -30,6 +31,36 @@ export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[
         return stilling;
     });
     return { hits: filtrertListe ?? [], antallFiltrertBort };
+};
+
+export const filtrerOrdFraKandidatliste = (kandidatlister: KandidatlisteSammendrag[]) => {
+    let antallFiltrertBort = 0;
+    const filtrertListe = kandidatlister?.filter((kandidatliste) => {
+        // 6 mnd fra publishByAdmin
+        if (!kandidatliste.opprettetTidspunkt) {
+            return kandidatliste;
+        }
+
+        const stillingsDatoForFilter = moment(kandidatliste.opprettetTidspunkt);
+        const seksMndSiden = moment().subtract(6, 'months');
+        if (!stillingsDatoForFilter.isBefore(seksMndSiden)) {
+            return kandidatliste;
+        }
+
+        const harCaseSensetiveOrd = caseSensetiveOrd.some((ord) =>
+            kandidatliste.tittel.includes(ord)
+        );
+        const harCaseInsensetiveOrd = caseInsensetiveOrd.some((ord) =>
+            kandidatliste.tittel.toLowerCase().includes(ord.toLowerCase())
+        );
+
+        if (harCaseSensetiveOrd || harCaseInsensetiveOrd) {
+            antallFiltrertBort++;
+            return null;
+        }
+        return kandidatliste;
+    });
+    return { filtrertListe, antallFiltrertBort };
 };
 
 export const caseSensetiveOrd = [
