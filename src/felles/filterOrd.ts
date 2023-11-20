@@ -3,6 +3,7 @@ import { Hit } from './domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from './domene/stilling/EsStilling';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 
+const antallMåneder = 6;
 export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[]) => {
     let antallFiltrertBort = 0;
     const filtrertListe = hits?.filter((stilling) => {
@@ -12,7 +13,7 @@ export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[
         }
 
         const stillingsDatoForFilter = moment(stilling._source?.stilling?.publishedByAdmin);
-        const seksMndSiden = moment().subtract(6, 'months');
+        const seksMndSiden = moment().subtract(antallMåneder, 'months');
         if (!stillingsDatoForFilter.isBefore(seksMndSiden)) {
             return stilling;
         }
@@ -36,13 +37,13 @@ export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[
 export const filtrerOrdFraKandidatliste = (kandidatlister: KandidatlisteSammendrag[]) => {
     let antallFiltrertBort = 0;
     const filtrertListe = kandidatlister?.filter((kandidatliste) => {
-        // 6 mnd fra publishByAdmin
+        // 6 mnd fra opprettetTidspunkt
         if (!kandidatliste.opprettetTidspunkt) {
             return kandidatliste;
         }
 
         const stillingsDatoForFilter = moment(kandidatliste.opprettetTidspunkt);
-        const seksMndSiden = moment().subtract(6, 'months');
+        const seksMndSiden = moment().subtract(antallMåneder, 'months');
         if (!stillingsDatoForFilter.isBefore(seksMndSiden)) {
             return kandidatliste;
         }
@@ -77,13 +78,9 @@ export const caseSensetiveOrd = [
     'UOO',
     'UTVO',
     'VTA',
-    'DIR',
-    'dev',
 ];
 
 export const caseInsensetiveOrd = [
-    'kake',
-    'kopi',
     'KVP',
     'Kvalifiseringsprogram',
     'kvalifiseringsprogram',
