@@ -1,18 +1,16 @@
-import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import { FunctionComponent } from 'react';
+import { Hit } from '../../../felles/domene/elastic/ElasticSearch';
 import css from './Stillingsliste.module.css';
 import Stillingsrad from './stillingsrad/Stillingsrad';
 
 type Props = {
-    esResponse: EsResponse<EsRekrutteringsbistandstilling>;
+    hits: Hit<EsRekrutteringsbistandstilling>[];
     kandidatnr?: string;
     navIdent?: string;
 };
 
-const Stillingsliste: FunctionComponent<Props> = ({ esResponse, kandidatnr, navIdent }) => {
-    const hits = esResponse.hits.hits;
-
+const Stillingsliste: FunctionComponent<Props> = ({ hits, kandidatnr, navIdent }) => {
     return (
         <ul className={css.stillingliste}>
             {hits.map((hit) => (
