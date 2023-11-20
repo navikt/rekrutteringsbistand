@@ -1,7 +1,7 @@
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import moment from 'moment';
 import { Hit } from './domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from './domene/stilling/EsStilling';
-import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 
 const antallMåneder = 6;
 export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[]) => {
@@ -78,9 +78,12 @@ export const caseSensetiveOrd = [
     'UOO',
     'UTVO',
     'VTA',
+    'ROS',
+    'ROP',
 ];
 
 export const caseInsensetiveOrd = [
+    'IPS',
     'KVP',
     'Kvalifiseringsprogram',
     'kvalifiseringsprogram',
