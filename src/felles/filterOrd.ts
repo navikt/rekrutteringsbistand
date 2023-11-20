@@ -77,10 +77,13 @@ export const caseSensetiveOrd = [
     'UOO',
     'UTVO',
     'VTA',
-    'sad',
+    'DIR',
+    'dev',
 ];
 
 export const caseInsensetiveOrd = [
+    'kake',
+    'kopi',
     'KVP',
     'Kvalifiseringsprogram',
     'kvalifiseringsprogram',
