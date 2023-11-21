@@ -6,15 +6,12 @@ type Props = {
     kandidatlisteId: string;
     children: ReactNode;
     erEier: boolean;
-    erFormidling: boolean;
 };
 
-const Stillingsheader = ({ kandidatlisteId, children, erEier, erFormidling }: Props) => (
+const Stillingsheader = ({ kandidatlisteId, children, erEier }: Props) => (
     <div className={css.stillingsheader}>
         <div>
-            {(erEier || !erFormidling) && (
-                <Kandidathandlinger erEier={erEier} kandidatlisteId={kandidatlisteId} />
-            )}
+            {erEier && <Kandidathandlinger erEier={erEier} kandidatlisteId={kandidatlisteId} />}
         </div>
         <div className={css.knapper}>{children}</div>
     </div>

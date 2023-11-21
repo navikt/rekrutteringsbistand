@@ -4,11 +4,7 @@ import classNames from 'classnames';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import Stilling, {
-    Stillingsinfo,
-    Stillingskategori,
-    System,
-} from 'felles/domene/stilling/Stilling';
+import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
 import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import { RESET_VALIDATION_ERROR } from '../adValidationReducer';
@@ -55,11 +51,7 @@ const Edit = ({
 
     return (
         <>
-            <Stillingsheader
-                kandidatlisteId={kandidatlisteId}
-                erEier={erEier}
-                erFormidling={stillingsinfoData.stillingskategori === Stillingskategori.Formidling}
-            >
+            <Stillingsheader kandidatlisteId={kandidatlisteId} erEier={erEier}>
                 {stillingErPublisert(stilling) && (
                     <CopyButton
                         copyText={stillingsLenke}

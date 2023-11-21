@@ -3,11 +3,7 @@ import { Button, CopyButton } from '@navikt/ds-react';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Stilling, {
-    Stillingsinfo,
-    Stillingskategori,
-    System,
-} from 'felles/domene/stilling/Stilling';
+import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
 import { State } from '../../../redux/store';
 import { StillingsinfoState } from '../../../stillingsinfo/stillingsinfoReducer';
 import { COPY_AD_FROM_MY_ADS, EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
@@ -80,9 +76,6 @@ class PreviewMenu extends React.Component<Props> {
                 <Stillingsheader
                     erEier={this.props.erEier}
                     kandidatlisteId={this.props.kandidatlisteId}
-                    erFormidling={
-                        stillingsinfoData.stillingskategori === Stillingskategori.Formidling
-                    }
                 >
                     {stillingErPublisert(stilling) && (
                         <CopyButton
