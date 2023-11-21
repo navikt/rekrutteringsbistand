@@ -11,7 +11,7 @@ type Props = {
 const Stillingsheader = ({ kandidatlisteId, children, erEier }: Props) => (
     <div className={css.stillingsheader}>
         <div>
-            {erEier && <Kandidathandlinger erEier={erEier} kandidatlisteId={kandidatlisteId} />}
+            <Kandidathandlinger erEier={erEier} kandidatlisteId={kandidatlisteId} />
         </div>
         <div className={css.knapper}>{children}</div>
     </div>

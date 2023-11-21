@@ -47,13 +47,15 @@ const Kandidathandlinger: FunctionComponent<Props> = ({ erEier, kandidatlisteId 
             />
             {visHandlingerKnyttetTilKandidatlisten && (
                 <>
-                    <Link
-                        className="navds-link"
-                        to={`/kandidatsok?kandidatliste=${kandidatlisteId}&brukKriterierFraStillingen=true`}
-                    >
-                        <MagnifyingGlassIcon />
-                        Finn kandidater
-                    </Link>
+                    {erEier && (
+                        <Link
+                            className="navds-link"
+                            to={`/kandidatsok?kandidatliste=${kandidatlisteId}&brukKriterierFraStillingen=true`}
+                        >
+                            <MagnifyingGlassIcon />
+                            Finn kandidater
+                        </Link>
+                    )}
                     <button
                         className={classNames('navds-link', css.leggTilKandidatKnapp)}
                         onClick={toggleLeggTilKandidatModal}
