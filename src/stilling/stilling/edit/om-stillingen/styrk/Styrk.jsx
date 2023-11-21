@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BodyShort, Detail, ErrorMessage, Button } from '@navikt/ds-react';
 
 import { FETCH_STYRK, SET_STYRK_TYPEAHEAD_VALUE, TOGGLE_STYRK_MODAL } from './styrkReducer';
-import { SET_EMPLOYMENT_JOBTITLE } from '../../../adDataReducer';
+import { SET_AD_TITLE, SET_EMPLOYMENT_JOBTITLE } from '../../../adDataReducer';
 import { SET_STYRK } from '../../../adDataReducer';
 import Skjemalabel from '../../skjemaetikett/Skjemalabel';
 import StyrkModal from './StyrkModal';
@@ -34,6 +34,7 @@ class Styrk extends React.Component {
                 this.props.stilling.properties.jobtitle === ''
             ) {
                 this.props.setJobTitle(suggestion.name);
+                this.props.setTitle(suggestion.name);
             }
         }
     };
@@ -132,6 +133,7 @@ Styrk.propTypes = {
     showStyrkModal: PropTypes.bool.isRequired,
     toggleList: PropTypes.func.isRequired,
     setJobTitle: PropTypes.func.isRequired,
+    setTitle: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -150,6 +152,8 @@ const mapDispatchToProps = (dispatch) => ({
     setStyrk: (code) => dispatch({ type: SET_STYRK, code }),
     setJobTitle: (jobtitle) => dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle }),
     toggleList: () => dispatch({ type: TOGGLE_STYRK_MODAL }),
+    setTitle: (adtitle) =>
+        dispatch({ type: SET_AD_TITLE, title: adtitle.target.value.replace(/^\s+/g, '') }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Styrk);
