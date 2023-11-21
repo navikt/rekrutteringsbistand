@@ -4,18 +4,23 @@ import { Link } from 'react-router-dom';
 import css from './Kandidatlistehandlinger.module.css';
 
 type Props = {
-    kandidatnr: string;
     onAnbefalClick: () => void;
     stillingsId: string;
+    erEier: boolean;
 };
 
-const Kandidathandlinger = ({ kandidatnr, stillingsId, onAnbefalClick }: Props) => {
+const Kandidathandlinger = ({ stillingsId, erEier, onAnbefalClick }: Props) => {
     return (
         <div className={css.knapper}>
-            <Link to={`/kandidater/lister/stilling/${stillingsId}/detaljer`} className="navds-link">
-                <PersonGroupIcon />
-                Se kandidatliste
-            </Link>
+            {erEier && (
+                <Link
+                    to={`/kandidater/lister/stilling/${stillingsId}/detaljer`}
+                    className="navds-link"
+                >
+                    <PersonGroupIcon />
+                    Se kandidatliste
+                </Link>
+            )}
             <Button onClick={onAnbefalClick} icon={<PersonCheckmarkIcon />}>
                 Anbefal kandidat
             </Button>

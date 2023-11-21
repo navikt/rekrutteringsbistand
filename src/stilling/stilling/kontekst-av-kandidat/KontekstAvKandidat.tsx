@@ -12,6 +12,7 @@ import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 
 type Props = {
     kandidatnr: string;
@@ -35,6 +36,9 @@ const KontekstAvKandidat = ({
 
     const brødsmulesti = byggBrødsmulesti(kandidatnr, stilling, kandidat, state?.stillingssøk);
 
+    const { navIdent } = useInnloggetBruker(null);
+    const erEier = stilling?.administration?.navIdent === navIdent;
+
     return (
         <div className={css.wrapperTilBanner}>
             <div className={css.innerWrapperTilBanner}>
@@ -52,8 +56,8 @@ const KontekstAvKandidat = ({
                                 />
                             )}
                             <Kandidatlistehandlinger
-                                kandidatnr={kandidatnr}
                                 stillingsId={stilling.uuid}
+                                erEier={erEier}
                                 onAnbefalClick={() => {
                                     setVisModal(true);
                                 }}
