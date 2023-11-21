@@ -20,7 +20,6 @@ import Forhåndsvisning from './forhåndsvisning/Forhåndsvisning';
 import AdministrationPreview from './forhåndsvisning/administration/AdministrationPreview';
 import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
 import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
-import useHentKandidatliste from './kandidathandlinger/useHentKandidatliste';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
@@ -40,8 +39,6 @@ const Stilling = () => {
     const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
 
     const { kandidatlisteId } = useKandidatlisteId(uuid);
-
-    const [kandidatliste, setKandidatliste] = useHentKandidatliste(stilling?.uuid);
 
     const { navIdent: innloggetBruker } = useInnloggetBruker(null);
 
@@ -147,8 +144,6 @@ const Stilling = () => {
                 <KontekstAvKandidat
                     kandidatlisteId={kandidatlisteId}
                     kandidatnr={kandidatnrFraStillingssøk}
-                    kandidatliste={kandidatliste}
-                    setKandidatliste={setKandidatliste}
                     stilling={stilling}
                 />
             )}
