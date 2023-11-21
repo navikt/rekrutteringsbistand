@@ -9,6 +9,8 @@ import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useSelector } from 'react-redux';
+import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
@@ -33,10 +35,14 @@ const KontekstAvKandidat = ({
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
+    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
+
     const brødsmulesti = byggBrødsmulesti(kandidatnr, stilling, kandidat, state?.stillingssøk);
 
     const { navIdent } = useInnloggetBruker(null);
-    const erEier = stilling?.administration?.navIdent === navIdent;
+
+    const erEier =
+        stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;
 
     return (
         <div className={css.wrapperTilBanner}>

@@ -37,6 +37,7 @@ const Stilling = () => {
     const kandidatnrFraStillingssøk = searchParams.get('kandidat');
     const navigate = useNavigate();
     const stilling = useSelector((state: State) => state.adData);
+    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
 
     const { kandidatlisteId } = useKandidatlisteId(uuid);
 
@@ -44,7 +45,9 @@ const Stilling = () => {
 
     const { navIdent: innloggetBruker } = useInnloggetBruker(null);
 
-    const erEier = stilling?.administration?.navIdent === innloggetBruker;
+    const erEier =
+        stilling?.administration?.navIdent === innloggetBruker ||
+        stillingsinfo?.eierNavident === innloggetBruker;
 
     const getStilling = (uuid: string, edit: boolean) => {
         dispatch({ type: FETCH_AD, uuid, edit });
