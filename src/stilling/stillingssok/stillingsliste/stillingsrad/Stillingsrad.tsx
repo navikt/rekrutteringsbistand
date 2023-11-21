@@ -9,7 +9,7 @@ import {
     EsStilling,
     stillingErUtløpt,
 } from 'felles/domene/stilling/EsStilling';
-import { Geografi, Privacy, Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { Geografi, Privacy } from 'felles/domene/stilling/Stilling';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
 import TekstlinjeMedIkon from '../../../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../../../stilling/Stilling';
@@ -62,12 +62,6 @@ const Stillingsrad: FunctionComponent<Props> = ({
 
     const publisertDato = konverterTilPresenterbarDato(stilling.published);
     const utløpsDato = konverterTilPresenterbarDato(stilling.expires);
-
-    const erFormidling =
-        rekrutteringsbistandstilling.stillingsinfo?.stillingskategori ===
-        Stillingskategori.Formidling;
-
-    const kanSeKandidatliste = erEier || !erFormidling;
 
     return (
         <RekBisKortStilling
@@ -139,7 +133,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
                             Rediger
                         </Link>
                     )}
-                    {kanSeKandidatliste &&
+                    {erEier &&
                         rekrutteringsbistandstilling.stilling.publishedByAdmin &&
                         skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                             <Link className={css.lenke} to={lagUrlTilKandidatliste(stilling)}>

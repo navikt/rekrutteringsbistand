@@ -23,12 +23,5 @@ export const erEierAvKandidatlisten = (
 export const harTilgangTilkandidatliste = (
     kandidatliste: Kandidatliste | KandidatlisteSammendrag
 ) => {
-    const erFormidling = kandidatliste.stillingskategori === Stillingskategori.Formidling;
-
-    if (erKobletTilStilling(kandidatliste) && !erFormidling) {
-        return true;
-    } else if (erEierAvKandidatlisten(kandidatliste)) {
-        return true;
-    }
-    return false;
+    return erEierAvKandidatlisten(kandidatliste);
 };

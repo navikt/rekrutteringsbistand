@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Status, System } from 'felles/domene/stilling/Stilling';
-import { Nettstatus } from 'felles/nettressurs';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import useKandidatlisteId from '../api/useKandidatlisteId';
 import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
@@ -20,7 +20,6 @@ import Forhåndsvisning from './forhåndsvisning/Forhåndsvisning';
 import AdministrationPreview from './forhåndsvisning/administration/AdministrationPreview';
 import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
 import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
-import useHentKandidatliste from './kandidathandlinger/useHentKandidatliste';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
@@ -32,13 +31,20 @@ const Stilling = () => {
     const location = useLocation();
     const { uuid } = useParams<QueryParams>();
     const { isEditingAd, isSavingAd, isLoadingAd } = useSelector((state: State) => state.ad);
+
     const [searchParams, setSearchParams] = useSearchParams();
     const kandidatnrFraStillingssøk = searchParams.get('kandidat');
     const navigate = useNavigate();
     const stilling = useSelector((state: State) => state.adData);
-    const [kandidatliste, setKandidatliste] = useHentKandidatliste(stilling?.uuid);
+    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
+
+    const { kandidatlisteId } = useKandidatlisteId(uuid);
+
     const { navIdent: innloggetBruker } = useInnloggetBruker(null);
-    const erEier = stilling?.administration?.navIdent === innloggetBruker;
+
+    const erEier =
+        stilling?.administration?.navIdent === innloggetBruker ||
+        stillingsinfo?.eierNavident === innloggetBruker;
 
     const getStilling = (uuid: string, edit: boolean) => {
         dispatch({ type: FETCH_AD, uuid, edit });
@@ -131,16 +137,13 @@ const Stilling = () => {
     }
 
     const erEksternStilling = stilling?.createdBy !== System.Rekrutteringsbistand;
-    const kandidatlisteId =
-        kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.kandidatlisteId : '';
 
     return (
         <div className={css.stilling}>
             {kandidatnrFraStillingssøk && (
                 <KontekstAvKandidat
+                    kandidatlisteId={kandidatlisteId}
                     kandidatnr={kandidatnrFraStillingssøk}
-                    kandidatliste={kandidatliste}
-                    setKandidatliste={setKandidatliste}
                     stilling={stilling}
                 />
             )}
@@ -153,7 +156,7 @@ const Stilling = () => {
                                 {erEksternStilling ? (
                                     <>
                                         <PreviewHeader
-                                            kandidatliste={kandidatliste}
+                                            kandidatlisteId={kandidatlisteId}
                                             erEier={erEier}
                                         />
                                         <Stillingstittel
@@ -165,15 +168,19 @@ const Stilling = () => {
                                     </>
                                 ) : (
                                     <Edit
-                                        kandidatliste={kandidatliste}
+                                        erEier={erEier}
                                         onPreviewAdClick={onPreviewAdClick}
+                                        kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
                             </>
                         ) : (
                             <>
                                 {!kandidatnrFraStillingssøk && (
-                                    <PreviewHeader kandidatliste={kandidatliste} erEier={erEier} />
+                                    <PreviewHeader
+                                        erEier={erEier}
+                                        kandidatlisteId={kandidatlisteId}
+                                    />
                                 )}
                                 <Stillingstittel
                                     tittel={stilling.title}

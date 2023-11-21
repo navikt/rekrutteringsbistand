@@ -2,26 +2,17 @@ import { Modal } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
 type Props = {
     kandidat: KandidatTilBanner;
-    kandidatliste: Kandidatliste;
-    setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
+    kandidatlisteId: string;
     vis: boolean;
     onClose: () => void;
 };
 
-const AnbefalKandidatModal = ({
-    kandidat,
-    kandidatliste,
-    setKandidatliste,
-    vis,
-    onClose,
-}: Props) => {
+const AnbefalKandidatModal = ({ kandidat, kandidatlisteId, vis, onClose }: Props) => {
     const dispatch = useDispatch();
 
     const handleBekreft = () => {
@@ -33,22 +24,14 @@ const AnbefalKandidatModal = ({
         });
     };
 
-    const handleOppdatertKandidatliste = (kandidatliste: Kandidatliste) => {
-        setKandidatliste({
-            kind: Nettstatus.Suksess,
-            data: kandidatliste,
-        });
-    };
-
     return (
         <Modal open={vis} onClose={onClose} header={{ heading: 'Anbefal kandidat' }}>
             <BekreftMedNotat
                 erAnbefaling
                 fnr={kandidat.fodselsnummer}
                 kandidat={kandidat}
-                kandidatliste={kandidatliste}
+                kandidatlisteId={kandidatlisteId}
                 onAvbryt={onClose}
-                onOppdatertKandidatliste={handleOppdatertKandidatliste}
                 onBekreft={handleBekreft}
             />
         </Modal>

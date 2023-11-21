@@ -3,9 +3,7 @@ import { Button, CopyButton } from '@navikt/ds-react';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
-import { Nettressurs } from 'felles/nettressurs';
 import { State } from '../../../redux/store';
 import { StillingsinfoState } from '../../../stillingsinfo/stillingsinfoReducer';
 import { COPY_AD_FROM_MY_ADS, EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
@@ -18,12 +16,12 @@ type Props = {
     stilling: Stilling;
     stillingsinfoData: Stillingsinfo;
     stillingsinfo: StillingsinfoState;
-    kandidatliste: Nettressurs<Kandidatliste>;
     limitedAccess: boolean;
     copyAd: (uuid: string) => void;
     editAd: () => void;
     leggTilIMineStillinger: () => void;
     erEier: boolean;
+    kandidatlisteId: string;
 };
 
 class PreviewMenu extends React.Component<Props> {
@@ -75,7 +73,10 @@ class PreviewMenu extends React.Component<Props> {
 
         return (
             <>
-                <Stillingsheader kandidatliste={this.props.kandidatliste}>
+                <Stillingsheader
+                    erEier={this.props.erEier}
+                    kandidatlisteId={this.props.kandidatlisteId}
+                >
                     {stillingErPublisert(stilling) && (
                         <CopyButton
                             copyText={hentAnnonselenke(stilling.uuid)}
