@@ -5,6 +5,7 @@ import { CopyButton } from '@navikt/ds-react';
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling from 'felles/domene/stilling/Stilling';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
@@ -12,7 +13,6 @@ import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
-import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 
 type Props = {
     kandidatnr: string;
@@ -30,7 +30,6 @@ const KontekstAvKandidat = ({
     kandidatlisteId,
 }: Props) => {
     const kandidat = useKandidat(kandidatnr);
-
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
@@ -56,6 +55,7 @@ const KontekstAvKandidat = ({
                                 />
                             )}
                             <Kandidatlistehandlinger
+                                kandidatlisteId={kandidatlisteId}
                                 stillingsId={stilling.uuid}
                                 erEier={erEier}
                                 onAnbefalClick={() => {

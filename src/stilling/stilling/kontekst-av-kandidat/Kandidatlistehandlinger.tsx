@@ -7,9 +7,10 @@ type Props = {
     onAnbefalClick: () => void;
     stillingsId: string;
     erEier: boolean;
+    kandidatlisteId?: string;
 };
 
-const Kandidathandlinger = ({ stillingsId, erEier, onAnbefalClick }: Props) => {
+const Kandidathandlinger = ({ stillingsId, erEier, onAnbefalClick, kandidatlisteId }: Props) => {
     return (
         <div className={css.knapper}>
             {erEier && (
@@ -21,7 +22,11 @@ const Kandidathandlinger = ({ stillingsId, erEier, onAnbefalClick }: Props) => {
                     Se kandidatliste
                 </Link>
             )}
-            <Button onClick={onAnbefalClick} icon={<PersonCheckmarkIcon />}>
+            <Button
+                disabled={!kandidatlisteId}
+                onClick={onAnbefalClick}
+                icon={<PersonCheckmarkIcon />}
+            >
                 Anbefal kandidat
             </Button>
         </div>
