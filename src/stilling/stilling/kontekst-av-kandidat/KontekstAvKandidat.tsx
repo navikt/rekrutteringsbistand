@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 
 import { CopyButton } from '@navikt/ds-react';
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
@@ -16,19 +15,11 @@ import css from './KontekstAvKandidat.module.css';
 
 type Props = {
     kandidatnr: string;
-    kandidatliste: Nettressurs<Kandidatliste>;
-    setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     stilling: Stilling;
     kandidatlisteId: string;
 };
 
-const KontekstAvKandidat = ({
-    kandidatnr,
-    kandidatliste,
-    setKandidatliste,
-    stilling,
-    kandidatlisteId,
-}: Props) => {
+const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) => {
     const kandidat = useKandidat(kandidatnr);
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
@@ -65,16 +56,14 @@ const KontekstAvKandidat = ({
                         </div>
                     }
                 />
-                {kandidat.kind === Nettstatus.Suksess &&
-                    kandidatliste.kind === Nettstatus.Suksess && (
-                        <AnbefalKandidatModal
-                            kandidat={kandidat.data}
-                            kandidatlisteId={kandidatlisteId}
-                            setKandidatliste={setKandidatliste}
-                            onClose={() => setVisModal(false)}
-                            vis={visModal}
-                        />
-                    )}
+                {kandidat.kind === Nettstatus.Suksess && kandidatlisteId && (
+                    <AnbefalKandidatModal
+                        kandidat={kandidat.data}
+                        kandidatlisteId={kandidatlisteId}
+                        onClose={() => setVisModal(false)}
+                        vis={visModal}
+                    />
+                )}
             </div>
         </div>
     );
