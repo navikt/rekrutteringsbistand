@@ -5,14 +5,14 @@ interface KandidatlisteId {
     kandidatlisteId: string;
 }
 
-const useKandidatlisteId = (stillingsId: string) => {
+const useKandidatlisteId = (stillingsId?: string) => {
     const { data, error, isLoading } = useSWR<KandidatlisteId>(
-        `/kandidat-api/veileder/stilling/${stillingsId}/kandidatliste`,
+        stillingsId ? `/kandidat-api/veileder/stilling/${stillingsId}/kandidatlisteid` : undefined,
         fetcher
     );
 
     return {
-        kandidatlisteId: data.kandidatlisteId,
+        kandidatlisteId: data?.kandidatlisteId,
         isLoading,
         isError: error,
     };
