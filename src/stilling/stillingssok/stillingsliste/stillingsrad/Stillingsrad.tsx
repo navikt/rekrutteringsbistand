@@ -31,6 +31,7 @@ type Props = {
     navIdent?: string;
 };
 
+// TODO: Fjern nå vi har byttet om
 export const tittelfelt = getMiljø() === Miljø.ProdGcp ? 'title' : 'styrkEllerTittel';
 
 const Stillingsrad: FunctionComponent<Props> = ({
