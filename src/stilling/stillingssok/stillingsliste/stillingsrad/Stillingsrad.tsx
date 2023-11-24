@@ -22,6 +22,7 @@ import {
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import css from './Stillingsrad.module.css';
 import { konverterTilPresenterbarDato } from './datoUtils';
+import { getMiljø, Miljø } from 'felles/miljø';
 
 type Props = {
     rekrutteringsbistandstilling: EsRekrutteringsbistandstilling;
@@ -29,6 +30,8 @@ type Props = {
     kandidatnr?: string;
     navIdent?: string;
 };
+
+export const tittelfelt = getMiljø() === Miljø.ProdGcp ? 'title' : 'styrkEllerTittel';
 
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,
@@ -90,7 +93,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
                         stillingssøk: searchParams.toString(),
                     }}
                 >
-                    {stilling.styrkEllerTittel}
+                    {stilling[tittelfelt]}
                 </Link>
             }
             stillingsinfo={
