@@ -90,7 +90,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
                         stillingssøk: searchParams.toString(),
                     }}
                 >
-                    {stilling.title}
+                    {stilling.styrkEllerTittel}
                 </Link>
             }
             stillingsinfo={

@@ -5,6 +5,7 @@ export const mockEsRekrutteringsbistandstilling: EsRekrutteringsbistandstilling 
     ...mockRekrutteringsbistandstilling,
     stilling: {
         ...mockStilling,
+        styrkEllerTittel: 'styrk eller tittel kommer her',
         annonsenr: String(mockStilling.id),
         categories: mockStilling.categoryList,
         locations: mockStilling.locationList,
