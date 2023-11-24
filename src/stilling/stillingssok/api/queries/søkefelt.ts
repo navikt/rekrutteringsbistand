@@ -10,7 +10,7 @@ const søkefelt = (søketermer: Set<string>, felter: Set<Søkefelt>) => {
     }
 
     if (felter.has(Søkefelt.Tittel)) {
-        feltManSkalSøkeI.push('stilling.title');
+        feltManSkalSøkeI.push('stilling.styrkEllerTittel');
     }
 
     if (felter.has(Søkefelt.Annonsetekst)) {
@@ -24,7 +24,7 @@ const søkefelt = (søketermer: Set<string>, felter: Set<Søkefelt>) => {
     if (feltManSkalSøkeI.length === 0) {
         feltManSkalSøkeI.push(
             'stilling.adtext_no^0.5',
-            'stilling.title',
+            'stilling.styrkEllerTittel',
             'stilling.annonsenr',
             'stilling.employer.name',
             'stilling.employer.orgnr',
