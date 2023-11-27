@@ -19,34 +19,36 @@ export const Historikktabell: FunctionComponent<Props> = ({
     aktivKandidatlisteId,
     forespørslerOmDelingAvCvForKandidat,
     smser,
-}) => (
-    <Table zebraStripes>
-        <Table.Header>
-            <Table.Row>
-                <Table.HeaderCell>Lagt i listen</Table.HeaderCell>
-                <Table.HeaderCell>Navn på kandidatliste</Table.HeaderCell>
-                <Table.HeaderCell>Arbeidsgiver</Table.HeaderCell>
-                <Table.HeaderCell>Lagt til av</Table.HeaderCell>
-                <Table.HeaderCell>Status/hendelser</Table.HeaderCell>
-                <Table.HeaderCell>Stilling</Table.HeaderCell>
-            </Table.Row>
-        </Table.Header>
-        <Table.Body>
-            {kandidatlister.map((liste, i) => (
-                <Historikkrad
-                    key={liste.uuid}
-                    kandidatliste={liste}
-                    aktiv={liste.uuid === aktivKandidatlisteId}
-                    forespørselOmDelingAvCv={finnForespørselOmDelingAvCv(
-                        forespørslerOmDelingAvCvForKandidat,
-                        liste
-                    )}
-                    sms={finnSms(smser, liste.uuid)}
-                />
-            ))}
-        </Table.Body>
-    </Table>
-);
+}) => {
+    return (
+        <Table zebraStripes>
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell>Lagt i listen</Table.HeaderCell>
+                    <Table.HeaderCell>Navn på kandidatliste</Table.HeaderCell>
+                    <Table.HeaderCell>Arbeidsgiver</Table.HeaderCell>
+                    <Table.HeaderCell>Lagt til av</Table.HeaderCell>
+                    <Table.HeaderCell>Status/hendelser</Table.HeaderCell>
+                    <Table.HeaderCell>Stilling</Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
+            <Table.Body>
+                {kandidatlister.map((liste, i) => (
+                    <Historikkrad
+                        key={liste.uuid}
+                        kandidatliste={liste}
+                        aktiv={liste.uuid === aktivKandidatlisteId}
+                        forespørselOmDelingAvCv={finnForespørselOmDelingAvCv(
+                            forespørslerOmDelingAvCvForKandidat,
+                            liste
+                        )}
+                        sms={finnSms(smser, liste.uuid)}
+                    />
+                ))}
+            </Table.Body>
+        </Table>
+    );
+};
 
 export const finnForespørselOmDelingAvCv = (
     forespørslerOmDelingAvCv: Nettressurs<ForespørselOmDelingAvCv[]>,

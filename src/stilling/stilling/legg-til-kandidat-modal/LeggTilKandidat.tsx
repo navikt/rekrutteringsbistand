@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 
 import { sendEvent } from 'felles/amplitude';
 import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
 import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
@@ -16,11 +15,11 @@ import css from './LeggTilKandidatModal.module.css';
 import { fetchKandidatMedFnr, fetchSynlighetsevaluering } from './kandidatApi';
 
 type Props = {
-    kandidatliste: Kandidatliste;
     onClose: () => void;
+    kandidatlisteId: string;
 };
 
-const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) => {
+const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatlisteId, onClose }) => {
     const dispatch = useDispatch();
 
     const [fnr, setFnr] = useState<string>('');
@@ -51,19 +50,12 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
             if (erGyldig) {
                 setFeilmelding(null);
 
-                if (erFnrAlleredeIListen(fnr)) {
-                    setFeilmelding('Kandidaten er allerede lagt til i listen');
-                } else {
-                    hentKandidatMedFødselsnummer(fnr);
-                }
+                hentKandidatMedFødselsnummer(fnr);
             } else {
                 tilbakestill('Fødselsnummeret er ikke gyldig');
             }
         }
     };
-
-    const erFnrAlleredeIListen = (fnr: string) =>
-        kandidatliste.kandidater.some((kandidat) => kandidat.fodselsnr === fnr);
 
     const hentKandidatMedFødselsnummer = async (fnr: string) => {
         setFnrSøk({
@@ -131,7 +123,7 @@ const LeggTilKandidat: FunctionComponent<Props> = ({ kandidatliste, onClose }) =
                     <BekreftMedNotat
                         fnr={fnr}
                         kandidat={fnrSøk.data}
-                        kandidatliste={kandidatliste}
+                        kandidatlisteId={kandidatlisteId}
                         onAvbryt={onClose}
                         onBekreft={handleBekreft}
                     />

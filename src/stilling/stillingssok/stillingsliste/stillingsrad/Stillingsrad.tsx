@@ -133,7 +133,8 @@ const Stillingsrad: FunctionComponent<Props> = ({
                             Rediger
                         </Link>
                     )}
-                    {rekrutteringsbistandstilling.stilling.publishedByAdmin &&
+                    {erEier &&
+                        rekrutteringsbistandstilling.stilling.publishedByAdmin &&
                         skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                             <Link className={css.lenke} to={lagUrlTilKandidatliste(stilling)}>
                                 Vis kandidater

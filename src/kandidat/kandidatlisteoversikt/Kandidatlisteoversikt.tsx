@@ -23,6 +23,7 @@ import Kandidatlistesøk from './søk/Kandidatlistesøk';
 import Kandidatlistetabell from './tabell/Kandidatlistetabell';
 import TabellBody from './tabell/TabellBody';
 import TabellHeader from './tabell/TabellHeader';
+import { filtrerOrdFraKandidatliste } from 'felles/filterOrd';
 
 const SIDESTØRRELSE = 20;
 
@@ -98,7 +99,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
 
         if (verdi !== type) {
             this.props.hentKandidatlister({
-                query,
+                query: this.state.søkeOrd || query,
                 type: verdi,
                 kunEgne,
                 pagenumber: 0,
@@ -191,7 +192,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
         const { query, type, kunEgne } = this.props.søkekriterier;
         if (!kunEgne) {
             this.props.hentKandidatlister({
-                query,
+                query: this.state.søkeOrd || query,
                 type,
                 kunEgne: true,
                 pagenumber: 0,
@@ -204,7 +205,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
         const { query, type, kunEgne } = this.props.søkekriterier;
         if (kunEgne) {
             this.props.hentKandidatlister({
-                query,
+                query: this.state.søkeOrd || query,
                 type,
                 kunEgne: false,
                 pagenumber: 0,
@@ -216,7 +217,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
     onPageChange = (nyttSidenummer: number) => {
         const { query, type, kunEgne } = this.props.søkekriterier;
         this.props.hentKandidatlister({
-            query,
+            query: this.state.søkeOrd || query,
             type,
             kunEgne,
             pagenumber: nyttSidenummer - 1,
@@ -236,9 +237,13 @@ class Kandidatlisteoversikt extends React.Component<Props> {
             this.props;
         const { søkeOrd, modal } = this.state;
 
+        const { filtrertListe, antallFiltrertBort } = filtrerOrdFraKandidatliste(kandidatlister);
+
         const tittel = `${
-            totaltAntallKandidatlister === undefined ? '0' : totaltAntallKandidatlister
-        } kandidatliste${totaltAntallKandidatlister === 1 ? '' : 'r'}`;
+            totaltAntallKandidatlister === undefined
+                ? '0'
+                : totaltAntallKandidatlister - antallFiltrertBort
+        } kandidatliste${totaltAntallKandidatlister - antallFiltrertBort === 1 ? '' : 'r'}`;
 
         return (
             <Layout
@@ -301,11 +306,11 @@ class Kandidatlisteoversikt extends React.Component<Props> {
                 <Kandidatlistetabell
                     className={css.tabell}
                     nettstatus={kandidatlisterStatus}
-                    kandidatlister={kandidatlister}
+                    kandidatlister={filtrertListe}
                 >
                     <TabellHeader />
                     <TabellBody
-                        kandidatlister={kandidatlister}
+                        kandidatlister={filtrertListe}
                         onRedigerClick={this.handleRedigerClick}
                         onMarkerSomMinClick={this.handleMarkerSomMinClick}
                         onSlettClick={this.handleSlettClick}

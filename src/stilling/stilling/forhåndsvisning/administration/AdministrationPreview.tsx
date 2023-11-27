@@ -8,7 +8,6 @@ import AdStatus from '../../administration/adStatus/AdStatus';
 import css from './AdministrationPreview.module.css';
 import ContactInfo from './contact/ContactInfo';
 import Kategori from './kategori/Kategori';
-import Notat from './notat/Notat';
 import Publishing from './publishing/Publishing';
 import Inkludering from './vis-inkluderingsmuligheter-ekstern-stilling/VisInkuderingsmuligheterForEksternStilling';
 
@@ -28,7 +27,6 @@ const AdministrationPreview = () => {
                 <Kategori />
                 <ContactInfo />
                 {!erDirektemeldtStilling(source) && <Inkludering />}
-                <Notat />
                 {limitedAccess && (
                     <Button
                         variant="primary"

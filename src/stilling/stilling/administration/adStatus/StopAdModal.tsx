@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HIDE_STOP_AD_MODAL, STOP_AD, STOP_AD_FROM_MY_ADS } from '../../adReducer';
 
 import { State } from '../../../redux/store';
-import Notat from '../notat/Notat';
 
 const StopAdModal = ({ fromMyAds }: { fromMyAds?: boolean }) => {
     const dispatch = useDispatch();
@@ -41,7 +40,6 @@ const StopAdModal = ({ fromMyAds }: { fromMyAds?: boolean }) => {
                     {`Er du sikker på at du ønsker å stoppe "${title}"? Stopper du stillingen
                     vil den ikke lenger være tilgjengelig for søk.`}
                 </BodyLong>
-                <Notat />
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={onStopAdClick}>

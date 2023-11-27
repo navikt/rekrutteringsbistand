@@ -3,11 +3,13 @@ import { useLocation } from 'react-router-dom';
 
 import { CopyButton } from '@navikt/ds-react';
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling from 'felles/domene/stilling/Stilling';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useSelector } from 'react-redux';
+import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
@@ -15,18 +17,23 @@ import css from './KontekstAvKandidat.module.css';
 
 type Props = {
     kandidatnr: string;
-    kandidatliste: Nettressurs<Kandidatliste>;
-    setKandidatliste: (kandidatliste: Nettressurs<Kandidatliste>) => void;
     stilling: Stilling;
+    kandidatlisteId: string;
 };
 
-const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, stilling }: Props) => {
+const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) => {
     const kandidat = useKandidat(kandidatnr);
-
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
+    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
+
     const brødsmulesti = byggBrødsmulesti(kandidatnr, stilling, kandidat, state?.stillingssøk);
+
+    const { navIdent } = useInnloggetBruker(null);
+
+    const erEier =
+        stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;
 
     return (
         <div className={css.wrapperTilBanner}>
@@ -45,8 +52,9 @@ const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, still
                                 />
                             )}
                             <Kandidatlistehandlinger
-                                kandidatnr={kandidatnr}
-                                kandidatliste={kandidatliste}
+                                kandidatlisteId={kandidatlisteId}
+                                stillingsId={stilling.uuid}
+                                erEier={erEier}
                                 onAnbefalClick={() => {
                                     setVisModal(true);
                                 }}
@@ -54,16 +62,14 @@ const KontekstAvKandidat = ({ kandidatnr, kandidatliste, setKandidatliste, still
                         </div>
                     }
                 />
-                {kandidat.kind === Nettstatus.Suksess &&
-                    kandidatliste.kind === Nettstatus.Suksess && (
-                        <AnbefalKandidatModal
-                            kandidat={kandidat.data}
-                            kandidatliste={kandidatliste.data}
-                            setKandidatliste={setKandidatliste}
-                            onClose={() => setVisModal(false)}
-                            vis={visModal}
-                        />
-                    )}
+                {kandidat.kind === Nettstatus.Suksess && kandidatlisteId && (
+                    <AnbefalKandidatModal
+                        kandidat={kandidat.data}
+                        kandidatlisteId={kandidatlisteId}
+                        onClose={() => setVisModal(false)}
+                        vis={visModal}
+                    />
+                )}
             </div>
         </div>
     );

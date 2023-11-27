@@ -1,19 +1,21 @@
+import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BodyShort, Button, Heading } from '@navikt/ds-react';
 
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { State } from '../../../../redux/store';
 import {
     MARKER_EKSTERN_STILLING_SOM_MIN,
     MARKER_INTERN_STILLING_SOM_MIN,
 } from '../../../adReducer';
 import { erDirektemeldtStilling } from '../../../adUtils';
-import MarkerSomMinModal from '../markerSomMinModal/MarkerSomMinModal';
 import previewcss from '../AdministrationPreview.module.css';
+import MarkerSomMinModal from '../markerSomMinModal/MarkerSomMinModal';
 
 const ContactInfo = () => {
     const dispatch = useDispatch();
-    const stilling = useSelector((state: any) => state.adData);
-    const stillingsinfo = useSelector((state: any) => state.stillingsinfoData);
+    const stilling = useSelector((state: State) => state.adData);
+    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
     const innlogget = useSelector((state: any) => state.reportee.data);
 
     const [markerSomMinStillingModalErÅpen, setMarkerSomMinStillingModalErÅpen] = useState(false);
@@ -51,6 +53,11 @@ const ContactInfo = () => {
         </>
     );
 
+    const visMarkerSomMinKnapp =
+        innlogget &&
+        innlogget.navIdent !== stilling.administration.navIdent &&
+        stillingsinfo.stillingskategori !== Stillingskategori.Formidling;
+
     return isDir ? (
         <div className={previewcss.previewPanel}>
             <Heading level="3" size="small">
@@ -59,9 +66,7 @@ const ContactInfo = () => {
             <BodyShort size="small" spacing>
                 Kontaktperson hos NAV: {reportee} {navIdent ? ` (${navIdent})` : ''}
             </BodyShort>
-            {innlogget &&
-                innlogget.navIdent !== stilling.administration.navIdent &&
-                markerSomMinKnappOgModal()}
+            {visMarkerSomMinKnapp && markerSomMinKnappOgModal()}
         </div>
     ) : (
         <>

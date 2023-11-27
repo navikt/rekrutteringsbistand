@@ -1,5 +1,5 @@
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
-import { BodyLong, BodyShort, Heading, Label, ReadMore } from '@navikt/ds-react';
+import { BodyShort, Heading, Label } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -80,15 +80,6 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste }) => {
                             </span>
                         )}
                     </BodyShort>
-
-                    {kandidatliste.beskrivelse && (
-                        <ReadMore header="Vis beskrivelse">
-                            <Heading spacing level="3" size="small">
-                                Beskrivelse
-                            </Heading>
-                            <BodyLong>{kandidatliste.beskrivelse}</BodyLong>
-                        </ReadMore>
-                    )}
                 </div>
                 <Kandidatlistestatus
                     className={css.status}

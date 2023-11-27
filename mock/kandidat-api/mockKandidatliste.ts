@@ -3,18 +3,24 @@ import Kandidatliste, {
     KanSletteKandidatliste,
     KandidatlisteForKandidat,
     Kandidatlistestatus,
+    OpprettetAv,
 } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { mockMeg } from '../meg/mock';
 import { mockStilling } from '../stilling-api/mockStilling';
 import { mockKandidatIKandidatliste } from './mockKandidatIKandidatliste';
 
+const enAnnenVeileder: OpprettetAv = {
+    ident: 'Z999999',
+    navn: 'Vilde Veileder',
+};
+
 export const mockKandidatlisteUtenStilling: Kandidatliste = {
     kandidatlisteId: 'bf6877fa-5c82-4610-8cf7-ff7a0df18e29',
     tittel: 'Volleyballskuespiller på Pescara Beach',
-    beskrivelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
 
-    kanEditere: true,
+    erEier: false,
+    kanEditere: false,
     kanSlette: KanSletteKandidatliste.KanSlettes,
     opprettetTidspunkt: new Date().toISOString(),
     status: Kandidatlistestatus.Åpen,
@@ -28,17 +34,14 @@ export const mockKandidatlisteUtenStilling: Kandidatliste = {
     kandidater: mockKandidatIKandidatliste,
     formidlingerAvUsynligKandidat: [],
 
-    opprettetAv: {
-        ident: mockMeg.navIdent,
-        navn: 'Varg Veileder',
-    },
+    opprettetAv: enAnnenVeileder,
 };
 
 export const mockKandidatlisteMedStilling: Kandidatliste = {
     kandidatlisteId: 'e793b0e0-14e6-450b-a0cb-ef7e50ba2385',
     tittel: 'Er du en bedreviter?',
-    beskrivelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
 
+    erEier: true,
     kanEditere: true,
     kanSlette: KanSletteKandidatliste.KanSlettes,
     opprettetTidspunkt: new Date().toISOString(),
@@ -81,6 +84,9 @@ export const opprettMockKandidatlisteForKandidat = (
     lagtTilAvNavn: kandidat.lagtTilAv.navn,
     utfallsendringer: kandidat.utfallsendringer,
     slettet: kandidat.arkivert,
+    stillingskategori: kandidatliste.stillingskategori,
+    opprettetAvIdent: kandidatliste.opprettetAv.ident,
+    erMaskert: true,
 });
 
 export const mockAlleKandidatlister = [mockKandidatlisteMedStilling, mockKandidatlisteUtenStilling];

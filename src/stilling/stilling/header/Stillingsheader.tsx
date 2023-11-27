@@ -1,17 +1,18 @@
 import { ReactNode } from 'react';
 import Kandidathandlinger from '../kandidathandlinger/Kandidathandlinger';
 import css from './Stillingsheader.module.css';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettressurs } from 'felles/nettressurs';
 
 type Props = {
-    kandidatliste: Nettressurs<Kandidatliste>;
+    kandidatlisteId: string;
     children: ReactNode;
+    erEier: boolean;
 };
 
-const Stillingsheader = ({ kandidatliste, children }: Props) => (
+const Stillingsheader = ({ kandidatlisteId, children, erEier }: Props) => (
     <div className={css.stillingsheader}>
-        <Kandidathandlinger kandidatliste={kandidatliste} />
+        <div>
+            <Kandidathandlinger erEier={erEier} kandidatlisteId={kandidatlisteId} />
+        </div>
         <div className={css.knapper}>{children}</div>
     </div>
 );

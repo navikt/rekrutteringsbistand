@@ -27,23 +27,40 @@ export const Historikkrad: FunctionComponent<Props> = ({
     forespørselOmDelingAvCv,
     sms,
 }) => {
-    const listenavn = kandidatliste.slettet ? (
-        <>
-            <BodyShort as="span">{kandidatliste.tittel} </BodyShort>
-            <Detail as="span" className={css.slettet}>
-                (slettet)
-            </Detail>
-        </>
-    ) : (
-        <Lenke to={lenkeTilKandidatliste(kandidatliste.uuid)}>{kandidatliste.tittel}</Lenke>
-    );
+    let tittel: ReactNode = null;
+
+    if (kandidatliste.slettet) {
+        tittel = (
+            <>
+                <BodyShort as="span">{kandidatliste.tittel} </BodyShort>
+                <Detail as="span" className={css.slettetEllerMaskert}>
+                    (slettet)
+                </Detail>
+            </>
+        );
+    } else if (kandidatliste.erMaskert) {
+        tittel = (
+            <>
+                <BodyShort as="span">{kandidatliste.tittel} </BodyShort>
+                <Detail as="span" className={css.slettetEllerMaskert}>
+                    (ingen tilgang)
+                </Detail>
+            </>
+        );
+    } else {
+        tittel = (
+            <Lenke to={lenkeTilKandidatliste(kandidatliste.uuid)}>{kandidatliste.tittel}</Lenke>
+        );
+    }
+
+    const skalViseLenkeTilStilling = !(kandidatliste.slettet || kandidatliste.erMaskert);
 
     return (
         <Table.Row shadeOnHover={false} selected={aktiv} key={kandidatliste.uuid}>
             <Table.DataCell>
                 {moment(kandidatliste.lagtTilTidspunkt).format('DD.MM.YYYY')}
             </Table.DataCell>
-            <Table.DataCell>{listenavn}</Table.DataCell>
+            <Table.DataCell>{tittel}</Table.DataCell>
             <Table.DataCell>
                 {kandidatliste.organisasjonNavn
                     ? capitalizeEmployerName(kandidatliste.organisasjonNavn)
@@ -64,7 +81,7 @@ export const Historikkrad: FunctionComponent<Props> = ({
                 </div>
             </Table.DataCell>
             <Table.DataCell className="historikkrad__stilling">
-                {!kandidatliste.slettet && kandidatliste.stillingId && (
+                {skalViseLenkeTilStilling && kandidatliste.stillingId && (
                     <Lenke to={lenkeTilStilling(kandidatliste.stillingId)}>Se stilling</Lenke>
                 )}
             </Table.DataCell>

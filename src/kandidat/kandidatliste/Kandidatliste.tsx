@@ -10,7 +10,6 @@ import { Nettstatus } from 'felles/nettressurs';
 import useMaskerFødselsnumre from '../app/useMaskerFødselsnumre';
 import AppState from '../state/AppState';
 import css from './Kandidatliste.module.css';
-import Avviksrapportering from './avviksrapportering/Avviksrapportering';
 import { erInaktiv } from './domene/kandidatUtils';
 import {
     erEierAvKandidatlisten,
@@ -170,10 +169,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
     const kandidatlistenErÅpen = kandidatliste.status === Kandidatlistestatus.Åpen;
     const kanArkivereKandidater = !filter.visArkiverte && kandidatlistenErÅpen;
 
-    const erKnyttetTilStilling = erKobletTilStilling(kandidatliste);
-
-    const visAvviksrapportering = !erKnyttetTilStilling;
-
     return (
         <div className={css.innhold}>
             <SideHeader kandidatliste={kandidatliste} />
@@ -188,9 +183,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
                             />
                         ) : (
                             <span />
-                        )}
-                        {visAvviksrapportering && (
-                            <Avviksrapportering kandidatlisteId={kandidatliste.kandidatlisteId} />
                         )}
                     </HvitBoks>
                     <div className={css.grid}>

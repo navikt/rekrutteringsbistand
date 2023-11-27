@@ -35,7 +35,6 @@
         minmax(0, 10fr)
         minmax(0, 6fr)
         minmax(0, 15fr)
-        minmax(0, 3fr)
         minmax(0, 3fr);
 }
 
@@ -49,7 +48,6 @@
         minmax(0, 6fr)
         minmax(0, 15fr)
         minmax(0, 3fr)
-        minmax(0, 3fr)
         minmax(0, 2.5fr);
 }
 
@@ -62,7 +60,6 @@
         minmax(0, 10fr)
         minmax(0, 6fr)
         minmax(0, 20fr)
-        minmax(0, 3fr)
         minmax(0, 3fr);
 }
 
@@ -71,7 +68,7 @@
         0
         2fr
         minmax(0, 10fr) minmax(0, 6fr) minmax(0, 10fr) minmax(0, 6fr)
-        minmax(0, 20fr) minmax(0, 3fr) minmax(0, 3fr) minmax(0, 2.5fr);
+        minmax(0, 20fr) minmax(0, 3fr) minmax(0, 2.5fr);
 }
 
 .rad > * {

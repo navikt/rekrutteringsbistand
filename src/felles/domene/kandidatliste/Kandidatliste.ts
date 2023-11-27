@@ -10,12 +10,12 @@ import {
 type Kandidatliste = {
     kandidatlisteId: string;
     tittel: string;
-    beskrivelse: string | null;
     organisasjonReferanse: string | null;
     organisasjonNavn: string | null;
     stillingId: string | null;
     opprettetAv: OpprettetAv;
     opprettetTidspunkt: string;
+    erEier: boolean;
     kanEditere: boolean;
     kanSlette: KanSletteKandidatliste;
     kandidater: KandidatIKandidatliste[];
@@ -44,6 +44,9 @@ export type KandidatlisteForKandidat = {
     slettet?: boolean;
     antallStillinger?: number;
     utfallsendringer: Utfallsendring[];
+    stillingskategori: Stillingskategori | null;
+    opprettetAvIdent: string;
+    erMaskert: boolean;
 };
 
 export enum KanSletteKandidatliste {
