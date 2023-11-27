@@ -149,7 +149,7 @@ const Stilling = () => {
             <Tabs defaultValue="om_stillingen">
                 <Tabs.List>
                     <Tabs.Tab value="om_stillingen" label="Om stillingen" />
-                    <Tabs.Tab value="kandidater_stilling" label="Kandidater" />
+                    {erEier && <Tabs.Tab value="kandidater_stilling" label="Kandidater" />}
                 </Tabs.List>
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
                     <div>
@@ -226,11 +226,13 @@ const Stilling = () => {
                         </div>
                     </div>
                 </Tabs.Panel>
-                <Tabs.Panel value="kandidater_stilling">
-                    <Provider store={store}>
-                        <Kandidatlisteside skjulBanner={true} stillingsId={stilling.uuid} />
-                    </Provider>
-                </Tabs.Panel>
+                {erEier && (
+                    <Tabs.Panel value="kandidater_stilling">
+                        <Provider store={store}>
+                            <Kandidatlisteside skjulBanner={true} stillingsId={stilling.uuid} />
+                        </Provider>
+                    </Tabs.Panel>
+                )}
             </Tabs>
         </div>
     );
