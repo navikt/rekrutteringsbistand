@@ -3,7 +3,7 @@ import { CopyButton, Heading } from '@navikt/ds-react';
 import { ReactComponent as StillingIkon } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
 import * as React from 'react';
 
-import { Stilling } from '../../felles/domene/stilling/Stilling';
+import { Stilling, Stillingsinfo } from '../../felles/domene/stilling/Stilling';
 import Grunnbanner from '../../felles/komponenter/grunnbanner/Grunnbanner';
 import Brødsmulesti from '../../felles/komponenter/kandidatbanner/Brødsmulesti';
 import TekstlinjeMedIkon from '../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
@@ -12,9 +12,14 @@ import { hentAnnonselenke } from './adUtils';
 
 export interface IVisStillingBanner {
     stilling: Stilling;
+    stillingsinfo: Stillingsinfo;
 }
 
-const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling }) => {
+const eierAvAstilling = (stilling: Stilling, stillingsinfo: Stillingsinfo): string => {
+    return stilling?.administration?.reportee ?? stillingsinfo.eierNavn;
+};
+
+const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling, stillingsinfo }) => {
     return (
         <Grunnbanner ikon={<StillingIkon />}>
             <div className={css.banner}>
@@ -35,7 +40,7 @@ const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling }) => {
                         <TekstlinjeMedIkon ikon={<Buldings2Icon />} tekst={stilling.businessName} />
                         <TekstlinjeMedIkon
                             ikon={<PersonIcon />}
-                            tekst={stilling?.administration?.reportee} // TODO Verifiser at dette er riktig (legg til stillingsinfo.eierNavn)
+                            tekst={eierAvAstilling(stilling, stillingsinfo)}
                         />
                     </div>
                     <div>

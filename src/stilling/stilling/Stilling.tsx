@@ -144,7 +144,7 @@ const Stilling = () => {
     return (
         <div>
             <div style={{ marginLeft: '50px' }}>
-                <VisStillingBanner stilling={stilling} />
+                <VisStillingBanner stilling={stilling} stillingsinfo={stillingsinfo} />
             </div>
             <Tabs defaultValue="om_stillingen">
                 <Tabs.List>
