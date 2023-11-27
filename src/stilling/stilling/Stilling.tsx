@@ -139,10 +139,86 @@ const Stilling = () => {
         );
     }
 
+    const stillingsSide = () => (
+        <div className={css.stilling}>
+            <div className={css.innhold}>
+                <main className={css.venstre}>
+                    <div className={css.venstreInnhold}>
+                        {isEditingAd ? (
+                            <>
+                                {erEksternStilling ? (
+                                    <>
+                                        <PreviewHeader
+                                            kandidatlisteId={kandidatlisteId}
+                                            erEier={erEier}
+                                        />
+                                        <Stillingstittel
+                                            tittel={stilling.title}
+                                            employer={stilling.properties.employer}
+                                            location={stilling.location}
+                                        />
+                                        <Forhåndsvisning stilling={stilling} />
+                                    </>
+                                ) : (
+                                    <Edit
+                                        erEier={erEier}
+                                        onPreviewAdClick={onPreviewAdClick}
+                                        kandidatlisteId={kandidatlisteId}
+                                    />
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                {!kandidatnrFraStillingssøk && (
+                                    <PreviewHeader
+                                        erEier={erEier}
+                                        kandidatlisteId={kandidatlisteId}
+                                    />
+                                )}
+                                <Stillingstittel
+                                    tittel={stilling.title}
+                                    employer={stilling.properties.employer}
+                                    location={stilling.location}
+                                />
+                                <Forhåndsvisning stilling={stilling} />
+                            </>
+                        )}
+                    </div>
+                </main>
+                <aside className={css.høyre}>
+                    {isEditingAd ? (
+                        <>
+                            {erEksternStilling ? (
+                                <AdministrationLimited kandidatlisteId={kandidatlisteId} />
+                            ) : (
+                                <Administration />
+                            )}
+                        </>
+                    ) : (
+                        <AdministrationPreview />
+                    )}
+                </aside>
+            </div>
+            <Error />
+        </div>
+    );
+
     const erEksternStilling = stilling?.createdBy !== System.Rekrutteringsbistand;
 
+    if (kandidatnrFraStillingssøk) {
+        return (
+            <>
+                <KontekstAvKandidat
+                    kandidatlisteId={kandidatlisteId}
+                    kandidatnr={kandidatnrFraStillingssøk}
+                    stilling={stilling}
+                />
+                {stillingsSide()}
+            </>
+        );
+    }
     return (
-        <div>
+        <>
             <div style={{ marginLeft: '50px' }}>
                 <VisStillingBanner stilling={stilling} stillingsinfo={stillingsinfo} />
             </div>
@@ -152,79 +228,7 @@ const Stilling = () => {
                     {erEier && <Tabs.Tab value="kandidater_stilling" label="Kandidater" />}
                 </Tabs.List>
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
-                    <div>
-                        <div className={css.stilling}>
-                            {kandidatnrFraStillingssøk && (
-                                <KontekstAvKandidat
-                                    kandidatlisteId={kandidatlisteId}
-                                    kandidatnr={kandidatnrFraStillingssøk}
-                                    stilling={stilling}
-                                />
-                            )}
-
-                            <div className={css.innhold}>
-                                <main className={css.venstre}>
-                                    <div className={css.venstreInnhold}>
-                                        {isEditingAd ? (
-                                            <>
-                                                {erEksternStilling ? (
-                                                    <>
-                                                        <PreviewHeader
-                                                            kandidatlisteId={kandidatlisteId}
-                                                            erEier={erEier}
-                                                        />
-                                                        <Stillingstittel
-                                                            tittel={stilling.title}
-                                                            employer={stilling.properties.employer}
-                                                            location={stilling.location}
-                                                        />
-                                                        <Forhåndsvisning stilling={stilling} />
-                                                    </>
-                                                ) : (
-                                                    <Edit
-                                                        erEier={erEier}
-                                                        onPreviewAdClick={onPreviewAdClick}
-                                                        kandidatlisteId={kandidatlisteId}
-                                                    />
-                                                )}
-                                            </>
-                                        ) : (
-                                            <>
-                                                {!kandidatnrFraStillingssøk && (
-                                                    <PreviewHeader
-                                                        erEier={erEier}
-                                                        kandidatlisteId={kandidatlisteId}
-                                                    />
-                                                )}
-                                                <Stillingstittel
-                                                    tittel={stilling.title}
-                                                    employer={stilling.properties.employer}
-                                                    location={stilling.location}
-                                                />
-                                                <Forhåndsvisning stilling={stilling} />
-                                            </>
-                                        )}
-                                    </div>
-                                </main>
-                                <aside className={css.høyre}>
-                                    {isEditingAd ? (
-                                        <>
-                                            {erEksternStilling ? (
-                                                <AdministrationLimited
-                                                    kandidatlisteId={kandidatlisteId}
-                                                />
-                                            ) : (
-                                                <Administration />
-                                            )}
-                                        </>
-                                    ) : (
-                                        <AdministrationPreview />
-                                    )}
-                                </aside>
-                            </div>
-                            <Error />
-                        </div>
-                    </div>
+                    {stillingsSide()}
                 </Tabs.Panel>
                 {erEier && (
                     <Tabs.Panel value="kandidater_stilling">
@@ -234,7 +238,7 @@ const Stilling = () => {
                     </Tabs.Panel>
                 )}
             </Tabs>
-        </div>
+        </>
     );
 };
 
