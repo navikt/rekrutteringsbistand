@@ -18,6 +18,7 @@ import Kandidatlistestatus from './kandidatlistestatus/Kandidatlistestatus';
 
 type Props = {
     kandidatliste: Kandidatliste;
+    skjulBanner?: boolean;
 };
 
 const erIkkeArkivert = (k: KandidatIKandidatliste) => !k.arkivert;
@@ -27,7 +28,7 @@ const harFåttJobb = (k: KandidatIKandidatliste) => k.utfall === Kandidatutfall.
 const usynligKandidatHarFåttJobb = (f: FormidlingAvUsynligKandidat) =>
     f.utfall === Kandidatutfall.FåttJobben;
 
-const SideHeader: FunctionComponent<Props> = ({ kandidatliste }) => {
+const SideHeader: FunctionComponent<Props> = ({ kandidatliste, skjulBanner }) => {
     const ikkeArkiverteKandidater = kandidatliste.kandidater.filter(erIkkeArkivert);
     const antallAktuelleKandidater = ikkeArkiverteKandidater.filter(erAktuell).length;
     const antallPresenterteKandidater = ikkeArkiverteKandidater.filter(erPresentert).length;
@@ -40,6 +41,22 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste }) => {
     } kandidater (${antallAktuelleKandidater} er aktuelle${
         erKobletTilStilling(kandidatliste) ? ` / ${antallPresenterteKandidater} er presentert` : ''
     })`;
+
+    if (skjulBanner) {
+        return (
+            <div>
+                <Kandidatlistestatus
+                    className={css.status}
+                    status={kandidatliste.status}
+                    erKnyttetTilStilling={erKobletTilStilling(kandidatliste)}
+                    kanEditere={kandidatliste.kanEditere}
+                    besatteStillinger={antallKandidaterSomHarFåttJobb}
+                    antallStillinger={kandidatliste.antallStillinger}
+                    kandidatlisteId={kandidatliste.kandidatlisteId}
+                />
+            </div>
+        );
+    }
 
     return (
         <header className={css.header}>

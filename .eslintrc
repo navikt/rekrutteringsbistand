@@ -41,7 +41,7 @@
                         "target": "stilling",
                         "message": "Stillingssiden kan kun importere filer fra egen mappe eller fellesmappen",
                         "from": ".",
-                        "except": ["stilling", "felles"]
+                        "except": ["stilling", "felles", "kandidat"]
                     },
                     {
                         "target": "stillingssok",

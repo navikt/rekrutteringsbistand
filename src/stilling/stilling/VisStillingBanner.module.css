@@ -1,0 +1,31 @@
+.infoLinje {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.stillingsWrapper {
+    display: flex;
+    margin-top: 2rem;
+}
+
+.stillingsWrapper hr {
+    margin-top: 3.5rem;
+    margin-bottom: 3.5rem;
+    border: 0;
+    border-top: 1px solid #c6c2bf;
+}
+
+.hovedinnhold {
+    flex: 1;
+    margin-right: 3.5rem;
+}
+
+.sidebar {
+    width: 420px;
+}
+
+.innholdsLinje {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
