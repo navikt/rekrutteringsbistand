@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 
 import { Status, System } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import { lenkeTilStilling } from '../../kandidat/app/paths';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
 import store from '../../kandidat/state/reduxStore';
 import useKandidatlisteId from '../api/useKandidatlisteId';
@@ -30,6 +31,9 @@ export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 type QueryParams = { uuid: string };
 
 const Stilling = () => {
+    const params = useParams<{ fane: string | undefined }>();
+    const fane = params.fane ?? 'om_stillingen';
+
     const dispatch = useDispatch();
     const location = useLocation();
     const { uuid } = useParams<QueryParams>();
@@ -82,6 +86,12 @@ const Stilling = () => {
     const onPreviewAdClick = () => {
         fjernRedigeringsmodusFraUrl();
         previewAd();
+    };
+
+    const onFaneChange = (fane: string) => {
+        navigate(
+            lenkeTilStilling(stilling?.uuid, false, fane === 'om_stillingen' ? undefined : fane)
+        );
     };
 
     useEffect(() => {
@@ -217,21 +227,22 @@ const Stilling = () => {
             </>
         );
     }
+
     return (
         <>
             <div style={{ marginLeft: '50px' }}>
                 <VisStillingBanner stilling={stilling} stillingsinfo={stillingsinfo} />
             </div>
-            <Tabs defaultValue="om_stillingen">
+            <Tabs value={fane} onChange={onFaneChange}>
                 <Tabs.List>
                     <Tabs.Tab value="om_stillingen" label="Om stillingen" />
-                    {erEier && <Tabs.Tab value="kandidater_stilling" label="Kandidater" />}
+                    {erEier && <Tabs.Tab value="kandidater" label="Kandidater" />}
                 </Tabs.List>
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
                     {stillingsSide()}
                 </Tabs.Panel>
                 {erEier && (
-                    <Tabs.Panel value="kandidater_stilling">
+                    <Tabs.Panel value="kandidater">
                         <Provider store={store}>
                             <Kandidatlisteside skjulBanner={true} stillingsId={stilling.uuid} />
                         </Provider>
