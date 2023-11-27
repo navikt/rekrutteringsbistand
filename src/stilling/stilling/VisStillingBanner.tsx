@@ -15,11 +15,15 @@ export interface IVisStillingBanner {
     stillingsinfo: Stillingsinfo;
 }
 
-const eierAvAstilling = (stilling: Stilling, stillingsinfo: Stillingsinfo): string => {
-    return stilling?.administration?.reportee ?? stillingsinfo.eierNavn;
+const eierAvAstilling = (stilling: Stilling, stillingsinfo: Stillingsinfo): string | null => {
+    if (stilling?.administration?.navIdent !== null) {
+        return stilling?.administration?.reportee ?? null;
+    }
+    return stillingsinfo.eierNavn ?? null;
 };
 
 const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling, stillingsinfo }) => {
+    const eierNavn = eierAvAstilling(stilling, stillingsinfo);
     return (
         <Grunnbanner ikon={<StillingIkon />}>
             <div className={css.banner}>
@@ -38,10 +42,7 @@ const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling, stillingsin
                     </Heading>
                     <div className={css.innholdsLinje}>
                         <TekstlinjeMedIkon ikon={<Buldings2Icon />} tekst={stilling.businessName} />
-                        <TekstlinjeMedIkon
-                            ikon={<PersonIcon />}
-                            tekst={eierAvAstilling(stilling, stillingsinfo)}
-                        />
+                        {eierNavn && <TekstlinjeMedIkon ikon={<PersonIcon />} tekst={eierNavn} />}
                     </div>
                     <div>
                         <CopyButton
