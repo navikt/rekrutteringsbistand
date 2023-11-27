@@ -11,14 +11,15 @@ export const skalViseRedigeringslenkeTilStilling = (
     rekrutteringsbistandStilling: EsRekrutteringsbistandstilling
 ) => rekrutteringsbistandStilling.stilling.source === Kilde.Intern;
 
-export const lagUrlTilStilling = (stilling: EsStilling, kandidatnr?: string) => {
-    const url = `/stillinger/stilling/${stilling.uuid}`;
+export const lagUrlTilStilling = (stilling: EsStilling, kandidatnr?: string, fane?: string) => {
+    let url = `/stillinger/stilling/${stilling.uuid}`;
+
+    if (fane) {
+        url += `/${fane}`;
+    }
 
     return kandidatnr ? `${url}?kandidat=${kandidatnr}` : url;
 };
-
-export const lagUrlTilKandidatliste = (stilling: EsStilling) =>
-    `/kandidater/lister/stilling/${stilling.uuid}/detaljer`;
 
 export const lagUrlTilStillingRedigering = (stilling: EsStilling) =>
     `/stillinger/stilling/${stilling.uuid}?redigeringsmodus=true`;

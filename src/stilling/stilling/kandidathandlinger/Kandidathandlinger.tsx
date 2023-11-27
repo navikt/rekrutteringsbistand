@@ -1,10 +1,9 @@
-import { MagnifyingGlassIcon, PersonGroupIcon, PersonPlusIcon } from '@navikt/aksel-icons';
+import { MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { sendGenerellEvent } from 'felles/amplitude';
 import Stilling from 'felles/domene/stilling/Stilling';
 import { State } from '../../redux/store';
 import { stillingenHarKandidatliste } from '../adUtils';
@@ -21,12 +20,6 @@ const Kandidathandlinger: FunctionComponent<Props> = ({ erEier, kandidatlisteId 
     const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
 
     const [visLeggTilKandidatModal, setVisLeggTilKandidatModal] = useState(false);
-
-    const onSeKandidatlisteClick = () => {
-        sendGenerellEvent('knapp', {
-            label: 'Se kandidater',
-        });
-    };
 
     const toggleLeggTilKandidatModal = () => {
         setVisLeggTilKandidatModal(!visLeggTilKandidatModal);
@@ -63,16 +56,6 @@ const Kandidathandlinger: FunctionComponent<Props> = ({ erEier, kandidatlisteId 
                         <PersonPlusIcon />
                         Legg til kandidat
                     </button>
-                    {erEier && (
-                        <Link
-                            className="navds-link"
-                            to={`/kandidater/lister/stilling/${stillingsdata.uuid}/detaljer`}
-                            onClick={onSeKandidatlisteClick}
-                        >
-                            <PersonGroupIcon />
-                            Se kandidatliste
-                        </Link>
-                    )}
                 </>
             )}
         </div>
