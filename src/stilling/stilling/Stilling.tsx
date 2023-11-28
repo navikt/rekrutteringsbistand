@@ -53,6 +53,8 @@ const Stilling = () => {
         stilling?.administration?.navIdent === innloggetBruker ||
         stillingsinfo?.eierNavident === innloggetBruker;
 
+    const harKandidatlisteSomKanÅpnes = erEier && kandidatlisteId;
+
     const getStilling = (uuid: string, edit: boolean) => {
         dispatch({ type: FETCH_AD, uuid, edit });
     };
@@ -235,13 +237,15 @@ const Stilling = () => {
                 <div className={css.faner}>
                     <Tabs.List>
                         <Tabs.Tab value="om_stillingen" label="Om stillingen" />
-                        {erEier && <Tabs.Tab value="kandidater" label="Kandidater" />}
+                        {harKandidatlisteSomKanÅpnes && (
+                            <Tabs.Tab value="kandidater" label="Kandidater" />
+                        )}
                     </Tabs.List>
                 </div>
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
                     {stillingsSide()}
                 </Tabs.Panel>
-                {erEier && (
+                {harKandidatlisteSomKanÅpnes && (
                     <Tabs.Panel value="kandidater">
                         <Provider store={store}>
                             <Kandidatlisteside skjulBanner={true} stillingsId={stilling.uuid} />
