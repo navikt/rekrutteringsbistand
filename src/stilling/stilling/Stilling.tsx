@@ -1,5 +1,5 @@
 import { BodyLong, Tabs } from '@navikt/ds-react';
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
@@ -23,6 +23,7 @@ import Error from './error/Error';
 import Forhåndsvisning from './forhåndsvisning/Forhåndsvisning';
 import AdministrationPreview from './forhåndsvisning/administration/AdministrationPreview';
 import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
+import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
@@ -148,7 +149,7 @@ const Stilling = () => {
         );
     }
 
-    const stillingsSide = () => (
+    const stillingsSide = (optionalTittel: ReactNode = null) => (
         <div className={css.stilling}>
             <div className={css.innhold}>
                 <main className={css.venstre}>
@@ -161,6 +162,7 @@ const Stilling = () => {
                                             kandidatlisteId={kandidatlisteId}
                                             erEier={erEier}
                                         />
+                                        {optionalTittel}
                                         <Forhåndsvisning stilling={stilling} />
                                     </>
                                 ) : (
@@ -179,6 +181,7 @@ const Stilling = () => {
                                         kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
+                                {optionalTittel}
                                 <Forhåndsvisning stilling={stilling} />
                             </>
                         )}
@@ -212,7 +215,13 @@ const Stilling = () => {
                     kandidatnr={kandidatnrFraStillingssøk}
                     stilling={stilling}
                 />
-                {stillingsSide()}
+                {stillingsSide(
+                    <Stillingstittel
+                        tittel={stilling.title}
+                        employer={stilling.properties.employer}
+                        location={stilling.location}
+                    />
+                )}
             </>
         );
     }
