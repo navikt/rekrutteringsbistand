@@ -50,9 +50,8 @@ export const hentTittelFraStilling = (stilling: Stilling) => {
         return stilling.title;
     }
 
-    const passendeStyrkkoder = stilling.categoryList.filter(
-        ({ categoryType }) => categoryType === 'STYRK08NAV'
-    );
+    const passendeStyrkkoder =
+        stilling.categoryList?.filter(({ categoryType }) => categoryType === 'STYRK08NAV') ?? [];
 
     if (passendeStyrkkoder.length === 0) {
         return 'Stilling uten valgt jobbtittel';
