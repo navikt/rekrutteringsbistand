@@ -230,14 +230,16 @@ const Stilling = () => {
 
     return (
         <>
-            <div style={{ marginLeft: '50px' }}>
+            <div className={css.banner}>
                 <VisStillingBanner stilling={stilling} stillingsinfo={stillingsinfo} />
             </div>
             <Tabs value={fane} onChange={onFaneChange}>
-                <Tabs.List>
-                    <Tabs.Tab value="om_stillingen" label="Om stillingen" />
-                    {erEier && <Tabs.Tab value="kandidater" label="Kandidater" />}
-                </Tabs.List>
+                <div className={css.faner}>
+                    <Tabs.List>
+                        <Tabs.Tab value="om_stillingen" label="Om stillingen" />
+                        {erEier && <Tabs.Tab value="kandidater" label="Kandidater" />}
+                    </Tabs.List>
+                </div>
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
                     {stillingsSide()}
                 </Tabs.Panel>

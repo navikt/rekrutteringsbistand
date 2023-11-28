@@ -44,7 +44,7 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste, skjulBanner }) =>
 
     if (skjulBanner) {
         return (
-            <div>
+            <div className={css.kunKandidatlistestatus}>
                 <Kandidatlistestatus
                     className={css.status}
                     status={kandidatliste.status}
