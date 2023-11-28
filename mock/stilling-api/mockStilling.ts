@@ -46,7 +46,7 @@ export const mockStilling: Stilling = {
     updatedBy: System.Rekrutteringsbistand,
     mediaList: [],
     contactList: [],
-    title: 'Eksempel på intern stilling',
+    title: 'TITTEL FRA ARBEIDSPLASSEN',
     status: Status.Aktiv,
     privacy: Privacy.Intern,
     source: Kilde.Intern,
@@ -70,7 +70,7 @@ export const mockStilling: Stilling = {
     categoryList: [
         {
             name: 'Kokk',
-            styrkCode: '0000.03',
+            categoryType: 'STYRK08NAV',
         },
     ],
     location: {
@@ -136,7 +136,7 @@ export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = 
         ...mockStilling,
         id: 101,
         uuid: '004aa428-8033-404a-bcf2-4dd5e33205c9',
-        title: 'Ny stilling',
+        title: 'TITTEL FRA ARBEIDSPLASSEN',
         administration: {
             status: AdminStatus.Pending,
             comments: null,

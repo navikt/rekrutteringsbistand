@@ -90,8 +90,13 @@ export type Arbeidsgiver = {
     location: Geografi;
 };
 
-export type StyrkCategory = {
+export type EsStyrkCategory = {
     styrkCode: string;
+    name: string;
+};
+
+export type StyrkCategory = {
+    categoryType: string;
     name: string;
 };
 

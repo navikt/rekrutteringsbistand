@@ -28,7 +28,8 @@ type Props = {
 };
 
 // TODO: Fjern nå vi har byttet om
-export const tittelfelt = getMiljø() === Miljø.ProdGcp ? 'title' : 'styrkEllerTittel';
+export const USE_STYRK_AS_TITLE_FEATURE_TOGGLE = getMiljø() !== Miljø.ProdGcp;
+export const tittelfelt = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? 'title' : 'styrkEllerTittel';
 
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,

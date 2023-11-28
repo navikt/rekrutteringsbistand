@@ -1,13 +1,13 @@
 import { isAfter, startOfDay } from 'date-fns';
 import {
     AdminStatus,
+    EsStyrkCategory,
     Geografi,
     Kontaktinfo,
     Properties,
     Status,
     Stillingbase,
     Stillingsinfo,
-    StyrkCategory,
 } from './Stilling';
 
 export type EsRekrutteringsbistandstilling = {
@@ -18,7 +18,7 @@ export type EsRekrutteringsbistandstilling = {
 /* Datastrukturen som brukes i ElasticSearch/OpenSearch */
 export type EsStilling = Stillingbase & {
     annonsenr: string | null;
-    categories: StyrkCategory[];
+    categories: EsStyrkCategory[];
     locations: Geografi[];
     contacts: Kontaktinfo[];
     employer: EsArbeidsgiver | null;
