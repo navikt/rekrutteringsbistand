@@ -9,6 +9,7 @@ import Brødsmulesti from '../../felles/komponenter/kandidatbanner/Brødsmulesti
 import TekstlinjeMedIkon from '../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
 import css from './VisStillingBanner.module.css';
 import { hentAnnonselenke } from './adUtils';
+import capitalizeEmployerName from './edit/endre-arbeidsgiver/capitalizeEmployerName';
 
 export interface IVisStillingBanner {
     stilling: Stilling;
@@ -41,7 +42,10 @@ const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling, stillingsin
                         {stilling.title}
                     </Heading>
                     <div className={css.innholdsLinje}>
-                        <TekstlinjeMedIkon ikon={<Buldings2Icon />} tekst={stilling.businessName} />
+                        <TekstlinjeMedIkon
+                            ikon={<Buldings2Icon />}
+                            tekst={capitalizeEmployerName(stilling.businessName)}
+                        />
                         {eierNavn && <TekstlinjeMedIkon ikon={<PersonIcon />} tekst={eierNavn} />}
                     </div>
                     <div>
