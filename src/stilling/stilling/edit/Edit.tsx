@@ -1,12 +1,11 @@
 import { NewspaperIcon } from '@navikt/aksel-icons';
-import { Accordion, Alert, Button, CopyButton } from '@navikt/ds-react';
+import { Accordion, Alert, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
 import { State } from '../../redux/store';
-import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import { RESET_VALIDATION_ERROR } from '../adValidationReducer';
 import EksternStillingAdvarsel from '../forhåndsvisning/header/EksternStillingAdvarsel';
 import Stillingsheader from '../header/Stillingsheader';
@@ -32,16 +31,8 @@ type Props = {
     kandidatlisteId: string;
 };
 
-const Edit = ({
-    stilling,
-    onPreviewAdClick,
-    resetValidation,
-    erEier,
-    stillingsinfoData,
-    kandidatlisteId,
-}: Props) => {
+const Edit = ({ stilling, onPreviewAdClick, resetValidation, erEier, kandidatlisteId }: Props) => {
     const stillingenErEkstern = stilling.createdBy !== System.Rekrutteringsbistand;
-    const stillingsLenke = hentAnnonselenke(stilling.uuid);
 
     useEffect(() => {
         return () => {
@@ -52,13 +43,6 @@ const Edit = ({
     return (
         <>
             <Stillingsheader kandidatlisteId={kandidatlisteId} erEier={erEier}>
-                {stillingErPublisert(stilling) && (
-                    <CopyButton
-                        copyText={stillingsLenke}
-                        text="Kopier annonselenke"
-                        size="medium"
-                    />
-                )}
                 {!stillingenErEkstern && (
                     <Button onClick={onPreviewAdClick} size="small" icon={<NewspaperIcon />}>
                         Forhåndsvis stillingen

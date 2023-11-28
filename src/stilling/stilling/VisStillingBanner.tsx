@@ -8,7 +8,7 @@ import Grunnbanner from '../../felles/komponenter/grunnbanner/Grunnbanner';
 import Brødsmulesti from '../../felles/komponenter/kandidatbanner/Brødsmulesti';
 import TekstlinjeMedIkon from '../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
 import css from './VisStillingBanner.module.css';
-import { hentAnnonselenke } from './adUtils';
+import { hentAnnonselenke, stillingErPublisert } from './adUtils';
 import capitalizeEmployerName from './edit/endre-arbeidsgiver/capitalizeEmployerName';
 
 export interface IVisStillingBanner {
@@ -46,15 +46,22 @@ const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling, stillingsin
                             ikon={<Buldings2Icon />}
                             tekst={capitalizeEmployerName(stilling.businessName)}
                         />
-                        {eierNavn && <TekstlinjeMedIkon ikon={<PersonIcon />} tekst={eierNavn} />}
+                        {eierNavn && (
+                            <TekstlinjeMedIkon
+                                ikon={<PersonIcon />}
+                                tekst={`Registrert av ${eierNavn}`}
+                            />
+                        )}
                     </div>
                     <div>
-                        <CopyButton
-                            style={{ padding: 0 }}
-                            copyText={hentAnnonselenke(stilling.uuid)}
-                            text="Kopier annonselenke"
-                            size="small"
-                        />
+                        {stillingErPublisert(stilling) && (
+                            <CopyButton
+                                style={{ padding: 0 }}
+                                copyText={hentAnnonselenke(stilling.uuid)}
+                                text="Kopier annonselenke"
+                                size="small"
+                            />
+                        )}
                     </div>
                 </div>
             </div>

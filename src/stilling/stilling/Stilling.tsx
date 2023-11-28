@@ -23,7 +23,6 @@ import Error from './error/Error';
 import Forhåndsvisning from './forhåndsvisning/Forhåndsvisning';
 import AdministrationPreview from './forhåndsvisning/administration/AdministrationPreview';
 import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
-import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
@@ -162,11 +161,6 @@ const Stilling = () => {
                                             kandidatlisteId={kandidatlisteId}
                                             erEier={erEier}
                                         />
-                                        <Stillingstittel
-                                            tittel={stilling.title}
-                                            employer={stilling.properties.employer}
-                                            location={stilling.location}
-                                        />
                                         <Forhåndsvisning stilling={stilling} />
                                     </>
                                 ) : (
@@ -185,11 +179,6 @@ const Stilling = () => {
                                         kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
-                                <Stillingstittel
-                                    tittel={stilling.title}
-                                    employer={stilling.properties.employer}
-                                    location={stilling.location}
-                                />
                                 <Forhåndsvisning stilling={stilling} />
                             </>
                         )}
