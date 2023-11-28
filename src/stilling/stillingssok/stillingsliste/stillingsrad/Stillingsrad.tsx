@@ -9,7 +9,11 @@ import {
     EsStilling,
     stillingErUtløpt,
 } from 'felles/domene/stilling/EsStilling';
-import { Geografi, Privacy } from 'felles/domene/stilling/Stilling';
+import {
+    Geografi,
+    Privacy,
+    USE_STYRK_AS_TITLE_FEATURE_TOGGLE,
+} from 'felles/domene/stilling/Stilling';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
 import TekstlinjeMedIkon from '../../../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../../../stilling/Stilling';
@@ -18,7 +22,6 @@ import { lagUrlTilStilling, skalViseLenkeTilKandidatliste } from '../../utils/st
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import css from './Stillingsrad.module.css';
 import { konverterTilPresenterbarDato } from './datoUtils';
-import { getMiljø, Miljø } from 'felles/miljø';
 
 type Props = {
     rekrutteringsbistandstilling: EsRekrutteringsbistandstilling;
@@ -26,9 +29,6 @@ type Props = {
     kandidatnr?: string;
     navIdent?: string;
 };
-
-// TODO: Fjern nå vi har byttet om
-export const USE_STYRK_AS_TITLE_FEATURE_TOGGLE = getMiljø() !== Miljø.ProdGcp;
 export const tittelfelt = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? 'styrkEllerTittel' : 'title';
 
 const Stillingsrad: FunctionComponent<Props> = ({

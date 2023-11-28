@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import { CopyButton } from '@navikt/ds-react';
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
-import Stilling from 'felles/domene/stilling/Stilling';
+import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
@@ -104,7 +104,7 @@ const byggBrødsmulesti = (
             href: urlTilFinnStilling,
         },
         {
-            tekst: stilling.title,
+            tekst: hentTittelFraStilling(stilling),
         },
     ];
 };
