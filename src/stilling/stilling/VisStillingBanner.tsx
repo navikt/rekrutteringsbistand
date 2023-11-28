@@ -41,7 +41,6 @@ const hentTittel = (stilling: Stilling) => {
 
 const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling, stillingsinfo }) => {
     const eierNavn = eierAvAstilling(stilling, stillingsinfo);
-    console.log('stilling:', { stilling, USE_STYRK_AS_TITLE_FEATURE_TOGGLE });
     const tittel = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? hentTittel(stilling) : stilling.title;
 
     return (
