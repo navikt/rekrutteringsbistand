@@ -20,6 +20,9 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
 
     useSøkekriterierFraStilling(stilling, brukKriterierFraStillingen);
 
+    const stillingsId =
+        kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.stillingId : null;
+
     return (
         <Grunnbanner ikon={<FinnKandidaterIkon />}>
             <div className={css.banner}>
@@ -60,18 +63,19 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                 <div className={css.lenker}>
                     {kandidatliste.kind === Nettstatus.Suksess ? (
                         <>
-                            {kandidatliste.data.stillingId && (
-                                <Link
-                                    className="navds-link"
-                                    to={lenkeTilStilling(kandidatliste.data.stillingId)}
-                                >
+                            {stillingsId && (
+                                <Link className="navds-link" to={lenkeTilStilling(stillingsId)}>
                                     <Buldings2Icon aria-hidden />
                                     Se stilling
                                 </Link>
                             )}
                             <Link
                                 className="navds-link"
-                                to={lenkeTilKandidatliste(kandidatliste.data.kandidatlisteId)}
+                                to={
+                                    stillingsId
+                                        ? lenkeTilStilling(stillingsId, 'kandidater')
+                                        : lenkeTilKandidatliste(kandidatliste.data.kandidatlisteId)
+                                }
                             >
                                 <PersonGroupIcon aria-hidden />
                                 Se kandidatliste
