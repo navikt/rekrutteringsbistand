@@ -23,6 +23,7 @@ import KandidatlisteActionType from './reducer/KandidatlisteActionType';
 
 type OwnProps = {
     kandidatliste: Kandidatlistetype;
+    skjulBanner?: boolean;
 };
 
 type ConnectedProps = {
@@ -240,6 +241,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                         </>
                     )}
                 <Kandidatliste
+                    skjulBanner={this.props.skjulBanner}
                     kandidatliste={kandidatliste}
                     onToggleMarkert={this.toggleMarkert}
                     onFjernAllMarkering={this.fjernAllMarkering}

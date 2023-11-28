@@ -19,6 +19,15 @@ export const lenkeTilKandidat = (kandidatnr: string, kandidatlisteId?: string) =
     return lenke;
 };
 
-export const lenkeTilStilling = (stillingsId: string) => `/stillinger/stilling/${stillingsId}`;
+export const lenkeTilStilling = (stillingsId: string, fane?: string) => {
+    let path = `/stillinger/stilling/${stillingsId}`;
+
+    if (fane) {
+        path += `/${fane}`;
+    }
+
+    return path;
+};
+
 export const lenkeTilKandidatliste = (kandidatlisteId: string) =>
     `/kandidater/lister/detaljer/${kandidatlisteId}`;

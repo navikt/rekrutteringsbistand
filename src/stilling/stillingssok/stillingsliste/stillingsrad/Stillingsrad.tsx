@@ -14,11 +14,7 @@ import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBi
 import TekstlinjeMedIkon from '../../../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../../../stilling/Stilling';
 import { hentHovedtags } from '../../filter/inkludering/tags';
-import {
-    lagUrlTilKandidatliste,
-    lagUrlTilStilling,
-    skalViseLenkeTilKandidatliste,
-} from '../../utils/stillingsUtils';
+import { lagUrlTilStilling, skalViseLenkeTilKandidatliste } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import css from './Stillingsrad.module.css';
 import { konverterTilPresenterbarDato } from './datoUtils';
@@ -140,7 +136,10 @@ const Stillingsrad: FunctionComponent<Props> = ({
                     {erEier &&
                         rekrutteringsbistandstilling.stilling.publishedByAdmin &&
                         skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
-                            <Link className={css.lenke} to={lagUrlTilKandidatliste(stilling)}>
+                            <Link
+                                className={css.lenke}
+                                to={lagUrlTilStilling(stilling, undefined, 'kandidater')}
+                            >
                                 Vis kandidater
                             </Link>
                         )}

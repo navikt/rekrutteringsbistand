@@ -5,6 +5,13 @@
     margin-bottom: 2rem;
 }
 
+.kunKandidatlistestatus {
+    padding: 1rem 2.5rem;
+    display: flex;
+    justify-content: end;
+    max-width: var(--kandidatsokInnholdBredde);
+}
+
 .inner {
     display: flex;
     flex-direction: column;
@@ -26,6 +33,11 @@
 }
 
 @media (min-width: 1280px) {
+    .kunKandidatlistestatus {
+        margin: 0 2rem;
+        padding: 1rem 0;
+    }
+
     .inner {
         flex-direction: row;
     }
@@ -38,5 +50,11 @@
 
     .status {
         margin-left: auto;
+    }
+}
+
+@media (min-width: 1590px) {
+    .kunKandidatlistestatus {
+        margin: 0 auto;
     }
 }

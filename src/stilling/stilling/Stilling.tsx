@@ -1,15 +1,19 @@
-import { BodyLong } from '@navikt/ds-react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { BodyLong, Tabs } from '@navikt/ds-react';
+import { ReactNode, useEffect } from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Status, System } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import { lenkeTilStilling } from '../../kandidat/app/paths';
+import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
+import store from '../../kandidat/state/reduxStore';
 import useKandidatlisteId from '../api/useKandidatlisteId';
 import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
 import css from './Stilling.module.css';
+import VisStillingBanner from './VisStillingBanner';
 import { REMOVE_AD_DATA } from './adDataReducer';
 import { EDIT_AD, FETCH_AD, PREVIEW_EDIT_AD } from './adReducer';
 import Administration from './administration/Administration';
@@ -27,6 +31,9 @@ export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 type QueryParams = { uuid: string };
 
 const Stilling = () => {
+    const params = useParams<{ fane: string | undefined }>();
+    const fane = params.fane ?? 'om_stillingen';
+
     const dispatch = useDispatch();
     const location = useLocation();
     const { uuid } = useParams<QueryParams>();
@@ -79,6 +86,12 @@ const Stilling = () => {
     const onPreviewAdClick = () => {
         fjernRedigeringsmodusFraUrl();
         previewAd();
+    };
+
+    const onFaneChange = (fane: string) => {
+        navigate(
+            lenkeTilStilling(stilling?.uuid, false, fane === 'om_stillingen' ? undefined : fane)
+        );
     };
 
     useEffect(() => {
@@ -136,18 +149,8 @@ const Stilling = () => {
         );
     }
 
-    const erEksternStilling = stilling?.createdBy !== System.Rekrutteringsbistand;
-
-    return (
+    const stillingsSide = (optionalTittel: ReactNode = null) => (
         <div className={css.stilling}>
-            {kandidatnrFraStillingssøk && (
-                <KontekstAvKandidat
-                    kandidatlisteId={kandidatlisteId}
-                    kandidatnr={kandidatnrFraStillingssøk}
-                    stilling={stilling}
-                />
-            )}
-
             <div className={css.innhold}>
                 <main className={css.venstre}>
                     <div className={css.venstreInnhold}>
@@ -159,11 +162,7 @@ const Stilling = () => {
                                             kandidatlisteId={kandidatlisteId}
                                             erEier={erEier}
                                         />
-                                        <Stillingstittel
-                                            tittel={stilling.title}
-                                            employer={stilling.properties.employer}
-                                            location={stilling.location}
-                                        />
+                                        {optionalTittel}
                                         <Forhåndsvisning stilling={stilling} />
                                     </>
                                 ) : (
@@ -182,11 +181,7 @@ const Stilling = () => {
                                         kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
-                                <Stillingstittel
-                                    tittel={stilling.title}
-                                    employer={stilling.properties.employer}
-                                    location={stilling.location}
-                                />
+                                {optionalTittel}
                                 <Forhåndsvisning stilling={stilling} />
                             </>
                         )}
@@ -208,6 +203,53 @@ const Stilling = () => {
             </div>
             <Error />
         </div>
+    );
+
+    const erEksternStilling = stilling?.createdBy !== System.Rekrutteringsbistand;
+
+    if (kandidatnrFraStillingssøk) {
+        return (
+            <>
+                <KontekstAvKandidat
+                    kandidatlisteId={kandidatlisteId}
+                    kandidatnr={kandidatnrFraStillingssøk}
+                    stilling={stilling}
+                />
+                {stillingsSide(
+                    <Stillingstittel
+                        tittel={stilling.title}
+                        employer={stilling.properties.employer}
+                        location={stilling.location}
+                    />
+                )}
+            </>
+        );
+    }
+
+    return (
+        <>
+            <div className={css.banner}>
+                <VisStillingBanner stilling={stilling} stillingsinfo={stillingsinfo} />
+            </div>
+            <Tabs value={fane} onChange={onFaneChange}>
+                <div className={css.faner}>
+                    <Tabs.List>
+                        <Tabs.Tab value="om_stillingen" label="Om stillingen" />
+                        {erEier && <Tabs.Tab value="kandidater" label="Kandidater" />}
+                    </Tabs.List>
+                </div>
+                <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
+                    {stillingsSide()}
+                </Tabs.Panel>
+                {erEier && (
+                    <Tabs.Panel value="kandidater">
+                        <Provider store={store}>
+                            <Kandidatlisteside skjulBanner={true} stillingsId={stilling.uuid} />
+                        </Provider>
+                    </Tabs.Panel>
+                )}
+            </Tabs>
+        </>
     );
 };
 

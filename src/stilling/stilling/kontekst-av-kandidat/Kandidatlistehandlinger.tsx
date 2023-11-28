@@ -1,6 +1,7 @@
 import { PersonCheckmarkIcon, PersonGroupIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import { Link } from 'react-router-dom';
+import { lenkeTilStilling } from '../../../kandidat/app/paths';
 import css from './Kandidatlistehandlinger.module.css';
 
 type Props = {
@@ -15,7 +16,7 @@ const Kandidathandlinger = ({ stillingsId, erEier, onAnbefalClick, kandidatliste
         <div className={css.knapper}>
             {erEier && (
                 <Link
-                    to={`/kandidater/lister/stilling/${stillingsId}/detaljer`}
+                    to={lenkeTilStilling(stillingsId, false, 'kandidater')}
                     className="navds-link"
                 >
                     <PersonGroupIcon />
