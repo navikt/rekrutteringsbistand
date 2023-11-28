@@ -23,6 +23,7 @@ export type EsStilling = Stillingbase & {
     contacts: Kontaktinfo[];
     employer: EsArbeidsgiver | null;
     properties: EsProperties;
+    styrkEllerTittel: string;
 };
 
 export type EsProperties = Partial<{
