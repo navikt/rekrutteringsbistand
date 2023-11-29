@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import { filtrerOrdFraKandidatliste } from 'felles/filterOrd';
 import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { Nettstatus } from 'felles/nettressurs';
 import Layout from '../../felles/komponenter/layout/Layout';
@@ -23,7 +24,6 @@ import Kandidatlistesøk from './søk/Kandidatlistesøk';
 import Kandidatlistetabell from './tabell/Kandidatlistetabell';
 import TabellBody from './tabell/TabellBody';
 import TabellHeader from './tabell/TabellHeader';
-import { filtrerOrdFraKandidatliste } from 'felles/filterOrd';
 
 const SIDESTØRRELSE = 20;
 
@@ -46,7 +46,7 @@ type ModalUtenKandidatliste = {
 
 export type KandidatlisterSøkekriterier = {
     query: string;
-    type: Stillingsfilter;
+    type: Stillingsfilter.UtenStilling;
     kunEgne: boolean;
     pagenumber: number;
     pagesize: number;
@@ -84,28 +84,14 @@ class Kandidatlisteoversikt extends React.Component<Props> {
     }
 
     refreshKandidatlister = () => {
-        const { query, type, kunEgne, pagenumber } = this.props.søkekriterier;
+        const { query, kunEgne, pagenumber } = this.props.søkekriterier;
         this.props.hentKandidatlister({
             query,
-            type,
+            type: Stillingsfilter.UtenStilling,
             kunEgne,
             pagenumber,
             pagesize: SIDESTØRRELSE,
         });
-    };
-
-    onFilterChange = (verdi: Stillingsfilter) => {
-        const { query, kunEgne, type } = this.props.søkekriterier;
-
-        if (verdi !== type) {
-            this.props.hentKandidatlister({
-                query: this.state.søkeOrd || query,
-                type: verdi,
-                kunEgne,
-                pagenumber: 0,
-                pagesize: SIDESTØRRELSE,
-            });
-        }
     };
 
     onSøkeOrdChange = (value: string) => {
@@ -114,10 +100,10 @@ class Kandidatlisteoversikt extends React.Component<Props> {
 
     onSubmitSøkKandidatlister = (e) => {
         e.preventDefault();
-        const { type, kunEgne } = this.props.søkekriterier;
+        const { kunEgne } = this.props.søkekriterier;
         this.props.hentKandidatlister({
             query: this.state.søkeOrd,
-            type,
+            type: Stillingsfilter.UtenStilling,
             kunEgne,
             pagenumber: 0,
             pagesize: SIDESTØRRELSE,
@@ -125,15 +111,15 @@ class Kandidatlisteoversikt extends React.Component<Props> {
     };
 
     onNullstillSøkClick = () => {
-        const { query, type, kunEgne, pagenumber } = this.props.søkekriterier;
+        const { query, kunEgne, pagenumber } = this.props.søkekriterier;
         if (this.state.søkeOrd !== '') {
             this.setState({ søkeOrd: '' });
         }
 
-        if (query !== '' || type !== '' || !kunEgne || pagenumber !== 0) {
+        if (query !== '' || !kunEgne || pagenumber !== 0) {
             this.props.hentKandidatlister({
                 query: '',
-                type: Stillingsfilter.Ingen,
+                type: Stillingsfilter.UtenStilling,
                 kunEgne: true,
                 pagenumber: 0,
                 pagesize: SIDESTØRRELSE,
@@ -189,11 +175,11 @@ class Kandidatlisteoversikt extends React.Component<Props> {
     };
 
     onVisMineKandidatlister = () => {
-        const { query, type, kunEgne } = this.props.søkekriterier;
+        const { query, kunEgne } = this.props.søkekriterier;
         if (!kunEgne) {
             this.props.hentKandidatlister({
                 query: this.state.søkeOrd || query,
-                type,
+                type: Stillingsfilter.UtenStilling,
                 kunEgne: true,
                 pagenumber: 0,
                 pagesize: SIDESTØRRELSE,
@@ -202,11 +188,11 @@ class Kandidatlisteoversikt extends React.Component<Props> {
     };
 
     onVisAlleKandidatlister = () => {
-        const { query, type, kunEgne } = this.props.søkekriterier;
+        const { query, kunEgne } = this.props.søkekriterier;
         if (kunEgne) {
             this.props.hentKandidatlister({
                 query: this.state.søkeOrd || query,
-                type,
+                type: Stillingsfilter.UtenStilling,
                 kunEgne: false,
                 pagenumber: 0,
                 pagesize: SIDESTØRRELSE,
@@ -215,10 +201,10 @@ class Kandidatlisteoversikt extends React.Component<Props> {
     };
 
     onPageChange = (nyttSidenummer: number) => {
-        const { query, type, kunEgne } = this.props.søkekriterier;
+        const { query, kunEgne } = this.props.søkekriterier;
         this.props.hentKandidatlister({
             query: this.state.søkeOrd || query,
-            type,
+            type: Stillingsfilter.UtenStilling,
             kunEgne,
             pagenumber: nyttSidenummer - 1,
             pagesize: SIDESTØRRELSE,
@@ -271,7 +257,6 @@ class Kandidatlisteoversikt extends React.Component<Props> {
                             søkekriterier={søkekriterier}
                             onVisMineKandidatlister={this.onVisMineKandidatlister}
                             onVisAlleKandidatlister={this.onVisAlleKandidatlister}
-                            onFilterChange={this.onFilterChange}
                         />
                     </div>
                 }
