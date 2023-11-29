@@ -21,7 +21,7 @@ const tabs: TabConfig[] = [
     },
 
     {
-        tittel: 'Kandidatlister',
+        tittel: 'Kandidatlister uten stillingsannonse',
         path: '/kandidater/lister',
     },
 ];
