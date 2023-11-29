@@ -1,10 +1,10 @@
+import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
 import { Reducer } from 'redux';
-import { ListeoversiktAction, ListeoversiktActionType } from './ListeoversiktAction';
-import { KandidatlisteSorteringsfelt } from '../Kandidatlistesortering';
 import { Retning } from '../../kandidatliste/liste-header/sorterbarKolonneheader/Retning';
+import { KandidatlisteSorteringsfelt } from '../Kandidatlistesortering';
 import { Stillingsfilter } from '../filter/Filter';
-import { KandidatlisteSammendrag } from 'felles/domene/kandidatliste/Kandidatliste';
+import { ListeoversiktAction, ListeoversiktActionType } from './ListeoversiktAction';
 
 export type Søkekriterier = {
     query: string;
@@ -34,7 +34,7 @@ const initialState = {
     },
     søkekriterier: {
         query: '',
-        type: Stillingsfilter.Ingen,
+        type: Stillingsfilter.UtenStilling,
         kunEgne: true,
         pagenumber: 0,
         pagesize: 20,
@@ -88,7 +88,7 @@ const listeoversiktReducer: Reducer<ListeoversiktState, ListeoversiktAction> = (
                 },
                 søkekriterier: {
                     query: '',
-                    type: Stillingsfilter.Ingen,
+                    type: Stillingsfilter.UtenStilling,
                     kunEgne: true,
                     pagenumber: 0,
                     pagesize: 20,

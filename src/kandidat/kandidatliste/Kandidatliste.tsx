@@ -50,6 +50,7 @@ type Props = {
     onSendSmsClick: any;
     onLeggTilKandidat: any;
     onToggleArkivert: any;
+    skjulBanner?: boolean;
 };
 
 const Kandidatliste: FunctionComponent<Props> = ({
@@ -63,6 +64,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
     onKandidatStatusChange,
     onToggleMarkert,
     onToggleArkivert,
+    skjulBanner,
 }) => {
     useMaskerFødselsnumre();
     useHentSendteMeldinger(kandidatliste.kandidatlisteId);
@@ -171,7 +173,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
 
     return (
         <div className={css.innhold}>
-            <SideHeader kandidatliste={kandidatliste} />
+            <SideHeader kandidatliste={kandidatliste} skjulBanner={skjulBanner} />
             {listenInneholderKandidater ? (
                 <>
                     <HvitBoks border>

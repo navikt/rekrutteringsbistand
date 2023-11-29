@@ -23,6 +23,17 @@ export const kandidatApiMock = [
             : new HttpResponse(null, { status: 404 });
     }),
 
+    http.get(`${api.kandidat}/veileder/stilling/:stillingsId/kandidatlisteid`, ({ params }) => {
+        const { stillingsId } = params;
+        const kandidatlisteMedStilling = mockAlleKandidatlister.find(
+            (liste) => liste.stillingId === stillingsId
+        );
+
+        return kandidatlisteMedStilling
+            ? HttpResponse.json({ kandidatlisteId: kandidatlisteMedStilling.stillingId })
+            : new HttpResponse(null, { status: 404 });
+    }),
+
     http.get(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId`, ({ params }) => {
         const { kandidatlisteId } = params;
         const kandidatlisteUtenStilling = mockAlleKandidatlister.find(

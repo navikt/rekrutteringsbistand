@@ -2,6 +2,13 @@
     background: var(--a-bg-subtle);
 }
 
+.banner,
+.faner {
+    max-width: var(--innhold-maksbredde);
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
 .innhold {
     display: grid;
     grid-template-columns: 1fr 25rem;

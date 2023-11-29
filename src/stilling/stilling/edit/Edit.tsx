@@ -1,12 +1,11 @@
 import { NewspaperIcon } from '@navikt/aksel-icons';
-import { Accordion, Alert, Button, CopyButton } from '@navikt/ds-react';
+import { Accordion, Alert, Button } from '@navikt/ds-react';
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import Stilling, { System } from 'felles/domene/stilling/Stilling';
+import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
 import { State } from '../../redux/store';
-import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import { RESET_VALIDATION_ERROR } from '../adValidationReducer';
 import EksternStillingAdvarsel from '../forhåndsvisning/header/EksternStillingAdvarsel';
 import Stillingsheader from '../header/Stillingsheader';
@@ -20,22 +19,20 @@ import PraktiskeOpplysninger from './praktiske-opplysninger/PraktiskeOpplysninge
 import RegistrerInkluderingsmuligheter from './registrer-inkluderingsmuligheter/DirektemeldtStilling';
 import Seksjon from './seksjon/Seksjon';
 
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettressurs } from 'felles/nettressurs';
 import css from './Edit.module.css';
 
 type Props = {
     onPreviewAdClick: () => void;
-    kandidatliste: Nettressurs<Kandidatliste>;
-
+    erEier: boolean;
     resetValidation: () => void;
     stilling: Stilling;
     hasChanges: boolean;
+    stillingsinfoData: Stillingsinfo;
+    kandidatlisteId: string;
 };
 
-const Edit = ({ stilling, onPreviewAdClick, resetValidation, kandidatliste }: Props) => {
+const Edit = ({ stilling, onPreviewAdClick, resetValidation, erEier, kandidatlisteId }: Props) => {
     const stillingenErEkstern = stilling.createdBy !== System.Rekrutteringsbistand;
-    const stillingsLenke = hentAnnonselenke(stilling.uuid);
 
     useEffect(() => {
         return () => {
@@ -45,14 +42,7 @@ const Edit = ({ stilling, onPreviewAdClick, resetValidation, kandidatliste }: Pr
 
     return (
         <>
-            <Stillingsheader kandidatliste={kandidatliste}>
-                {stillingErPublisert(stilling) && (
-                    <CopyButton
-                        copyText={stillingsLenke}
-                        text="Kopier annonselenke"
-                        size="medium"
-                    />
-                )}
+            <Stillingsheader kandidatlisteId={kandidatlisteId} erEier={erEier}>
                 {!stillingenErEkstern && (
                     <Button onClick={onPreviewAdClick} size="small" icon={<NewspaperIcon />}>
                         Forhåndsvis stillingen
@@ -113,6 +103,7 @@ const mapDispatchToProps = (dispatch: (action: any) => void) => ({
 });
 
 const mapStateToProps = (state: State) => ({
+    stillingsinfoData: state.stillingsinfoData,
     stilling: state.adData,
     hasChanges: state.ad.hasChanges,
 });

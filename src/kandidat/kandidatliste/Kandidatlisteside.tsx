@@ -3,17 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
 import Sidelaster from '../../felles/komponenter/sidelaster/Sidelaster';
-import AppState from '../state/AppState';
-import KandidatlisteOgModaler from './KandidatlisteOgModaler';
-import useScrollTilToppen from './hooks/useScrollTilToppen';
-import KandidatlisteActionType from './reducer/KandidatlisteActionType';
+import KandidatlisteOgModaler from '../../kandidat/kandidatliste/KandidatlisteOgModaler';
+import useScrollTilToppen from '../../kandidat/kandidatliste/hooks/useScrollTilToppen';
+import KandidatlisteActionType from '../../kandidat/kandidatliste/reducer/KandidatlisteActionType';
+import AppState from '../../kandidat/state/AppState';
 
 type Props = {
     stillingsId?: string;
     kandidatlisteId?: string;
+    skjulBanner?: boolean;
 };
 
-const Kandidatlisteside: FunctionComponent<Props> = ({ stillingsId, kandidatlisteId }) => {
+const Kandidatlisteside: FunctionComponent<Props> = ({
+    stillingsId,
+    kandidatlisteId,
+    skjulBanner,
+}) => {
     const dispatch = useDispatch();
     const { kandidatliste } = useSelector((state: AppState) => state.kandidatliste);
 
@@ -39,7 +44,7 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ stillingsId, kandidatlist
         return null;
     }
 
-    return <KandidatlisteOgModaler kandidatliste={kandidatliste.data} />;
+    return <KandidatlisteOgModaler kandidatliste={kandidatliste.data} skjulBanner={skjulBanner} />;
 };
 
 export default Kandidatlisteside;

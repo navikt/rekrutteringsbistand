@@ -193,7 +193,7 @@ const LeggTilKandidatModal: FunctionComponent<Props> = ({
                     <BekreftMedNotat
                         fnr={fnr}
                         kandidat={fnrSøk.data}
-                        kandidatliste={kandidatliste}
+                        kandidatlisteId={kandidatliste.kandidatlisteId}
                         onAvbryt={nullstillOgLukk}
                         onBekreft={handleBekreft}
                         onOppdatertKandidatliste={handleOppdatertKandidatliste}

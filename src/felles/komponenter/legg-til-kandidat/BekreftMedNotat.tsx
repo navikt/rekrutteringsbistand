@@ -12,21 +12,21 @@ import Knapper from './Knapper';
 type Props = {
     fnr: string;
     kandidat: KandidatLookup;
-    kandidatliste: Kandidatliste;
     onOppdatertKandidatliste?: (kandidatliste: Kandidatliste) => void;
     onAvbryt: () => void;
     onBekreft: () => void;
     erAnbefaling?: boolean;
+    kandidatlisteId: string;
 };
 
 const BekreftMedNotat = ({
     fnr,
     kandidat,
-    kandidatliste,
     onOppdatertKandidatliste,
     onAvbryt,
     onBekreft,
     erAnbefaling = false,
+    kandidatlisteId,
 }: Props) => {
     const [leggTilKandidat, setLeggTilKandidat] = useState<Nettressurs<Kandidatliste>>({
         kind: Nettstatus.IkkeLastet,
@@ -50,7 +50,7 @@ const BekreftMedNotat = ({
         ];
 
         const respons = await post<Kandidatliste>(
-            `${api.kandidat}/veileder/kandidatlister/${kandidatliste.kandidatlisteId}/kandidater`,
+            `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
             data
         );
 

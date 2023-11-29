@@ -1,15 +1,12 @@
 import { DocPencilIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
-import { Button, CopyButton } from '@navikt/ds-react';
+import { Button } from '@navikt/ds-react';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
-import { Nettressurs } from 'felles/nettressurs';
 import { State } from '../../../redux/store';
 import { StillingsinfoState } from '../../../stillingsinfo/stillingsinfoReducer';
 import { COPY_AD_FROM_MY_ADS, EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
-import { hentAnnonselenke, stillingErPublisert } from '../../adUtils';
 import Stillingsheader from '../../header/Stillingsheader';
 import EksternStillingAdvarsel from './EksternStillingAdvarsel';
 import OpprettKandidatlisteModal from './OpprettKandidatlisteModal';
@@ -18,11 +15,12 @@ type Props = {
     stilling: Stilling;
     stillingsinfoData: Stillingsinfo;
     stillingsinfo: StillingsinfoState;
-    kandidatliste: Nettressurs<Kandidatliste>;
     limitedAccess: boolean;
     copyAd: (uuid: string) => void;
     editAd: () => void;
     leggTilIMineStillinger: () => void;
+    erEier: boolean;
+    kandidatlisteId: string;
 };
 
 class PreviewMenu extends React.Component<Props> {
@@ -67,22 +65,18 @@ class PreviewMenu extends React.Component<Props> {
     };
 
     render() {
-        const { stilling, limitedAccess, stillingsinfoData } = this.props;
+        const { limitedAccess, stillingsinfoData } = this.props;
 
         const kanOverfoereStilling =
             stillingsinfoData && limitedAccess && !stillingsinfoData.eierNavident;
 
         return (
             <>
-                <Stillingsheader kandidatliste={this.props.kandidatliste}>
-                    {stillingErPublisert(stilling) && (
-                        <CopyButton
-                            copyText={hentAnnonselenke(stilling.uuid)}
-                            text="Kopier annonselenke"
-                            size="small"
-                        />
-                    )}
-                    {!limitedAccess && (
+                <Stillingsheader
+                    erEier={this.props.erEier}
+                    kandidatlisteId={this.props.kandidatlisteId}
+                >
+                    {!limitedAccess && this.props.erEier && (
                         <Button onClick={this.onEditAdClick} size="small" icon={<DocPencilIcon />}>
                             Rediger
                         </Button>

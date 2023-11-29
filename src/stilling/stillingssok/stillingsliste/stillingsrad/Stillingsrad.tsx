@@ -9,19 +9,16 @@ import {
     EsStilling,
     stillingErUtløpt,
 } from 'felles/domene/stilling/EsStilling';
-import { Geografi, Privacy, Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { Geografi, Privacy } from 'felles/domene/stilling/Stilling';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
 import TekstlinjeMedIkon from '../../../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../../../stilling/Stilling';
 import { hentHovedtags } from '../../filter/inkludering/tags';
-import {
-    lagUrlTilKandidatliste,
-    lagUrlTilStilling,
-    skalViseLenkeTilKandidatliste,
-} from '../../utils/stillingsUtils';
+import { lagUrlTilStilling, skalViseLenkeTilKandidatliste } from '../../utils/stillingsUtils';
 import formaterMedStoreOgSmåBokstaver from '../../utils/stringUtils';
 import css from './Stillingsrad.module.css';
 import { konverterTilPresenterbarDato } from './datoUtils';
+import { getMiljø, Miljø } from 'felles/miljø';
 
 type Props = {
     rekrutteringsbistandstilling: EsRekrutteringsbistandstilling;
@@ -29,6 +26,9 @@ type Props = {
     kandidatnr?: string;
     navIdent?: string;
 };
+
+// TODO: Fjern nå vi har byttet om
+export const tittelfelt = getMiljø() === Miljø.ProdGcp ? 'title' : 'styrkEllerTittel';
 
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,
@@ -63,12 +63,6 @@ const Stillingsrad: FunctionComponent<Props> = ({
     const publisertDato = konverterTilPresenterbarDato(stilling.published);
     const utløpsDato = konverterTilPresenterbarDato(stilling.expires);
 
-    const erFormidling =
-        rekrutteringsbistandstilling.stillingsinfo?.stillingskategori ===
-        Stillingskategori.Formidling;
-
-    const kanSeKandidatliste = erEier || !erFormidling;
-
     return (
         <RekBisKortStilling
             erEier={erEier}
@@ -96,7 +90,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
                         stillingssøk: searchParams.toString(),
                     }}
                 >
-                    {stilling.title}
+                    {stilling[tittelfelt]}
                 </Link>
             }
             stillingsinfo={
@@ -139,10 +133,13 @@ const Stillingsrad: FunctionComponent<Props> = ({
                             Rediger
                         </Link>
                     )}
-                    {kanSeKandidatliste &&
+                    {erEier &&
                         rekrutteringsbistandstilling.stilling.publishedByAdmin &&
                         skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
-                            <Link className={css.lenke} to={lagUrlTilKandidatliste(stilling)}>
+                            <Link
+                                className={css.lenke}
+                                to={lagUrlTilStilling(stilling, undefined, 'kandidater')}
+                            >
                                 Vis kandidater
                             </Link>
                         )}

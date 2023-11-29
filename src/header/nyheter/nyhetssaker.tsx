@@ -5,6 +5,26 @@ const tilDato = (dag: number, måned: number, år: number, timer: number = 0, mi
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(28, 11, 2023),
+        tittel: 'Endringslogg på Navet',
+        innhold: (
+            <p>
+                <span>
+                    På grunn av personvernavviket skjer det nå flere endringer i
+                    Rekrutteringsbistand. Se{' '}
+                </span>
+                <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Funksjonaliteten-i-Rekrutteringsbistand-er-endret(2).aspx"
+                >
+                    endringslogg på Navet
+                </a>
+                <span> for oppdatert informasjon.</span>
+            </p>
+        ),
+    },
+    {
         dato: tilDato(19, 10, 2023),
         tittel: 'Ny funksjonalitet for lukking av personvernavvik',
         innhold: (

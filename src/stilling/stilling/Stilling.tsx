@@ -1,14 +1,19 @@
-import { BodyLong } from '@navikt/ds-react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { BodyLong, Tabs } from '@navikt/ds-react';
+import { ReactNode, useEffect } from 'react';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { Status, System } from 'felles/domene/stilling/Stilling';
-import { Nettstatus } from 'felles/nettressurs';
+import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import { lenkeTilStilling } from '../../kandidat/app/paths';
+import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
+import store from '../../kandidat/state/reduxStore';
+import useKandidatlisteId from '../api/useKandidatlisteId';
 import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
 import css from './Stilling.module.css';
+import VisStillingBanner from './VisStillingBanner';
 import { REMOVE_AD_DATA } from './adDataReducer';
 import { EDIT_AD, FETCH_AD, PREVIEW_EDIT_AD } from './adReducer';
 import Administration from './administration/Administration';
@@ -19,7 +24,6 @@ import Forhåndsvisning from './forhåndsvisning/Forhåndsvisning';
 import AdministrationPreview from './forhåndsvisning/administration/AdministrationPreview';
 import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
 import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
-import useHentKandidatliste from './kandidathandlinger/useHentKandidatliste';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
@@ -27,15 +31,29 @@ export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 type QueryParams = { uuid: string };
 
 const Stilling = () => {
+    const params = useParams<{ fane: string | undefined }>();
+    const fane = params.fane ?? 'om_stillingen';
+
     const dispatch = useDispatch();
     const location = useLocation();
     const { uuid } = useParams<QueryParams>();
     const { isEditingAd, isSavingAd, isLoadingAd } = useSelector((state: State) => state.ad);
+
     const [searchParams, setSearchParams] = useSearchParams();
     const kandidatnrFraStillingssøk = searchParams.get('kandidat');
     const navigate = useNavigate();
     const stilling = useSelector((state: State) => state.adData);
-    const [kandidatliste, setKandidatliste] = useHentKandidatliste(stilling?.uuid);
+    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
+
+    const { kandidatlisteId } = useKandidatlisteId(uuid);
+
+    const { navIdent: innloggetBruker } = useInnloggetBruker(null);
+
+    const erEier =
+        stilling?.administration?.navIdent === innloggetBruker ||
+        stillingsinfo?.eierNavident === innloggetBruker;
+
+    const harKandidatlisteSomKanÅpnes = erEier && kandidatlisteId;
 
     const getStilling = (uuid: string, edit: boolean) => {
         dispatch({ type: FETCH_AD, uuid, edit });
@@ -70,6 +88,12 @@ const Stilling = () => {
     const onPreviewAdClick = () => {
         fjernRedigeringsmodusFraUrl();
         previewAd();
+    };
+
+    const onFaneChange = (fane: string) => {
+        navigate(
+            lenkeTilStilling(stilling?.uuid, false, fane === 'om_stillingen' ? undefined : fane)
+        );
     };
 
     useEffect(() => {
@@ -127,21 +151,8 @@ const Stilling = () => {
         );
     }
 
-    const erEksternStilling = stilling?.createdBy !== System.Rekrutteringsbistand;
-    const kandidatlisteId =
-        kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.kandidatlisteId : '';
-
-    return (
+    const stillingsSide = (optionalTittel: ReactNode = null) => (
         <div className={css.stilling}>
-            {kandidatnrFraStillingssøk && (
-                <KontekstAvKandidat
-                    kandidatnr={kandidatnrFraStillingssøk}
-                    kandidatliste={kandidatliste}
-                    setKandidatliste={setKandidatliste}
-                    stilling={stilling}
-                />
-            )}
-
             <div className={css.innhold}>
                 <main className={css.venstre}>
                     <div className={css.venstreInnhold}>
@@ -149,31 +160,30 @@ const Stilling = () => {
                             <>
                                 {erEksternStilling ? (
                                     <>
-                                        <PreviewHeader kandidatliste={kandidatliste} />
-                                        <Stillingstittel
-                                            tittel={stilling.title}
-                                            employer={stilling.properties.employer}
-                                            location={stilling.location}
+                                        <PreviewHeader
+                                            kandidatlisteId={kandidatlisteId}
+                                            erEier={erEier}
                                         />
+                                        {optionalTittel}
                                         <Forhåndsvisning stilling={stilling} />
                                     </>
                                 ) : (
                                     <Edit
-                                        kandidatliste={kandidatliste}
+                                        erEier={erEier}
                                         onPreviewAdClick={onPreviewAdClick}
+                                        kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
                             </>
                         ) : (
                             <>
                                 {!kandidatnrFraStillingssøk && (
-                                    <PreviewHeader kandidatliste={kandidatliste} />
+                                    <PreviewHeader
+                                        erEier={erEier}
+                                        kandidatlisteId={kandidatlisteId}
+                                    />
                                 )}
-                                <Stillingstittel
-                                    tittel={stilling.title}
-                                    employer={stilling.properties.employer}
-                                    location={stilling.location}
-                                />
+                                {optionalTittel}
                                 <Forhåndsvisning stilling={stilling} />
                             </>
                         )}
@@ -195,6 +205,55 @@ const Stilling = () => {
             </div>
             <Error />
         </div>
+    );
+
+    const erEksternStilling = stilling?.createdBy !== System.Rekrutteringsbistand;
+
+    if (kandidatnrFraStillingssøk) {
+        return (
+            <>
+                <KontekstAvKandidat
+                    kandidatlisteId={kandidatlisteId}
+                    kandidatnr={kandidatnrFraStillingssøk}
+                    stilling={stilling}
+                />
+                {stillingsSide(
+                    <Stillingstittel
+                        tittel={stilling.title}
+                        employer={stilling.properties.employer}
+                        location={stilling.location}
+                    />
+                )}
+            </>
+        );
+    }
+
+    return (
+        <>
+            <div className={css.banner}>
+                <VisStillingBanner stilling={stilling} stillingsinfo={stillingsinfo} />
+            </div>
+            <Tabs value={fane} onChange={onFaneChange}>
+                <div className={css.faner}>
+                    <Tabs.List>
+                        <Tabs.Tab value="om_stillingen" label="Om stillingen" />
+                        {harKandidatlisteSomKanÅpnes && (
+                            <Tabs.Tab value="kandidater" label="Kandidater" />
+                        )}
+                    </Tabs.List>
+                </div>
+                <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
+                    {stillingsSide()}
+                </Tabs.Panel>
+                {harKandidatlisteSomKanÅpnes && (
+                    <Tabs.Panel value="kandidater">
+                        <Provider store={store}>
+                            <Kandidatlisteside skjulBanner={true} stillingsId={stilling.uuid} />
+                        </Provider>
+                    </Tabs.Panel>
+                )}
+            </Tabs>
+        </>
     );
 };
 

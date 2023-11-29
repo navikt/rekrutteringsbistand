@@ -27,9 +27,23 @@ export const lenkeTilKandidat = (
 
     return path;
 };
+export const lenkeTilStilling = (
+    stillingsId: string,
+    redigeringsmodus?: boolean,
+    fane?: string
+) => {
+    let path = `/stillinger/stilling/${stillingsId}`;
 
-export const lenkeTilStilling = (stillingsId: string, redigeringsmodus?: boolean) =>
-    `/stillinger/stilling/${stillingsId}${redigeringsmodus ? '?redigeringsmodus=true' : ''}`;
+    if (fane) {
+        path += `/${fane}`;
+    }
+
+    if (redigeringsmodus) {
+        path += '?redigeringsmodus=true';
+    }
+
+    return path;
+};
 
 export const lenkeTilKandidatsøk = (searchParams?: string) => {
     let url = '/kandidatsok';

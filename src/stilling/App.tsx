@@ -20,7 +20,7 @@ const App = () => {
             <Routes>
                 <Route path="stillingssok/*" element={<StillingsSøkIndex />} />
                 <Route path="stillingssok/kandidat/:kandidat" element={<StillingsSøkIndex />} />
-                <Route path="stilling/:uuid" element={<Stilling />} />
+                <Route path="stilling/:uuid/:fane?" element={<Stilling />} />
             </Routes>
         </>
     );
