@@ -11,7 +11,6 @@ import EksternStillingAdvarsel from '../forhåndsvisning/header/EksternStillingA
 import Stillingsheader from '../header/Stillingsheader';
 import Arbeidssted from './arbeidssted/Arbeidssted';
 import EndreArbeidsgiver from './endre-arbeidsgiver/EndreArbeidsgiver';
-import EditHeader from './header/EditHeader';
 import HvordanSendeSøknad from './hvordan-sende-søknad/HvordanSendeSøknad';
 import Kontaktinformasjon from './kontaktinformasjon/Kontaktinformasjon';
 import OmStillingen from './om-stillingen/OmStillingen';
@@ -59,9 +58,6 @@ const Edit = ({ stilling, onPreviewAdClick, resetValidation, erEier, kandidatlis
             )}
             <div className={css.edit}>
                 <Accordion className={classNames(css.venstre, css.accordions)}>
-                    <Seksjon tittel="Tittel på annonsen">
-                        <EditHeader stilling={stilling} />
-                    </Seksjon>
                     <Seksjon spacing tittel="Om bedriften">
                         <EndreArbeidsgiver stilling={stilling} />
                     </Seksjon>
