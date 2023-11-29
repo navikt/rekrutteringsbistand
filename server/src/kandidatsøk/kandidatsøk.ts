@@ -112,7 +112,7 @@ const requestBerOmSpesifikkPerson = (
         };
     } else if (idInniHentKandidatQuery) {
         return {
-            melding: 'NAV-ansatt har åpnet CV-en til bruker',
+            melding: "NAV-ansatt har åpnet CV'en til bruker",
             fnrEllerAktørId: idInniHentKandidatQuery,
         };
     } else if (idInniFinnStillingQuery) {
