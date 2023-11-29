@@ -233,7 +233,7 @@ class Kandidatlisteoversikt extends React.Component<Props> {
 
         return (
             <Layout
-                tittel="Kandidatlister"
+                tittel="Kandidatlister uten stillingsannonse"
                 knappIBanner={
                     <Button
                         variant="secondary"
