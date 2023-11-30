@@ -1,3 +1,4 @@
+import { Privacy } from 'felles/domene/stilling/Stilling';
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { State } from '../redux/store';
 import { SET_NOTAT } from '../stillingsinfo/stillingsinfoDataReducer';
@@ -9,14 +10,12 @@ import {
     CHECK_EMPLOYMENT_WORKDAY,
     CHECK_EMPLOYMENT_WORKHOURS,
     CHECK_TAG,
-    findLocationByPostalCode,
     REMOVE_COUNTRY,
     REMOVE_COUNTY,
     REMOVE_LOCATION_AREAS,
     REMOVE_MUNICIPAL,
     REMOVE_POSTAL_CODE,
     SET_AD_TEXT,
-    SET_AD_TITLE,
     SET_APPLICATIONDUE,
     SET_APPLICATIONEMAIL,
     SET_APPLICATIONURL,
@@ -32,19 +31,18 @@ import {
     UNCHECK_EMPLOYMENT_WORKDAY,
     UNCHECK_EMPLOYMENT_WORKHOURS,
     UNCHECK_TAG,
+    findLocationByPostalCode,
 } from './adDataReducer';
-import { DEFAULT_TITLE_NEW_AD, SET_KAN_INKLUDERE } from './adReducer';
+import { SET_KAN_INKLUDERE } from './adReducer';
 import isJson from './edit/praktiske-opplysninger/IsJson';
 import { KanInkludere } from './edit/registrer-inkluderingsmuligheter/DirektemeldtStilling';
 import { tagsInneholderInkluderingsmuligheter } from './tags/utils';
-import { Privacy } from 'felles/domene/stilling/Stilling';
 
 export type ValidertFelt =
     | 'location'
     | 'postalCode'
     | 'locationArea'
     | 'styrk'
-    | 'title'
     | 'adText'
     | 'expires'
     | 'published'
@@ -155,18 +153,6 @@ export function* validateStyrk() {
         yield addValidationError({ field: 'styrk', message: 'STYRK mangler' });
     } else {
         yield removeValidationError({ field: 'styrk' });
-    }
-}
-
-export function* validateTitle() {
-    const adTitle = yield select((state) => state.adData?.title);
-    if (valueIsNotSet(adTitle) || adTitle === DEFAULT_TITLE_NEW_AD) {
-        yield addValidationError({
-            field: 'title',
-            message: 'Overskrift på stillingen mangler',
-        });
-    } else {
-        yield removeValidationError({ field: 'title' });
     }
 }
 
@@ -512,7 +498,6 @@ export function* validateAll() {
         yield validateLocation();
         yield validateExpireDate();
         yield validatePublishDate();
-        yield validateTitle();
         yield validateStyrk();
         yield validateAdtext();
         yield validateApplicationEmail();
@@ -538,7 +523,6 @@ export function hasValidationErrors(validation: Record<ValidertFelt, string | un
         validation.styrk !== undefined ||
         validation.location !== undefined ||
         validation.expires !== undefined ||
-        validation.title !== undefined ||
         validation.adText !== undefined ||
         validation.applicationEmail !== undefined ||
         validation.contactPersonEmail !== undefined ||
@@ -563,7 +547,6 @@ export function hasValidationErrors(validation: Record<ValidertFelt, string | un
 export function* validateBeforeSave() {
     const state = yield select();
     if (state.adData !== null) {
-        yield validateTitle();
         yield validateStyrk();
         yield validateApplicationEmail();
         yield validateContactpersonEmailAndPhone();
@@ -575,7 +558,6 @@ export function* validateBeforeSave() {
 export function hasValidationErrorsOnSave(validation: Record<ValidertFelt, string | undefined>) {
     return (
         validation.styrk !== undefined ||
-        validation.title !== undefined ||
         validation.applicationEmail !== undefined ||
         validation.contactPersonEmail !== undefined ||
         validation.contactPersonPhone !== undefined ||
@@ -636,7 +618,6 @@ export const validationSaga = function* saga() {
         validateLocation
     );
     yield takeLatest(SET_AD_TEXT, validateAdtext);
-    yield takeLatest(SET_AD_TITLE, validateTitle);
     yield takeLatest(VALIDATE_APPLICATION_EMAIL, validateApplicationEmail);
     yield takeLatest(VALIDATE_CONTACTPERSON_EMAIL_AND_PHONE, validateContactpersonEmailAndPhone);
     yield takeLatest(VALIDATE_CONTACTPERSON_NAME, validateContactPersonName);
