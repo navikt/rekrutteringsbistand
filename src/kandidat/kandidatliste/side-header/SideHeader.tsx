@@ -1,8 +1,5 @@
 import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, Label } from '@navikt/ds-react';
-import { FunctionComponent } from 'react';
-import { Link } from 'react-router-dom';
-
 import {
     FormidlingAvUsynligKandidat,
     KandidatIKandidatliste,
@@ -10,6 +7,8 @@ import {
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import React, { FunctionComponent } from 'react';
+import { Link, redirect } from 'react-router-dom';
 import { lenkeTilKandidatlisteoversikt, lenkeTilStilling } from '../../app/paths';
 import { capitalizeEmployerName } from '../../utils/formateringUtils';
 import { erKobletTilArbeidsgiver, erKobletTilStilling } from '../domene/kandidatlisteUtils';
@@ -41,6 +40,13 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste, skjulBanner }) =>
     } kandidater (${antallAktuelleKandidater} er aktuelle${
         erKobletTilStilling(kandidatliste) ? ` / ${antallPresenterteKandidater} er presentert` : ''
     })`;
+
+    React.useEffect(() => {
+        if (!skjulBanner && kandidatliste.stillingId) {
+            const stillingsPath = lenkeTilStilling(kandidatliste.stillingId, false, 'kandidater');
+            redirect(stillingsPath);
+        }
+    }, [kandidatliste.stillingId, skjulBanner]);
 
     if (skjulBanner) {
         return (

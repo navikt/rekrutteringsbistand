@@ -6,6 +6,7 @@ import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatlis
 import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
 import { SmsStatus } from 'felles/domene/sms/Sms';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import Stilling from '../../felles/domene/stilling/Stilling';
 import AppState from '../state/AppState';
 import { AlertType, VarslingAction, VarslingActionType } from '../varsling/varslingReducer';
 import Kandidatliste from './Kandidatliste';
@@ -24,6 +25,7 @@ import KandidatlisteActionType from './reducer/KandidatlisteActionType';
 type OwnProps = {
     kandidatliste: Kandidatlistetype;
     skjulBanner?: boolean;
+    stilling?: Stilling;
 };
 
 type ConnectedProps = {
@@ -219,6 +221,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                         erKobletTilStilling(kandidatliste) &&
                         kandidaterMåGodkjenneDelingAvCv(kandidatliste)
                     }
+                    stilling={this.props.stilling}
                 />
                 <LeggTilKandidatModal
                     vis={leggTilModalOpen}

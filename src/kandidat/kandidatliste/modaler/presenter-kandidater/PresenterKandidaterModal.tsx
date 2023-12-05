@@ -6,6 +6,7 @@ import { Nettstatus } from 'felles/nettressurs';
 import useNavKontor from 'felles/store/navKontor';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Stilling from '../../../../felles/domene/stilling/Stilling';
 import { postDelteKandidater } from '../../../api/api';
 import { VarslingActionType } from '../../../varsling/varslingReducer';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../domene/kandidatlisteUtils';
@@ -24,6 +25,7 @@ type Props = {
     kandidaterSomHarSvartJa: KandidatIKandidatliste[];
     alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere: boolean;
     kandidatliste: Kandidatliste;
+    stilling?: Stilling;
 };
 
 const PresenterKandidaterModal = ({
@@ -33,6 +35,7 @@ const PresenterKandidaterModal = ({
     kandidaterSomHarSvartJa,
     alleKandidaterMåGodkjenneForespørselOmDelingAvCvForÅPresentere,
     kandidatliste,
+    stilling,
 }: Props) => {
     const dispatch = useDispatch();
     const valgtNavKontor = useNavKontor((state) => state.navKontor);
@@ -176,6 +179,7 @@ const PresenterKandidaterModal = ({
                             <Accordion.Header>Forhåndsvis e-posten</Accordion.Header>
                             <Accordion.Content className={css.forhåndsvisning}>
                                 <ForhåndsvisningAvEpost
+                                    stillingstittel={stilling?.title}
                                     kandidatliste={kandidatliste}
                                     melding={melding}
                                 />

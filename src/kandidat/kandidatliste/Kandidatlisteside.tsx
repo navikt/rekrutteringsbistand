@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
+import Stilling from '../../felles/domene/stilling/Stilling';
 import Sidelaster from '../../felles/komponenter/sidelaster/Sidelaster';
 import KandidatlisteOgModaler from '../../kandidat/kandidatliste/KandidatlisteOgModaler';
 import useScrollTilToppen from '../../kandidat/kandidatliste/hooks/useScrollTilToppen';
@@ -12,12 +13,14 @@ type Props = {
     stillingsId?: string;
     kandidatlisteId?: string;
     skjulBanner?: boolean;
+    stilling?: Stilling;
 };
 
 const Kandidatlisteside: FunctionComponent<Props> = ({
     stillingsId,
     kandidatlisteId,
     skjulBanner,
+    stilling,
 }) => {
     const dispatch = useDispatch();
     const { kandidatliste } = useSelector((state: AppState) => state.kandidatliste);
@@ -44,7 +47,13 @@ const Kandidatlisteside: FunctionComponent<Props> = ({
         return null;
     }
 
-    return <KandidatlisteOgModaler kandidatliste={kandidatliste.data} skjulBanner={skjulBanner} />;
+    return (
+        <KandidatlisteOgModaler
+            kandidatliste={kandidatliste.data}
+            skjulBanner={skjulBanner}
+            stilling={stilling}
+        />
+    );
 };
 
 export default Kandidatlisteside;
