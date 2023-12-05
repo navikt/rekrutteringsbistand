@@ -8,7 +8,7 @@ import {
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import React, { FunctionComponent } from 'react';
-import { Link, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { lenkeTilKandidatlisteoversikt, lenkeTilStilling } from '../../app/paths';
 import { capitalizeEmployerName } from '../../utils/formateringUtils';
 import { erKobletTilArbeidsgiver, erKobletTilStilling } from '../domene/kandidatlisteUtils';
@@ -34,7 +34,7 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste, skjulBanner }) =>
     const antallKandidaterSomHarFåttJobb =
         ikkeArkiverteKandidater.filter(harFåttJobb).length +
         kandidatliste.formidlingerAvUsynligKandidat.filter(usynligKandidatHarFåttJobb).length;
-
+    const navigate = useNavigate();
     const oppsummeringTekst = `${
         kandidatliste.kandidater.length
     } kandidater (${antallAktuelleKandidater} er aktuelle${
@@ -44,9 +44,9 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste, skjulBanner }) =>
     React.useEffect(() => {
         if (!skjulBanner && kandidatliste.stillingId) {
             const stillingsPath = lenkeTilStilling(kandidatliste.stillingId, false, 'kandidater');
-            redirect(stillingsPath);
+            navigate(stillingsPath, { replace: true });
         }
-    }, [kandidatliste.stillingId, skjulBanner]);
+    }, [kandidatliste.stillingId, skjulBanner, navigate]);
 
     if (skjulBanner) {
         return (
