@@ -252,6 +252,7 @@ const Stilling = () => {
                                 skjulBanner={true}
                                 stillingsId={stilling.uuid}
                                 stilling={stilling}
+                                kandidatlisteId={kandidatlisteId}
                             />
                         </Provider>
                     </Tabs.Panel>

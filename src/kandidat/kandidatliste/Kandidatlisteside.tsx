@@ -11,7 +11,7 @@ import AppState from '../../kandidat/state/AppState';
 
 type Props = {
     stillingsId?: string;
-    kandidatlisteId?: string;
+    kandidatlisteId: string;
     skjulBanner?: boolean;
     stilling?: Stilling;
 };
@@ -45,6 +45,14 @@ const Kandidatlisteside: FunctionComponent<Props> = ({
         return <Sidelaster />;
     } else if (kandidatliste.kind !== Nettstatus.Suksess) {
         return null;
+    }
+
+    // TODO: Fix mock for scenario
+    if (
+        kandidatliste.kind === Nettstatus.Suksess &&
+        kandidatlisteId !== kandidatliste.data.kandidatlisteId
+    ) {
+        return <Sidelaster />;
     }
 
     return (
