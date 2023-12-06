@@ -4,5 +4,6 @@ import mswHandlers from './handlers';
 const worker = setupWorker(...mswHandlers);
 
 worker.start({
-    onUnhandledRequest: 'warn',
+    //todo set til warn for console log warnings
+    onUnhandledRequest: 'bypass',
 });
