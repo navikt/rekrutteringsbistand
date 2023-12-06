@@ -30,11 +30,13 @@ export const Historikkrad: FunctionComponent<Props> = ({
 }) => {
     let tittel: ReactNode = null;
 
-    const { stilling } = useHentStilling(
+    const { isError, stilling } = useHentStilling(
         kandidatliste.erMaskert ? undefined : kandidatliste.stillingId
     );
 
-    const stillingsTittel = stilling?.stilling?.title ?? '';
+    const stillingsTittel = isError
+        ? 'klarte ikke hente tittel ...'
+        : stilling?.stilling?.title ?? 'laster ...';
 
     const listeTittel = kandidatliste.erMaskert
         ? kandidatliste.tittel
