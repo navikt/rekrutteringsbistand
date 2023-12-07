@@ -5,8 +5,10 @@ import { Dispatch } from 'redux';
 
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { postKandidatTilKandidatliste } from '../../api/api';
+import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
 import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
@@ -72,6 +74,10 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
         });
     };
 
+    const stillingstittel = useHentStillingTittel(
+        kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.stillingId : undefined
+    );
+
     return (
         <Modal
             className={css.modal}
@@ -86,7 +92,10 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
                         <Modal.Body>
                             <BodyLong>
                                 Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
-                                {kandidatliste.data.tittel}»?
+                                {erKobletTilStilling(kandidatliste.data)
+                                    ? stillingstittel
+                                    : kandidatliste.data.tittel}
+                                »?
                             </BodyLong>
                         </Modal.Body>
                         <Modal.Footer>
