@@ -15,6 +15,8 @@ import Kandidatheader from '../komponenter/header/Kandidatheader';
 import Kandidatmeny from '../komponenter/meny/Kandidatmeny';
 import { hentØktFraKandidatsøk } from '../søkekontekst';
 import LagreKandidatIKandidatlisteModal from './LagreKandidatIKandidatlisteModal';
+import {useHentStillingTittel} from "../../api/useStilling";
+import {erKobletTilStilling} from "../../kandidatliste/domene/kandidatlisteUtils";
 
 type Props = {
     tabs: ReactNode;
@@ -44,11 +46,13 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
         kandidatliste.kind === Nettstatus.Suksess &&
         kandidatliste.data.kandidater.some((k) => k.kandidatnr === kandidatnr);
 
+    const stillingTittel = useHentStillingTittel(kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.stillingId : undefined)
+
     const brødsmulesti =
         kandidatliste.kind === Nettstatus.Suksess
             ? [
                   {
-                      tekst: kandidatliste.data.tittel,
+                      tekst: erKobletTilStilling(kandidatliste.data) ? stillingTittel : kandidatliste.data.tittel,
                       href: lenkeTilKandidatliste(kandidatlisteId),
                   },
                   {

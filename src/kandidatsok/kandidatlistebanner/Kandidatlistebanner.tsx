@@ -10,6 +10,7 @@ import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKand
 import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
 import { lenkeTilKandidatliste, lenkeTilStilling } from '../utils';
 import css from './Kandidatlistebanner.module.css';
+import { useHentStillingTittel } from '../../kandidat/api/useStilling';
 
 type Props = {
     kontekst: KontekstAvKandidatlisteEllerStilling;
@@ -23,6 +24,8 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
     const stillingsId =
         kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.stillingId : null;
 
+    const stillingTittel = useHentStillingTittel(stillingsId);
+
     return (
         <Grunnbanner ikon={<FinnKandidaterIkon />}>
             <div className={css.banner}>
@@ -31,7 +34,7 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                         <Brødsmulesti
                             brødsmulesti={[
                                 {
-                                    tekst: kandidatliste.data.tittel,
+                                    tekst: stillingTittel ?? kandidatliste.data.tittel,
                                     href: lenkeTilKandidatliste(kandidatliste.data.kandidatlisteId),
                                 },
                                 {
@@ -44,7 +47,7 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                     )}
                     <Heading size="large" level="2">
                         {kandidatliste.kind === Nettstatus.Suksess ? (
-                            kandidatliste.data.tittel
+                            stillingTittel ?? kandidatliste.data.tittel
                         ) : (
                             <Skeleton>Placeholder</Skeleton>
                         )}

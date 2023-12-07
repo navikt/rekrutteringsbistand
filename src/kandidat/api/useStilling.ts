@@ -1,8 +1,11 @@
 import useSWR from 'swr';
-import { Rekrutteringsbistandstilling } from '../../felles/domene/stilling/Stilling';
+import {
+    hentTittelFraStilling,
+    Rekrutteringsbistandstilling,
+} from '../../felles/domene/stilling/Stilling';
 import fetcher from '../../felles/hooks/fetcher';
 
-const useHentStilling = (stillingsId?: string) => {
+const useHentStilling = (stillingsId?: string | null) => {
     const { data, error, isLoading } = useSWR<Rekrutteringsbistandstilling>(
         stillingsId ? `/stilling-api/rekrutteringsbistandstilling/${stillingsId}` : undefined,
         fetcher
@@ -14,8 +17,12 @@ const useHentStilling = (stillingsId?: string) => {
     };
 };
 
-export const useHentStillingTittel = (stillingsId?: string) => {
+export const useHentStillingTittel = (stillingsId?: string | null) => {
     const { isError, isLoading, stilling } = useHentStilling(stillingsId);
+
+    if (!stillingsId) {
+        return undefined;
+    }
 
     if (isLoading) {
         return 'laster stillingstittel ...';
@@ -25,7 +32,7 @@ export const useHentStillingTittel = (stillingsId?: string) => {
         return 'Klarte ikke å hente stillingstittel';
     }
 
-    return stilling?.stilling?.title ?? 'Ukjent stillingstittel';
+    return stilling?.stilling ? hentTittelFraStilling(stilling.stilling) : 'Ukjent stillingstittel';
 };
 
 export default useHentStilling;

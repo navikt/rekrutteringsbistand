@@ -30,6 +30,7 @@ import useForespørselOmDelingAvCv from './useForespørselOmDelingAvCv';
 import useNavigerbareKandidater from './useNavigerbareKandidater';
 import useSendtKandidatmelding from './useSendtKandidatmelding';
 import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
+import { useHentStillingTittel } from '../../api/useStilling';
 
 type Props = {
     tabs: ReactNode;
@@ -107,11 +108,14 @@ const FraKandidatlisteInner = ({
         });
     };
 
-    const endreStatusTekst = erKobletTilStilling(kandidatliste) ? 'Status/hendelse:' : 'Status:';
+    const erStilling = erKobletTilStilling(kandidatliste);
+    const endreStatusTekst = erStilling ? 'Status/hendelse:' : 'Status:';
+
+    const stillingTittel = useHentStillingTittel(kandidatliste.stillingId);
 
     const brødsmulesti = [
         {
-            tekst: kandidatliste.tittel,
+            tekst: erStilling ? stillingTittel : kandidatliste.tittel,
             href: lenkeTilKandidatliste(
                 kandidatliste.kandidatlisteId,
                 filterTilQueryParams(state.filter)
