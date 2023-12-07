@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useHentStillingTittel } from '../api/useStilling';
+import { useHentStillingTittel } from '../../felles/hooks/useStilling';
 
 export interface IKandidatlisteTittel {
     stillingid?: string;

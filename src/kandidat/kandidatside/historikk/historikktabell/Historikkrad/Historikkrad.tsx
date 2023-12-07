@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Sms } from 'felles/domene/sms/Sms';
-import useHentStilling from '../../../../api/useStilling';
+import useHentStilling from '../../../../../felles/hooks/useStilling';
 import { lenkeTilKandidatliste, lenkeTilStilling } from '../../../../app/paths';
 import Hendelsesetikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
 import StatusEtikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/StatusEtikett';

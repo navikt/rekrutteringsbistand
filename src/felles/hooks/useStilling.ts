@@ -1,9 +1,6 @@
 import useSWR from 'swr';
-import {
-    hentTittelFraStilling,
-    Rekrutteringsbistandstilling,
-} from '../../felles/domene/stilling/Stilling';
-import fetcher from '../../felles/hooks/fetcher';
+import { hentTittelFraStilling, Rekrutteringsbistandstilling } from '../domene/stilling/Stilling';
+import fetcher from './fetcher';
 
 const useHentStilling = (stillingsId?: string | null) => {
     const { data, error, isLoading } = useSWR<Rekrutteringsbistandstilling>(

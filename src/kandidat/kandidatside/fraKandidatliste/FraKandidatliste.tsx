@@ -9,6 +9,7 @@ import {
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { lenkeTilKandidatliste } from '../../app/paths';
@@ -30,7 +31,6 @@ import useForespørselOmDelingAvCv from './useForespørselOmDelingAvCv';
 import useNavigerbareKandidater from './useNavigerbareKandidater';
 import useSendtKandidatmelding from './useSendtKandidatmelding';
 import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
-import { useHentStillingTittel } from '../../api/useStilling';
 
 type Props = {
     tabs: ReactNode;

@@ -6,11 +6,11 @@ import { ReactComponent as FinnKandidaterIkon } from 'felles/komponenter/piktogr
 import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
+import { useHentStillingTittel } from '../../felles/hooks/useStilling';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
 import { lenkeTilKandidatliste, lenkeTilStilling } from '../utils';
 import css from './Kandidatlistebanner.module.css';
-import { useHentStillingTittel } from '../../kandidat/api/useStilling';
 
 type Props = {
     kontekst: KontekstAvKandidatlisteEllerStilling;
