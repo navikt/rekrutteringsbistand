@@ -14,4 +14,18 @@ const useHentStilling = (stillingsId?: string) => {
     };
 };
 
+export const useHentStillingTittel = (stillingsId?: string) => {
+    const { isError, isLoading, stilling } = useHentStilling(stillingsId);
+
+    if (isLoading) {
+        return 'laster stillingstittel ...';
+    }
+
+    if (isError) {
+        return 'Klarte ikke å hente stillingstittel';
+    }
+
+    return stilling?.stilling?.title ?? 'Ukjent stillingstittel';
+};
+
 export default useHentStilling;
