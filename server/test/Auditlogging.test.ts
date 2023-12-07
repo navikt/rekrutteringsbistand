@@ -1,14 +1,12 @@
 import { beforeEach, describe, expect, jest, test } from '@jest/globals';
 import { NextFunction, Request, Response } from 'express';
-import { EsQuery } from '../../src/felles/domene/elastic/ElasticSearch';
-import Kandidat from '../../src/felles/domene/kandidat/Kandidat';
 import * as azureAd from '../src/azureAd';
 import * as kandidatsøk from '../src/kandidatsøk/kandidatsøk';
 import * as logger from '../src/logger';
 import * as queries from './queriesMotSpesifikkPerson';
 
 describe('Auditlogging av personspesifikt kandidatsøk', () => {
-    let mockRequest: Partial<Request<unknown, unknown, EsQuery<Kandidat>>>;
+    let mockRequest: Partial<Request<unknown, unknown, unknown>>;
     let mockResponse: Partial<Response>;
     let nextFunction: NextFunction = jest.fn();
 

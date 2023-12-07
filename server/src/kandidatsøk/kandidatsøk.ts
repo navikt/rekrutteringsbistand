@@ -1,9 +1,8 @@
 import { Request, RequestHandler } from 'express';
-import { EsQuery } from '../../../src/felles/domene/elastic/ElasticSearch';
-import Kandidat from '../../../src/felles/domene/kandidat/Kandidat';
 import { hentGrupper, hentNavIdent } from '../azureAd';
 import { auditLog, logger, opprettLoggmeldingForAuditlogg, secureLog } from '../logger';
 import { retrieveToken } from '../middlewares';
+import { SearchQuery } from './elasticSearchTyper';
 
 export const { AD_GRUPPE_MODIA_GENERELL_TILGANG, AD_GRUPPE_MODIA_OPPFOLGING } = process.env;
 
@@ -93,7 +92,7 @@ type MeldingTilAuditlog = {
 };
 
 const requestBerOmSpesifikkPerson = (
-    request: Request<unknown, unknown, EsQuery<Kandidat>>
+    request: Request<unknown, unknown, SearchQuery>
 ): null | MeldingTilAuditlog => {
     const berOmData = request.body && request.body._source !== false;
 
@@ -122,7 +121,7 @@ const requestBerOmSpesifikkPerson = (
     return null;
 };
 
-export const erSpesifikkPersonQuery = (request: EsQuery<Kandidat>): string | null => {
+export const erSpesifikkPersonQuery = (request: SearchQuery): string | null => {
     let fnrEllerAktørId = null;
 
     request.query?.bool?.must?.forEach((mustQuery) =>
@@ -136,7 +135,7 @@ export const erSpesifikkPersonQuery = (request: EsQuery<Kandidat>): string | nul
     return fnrEllerAktørId;
 };
 
-export const erHentKandidatQuery = (request: EsQuery<Kandidat>): string | null => {
+export const erHentKandidatQuery = (request: SearchQuery): string | null => {
     if (
         request.size === 1 &&
         request._source === undefined &&
@@ -148,7 +147,7 @@ export const erHentKandidatQuery = (request: EsQuery<Kandidat>): string | null =
     return null;
 };
 
-export const erFinnStillingQuery = (request: EsQuery<Kandidat>): string | null => {
+export const erFinnStillingQuery = (request: SearchQuery): string | null => {
     if (
         request.size === 1 &&
         request._source &&

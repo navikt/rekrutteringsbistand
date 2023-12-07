@@ -11,6 +11,10 @@ export type SearchQuery = {
                 };
             }>;
         };
+        term?: {
+            [felt: string]: string;
+        };
     };
-    _source: boolean | string[];
+    _source?: boolean | string[];
+    size?: number;
 };
