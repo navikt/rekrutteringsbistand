@@ -1,8 +1,10 @@
-import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import KandidatIKandidatliste, {
+    Kandidatutfall,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, {
-    KanSletteKandidatliste,
     KandidatlisteForKandidat,
     Kandidatlistestatus,
+    KanSletteKandidatliste,
     OpprettetAv,
 } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
@@ -32,7 +34,22 @@ export const mockKandidatlisteUtenStilling: Kandidatliste = {
     antallStillinger: null,
 
     kandidater: mockKandidatIKandidatliste,
-    formidlingerAvUsynligKandidat: [],
+    formidlingerAvUsynligKandidat: [
+        {
+            fornavn: 'Fornavn',
+            mellomnavn: 'Mellomnavn',
+            etternavn: 'Etternavn',
+            id: '12345678910',
+            utfall: Kandidatutfall.FåttJobben,
+            lagtTilTidspunkt: new Date().toISOString(),
+            lagtTilAvIdent: 'Z999999',
+            lagtTilAvNavn: 'Veileder Navn',
+            arkivert: true,
+            arkivertTidspunkt: new Date().toISOString(),
+            arkivertAvIdent: 'Z999998',
+            arkivertAvNavn: 'Arkivist Navn',
+        },
+    ],
 
     opprettetAv: enAnnenVeileder,
 };

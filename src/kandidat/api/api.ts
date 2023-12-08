@@ -1,5 +1,7 @@
 import { api, post } from 'felles/api';
+import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Cv from 'felles/domene/kandidat/Cv';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import {
     Kandidatstatus,
     Kandidatutfall,
@@ -11,8 +13,6 @@ import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler
 import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
-import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
