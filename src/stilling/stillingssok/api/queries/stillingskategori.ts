@@ -1,7 +1,9 @@
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 
 export const stillingskategori = (stillingskategori: Set<Stillingskategori>) => {
-    const visAlleStillinger = stillingskategori.size === Object.keys(Stillingskategori).length;
+    const visAlleStillinger =
+        stillingskategori.size === Object.keys(Stillingskategori).length ||
+        stillingskategori.size === 0;
 
     if (visAlleStillinger) {
         return [];
