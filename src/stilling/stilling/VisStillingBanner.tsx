@@ -3,7 +3,7 @@ import { CopyButton, Heading } from '@navikt/ds-react';
 import { ReactComponent as StillingIkon } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
 import * as React from 'react';
 
-import { Stilling, Stillingsinfo } from '../../felles/domene/stilling/Stilling';
+import { hentTittelFraStilling, Stilling, Stillingsinfo } from 'felles/domene/stilling/Stilling';
 import Grunnbanner from '../../felles/komponenter/grunnbanner/Grunnbanner';
 import Brødsmulesti from '../../felles/komponenter/kandidatbanner/Brødsmulesti';
 import TekstlinjeMedIkon from '../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
@@ -25,6 +25,8 @@ const eierAvAstilling = (stilling: Stilling, stillingsinfo: Stillingsinfo): stri
 
 const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling, stillingsinfo }) => {
     const eierNavn = eierAvAstilling(stilling, stillingsinfo);
+    const tittel = hentTittelFraStilling(stilling);
+
     return (
         <Grunnbanner ikon={<StillingIkon />}>
             <div className={css.banner}>
@@ -33,13 +35,13 @@ const VisStillingBanner: React.FC<IVisStillingBanner> = ({ stilling, stillingsin
                         brødsmulesti={[
                             { tekst: 'Stillinger', href: '/stillinger/stillingssok' },
                             {
-                                tekst: stilling.title,
+                                tekst: tittel,
                                 href: `/stillinger/stilling/${stilling.uuid}`,
                             },
                         ]}
                     />
                     <Heading size="large" level="2">
-                        {stilling.title}
+                        {tittel}
                     </Heading>
                     <div className={css.innholdsLinje}>
                         <TekstlinjeMedIkon

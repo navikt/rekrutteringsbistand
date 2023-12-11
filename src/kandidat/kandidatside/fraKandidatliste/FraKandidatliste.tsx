@@ -9,6 +9,7 @@ import {
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { lenkeTilKandidatliste } from '../../app/paths';
@@ -107,11 +108,14 @@ const FraKandidatlisteInner = ({
         });
     };
 
-    const endreStatusTekst = erKobletTilStilling(kandidatliste) ? 'Status/hendelse:' : 'Status:';
+    const erStilling = erKobletTilStilling(kandidatliste);
+    const endreStatusTekst = erStilling ? 'Status/hendelse:' : 'Status:';
+
+    const stillingTittel = useHentStillingTittel(kandidatliste.stillingId);
 
     const brødsmulesti = [
         {
-            tekst: kandidatliste.tittel,
+            tekst: erStilling ? stillingTittel : kandidatliste.tittel,
             href: lenkeTilKandidatliste(
                 kandidatliste.kandidatlisteId,
                 filterTilQueryParams(state.filter)

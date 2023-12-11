@@ -6,9 +6,10 @@ import css from './ForhåndsvisningAvEpost.module.css';
 type Props = {
     kandidatliste: Kandidatliste;
     melding: string;
+    stillingstittel?: string;
 };
 
-const ForhåndsvisningAvEpost = ({ kandidatliste, melding }: Props) => {
+const ForhåndsvisningAvEpost = ({ kandidatliste, melding, stillingstittel }: Props) => {
     const iframeRef = useRef<HTMLIFrameElement>();
 
     const erstattPlaceholders = useCallback(
@@ -21,13 +22,14 @@ const ForhåndsvisningAvEpost = ({ kandidatliste, melding }: Props) => {
                 const tekstElement = iframeDocument.getElementById('tekst');
                 const avsenderElement = iframeDocument.getElementById('avsender');
 
-                if (tittelElement) tittelElement.innerText = kandidatliste.tittel;
-                if (stillingstittelElement) stillingstittelElement.innerText = kandidatliste.tittel;
+                if (tittelElement) tittelElement.innerText = stillingstittel || 'stilling';
+                if (stillingstittelElement)
+                    stillingstittelElement.innerText = stillingstittel || 'stilling';
                 if (tekstElement) tekstElement.innerHTML = melding;
                 if (avsenderElement) avsenderElement.innerHTML = kandidatliste.opprettetAv.navn;
             }
         },
-        [kandidatliste.opprettetAv.navn, kandidatliste.tittel, melding]
+        [kandidatliste.opprettetAv.navn, melding, stillingstittel]
     );
 
     useEffect(() => {

@@ -1,12 +1,13 @@
-import { ChangeEvent, FunctionComponent } from 'react';
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
 import { ExternalLinkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Checkbox, Label } from '@navikt/ds-react';
+import classNames from 'classnames';
+import { ChangeEvent, FunctionComponent } from 'react';
+import { Link } from 'react-router-dom';
 
-import { lenkeTilKandidatliste } from '../../../app/paths';
-import { capitalizeEmployerName } from '../../../utils/formateringUtils';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import { lenkeTilKandidatliste } from '../../../app/paths';
+import KandidatlisteTittel from '../../../kandidatliste/KandidatlisteTittel';
+import { capitalizeEmployerName } from '../../../utils/formateringUtils';
 import css from './VelgKandidatlister.module.css';
 
 type Props = {
@@ -42,10 +43,16 @@ const VelgbarKandidatliste: FunctionComponent<Props> = ({
                 value={kandidatlisteId}
                 onChange={onKandidatlisteMarkert}
             >
-                {tittel}
+                <KandidatlisteTittel
+                    stillingid={kandidatliste?.stillingId}
+                    kandidatlisteTittel={tittel}
+                />
             </Checkbox>
             <Label className={labelCls} htmlFor={checkboxId}>
-                {tittel}
+                <KandidatlisteTittel
+                    stillingid={kandidatliste?.stillingId}
+                    kandidatlisteTittel={tittel}
+                />
             </Label>
             {kandidatliste.organisasjonNavn ? (
                 <BodyShort className={classNames(css.arbeidsgiver, css.maksEnLinje)}>

@@ -59,7 +59,6 @@ export const SET_EXPIRATION_DATE = 'SET_EXPIRATION_DATE';
 export const SET_AD_TEXT = 'SET_AD_TEXT';
 export const SET_AD_STATUS = 'SET_AD_STATUS';
 export const SET_ADMIN_STATUS = 'SET_ADMIN_STATUS';
-export const SET_AD_TITLE = 'SET_AD_TITLE';
 export const SET_REPORTEE = 'SET_REPORTEE';
 export const SET_NAV_IDENT = 'SET_NAV_IDENT';
 export const SET_UPDATED_BY = 'SET_UPDATED_BY';
@@ -114,11 +113,6 @@ const manipulateAdReducer = (state: Stilling, action) => {
                 categoryList: action.code
                     ? [findStyrkAndSkipAlternativeNames(action.code)]
                     : undefined,
-            };
-        case SET_AD_TITLE:
-            return {
-                ...state,
-                title: action.title,
             };
         case ADD_LOCATION_AREA: {
             const isAlreadyAdded = isLocationInList(action.location, state.locationList);

@@ -1,3 +1,5 @@
+import { getMiljø, Miljø } from 'felles/miljø';
+
 export type Rekrutteringsbistandstilling = {
     stilling: Stilling;
     stillingsinfo: Stillingsinfo | null;
@@ -35,6 +37,26 @@ export type Stilling = Stillingbase & {
     contactList?: Kontaktinfo[];
     mediaList?: object[];
     properties: Properties & Record<string, any>;
+};
+
+// TODO: Fjern nå vi har byttet om
+export const USE_STYRK_AS_TITLE_FEATURE_TOGGLE = getMiljø() !== Miljø.ProdGcp;
+export const hentTittelFraStilling = (stilling: Stilling) => {
+    if (!USE_STYRK_AS_TITLE_FEATURE_TOGGLE) {
+        return stilling.title;
+    }
+
+    if (stilling.source !== 'DIR') {
+        return stilling.title;
+    }
+
+    const passendeStyrkkoder =
+        stilling.categoryList?.filter(({ categoryType }) => categoryType === 'STYRK08NAV') ?? [];
+
+    if (passendeStyrkkoder.length === 0) {
+        return 'Stilling uten valgt jobbtittel';
+    }
+    return passendeStyrkkoder.map((it) => it.name).join('/');
 };
 
 export enum System {
@@ -90,8 +112,13 @@ export type Arbeidsgiver = {
     location: Geografi;
 };
 
-export type StyrkCategory = {
+export type EsStyrkCategory = {
     styrkCode: string;
+    name: string;
+};
+
+export type StyrkCategory = {
+    categoryType: string;
     name: string;
 };
 

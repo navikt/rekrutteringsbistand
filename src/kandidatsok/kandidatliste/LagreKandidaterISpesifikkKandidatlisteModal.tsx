@@ -2,6 +2,7 @@ import { Alert, BodyLong, Button, Loader, Modal } from '@navikt/ds-react';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useState } from 'react';
+import { useHentStillingTittel } from '../../felles/hooks/useStilling';
 import { lagreKandidaterIKandidatliste } from '../api/api';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from './LagreKandidaterIMineKandidatlisterModal';
@@ -50,6 +51,12 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         }
     };
 
+    const stillingstittel = useHentStillingTittel(
+        kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === Nettstatus.Suksess
+            ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.stillingId
+            : undefined
+    );
+
     return (
         <Modal
             open={vis}
@@ -67,7 +74,11 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                         <Modal.Body>
                             <BodyLong>
                                 Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
-                                {kontekstAvKandidatlisteEllerStilling.kandidatliste.data.tittel}»?
+                                {kontekstAvKandidatlisteEllerStilling.kandidatliste.data.stillingId
+                                    ? stillingstittel
+                                    : kontekstAvKandidatlisteEllerStilling.kandidatliste.data
+                                          .tittel}
+                                »?
                             </BodyLong>
                         </Modal.Body>
                         <Modal.Footer>

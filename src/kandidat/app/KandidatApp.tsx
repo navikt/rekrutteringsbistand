@@ -1,14 +1,13 @@
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
-import KandidatlistesideMedStilling from '../kandidatliste/KandidatlistesideMedStilling';
+import { TilToppenKnapp } from '../../felles/komponenter/tilToppenKnapp/TilToppenKnapp';
 import KandidatlisteUtenStilling from '../kandidatliste/KandidatlistesideUtenStilling';
 import Kandidatlisteoversikt from '../kandidatlisteoversikt/Kandidatlisteoversikt';
 import Kandidatside from '../kandidatside/Kandidatside';
 import CvSide from '../kandidatside/cv/CvSide';
 import Historikkside from '../kandidatside/historikk/Historikkside';
 import NotFound from '../komponenter/errorside/NotFound';
-import { TilToppenKnapp } from '../../felles/komponenter/tilToppenKnapp/TilToppenKnapp';
 import store from '../state/reduxStore';
 import Varsling from '../varsling/Varsling';
 import css from './KandidatApp.module.css';
@@ -24,10 +23,6 @@ const KandidatApp = () => {
                         <Route path="mangler-tilgang" element={<ManglerTilgang />} />
 
                         <Route path="lister" element={<Kandidatlisteoversikt />} />
-                        <Route
-                            path="lister/stilling/:id/detaljer"
-                            element={<KandidatlistesideMedStilling />}
-                        />
                         <Route
                             path="lister/detaljer/:listeid"
                             element={<KandidatlisteUtenStilling />}

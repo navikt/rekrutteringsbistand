@@ -99,8 +99,6 @@ export const SHOW_STOP_MODAL_MY_ADS = 'SHOW_STOP_MODAL_MY_ADS';
 export const ADD_COPIED_ADS = 'ADD_COPIED_ADS';
 export const CLEAR_COPIED_ADS = 'CLEAR_COPIED_ADS';
 
-export const DEFAULT_TITLE_NEW_AD = 'Ny stilling';
-
 export const LEGG_TIL_I_MINE_STILLINGER = 'LEGG_TIL_I_MINE_STILLINGER';
 export const MARKER_EKSTERN_STILLING_SOM_MIN = 'MARKER_EKSTERN_STILLING_SOM_MIN';
 export const MARKER_INTERN_STILLING_SOM_MIN = 'MARKER_INTERN_STILLING_SOM_MIN';
@@ -404,7 +402,6 @@ function* createAd(action) {
         const reportee = yield getReportee();
 
         const stillingDto = {
-            title: DEFAULT_TITLE_NEW_AD,
             createdBy: System.Rekrutteringsbistand,
             updatedBy: System.Rekrutteringsbistand,
             source: Kilde.Intern,

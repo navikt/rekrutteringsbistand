@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
-import { Status, System } from 'felles/domene/stilling/Stilling';
+import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
 import { lenkeTilStilling } from '../../kandidat/app/paths';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
@@ -219,7 +219,7 @@ const Stilling = () => {
                 />
                 {stillingsSide(
                     <Stillingstittel
-                        tittel={stilling.title}
+                        tittel={hentTittelFraStilling(stilling)}
                         employer={stilling.properties.employer}
                         location={stilling.location}
                     />
@@ -248,7 +248,12 @@ const Stilling = () => {
                 {harKandidatlisteSomKanÅpnes && (
                     <Tabs.Panel value="kandidater">
                         <Provider store={store}>
-                            <Kandidatlisteside skjulBanner={true} stillingsId={stilling.uuid} />
+                            <Kandidatlisteside
+                                skjulBanner={true}
+                                stillingsId={stilling.uuid}
+                                stilling={stilling}
+                                kandidatlisteId={kandidatlisteId}
+                            />
                         </Provider>
                     </Tabs.Panel>
                 )}

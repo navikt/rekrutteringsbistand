@@ -4,8 +4,10 @@ import { FunctionComponent, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Nettstatus } from 'felles/nettressurs';
+import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import { lenkeTilKandidatliste, lenkeTilKandidatsøk } from '../../app/paths';
+import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useCv from '../hooks/useCv';
 import useFaner from '../hooks/useFaner';
@@ -44,11 +46,17 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
         kandidatliste.kind === Nettstatus.Suksess &&
         kandidatliste.data.kandidater.some((k) => k.kandidatnr === kandidatnr);
 
+    const stillingTittel = useHentStillingTittel(
+        kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.stillingId : undefined
+    );
+
     const brødsmulesti =
         kandidatliste.kind === Nettstatus.Suksess
             ? [
                   {
-                      tekst: kandidatliste.data.tittel,
+                      tekst: erKobletTilStilling(kandidatliste.data)
+                          ? stillingTittel
+                          : kandidatliste.data.tittel,
                       href: lenkeTilKandidatliste(kandidatlisteId),
                   },
                   {

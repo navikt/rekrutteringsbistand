@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Sms } from 'felles/domene/sms/Sms';
+import useHentStilling from '../../../../../felles/hooks/useStilling';
 import { lenkeTilKandidatliste, lenkeTilStilling } from '../../../../app/paths';
 import Hendelsesetikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
 import StatusEtikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
@@ -29,10 +30,24 @@ export const Historikkrad: FunctionComponent<Props> = ({
 }) => {
     let tittel: ReactNode = null;
 
+    const { isError, stilling } = useHentStilling(
+        kandidatliste.erMaskert ? undefined : kandidatliste.stillingId
+    );
+
+    const stillingsTittel = isError
+        ? 'klarte ikke hente tittel ...'
+        : stilling?.stilling?.title ?? 'laster ...';
+
+    const listeTittel = kandidatliste.erMaskert
+        ? kandidatliste.tittel
+        : kandidatliste.stillingId
+        ? stillingsTittel
+        : kandidatliste.tittel;
+
     if (kandidatliste.slettet) {
         tittel = (
             <>
-                <BodyShort as="span">{kandidatliste.tittel} </BodyShort>
+                <BodyShort as="span">{listeTittel} </BodyShort>
                 <Detail as="span" className={css.slettetEllerMaskert}>
                     (slettet)
                 </Detail>
@@ -41,16 +56,14 @@ export const Historikkrad: FunctionComponent<Props> = ({
     } else if (kandidatliste.erMaskert) {
         tittel = (
             <>
-                <BodyShort as="span">{kandidatliste.tittel} </BodyShort>
+                <BodyShort as="span">{listeTittel} </BodyShort>
                 <Detail as="span" className={css.slettetEllerMaskert}>
                     (ingen tilgang)
                 </Detail>
             </>
         );
     } else {
-        tittel = (
-            <Lenke to={lenkeTilKandidatliste(kandidatliste.uuid)}>{kandidatliste.tittel}</Lenke>
-        );
+        tittel = <Lenke to={lenkeTilKandidatliste(kandidatliste.uuid)}>{listeTittel}</Lenke>;
     }
 
     const skalViseLenkeTilStilling = !(kandidatliste.slettet || kandidatliste.erMaskert);

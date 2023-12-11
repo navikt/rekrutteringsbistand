@@ -58,6 +58,52 @@ export const mockKandidatlisteMedStilling: Kandidatliste = {
     kandidatlisteId: 'e793b0e0-14e6-450b-a0cb-ef7e50ba2385',
     tittel: 'Er du en bedreviter?',
 
+    erEier: false,
+    kanEditere: true,
+    kanSlette: KanSletteKandidatliste.KanSlettes,
+    opprettetTidspunkt: new Date().toISOString(),
+    status: Kandidatlistestatus.Åpen,
+
+    stillingId: mockStilling.uuid,
+    stillingskategori: Stillingskategori.Stilling,
+    antallStillinger: Number(mockStilling.properties.positioncount),
+    organisasjonReferanse: mockStilling.employer.orgnr,
+    organisasjonNavn: mockStilling.employer.publicName,
+
+    formidlingerAvUsynligKandidat: [],
+    kandidater: mockKandidatIKandidatliste,
+
+    opprettetAv: enAnnenVeileder,
+};
+
+export const mockMinKandidatlisteUtenStilling: Kandidatliste = {
+    kandidatlisteId: '123-test-uten-stilling',
+    tittel: 'Min Kandidatliste uten stilling',
+
+    erEier: true,
+    kanEditere: false,
+    kanSlette: KanSletteKandidatliste.KanSlettes,
+    opprettetTidspunkt: new Date().toISOString(),
+    status: Kandidatlistestatus.Åpen,
+
+    stillingskategori: null,
+    organisasjonNavn: null,
+    organisasjonReferanse: null,
+    stillingId: null,
+    antallStillinger: null,
+
+    kandidater: mockKandidatIKandidatliste,
+    formidlingerAvUsynligKandidat: [],
+
+    opprettetAv: {
+        ident: mockMeg.navIdent,
+        navn: 'Varg Veileder',
+    },
+};
+export const mockMinKandidatlisteMedStilling: Kandidatliste = {
+    kandidatlisteId: 'abc-test-med-stilling',
+    tittel: 'Min Kandidatliste med stilling',
+
     erEier: true,
     kanEditere: true,
     kanSlette: KanSletteKandidatliste.KanSlettes,
@@ -106,4 +152,9 @@ export const opprettMockKandidatlisteForKandidat = (
     erMaskert: true,
 });
 
-export const mockAlleKandidatlister = [mockKandidatlisteMedStilling, mockKandidatlisteUtenStilling];
+export const mockAlleKandidatlister = [
+    mockKandidatlisteMedStilling,
+    mockKandidatlisteUtenStilling,
+    mockMinKandidatlisteUtenStilling,
+    mockMinKandidatlisteMedStilling,
+];

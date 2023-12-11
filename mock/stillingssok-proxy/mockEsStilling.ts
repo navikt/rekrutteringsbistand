@@ -7,7 +7,12 @@ export const mockEsRekrutteringsbistandstilling: EsRekrutteringsbistandstilling 
         ...mockStilling,
         styrkEllerTittel: 'styrk eller tittel kommer her',
         annonsenr: String(mockStilling.id),
-        categories: mockStilling.categoryList,
+        categories: [
+            {
+                name: 'Foo',
+                styrkCode: '0000.03',
+            },
+        ],
         locations: mockStilling.locationList,
         contacts: mockStilling.contactList,
         employer: {
