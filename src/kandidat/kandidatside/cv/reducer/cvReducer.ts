@@ -1,7 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { Error, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { SearchApiError } from '../../../api/fetchUtils';
-import { fetchCv } from '../../../api/api';
+import { fetchCv, fetchId } from '../../../api/api';
 import Kandidat, { Id } from 'felles/domene/kandidat/Kandidat';
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 
@@ -106,7 +106,7 @@ const cvReducer = (state: CvState = initialState, action: CvAction): CvState => 
 
 function* fetchCvForKandidat(action: FetchCvAction) {
     try {
-        const idResponse: EsResponse<Id> = yield call(fetchCv, action.arenaKandidatnr);
+        const idResponse: EsResponse<Id> = yield call(fetchId, action.arenaKandidatnr);
         const iDhits = idResponse.hits.hits;
         if (iDhits.length === 0) {
             yield put({ type: CvActionType.FetchCvNotFound });
