@@ -12,9 +12,6 @@ spec:
     port: 8080
     ingresses:
         - {{ ingress }}
-    replicas: # TODO Skallerer ned frontend
-      max: 0  # TODO Skallerer ned frontend 
-      min: 0  # TODO Skallerer ned frontend
     liveness:
         initialDelay: 5
         path: /internal/isAlive
