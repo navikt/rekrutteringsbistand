@@ -107,8 +107,8 @@ const cvReducer = (state: CvState = initialState, action: CvAction): CvState => 
 function* fetchCvForKandidat(action: FetchCvAction) {
     try {
         const idResponse: EsResponse<Id> = yield call(fetchId, action.arenaKandidatnr);
-        const iDhits = idResponse.hits.hits;
-        if (iDhits.length === 0) {
+        const idHits = idResponse.hits.hits;
+        if (idHits.length === 0) {
             yield put({ type: CvActionType.FetchCvNotFound });
         }
         const fodselsnummer = idResponse.hits.hits[0]._source.fodselsnummer;
