@@ -18,3 +18,14 @@ export type SearchQuery = {
     _source?: boolean | string[];
     size?: number;
 };
+
+export type ElasticsearchResponse = {
+    hits?: {
+        hits?: Array<{
+            _source?: {
+                aktorId?: string;
+                fodselsnummer?: string;
+            };
+        }>;
+    };
+};

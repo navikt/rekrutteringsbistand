@@ -40,3 +40,16 @@ export const queryTilHentKandidat = (kandidatnr: string): EsQuery<Kandidat> => (
     size: 1,
     query: { term: { kandidatnr: kandidatnr } },
 });
+
+export const responseJsonTilHentKandidat = (fodselsnummer: string) => ({
+    hits: {
+        hits: [
+            {
+                _source: {
+                    aktorId: '2681869303229',
+                    fodselsnummer: '41928601194',
+                },
+            },
+        ],
+    },
+});

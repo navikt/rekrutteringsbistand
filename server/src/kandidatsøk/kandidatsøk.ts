@@ -1,8 +1,8 @@
-import { Request, RequestHandler } from 'express';
+import { Request, RequestHandler, Response } from 'express';
 import { hentGrupper, hentNavIdent } from '../azureAd';
 import { auditLog, logger, opprettLoggmeldingForAuditlogg, secureLog } from '../logger';
 import { retrieveToken } from '../middlewares';
-import { SearchQuery } from './elasticSearchTyper';
+import { ElasticsearchResponse, SearchQuery } from './elasticSearchTyper';
 
 export const { AD_GRUPPE_MODIA_GENERELL_TILGANG, AD_GRUPPE_MODIA_OPPFOLGING } = process.env;
 
@@ -58,7 +58,11 @@ export const leggTilAuthorizationForKandidatsøkEs =
         next();
     };
 
-export const loggSøkPåFnrEllerAktørId: RequestHandler = (request, response, next) => {
+export const loggSøkPåFnrEllerAktørId: RequestHandler = (
+    request: Request<unknown, unknown, SearchQuery>,
+    response: Response<ElasticsearchResponse, unknown>,
+    next
+) => {
     try {
         const requestOmSpesifikkPerson = requestBerOmSpesifikkPerson(request);
 
@@ -66,10 +70,13 @@ export const loggSøkPåFnrEllerAktørId: RequestHandler = (request, response, n
             const brukerensAccessToken = retrieveToken(request.headers);
             const navIdent = hentNavIdent(brukerensAccessToken);
 
+            const personIdFraResponse = hentPersonIdFraResponse(response.);
+
             const melding = opprettLoggmeldingForAuditlogg(
                 requestOmSpesifikkPerson.melding,
                 requestOmSpesifikkPerson.fnrEllerAktørId,
-                navIdent
+                navIdent,
+                personIdFraResponse
             );
 
             auditLog.info(melding);
@@ -89,6 +96,10 @@ export const loggSøkPåFnrEllerAktørId: RequestHandler = (request, response, n
 type MeldingTilAuditlog = {
     melding: string;
     fnrEllerAktørId: string;
+};
+
+const hentPersonIdFraResponse = (response: Response<ElasticsearchResponse, unknown>): string => {
+    return response.hits?.hits[0]?._source?.fodselsnummer;
 };
 
 const requestBerOmSpesifikkPerson = (

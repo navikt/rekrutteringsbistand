@@ -14,6 +14,7 @@ describe('Auditlogging av personspesifikt kandidatsøk', () => {
         mockResponse = {
             status: jest.fn(() => mockResponse),
             send: jest.fn(),
+            body: jest.fn(() => queries.responseJsonTilHentKandidat('41928601194')),
         } as Partial<Response>;
 
         mockRequest = {
