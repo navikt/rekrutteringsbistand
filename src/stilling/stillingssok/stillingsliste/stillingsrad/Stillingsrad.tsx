@@ -39,7 +39,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
     score,
 }) => {
     const [searchParams] = useSearchParams();
-    const { stillingskategori } = rekrutteringsbistandstilling?.stillingsinfo;
+    const stillingskategori = rekrutteringsbistandstilling?.stillingsinfo?.stillingskategori;
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
 
