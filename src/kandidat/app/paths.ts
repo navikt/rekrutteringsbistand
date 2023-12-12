@@ -25,23 +25,6 @@ export const lenkeTilKandidat = (
 
     return path;
 };
-export const lenkeTilStilling = (
-    stillingsId: string,
-    redigeringsmodus?: boolean,
-    fane?: string
-) => {
-    let path = `/stillinger/stilling/${stillingsId}`;
-
-    if (fane) {
-        path += `/${fane}`;
-    }
-
-    if (redigeringsmodus) {
-        path += '?redigeringsmodus=true';
-    }
-
-    return path;
-};
 
 export const lenkeTilKandidatsøk = (searchParams?: string) => {
     let url = '/kandidatsok';

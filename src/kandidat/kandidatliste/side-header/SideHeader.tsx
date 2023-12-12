@@ -8,7 +8,7 @@ import {
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import React, { FunctionComponent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { lenkeTilStilling } from '../../app/paths';
+import { lenkeTilStilling } from '../../../felles/lenker';
 import { capitalizeEmployerName } from '../../utils/formateringUtils';
 import { erKobletTilArbeidsgiver, erKobletTilStilling } from '../domene/kandidatlisteUtils';
 import css from './SideHeader.module.css';
@@ -42,7 +42,11 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste, skjulBanner }) =>
 
     React.useEffect(() => {
         if (!skjulBanner && kandidatliste.stillingId) {
-            const stillingsPath = lenkeTilStilling(kandidatliste.stillingId, false, 'kandidater');
+            const stillingsPath = lenkeTilStilling({
+                stillingsId: kandidatliste.stillingId,
+                redigeringsmodus: false,
+                fane: 'kandidater',
+            });
             navigate(stillingsPath, { replace: true });
         }
     }, [kandidatliste.stillingId, skjulBanner, navigate]);
@@ -88,7 +92,7 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste, skjulBanner }) =>
                         {erKobletTilStilling(kandidatliste) && (
                             <span>
                                 <Link
-                                    to={lenkeTilStilling(kandidatliste.stillingId!)}
+                                    to={lenkeTilStilling({ stillingsId: kandidatliste.stillingId })}
                                     className="navds-link"
                                 >
                                     Se stillingsannonse

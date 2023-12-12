@@ -2,7 +2,6 @@ import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import { TilToppenKnapp } from '../../felles/komponenter/tilToppenKnapp/TilToppenKnapp';
-import KandidatlisteUtenStilling from '../kandidatliste/KandidatlistesideUtenStilling';
 import Kandidatside from '../kandidatside/Kandidatside';
 import CvSide from '../kandidatside/cv/CvSide';
 import Historikkside from '../kandidatside/historikk/Historikkside';
@@ -20,11 +19,6 @@ const KandidatApp = () => {
                 <main className={css.main}>
                     <Routes>
                         <Route path="mangler-tilgang" element={<ManglerTilgang />} />
-
-                        <Route
-                            path="lister/detaljer/:listeid"
-                            element={<KandidatlisteUtenStilling />}
-                        />
                         <Route path="kandidat/:kandidatnr" element={<Kandidatside />}>
                             <Route path="cv" element={<CvSide />} />
                             <Route path="historikk" element={<Historikkside />} />
