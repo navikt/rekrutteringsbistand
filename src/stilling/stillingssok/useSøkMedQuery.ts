@@ -2,6 +2,7 @@ import { sendEvent } from 'felles/amplitude';
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import { useEffect, useState } from 'react';
+import { Stillingskategori } from '../../felles/domene/stilling/Stilling';
 import { søk } from './api/api';
 import { lagQuery } from './api/queries/queries';
 import useStandardsøk from './standardsøk/StandardsøkContext';
@@ -13,9 +14,10 @@ export const DEFAULT_VALGTE_KRITERIER = '?publisert=intern&statuser=publisert';
 type Returverdi = {
     navIdent?: string;
     ikkePubliserte?: boolean;
+    overstyrMedStillingskategori?: Set<Stillingskategori>;
 };
 
-const useSøkMedQuery = ({ navIdent, ikkePubliserte }: Returverdi) => {
+const useSøkMedQuery = ({ navIdent, ikkePubliserte, overstyrMedStillingskategori }: Returverdi) => {
     const { navigate, searchParams, state } = useNavigering();
     const { standardsøk } = useStandardsøk();
     const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);
@@ -29,7 +31,9 @@ const useSøkMedQuery = ({ navIdent, ikkePubliserte }: Returverdi) => {
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
         const søkMedQuery = async () => {
-            let respons = await søk(lagQuery(søkekriterier, navIdent, ikkePubliserte));
+            let respons = await søk(
+                lagQuery({ søkekriterier, navIdent, ikkePubliserte, overstyrMedStillingskategori })
+            );
             setRespons(respons);
         };
 
@@ -43,7 +47,7 @@ const useSøkMedQuery = ({ navIdent, ikkePubliserte }: Returverdi) => {
         } else {
             søkMedQuery();
         }
-    }, [searchParams, navigate, state, navIdent, ikkePubliserte]);
+    }, [searchParams, navigate, state, navIdent, ikkePubliserte, overstyrMedStillingskategori]);
 
     useEffect(() => {
         const skalBrukeStandardsøk = searchParams.has(QueryParam.BrukStandardsøk);

@@ -1,5 +1,6 @@
 import { EsQuery } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
+import { Stillingskategori } from '../../../../felles/domene/stilling/Stilling';
 import { Søkekriterier } from '../../Stillingssøk';
 import { Søkefelt } from '../../søkefelter/Søkefelter';
 import geografi from './geografi';
@@ -13,32 +14,49 @@ import søkefelt from './søkefelt';
 
 export const maksAntallTreffPerSøk = 40;
 
-export const lagQuery = (
-    søkekriterier: Søkekriterier,
-    navIdent?: string,
-    ikkePubliserte?: boolean
-): EsQuery<EsRekrutteringsbistandstilling> => {
+interface IlagQuery {
+    søkekriterier: Søkekriterier;
+    navIdent?: string;
+    ikkePubliserte?: boolean;
+    overstyrMedStillingskategori?: Set<Stillingskategori>;
+}
+
+export const lagQuery = ({
+    søkekriterier,
+    navIdent,
+    ikkePubliserte,
+    overstyrMedStillingskategori,
+}: IlagQuery): EsQuery<EsRekrutteringsbistandstilling> => {
     return {
         size: maksAntallTreffPerSøk,
         from: regnUtFørsteTreffFra(søkekriterier.side, maksAntallTreffPerSøk),
         track_total_hits: true,
-        query: lagIndreQuery({ søkekriterier, navIdent, ikkePubliserte }),
+        query: lagIndreQuery({
+            søkekriterier,
+            navIdent,
+            ikkePubliserte,
+            overstyrMedStillingskategori,
+        }),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
         ...aggregeringer(søkekriterier),
     };
 };
+
+interface IlagIndreQuery {
+    søkekriterier: Søkekriterier;
+    alternativtFelt?: Søkefelt;
+    navIdent?: string;
+    ikkePubliserte?: boolean;
+    overstyrMedStillingskategori?: Set<Stillingskategori>;
+}
 
 export const lagIndreQuery = ({
     søkekriterier,
     alternativtFelt,
     navIdent,
     ikkePubliserte,
-}: {
-    søkekriterier: Søkekriterier;
-    alternativtFelt?: Søkefelt;
-    navIdent?: string;
-    ikkePubliserte?: boolean;
-}) => {
+    overstyrMedStillingskategori,
+}: IlagIndreQuery) => {
     const minimum_should_match = søkekriterier.tekst.size === 0 ? '0' : '1';
     const identSøk = navIdent ? kunMineStillinger(navIdent) : '';
 
@@ -56,7 +74,11 @@ export const lagIndreQuery = ({
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
                 ...status(søkekriterier.statuser, ikkePubliserte),
-                ...stillingskategori(søkekriterier.stillingskategorier),
+                ...stillingskategori(
+                    overstyrMedStillingskategori
+                        ? overstyrMedStillingskategori
+                        : søkekriterier.stillingskategorier
+                ),
                 ...inkludering(
                     søkekriterier.hovedinkluderingstags,
                     søkekriterier.subinkluderingstags

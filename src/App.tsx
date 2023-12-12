@@ -8,6 +8,7 @@ import {
 import Appfeil from './felles/komponenter/feilmelding/Appfeil';
 import Header from './header/Header';
 
+import FormidlingsSide from './formidling/Formidling';
 import { Component as Forside } from './forside/index';
 import { Component as Kandidat } from './kandidat/index';
 import { Component as Kandidatsøk } from './kandidatsok/index';
@@ -22,6 +23,11 @@ const App = () => {
                 <Route path="stillinger/*" element={<Stilling />} errorElement={<Appfeil />} />
                 <Route path="kandidatsok" element={<Kandidatsøk />} errorElement={<Appfeil />} />
                 <Route path="kandidater/*" element={<Kandidat />} errorElement={<Appfeil />} />
+                <Route
+                    path="formidlinger/*"
+                    element={<FormidlingsSide />}
+                    errorElement={<Appfeil />}
+                />
 
                 <Route
                     path="stillingssok/personbruker"
