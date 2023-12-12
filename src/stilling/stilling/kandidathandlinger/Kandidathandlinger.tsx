@@ -9,6 +9,7 @@ import { State } from '../../redux/store';
 import { stillingenHarKandidatliste } from '../adUtils';
 import LeggTilKandidatModal from '../legg-til-kandidat-modal/LeggTilKandidatModal';
 import css from './Kandidathandlinger.module.css';
+import { BodyShort, Loader } from '@navikt/ds-react';
 
 type Props = {
     kandidatlisteId: string;
@@ -40,15 +41,21 @@ const Kandidathandlinger: FunctionComponent<Props> = ({ erEier, kandidatlisteId 
             />
             {visHandlingerKnyttetTilKandidatlisten && (
                 <>
-                    {erEier && (
-                        <Link
-                            className="navds-link"
-                            to={`/kandidatsok?kandidatliste=${kandidatlisteId}&brukKriterierFraStillingen=true`}
-                        >
-                            <MagnifyingGlassIcon />
-                            Finn kandidater
-                        </Link>
-                    )}
+                    {erEier &&
+                        (kandidatlisteId ? (
+                            <Link
+                                className="navds-link"
+                                to={`/kandidatsok?kandidatliste=${kandidatlisteId}&brukKriterierFraStillingen=true`}
+                            >
+                                <MagnifyingGlassIcon />
+                                Finn kandidater
+                            </Link>
+                        ) : (
+                            <BodyShort className="navds-link" style={{ color: 'inherit' }}>
+                                <Loader />
+                                Finn kandidater
+                            </BodyShort>
+                        ))}
                     <button
                         className={classNames('navds-link', css.leggTilKandidatKnapp)}
                         onClick={toggleLeggTilKandidatModal}
