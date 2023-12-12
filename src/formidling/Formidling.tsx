@@ -5,7 +5,9 @@ import { sendEvent } from '../felles/amplitude';
 import Layout from '../felles/komponenter/layout/Layout';
 import useNavigering from '../stilling/stillingssok/useNavigering';
 import { QueryParam, oppdaterUrlMedParam } from '../stilling/stillingssok/utils/urlUtils';
-import AlleFormidlinger from './AlleFormidlinger';
+import Formidlingssøk from './Formidlingssøk';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
+import FormidlingssøkSidebar from './FormidlingssøkSidebar';
 
 enum TabVisning {
     VIS_ALLE = 'visAlle',
@@ -18,6 +20,7 @@ const Formidling: React.FC = () => {
     const queryParams = new URLSearchParams(search);
     const portefolje = queryParams.get('portefolje') ?? TabVisning.VIS_ALLE;
     const { searchParams, navigate } = useNavigering();
+    const { navIdent } = useInnloggetBruker(null);
 
     const oppdaterTab = (tab: TabVisning) => {
         if (tab === TabVisning.VIS_MINE) {
@@ -32,17 +35,17 @@ const Formidling: React.FC = () => {
     };
 
     return (
-        <Layout tittel="Formidlinger">
+        <Layout tittel="Formidlinger" sidepanel={<FormidlingssøkSidebar />}>
             <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
                 <Tabs.List>
                     <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle" />
                     <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine stillinger" />
                 </Tabs.List>
                 <Tabs.Panel value={TabVisning.VIS_ALLE}>
-                    <AlleFormidlinger />
+                    <Formidlingssøk />
                 </Tabs.Panel>
                 <Tabs.Panel value={TabVisning.VIS_MINE}>
-                    <div>kake</div>
+                    <Formidlingssøk navIdent={navIdent} />
                 </Tabs.Panel>
             </Tabs>
         </Layout>

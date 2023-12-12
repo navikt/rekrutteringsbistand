@@ -13,11 +13,12 @@ import useAntallTreff from '../stilling/stillingssok/useAntallTreff';
 import useSøkMedQuery from '../stilling/stillingssok/useSøkMedQuery';
 
 export interface IAlleFormidlinger {
-    children?: React.ReactNode | undefined;
+    navIdent?: string;
 }
 
-const AlleFormidlinger: React.FC<IAlleFormidlinger> = ({ children }) => {
+const FormidlingssK: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
     const respons = useSøkMedQuery({
+        navIdent,
         overstyrMedStillingskategori: new Set([Stillingskategori.Formidling]),
     });
 
@@ -38,7 +39,7 @@ const AlleFormidlinger: React.FC<IAlleFormidlinger> = ({ children }) => {
     }
     return (
         <div style={{ marginTop: '1rem' }}>
-            <Filtermeny finnerStillingForKandidat={false} />
+            <Filtermeny finnerStillingForKandidat={false} skjulLagreStandardsøk />
             {/* <div className={css.beskrivelseAvSøk}> */}
             <div>
                 {/* <Heading level="2" size="medium" className={css.antallStillinger}> */}
@@ -56,4 +57,4 @@ const AlleFormidlinger: React.FC<IAlleFormidlinger> = ({ children }) => {
     );
 };
 
-export default AlleFormidlinger;
+export default FormidlingssK;
