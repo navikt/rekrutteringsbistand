@@ -1,7 +1,7 @@
 interface ILenkeTilStilling {
     stillingsId: string;
     redigeringsmodus?: boolean;
-    fane?: string;
+    fane?: 'kandidater';
 }
 
 export const lenkeTilStilling = (props: ILenkeTilStilling) => {

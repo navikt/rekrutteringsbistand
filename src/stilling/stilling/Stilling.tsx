@@ -94,7 +94,8 @@ const Stilling = () => {
         navigate(
             lenkeTilStilling({
                 stillingsId: stilling.uuid,
-                fane: fane === 'om_stillingen' ? undefined : fane,
+                fane:
+                    fane === 'om_stillingen' ? undefined : fane === 'kandidater' ? fane : undefined,
             })
         );
     };
