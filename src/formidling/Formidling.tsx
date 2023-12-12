@@ -1,4 +1,5 @@
 import { Tabs } from '@navikt/ds-react';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { sendEvent } from '../felles/amplitude';
@@ -6,12 +7,10 @@ import Layout from '../felles/komponenter/layout/Layout';
 import useNavigering from '../stilling/stillingssok/useNavigering';
 import { QueryParam, oppdaterUrlMedParam } from '../stilling/stillingssok/utils/urlUtils';
 import Formidlingssøk from './Formidlingssøk';
-import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import FormidlingssøkSidebar from './FormidlingssøkSidebar';
 
 enum TabVisning {
     VIS_ALLE = 'visAlle',
-    VIS_KONTOR = 'mittKontor',
     VIS_MINE = 'visMine',
 }
 
@@ -39,7 +38,7 @@ const Formidling: React.FC = () => {
             <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
                 <Tabs.List>
                     <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle" />
-                    <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine stillinger" />
+                    <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine formidlinger" />
                 </Tabs.List>
                 <Tabs.Panel value={TabVisning.VIS_ALLE}>
                     <Formidlingssøk />
