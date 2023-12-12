@@ -1,5 +1,6 @@
 import { Heading, Loader } from '@navikt/ds-react';
 import * as React from 'react';
+import css from './Formidlingssøk.module.css';
 import { Stillingskategori } from '../felles/domene/stilling/Stilling';
 import { filtrerOrdFraStilling } from '../felles/filterOrd';
 import { formaterAntallAnnonser } from '../stilling/stillingssok/Stillingssøk';
@@ -16,10 +17,15 @@ export interface IAlleFormidlinger {
     navIdent?: string;
 }
 
-const FormidlingssK: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
+/* Hentet ut som konstant, så den alltid har samme identitet, siden
+den brukes i dependency på en useEffect eller lignende.
+ */
+const kunFormidling = new Set([Stillingskategori.Formidling]);
+
+const Formidlingssøk: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
     const respons = useSøkMedQuery({
         navIdent,
-        overstyrMedStillingskategori: new Set([Stillingskategori.Formidling]),
+        overstyrMedStillingskategori: kunFormidling,
     });
 
     const globalAggregering = respons?.aggregations
@@ -31,8 +37,7 @@ const FormidlingssK: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
 
     if (!respons) {
         return (
-            // <div className={css.spinner}>
-            <div>
+            <div className={css.spinner}>
                 <Loader variant="interaction" size="2xlarge" />
             </div>
         );
@@ -40,9 +45,7 @@ const FormidlingssK: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
     return (
         <div style={{ marginTop: '1rem' }}>
             <Filtermeny finnerStillingForKandidat={false} skjulLagreStandardsøk />
-            {/* <div className={css.beskrivelseAvSøk}> */}
-            <div>
-                {/* <Heading level="2" size="medium" className={css.antallStillinger}> */}
+            <div className={css.beskrivelseAvSøk}>
                 <Heading level="2" size="medium">
                     {formaterAntallAnnonser(antallTreff)}
                 </Heading>
@@ -57,4 +60,4 @@ const FormidlingssK: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
     );
 };
 
-export default FormidlingssK;
+export default Formidlingssøk;

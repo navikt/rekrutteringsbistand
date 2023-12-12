@@ -1,0 +1,19 @@
+.beskrivelseAvSøk {
+    align-self: stretch;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.spinner {
+    margin-top: 10rem;
+    display: flex;
+    justify-content: center;
+    /* Gjør siden kjempehøy under innlasting av stillinger */
+    /* slik at nettleseren klarer å scrolle til dit du var. */
+    margin-bottom: 500rem;
+}
