@@ -55,13 +55,14 @@ export function fetchId(kandidatnr: string): Promise<EsResponse<Id>> {
     return postJson(`${api.kandidatsøk}`, JSON.stringify(byggIdQuery(kandidatnr)));
 }
 
-const byggIdQuery = (kandidatnr: string): EsQuery<Cv> => ({
+const byggIdQuery = (kandidatnr: string): EsQuery<Id> => ({
     query: {
         term: {
             kandidatnr: kandidatnr,
         },
     },
     size: 1,
+    _source: ['fodselsnummer'],
 });
 
 const byggQuery = (fodselsnummer: string): EsQuery<Cv> => ({
