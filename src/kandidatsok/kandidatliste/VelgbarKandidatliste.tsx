@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { useHentStillingTittel } from '../../felles/hooks/useStilling';
-import { lenkeTilKandidatliste, storForbokstav } from '../utils';
+import { storForbokstav } from '../utils';
 import css from './VelgKandidatlister.module.css';
 
 type Props = {
@@ -55,7 +55,9 @@ const VelgbarKandidatliste: FunctionComponent<Props> = ({
             <BodyShort className={css.opprettet}>{opprettetDato}</BodyShort>
             <Link
                 target="_blank"
-                to={lenkeTilKandidatliste(kandidatlisteId)}
+                //TODO finn ndenne
+                // to={lenkeTilKandidatliste(kandidatlisteId)}
+                to={'#'}
                 className="navds-link"
             >
                 <ExternalLinkIcon title="Åpne kandidatliste" />

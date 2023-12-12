@@ -1,4 +1,3 @@
-import { ChevronLeftIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, Label } from '@navikt/ds-react';
 import {
     FormidlingAvUsynligKandidat,
@@ -9,7 +8,7 @@ import {
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import React, { FunctionComponent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { lenkeTilKandidatlisteoversikt, lenkeTilStilling } from '../../app/paths';
+import { lenkeTilStilling } from '../../app/paths';
 import { capitalizeEmployerName } from '../../utils/formateringUtils';
 import { erKobletTilArbeidsgiver, erKobletTilStilling } from '../domene/kandidatlisteUtils';
 import css from './SideHeader.module.css';
@@ -67,12 +66,6 @@ const SideHeader: FunctionComponent<Props> = ({ kandidatliste, skjulBanner }) =>
     return (
         <header className={css.header}>
             <div className={css.inner}>
-                <div className={css.tilbake}>
-                    <Link className="navds-link" to={lenkeTilKandidatlisteoversikt}>
-                        <ChevronLeftIcon />
-                        Til kandidatlister
-                    </Link>
-                </div>
                 <div>
                     <Heading spacing level="2" size="medium">
                         {kandidatliste.tittel}

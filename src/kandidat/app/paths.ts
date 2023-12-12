@@ -4,8 +4,6 @@ const nesteSeparator = (lenke: string) => (lenke.includes('?') ? '&' : '?');
 
 export const lenkeTilTilgangsside = `/kandidater/mangler-tilgang`;
 
-export const lenkeTilKandidatlisteoversikt = `/kandidater/lister`;
-
 export const lenkeTilKandidatliste = (kandidatlisteId: string, filterQuery?: URLSearchParams) => {
     let lenke = `/kandidater/lister/detaljer/${kandidatlisteId}`;
 

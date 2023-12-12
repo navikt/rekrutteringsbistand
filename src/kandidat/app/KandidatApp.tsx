@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import { TilToppenKnapp } from '../../felles/komponenter/tilToppenKnapp/TilToppenKnapp';
 import KandidatlisteUtenStilling from '../kandidatliste/KandidatlistesideUtenStilling';
-import Kandidatlisteoversikt from '../kandidatlisteoversikt/Kandidatlisteoversikt';
 import Kandidatside from '../kandidatside/Kandidatside';
 import CvSide from '../kandidatside/cv/CvSide';
 import Historikkside from '../kandidatside/historikk/Historikkside';
@@ -22,7 +21,6 @@ const KandidatApp = () => {
                     <Routes>
                         <Route path="mangler-tilgang" element={<ManglerTilgang />} />
 
-                        <Route path="lister" element={<Kandidatlisteoversikt />} />
                         <Route
                             path="lister/detaljer/:listeid"
                             element={<KandidatlisteUtenStilling />}
