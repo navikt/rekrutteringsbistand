@@ -54,19 +54,16 @@ const RekBisKortStilling = ({
                                 Utløpt
                             </Tag>
                         )}
-
                         {erIkkePublisert && (
                             <Tag size="small" variant="warning" className={css.utløptTag}>
                                 Ikke publisert
                             </Tag>
                         )}
-
                         {erUtkast && (
                             <Tag size="small" variant="alt1" className={css.utløptTag}>
                                 Utkast
                             </Tag>
                         )}
-
                         {erStoppet && (
                             <Tag size="small" variant="error" className={css.utløptTag}>
                                 Stoppet
