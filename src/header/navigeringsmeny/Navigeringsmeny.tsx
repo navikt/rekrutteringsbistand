@@ -19,10 +19,13 @@ const tabs: TabConfig[] = [
         tittel: 'Kandidatsøk',
         path: '/kandidatsok',
     },
-
     {
         tittel: 'Kandidatlister uten stillingsannonse',
         path: '/kandidater/lister',
+    },
+    {
+        tittel: 'Formidlinger',
+        path: '/formidlinger',
     },
 ];
 

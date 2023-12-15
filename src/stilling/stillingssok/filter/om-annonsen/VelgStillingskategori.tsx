@@ -4,11 +4,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import useNavigering from '../../useNavigering';
 import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils/urlUtils';
 
-const kategorier = [
-    Stillingskategori.Stilling,
-    Stillingskategori.Jobbmesse,
-    Stillingskategori.Formidling,
-];
+const kategorier = [Stillingskategori.Stilling, Stillingskategori.Jobbmesse];
 
 const VelgStillingskategori = () => {
     const { searchParams, navigate } = useNavigering();
@@ -53,11 +49,9 @@ const VelgStillingskategori = () => {
 export const stillingskategoriTilVisningsnavn = (kategori: Stillingskategori) => {
     switch (kategori) {
         case Stillingskategori.Stilling:
-            return 'Standard';
+            return 'Stilling';
         case Stillingskategori.Jobbmesse:
             return 'Jobbmesse';
-        case Stillingskategori.Formidling:
-            return 'Formidling';
         default:
             return '';
     }

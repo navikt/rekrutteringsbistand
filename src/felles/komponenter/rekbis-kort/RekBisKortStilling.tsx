@@ -16,6 +16,7 @@ type Props = {
     erIkkePublisert?: boolean;
     erUtkast?: boolean;
     erStoppet?: boolean;
+    erJobbmesse?: boolean;
 };
 
 const RekBisKortStilling = ({
@@ -31,12 +32,18 @@ const RekBisKortStilling = ({
     erIkkePublisert,
     erUtkast,
     erStoppet,
+    erJobbmesse,
 }: Props) => {
     return (
         <RekBisKort
             header={
                 <div className={css.header}>
                     <div className={css.header}>
+                        {erJobbmesse && (
+                            <Tag size="small" variant="alt2" className={css.utløptTag}>
+                                Jobbmesse
+                            </Tag>
+                        )}
                         {erEier && (
                             <Tag size="small" variant="info" className={css.utløptTag}>
                                 Min stilling
@@ -47,19 +54,16 @@ const RekBisKortStilling = ({
                                 Utløpt
                             </Tag>
                         )}
-
                         {erIkkePublisert && (
                             <Tag size="small" variant="warning" className={css.utløptTag}>
                                 Ikke publisert
                             </Tag>
                         )}
-
                         {erUtkast && (
                             <Tag size="small" variant="alt1" className={css.utløptTag}>
                                 Utkast
                             </Tag>
                         )}
-
                         {erStoppet && (
                             <Tag size="small" variant="error" className={css.utløptTag}>
                                 Stoppet

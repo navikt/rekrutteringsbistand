@@ -8,6 +8,7 @@ import { søk } from '../api/api';
 import { lagIndreQuery } from '../api/queries/queries';
 import { hentSøkekriterier } from '../utils/urlUtils';
 import css from './Utviklingsapp.module.css';
+import { fallbackIngenValgteStillingskategorierSet } from '../AlleStillinger';
 
 const ForklarMatch = () => {
     const { stillingsId } = useParams();
@@ -19,7 +20,11 @@ const ForklarMatch = () => {
     useEffect(() => {
         const hentForklaringMedStillingsId = async (stillingsId: string) => {
             const query = {
-                query: lagIndreQuery({ søkekriterier }),
+                query: lagIndreQuery({
+                    søkekriterier,
+                    fallbackIngenValgteStillingskategorier:
+                        fallbackIngenValgteStillingskategorierSet,
+                }),
             };
 
             const respons = await søk(query, true);

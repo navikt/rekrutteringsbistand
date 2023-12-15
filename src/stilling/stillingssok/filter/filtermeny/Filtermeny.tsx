@@ -8,9 +8,10 @@ import css from './Filtermeny.module.css';
 
 type Props = {
     finnerStillingForKandidat: boolean;
+    skjulLagreStandardsøk?: boolean;
 };
 
-const Filtermeny = ({ finnerStillingForKandidat }: Props) => {
+const Filtermeny = ({ finnerStillingForKandidat, skjulLagreStandardsøk }: Props) => {
     const [searchParams] = useSearchParams();
 
     const keys = Array.from(searchParams.keys());
@@ -28,7 +29,7 @@ const Filtermeny = ({ finnerStillingForKandidat }: Props) => {
     return (
         <div className={classNames(css.wrapper, css.filtermeny)}>
             <ValgteKrierier finnerStillingForKandidat={finnerStillingForKandidat} />
-            {!finnerStillingForKandidat && <LagreStandardsøk />}
+            {finnerStillingForKandidat || skjulLagreStandardsøk ? null : <LagreStandardsøk />}
         </div>
     );
 };
