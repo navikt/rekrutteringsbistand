@@ -10,7 +10,7 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import Søkefelter from './søkefelter/Søkefelter';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
-import { fallbackIngenValgteStillingskategorier } from './AlleStillinger';
+import { fallbackIngenValgteStillingskategorierSet } from './AlleStillinger';
 
 export type Props = {
     navIdent: string;
@@ -22,7 +22,7 @@ const MineStillinger = ({ navIdent, kandidatnr, finnerStillingForKandidat }: Pro
     const respons = useSøkMedQuery({
         navIdent,
         ikkePubliserte: true,
-        fallbackIngenValgteStillingskategorier,
+        fallbackIngenValgteStillingskategorier: fallbackIngenValgteStillingskategorierSet,
     });
     const globalAggregering = respons?.aggregations
         ?.globalAggregering as unknown as GlobalAggregering;

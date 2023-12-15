@@ -17,14 +17,14 @@ export type Props = {
     finnerStillingForKandidat?: boolean;
 };
 
-export const fallbackIngenValgteStillingskategorier = new Set([
+export const fallbackIngenValgteStillingskategorierSet = new Set([
     Stillingskategori.Stilling,
     Stillingskategori.Jobbmesse,
 ]);
 
 const AlleStillinger = ({ kandidatnr, finnerStillingForKandidat }: Props) => {
     const respons = useSøkMedQuery({
-        fallbackIngenValgteStillingskategorier,
+        fallbackIngenValgteStillingskategorier: fallbackIngenValgteStillingskategorierSet,
     });
 
     const globalAggregering = respons?.aggregations

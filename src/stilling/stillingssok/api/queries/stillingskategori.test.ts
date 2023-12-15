@@ -1,5 +1,8 @@
 import { Stillingskategori } from '../../../../felles/domene/stilling/Stilling';
 import { stillingskategori } from './stillingskategori';
+// eslint-disable-next-line import/no-restricted-paths
+import { kunFormidlingSet } from '../../../../formidling/Formidlingssøk';
+import { fallbackIngenValgteStillingskategorierSet } from '../../AlleStillinger';
 
 describe('Test stillingskategori query', () => {
     it('Ved valg FORMIDLING skal bare FORMIDLING vises', () => {
@@ -17,7 +20,9 @@ describe('Test stillingskategori query', () => {
                 },
             },
         ];
-        expect(stillingskategori(valg)).toEqual(resultat);
+        expect(stillingskategori({ valgte: valg, fallbackIngenValgte: kunFormidlingSet })).toEqual(
+            resultat
+        );
     });
 
     it('Ved INGEN VALG eller valg Stilling og Jobbmesse, skal alt uten FORMIDLING vises', () => {
@@ -28,6 +33,11 @@ describe('Test stillingskategori query', () => {
                     must_not: [
                         {
                             term: {
+                                'stillingsinfo.stillingskategori': Stillingskategori.Arbeidstrening,
+                            },
+                        },
+                        {
+                            term: {
                                 'stillingsinfo.stillingskategori': Stillingskategori.Formidling,
                             },
                         },
@@ -35,8 +45,18 @@ describe('Test stillingskategori query', () => {
                 },
             },
         ];
-        expect(stillingskategori(valg)).toEqual(resultat);
-        expect(stillingskategori(new Set())).toEqual(resultat);
+        expect(
+            stillingskategori({
+                valgte: valg,
+                fallbackIngenValgte: fallbackIngenValgteStillingskategorierSet,
+            })
+        ).toEqual(resultat);
+        expect(
+            stillingskategori({
+                valgte: new Set(),
+                fallbackIngenValgte: fallbackIngenValgteStillingskategorierSet,
+            })
+        ).toEqual(resultat);
     });
 
     it('Ved valg stilling skal alt uten FORMIDLING og JOBBMESSE vises', () => {
@@ -47,7 +67,7 @@ describe('Test stillingskategori query', () => {
                     must_not: [
                         {
                             term: {
-                                'stillingsinfo.stillingskategori': Stillingskategori.Formidling,
+                                'stillingsinfo.stillingskategori': Stillingskategori.Arbeidstrening,
                             },
                         },
                         {
@@ -55,11 +75,21 @@ describe('Test stillingskategori query', () => {
                                 'stillingsinfo.stillingskategori': Stillingskategori.Jobbmesse,
                             },
                         },
+                        {
+                            term: {
+                                'stillingsinfo.stillingskategori': Stillingskategori.Formidling,
+                            },
+                        },
                     ],
                 },
             },
         ];
-        expect(stillingskategori(valg)).toEqual(resultat);
+        expect(
+            stillingskategori({
+                valgte: valg,
+                fallbackIngenValgte: fallbackIngenValgteStillingskategorierSet,
+            })
+        ).toEqual(resultat);
     });
 
     it('Ved valg JOBBMESSE skal bare JOBBMESSE vises', () => {
@@ -77,6 +107,11 @@ describe('Test stillingskategori query', () => {
                 },
             },
         ];
-        expect(stillingskategori(valg)).toEqual(resultat);
+        expect(
+            stillingskategori({
+                valgte: valg,
+                fallbackIngenValgte: fallbackIngenValgteStillingskategorierSet,
+            })
+        ).toEqual(resultat);
     });
 });

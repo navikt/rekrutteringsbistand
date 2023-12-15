@@ -8,7 +8,7 @@ import { søk } from '../api/api';
 import { lagIndreQuery } from '../api/queries/queries';
 import { hentSøkekriterier } from '../utils/urlUtils';
 import css from './Utviklingsapp.module.css';
-import { fallbackIngenValgteStillingskategorier } from '../AlleStillinger';
+import { fallbackIngenValgteStillingskategorierSet } from '../AlleStillinger';
 
 const ForklarMatch = () => {
     const { stillingsId } = useParams();
@@ -22,7 +22,8 @@ const ForklarMatch = () => {
             const query = {
                 query: lagIndreQuery({
                     søkekriterier,
-                    fallbackIngenValgteStillingskategorier,
+                    fallbackIngenValgteStillingskategorier:
+                        fallbackIngenValgteStillingskategorierSet,
                 }),
             };
 

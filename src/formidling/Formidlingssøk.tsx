@@ -20,13 +20,13 @@ export interface IAlleFormidlinger {
 /* Hentet ut som konstant, så den alltid har samme identitet, siden
  * den brukes i dependency på en useEffect eller lignende.
  */
-const kunFormidling = new Set([Stillingskategori.Formidling]);
+export const kunFormidlingSet = new Set([Stillingskategori.Formidling]);
 
 const Formidlingssøk: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
     const respons = useSøkMedQuery({
         navIdent,
-        overstyrValgteStillingskategorier: kunFormidling,
-        fallbackIngenValgteStillingskategorier: kunFormidling,
+        overstyrValgteStillingskategorier: kunFormidlingSet,
+        fallbackIngenValgteStillingskategorier: kunFormidlingSet,
     });
 
     const globalAggregering = respons?.aggregations
