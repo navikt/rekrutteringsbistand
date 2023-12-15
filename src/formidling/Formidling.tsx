@@ -14,10 +14,12 @@ enum TabVisning {
     VIS_MINE = 'visMine',
 }
 
+const defaultTab = TabVisning.VIS_ALLE;
+
 const Formidling: React.FC = () => {
     const { search } = useLocation();
     const queryParams = new URLSearchParams(search);
-    const portefolje = queryParams.get('portefolje') ?? TabVisning.VIS_ALLE;
+    const portefolje = queryParams.get('portefolje') ?? defaultTab;
     const { searchParams, navigate } = useNavigering();
     const { navIdent } = useInnloggetBruker(null);
 
@@ -29,7 +31,7 @@ const Formidling: React.FC = () => {
             searchParams,
             navigate,
             parameter: QueryParam.Portofølje,
-            verdi: tab === TabVisning.VIS_MINE ? TabVisning.VIS_MINE : null,
+            verdi: tab === defaultTab ? null : tab,
         });
     };
 
