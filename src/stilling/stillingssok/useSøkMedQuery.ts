@@ -14,10 +14,16 @@ export const DEFAULT_VALGTE_KRITERIER = '?publisert=intern&statuser=publisert';
 type Returverdi = {
     navIdent?: string;
     ikkePubliserte?: boolean;
-    overstyrMedStillingskategori?: Set<Stillingskategori>;
+    overstyrValgteStillingskategorier?: Set<Stillingskategori>;
+    fallbackIngenValgteStillingskategorier: Set<Stillingskategori>;
 };
 
-const useSøkMedQuery = ({ navIdent, ikkePubliserte, overstyrMedStillingskategori }: Returverdi) => {
+const useSøkMedQuery = ({
+    navIdent,
+    ikkePubliserte,
+    overstyrValgteStillingskategorier,
+    fallbackIngenValgteStillingskategorier,
+}: Returverdi) => {
     const { navigate, searchParams, state } = useNavigering();
     const { standardsøk } = useStandardsøk();
     const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);
@@ -26,13 +32,25 @@ const useSøkMedQuery = ({ navIdent, ikkePubliserte, overstyrMedStillingskategor
         const skalBrukeStandardsøk = searchParams.has(QueryParam.BrukStandardsøk);
         if (skalBrukeStandardsøk) return;
 
-        const søkekriterier = hentSøkekriterier(searchParams);
+        let søkekriterier = hentSøkekriterier(searchParams);
+        if (overstyrValgteStillingskategorier) {
+            søkekriterier = {
+                ...søkekriterier,
+                stillingskategorier: overstyrValgteStillingskategorier,
+            };
+        }
+
         const harByttetSide = state?.harByttetSide;
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
         const søkMedQuery = async () => {
             let respons = await søk(
-                lagQuery({ søkekriterier, navIdent, ikkePubliserte, overstyrMedStillingskategori })
+                lagQuery({
+                    søkekriterier,
+                    navIdent,
+                    ikkePubliserte,
+                    fallbackIngenValgteStillingskategorier,
+                })
             );
             setRespons(respons);
         };
@@ -47,7 +65,15 @@ const useSøkMedQuery = ({ navIdent, ikkePubliserte, overstyrMedStillingskategor
         } else {
             søkMedQuery();
         }
-    }, [searchParams, navigate, state, navIdent, ikkePubliserte, overstyrMedStillingskategori]);
+    }, [
+        searchParams,
+        navigate,
+        state,
+        navIdent,
+        ikkePubliserte,
+        overstyrValgteStillingskategorier,
+        fallbackIngenValgteStillingskategorier,
+    ]);
 
     useEffect(() => {
         const skalBrukeStandardsøk = searchParams.has(QueryParam.BrukStandardsøk);

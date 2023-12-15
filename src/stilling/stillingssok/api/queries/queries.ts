@@ -1,6 +1,5 @@
 import { EsQuery } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { Stillingskategori } from '../../../../felles/domene/stilling/Stilling';
 import { Søkekriterier } from '../../Stillingssøk';
 import { Søkefelt } from '../../søkefelter/Søkefelter';
 import geografi from './geografi';
@@ -11,6 +10,7 @@ import sorterTreff from './sortering';
 import { status } from './status';
 import { stillingskategori } from './stillingskategori';
 import søkefelt from './søkefelt';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 
 export const maksAntallTreffPerSøk = 40;
 
@@ -18,14 +18,14 @@ interface IlagQuery {
     søkekriterier: Søkekriterier;
     navIdent?: string;
     ikkePubliserte?: boolean;
-    overstyrMedStillingskategori?: Set<Stillingskategori>;
+    fallbackIngenValgteStillingskategorier: Set<Stillingskategori>;
 }
 
 export const lagQuery = ({
     søkekriterier,
     navIdent,
     ikkePubliserte,
-    overstyrMedStillingskategori,
+    fallbackIngenValgteStillingskategorier,
 }: IlagQuery): EsQuery<EsRekrutteringsbistandstilling> => {
     return {
         size: maksAntallTreffPerSøk,
@@ -35,10 +35,10 @@ export const lagQuery = ({
             søkekriterier,
             navIdent,
             ikkePubliserte,
-            overstyrMedStillingskategori,
+            fallbackIngenValgteStillingskategorier,
         }),
         ...sorterTreff(søkekriterier.sortering, søkekriterier.tekst),
-        ...aggregeringer(søkekriterier),
+        ...aggregeringer({ søkekriterier, fallbackIngenValgteStillingskategorier }),
     };
 };
 
@@ -47,7 +47,7 @@ interface IlagIndreQuery {
     alternativtFelt?: Søkefelt;
     navIdent?: string;
     ikkePubliserte?: boolean;
-    overstyrMedStillingskategori?: Set<Stillingskategori>;
+    fallbackIngenValgteStillingskategorier: Set<Stillingskategori>;
 }
 
 export const lagIndreQuery = ({
@@ -55,7 +55,7 @@ export const lagIndreQuery = ({
     alternativtFelt,
     navIdent,
     ikkePubliserte,
-    overstyrMedStillingskategori,
+    fallbackIngenValgteStillingskategorier,
 }: IlagIndreQuery) => {
     const minimum_should_match = søkekriterier.tekst.size === 0 ? '0' : '1';
     const identSøk = navIdent ? kunMineStillinger(navIdent) : '';
@@ -74,11 +74,10 @@ export const lagIndreQuery = ({
                 ...publisert(søkekriterier.publisert),
                 ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
                 ...status(søkekriterier.statuser, ikkePubliserte),
-                ...stillingskategori(
-                    overstyrMedStillingskategori
-                        ? overstyrMedStillingskategori
-                        : søkekriterier.stillingskategorier
-                ),
+                ...stillingskategori({
+                    valgte: søkekriterier.stillingskategorier,
+                    fallbackIngenValgte: fallbackIngenValgteStillingskategorier,
+                }),
                 ...inkludering(
                     søkekriterier.hovedinkluderingstags,
                     søkekriterier.subinkluderingstags
@@ -88,23 +87,31 @@ export const lagIndreQuery = ({
     };
 };
 
-const aggregeringer = (søkekriterier: Søkekriterier) => {
-    let queriesForFeltaggregering: Partial<Record<Søkefelt, object>> = {};
-
-    if (søkekriterier.tekst.size > 0) {
-        queriesForFeltaggregering = {
-            ...queriesForFeltaggregering,
-            arbeidsgiver: lagIndreQuery({ søkekriterier, alternativtFelt: Søkefelt.Arbeidsgiver }),
-            tittel: lagIndreQuery({ søkekriterier, alternativtFelt: Søkefelt.Tittel }),
-            annonsetekst: lagIndreQuery({ søkekriterier, alternativtFelt: Søkefelt.Annonsetekst }),
-            annonsenummer: lagIndreQuery({
-                søkekriterier,
-                alternativtFelt: Søkefelt.Annonsenummer,
-            }),
-        };
-    } else {
+type IAggregeringer = {
+    søkekriterier: Søkekriterier;
+    fallbackIngenValgteStillingskategorier: Set<Stillingskategori>;
+};
+const aggregeringer = ({
+    søkekriterier,
+    fallbackIngenValgteStillingskategorier,
+}: IAggregeringer) => {
+    if (søkekriterier.tekst.size <= 0) {
         return {};
     }
+
+    const indreQueryMedAlternativFelt = (alternativtFelt: Søkefelt) =>
+        lagIndreQuery({
+            søkekriterier,
+            alternativtFelt,
+            fallbackIngenValgteStillingskategorier,
+        });
+
+    const queriesForFeltaggregering: Partial<Record<Søkefelt, object>> = {
+        arbeidsgiver: indreQueryMedAlternativFelt(Søkefelt.Arbeidsgiver),
+        tittel: indreQueryMedAlternativFelt(Søkefelt.Tittel),
+        annonsetekst: indreQueryMedAlternativFelt(Søkefelt.Annonsetekst),
+        annonsenummer: indreQueryMedAlternativFelt(Søkefelt.Annonsenummer),
+    };
 
     return {
         aggs: {
