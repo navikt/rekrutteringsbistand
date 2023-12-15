@@ -36,7 +36,7 @@ export const queryTilKandidatsøkMedAktørIdOgFødselsnummer = (
     ],
 });
 
-export const queryTilHentKandidat = (kandidatnr: string): EsQuery<Kandidat> => ({
+export const queryTilHentKandidat = (fodselsnummer: string): EsQuery<Kandidat> => ({
     size: 1,
-    query: { term: { kandidatnr: kandidatnr } },
+    query: { term: { fodselsnummer: fodselsnummer } },
 });

@@ -2,7 +2,7 @@ import Cv from './Cv';
 import Jobbprofil from './Jobbprofil';
 import Oppfølgingsinformasjon from './Oppfølgingsinformasjon';
 
-type Id = {
+export type Id = {
     aktorId: string;
     fodselsnummer: string;
     arenaKandidatnr: string;

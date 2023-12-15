@@ -139,9 +139,9 @@ export const erHentKandidatQuery = (request: SearchQuery): string | null => {
     if (
         request.size === 1 &&
         request._source === undefined &&
-        request.query?.term?.['kandidatnr'] !== undefined
+        request.query?.term?.['fodselsnummer'] !== undefined
     ) {
-        return request.query.term['kandidatnr'];
+        return request.query.term['fodselsnummer'];
     }
 
     return null;
