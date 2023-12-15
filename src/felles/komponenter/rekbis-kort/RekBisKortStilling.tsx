@@ -40,7 +40,7 @@ const RekBisKortStilling = ({
                 <div className={css.header}>
                     <div className={css.header}>
                         {erJobbmesse && (
-                            <Tag size="small" variant="success" className={css.utløptTag}>
+                            <Tag size="small" variant="alt2" className={css.utløptTag}>
                                 Jobbmesse
                             </Tag>
                         )}
