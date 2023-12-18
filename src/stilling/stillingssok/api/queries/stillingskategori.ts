@@ -1,53 +1,57 @@
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 
-export const stillingskategori = (stillingskategori: Set<Stillingskategori>) => {
-    const visAlleStillinger = stillingskategori.size === Object.keys(Stillingskategori).length;
+type IStillingskategori = {
+    fallbackIngenValgte: Set<Stillingskategori>;
+    valgte: Set<Stillingskategori>;
+};
 
-    if (visAlleStillinger) {
-        return [];
+export const stillingskategori = ({ valgte, fallbackIngenValgte }: IStillingskategori) => {
+    if (valgte.size === 0) {
+        valgte = fallbackIngenValgte;
+    }
+
+    /** Filtrering på stillingskategori (`stillingsinfo.stillingskategori`) kan ikke gjøres naivt:
+     *  - eksterne stillinger uten kandidatlister har ingen kategori (`stillingsinfo` er null).
+     *  - elasticsearch skiller ikke mellom null og om felt mangler.
+     *
+     * Vi filtrere derfor på stillingskategori på to måter:
+     * 1. Om stillinger skal være en del av resultatet, filtrerer vi bort det som ikke er valgt.
+     * 2. Om stillinger ikke skal være en del av resultatet, filtrerer man direkte på det som er valgt.
+     */
+
+    if (valgte.has(Stillingskategori.Stilling)) {
+        const ikkeValgte = motsatteValg(valgte);
+        return ekskluderKategorier(ikkeValgte);
     } else {
-        return kunValgteKategorier(stillingskategori);
+        return visKunKategorier(valgte);
     }
 };
 
-const kunValgteKategorier = (stillingskategori: Set<Stillingskategori>) => {
-    if (stillingskategori.size === 0 || stillingskategori.has(Stillingskategori.Stilling)) {
-        const mustNot = [];
-
-        if (!stillingskategori.has(Stillingskategori.Formidling)) {
-            mustNot.push(Stillingskategori.Formidling);
-        }
-
-        if (!stillingskategori.has(Stillingskategori.Jobbmesse)) {
-            mustNot.push(Stillingskategori.Jobbmesse);
-        }
-
-        const skalEkskluderes = mustNot.map((kategori) => ({
-            term: {
-                'stillingsinfo.stillingskategori': kategori,
-            },
-        }));
-
-        return [
-            {
-                bool: {
-                    must_not: skalEkskluderes,
-                },
-            },
-        ];
-    } else {
-        const skalInkluderes = Array.from(stillingskategori).map((kategori) => ({
-            term: {
-                'stillingsinfo.stillingskategori': kategori,
-            },
-        }));
-
-        return [
-            {
-                bool: {
-                    should: skalInkluderes,
-                },
-            },
-        ];
-    }
+const motsatteValg = (valgteKategorier: Set<Stillingskategori>) => {
+    const alleKategorier = Object.values(Stillingskategori);
+    return new Set(alleKategorier.filter((kategori) => !valgteKategorier.has(kategori)));
 };
+
+const visKunKategorier = (stillingskategorier: Set<Stillingskategori>) => [
+    {
+        bool: {
+            should: [...stillingskategorier].map((kategori) => ({
+                term: {
+                    'stillingsinfo.stillingskategori': kategori,
+                },
+            })),
+        },
+    },
+];
+
+const ekskluderKategorier = (stillingskategorier: Set<Stillingskategori>) => [
+    {
+        bool: {
+            must_not: [...stillingskategorier].map((kategori) => ({
+                term: {
+                    'stillingsinfo.stillingskategori': kategori,
+                },
+            })),
+        },
+    },
+];

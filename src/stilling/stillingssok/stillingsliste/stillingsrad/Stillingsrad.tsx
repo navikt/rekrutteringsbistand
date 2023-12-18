@@ -12,6 +12,7 @@ import {
 import {
     Geografi,
     Privacy,
+    Stillingskategori,
     USE_STYRK_AS_TITLE_FEATURE_TOGGLE,
 } from 'felles/domene/stilling/Stilling';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
@@ -38,7 +39,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
     score,
 }) => {
     const [searchParams] = useSearchParams();
-
+    const stillingskategori = rekrutteringsbistandstilling?.stillingsinfo?.stillingskategori;
     const stilling = rekrutteringsbistandstilling.stilling;
     const eierNavn = formaterEiernavn(hentEier(rekrutteringsbistandstilling));
 
@@ -66,6 +67,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
 
     return (
         <RekBisKortStilling
+            erJobbmesse={stillingskategori === Stillingskategori.Jobbmesse}
             erEier={erEier}
             erIkkePublisert={
                 stilling.publishedByAdmin && status === 'INACTIVE' && !erUtløptStilling

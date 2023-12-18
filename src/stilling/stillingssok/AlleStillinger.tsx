@@ -10,14 +10,22 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import Søkefelter from './søkefelter/Søkefelter';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 
 export type Props = {
     kandidatnr: string;
     finnerStillingForKandidat?: boolean;
 };
 
+export const fallbackIngenValgteStillingskategorierSet = new Set([
+    Stillingskategori.Stilling,
+    Stillingskategori.Jobbmesse,
+]);
+
 const AlleStillinger = ({ kandidatnr, finnerStillingForKandidat }: Props) => {
-    const respons = useSøkMedQuery({});
+    const respons = useSøkMedQuery({
+        fallbackIngenValgteStillingskategorier: fallbackIngenValgteStillingskategorierSet,
+    });
 
     const globalAggregering = respons?.aggregations
         ?.globalAggregering as unknown as GlobalAggregering;

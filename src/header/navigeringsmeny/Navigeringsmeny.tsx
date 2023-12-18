@@ -19,6 +19,10 @@ const tabs: TabConfig[] = [
         tittel: 'Kandidatsøk',
         path: '/kandidatsok',
     },
+    {
+        tittel: 'Formidlinger',
+        path: '/formidlinger',
+    },
 ];
 
 const Navigeringsmeny: FunctionComponent = () => {
