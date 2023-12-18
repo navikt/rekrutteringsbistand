@@ -63,8 +63,10 @@ export const Historikkrad: FunctionComponent<Props> = ({
                 </Detail>
             </>
         );
-    } else {
+    } else if (kandidatliste.stillingId) {
         tittel = <Lenke to={lenkeTilKandidatliste(kandidatliste.uuid)}>{listeTittel}</Lenke>;
+    } else {
+        tittel = <BodyShort as="span">{listeTittel} </BodyShort>;
     }
 
     const skalViseLenkeTilStilling = !(kandidatliste.slettet || kandidatliste.erMaskert);
