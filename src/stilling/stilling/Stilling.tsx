@@ -5,26 +5,26 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 
 import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
-import { lenkeTilStilling } from '../../kandidat/app/paths';
+import { lenkeTilStilling } from '../../felles/lenker';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
 import store from '../../kandidat/state/reduxStore';
 import useKandidatlisteId from '../api/useKandidatlisteId';
 import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
-import css from './Stilling.module.css';
-import VisStillingBanner from './VisStillingBanner';
 import { REMOVE_AD_DATA } from './adDataReducer';
-import { EDIT_AD, FETCH_AD, PREVIEW_EDIT_AD } from './adReducer';
 import Administration from './administration/Administration';
 import AdministrationLimited from './administration/limited/AdministrationLimited';
+import { EDIT_AD, FETCH_AD, PREVIEW_EDIT_AD } from './adReducer';
 import Edit from './edit/Edit';
 import Error from './error/Error';
-import Forhåndsvisning from './forhåndsvisning/Forhåndsvisning';
 import AdministrationPreview from './forhåndsvisning/administration/AdministrationPreview';
+import Forhåndsvisning from './forhåndsvisning/Forhåndsvisning';
 import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
 import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
+import css from './Stilling.module.css';
+import VisStillingBanner from './VisStillingBanner';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 
@@ -92,7 +92,11 @@ const Stilling = () => {
 
     const onFaneChange = (fane: string) => {
         navigate(
-            lenkeTilStilling(stilling?.uuid, false, fane === 'om_stillingen' ? undefined : fane)
+            lenkeTilStilling({
+                stillingsId: stilling.uuid,
+                fane:
+                    fane === 'om_stillingen' ? undefined : fane === 'kandidater' ? fane : undefined,
+            })
         );
     };
 

@@ -1,6 +1,6 @@
 import { Label, Tabs } from '@navikt/ds-react';
 import React, { Dispatch, ReactNode } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import {
@@ -12,14 +12,12 @@ import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
-import { lenkeTilKandidatliste } from '../../app/paths';
+import { lenkeTilStilling } from '../../../felles/lenker';
 import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
-import { filterTilQueryParams } from '../../kandidatliste/filter/filter-utils';
 import StatusOgHendelser from '../../kandidatliste/kandidatrad/status-og-hendelser/StatusOgHendelser';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
 import Sidefeil from '../../komponenter/sidefeil/Sidefeil';
-import AppState from '../../state/AppState';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
 import useCv from '../hooks/useCv';
 import useFaner from '../hooks/useFaner';
@@ -92,7 +90,6 @@ const FraKandidatlisteInner = ({
     children: React.ReactNode;
 }) => {
     const dispatch: Dispatch<KandidatlisteAction> = useDispatch();
-    const state = useSelector((state: AppState) => state.kandidatliste);
 
     const [fane, setFane] = useFaner();
     const forespørsel = useForespørselOmDelingAvCv(kandidat, kandidatliste);
@@ -116,10 +113,7 @@ const FraKandidatlisteInner = ({
     const brødsmulesti = [
         {
             tekst: erStilling ? stillingTittel : kandidatliste.tittel,
-            href: lenkeTilKandidatliste(
-                kandidatliste.kandidatlisteId,
-                filterTilQueryParams(state.filter)
-            ),
+            href: lenkeTilStilling({ stillingsId: kandidatliste.stillingId, fane: 'kandidater' }),
         },
     ];
 

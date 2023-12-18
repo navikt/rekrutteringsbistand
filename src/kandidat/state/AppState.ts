@@ -1,5 +1,4 @@
 import { KandidatlisteState } from '../kandidatliste/reducer/kandidatlisteReducer';
-import { ListeoversiktState } from '../kandidatlisteoversikt/reducer/listeoversiktReducer';
 import { CvState } from '../kandidatside/cv/reducer/cvReducer';
 import { HistorikkState } from '../kandidatside/historikk/historikkReducer';
 import { VarslingState } from '../varsling/varslingReducer';
@@ -10,7 +9,6 @@ type AppState = {
     enhetsregister: any;
     historikk: HistorikkState;
     kandidatliste: KandidatlisteState;
-    listeoversikt: ListeoversiktState;
     varsling: VarslingState;
     error: ErrorState;
 };

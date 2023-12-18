@@ -4,8 +4,6 @@ const nesteSeparator = (lenke: string) => (lenke.includes('?') ? '&' : '?');
 
 export const lenkeTilTilgangsside = `/kandidater/mangler-tilgang`;
 
-export const lenkeTilKandidatlisteoversikt = `/kandidater/lister`;
-
 export const lenkeTilKandidatliste = (kandidatlisteId: string, filterQuery?: URLSearchParams) => {
     let lenke = `/kandidater/lister/detaljer/${kandidatlisteId}`;
 
@@ -24,23 +22,6 @@ export const lenkeTilKandidat = (
     const path = `/kandidater/kandidat/${kandidatnummer}/cv`;
     if (kandidatlisteId) return path + `?${KandidatQueryParam.KandidatlisteId}=${kandidatlisteId}`;
     if (stillingsId) return path + `?${KandidatQueryParam.StillingId}=${stillingsId}`;
-
-    return path;
-};
-export const lenkeTilStilling = (
-    stillingsId: string,
-    redigeringsmodus?: boolean,
-    fane?: string
-) => {
-    let path = `/stillinger/stilling/${stillingsId}`;
-
-    if (fane) {
-        path += `/${fane}`;
-    }
-
-    if (redigeringsmodus) {
-        path += '?redigeringsmodus=true';
-    }
 
     return path;
 };

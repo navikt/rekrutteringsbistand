@@ -8,7 +8,8 @@ import { Link } from 'react-router-dom';
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Sms } from 'felles/domene/sms/Sms';
 import useHentStilling from '../../../../../felles/hooks/useStilling';
-import { lenkeTilKandidatliste, lenkeTilStilling } from '../../../../app/paths';
+import { lenkeTilStilling } from '../../../../../felles/lenker';
+import { lenkeTilKandidatliste } from '../../../../app/paths';
 import Hendelsesetikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
 import StatusEtikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
 import { ForespørselOmDelingAvCv } from '../../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
@@ -62,8 +63,10 @@ export const Historikkrad: FunctionComponent<Props> = ({
                 </Detail>
             </>
         );
-    } else {
+    } else if (kandidatliste.stillingId) {
         tittel = <Lenke to={lenkeTilKandidatliste(kandidatliste.uuid)}>{listeTittel}</Lenke>;
+    } else {
+        tittel = <BodyShort as="span">{listeTittel} </BodyShort>;
     }
 
     const skalViseLenkeTilStilling = !(kandidatliste.slettet || kandidatliste.erMaskert);
@@ -95,7 +98,9 @@ export const Historikkrad: FunctionComponent<Props> = ({
             </Table.DataCell>
             <Table.DataCell className="historikkrad__stilling">
                 {skalViseLenkeTilStilling && kandidatliste.stillingId && (
-                    <Lenke to={lenkeTilStilling(kandidatliste.stillingId)}>Se stilling</Lenke>
+                    <Lenke to={lenkeTilStilling({ stillingsId: kandidatliste.stillingId })}>
+                        Se stilling
+                    </Lenke>
                 )}
             </Table.DataCell>
         </Table.Row>

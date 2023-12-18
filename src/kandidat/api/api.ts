@@ -10,7 +10,6 @@ import {
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
-import { KandidatlisteDto } from '../kandidatlisteoversikt/modaler/Kandidatlisteskjema';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
 
@@ -101,14 +100,14 @@ export const putUtfallKandidat = (
         JSON.stringify({ utfall, navKontor })
     );
 
-export const postKandidatliste = (kandidatlisteDto: KandidatlisteDto) =>
+export const postKandidatliste = (kandidatlisteDto: any) =>
     postJson(`${api.kandidat}/veileder/me/kandidatlister`, JSON.stringify(kandidatlisteDto));
 
 export function putKandidatliste(stillingsId) {
     return putJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste/`);
 }
 
-export function endreKandidatliste(kandidatlisteId: string, kandidatlisteDto: KandidatlisteDto) {
+export function endreKandidatliste(kandidatlisteId: string, kandidatlisteDto: any) {
     return putJson(
         `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`,
         JSON.stringify(kandidatlisteDto)

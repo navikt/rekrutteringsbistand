@@ -2,8 +2,7 @@ import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'r
 import createSagaMiddleware from 'redux-saga';
 import kandidatlisteReducer from '../kandidatliste/reducer/kandidatlisteReducer';
 import kandidatlisteSaga from '../kandidatliste/reducer/kandidatlisteSaga';
-import listeoversiktReducer from '../kandidatlisteoversikt/reducer/listeoversiktReducer';
-import listeoversiktSaga from '../kandidatlisteoversikt/reducer/listeoversiktSaga';
+
 import cvReducer, { cvSaga } from '../kandidatside/cv/reducer/cvReducer';
 import { historikkReducer, historikkSaga } from '../kandidatside/historikk/historikkReducer';
 import enhetsregisterReducer, {
@@ -22,7 +21,6 @@ const store = legacy_createStore(
         enhetsregister: enhetsregisterReducer,
         historikk: historikkReducer,
         kandidatliste: kandidatlisteReducer,
-        listeoversikt: listeoversiktReducer,
         varsling: varslingReducer,
         error: errorReducer,
     }),
@@ -33,7 +31,6 @@ sagaMiddleware.run(cvSaga);
 sagaMiddleware.run(historikkSaga);
 sagaMiddleware.run(kandidatlisteSaga);
 sagaMiddleware.run(enhetsregisterSaga);
-sagaMiddleware.run(listeoversiktSaga);
 sagaMiddleware.run(varslingSaga);
 
 export default store;

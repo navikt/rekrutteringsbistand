@@ -7,9 +7,9 @@ import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { useHentStillingTittel } from '../../felles/hooks/useStilling';
+import { lenkeTilStilling } from '../../felles/lenker';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
-import { lenkeTilKandidatliste, lenkeTilStilling } from '../utils';
 import css from './Kandidatlistebanner.module.css';
 
 type Props = {
@@ -35,7 +35,13 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                             brødsmulesti={[
                                 {
                                     tekst: stillingTittel ?? kandidatliste.data.tittel,
-                                    href: lenkeTilKandidatliste(kandidatliste.data.kandidatlisteId),
+                                    href: stillingsId
+                                        ? lenkeTilStilling({
+                                              stillingsId: stillingsId,
+                                              redigeringsmodus: false,
+                                              fane: 'kandidater',
+                                          })
+                                        : '#',
                                 },
                                 {
                                     tekst: 'Finn kandidater',
@@ -67,7 +73,10 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                     {kandidatliste.kind === Nettstatus.Suksess ? (
                         <>
                             {stillingsId && (
-                                <Link className="navds-link" to={lenkeTilStilling(stillingsId)}>
+                                <Link
+                                    className="navds-link"
+                                    to={lenkeTilStilling({ stillingsId: stillingsId })}
+                                >
                                     <Buldings2Icon aria-hidden />
                                     Se stilling
                                 </Link>
@@ -76,8 +85,11 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                                 className="navds-link"
                                 to={
                                     stillingsId
-                                        ? lenkeTilStilling(stillingsId, 'kandidater')
-                                        : lenkeTilKandidatliste(kandidatliste.data.kandidatlisteId)
+                                        ? lenkeTilStilling({
+                                              stillingsId: stillingsId,
+                                              fane: 'kandidater',
+                                          })
+                                        : '#'
                                 }
                             >
                                 <PersonGroupIcon aria-hidden />
