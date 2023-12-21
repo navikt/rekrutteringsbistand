@@ -7,6 +7,7 @@ const url = {
     modiaAktivEnhet: `/modiacontextholder/api/context/aktivenhet`,
     modiaAktivBruker: `/modiacontextholder/api/context/aktivbruker`,
     modiaDecorator: `/modiacontextholder/api/decorator`,
+    featuretoggle: `/modiacontextholder/api/featuretoggle`,
 };
 
 const aktivEnhet = { aktivBruker: null, aktivEnhet: '0239' };
@@ -28,7 +29,7 @@ export const modiaContextHolderMock = [
     http.get(url.modiaDecorator, () => HttpResponse.json(decorator)),
     http.get(url.modiaAktivEnhet, () => HttpResponse.json(aktivEnhet)),
     http.get(url.modiaAktivBruker, () => HttpResponse.json(aktivBruker)),
-
     http.post(url.modiaContext, () => new HttpResponse(null, { status: 201 })),
     http.delete(url.modiaAktivBruker, () => new HttpResponse(null, { status: 200 })),
+    http.get(url.featuretoggle, () => HttpResponse.json({})),
 ];

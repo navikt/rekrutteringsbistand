@@ -4,9 +4,7 @@
     "private": true,
     "homepage": "/",
     "scripts": {
-        "start": "cross-env VITE_MOCK=true VITE_MOCK_MODIA=true VITE_MOCK_AIVEN=true vite",
-        "start:modia": "cross-env VITE_MOCK=true VITE_MOCK_AIVEN=true vite",
-        "start:aiven": "cross-env VITE_MOCK=true VITE_MOCK_MODIA=true vite",
+        "start": "vite",
         "start:faro": "cross-env VITE_MOCK=true VITE_MOCK_MODIA=true VITE_LOKAL_FARO=true vite",
         "build": "vite build",
         "test": "vitest --dir src",

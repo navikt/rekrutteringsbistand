@@ -1,9 +1,9 @@
 import { setupWorker } from 'msw/browser';
 import mswHandlers from './handlers';
 
-const worker = setupWorker(...mswHandlers);
+export const mswWorker = setupWorker(...mswHandlers);
 
-worker.start({
+mswWorker.start({
     //todo set til warn for console log warnings
-    onUnhandledRequest: 'bypass',
+    onUnhandledRequest: 'warn',
 });
