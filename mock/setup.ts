@@ -1,7 +1,6 @@
 import { setupWorker } from 'msw/browser';
-import mswHandlers from './handlers';
 
-export const mswWorker = setupWorker(...mswHandlers);
+export const mswWorker = setupWorker();
 
 mswWorker.start({
     //todo set til warn for console log warnings

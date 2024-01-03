@@ -1,4 +1,5 @@
 import { Heading, Loader } from '@navikt/ds-react';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { filtrerOrdFraStilling } from '../../felles/filterOrd';
 import { formaterAntallAnnonser } from './Stillingssøk';
 import css from './Stillingssøk.module.css';
@@ -10,10 +11,9 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import Søkefelter from './søkefelter/Søkefelter';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
-import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 
 export type Props = {
-    kandidatnr: string;
+    kandidatnr?: string;
     finnerStillingForKandidat?: boolean;
 };
 
