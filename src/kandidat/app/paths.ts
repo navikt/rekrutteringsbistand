@@ -3,9 +3,8 @@ import { KandidatQueryParam } from '../kandidatside/Kandidatside';
 const nesteSeparator = (lenke: string) => (lenke.includes('?') ? '&' : '?');
 
 export const lenkeTilTilgangsside = `/kandidater/mangler-tilgang`;
-
-export const lenkeTilKandidatliste = (kandidatlisteId: string, filterQuery?: URLSearchParams) => {
-    let lenke = `/kandidater/lister/detaljer/${kandidatlisteId}`;
+export const lenkeTilKandidatliste = (stillingId: string, filterQuery?: URLSearchParams) => {
+    let lenke = `/stillinger/stilling/${stillingId}/kandidater`;
 
     if (filterQuery) {
         lenke += `?${filterQuery}`;

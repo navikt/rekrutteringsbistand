@@ -25,6 +25,7 @@ const Kandidatside: FunctionComponent = () => {
     const kandidatnr = routeParams.kandidatnr!;
 
     const kandidatlisteIdFraUrl = searchParams.get(KandidatQueryParam.KandidatlisteId);
+    const stillingidFraUrl = searchParams.get(KandidatQueryParam.StillingId);
     const kommerFraKandidatliste = searchParams.get(KandidatQueryParam.FraKandidatliste) === 'true';
     const kommerFraKandidatsøket = searchParams.get(KandidatQueryParam.FraKandidatsøk) === 'true';
 
@@ -49,6 +50,7 @@ const Kandidatside: FunctionComponent = () => {
                     tabs={<Faner />}
                     kandidatnr={kandidatnr}
                     kandidatlisteId={kandidatlisteIdFraUrl}
+                    stillingId={stillingidFraUrl}
                 >
                     <Outlet />
                 </FraSøkMedKandidatliste>
