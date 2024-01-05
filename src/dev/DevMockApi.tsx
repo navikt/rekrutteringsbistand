@@ -1,7 +1,7 @@
 import { Checkbox, CopyButton, HelpText } from '@navikt/ds-react';
 import { HttpHandler } from 'msw';
 import * as React from 'react';
-import { useIndexedDBDevToggle } from './useIndexedDB';
+import { useLocalStorageToggle } from './DevUtil';
 
 const visApiMedHelper = (navn: string, handler: HttpHandler[]) => {
     return (
@@ -22,15 +22,21 @@ const visApiMedHelper = (navn: string, handler: HttpHandler[]) => {
 
 export interface IDevMockApi {
     navn: string;
+    setAktiv: (navn: string, aktiv: boolean) => void;
     mockApi?: HttpHandler[];
 }
 
-const DevMockApi: React.FC<IDevMockApi> = ({ navn, mockApi }) => {
-    const { state, toggle } = useIndexedDBDevToggle(navn);
+const DevMockApi: React.FC<IDevMockApi> = ({ navn, setAktiv, mockApi }) => {
+    const [mockAktiv, toggleMockAktiv] = useLocalStorageToggle(navn);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setAktiv(navn, !mockAktiv);
+        toggleMockAktiv(e);
+    };
 
     return (
         <div style={{ display: 'flex' }}>
-            <Checkbox value={navn} checked={state} onChange={toggle}>
+            <Checkbox value={navn} checked={mockAktiv} onChange={handleChange}>
                 {navn}
             </Checkbox>
             {mockApi && visApiMedHelper(navn, mockApi)}

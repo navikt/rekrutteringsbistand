@@ -7,6 +7,7 @@ import { kandidatsøkMock } from '../../mock/kandidatsok-proxy/mock';
 import { innloggetBrukerMock } from '../../mock/meg/mock';
 import { modiaContextHolderMock } from '../../mock/modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from '../../mock/presenterte-kandidater-api/mock';
+import { mswWorker } from '../../mock/setup';
 import { smsApiMock } from '../../mock/sms-api/mock';
 import { statistikkApiMock } from '../../mock/statistikk-api/mock';
 import { stillingApiMock } from '../../mock/stilling-api/mock';
@@ -73,44 +74,40 @@ const mockConfig = [
 const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
     const ref = useRef<HTMLDialogElement>(null);
 
-    // get all values from rekrutteringsbistand-mock indexeddb
+    const setupMocking = mockConfig.flatMap((e) => {
+        const aktiv = localStorage.getItem(e.navn) === 'true';
+        return {
+            ...e,
+            aktiv,
+        };
+    });
 
-    // const setupMocking = mockConfig.flatMap((e) => {
-    //     const aktiv = localStorage.getItem(e.navn) === 'true';
-    //     return {
-    //         ...e,
-    //         aktiv,
-    //     };
-    // });
+    const [mocks, setMocks] = React.useState(setupMocking);
 
-    // const [mocks, setMocks] = React.useState(setupMocking);
+    const setAktiv = (navn: string, aktiv: boolean) => {
+        setMocks((prev) => {
+            const index = prev.findIndex((e) => e.navn === navn);
+            const newMocks = [...prev];
+            newMocks[index] = {
+                ...newMocks[index],
+                aktiv,
+            };
+            return newMocks;
+        });
+    };
 
-    // const setAktiv = (navn: string, aktiv: boolean) => {
-    //     setMocks((prev) => {
-    //         const index = prev.findIndex((e) => e.navn === navn);
-    //         const newMocks = [...prev];
-    //         newMocks[index] = {
-    //             ...newMocks[index],
-    //             aktiv,
-    //         };
-    //         return newMocks;
-    //     });
-    // };
+    React.useEffect(() => {
+        const activeMocks = mocks.flatMap((e) => {
+            return e.aktiv ? e.mock : [];
+        });
 
-    // get all values from indexeddb store
+        const inaktiveMocks = mocks.flatMap((e) => {
+            return e.aktiv ? [] : e.mock;
+        });
 
-    // React.useEffect(() => {
-    //     const activeMocks = mocks.flatMap((e) => {
-    //         return e.aktiv ? e.mock : [];
-    //     });
-
-    //     const inaktiveMocks = mocks.flatMap((e) => {
-    //         return e.aktiv ? [] : e.mock;
-    //     });
-
-    //     mswWorker.use(...inaktiveMocks);
-    //     mswWorker.resetHandlers(...activeMocks);
-    // }, [mocks]);
+        mswWorker.use(...inaktiveMocks);
+        mswWorker.resetHandlers(...activeMocks);
+    }, [mocks]);
 
     return (
         <div className="py-16">
@@ -121,8 +118,13 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
             <Modal width="medium" ref={ref} header={{ heading: 'Mocks' }}>
                 <Modal.Body>
                     <div>
-                        {mockConfig.map((e, index) => (
-                            <DevMockApi key={index} navn={e.navn} mockApi={e.mock} />
+                        {mocks.map((e, index) => (
+                            <DevMockApi
+                                key={index}
+                                navn={e.navn}
+                                mockApi={e.mock}
+                                setAktiv={setAktiv}
+                            />
                         ))}
                     </div>
                 </Modal.Body>
