@@ -57,7 +57,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                       tekst: erKobletTilStilling(kandidatliste.data)
                           ? stillingTittel
                           : kandidatliste.data.tittel,
-                      href: lenkeTilKandidatliste(kandidatlisteId),
+                      href: lenkeTilKandidatliste(kandidatliste.data.stillingId),
                   },
                   {
                       tekst: 'Finn kandidater',
@@ -83,7 +83,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                         <BodyShort>
                             <span>Kandidaten er lagret i </span>
                             <Link
-                                to={lenkeTilKandidatliste(kandidatlisteId)}
+                                to={lenkeTilKandidatliste(kandidatliste.data.stillingId)}
                                 className="navds-link"
                             >
                                 kandidatlisten
