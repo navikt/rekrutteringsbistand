@@ -44,6 +44,7 @@ const Kandidatside: FunctionComponent = () => {
             return <Sidefeil feilmelding="Mangler kandidatlisteId i URL" />;
         }
     } else if (kommerFraKandidatsøket) {
+        console.log('kommer fra kandidatsøket', kandidatlisteIdFraUrl, stillingidFraUrl);
         if (kandidatlisteIdFraUrl) {
             return (
                 <FraSøkMedKandidatliste

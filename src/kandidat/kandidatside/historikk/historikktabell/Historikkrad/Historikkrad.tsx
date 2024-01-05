@@ -64,7 +64,9 @@ export const Historikkrad: FunctionComponent<Props> = ({
             </>
         );
     } else if (kandidatliste.stillingId) {
-        tittel = <Lenke to={lenkeTilKandidatliste(kandidatliste?.stillingId)}>{listeTittel}</Lenke>;
+        tittel = kandidatliste?.stillingId && (
+            <Lenke to={lenkeTilKandidatliste(kandidatliste?.stillingId)}>{listeTittel}</Lenke>
+        );
     } else {
         tittel = <BodyShort as="span">{listeTittel} </BodyShort>;
     }
