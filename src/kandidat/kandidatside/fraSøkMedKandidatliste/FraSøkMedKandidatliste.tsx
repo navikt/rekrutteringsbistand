@@ -22,7 +22,6 @@ type Props = {
     tabs: ReactNode;
     kandidatnr: string;
     kandidatlisteId: string;
-    stillingId: string;
     children?: ReactNode;
 };
 
@@ -30,7 +29,6 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     tabs,
     kandidatnr,
     kandidatlisteId,
-    stillingId,
     children,
 }) => {
     useScrollTilToppen(kandidatnr);
@@ -59,7 +57,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                       tekst: erKobletTilStilling(kandidatliste.data)
                           ? stillingTittel
                           : kandidatliste.data.tittel,
-                      href: lenkeTilKandidatliste(stillingId),
+                      href: lenkeTilKandidatliste(kandidatliste.data.stillingId),
                   },
                   {
                       tekst: 'Finn kandidater',
@@ -84,7 +82,10 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                     {kandidatErAlleredeLagretIListen ? (
                         <BodyShort>
                             <span>Kandidaten er lagret i </span>
-                            <Link to={lenkeTilKandidatliste(stillingId)} className="navds-link">
+                            <Link
+                                to={lenkeTilKandidatliste(kandidatliste.data.stillingId)}
+                                className="navds-link"
+                            >
                                 kandidatlisten
                             </Link>
                         </BodyShort>
