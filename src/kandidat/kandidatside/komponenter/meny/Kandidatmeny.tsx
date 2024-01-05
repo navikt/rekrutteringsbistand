@@ -25,16 +25,6 @@ const Kandidatmeny: FunctionComponent<Props> = ({ cv, tabs, children }) => {
                     {cv.kind === Nettstatus.Suksess && (
                         <>
                             <LenkeTilAktivitetsplan fnr={cv.data.fodselsnummer} somKnapp={true} />
-                            <Button
-                                as="a"
-                                variant="secondary"
-                                target="_blank"
-                                href={`${lastNedCvUrl}${cv.data.fodselsnummer}`}
-                                onClick={() => sendEvent('cv_last_ned', 'klikk')}
-                                icon={<DownloadIcon aria-hidden />}
-                            >
-                                Last ned CV
-                            </Button>
                         </>
                     )}
                 </div>
@@ -42,10 +32,5 @@ const Kandidatmeny: FunctionComponent<Props> = ({ cv, tabs, children }) => {
         </div>
     );
 };
-
-export const lastNedCvUrl =
-    getMiljø() === Miljø.ProdGcp
-        ? 'https://pam-personbruker-veileder.intern.nav.no/cv/pdf?fnr='
-        : 'https://pam-personbruker-veileder.intern.dev.nav.no/cv/pdf?fnr=';
 
 export default Kandidatmeny;
