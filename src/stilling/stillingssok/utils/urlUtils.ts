@@ -57,7 +57,8 @@ export const hentSøkekriterier = (searchParams: URLSearchParams): Søkekriterie
         stillingskategorier: hentSøkekriterie(
             QueryParam.Stillingskategorier
         ) as Set<Stillingskategori>,
-        sortering: (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.MestRelevant,
+        sortering:
+            (searchParams.get(QueryParam.Sortering) as Sortering) ?? Sortering.Publiseringsdato,
         felter: hentSøkekriterie(QueryParam.Felter) as Set<Søkefelt>,
         portefolje: hentSøkekriterie(QueryParam.Portofølje),
     };
