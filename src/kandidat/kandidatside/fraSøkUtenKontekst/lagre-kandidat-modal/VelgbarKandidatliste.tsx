@@ -62,13 +62,15 @@ const VelgbarKandidatliste: FunctionComponent<Props> = ({
                 <span />
             )}
             <BodyShort className={css.opprettet}>{opprettetDato}</BodyShort>
-            <Link
-                target="_blank"
-                to={lenkeTilKandidatliste(kandidatlisteId)}
-                className="navds-link"
-            >
-                <ExternalLinkIcon title="Åpne kandidatliste" />
-            </Link>
+            {kandidatliste.stillingId && (
+                <Link
+                    target="_blank"
+                    to={lenkeTilKandidatliste(kandidatliste?.stillingId)}
+                    className="navds-link"
+                >
+                    <ExternalLinkIcon title="Åpne kandidatliste" />
+                </Link>
+            )}
         </div>
     );
 };
