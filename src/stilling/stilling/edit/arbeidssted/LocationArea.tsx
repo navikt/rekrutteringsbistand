@@ -129,6 +129,7 @@ class LocationArea extends React.Component<Props> {
         return (
             <>
                 <Typeahead
+                    autoFocus={!typeaheadValue}
                     label="Skriv inn kommune, fylke eller land"
                     onChange={this.onLocationAreaChange}
                     onSelect={this.onLocationAreaSelect}
