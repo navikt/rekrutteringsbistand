@@ -101,12 +101,11 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
             return e.aktiv ? e.mock : [];
         });
 
-        const inaktiveMocks = mocks.flatMap((e) => {
-            return e.aktiv ? [] : e.mock;
-        });
+        // const inaktiveMocks = mocks.flatMap((e) => {
+        //     return e.aktiv ? [] : e.mock;
+        // });
 
-        mswWorker.use(...inaktiveMocks);
-        mswWorker.resetHandlers(...activeMocks);
+        mswWorker.use(...activeMocks);
     }, [mocks]);
 
     return (
@@ -134,6 +133,8 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+            {children}
         </div>
     );
 };
