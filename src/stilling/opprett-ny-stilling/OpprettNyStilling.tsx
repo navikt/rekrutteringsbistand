@@ -94,6 +94,7 @@ const OpprettNyStilling: FunctionComponent<Props> = ({ onClose }) => {
                     feilmelding={stillingskategorifeilmelding}
                 />
                 <VelgArbeidsgiver
+                    autoFocus={stillingskategori !== null}
                     arbeidsgiver={arbeidsgiver}
                     setArbeidsgiver={setArbeidsgiver}
                     feilmelding={arbeidsgiverfeilmelding}

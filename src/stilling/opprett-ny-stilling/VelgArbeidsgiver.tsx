@@ -15,6 +15,7 @@ type Props = {
     setArbeidsgiver: (verdi: Enhetsregistertreff | null) => void;
     feilmelding?: string;
     setFeilmelding: (verdi: string | undefined) => void;
+    autoFocus?: boolean;
 };
 
 export type EmployerState = {
@@ -26,6 +27,7 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
     setArbeidsgiver,
     feilmelding,
     setFeilmelding,
+    autoFocus,
 }) => {
     const [input, setInput] = useState<string>('');
     const [alleForslag, setAlleForslag] = useState<Nettressurs<Enhetsregistertreff[]>>(
@@ -100,6 +102,7 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
                 Søk etter virksomheten fra enhetsregisteret
             </BodyShort>
             <Typeahead
+                autoFocus={autoFocus}
                 className={css.typeahead}
                 value={input}
                 onBlur={onInputBlur}

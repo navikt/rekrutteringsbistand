@@ -115,6 +115,12 @@ const Typeahead = ({
         }
     };
 
+    React.useEffect(() => {
+        if (autoFocus && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [autoFocus]);
+
     const scrollTilSuggestion = (suggestionIndex: number) => {
         const suggestionId = hentSuggestionId(id, suggestionIndex);
         const suggestionElement = document.getElementById(suggestionId);
