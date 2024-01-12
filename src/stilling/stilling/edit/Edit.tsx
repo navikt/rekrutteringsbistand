@@ -94,7 +94,7 @@ const Edit = ({
                         <HvordanSendeSøknad />
                     </Seksjon>
                     <Seksjon påkrevd tittel="Arbeidssted">
-                        <Arbeidssted />
+                        <Arbeidssted virksomhetLokasjon={stilling?.employer?.location} />
                     </Seksjon>
                 </Accordion>
             </div>

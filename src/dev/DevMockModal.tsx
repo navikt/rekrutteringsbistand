@@ -77,7 +77,7 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
     const [loading, setLoading] = React.useState(false);
 
     const setupMocking = mockConfig.flatMap((e) => {
-        const aktiv = localStorage.getItem(e.navn) === 'true';
+        const aktiv = localStorage.getItem(e.navn) !== 'false';
         return {
             ...e,
             aktiv,

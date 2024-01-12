@@ -17,13 +17,14 @@ import LocationArea from './LocationArea';
 import capitalizeLocation from './capitalizeLocation';
 import { FETCH_LOCATIONS, SET_POSTAL_CODE_TYPEAHEAD_VALUE } from './locationCodeReducer';
 
-type Props = {
+export interface IArbeidssted {
     suggestions: Array<{
         kode: string;
         navn: string;
         postalCode: string;
         city?: string;
     }>;
+    virksomhetLokasjon?: Geografi;
     setPostalCodeTypeAheadValue: (value: string) => void;
     addPostalCode: (value: string) => void;
     validation: Record<ValidertFelt, string | undefined>;
@@ -34,144 +35,138 @@ type Props = {
     removeLocationAreas: () => void;
     removePostalCode: () => void;
     removePostalCodeAddress: () => void;
-};
+}
 
-class Location extends React.Component<Props> {
-    declare state: {
-        postCode: boolean;
-        locationArea: boolean;
-    };
+const Arbeidssted: React.FC<IArbeidssted> = ({
+    suggestions,
+    typeAheadValue,
+    validation,
+    locationList,
+    virksomhetLokasjon,
+    fetchLocations,
+    removePostalCodeAddress,
+    addPostalCodeAddress,
+    setPostalCodeTypeAheadValue,
+    removePostalCode,
+    addPostalCode,
+    removeLocationAreas,
+}) => {
+    const [postCode, setPostCode] = React.useState<boolean>(true);
+    const [locationArea, setLocationArea] = React.useState<boolean>();
 
-    constructor(props: Props) {
-        super(props);
+    React.useEffect(() => {
+        fetchLocations();
+        setLocationArea(locationListContainsArea(locationList));
+    }, [locationList, fetchLocations]);
 
-        const { locationList = [] } = props;
-        this.state = {
-            postCode: true,
-            locationArea: this.locationListContainsArea(locationList),
-        };
-    }
-
-    componentDidMount() {
-        this.props.fetchLocations();
-    }
-
-    onAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const onAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
 
         if (value === '') {
-            this.props.removePostalCodeAddress();
+            removePostalCodeAddress();
         } else {
-            this.props.addPostalCodeAddress(value);
+            addPostalCodeAddress(value);
         }
     };
 
-    onTypeAheadValueChange = (value: string) => {
-        this.props.setPostalCodeTypeAheadValue(value);
+    const onTypeAheadValueChange = (value: string) => {
+        setPostalCodeTypeAheadValue(value);
         if (value === '') {
-            this.props.removePostalCode();
+            removePostalCode();
         }
     };
 
-    onTypeAheadSuggestionSelected = (location) => {
+    const onTypeAheadSuggestionSelected = (location) => {
         if (location) {
-            this.props.setPostalCodeTypeAheadValue(location.value);
-            this.props.addPostalCode(location.value);
+            setPostalCodeTypeAheadValue(location.value);
+            addPostalCode(location.value);
         }
     };
 
-    onBlur = (code: string) => {
+    const onBlur = (code: string) => {
         if (code !== '') {
-            this.onTypeAheadSuggestionSelected({ value: code });
+            onTypeAheadSuggestionSelected({ value: code });
         }
     };
 
-    onPostCodeChecked = (e: ChangeEvent<HTMLInputElement>) => {
+    const onPostCodeChecked = (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.checked) {
-            this.props.removePostalCode();
-            this.props.removePostalCodeAddress();
+            removePostalCode();
+            removePostalCodeAddress();
         }
 
-        this.setState({
-            ...this.state,
-            postCode: e.target.checked,
-        });
+        setPostCode(e.target.checked);
     };
 
-    onLocationAreaChecked = (e: ChangeEvent<HTMLInputElement>) => {
+    const onLocationAreaChecked = (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.checked) {
-            this.props.removeLocationAreas();
+            removeLocationAreas();
         }
 
-        this.setState({
-            ...this.state,
-            locationArea: e.target.checked,
-        });
+        setLocationArea(e.target.checked);
     };
 
-    locationListContainsArea = (locationList: Array<Geografi>) =>
+    const locationListContainsArea = (locationList: Array<Geografi>) =>
         locationList &&
         locationList.some(
             (location) =>
                 (location.country || location.municipal || location.county) && !location.postalCode
         );
 
-    render() {
-        const { suggestions, typeAheadValue, validation, locationList } = this.props;
-        const førsteAdresse = locationList[0]?.address;
+    const førsteAdresse = locationList[0]?.address;
 
-        return (
-            <>
-                <Checkbox checked={this.state.postCode} onChange={this.onPostCodeChecked}>
-                    Adresse
-                </Checkbox>
-                {this.state.postCode && (
-                    <div className={css.spacing}>
-                        <TextField
-                            label="Gateadresse"
-                            value={førsteAdresse ?? undefined}
-                            onChange={this.onAddressChange}
-                        />
-                        <Typeahead
-                            label="Postnummer"
-                            className={css.postkode}
-                            onSelect={this.onTypeAheadSuggestionSelected}
-                            onChange={this.onTypeAheadValueChange}
-                            onBlur={this.onBlur}
-                            suggestions={suggestions.map((loc) => ({
-                                value: loc.postalCode,
-                                label: `${loc.postalCode} ${capitalizeLocation(loc.city)}`,
-                            }))}
-                            value={typeAheadValue}
-                            error={validation.postalCode}
-                        />
-                        <TextField
-                            className={css.poststed}
-                            label="Poststed"
-                            disabled
-                            value={
-                                locationList &&
-                                locationList.length &&
-                                locationList[0] &&
-                                locationList[0].city
-                                    ? locationList[0].city
-                                    : ''
-                            }
-                        />
-                    </div>
-                )}
-                <Checkbox
-                    checked={this.state.locationArea === true}
-                    onChange={this.onLocationAreaChecked}
-                >
-                    Kommuner, fylker eller land
-                </Checkbox>
-                {this.state.locationArea && <LocationArea />}
-                {validation.location && <ErrorMessage>{validation.location}</ErrorMessage>}
-            </>
-        );
-    }
-}
+    return (
+        <>
+            <Checkbox checked={postCode} onChange={onPostCodeChecked}>
+                Adresse
+            </Checkbox>
+            {postCode && (
+                <div className={css.spacing}>
+                    <TextField
+                        label="Gateadresse"
+                        value={førsteAdresse ?? virksomhetLokasjon?.address ?? undefined}
+                        onChange={onAddressChange}
+                    />
+                    <Typeahead
+                        label="Postnummer"
+                        className={css.postkode}
+                        onSelect={onTypeAheadSuggestionSelected}
+                        onChange={onTypeAheadValueChange}
+                        onBlur={onBlur}
+                        suggestions={suggestions.map((loc) => ({
+                            value: loc.postalCode,
+                            label: `${loc.postalCode} ${capitalizeLocation(loc.city)}`,
+                        }))}
+                        value={
+                            typeAheadValue
+                                ? typeAheadValue
+                                : virksomhetLokasjon?.postalCode ?? undefined
+                        }
+                        error={validation.postalCode}
+                    />
+                    <TextField
+                        className={css.poststed}
+                        label="Poststed"
+                        disabled
+                        value={
+                            locationList &&
+                            locationList.length &&
+                            locationList[0] &&
+                            locationList[0].city
+                                ? locationList[0].city
+                                : virksomhetLokasjon?.city ?? undefined
+                        }
+                    />
+                </div>
+            )}
+            <Checkbox checked={locationArea === true} onChange={onLocationAreaChecked}>
+                Kommuner, fylker eller land
+            </Checkbox>
+            {locationArea && <LocationArea />}
+            {validation.location && <ErrorMessage>{validation.location}</ErrorMessage>}
+        </>
+    );
+};
 
 const mapStateToProps = (state: State) => ({
     typeAheadValue: state.locationCode.typeAheadValue,
@@ -191,4 +186,4 @@ const mapDispatchToProps = (dispatch) => ({
     removeLocationAreas: () => dispatch({ type: REMOVE_LOCATION_AREAS }),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Location);
+export default connect(mapStateToProps, mapDispatchToProps)(Arbeidssted);
