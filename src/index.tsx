@@ -20,22 +20,29 @@ if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
     });
 }
 
-if (import.meta.env.DEV) {
-    await import('../mock/setup');
+async function enableMocking() {
+    if (!import.meta.env.DEV) {
+        return;
+    }
+    const { mswWorker } = await import('../mock/setup');
+    mswWorker.start({
+        onUnhandledRequest: 'warn',
+    });
 }
 
 const element = document.getElementById('rekrutteringsbistand');
 const root = createRoot(element as HTMLElement);
 
-root.render(
-    <React.StrictMode>
-        {import.meta.env.DEV ? (
-            <DevTools>
+enableMocking().then(() => {
+    root.render(
+        <React.StrictMode>
+            {import.meta.env.DEV ? (
+                <DevTools>
+                    <App />
+                </DevTools>
+            ) : (
                 <App />
-            </DevTools>
-        ) : (
-            <App />
-        )}
-    </React.StrictMode>
-);
-// }
+            )}
+        </React.StrictMode>
+    );
+});
