@@ -21,6 +21,7 @@ import Seksjon from './seksjon/Seksjon';
 import css from './Edit.module.css';
 
 type Props = {
+    innloggetBruker: string;
     onPreviewAdClick: () => void;
     erEier: boolean;
     resetValidation: () => void;
@@ -30,7 +31,14 @@ type Props = {
     kandidatlisteId: string;
 };
 
-const Edit = ({ stilling, onPreviewAdClick, resetValidation, erEier, kandidatlisteId }: Props) => {
+const Edit = ({
+    innloggetBruker,
+    stilling,
+    onPreviewAdClick,
+    resetValidation,
+    erEier,
+    kandidatlisteId,
+}: Props) => {
     const stillingenErEkstern = stilling.createdBy !== System.Rekrutteringsbistand;
 
     useEffect(() => {
@@ -77,7 +85,7 @@ const Edit = ({ stilling, onPreviewAdClick, resetValidation, erEier, kandidatlis
                         <PraktiskeOpplysninger />
                     </Seksjon>
                     <Seksjon spacing tittel="Kontaktinformasjon">
-                        <Kontaktinformasjon />
+                        <Kontaktinformasjon innloggetBruker={innloggetBruker} />
                     </Seksjon>
                     <Seksjon
                         tittel="Hvordan sende søknad?"

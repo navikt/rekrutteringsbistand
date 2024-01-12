@@ -1,5 +1,5 @@
-import { Fieldset, TextField } from '@navikt/ds-react';
-import { ChangeEvent, FunctionComponent } from 'react';
+import { Button, Fieldset, TextField } from '@navikt/ds-react';
+import { ChangeEvent, FunctionComponent, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { Kontaktinfo } from 'felles/domene/stilling/Stilling';
@@ -14,6 +14,7 @@ import {
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
 
 type Props = {
+    innloggetBruker: string;
     contactList?: Kontaktinfo[];
     setContactPerson: (kontaktperson: any) => void;
     validateEmailAndPhone: () => void;
@@ -23,6 +24,7 @@ type Props = {
 };
 
 const Kontaktinformasjon: FunctionComponent<Props> = ({
+    innloggetBruker,
     contactList,
     setContactPerson,
     validateEmailAndPhone,
@@ -55,6 +57,19 @@ const Kontaktinformasjon: FunctionComponent<Props> = ({
     };
 
     const kontaktperson = contactList && contactList[0];
+
+    const lagreKonktaktperson = () => {
+        localStorage.setItem(innloggetBruker, JSON.stringify(kontaktperson ?? {}));
+    };
+
+    useEffect(() => {
+        if (!kontaktperson) {
+            const lagretKontaktperson = localStorage.getItem(innloggetBruker);
+            if (lagretKontaktperson !== null) {
+                setContactPerson(JSON.parse(lagretKontaktperson));
+            }
+        }
+    }, [innloggetBruker, kontaktperson, setContactPerson]);
 
     return (
         <>
@@ -98,6 +113,9 @@ const Kontaktinformasjon: FunctionComponent<Props> = ({
                     onChange={onPhoneChange}
                 />
             </Fieldset>
+            <Button variant="tertiary" onClick={lagreKonktaktperson}>
+                Lagre som standard
+            </Button>
         </>
     );
 };
