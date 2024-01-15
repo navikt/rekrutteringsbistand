@@ -17,7 +17,7 @@ import LocationArea from './LocationArea';
 import capitalizeLocation from './capitalizeLocation';
 import { FETCH_LOCATIONS, SET_POSTAL_CODE_TYPEAHEAD_VALUE } from './locationCodeReducer';
 
-export interface IArbeidssted {
+interface IArbeidssted {
     suggestions: Array<{
         kode: string;
         navn: string;
