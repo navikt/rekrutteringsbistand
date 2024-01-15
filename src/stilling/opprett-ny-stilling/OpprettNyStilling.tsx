@@ -94,6 +94,7 @@ const OpprettNyStilling: FunctionComponent<Props> = ({ onClose }) => {
                     feilmelding={stillingskategorifeilmelding}
                 />
                 <VelgArbeidsgiver
+                    // autoFocus={stillingskategori !== null} // Kan implementeres når formidling flyttes fra opprett ny
                     arbeidsgiver={arbeidsgiver}
                     setArbeidsgiver={setArbeidsgiver}
                     feilmelding={arbeidsgiverfeilmelding}

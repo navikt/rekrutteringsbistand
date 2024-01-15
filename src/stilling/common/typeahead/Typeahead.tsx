@@ -1,8 +1,8 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
-import TypeaheadSuggestion, { hentSuggestionId } from './TypeaheadSuggestion';
 import { TextField } from '@navikt/ds-react';
-import css from './Typeahead.module.css';
 import classNames from 'classnames';
+import React, { useEffect, useId, useRef, useState } from 'react';
+import css from './Typeahead.module.css';
+import TypeaheadSuggestion, { hentSuggestionId } from './TypeaheadSuggestion';
 
 export type Suggestion = {
     label: React.ReactNode;
@@ -19,6 +19,7 @@ type Props = {
     suggestions: Suggestion[];
     error?: string;
     className?: string;
+    autoFocus?: boolean;
 };
 
 const Typeahead = ({
@@ -31,6 +32,7 @@ const Typeahead = ({
     suggestions,
     error,
     className,
+    autoFocus,
 }: Props) => {
     const id = useId();
 
@@ -113,6 +115,12 @@ const Typeahead = ({
         }
     };
 
+    React.useEffect(() => {
+        if (autoFocus && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [autoFocus]);
+
     const scrollTilSuggestion = (suggestionIndex: number) => {
         const suggestionId = hentSuggestionId(id, suggestionIndex);
         const suggestionElement = document.getElementById(suggestionId);
@@ -178,6 +186,7 @@ const Typeahead = ({
     return (
         <div className={classNames(css.typeahead, className)}>
             <TextField
+                autoFocus={autoFocus}
                 label={label}
                 id={id}
                 role="combobox"

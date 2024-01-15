@@ -2,6 +2,7 @@ import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/
 import { kandidatApiMock } from './kandidat-api/mock';
 import { kandidatsøkMock } from './kandidatsok-proxy/mock';
 import { innloggetBrukerMock } from './meg/mock';
+import { modiaMock } from './modia/modia';
 import { modiaContextHolderMock } from './modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from './presenterte-kandidater-api/mock';
 import { smsApiMock } from './sms-api/mock';
@@ -20,8 +21,9 @@ const mswHandlers = [
     ...smsApiMock,
     ...synlighetApiMock,
     ...modiaContextHolderMock,
-    ...(import.meta.env.VITE_MOCK_AIVEN ? kandidatsøkMock : []),
-    ...(import.meta.env.VITE_MOCK_AIVEN ? stillingssøkMock : []),
+    ...kandidatsøkMock,
+    ...stillingssøkMock,
+    ...modiaMock,
 ];
 
 export default mswHandlers;

@@ -1,5 +1,6 @@
 import { Tabs } from '@navikt/ds-react';
 import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
+import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/formidlinger.svg';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { sendEvent } from '../felles/amplitude';
@@ -36,7 +37,7 @@ const Formidling: React.FC = () => {
     };
 
     return (
-        <Layout tittel="Formidlinger" sidepanel={<FormidlingssøkSidebar />}>
+        <Layout tittel="Formidlinger" sidepanel={<FormidlingssøkSidebar />} ikon={<Piktogram />}>
             <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
                 <Tabs.List>
                     <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle" />

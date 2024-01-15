@@ -37,7 +37,6 @@ const OmStillingen = ({ stilling }: Props) => {
             <TextField
                 value={stilling.properties.jobtitle}
                 label="Yrkestittel som vises på stillingen"
-                description="Kan overskrives"
                 onChange={handleYrkestittelChange}
             />
             <div>

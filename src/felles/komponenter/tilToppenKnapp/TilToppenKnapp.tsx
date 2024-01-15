@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
 import { ChevronUpDoubleIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
-import throttle from 'lodash.throttle';
 import classNames from 'classnames';
+import throttle from 'lodash.throttle';
+import { useEffect, useRef, useState } from 'react';
 import css from './TilToppenKnapp.module.css';
 
 export const TilToppenKnapp = () => {

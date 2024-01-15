@@ -1,7 +1,7 @@
 import { Select } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
-import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../utils/urlUtils';
 import useNavigering from '../useNavigering';
+import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../utils/urlUtils';
 import css from './Sorter.module.css';
 
 export enum Sortering {
@@ -16,7 +16,7 @@ const Sorter: FunctionComponent = () => {
 
     useEffect(() => {
         if (state?.brukStandardsøk) {
-            setValgt(Sortering.MestRelevant);
+            setValgt(Sortering.Publiseringsdato);
         }
     }, [searchParams, state]);
 
@@ -28,7 +28,7 @@ const Sorter: FunctionComponent = () => {
             searchParams,
             navigate,
             parameter: QueryParam.Sortering,
-            verdi: valgt === Sortering.MestRelevant ? null : valgt,
+            verdi: valgt === Sortering.Publiseringsdato ? null : valgt,
         });
     };
 

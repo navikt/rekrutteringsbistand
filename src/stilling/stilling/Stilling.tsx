@@ -173,6 +173,7 @@ const Stilling = () => {
                                     </>
                                 ) : (
                                     <Edit
+                                        innloggetBruker={innloggetBruker}
                                         erEier={erEier}
                                         onPreviewAdClick={onPreviewAdClick}
                                         kandidatlisteId={kandidatlisteId}

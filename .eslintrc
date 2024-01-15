@@ -17,7 +17,7 @@
                         "target": "header",
                         "message": "Headeren kan kun importere filer fra egen mappe eller fellesmappen",
                         "from": ".",
-                        "except": ["header", "felles"]
+                        "except": ["header", "felles", "dev"]
                     },
                     {
                         "target": "forside",

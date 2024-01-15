@@ -1,5 +1,6 @@
 import { Heading, Loader } from '@navikt/ds-react';
 import { filtrerOrdFraStilling } from '../../felles/filterOrd';
+import { fallbackIngenValgteStillingskategorierSet } from './AlleStillinger';
 import { formaterAntallAnnonser } from './Stillingssøk';
 import css from './Stillingssøk.module.css';
 import { GlobalAggregering } from './domene/elasticSearchTyper';
@@ -10,11 +11,10 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import Søkefelter from './søkefelter/Søkefelter';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
-import { fallbackIngenValgteStillingskategorierSet } from './AlleStillinger';
 
 export type Props = {
     navIdent: string;
-    kandidatnr: string;
+    kandidatnr?: string;
     finnerStillingForKandidat?: boolean;
 };
 

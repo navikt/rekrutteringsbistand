@@ -169,7 +169,6 @@ export type Properties = Partial<{
 }>;
 
 export type Kontaktinfo = {
-    person: string | null;
     title: string | null;
     phone: string | null;
     email: string | null;

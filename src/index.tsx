@@ -3,6 +3,7 @@ import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
+import DevTools from './dev/DevTools';
 import faroConfig from './faroConfig';
 import './index.css';
 
@@ -19,15 +20,29 @@ if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
     });
 }
 
-if (import.meta.env.VITE_MOCK) {
-    await import('../mock/setup');
+async function enableMocking() {
+    if (!import.meta.env.DEV) {
+        return;
+    }
+    const { mswWorker } = await import('../mock/setup');
+    mswWorker.start({
+        onUnhandledRequest: 'warn',
+    });
 }
 
 const element = document.getElementById('rekrutteringsbistand');
 const root = createRoot(element as HTMLElement);
 
-root.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
-);
+enableMocking().then(() => {
+    root.render(
+        <React.StrictMode>
+            {import.meta.env.DEV ? (
+                <DevTools>
+                    <App />
+                </DevTools>
+            ) : (
+                <App />
+            )}
+        </React.StrictMode>
+    );
+});
