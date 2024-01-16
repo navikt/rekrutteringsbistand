@@ -74,8 +74,10 @@ const mockConfig = [
 const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
     const ref = useRef<HTMLDialogElement>(null);
 
+    const [loading, setLoading] = React.useState(false);
+
     const setupMocking = mockConfig.flatMap((e) => {
-        const aktiv = localStorage.getItem(e.navn) === 'true';
+        const aktiv = localStorage.getItem(e.navn) !== 'false';
         return {
             ...e,
             aktiv,
@@ -97,15 +99,12 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
     };
 
     React.useEffect(() => {
+        setLoading(true);
         const activeMocks = mocks.flatMap((e) => {
             return e.aktiv ? e.mock : [];
         });
-
-        // const inaktiveMocks = mocks.flatMap((e) => {
-        //     return e.aktiv ? [] : e.mock;
-        // });
-
         mswWorker.use(...activeMocks);
+        setLoading(false);
     }, [mocks]);
 
     return (
@@ -128,13 +127,20 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button type="button" variant="tertiary" onClick={() => ref.current?.close()}>
+                    <Button
+                        type="button"
+                        variant="tertiary"
+                        onClick={() => {
+                            ref.current?.close();
+                            window.location.reload();
+                        }}
+                    >
                         Lukk
                     </Button>
                 </Modal.Footer>
             </Modal>
 
-            {children}
+            {loading ? <span>laster mock setup...</span> : children}
         </div>
     );
 };
