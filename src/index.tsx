@@ -21,13 +21,14 @@ if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
 }
 
 async function enableMocking() {
-    if (!import.meta.env.DEV) {
-        return;
+    if (import.meta.env.DEV) {
+        const { mswWorker } = await import('../mock/setup');
+        mswWorker.start({
+            onUnhandledRequest: 'warn',
+        });
+    } else {
+        return Promise.resolve();
     }
-    const { mswWorker } = await import('../mock/setup');
-    mswWorker.start({
-        onUnhandledRequest: 'warn',
-    });
 }
 
 const element = document.getElementById('rekrutteringsbistand');
