@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useRef } from 'react';
 import { forespørselOmDelingAvCvMock } from '../../mock/foresporsel-om-deling-av-cv-api/mock';
 import { kandidatApiMock } from '../../mock/kandidat-api/mock';
+import { kandidatSokApiMock } from '../../mock/kandidatsok-api/mock';
 import { kandidatsøkMock } from '../../mock/kandidatsok-proxy/mock';
 import { innloggetBrukerMock } from '../../mock/meg/mock';
 import { modiaContextHolderMock } from '../../mock/modiacontextholder/mock';
@@ -73,6 +74,10 @@ const mockConfig = [
     {
         navn: 'Kandidat-API (ny)',
         mock: kandidatHandlers,
+    },
+    {
+        navn: 'Kandidatsøk api',
+        mock: kandidatSokApiMock,
     },
 ];
 

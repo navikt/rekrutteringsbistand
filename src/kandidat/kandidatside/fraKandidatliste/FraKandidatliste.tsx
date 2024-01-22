@@ -8,7 +8,7 @@ import {
     Kandidatstatus,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { Nettstatus } from 'felles/nettressurs';
 import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
@@ -41,7 +41,7 @@ const FraKandidatliste = ({ tabs, kandidatnr, kandidatlisteId, children, ...prop
     useScrollTilToppen(kandidatnr);
     useValgtKandidatIKandidatliste(kandidatnr, kandidatlisteId);
 
-    const cv = useCv(kandidatnr);
+    const { cv } = useCv(kandidatnr);
     const kandidatliste = useKandidatliste(kandidatlisteId);
 
     if (kandidatliste.kind === Nettstatus.LasterInn) {
@@ -84,7 +84,7 @@ const FraKandidatlisteInner = ({
     children,
 }: {
     tabs: ReactNode;
-    cv: Nettressurs<Kandidat>;
+    cv: Kandidat;
     kandidat: KandidatIKandidatliste;
     kandidatliste: Kandidatliste;
     children: React.ReactNode;

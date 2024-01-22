@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import fetcher from '../../felles/hooks/fetcher';
+import { fetcher } from '../../felles/hooks/fetcher';
 
 interface KandidatlisteId {
     kandidatlisteId: string;

@@ -24,7 +24,7 @@ async function enableMocking() {
     if (import.meta.env.DEV) {
         const { mswWorker } = await import('../mock/setup');
         mswWorker.start({
-            onUnhandledRequest: 'bypass',
+            onUnhandledRequest: 'warn',
         });
     } else {
         return Promise.resolve();

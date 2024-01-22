@@ -1,7 +1,4 @@
 import { api, post } from 'felles/api';
-import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import Cv from 'felles/domene/kandidat/Cv';
-import Kandidat, { Id } from 'felles/domene/kandidat/Kandidat';
 import {
     Kandidatstatus,
     Kandidatutfall,
@@ -15,6 +12,10 @@ import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-ka
 import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
+
+export const endepunkter = {
+    lookupCv: `${api.kandidatSokApi}/api/lookup-cv`,
+};
 
 const convertToUrlParams = (query: object) =>
     Object.keys(query)
@@ -45,33 +46,6 @@ const employerNameCompletionQueryTemplate = (match) => ({
         },
     },
     size: 50,
-});
-
-export function fetchCv(fodselsnummer: string): Promise<EsResponse<Kandidat>> {
-    return postJson(`${api.kandidatsøk}`, JSON.stringify(byggQuery(fodselsnummer)));
-}
-
-export function fetchId(kandidatnr: string): Promise<EsResponse<Id>> {
-    return postJson(`${api.kandidatsøk}`, JSON.stringify(byggIdQuery(kandidatnr)));
-}
-
-const byggIdQuery = (kandidatnr: string): EsQuery<Id> => ({
-    query: {
-        term: {
-            kandidatnr: kandidatnr,
-        },
-    },
-    size: 1,
-    _source: ['fodselsnummer'],
-});
-
-const byggQuery = (fodselsnummer: string): EsQuery<Cv> => ({
-    query: {
-        term: {
-            fodselsnummer: fodselsnummer,
-        },
-    },
-    size: 1,
 });
 
 export const fetchKandidatlisteMedStillingsId = (stillingsId: string) =>

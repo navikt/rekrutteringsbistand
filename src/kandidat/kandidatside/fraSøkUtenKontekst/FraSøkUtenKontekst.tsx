@@ -3,7 +3,6 @@ import { FunctionComponent, MouseEvent, ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { TasklistIcon } from '@navikt/aksel-icons';
-import { Nettstatus } from 'felles/nettressurs';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import { lenkeTilKandidatsøk } from '../../app/paths';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
@@ -27,7 +26,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
 
     const navigate = useNavigate();
     const [fane, setFane] = useFaner();
-    const cv = useCv(kandidatnr);
+    const { cv } = useCv(kandidatnr);
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr);
     const [visKandidatlisterModal, setVisKandidatlisterModal] = useState<boolean>(false);
 
@@ -61,7 +60,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
         >
             <Tabs value={fane} onChange={setFane as any} className={css.tabs}>
                 <Kandidatmeny tabs={tabs} cv={cv}>
-                    {cv.kind === Nettstatus.Suksess && (
+                    {cv && (
                         <Button as="a" href={finnStillingUrl} onClick={handleFinnStillingClick}>
                             Finn stilling
                         </Button>
