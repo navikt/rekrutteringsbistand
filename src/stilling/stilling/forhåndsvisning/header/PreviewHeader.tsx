@@ -72,10 +72,7 @@ class PreviewMenu extends React.Component<Props> {
 
         return (
             <>
-                <Stillingsheader
-                    erEier={this.props.erEier}
-                    kandidatlisteId={this.props.kandidatlisteId}
-                >
+                <Stillingsheader>
                     {!limitedAccess && this.props.erEier && (
                         <Button onClick={this.onEditAdClick} size="small" icon={<DocPencilIcon />}>
                             Rediger

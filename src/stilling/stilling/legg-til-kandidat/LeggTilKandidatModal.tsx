@@ -4,15 +4,20 @@ import useKandidatlisteId from '../../api/useKandidatlisteId';
 import LeggTilKandidat from './LeggTilKandidat';
 import css from './LeggTilKandidatModal.module.css';
 
-type Props = {
+type ILeggTilKandidatModal = {
     vis: boolean;
     onClose: () => void;
     stillingsId: string;
+    erEier?: boolean;
 };
 
-const LeggTilKandidatModal = ({ vis, onClose, stillingsId }: Props) => {
+const LeggTilKandidatModal: React.FC<ILeggTilKandidatModal> = ({
+    vis,
+    onClose,
+    stillingsId,
+    erEier,
+}) => {
     const { kandidatlisteId, isLoading, isError } = useKandidatlisteId(stillingsId);
-
     return (
         <Modal
             open={vis}
@@ -35,7 +40,12 @@ const LeggTilKandidatModal = ({ vis, onClose, stillingsId }: Props) => {
                 )}
             </Modal.Body>
             {kandidatlisteId && (
-                <LeggTilKandidat kandidatlisteId={kandidatlisteId} onClose={onClose} />
+                <LeggTilKandidat
+                    kandidatlisteId={kandidatlisteId}
+                    onClose={onClose}
+                    erEier={erEier}
+                    stillingsId={stillingsId}
+                />
             )}
         </Modal>
     );

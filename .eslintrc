@@ -29,7 +29,7 @@
                         "target": "kandidat",
                         "message": "Kandidatsiden kan kun importere filer fra egen mappe eller fellesmappen",
                         "from": ".",
-                        "except": ["kandidat", "felles"]
+                        "except": ["kandidat", "felles", "api"]
                     },
                     {
                         "target": "kandidatsok",

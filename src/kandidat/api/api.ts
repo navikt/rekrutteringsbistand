@@ -9,7 +9,8 @@ import {
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
+import { endepunkter } from '../../api/kandidat-api/endepunkter';
+import { FormidlingAvUsynligKandidatOutboundDto } from '../../api/server.dto';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
 
@@ -275,7 +276,7 @@ export const fetchUsynligKandidat = async (
 ): Promise<Nettressurs<UsynligKandidat[]>> => {
     try {
         const body = await postJson(
-            `${api.kandidat}/veileder/kandidater/navn`,
+            endepunkter.kandidatNavn,
             JSON.stringify({
                 fnr,
             })

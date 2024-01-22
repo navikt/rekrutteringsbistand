@@ -17,7 +17,7 @@ import {
     hentForespørslerForKandidatForStilling,
 } from './knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import SendSmsModal from './modaler/SendSmsModal';
-import LeggTilKandidatModal from './modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
+// import LeggTilKandidatModal from './modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
 import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
 import KandidatlisteAction from './reducer/KandidatlisteAction';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
@@ -202,7 +202,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
     };
 
     render() {
-        const { deleModalOpen, leggTilModalOpen } = this.state;
+        const { deleModalOpen } = this.state;
         const { kandidatliste, endreStatusKandidat, toggleArkivert } = this.props;
         const { kandidater } = kandidatliste;
 
@@ -222,12 +222,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                         kandidaterMåGodkjenneDelingAvCv(kandidatliste)
                     }
                     stilling={this.props.stilling}
-                />
-                <LeggTilKandidatModal
-                    vis={leggTilModalOpen}
-                    onClose={this.onToggleLeggTilKandidatModal}
-                    stillingsId={kandidatliste.stillingId}
-                    kandidatliste={kandidatliste}
                 />
                 {kandidatliste.stillingId &&
                     this.props.sendteMeldinger.kind === Nettstatus.Suksess && (

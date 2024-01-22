@@ -24,7 +24,6 @@ const Kandidatlisteside: FunctionComponent<Props> = ({
 }) => {
     const dispatch = useDispatch();
     const { kandidatliste } = useSelector((state: AppState) => state.kandidatliste);
-
     useScrollTilToppen(kandidatliste);
 
     useEffect(() => {
@@ -47,7 +46,6 @@ const Kandidatlisteside: FunctionComponent<Props> = ({
         return null;
     }
 
-    // TODO: Fix mock for scenario
     if (
         kandidatliste.kind === Nettstatus.Suksess &&
         kandidatlisteId !== kandidatliste.data.kandidatlisteId

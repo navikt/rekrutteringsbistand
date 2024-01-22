@@ -1,17 +1,15 @@
-import { BodyLong, ErrorMessage, Heading } from '@navikt/ds-react';
+import { ErrorMessage } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { UsynligKandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus, ikkeLastet } from 'felles/nettressurs';
 import Sidelaster from '../../../../felles/komponenter/sidelaster/Sidelaster';
 import { fetchUsynligKandidat } from '../../../api/api';
 import FormidleUsynligKandidat from './FormidleUsynligKandidat';
-import css from './InformasjonOmUsynligKandidat.module.css';
 
 type Props = {
     fnr: string;
-    kandidatliste: Kandidatliste;
+    kandidatlisteId: string;
     stillingsId: string | null;
     valgtNavKontor: string | null;
     onClose: () => void;
@@ -19,7 +17,7 @@ type Props = {
 
 const InformasjonOmUsynligKandidat: FunctionComponent<Props> = ({
     fnr,
-    kandidatliste,
+    kandidatlisteId,
     stillingsId,
     valgtNavKontor,
     onClose,
@@ -31,33 +29,17 @@ const InformasjonOmUsynligKandidat: FunctionComponent<Props> = ({
             setPdlSøk(await fetchUsynligKandidat(fnr));
         };
 
-        if (stillingsId && valgtNavKontor && kandidatliste.kanEditere) {
+        if (stillingsId && valgtNavKontor && kandidatlisteId) {
             hentUsynligKandidat();
         }
-    }, [fnr, stillingsId, valgtNavKontor, kandidatliste.kanEditere]);
+    }, [fnr, stillingsId, valgtNavKontor, kandidatlisteId]);
 
     if (stillingsId === null || valgtNavKontor === null) {
         return null;
     }
 
-    if (!kandidatliste.kanEditere) {
-        return (
-            <>
-                <Heading className={css.fraFolkeregisteret} spacing level="3" size="small">
-                    Fra folkeregisteret
-                </Heading>
-                <BodyLong>
-                    Du er ikke eier av stillingen og kan derfor ikke registrere formidling.
-                </BodyLong>
-            </>
-        );
-    }
-
     return (
         <>
-            <Heading className={css.fraFolkeregisteret} spacing level="3" size="small">
-                Fra folkeregisteret
-            </Heading>
             {pdlSøk.kind === Nettstatus.LasterInn && <Sidelaster size="large" />}
 
             {pdlSøk.kind === Nettstatus.FinnesIkke && (
@@ -72,7 +54,7 @@ const InformasjonOmUsynligKandidat: FunctionComponent<Props> = ({
                 <FormidleUsynligKandidat
                     fnr={fnr}
                     usynligKandidat={pdlSøk.data}
-                    kandidatliste={kandidatliste}
+                    kandidatlisteId={kandidatlisteId}
                     stillingsId={stillingsId}
                     valgtNavKontor={valgtNavKontor}
                     onClose={onClose}

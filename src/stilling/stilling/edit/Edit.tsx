@@ -49,7 +49,7 @@ const Edit = ({
 
     return (
         <>
-            <Stillingsheader kandidatlisteId={kandidatlisteId} erEier={erEier}>
+            <Stillingsheader>
                 {!stillingenErEkstern && (
                     <Button onClick={onPreviewAdClick} size="small" icon={<NewspaperIcon />}>
                         Forhåndsvis stillingen

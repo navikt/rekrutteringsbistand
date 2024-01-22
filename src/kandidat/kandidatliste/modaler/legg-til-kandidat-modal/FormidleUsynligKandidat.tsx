@@ -1,23 +1,24 @@
+import { Alert, BodyShort, Checkbox, CheckboxGroup, ErrorMessage } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Alert, BodyShort, Checkbox, CheckboxGroup, ErrorMessage } from '@navikt/ds-react';
 
-import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
-import { FormidlingAvUsynligKandidatOutboundDto } from './LeggTilKandidatModal';
-import { Nettressurs, ikkeLastet, senderInn, Nettstatus } from 'felles/nettressurs';
-import { postFormidlingerAvUsynligKandidat } from '../../../api/api';
 import { UsynligKandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
+import { Nettressurs, Nettstatus, ikkeLastet, senderInn } from 'felles/nettressurs';
+import { postFormidlingerAvUsynligKandidat } from '../../../api/api';
+import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
+import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
-import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
+
+import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
 import css from './LeggTilKandidatModal.module.css';
 
 type Props = {
     fnr: string;
     usynligKandidat: UsynligKandidat[];
-    kandidatliste: Kandidatliste;
+    kandidatlisteId: string;
     stillingsId: string;
     valgtNavKontor: string;
     onClose: () => void;
@@ -26,7 +27,7 @@ type Props = {
 const FormidleUsynligKandidat: FunctionComponent<Props> = ({
     fnr,
     usynligKandidat,
-    kandidatliste,
+    kandidatlisteId,
     stillingsId,
     valgtNavKontor,
     onClose,
@@ -47,10 +48,7 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
             stillingsId,
         };
 
-        const resultat = await postFormidlingerAvUsynligKandidat(
-            kandidatliste.kandidatlisteId,
-            dto
-        );
+        const resultat = await postFormidlingerAvUsynligKandidat(kandidatlisteId, dto);
 
         setFormidling(resultat);
 

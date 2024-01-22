@@ -1,4 +1,4 @@
-import { Alert, BodyLong, BodyShort, Label, Modal } from '@navikt/ds-react';
+import { Alert, BodyShort, Modal } from '@navikt/ds-react';
 import { useState } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
@@ -75,18 +75,7 @@ const BekreftMedNotat = ({
     return (
         <>
             <Modal.Body>
-                <BodyShort
-                    spacing
-                >{`${kandidat.fornavn} ${kandidat.etternavn} (${fnr})`}</BodyShort>
-                <Alert variant="info">
-                    <Label as="p" spacing>
-                        Vi tar bort fritekstfeltet for å hindre personvernsavvik.
-                    </Label>
-                    <BodyLong>
-                        Frykt ikke. Vi jobber på spreng med å finne nye måter for å hjelpe deg med å
-                        få oversikt over, og avklare kandidatene.
-                    </BodyLong>
-                </Alert>
+                <BodyShort spacing>{`${kandidat.fornavn} ${kandidat.etternavn} `}</BodyShort>
             </Modal.Body>
             <Knapper
                 onLeggTilClick={onLeggTilKandidat}

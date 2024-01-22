@@ -30,7 +30,7 @@ export const kandidatApiMock = [
         );
 
         return kandidatlisteMedStilling
-            ? HttpResponse.json({ kandidatlisteId: kandidatlisteMedStilling.stillingId })
+            ? HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' })
             : new HttpResponse(null, { status: 404 });
     }),
 
@@ -143,8 +143,6 @@ export const kandidatApiMock = [
                 : new HttpResponse(null, { status: 404 });
         }
     ),
-
-    http.get(`${api.kandidat}/veileder/kandidater/navn`, todo),
 
     http.post(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat`,
