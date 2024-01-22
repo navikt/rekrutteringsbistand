@@ -3,7 +3,6 @@ import createSagaMiddleware from 'redux-saga';
 import kandidatlisteReducer from '../kandidatliste/reducer/kandidatlisteReducer';
 import kandidatlisteSaga from '../kandidatliste/reducer/kandidatlisteSaga';
 
-import cvReducer, { cvSaga } from '../kandidatside/cv/reducer/cvReducer';
 import { historikkReducer, historikkSaga } from '../kandidatside/historikk/historikkReducer';
 import enhetsregisterReducer, {
     enhetsregisterSaga,
@@ -17,7 +16,6 @@ const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
 
 const store = legacy_createStore(
     combineReducers({
-        cv: cvReducer,
         enhetsregister: enhetsregisterReducer,
         historikk: historikkReducer,
         kandidatliste: kandidatlisteReducer,
@@ -27,7 +25,6 @@ const store = legacy_createStore(
     composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run(cvSaga);
 sagaMiddleware.run(historikkSaga);
 sagaMiddleware.run(kandidatlisteSaga);
 sagaMiddleware.run(enhetsregisterSaga);

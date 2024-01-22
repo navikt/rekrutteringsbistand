@@ -36,7 +36,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     const [fane, setFane] = useFaner();
     const [visLagreKandidatModal, setVisLagreKandidatModal] = useState<boolean>(false);
 
-    const cv = useCv(kandidatnr);
+    const { cv } = useCv(kandidatnr);
     const kandidatliste = useKandidatliste(kandidatlisteId);
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, kandidatlisteId);
 

@@ -14,6 +14,7 @@ import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørse
 import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import AppState from '../../state/AppState';
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
+import useCv from '../hooks/useCv';
 import { KandidatQueryParam } from '../Kandidatside';
 import { KandidatlisterForKandidatActionType } from './historikkReducer';
 import css from './Historikkside.module.css';
@@ -28,7 +29,7 @@ const Historikkside: FunctionComponent = () => {
     const kandidatlisteId = queryParams.get(KandidatQueryParam.KandidatlisteId);
 
     const historikk = useSelector((state: AppState) => state.historikk);
-    const cv = useSelector((state: AppState) => state.cv.cv);
+    const { cv } = useCv(kandidatnr);
     const kandidatStatus = useSelector(hentStatus(kandidatnr!));
     const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] = useState<
         Nettressurs<ForespørselOmDelingAvCv[]>
@@ -46,10 +47,10 @@ const Historikkside: FunctionComponent = () => {
             setSmser(suksess(smser));
         };
 
-        if (cv.kind === Nettstatus.Suksess) {
+        if (cv) {
             setForespørslerOmDelingAvCv(lasterInn());
-            hentForespørslerOmDelingAvCvForKandidat(cv.data.aktorId);
-            hentSmserForKandidat(cv.data.fodselsnummer);
+            hentForespørslerOmDelingAvCvForKandidat(cv.aktorId);
+            hentSmserForKandidat(cv.fodselsnummer);
         }
     }, [cv]);
 
@@ -105,11 +106,11 @@ const formaterNavn = (fornavn: string, etternavn: string) => {
 };
 
 export const hentKandidatensNavnFraCvEllerKandidatlister = (
-    cv: Nettressurs<Kandidat>,
+    cv: Kandidat,
     kandidatlister: KandidatlisteForKandidat[]
 ) => {
-    if (cv.kind === Nettstatus.Suksess) {
-        return formaterNavn(cv.data.fornavn, cv.data.etternavn);
+    if (cv) {
+        return formaterNavn(cv.fornavn, cv.etternavn);
     }
 
     if (kandidatlister.length > 0) {

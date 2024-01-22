@@ -1,12 +1,11 @@
 import { FunctionComponent, ReactNode } from 'react';
 
 import Kandidat from 'felles/domene/kandidat/Kandidat';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import LenkeTilAktivitetsplan from '../lenker/LenkeTilAktivitetsplan';
 import css from './Kandidatmeny.module.css';
 
 type Props = {
-    cv: Nettressurs<Kandidat>;
+    cv: Kandidat;
     tabs: ReactNode;
     children?: ReactNode;
 };
@@ -18,9 +17,9 @@ const Kandidatmeny: FunctionComponent<Props> = ({ cv, tabs, children }) => {
                 <nav className={css.faner}>{tabs}</nav>
                 <div className={css.menyvalg}>
                     {children}
-                    {cv.kind === Nettstatus.Suksess && (
+                    {cv && (
                         <>
-                            <LenkeTilAktivitetsplan fnr={cv.data.fodselsnummer} somKnapp={true} />
+                            <LenkeTilAktivitetsplan fnr={cv.fodselsnummer} somKnapp={true} />
                         </>
                     )}
                 </div>

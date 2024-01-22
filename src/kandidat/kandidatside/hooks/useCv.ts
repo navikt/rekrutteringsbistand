@@ -1,24 +1,15 @@
-import { Dispatch, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import useSWR from 'swr';
+import { postFetcher } from '../../../felles/hooks/fetcher';
+import { endepunkter } from '../../api/api';
 
-import AppState from '../../state/AppState';
-import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
-import { CvAction, CvActionType } from '../cv/reducer/cvReducer';
+const useCv = (kandidatnr?: string) => {
+    const swrData = useSWR({ path: endepunkter.lookupCv, kandidatnr }, ({ path }) =>
+        postFetcher(path, { kandidatnr })
+    );
 
-const useCv = (kandidatnr: string) => {
-    const dispatch: Dispatch<CvAction | KandidatlisteAction> = useDispatch();
-    const state = useSelector((state: AppState) => state.cv);
+    const cv = swrData?.data?.hits?.hits[0]?._source;
 
-    useEffect(() => {
-        const hentCvForKandidat = (arenaKandidatnr: string) => {
-            dispatch({ type: CvActionType.NullstillCv });
-            dispatch({ type: CvActionType.FetchCv, arenaKandidatnr });
-        };
-
-        hentCvForKandidat(kandidatnr);
-    }, [dispatch, kandidatnr]);
-
-    return state.cv;
+    return { ...swrData, cv };
 };
 
 export default useCv;

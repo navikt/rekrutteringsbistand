@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { hentTittelFraStilling, Rekrutteringsbistandstilling } from '../domene/stilling/Stilling';
-import fetcher from './fetcher';
+import { fetcher } from './fetcher';
 
 const useHentStilling = (stillingsId?: string | null) => {
     const { data, error, isLoading } = useSWR<Rekrutteringsbistandstilling>(
