@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { api } from '../../../felles/api';
-import fetcher from '../../../felles/hooks/fetcher';
+import { fetcher } from '../../../felles/hooks/fetcher';
 
 const useSynlighetsevaluering = (fødselsnummer: string) => {
     const { data, error, isLoading } = useSWR(

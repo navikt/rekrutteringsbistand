@@ -1,5 +1,5 @@
 import { HttpResponse, http } from 'msw';
-import { endepunkter } from '../endepunkter';
+import { endepunkter } from '../../../kandidat/api/api';
 import { kandidatNavnMockGenerator } from './kandidatNavn.testdata';
 
 export const kandidatNavnMockHandler = [

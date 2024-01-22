@@ -6,7 +6,6 @@ import {
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { endepunkter } from '../../api/kandidat-api/endepunkter';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../api/server.dto';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
@@ -15,6 +14,7 @@ export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
 export const endepunkter = {
     lookupCv: `${api.kandidatSokApi}/api/lookup-cv`,
+    kandidatNavn: `${api.kandidat}/veileder/kandidater/navn`,
 };
 
 const convertToUrlParams = (query: object) =>
