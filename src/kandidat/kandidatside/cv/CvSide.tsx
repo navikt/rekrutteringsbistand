@@ -3,9 +3,7 @@ import { FunctionComponent } from 'react';
 import { Alert, BodyLong, Heading } from '@navikt/ds-react';
 import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 import { useParams } from 'react-router';
-import useSWR from 'swr';
-import { postFetcher } from '../../../felles/hooks/fetcher';
-import { endepunkter } from '../../api/api';
+import useCv from '../hooks/useCv';
 import css from './CvSide.module.css';
 import Erfaringer from './cv/Erfaringer';
 import Fagbrev from './cv/Fagbrev';
@@ -21,10 +19,7 @@ import Jobbønsker from './cv/jobbønsker/Jobbønsker';
 const CvSide: FunctionComponent = () => {
     const { kandidatnr } = useParams();
 
-    const { data, error, isLoading } = useSWR(
-        { path: endepunkter.lookupCv, kandidatnr },
-        ({ path }) => postFetcher(path, { kandidatnr })
-    );
+    const { cv, error, isLoading } = useCv(kandidatnr);
 
     if (isLoading) {
         return <Sidelaster />;
@@ -57,7 +52,7 @@ const CvSide: FunctionComponent = () => {
             </div>
         );
     }
-    const cv = data?.hits?.hits[0]?._source;
+
     if (cv) {
         return (
             <div className={css.side}>

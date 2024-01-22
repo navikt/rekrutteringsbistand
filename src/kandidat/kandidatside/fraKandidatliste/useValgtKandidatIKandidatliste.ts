@@ -3,10 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import { CvAction } from '../cv/reducer/cvReducer';
 
 const useValgtKandidatIKandidatliste = (kandidatnr: string, kandidatlisteId: string) => {
-    const dispatch: Dispatch<CvAction | KandidatlisteAction> = useDispatch();
+    const dispatch: Dispatch<KandidatlisteAction> = useDispatch();
 
     useEffect(() => {
         const settValgtKandidat = (kandidatlisteId: string, kandidatnr: string) => {
