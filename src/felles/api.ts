@@ -14,6 +14,7 @@ export const api = {
     presenterteKandidaterApi: '/presenterte-kandidater-api',
     modiaContextHolder: '/modiacontextholder/api',
     arbeidsgiverNotifikasjon: '/arbeidsgiver-notifikasjon-api',
+    kandidatSokApi: '/kandidatsok-api',
 };
 
 export const videresendTilInnlogging = () => {

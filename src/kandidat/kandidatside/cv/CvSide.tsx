@@ -1,30 +1,36 @@
 import { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
 
-import { Nettstatus } from 'felles/nettressurs';
-import AppState from '../../state/AppState';
+import { Alert, BodyLong, Heading } from '@navikt/ds-react';
 import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
+import { useParams } from 'react-router';
+import useSWR from 'swr';
+import { postFetcher } from '../../../felles/hooks/fetcher';
+import { endepunkter } from '../../api/api';
 import css from './CvSide.module.css';
-import Jobbønsker from './cv/jobbønsker/Jobbønsker';
 import Erfaringer from './cv/Erfaringer';
-import Utdanning from './cv/Utdanning';
 import Fagbrev from './cv/Fagbrev';
 import Førerkort from './cv/Førerkort';
-import Språk from './cv/Språk';
 import Godkjenninger from './cv/Godkjenninger';
+import Kompetanse from './cv/Kompetanse';
 import Kurs from './cv/Kurs';
 import Sammendrag from './cv/Sammendrag';
-import Kompetanse from './cv/Kompetanse';
-import { Alert, BodyLong, Heading } from '@navikt/ds-react';
+import Språk from './cv/Språk';
+import Utdanning from './cv/Utdanning';
+import Jobbønsker from './cv/jobbønsker/Jobbønsker';
 
 const CvSide: FunctionComponent = () => {
-    const { cv } = useSelector((state: AppState) => state.cv);
+    const { kandidatnr } = useParams();
 
-    if (cv.kind === Nettstatus.LasterInn || cv.kind === Nettstatus.IkkeLastet) {
+    const { data, error, isLoading } = useSWR(
+        { path: endepunkter.lookupCv, kandidatnr },
+        ({ path }) => postFetcher(path, { kandidatnr })
+    );
+
+    if (isLoading) {
         return <Sidelaster />;
     }
 
-    if (cv.kind === Nettstatus.FinnesIkke) {
+    if (error) {
         return (
             <div className={css.side}>
                 <div className={css.wrapper}>
@@ -51,25 +57,25 @@ const CvSide: FunctionComponent = () => {
             </div>
         );
     }
-
-    if (cv.kind === Nettstatus.Suksess) {
+    const cv = data?.hits?.hits[0]?._source;
+    if (cv) {
         return (
             <div className={css.side}>
                 <div className={css.wrapper}>
                     <div className={css.mosaik}>
                         <div className={css.kolonne}>
-                            <Jobbønsker cv={cv.data} />
-                            <Sammendrag cv={cv.data} />
-                            <Kompetanse cv={cv.data} />
-                            <Utdanning cv={cv.data} />
-                            <Fagbrev cv={cv.data} />
-                            <Erfaringer cv={cv.data} />
+                            <Jobbønsker cv={cv} />
+                            <Sammendrag cv={cv} />
+                            <Kompetanse cv={cv} />
+                            <Utdanning cv={cv} />
+                            <Fagbrev cv={cv} />
+                            <Erfaringer cv={cv} />
                         </div>
                         <div className={css.kolonne}>
-                            <Førerkort cv={cv.data} />
-                            <Godkjenninger cv={cv.data} />
-                            <Språk cv={cv.data} />
-                            <Kurs cv={cv.data} />
+                            <Førerkort cv={cv} />
+                            <Godkjenninger cv={cv} />
+                            <Språk cv={cv} />
+                            <Kurs cv={cv} />
                         </div>
                     </div>
                 </div>

@@ -15,6 +15,10 @@ import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fe
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
+export const endepunkter = {
+    lookupCv: `${api.kandidatSokApi}/api/lookup-cv`,
+};
+
 const convertToUrlParams = (query: object) =>
     Object.keys(query)
         .map((key) => {
