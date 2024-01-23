@@ -9,8 +9,7 @@ import PostKandidatTilKandidatliste from 'felles/domene/kandidatliste/PostKandid
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Knapper from './Knapper';
 
-type Props = {
-    fnr: string;
+type IBekreftLeggTilKandidat = {
     kandidat: KandidatLookup;
     onOppdatertKandidatliste?: (kandidatliste: Kandidatliste) => void;
     onAvbryt: () => void;
@@ -19,15 +18,14 @@ type Props = {
     kandidatlisteId: string;
 };
 
-const BekreftMedNotat = ({
-    fnr,
+const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
     kandidat,
     onOppdatertKandidatliste,
     onAvbryt,
     onBekreft,
     erAnbefaling = false,
     kandidatlisteId,
-}: Props) => {
+}) => {
     const [leggTilKandidat, setLeggTilKandidat] = useState<Nettressurs<Kandidatliste>>({
         kind: Nettstatus.IkkeLastet,
     });
@@ -45,7 +43,6 @@ const BekreftMedNotat = ({
         const data: PostKandidatTilKandidatliste[] = [
             {
                 kandidatnr: kandidat.arenaKandidatnr,
-                notat: '',
             },
         ];
 
@@ -94,4 +91,4 @@ const BekreftMedNotat = ({
     );
 };
 
-export default BekreftMedNotat;
+export default BekreftLeggTilKandidat;

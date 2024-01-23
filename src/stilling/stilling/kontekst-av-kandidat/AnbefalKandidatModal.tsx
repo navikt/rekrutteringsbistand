@@ -2,7 +2,7 @@ import { Modal } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
-import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
+import BekreftLeggTilKandidat from '../../../felles/komponenter/legg-til-kandidat/BekreftLeggTilKandidat';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
 type Props = {
@@ -26,9 +26,8 @@ const AnbefalKandidatModal = ({ kandidat, kandidatlisteId, vis, onClose }: Props
 
     return (
         <Modal open={vis} onClose={onClose} header={{ heading: 'Anbefal kandidat' }}>
-            <BekreftMedNotat
+            <BekreftLeggTilKandidat
                 erAnbefaling
-                fnr={kandidat.fodselsnummer}
                 kandidat={kandidat}
                 kandidatlisteId={kandidatlisteId}
                 onAvbryt={onClose}

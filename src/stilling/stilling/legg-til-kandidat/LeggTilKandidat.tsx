@@ -6,7 +6,7 @@ import { sendEvent } from 'felles/amplitude';
 import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus, ikkeLastet } from 'felles/nettressurs';
 import FødselsnummerPåKandidat from '../../../felles/komponenter/fnr-på-kandidat/FødselsnummerTekstfelt';
-import BekreftMedNotat from '../../../felles/komponenter/legg-til-kandidat/BekreftMedNotat';
+import BekreftLeggTilKandidat from '../../../felles/komponenter/legg-til-kandidat/BekreftLeggTilKandidat';
 import Knapper from '../../../felles/komponenter/legg-til-kandidat/Knapper';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 import LeggTilFormidling from '../legg-til-formidling/LeggTilFormidling';
@@ -98,8 +98,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                 )}
 
                 {fnrSøk.kind === Nettstatus.Suksess && (
-                    <BekreftMedNotat
-                        fnr={fnr}
+                    <BekreftLeggTilKandidat
                         kandidat={fnrSøk.data}
                         kandidatlisteId={kandidatlisteId}
                         onAvbryt={onClose}

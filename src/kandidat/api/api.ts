@@ -119,6 +119,7 @@ export const postDelteKandidater = (
         }
     );
 
+//TODO Sjekk opp i denne
 export const postKandidatTilKandidatliste = async (
     kandidatlisteId: string,
     kandidatnr: string,
