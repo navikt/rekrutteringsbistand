@@ -6,6 +6,7 @@ import App from './App';
 import DevTools from './dev/DevTools';
 import faroConfig from './faroConfig';
 import './index.css';
+import { SWRConfig } from 'swr';
 
 if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
     initializeFaro({
@@ -37,13 +38,19 @@ const root = createRoot(element as HTMLElement);
 enableMocking().then(() => {
     root.render(
         <React.StrictMode>
-            {import.meta.env.DEV ? (
-                <DevTools>
+            <SWRConfig
+                value={{
+                    revalidateOnFocus: false,
+                }}
+            >
+                {import.meta.env.DEV ? (
+                    <DevTools>
+                        <App />
+                    </DevTools>
+                ) : (
                     <App />
-                </DevTools>
-            ) : (
-                <App />
-            )}
+                )}
+            </SWRConfig>
         </React.StrictMode>
     );
 });
