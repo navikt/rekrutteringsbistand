@@ -6,7 +6,7 @@ import { mockKandidat } from './mockKandidat';
 
 export const kandidatsøkMock = [
     http.post(api.kandidatsøk, () => {
-        const skalMockeIngenTreff = true;
+        const skalMockeIngenTreff = false;
         const respons = skalMockeIngenTreff ? ingenTreff : treff;
 
         return HttpResponse.json(respons);

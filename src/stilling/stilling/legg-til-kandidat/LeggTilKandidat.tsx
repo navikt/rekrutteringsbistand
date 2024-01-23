@@ -173,7 +173,10 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                     </>
                 )}
             </Modal.Body>
-            {!registrerFormidling && <Knapper leggTilDisabled onAvbrytClick={onClose} />}
+            {!registrerFormidling ||
+                (fnrSøk.kind === Nettstatus.Suksess && (
+                    <Knapper leggTilDisabled onAvbrytClick={onClose} />
+                ))}
         </>
     );
 };
