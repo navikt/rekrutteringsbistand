@@ -22,27 +22,33 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
     }
 
     return (
-        <div style={{ display: 'flex', gap: '1rem', width: '100%' }}>
-            <Link to={lenkeTilFinnKandidater(stillingId, kandidatlisteId, true)}>
-                <Button variant="tertiary" as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
-                    Finn kandidater
+        <div
+            style={{
+                width: '100%',
+                boxShadow: 'inset 0 -1px 0 0 var(--ac-tabs-border, var(--a-border-divider))',
+            }}
+        >
+            <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.75rem' }}>
+                <Link to={lenkeTilFinnKandidater(stillingId, kandidatlisteId, true)}>
+                    <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
+                        Finn kandidater
+                    </Button>
+                </Link>
+
+                <Button
+                    onClick={() => setVisLeggTilKandidatModal(true)}
+                    icon={<PersonPlusIcon aria-hidden />}
+                >
+                    Legg til kandidat
                 </Button>
-            </Link>
 
-            <Button
-                variant="tertiary"
-                onClick={() => setVisLeggTilKandidatModal(true)}
-                icon={<PersonPlusIcon aria-hidden />}
-            >
-                Legg til kandidat
-            </Button>
-
-            <LeggTilKandidatModal
-                erEier={erEier}
-                vis={visLeggTilKandidatModal}
-                onClose={() => setVisLeggTilKandidatModal(false)}
-                stillingsId={stillingId}
-            />
+                <LeggTilKandidatModal
+                    erEier={erEier}
+                    vis={visLeggTilKandidatModal}
+                    onClose={() => setVisLeggTilKandidatModal(false)}
+                    stillingsId={stillingId}
+                />
+            </div>
         </div>
     );
 };

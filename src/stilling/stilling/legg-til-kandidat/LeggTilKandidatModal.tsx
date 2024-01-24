@@ -1,6 +1,6 @@
 import { Alert, Loader, Modal } from '@navikt/ds-react';
 
-import useKandidatlisteId from '../../api/useKandidatlisteId';
+import useKandidatlisteId from '../../../felles/hooks/useKandidatlisteId';
 import LeggTilKandidat from './LeggTilKandidat';
 import css from './LeggTilKandidatModal.module.css';
 
@@ -27,19 +27,13 @@ const LeggTilKandidatModal: React.FC<ILeggTilKandidatModal> = ({
                 heading: 'Legg til kandidat',
             }}
         >
-            <Modal.Body>
-                <Alert variant="warning">
-                    Før du legger en kandidat på kandidatlisten må du undersøke om personen
-                    oppfyller kravene som er nevnt i stillingen.
+            {isLoading && <Loader size="medium" className={css.spinner} />}
+            {isError && (
+                <Alert fullWidth variant="error" size="small">
+                    Klarte ikke å laste ned kandidatliste for stillingen.
                 </Alert>
-                {isLoading && <Loader size="medium" className={css.spinner} />}
-                {isError && (
-                    <Alert fullWidth variant="error" size="small">
-                        Klarte ikke å laste ned kandidatliste for stillingen.
-                    </Alert>
-                )}
-            </Modal.Body>
-            {kandidatlisteId && (
+            )}
+            {kandidatlisteId && vis && (
                 <LeggTilKandidat
                     kandidatlisteId={kandidatlisteId}
                     onClose={onClose}

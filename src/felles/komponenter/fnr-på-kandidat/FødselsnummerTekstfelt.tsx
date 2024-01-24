@@ -10,7 +10,7 @@ export interface IFødselsnummerTekstfelt {
 const validerFnr = (fnr: string): boolean => fnrValidator.idnr(fnr).status === 'valid';
 
 const FødselsnummerTekstfelt: React.FC<IFødselsnummerTekstfelt> = ({ callBack, initFnr }) => {
-    const [fnr, setFnr] = React.useState<string>(initFnr);
+    const [fnr, setFnr] = React.useState<string>(initFnr || '');
     const [feilmelding, setFeilmelding] = React.useState<string>();
 
     const handleFnrChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,12 +1,15 @@
 import * as React from 'react';
+import { IuseKandidatNavnSøk } from '../../../felles/hooks/useKandidatNavn';
 import useNavKontor from '../../../felles/store/navKontor';
-import InformasjonOmUsynligKandidat from '../../../kandidat/kandidatliste/modaler/legg-til-kandidat-modal/InformasjonOmUsynligKandidat';
+import FormidleUsynligKandidat from '../../../kandidat/kandidatliste/modaler/legg-til-kandidat-modal/FormidleUsynligKandidat';
 
 export interface ILeggTilFormidling {
     fnr: string;
     kandidatlisteId: string;
     stillingsId: string;
     onClose: () => void;
+    kandidatSøkResultat: IuseKandidatNavnSøk;
+    handleBekreft: () => void;
 }
 
 const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
@@ -14,13 +17,20 @@ const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
     stillingsId,
     onClose,
     kandidatlisteId,
+    kandidatSøkResultat,
+    handleBekreft,
 }) => {
     const valgtNavKontor = useNavKontor((state) => state.navKontor);
     return (
         <div style={{ paddingTop: '1rem' }}>
-            <InformasjonOmUsynligKandidat
+            <FormidleUsynligKandidat
+                handleBekreft={handleBekreft}
                 fnr={fnr}
-                // kandidatliste={kandidatliste}
+                usynligKandidat={{
+                    fornavn: kandidatSøkResultat.fornavn,
+                    mellomnavn: kandidatSøkResultat.mellomnavn,
+                    etternavn: kandidatSøkResultat.etternavn,
+                }}
                 kandidatlisteId={kandidatlisteId}
                 stillingsId={stillingsId}
                 valgtNavKontor={valgtNavKontor}

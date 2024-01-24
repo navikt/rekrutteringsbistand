@@ -24,11 +24,12 @@ const AnbefalKandidatModal = ({ kandidat, kandidatlisteId, vis, onClose }: Props
         });
     };
 
+    //TODO 24.01.24, Sjekk denne (arenaKandiatnr)
     return (
         <Modal open={vis} onClose={onClose} header={{ heading: 'Anbefal kandidat' }}>
             <BekreftLeggTilKandidat
                 erAnbefaling
-                kandidat={kandidat}
+                kandidatnr={kandidat.arenaKandidatnr}
                 kandidatlisteId={kandidatlisteId}
                 onAvbryt={onClose}
                 onBekreft={handleBekreft}

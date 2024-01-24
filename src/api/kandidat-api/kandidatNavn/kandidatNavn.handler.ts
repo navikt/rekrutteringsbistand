@@ -1,9 +1,9 @@
 import { HttpResponse, http } from 'msw';
-import { endepunkter } from '../../../kandidat/api/api';
+import { kandidatEndepunkter } from '../kandidat.api';
 import { kandidatNavnMockGenerator } from './kandidatNavn.testdata';
 
 export const kandidatNavnMockHandler = [
-    http.post(endepunkter.kandidatNavn, () =>
+    http.post(kandidatEndepunkter.kandidatNavn, () =>
         HttpResponse.json([kandidatNavnMockGenerator()], { status: 200 })
     ),
 ];

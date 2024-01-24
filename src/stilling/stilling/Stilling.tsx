@@ -5,10 +5,10 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 
 import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
 import store from '../../kandidat/state/reduxStore';
-import useKandidatlisteId from '../api/useKandidatlisteId';
 import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';

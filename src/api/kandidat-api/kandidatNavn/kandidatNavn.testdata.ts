@@ -5,5 +5,6 @@ export function kandidatNavnMockGenerator(): kandidatNavnDTO {
         fornavn: 'PersonForNavn',
         etternavn: 'PersonEtterNavn',
         mellomnavn: 'PersonMellomNavn',
+        kandidatnr: '123456789',
     };
 }

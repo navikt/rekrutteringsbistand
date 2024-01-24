@@ -131,7 +131,7 @@ export const kandidatApiMock = [
 
     http.post(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat`,
-        todo
+        () => new HttpResponse(null, { status: 201 })
     ),
 
     http.put(

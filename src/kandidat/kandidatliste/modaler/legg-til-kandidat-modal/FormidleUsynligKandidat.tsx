@@ -13,15 +13,15 @@ import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
-import css from './LeggTilKandidatModal.module.css';
 
 type Props = {
     fnr: string;
-    usynligKandidat: UsynligKandidat[];
+    usynligKandidat: UsynligKandidat;
     kandidatlisteId: string;
     stillingsId: string;
     valgtNavKontor: string;
     onClose: () => void;
+    handleBekreft: () => void;
 };
 
 const FormidleUsynligKandidat: FunctionComponent<Props> = ({
@@ -31,6 +31,7 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
     stillingsId,
     valgtNavKontor,
     onClose,
+    handleBekreft,
 }) => {
     const dispatch = useDispatch();
     const [formidling, setFormidling] = useState<Nettressurs<Kandidatliste>>(ikkeLastet());
@@ -53,7 +54,8 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
         setFormidling(resultat);
 
         if (resultat.kind === Nettstatus.Suksess) {
-            onClose();
+            handleBekreft();
+            // onClose();
             varsleKandidatlisteOmFormidling(resultat.data, dto);
         }
     };
@@ -79,14 +81,14 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
     return (
         <>
             <BodyShort spacing>
-                {hentNavnPåUsynligKandidat(usynligKandidat)} ({fnr})
+                {hentNavnPåUsynligKandidat([usynligKandidat])} ({fnr})
             </BodyShort>
-            <Alert variant="info" className={css.folkeregisterInfo}>
+            <Alert variant="info">
                 Navnet er hentet fra folkeregisteret. Selv om personen ikke er synlig i
                 Rekrutteringsbistand, kan du allikevel registrere formidlingen her for statistikkens
                 del. Personen vil vises øverst i kandidatlisten.
             </Alert>
-            <CheckboxGroup legend={`Registrer formidling for ${usynligKandidat[0].fornavn}:`}>
+            <CheckboxGroup legend={`Registrer formidling for ${usynligKandidat.fornavn}:`}>
                 <Checkbox
                     value={presentert}
                     onChange={(event) => setPresentert(event.target.checked)}

@@ -1,64 +1,52 @@
-import { Alert, BodyShort, Modal } from '@navikt/ds-react';
+import { Alert } from '@navikt/ds-react';
 import { useState } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
-import { api, post } from 'felles/api';
-import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import PostKandidatTilKandidatliste from 'felles/domene/kandidatliste/PostKandidatTilKandidatliste';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/kandidat.api';
 import Knapper from './Knapper';
 
 type IBekreftLeggTilKandidat = {
-    kandidat: KandidatLookup;
-    onOppdatertKandidatliste?: (kandidatliste: Kandidatliste) => void;
+    kandidatnr: string;
+    // onOppdatertKandidatliste?: (kandidatliste: Kandidatliste) => void;
     onAvbryt: () => void;
-    onBekreft: () => void;
+    onBekreft: (melding: string) => void;
     erAnbefaling?: boolean;
     kandidatlisteId: string;
 };
 
 const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
-    kandidat,
-    onOppdatertKandidatliste,
+    kandidatnr,
+    // onOppdatertKandidatliste,
     onAvbryt,
     onBekreft,
     erAnbefaling = false,
     kandidatlisteId,
 }) => {
-    const [leggTilKandidat, setLeggTilKandidat] = useState<Nettressurs<Kandidatliste>>({
-        kind: Nettstatus.IkkeLastet,
-    });
+    const [laster, setLaster] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
 
     const onLeggTilKandidat = async () => {
-        setLeggTilKandidat({
-            kind: Nettstatus.SenderInn,
-        });
+        setLaster(true);
+        setError(false);
 
         sendEvent('legg_til_kandidat', 'klikk', {
             app: 'stilling',
             erAnbefaling,
         });
 
-        const data: PostKandidatTilKandidatliste[] = [
-            {
-                kandidatnr: kandidat.arenaKandidatnr,
-            },
-        ];
+        const respons = await leggTilKandidatKandidatliste(kandidatlisteId, kandidatnr);
 
-        const respons = await post<Kandidatliste>(
-            `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
-            data
-        );
+        // setLeggTilKandidat(respons);
 
-        setLeggTilKandidat(respons);
-
-        if (respons.kind === Nettstatus.Suksess) {
-            onBekreft();
-
-            if (onOppdatertKandidatliste) {
-                onOppdatertKandidatliste(respons.data);
-            }
+        if (respons.ok) {
+            setLaster(false);
+            onBekreft('');
+            // if (onOppdatertKandidatliste) {
+            //     onOppdatertKandidatliste(respons.data);
+            // }
+        } else {
+            setLaster(false);
+            setError(true);
         }
     };
 
@@ -71,18 +59,15 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
 
     return (
         <>
-            <Modal.Body>
-                <BodyShort spacing>{`${kandidat.fornavn} ${kandidat.etternavn} `}</BodyShort>
-            </Modal.Body>
             <Knapper
                 onLeggTilClick={onLeggTilKandidat}
                 onAvbrytClick={onAvbryt}
-                leggTilSpinner={leggTilKandidat.kind === Nettstatus.SenderInn}
+                leggTilSpinner={laster}
                 leggTilTekst={leggTilTekst}
-                leggTilDisabled={leggTilKandidat.kind === Nettstatus.SenderInn}
-                avbrytDisabled={leggTilKandidat.kind === Nettstatus.SenderInn}
+                leggTilDisabled={laster}
+                avbrytDisabled={laster}
             />
-            {leggTilKandidat.kind === Nettstatus.Feil && (
+            {error && (
                 <Alert fullWidth variant="error" size="small">
                     Klarte ikke å legge til kandidat
                 </Alert>
