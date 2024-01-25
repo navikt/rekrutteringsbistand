@@ -5,6 +5,7 @@ import {
     KandidatKilde,
     useKandidatNavnSøk,
 } from '../../hooks/useKandidatNavn';
+import {useEffect} from "react";
 
 export interface IKandidatNavn {
     fnr: string;
@@ -15,7 +16,9 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
     const resultat = useKandidatNavnSøk(fnr);
     const { fornavn, mellomnavn, etternavn, laster, kandidatnr, kilde } = resultat;
 
-    callback(resultat);
+    useEffect(() => {
+        callback(resultat);
+    },[callback, resultat]);
 
     if (laster) {
         return <Loader size="medium" />;
