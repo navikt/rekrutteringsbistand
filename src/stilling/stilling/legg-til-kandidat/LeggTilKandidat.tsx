@@ -56,7 +56,10 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     const handleBekreft = () => {
         setVisOppsummering(true);
         const kandidatlisteState = kandidatStore.getState().kandidatliste.kandidatliste;
-        if (kandidatlisteState.kind === 'Suksess') {
+        if (
+            kandidatlisteState.kind === 'Suksess' &&
+            kandidatlisteState.data.stillingId === stillingsId
+        ) {
             kandidatStore.dispatch({
                 type: KandidatlisteActionType.HentKandidatlisteMedStillingsId,
                 stillingsId,
