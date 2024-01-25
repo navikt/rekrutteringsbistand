@@ -93,4 +93,6 @@ describe('<LeggTilKandidat />', () => {
         //Viser registrer formidling knapp
         expect(screen.getByRole('button', { name: /Registrer formidling for usynlig kandidat/i }));
     });
+
+    // const fnrFinnesIkke = '01098902216';
 });

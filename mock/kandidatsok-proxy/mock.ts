@@ -11,9 +11,11 @@ export const kandidatsøkMock = [
         //@ts-ignore
         const fnrRequest = data?.query?.term?.fodselsnummer;
 
-        const ingenTreffFnr = '22078738700';
+        const fnrIngenTreff = '22078738700';
+        const fnrFinnesIkke = '01098902216';
 
-        const respons = fnrRequest === ingenTreffFnr ? ingenTreff : treff;
+        const respons =
+            fnrRequest === fnrIngenTreff || fnrRequest === fnrFinnesIkke ? ingenTreff : treff;
 
         return HttpResponse.json(respons);
     }),

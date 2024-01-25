@@ -51,6 +51,7 @@ export const useKandidatNavnSøk = (fnr: string): IuseKandidatNavnSøk => {
                 setKilde(KandidatKilde.REKRUTTERINGSBISTAND);
             } else {
                 const pdlData = await hentKandidatFraPDL(fnr);
+
                 if (pdlData[0]) {
                     setLaster(false);
                     setKilde(KandidatKilde.PDL);

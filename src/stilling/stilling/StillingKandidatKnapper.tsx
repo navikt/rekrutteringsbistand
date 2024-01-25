@@ -29,11 +29,13 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
             }}
         >
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.75rem' }}>
-                <Link to={lenkeTilFinnKandidater(stillingId, kandidatlisteId, true)}>
-                    <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
-                        Finn kandidater
-                    </Button>
-                </Link>
+                {erEier && (
+                    <Link to={lenkeTilFinnKandidater(stillingId, kandidatlisteId, true)}>
+                        <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
+                            Finn kandidater
+                        </Button>
+                    </Link>
+                )}
 
                 <Button
                     onClick={() => setVisLeggTilKandidatModal(true)}
