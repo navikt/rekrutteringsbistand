@@ -15,7 +15,7 @@ const SynlighetsEvaluering: React.FC<ISynlighetsEvaluering> = ({ fødselsnummer 
     }
 
     if (error) {
-        <span> Klarte ikke hente synlighetsevaluering </span>;
+        return <span> Klarte ikke hente synlighetsevaluering </span>;
     }
     return (
         <>

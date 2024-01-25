@@ -8,6 +8,8 @@ import Knapper from '../../../felles/komponenter/legg-til-kandidat/Knapper';
 import LeggTilFormidling from '../legg-til-formidling/LeggTilFormidling';
 import css from './LeggTilKandidat.module.css';
 import SynlighetsEvaluering from './SynlighetsEvaluering';
+import kandidatStore from '../../../kandidat/state/reduxStore';
+import KandidatlisteActionType from '../../../kandidat/kandidatliste/reducer/KandidatlisteActionType';
 
 type ILeggTilKandidat = {
     onClose: () => void;
@@ -53,6 +55,16 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
 
     const handleBekreft = () => {
         setVisOppsummering(true);
+        const kandidatlisteState = kandidatStore.getState().kandidatliste.kandidatliste;
+        if (
+            kandidatlisteState.kind === 'Suksess' &&
+            kandidatlisteState.data.stillingId === stillingsId
+        ) {
+            kandidatStore.dispatch({
+                type: KandidatlisteActionType.HentKandidatlisteMedStillingsId,
+                stillingsId,
+            });
+        }
     };
 
     if (visOppsummering) {
