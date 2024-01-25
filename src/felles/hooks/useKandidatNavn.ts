@@ -1,6 +1,6 @@
 import React from 'react';
 import { postApi } from '../../api/fetcher';
-import { kandidatEndepunkter } from '../../api/kandidat-api/kandidat.api';
+import { hentKandidatFraPDL } from '../../api/kandidat-api/kandidat.api';
 import { kandidatNavnDTO } from '../../api/kandidat-api/kandidatNavn/kandidatNav.dto';
 import { api } from '../api';
 import { EsQuery } from '../domene/elastic/ElasticSearch';
@@ -50,7 +50,7 @@ export const useKandidatNavnSøk = (fnr: string): IuseKandidatNavnSøk => {
                 setLaster(false);
                 setKilde(KandidatKilde.REKRUTTERINGSBISTAND);
             } else {
-                const pdlData = await postApi(kandidatEndepunkter.kandidatNavn, fnr);
+                const pdlData = await hentKandidatFraPDL(fnr);
                 if (pdlData[0]) {
                     setLaster(false);
                     setKilde(KandidatKilde.PDL);
