@@ -5,9 +5,15 @@ import { api } from '../../src/felles/api';
 import { mockKandidat } from './mockKandidat';
 
 export const kandidatsøkMock = [
-    http.post(api.kandidatsøk, () => {
-        const skalMockeIngenTreff = true;
-        const respons = skalMockeIngenTreff ? ingenTreff : treff;
+    http.post(api.kandidatsøk, async ({ request }) => {
+        const data = await request.json();
+
+        //@ts-ignore
+        const fnrRequest = data?.query?.term?.fodselsnummer;
+
+        const ingenTreffFnr = '22078738700';
+
+        const respons = fnrRequest === ingenTreffFnr ? ingenTreff : treff;
 
         return HttpResponse.json(respons);
     }),

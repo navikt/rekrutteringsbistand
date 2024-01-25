@@ -1,7 +1,49 @@
-export const hentApi = (url: string) => fetch(url).then((r) => r.json());
+const basePath = import.meta.env.VITEST ? 'http://localhost:3000' : '';
 
-export const postApi = (url: string, body: any) =>
-    fetch(url, { method: 'POST', body: JSON.stringify(body) }).then((r) => r.json());
+export const hentApi = async (url: string) => {
+    try {
+        const response = await fetch(basePath + url, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error('Feil respons fra server');
+        }
+    } catch (e) {
+        throw e;
+    }
+};
+
+export const postApi = async (url: string, body: any) => {
+    try {
+        const response = await fetch(basePath + url, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error('Feil respons fra server');
+        }
+    } catch (e) {
+        throw e;
+    }
+};
 
 export const postApiResponse = (url: string, body: any) =>
-    fetch(url, { method: 'POST', body: JSON.stringify(body) });
+    fetch(basePath + url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });

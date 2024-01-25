@@ -1,10 +1,10 @@
+import { Loader } from '@navikt/ds-react';
 import * as React from 'react';
 import {
     IuseKandidatNavnSøk,
     KandidatKilde,
     useKandidatNavnSøk,
 } from '../../hooks/useKandidatNavn';
-import { Loader } from '@navikt/ds-react';
 
 export interface IKandidatNavn {
     fnr: string;
@@ -18,7 +18,7 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
     callback(resultat);
 
     if (laster) {
-        return   <Loader size="medium" />
+        return <Loader size="medium" />;
     }
 
     if (kilde === KandidatKilde.REKRUTTERINGSBISTAND) {

@@ -1,6 +1,4 @@
-import { Alert, Button, Loader, Modal } from '@navikt/ds-react';
-import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
-import { Nettressurs, Nettstatus, ikkeLastet } from 'felles/nettressurs';
+import { Alert, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useCallback, useState } from 'react';
 import { IuseKandidatNavnSøk, KandidatKilde } from '../../../felles/hooks/useKandidatNavn';
 import FødselsnummerPåKandidat from '../../../felles/komponenter/fnr-på-kandidat/FødselsnummerTekstfelt';
@@ -27,7 +25,6 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     const [visOppsummering, setVisOppsummering] = useState<boolean>(false);
     const [visSynlighetsEvaluering, setVisSynlighetsEvaluering] = useState<boolean>(false);
     const [fnr, setFnr] = useState<string | null>(null);
-    const [fnrSøk, setFnrSøk] = useState<Nettressurs<KandidatLookup>>(ikkeLastet());
     const [registrerFormidling, setRegistrerFormidling] = useState<boolean>(false);
 
     const [kandidatSøkResultat, setKandidatSøkResultat] = useState<IuseKandidatNavnSøk | null>(
@@ -48,38 +45,11 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     );
 
     const tilbakestill = () => {
-        setFnrSøk(ikkeLastet());
         setFnr(null);
         setVisSynlighetsEvaluering(false);
         setRegistrerFormidling(false);
         setKandidatSøkResultat(null);
     };
-
-    // const hentKandidatMedFødselsnummer = async (fnr: string) => {
-    //     setFnrSøk({
-    //         kind: Nettstatus.LasterInn,
-    //     });
-
-    //     try {
-    //         const fnrSøkResponse = await fetchKandidatMedFnr(fnr);
-    //         setFnrSøk(fnrSøkResponse);
-
-    //         if (fnrSøkResponse.kind === Nettstatus.FinnesIkke) {
-    //             setFeilmelding('Kandidaten er ikke synlig i Rekrutteringsbistand');
-
-    //             sendEvent('legg_til_kandidat', 'fant_ingen_kandidat', {
-    //                 kontekst: 'stilling',
-    //             });
-    //         }
-    //     } catch (e) {
-    //         setFnrSøk({
-    //             kind: Nettstatus.Feil,
-    //             error: {
-    //                 message: 'Klarte ikke å hente kandidat med fødselsnummer',
-    //             },
-    //         });
-    //     }
-    // };
 
     const handleBekreft = () => {
         setVisOppsummering(true);
@@ -204,10 +174,6 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                             )}
                         </>
                     )}
-
-                {fnrSøk.kind === Nettstatus.LasterInn && (
-                    <Loader size="medium" className={css.spinner} />
-                )}
 
                 {!kandidatSøkResultat && <Knapper leggTilDisabled onAvbrytClick={onClose} />}
             </Modal.Body>
