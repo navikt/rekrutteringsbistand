@@ -1,4 +1,4 @@
-import { postApi, postApiResponse } from '../fetcher';
+import { postApiResponse } from '../fetcher';
 
 const kandidatApi = '/kandidat-api';
 
@@ -15,5 +15,5 @@ export const leggTilKandidatKandidatliste = async (kandidatlisteId: string, kand
 };
 
 export const hentKandidatFraPDL = async (fnr: string) => {
-    return await postApi(kandidatEndepunkter.kandidatNavn, { fnr });
+    return await postApiResponse(kandidatEndepunkter.kandidatNavn, { fnr });
 };

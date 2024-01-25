@@ -94,5 +94,14 @@ describe('<LeggTilKandidat />', () => {
         expect(screen.getByRole('button', { name: /Registrer formidling for usynlig kandidat/i }));
     });
 
-    // const fnrFinnesIkke = '01098902216';
+    it('Skriver inn for gyldig fødselsnummer, men fødselsnummeret finnes ikke ', async () => {
+        const tekstfelt = screen.getByRole('textbox');
+
+        const fnrFinnesIkke = '01098902216';
+        userEvent.type(tekstfelt, fnrFinnesIkke);
+
+        await waitFor(() =>
+            expect(screen.getByText(/Finner ikke person knyttet til fnr/i)).toBeInTheDocument()
+        );
+    });
 });

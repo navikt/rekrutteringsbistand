@@ -1,11 +1,11 @@
-import { Loader } from '@navikt/ds-react';
+import { Alert, Loader } from '@navikt/ds-react';
 import * as React from 'react';
+import { useEffect } from 'react';
 import {
     IuseKandidatNavnSøk,
     KandidatKilde,
     useKandidatNavnSøk,
 } from '../../hooks/useKandidatNavn';
-import {useEffect} from "react";
 
 export interface IKandidatNavn {
     fnr: string;
@@ -18,7 +18,7 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
 
     useEffect(() => {
         callback(resultat);
-    },[callback, resultat]);
+    }, [callback, resultat]);
 
     if (laster) {
         return <Loader size="medium" />;
@@ -59,7 +59,11 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
         );
     }
 
-    return <div> Finner ikke person knyttet til fnr </div>;
+    return (
+        <Alert variant="error" style={{ marginTop: '1rem' }}>
+            Finner ikke person knyttet til fnr{' '}
+        </Alert>
+    );
 };
 
 export default KandidatNavn;

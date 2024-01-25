@@ -18,23 +18,19 @@ export const hentApi = async (url: string) => {
 };
 
 export const postApi = async (url: string, body: any) => {
-    try {
-        const response = await fetch(basePath + url, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-        });
+    const response = await fetch(basePath + url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
 
-        if (response.ok) {
-            return await response.json();
-        } else {
-            throw new Error('Feil respons fra server');
-        }
-    } catch (e) {
-        throw e;
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error('Feil respons fra server');
     }
 };
 

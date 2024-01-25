@@ -45,7 +45,6 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
                 kandidatnr
             );
 
-            console.log('🎺 oppdatertKandidatliste', oppdatertKandidatliste);
             if (oppdatertKandidatliste.ok) {
                 // onSuccess();
                 onClose();

@@ -31,13 +31,18 @@ export interface IuseKandidatNavnSøk extends kandidatNavnDTO {
 }
 export const useKandidatNavnSøk = (fnr: string): IuseKandidatNavnSøk => {
     const [navneData, setNavneData] = React.useState<kandidatNavnDTO>(null);
-    const [laster, setLaster] = React.useState<boolean>(false);
+    const [laster, setLaster] = React.useState<boolean>(true);
     const [kilde, setKilde] = React.useState<KandidatKilde>(null);
 
     const reset = () => {
         setLaster(true);
         setNavneData(null);
         setKilde(null);
+    };
+
+    const ingenTreff = () => {
+        setKilde(KandidatKilde.FINNES_IKKE);
+        setLaster(false);
     };
 
     React.useEffect(() => {
@@ -50,15 +55,18 @@ export const useKandidatNavnSøk = (fnr: string): IuseKandidatNavnSøk => {
                 setLaster(false);
                 setKilde(KandidatKilde.REKRUTTERINGSBISTAND);
             } else {
-                const pdlData = await hentKandidatFraPDL(fnr);
-
-                if (pdlData[0]) {
-                    setLaster(false);
-                    setKilde(KandidatKilde.PDL);
-                    setNavneData(pdlData[0]);
+                const response = await hentKandidatFraPDL(fnr);
+                if (response.ok) {
+                    const pdlData = await response.json();
+                    if (pdlData[0]) {
+                        setLaster(false);
+                        setKilde(KandidatKilde.PDL);
+                        setNavneData(pdlData[0]);
+                    } else {
+                        ingenTreff();
+                    }
                 } else {
-                    setKilde(KandidatKilde.FINNES_IKKE);
-                    setLaster(false);
+                    ingenTreff();
                 }
             }
         };
