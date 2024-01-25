@@ -9,7 +9,9 @@ export const kandidatEndepunkter = {
 };
 
 export const leggTilKandidatKandidatliste = async (kandidatlisteId: string, kandidatnr: string) => {
-    return await postApiResponse(kandidatEndepunkter.leggTilKandidat(kandidatlisteId), kandidatnr);
+    return await postApiResponse(kandidatEndepunkter.leggTilKandidat(kandidatlisteId), [
+        { kandidatnr: kandidatnr },
+    ]);
 };
 
 export const hentKandidatFraPDL = async (fnr: string) => {
