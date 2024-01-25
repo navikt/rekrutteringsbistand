@@ -22,7 +22,6 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
     kandidatnr,
     kandidatliste,
 }) => {
-    // const dispatch: Dispatch<KandidatlisteAction | VarslingAction> = useDispatch();
     const [lagreKandidatStatus, setLagreKandidatStatus] = useState<Nettstatus>(
         Nettstatus.IkkeLastet
     );

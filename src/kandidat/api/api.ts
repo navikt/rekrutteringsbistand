@@ -208,29 +208,6 @@ export const fetchKandidatlisterForKandidat = (
     );
 };
 
-// export const fetchUsynligKandidat = async (
-//     fnr: string
-// ): Promise<Nettressurs<UsynligKandidat[]>> => {
-//     try {
-//         const body = await postJson(
-//             endepunkter.kandidatNavn,
-//             JSON.stringify({
-//                 fnr,
-//             })
-//         );
-
-//         return {
-//             kind: Nettstatus.Suksess,
-//             data: body,
-//         };
-//     } catch (e) {
-//         return {
-//             kind: Nettstatus.Feil,
-//             error: e,
-//         };
-//     }
-// };
-
 export const fetchArbeidsgivereEnhetsregister = (query) =>
     postJson(
         `${ENHETSREGISTER_API}/underenhet/_search`,

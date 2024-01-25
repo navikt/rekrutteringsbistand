@@ -36,14 +36,9 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
 
         const respons = await leggTilKandidatKandidatliste(kandidatlisteId, kandidatnr);
 
-        // setLeggTilKandidat(respons);
-
         if (respons.ok) {
             setLaster(false);
             onBekreft('');
-            // if (onOppdatertKandidatliste) {
-            //     onOppdatertKandidatliste(respons.data);
-            // }
         } else {
             setLaster(false);
             setError(true);
