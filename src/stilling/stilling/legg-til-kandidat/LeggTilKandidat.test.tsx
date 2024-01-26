@@ -58,12 +58,10 @@ describe('<LeggTilKandidat />', () => {
     it('Skriver inn for gyldig fødselsnummer for kandidat i rekrutteringsbistand', async () => {
         const tekstfelt = screen.getByRole('textbox');
 
-        expect(screen.queryByText(/Kandidatnr/i)).not.toBeInTheDocument();
         expect(screen.queryByText(/Navn/i)).not.toBeInTheDocument();
 
         userEvent.type(tekstfelt, devFnr.ok);
 
-        await waitFor(() => expect(screen.getByText(/Kandidatnr/i)).toBeInTheDocument());
         await waitFor(() => expect(screen.getByText(/Navn/i)).toBeInTheDocument());
 
         expect(screen.getByRole('button', { name: /legg til/i })).not.toBeDisabled();
@@ -81,7 +79,7 @@ describe('<LeggTilKandidat />', () => {
         );
 
         // Viser navn fra PDL
-        expect(screen.getByText('Navn')).toBeInTheDocument();
+        expect(screen.getByText('Kandidaten er hentet fra folkeregistret')).toBeInTheDocument();
 
         // Viser knapp for oppslag i synlighetsmotoren
         expect(
