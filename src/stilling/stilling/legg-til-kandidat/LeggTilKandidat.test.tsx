@@ -18,11 +18,6 @@ describe('<LeggTilKandidat />', () => {
     });
 
     it('Rendrer initiel visning', () => {
-        expect(
-            screen.getByText(
-                /Før du legger en kandidat på kandidatlisten må du undersøke om personen oppfyller kravene som er nevnt i stillingen./
-            )
-        ).toBeInTheDocument();
         expect(screen.getByRole('textbox')).toBeInTheDocument();
         const leggTilKnapp = screen.getByRole('button', { name: /legg til/i });
         expect(leggTilKnapp).toBeDisabled();
@@ -89,7 +84,7 @@ describe('<LeggTilKandidat />', () => {
         );
 
         //Viser registrer formidling knapp
-        expect(screen.getByRole('button', { name: /Registrer formidling for usynlig kandidat/i }));
+        expect(screen.getByRole('button', { name: /Registrer formidling/i }));
     });
 
     it('Skriver inn for gyldig fødselsnummer, men fødselsnummeret finnes ikke ', async () => {

@@ -107,9 +107,7 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
                 avbrytDisabled={formidling.kind === Nettstatus.SenderInn}
             />
             {formidling.kind === Nettstatus.Feil && (
-                <ErrorMessage>
-                    Det skjedde noe galt under formidling av usynlig kandidat
-                </ErrorMessage>
+                <ErrorMessage>Det skjedde noe galt under formidling av kandidat</ErrorMessage>
             )}
         </>
     );

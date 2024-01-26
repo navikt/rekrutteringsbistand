@@ -86,108 +86,112 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     return (
         <div className={css.leggTilKandidat}>
             <Modal.Body>
-                <Alert variant="warning" style={{ marginBottom: '1rem' }}>
-                    Før du legger en kandidat på kandidatlisten må du undersøke om personen
-                    oppfyller kravene som er nevnt i stillingen.
-                </Alert>
-                <FødselsnummerPåKandidat
-                    callBack={(fødselsnummer) => {
-                        if (fødselsnummer) {
-                            setFnr(fødselsnummer);
-                        } else {
-                            tilbakestill();
-                        }
-                    }}
-                />
+                <div style={{ width: '600px' }}>
+                    <FødselsnummerPåKandidat
+                        callBack={(fødselsnummer) => {
+                            if (fødselsnummer) {
+                                setFnr(fødselsnummer);
+                            } else {
+                                tilbakestill();
+                            }
+                        }}
+                    />
 
-                {fnr && !registrerFormidling && (
-                    <KandidatNavn fnr={fnr} callback={kandidatSøkResultatCallback} />
-                )}
-
-                {kandidatSøkResultat &&
-                    kandidatSøkResultat.kilde === KandidatKilde.REKRUTTERINGSBISTAND && (
-                        <BekreftLeggTilKandidat
-                            kandidatnr={kandidatSøkResultat.kandidatnr}
-                            kandidatlisteId={kandidatlisteId}
-                            onAvbryt={onClose}
-                            onBekreft={handleBekreft}
-                        />
+                    {fnr && !registrerFormidling && (
+                        <KandidatNavn fnr={fnr} callback={kandidatSøkResultatCallback} />
                     )}
 
-                {kandidatSøkResultat && kandidatSøkResultat.kilde === KandidatKilde.PDL && (
-                    <>
-                        {registrerFormidling ? (
-                            <LeggTilFormidling
-                                handleBekreft={handleBekreft}
-                                kandidatSøkResultat={kandidatSøkResultat}
-                                fnr={fnr}
-                                stillingsId={stillingsId}
-                                onClose={onClose}
+                    {kandidatSøkResultat &&
+                        kandidatSøkResultat.kilde === KandidatKilde.REKRUTTERINGSBISTAND && (
+                            <BekreftLeggTilKandidat
+                                kandidatnr={kandidatSøkResultat.kandidatnr}
                                 kandidatlisteId={kandidatlisteId}
+                                onAvbryt={onClose}
+                                onBekreft={handleBekreft}
                             />
-                        ) : (
-                            <div style={{ marginTop: '1.5rem' }}>
-                                <Alert variant="warning">
-                                    Kandidaten er ikke synlig i Rekrutteringsbistand
-                                </Alert>
-                                <br />
-                                {visSynlighetsEvaluering ? (
-                                    <SynlighetsEvaluering fødselsnummer={fnr} />
-                                ) : (
-                                    <Alert variant="info">
-                                        <strong>
-                                            Årsaken kan være en eller flere av disse: ​​​​​​​
-                                        </strong>
-                                        <ol>
-                                            <li>Kandidaten mangler CV eller jobbprofil.</li>
-                                            <li>
-                                                Kandidaten har ikke blitt informert om NAVs
-                                                behandlingsgrunnlag for deling av CV.
-                                            </li>
-                                            <li>
-                                                Kandidaten har personforholdet «Fritatt for
-                                                kandidatsøk» i Arena.
-                                            </li>
-                                            <li>
-                                                ​​​​​​​Kandidaten har formidlingskode «Ikke
-                                                servicebehov (ISERV)» i Arena.
-                                            </li>
-                                            <li>Kandidaten har status "Egen ansatt".</li>
-                                            <li>Kandidaten har diskresjonskode (kode 6 og 7).</li>
-                                            <li>
-                                                Kandidaten er deltager i kommunalt
-                                                kvalifiseringsprogram (KVP)
-                                            </li>
-                                        </ol>
-                                        <Button
-                                            onClick={() => setVisSynlighetsEvaluering(true)}
-                                            variant="secondary"
-                                        >
-                                            Se hvorfor kandidaten ikke er synlig (punkt 1-5)
-                                        </Button>
-                                    </Alert>
-                                )}
-                                <br />
-
-                                {erEier ? (
-                                    <Button onClick={() => setRegistrerFormidling(true)}>
-                                        Registrer formidling for usynlig kandidat
-                                    </Button>
-                                ) : (
-                                    <span>
-                                        Du må være eier av stillingen for å registrere formidling
-                                    </span>
-                                )}
-                                <Knapper leggTilDisabled onAvbrytClick={onClose} />
-                            </div>
                         )}
-                    </>
-                )}
 
-                {(!kandidatSøkResultat ||
-                    kandidatSøkResultat.kilde === KandidatKilde.FINNES_IKKE) && (
-                    <Knapper leggTilDisabled onAvbrytClick={onClose} />
-                )}
+                    {kandidatSøkResultat && kandidatSøkResultat.kilde === KandidatKilde.PDL && (
+                        <>
+                            {registrerFormidling ? (
+                                <LeggTilFormidling
+                                    handleBekreft={handleBekreft}
+                                    kandidatSøkResultat={kandidatSøkResultat}
+                                    fnr={fnr}
+                                    stillingsId={stillingsId}
+                                    onClose={onClose}
+                                    kandidatlisteId={kandidatlisteId}
+                                />
+                            ) : (
+                                <div style={{ marginTop: '1.5rem' }}>
+                                    <Alert variant="warning">
+                                        Kandidaten er ikke synlig i Rekrutteringsbistand
+                                    </Alert>
+                                    <br />
+                                    {visSynlighetsEvaluering ? (
+                                        <SynlighetsEvaluering fødselsnummer={fnr} />
+                                    ) : (
+                                        <Alert variant="info">
+                                            <strong>
+                                                Årsaken kan være en eller flere av disse: ​​​​​​​
+                                            </strong>
+                                            <ol>
+                                                <li>Kandidaten mangler CV eller jobbprofil.</li>
+                                                <li>
+                                                    Kandidaten har ikke blitt informert om NAVs
+                                                    behandlingsgrunnlag for deling av CV.
+                                                </li>
+                                                <li>
+                                                    Kandidaten har personforholdet «Fritatt for
+                                                    kandidatsøk» i Arena.
+                                                </li>
+                                                <li>
+                                                    ​​​​​​​Kandidaten har formidlingskode «Ikke
+                                                    servicebehov (ISERV)» i Arena.
+                                                </li>
+                                                <li>Kandidaten har status "Egen ansatt".</li>
+                                                <li>
+                                                    Kandidaten har diskresjonskode (kode 6 og 7).
+                                                </li>
+                                                <li>
+                                                    Kandidaten er deltager i kommunalt
+                                                    kvalifiseringsprogram (KVP)
+                                                </li>
+                                            </ol>
+                                            <Button
+                                                onClick={() => setVisSynlighetsEvaluering(true)}
+                                                variant="secondary"
+                                            >
+                                                Se hvorfor kandidaten ikke er synlig (punkt 1-5)
+                                            </Button>
+                                        </Alert>
+                                    )}
+                                    <br />
+
+                                    {erEier ? (
+                                        <Button
+                                            onClick={() => setRegistrerFormidling(true)}
+                                            style={{ width: '100%', marginBottom: '1rem' }}
+                                        >
+                                            Registrer formidling
+                                        </Button>
+                                    ) : (
+                                        <span>
+                                            Du må være eier av stillingen for å registrere
+                                            formidling
+                                        </span>
+                                    )}
+                                    <Knapper leggTilDisabled onAvbrytClick={onClose} />
+                                </div>
+                            )}
+                        </>
+                    )}
+
+                    {(!kandidatSøkResultat ||
+                        kandidatSøkResultat.kilde === KandidatKilde.FINNES_IKKE) && (
+                        <Knapper leggTilDisabled onAvbrytClick={onClose} />
+                    )}
+                </div>
             </Modal.Body>
         </div>
     );
