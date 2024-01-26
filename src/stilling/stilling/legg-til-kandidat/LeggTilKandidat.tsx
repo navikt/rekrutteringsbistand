@@ -100,7 +100,9 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                     }}
                 />
 
-                {fnr && <KandidatNavn fnr={fnr} callback={kandidatSøkResultatCallback} />}
+                {fnr && !registrerFormidling && (
+                    <KandidatNavn fnr={fnr} callback={kandidatSøkResultatCallback} />
+                )}
 
                 {kandidatSøkResultat &&
                     kandidatSøkResultat.kilde === KandidatKilde.REKRUTTERINGSBISTAND && (
@@ -125,7 +127,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                             />
                         ) : (
                             <div style={{ marginTop: '1.5rem' }}>
-                                <Alert inline variant="warning">
+                                <Alert variant="warning">
                                     Kandidaten er ikke synlig i Rekrutteringsbistand
                                 </Alert>
                                 <br />

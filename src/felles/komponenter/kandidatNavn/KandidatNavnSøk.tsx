@@ -14,7 +14,7 @@ export interface IKandidatNavn {
 
 const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
     const resultat = useKandidatNavnSøk(fnr);
-    const { fornavn, mellomnavn, etternavn, laster, kandidatnr, kilde } = resultat;
+    const { fornavn, mellomnavn, etternavn, laster, kilde } = resultat;
 
     useEffect(() => {
         callback(resultat);
@@ -27,34 +27,23 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
     if (kilde === KandidatKilde.REKRUTTERINGSBISTAND) {
         return (
             <div style={{ marginTop: '1rem' }}>
-                <dl>
-                    <dt>Kandidatnr</dt>
-                    <dd>{kandidatnr}</dd>
-                </dl>
-
-                <dl>
-                    <dt>Navn</dt>
-                    <dd>
-                        {fornavn} {mellomnavn} {etternavn}
-                    </dd>
-                </dl>
+                <strong>Navn</strong>
+                <br />
+                <span>
+                    {fornavn} {mellomnavn} {etternavn}
+                </span>
             </div>
         );
     }
 
     if (kilde === KandidatKilde.PDL) {
         return (
-            <div>
-                <dl>
-                    <dt>Kandidaten er hentet fra folkeregistret</dt>
-                </dl>
-
-                <dl>
-                    <dt>Navn</dt>
-                    <dd>
-                        {fornavn} {mellomnavn} {etternavn}
-                    </dd>
-                </dl>
+            <div style={{ marginTop: '1rem' }}>
+                <strong>Kandidaten er hentet fra folkeregistret</strong>
+                <br />
+                <span>
+                    {fornavn} {mellomnavn} {etternavn}
+                </span>
             </div>
         );
     }

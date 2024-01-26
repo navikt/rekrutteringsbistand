@@ -87,6 +87,7 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
                 Rekrutteringsbistand, kan du allikevel registrere formidlingen her for statistikkens
                 del. Personen vil vises øverst i kandidatlisten.
             </Alert>
+            <br />
             <CheckboxGroup legend={`Registrer formidling for ${usynligKandidat.fornavn}:`}>
                 <Checkbox
                     value={presentert}
