@@ -1,4 +1,5 @@
 import { HttpResponse, http } from 'msw';
+import { devFnr } from '../../../dev/DevUtil';
 import { kandidatEndepunkter } from '../kandidat.api';
 import { kandidatNavnMockGenerator } from './kandidatNavn.testdata';
 
@@ -6,12 +7,10 @@ export const kandidatNavnMockHandler = [
     http.post(kandidatEndepunkter.kandidatNavn, async ({ request }) => {
         const data = await request.json();
 
-        const ukjentFnr = '01098902216';
-
         //@ts-ignore
         const fnrRequest = data.fnr;
 
-        const ingenTreff = ukjentFnr === fnrRequest;
+        const ingenTreff = devFnr.finnesIkke === fnrRequest;
 
         return ingenTreff
             ? new HttpResponse('Not found', {

@@ -1,6 +1,7 @@
 // FILEPATH: /Users/wiklem/NAV/TOI/rekrutteringsbistand/src/stilling/stilling/legg-til-kandidat/LeggTilKandidat.test.tsx
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { devFnr } from '../../../dev/DevUtil';
 import LeggTilKandidat from './LeggTilKandidat';
 
 describe('<LeggTilKandidat />', () => {
@@ -60,7 +61,7 @@ describe('<LeggTilKandidat />', () => {
         expect(screen.queryByText(/Kandidatnr/i)).not.toBeInTheDocument();
         expect(screen.queryByText(/Navn/i)).not.toBeInTheDocument();
 
-        userEvent.type(tekstfelt, '28125314475');
+        userEvent.type(tekstfelt, devFnr.ok);
 
         await waitFor(() => expect(screen.getByText(/Kandidatnr/i)).toBeInTheDocument());
         await waitFor(() => expect(screen.getByText(/Navn/i)).toBeInTheDocument());
@@ -71,8 +72,7 @@ describe('<LeggTilKandidat />', () => {
     it('Skriver inn for gyldig fødselsnummer, men det finnes ingen kandidat i rekbis', async () => {
         const tekstfelt = screen.getByRole('textbox');
 
-        const ingentreffFnr = '22078738700';
-        userEvent.type(tekstfelt, ingentreffFnr);
+        userEvent.type(tekstfelt, devFnr.ingentreff);
 
         await waitFor(() =>
             expect(
@@ -97,11 +97,12 @@ describe('<LeggTilKandidat />', () => {
     it('Skriver inn for gyldig fødselsnummer, men fødselsnummeret finnes ikke ', async () => {
         const tekstfelt = screen.getByRole('textbox');
 
-        const fnrFinnesIkke = '01098902216';
-        userEvent.type(tekstfelt, fnrFinnesIkke);
+        userEvent.type(tekstfelt, devFnr.finnesIkke);
 
         await waitFor(() =>
-            expect(screen.getByText(/Finner ikke person knyttet til fnr/i)).toBeInTheDocument()
+            expect(
+                screen.getByText(/Finner ikke person knyttet til fødselsnummer/i)
+            ).toBeInTheDocument()
         );
     });
 });

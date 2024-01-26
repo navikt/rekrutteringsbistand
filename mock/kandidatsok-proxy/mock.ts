@@ -1,6 +1,7 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { HttpResponse, http } from 'msw';
+import { devFnr } from '../../src/dev/DevUtil';
 import { api } from '../../src/felles/api';
 import { mockKandidat } from './mockKandidat';
 
@@ -11,11 +12,10 @@ export const kandidatsøkMock = [
         //@ts-ignore
         const fnrRequest = data?.query?.term?.fodselsnummer;
 
-        const fnrIngenTreff = '22078738700';
-        const fnrFinnesIkke = '01098902216';
-
         const respons =
-            fnrRequest === fnrIngenTreff || fnrRequest === fnrFinnesIkke ? ingenTreff : treff;
+            fnrRequest === devFnr.ingentreff || fnrRequest === devFnr.finnesIkke
+                ? ingenTreff
+                : treff;
 
         return HttpResponse.json(respons);
     }),

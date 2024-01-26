@@ -7,7 +7,6 @@ import Knapper from './Knapper';
 
 type IBekreftLeggTilKandidat = {
     kandidatnr: string;
-    // onOppdatertKandidatliste?: (kandidatliste: Kandidatliste) => void;
     onAvbryt: () => void;
     onBekreft: (melding: string) => void;
     erAnbefaling?: boolean;
@@ -16,7 +15,6 @@ type IBekreftLeggTilKandidat = {
 
 const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
     kandidatnr,
-    // onOppdatertKandidatliste,
     onAvbryt,
     onBekreft,
     erAnbefaling = false,

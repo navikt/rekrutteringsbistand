@@ -63,12 +63,6 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
                 setLagreIKandidatlister(Nettstatus.Suksess);
                 setMarkerteLister(new Set());
 
-                // responser.forEach((oppdatertKandidatliste) => {
-                //     if (oppdatertKandidatliste.kind === Nettstatus.Suksess) {
-                //         onKandidatlisteOppdatert(oppdatertKandidatliste.data, kandidatnr);
-                //     }
-                // });
-
                 visMeldingOmLagredeKandidater(markerteKandidatlister.length);
             }
 
@@ -82,14 +76,6 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
             setLagreIKandidatlister(Nettstatus.Feil);
         }
     };
-
-    // const onKandidatlisteOppdatert = (kandidatliste: Kandidatliste, kandidatnr: string) => {
-    //     dispatch({
-    //         type: KandidatlisteActionType.OppdaterKandidatlisteMedKandidat,
-    //         kandidatliste,
-    //         kandidatnr,
-    //     });
-    // };
 
     const visMeldingOmLagredeKandidater = (antallKandidatlister: number) => {
         dispatch({

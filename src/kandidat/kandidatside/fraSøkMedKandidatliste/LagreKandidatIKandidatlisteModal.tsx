@@ -55,20 +55,6 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
         }
     };
 
-    // const onSuccess = (kandidatliste: Kandidatliste) => {
-    //     dispatch({
-    //         type: VarslingActionType.VisVarsling,
-    //         alertType: 'success',
-    //         innhold: `Lagret kandidaten i kandidatlisten «${kandidatliste.tittel}»`,
-    //     });
-
-    //     dispatch({
-    //         type: KandidatlisteActionType.OppdaterKandidatlisteMedKandidat,
-    //         kandidatliste,
-    //         kandidatnr,
-    //     });
-    // };
-
     const stillingstittel = useHentStillingTittel(
         kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.stillingId : undefined
     );

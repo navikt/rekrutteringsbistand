@@ -61,7 +61,7 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
 
     return (
         <Alert variant="error" style={{ marginTop: '1rem' }}>
-            Finner ikke person knyttet til fnr{' '}
+            Finner ikke person knyttet til fødselsnummer
         </Alert>
     );
 };
