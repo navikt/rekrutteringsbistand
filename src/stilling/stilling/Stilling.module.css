@@ -4,6 +4,8 @@
 
 .banner,
 .faner {
+    display: flex;
+    justify-content: space-between;
     max-width: var(--innhold-maksbredde);
     margin: 0 auto;
     padding: 0 1rem;

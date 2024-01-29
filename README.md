@@ -24,13 +24,10 @@ I utviklingsmiljøet er Modia-dekoratøren erstattet med en placeholder. Slik la
 npm run start:modia
 ```
 
-### Aiven
+### Mock
 
-Noen ganger er det ønskelig å koble appen direkte mot ElasticSearch på Aiven i stedet for å mocke stillingssøket og kandidatsøket:
+Noen ganger er det ønskelig å koble appen direkte backend i stedet for å mocke 
 
-```sh
-npm run start:aiven
-```
 
 Merk at Aiven krever brukernavn og passord for autentisering. Det er opprettet en proxy i `vite.config.ts`, men for at denne skal fungere må du opprette en fil `.env.development.local` på rot og definere følgende miljøvariabler:
 

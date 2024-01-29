@@ -9,15 +9,23 @@ interface IDevTools {
 const DevTools: React.FC<IDevTools> = ({ children }) => {
     return (
         <>
-            <div style={{ display: 'flex', alignContent: 'baseline' }}>
+            <div
+                style={{
+                    display: 'flex',
+                    backgroundColor: '#EFF0F2',
+                    border: 'solid black 5px',
+                    padding: '2px 10px 2px 10px',
+                    alignItems: 'center',
+                    gap: '10px',
+                }}
+            >
                 <div
                     style={{
-                        backgroundColor: '#3B352F',
-                        color: 'white',
-                        padding: '0 1rem 0 1rem',
+                        color: '#3F3732',
+                        fontWeight: 'bold',
                     }}
                 >
-                    <strong> DevToolZ </strong>
+                    <span style={{}}> DevToolZ: </span>
                 </div>
                 <DevMockModal />
             </div>

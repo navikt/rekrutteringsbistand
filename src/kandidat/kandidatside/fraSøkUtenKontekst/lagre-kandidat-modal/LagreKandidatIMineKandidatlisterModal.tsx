@@ -2,11 +2,9 @@ import { Button, Modal } from '@navikt/ds-react';
 import { ChangeEvent, Dispatch, FunctionComponent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import { postKandidatTilKandidatliste } from '../../../api/api';
+import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/kandidat.api';
 import KandidatlisteAction from '../../../kandidatliste/reducer/KandidatlisteAction';
-import KandidatlisteActionType from '../../../kandidatliste/reducer/KandidatlisteActionType';
 import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import css from './LagreKandidatIMineKandidatlisterModal.module.css';
 import VelgKandidatlister from './VelgKandidatlister';
@@ -57,19 +55,13 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
 
             const responser = await Promise.all(
                 markerteKandidatlister.map((kandidatlisteId) =>
-                    postKandidatTilKandidatliste(kandidatlisteId, kandidatnr)
+                    leggTilKandidatKandidatliste(kandidatlisteId, kandidatnr)
                 )
             );
 
-            if (responser.every((respons) => respons.kind === Nettstatus.Suksess)) {
+            if (responser.every((respons) => respons.ok)) {
                 setLagreIKandidatlister(Nettstatus.Suksess);
                 setMarkerteLister(new Set());
-
-                responser.forEach((oppdatertKandidatliste) => {
-                    if (oppdatertKandidatliste.kind === Nettstatus.Suksess) {
-                        onKandidatlisteOppdatert(oppdatertKandidatliste.data, kandidatnr);
-                    }
-                });
 
                 visMeldingOmLagredeKandidater(markerteKandidatlister.length);
             }
@@ -83,14 +75,6 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
         } catch (e) {
             setLagreIKandidatlister(Nettstatus.Feil);
         }
-    };
-
-    const onKandidatlisteOppdatert = (kandidatliste: Kandidatliste, kandidatnr: string) => {
-        dispatch({
-            type: KandidatlisteActionType.OppdaterKandidatlisteMedKandidat,
-            kandidatliste,
-            kandidatnr,
-        });
     };
 
     const visMeldingOmLagredeKandidater = (antallKandidatlister: number) => {

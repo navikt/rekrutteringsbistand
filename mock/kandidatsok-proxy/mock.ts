@@ -1,13 +1,21 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { HttpResponse, http } from 'msw';
+import { devFnr } from '../../src/dev/DevUtil';
 import { api } from '../../src/felles/api';
 import { mockKandidat } from './mockKandidat';
 
 export const kandidatsøkMock = [
-    http.post(api.kandidatsøk, () => {
-        const skalMockeIngenTreff = false;
-        const respons = skalMockeIngenTreff ? ingenTreff : treff;
+    http.post(api.kandidatsøk, async ({ request }) => {
+        const data = await request.json();
+
+        //@ts-ignore
+        const fnrRequest = data?.query?.term?.fodselsnummer;
+
+        const respons =
+            fnrRequest === devFnr.ingentreff || fnrRequest === devFnr.finnesIkke
+                ? ingenTreff
+                : treff;
 
         return HttpResponse.json(respons);
     }),

@@ -53,15 +53,15 @@ const VelgbarKandidatliste: FunctionComponent<Props> = ({
                 {storForbokstav(kandidatliste.organisasjonNavn)}
             </BodyShort>
             <BodyShort className={css.opprettet}>{opprettetDato}</BodyShort>
-            <Link
-                target="_blank"
-                //TODO finn ndenne
-                // to={lenkeTilKandidatliste(kandidatlisteId)}
-                to={'#'}
-                className="navds-link"
-            >
-                <ExternalLinkIcon title="Åpne kandidatliste" />
-            </Link>
+            {kandidatliste.stillingId && (
+                <Link
+                    target="_blank"
+                    to={`/stillinger/stilling/${kandidatliste.stillingId}/kandidater`}
+                    className="navds-link"
+                >
+                    <ExternalLinkIcon title="Åpne kandidatliste" />
+                </Link>
+            )}
         </div>
     );
 };

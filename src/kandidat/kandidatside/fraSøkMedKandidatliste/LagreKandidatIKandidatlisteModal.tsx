@@ -1,17 +1,12 @@
 import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Dispatch } from 'redux';
 
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/kandidat.api';
 import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
-import { postKandidatTilKandidatliste } from '../../api/api';
 import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
-import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
-import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
-import { VarslingAction, VarslingActionType } from '../../varsling/varslingReducer';
 import css from './LagreKandidatIKandidatlisteModal.module.css';
 
 type Props = {
@@ -27,7 +22,6 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
     kandidatnr,
     kandidatliste,
 }) => {
-    const dispatch: Dispatch<KandidatlisteAction | VarslingAction> = useDispatch();
     const [lagreKandidatStatus, setLagreKandidatStatus] = useState<Nettstatus>(
         Nettstatus.IkkeLastet
     );
@@ -43,14 +37,15 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
 
         setLagreKandidatStatus(Nettstatus.SenderInn);
 
+        // TODO Verifiser / legg til nettstatus etter endring av funksjon
         try {
-            const oppdatertKandidatliste = await postKandidatTilKandidatliste(
+            const oppdatertKandidatliste = await leggTilKandidatKandidatliste(
                 kandidatlisteId,
                 kandidatnr
             );
 
-            if (oppdatertKandidatliste.kind === Nettstatus.Suksess) {
-                onSuccess(oppdatertKandidatliste.data);
+            if (oppdatertKandidatliste.ok) {
+                // onSuccess();
                 onClose();
             } else {
                 setLagreKandidatStatus(Nettstatus.Feil);
@@ -58,20 +53,6 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
         } catch (e) {
             setLagreKandidatStatus(Nettstatus.Feil);
         }
-    };
-
-    const onSuccess = (kandidatliste: Kandidatliste) => {
-        dispatch({
-            type: VarslingActionType.VisVarsling,
-            alertType: 'success',
-            innhold: `Lagret kandidaten i kandidatlisten «${kandidatliste.tittel}»`,
-        });
-
-        dispatch({
-            type: KandidatlisteActionType.OppdaterKandidatlisteMedKandidat,
-            kandidatliste,
-            kandidatnr,
-        });
     };
 
     const stillingstittel = useHentStillingTittel(
