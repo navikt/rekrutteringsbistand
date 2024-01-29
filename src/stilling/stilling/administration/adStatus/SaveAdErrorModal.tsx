@@ -28,9 +28,6 @@ const SaveAdErrorModal = () => {
                         {validation.title && (
                             <li className="skjemaelement__feilmelding">{validation.title}</li>
                         )}
-                        {validation.notat && (
-                            <li className="skjemaelement__feilmelding">{validation.notat}</li>
-                        )}
                         {validation.styrk && (
                             <li className="skjemaelement__feilmelding">{validation.styrk}</li>
                         )}

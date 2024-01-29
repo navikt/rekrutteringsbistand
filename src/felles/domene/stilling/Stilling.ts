@@ -88,7 +88,6 @@ export enum Kilde {
 export type Stillingsinfo = {
     eierNavident: string | null;
     eierNavn: string | null;
-    notat: string | null;
     stillingsid: string;
     stillingsinfoid: string;
     stillingskategori: Stillingskategori | null;

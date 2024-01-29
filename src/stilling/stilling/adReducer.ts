@@ -4,16 +4,15 @@ import { hentRekrutteringsbistandstilling, kopierStilling, postStilling } from '
 import { getReportee } from '../reportee/reporteeReducer';
 import {
     SET_NAV_IDENT_STILLINGSINFO,
-    SET_NOTAT,
     SET_STILLINGSINFO_DATA,
 } from '../stillingsinfo/stillingsinfoDataReducer';
 import { OPPRETT_STILLINGSINFO, UPDATE_STILLINGSINFO } from '../stillingsinfo/stillingsinfoReducer';
 import {
     CHECK_TAG,
     REMOVE_AD_DATA,
-    SET_ADMIN_STATUS,
     SET_AD_DATA,
     SET_AD_STATUS,
+    SET_ADMIN_STATUS,
     SET_FIRST_PUBLISHED,
     SET_NAV_IDENT,
     SET_REPORTEE,
@@ -355,18 +354,12 @@ function* getRekrutteringsbistandstilling(action) {
         const stillingsinfo = response.stillingsinfo || {
             eierNavident: undefined,
             eierNavn: undefined,
-            notat: undefined,
             stillingsid: response.stilling.uuid,
         };
 
-        const kommentarFraAd = response.stilling.administration?.comments;
-        const stillingsinfoNotatfix = {
-            ...stillingsinfo,
-            notat: hentNotatFraRekrutteringsbistandEllerAd(stillingsinfo.notat, kommentarFraAd),
-        };
         yield put({
             type: SET_STILLINGSINFO_DATA,
-            data: stillingsinfoNotatfix,
+            data: stillingsinfo,
         });
         if (action.edit) {
             yield put({ type: EDIT_AD });
@@ -380,11 +373,6 @@ function* getRekrutteringsbistandstilling(action) {
     }
 }
 
-function hentNotatFraRekrutteringsbistandEllerAd(stillingsinfoNotat, kommentarFraAd) {
-    // Notat undefined betyr at kommentar ikke er konvertert og skal hentes fra pam-ad. Om den er tom er den konvertert men slettet.
-    return stillingsinfoNotat ?? kommentarFraAd;
-}
-
 function* showStopModalMyAds(action) {
     yield getRekrutteringsbistandstilling(action);
     yield put({ type: SHOW_STOP_AD_MODAL });
@@ -396,7 +384,6 @@ function needClassify(originalAdData, adData) {
 
 function* createAd(action) {
     yield put({ type: CREATE_AD_BEGIN });
-    yield put({ type: SET_NOTAT, notat: undefined });
 
     try {
         const reportee = yield getReportee();
@@ -457,7 +444,6 @@ function* saveRekrutteringsbistandStilling() {
             stillingsinfoid: state.stillingsinfoData
                 ? state.stillingsinfoData.stillingsinfoid
                 : undefined,
-            notat: state.stillingsinfoData !== undefined ? state.stillingsinfoData.notat : '',
         };
 
         const response = yield fetchPut(putUrl, data);

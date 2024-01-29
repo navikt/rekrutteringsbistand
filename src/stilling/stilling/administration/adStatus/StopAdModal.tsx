@@ -8,7 +8,6 @@ const StopAdModal = ({ fromMyAds }: { fromMyAds?: boolean }) => {
     const dispatch = useDispatch();
 
     const showStopAdModal = useSelector((state: State) => state.ad.showStopAdModal);
-    const validation = useSelector((state: State) => state.adValidation.errors);
     const title = useSelector((state: State) => state.adData?.title);
 
     const onClose = () => {
@@ -16,14 +15,12 @@ const StopAdModal = ({ fromMyAds }: { fromMyAds?: boolean }) => {
     };
 
     const onStopAdClick = () => {
-        if (validation.notat === undefined) {
-            onClose();
+        onClose();
 
-            if (fromMyAds) {
-                dispatch({ type: STOP_AD_FROM_MY_ADS });
-            } else {
-                dispatch({ type: STOP_AD });
-            }
+        if (fromMyAds) {
+            dispatch({ type: STOP_AD_FROM_MY_ADS });
+        } else {
+            dispatch({ type: STOP_AD });
         }
     };
 

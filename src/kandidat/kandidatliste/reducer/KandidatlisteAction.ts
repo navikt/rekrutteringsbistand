@@ -8,7 +8,7 @@ import { Error } from 'felles/nettressurs';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../api/server.dto';
 import { SearchApiError } from '../../api/fetchUtils';
 import { ForespørslerForStillingInboundDto } from '../../api/forespørselOmDelingAvCvApi';
-import { Notat, Visningsstatus } from '../domene/Kandidatressurser';
+import { Visningsstatus } from '../domene/Kandidatressurser';
 import { ForespørselOutboundDto } from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import KandidatlisteActionType from './KandidatlisteActionType';
 import { Kandidatlistefilter, Kandidatsortering } from './kandidatlisteReducer';
@@ -132,83 +132,10 @@ export interface SetFodselsnummerAction {
     fodselsnummer: string;
 }
 
-export interface SetNotatAction {
-    type: KandidatlisteActionType.SetNotat;
-    notat: string;
-}
-
-export interface HentNotaterAction {
-    type: KandidatlisteActionType.HentNotater;
-    kandidatlisteId: string;
-    kandidatnr: string;
-}
-
-export interface HentNotaterSuccessAction {
-    type: KandidatlisteActionType.HentNotaterSuccess;
-    kandidatnr: string;
-    notater: Array<Notat>;
-}
-
-export interface HentNotaterFailureAction {
-    type: KandidatlisteActionType.HentNotaterFailure;
-}
-
-export interface OpprettNotatAction {
-    type: KandidatlisteActionType.OpprettNotat;
-    kandidatlisteId: string;
-    kandidatnr: string;
-    tekst: string;
-}
-
-export interface OpprettNotatSuccessAction {
-    type: KandidatlisteActionType.OpprettNotatSuccess;
-    kandidatnr: string;
-    notater: Array<Notat>;
-}
-
 export interface FormidleUsynligKandidatSuccessAction {
     type: KandidatlisteActionType.FormidleUsynligKandidatSuccess;
     kandidatliste: Kandidatliste;
     formidlingAvUsynligKandidat: FormidlingAvUsynligKandidatOutboundDto;
-}
-
-export interface OpprettNotatFailureAction {
-    type: KandidatlisteActionType.OpprettNotatFailure;
-}
-
-export interface EndreNotatAction {
-    type: KandidatlisteActionType.EndreNotat;
-    kandidatlisteId: string;
-    kandidatnr: string;
-    notatId: string;
-    tekst: string;
-}
-
-export interface EndreNotatSuccessAction {
-    type: KandidatlisteActionType.EndreNotatSuccess;
-    kandidatnr: string;
-    notater: Array<Notat>;
-}
-
-export interface EndreNotatFailureAction {
-    type: KandidatlisteActionType.EndreNotatFailure;
-}
-
-export interface SlettNotatAction {
-    type: KandidatlisteActionType.SlettNotat;
-    kandidatlisteId: string;
-    kandidatnr: string;
-    notatId: string;
-}
-
-export interface SlettNotatSuccessAction {
-    type: KandidatlisteActionType.SlettNotatSuccess;
-    kandidatnr: string;
-    notater: Array<Notat>;
-}
-
-export interface SlettNotatFailureAction {
-    type: KandidatlisteActionType.SlettNotatFailure;
 }
 
 export interface ToggleArkivertAction {
@@ -386,19 +313,6 @@ type KandidatlisteAction =
     | EndreUtfallKandidatSuccessAction
     | EndreUtfallKandidatFailureAction
     | SetFodselsnummerAction
-    | SetNotatAction
-    | HentNotaterAction
-    | HentNotaterSuccessAction
-    | HentNotaterFailureAction
-    | OpprettNotatAction
-    | OpprettNotatSuccessAction
-    | OpprettNotatFailureAction
-    | EndreNotatAction
-    | EndreNotatSuccessAction
-    | EndreNotatFailureAction
-    | SlettNotatAction
-    | SlettNotatSuccessAction
-    | SlettNotatFailureAction
     | ToggleArkivertAction
     | ToggleArkivertSuccessAction
     | ToggleArkivertFailureAction

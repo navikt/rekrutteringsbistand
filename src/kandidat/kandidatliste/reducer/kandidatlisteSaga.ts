@@ -2,19 +2,15 @@ import { sendEvent } from 'felles/amplitude';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import {
-    deleteNotat,
     fetchKandidatlisteMedKandidatlisteId,
     fetchKandidatlisteMedStillingsId,
-    fetchNotater,
     fetchSendteMeldinger,
-    postNotat,
     postSmsTilKandidater,
     putArkivert,
     putArkivertForFlereKandidater,
     putFormidlingsutfallForUsynligKandidat,
     putKandidatliste,
     putKandidatlistestatus,
-    putNotat,
     putStatusKandidat,
     putUtfallKandidat,
     slettCvFraArbeidsgiversKandidatliste,
@@ -33,16 +29,13 @@ import KandidatlisteAction, {
     EndreFormidlingsutfallForUsynligKandidatSuccessAction,
     EndreKandidatlistestatusAction,
     EndreKandidatlistestatusSuccessAction,
-    EndreNotatAction,
     EndreStatusKandidatAction,
     EndreUtfallKandidatAction,
     EndreUtfallKandidatSuccessAction,
     HentForespørslerOmDelingAvCvAction,
     HentKandidatlisteMedKandidatlisteIdAction,
     HentKandidatlisteMedStillingsIdAction,
-    HentNotaterAction,
     HentSendteMeldingerAction,
-    OpprettNotatAction,
     SendForespørselOmDelingAvCv,
     SendSmsAction,
     SlettCvFraArbeidsgiversKandidatliste,
@@ -220,83 +213,6 @@ function* endreKandidatlistestatus(action: EndreKandidatlistestatusAction) {
     }
 }
 
-function* hentNotater(action: HentNotaterAction) {
-    try {
-        const response = yield fetchNotater(action.kandidatlisteId, action.kandidatnr);
-        yield put({
-            type: KandidatlisteActionType.HentNotaterSuccess,
-            notater: response.liste,
-            kandidatnr: action.kandidatnr,
-        });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: KandidatlisteActionType.HentNotaterFailure, error: e });
-        } else {
-            throw e;
-        }
-    }
-}
-
-function* opprettNotat(action: OpprettNotatAction) {
-    try {
-        const response = yield postNotat(action.kandidatlisteId, action.kandidatnr, action.tekst);
-        yield put({
-            type: KandidatlisteActionType.OpprettNotatSuccess,
-            notater: response.liste,
-            kandidatnr: action.kandidatnr,
-        });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: KandidatlisteActionType.OpprettNotatFailure, error: e });
-        } else {
-            throw e;
-        }
-    }
-}
-
-function* endreNotat(action: EndreNotatAction) {
-    try {
-        const response = yield putNotat(
-            action.kandidatlisteId,
-            action.kandidatnr,
-            action.notatId,
-            action.tekst
-        );
-        yield put({
-            type: KandidatlisteActionType.EndreNotatSuccess,
-            notater: response.liste,
-            kandidatnr: action.kandidatnr,
-        });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: KandidatlisteActionType.EndreNotatFailure, error: e });
-        } else {
-            throw e;
-        }
-    }
-}
-
-function* slettNotat(action) {
-    try {
-        const response = yield deleteNotat(
-            action.kandidatlisteId,
-            action.kandidatnr,
-            action.notatId
-        );
-        yield put({
-            type: KandidatlisteActionType.SlettNotatSuccess,
-            notater: response.liste,
-            kandidatnr: action.kandidatnr,
-        });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: KandidatlisteActionType.SlettNotatFailure, error: e });
-        } else {
-            throw e;
-        }
-    }
-}
-
 function* toggleArkivert(action: ToggleArkivertAction) {
     try {
         const arkivertKandidat = yield putArkivert(
@@ -458,10 +374,6 @@ function* kandidatlisteSaga() {
     );
     yield takeLatest(KandidatlisteActionType.EndreStatusKandidat, endreKandidatstatus);
     yield takeLatest(KandidatlisteActionType.EndreUtfallKandidat, endreKandidatUtfall);
-    yield takeLatest(KandidatlisteActionType.HentNotater, hentNotater);
-    yield takeLatest(KandidatlisteActionType.OpprettNotat, opprettNotat);
-    yield takeLatest(KandidatlisteActionType.EndreNotat, endreNotat);
-    yield takeLatest(KandidatlisteActionType.SlettNotat, slettNotat);
     yield takeLatest(KandidatlisteActionType.ToggleArkivert, toggleArkivert);
     yield takeLatest(KandidatlisteActionType.AngreArkivering, angreArkiveringForKandidater);
     yield takeLatest(
@@ -469,10 +381,7 @@ function* kandidatlisteSaga() {
             KandidatlisteActionType.HentKandidatlisteMedStillingsIdFailure,
             KandidatlisteActionType.HentKandidatlisteMedKandidatlisteIdFailure,
             KandidatlisteActionType.EndreStatusKandidatFailure,
-            KandidatlisteActionType.OpprettNotatFailure,
-            KandidatlisteActionType.EndreNotatFailure,
             KandidatlisteActionType.ToggleArkivertFailure,
-            KandidatlisteActionType.SlettNotatFailure,
             KandidatlisteActionType.LagreKandidatIKandidatlisteFailure,
         ],
         sjekkError

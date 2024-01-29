@@ -108,12 +108,6 @@
     padding-left: 0.5rem;
 }
 
-.antallNotater {
-    margin-right: 0.4rem;
-    font-size: 1rem;
-    font-weight: normal;
-}
-
 .lagtTil {
     flex-wrap: wrap;
     align-content: center;
@@ -126,12 +120,4 @@
 .tabellTekstInner {
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.visNotaterKnapp {
-    gap: 0.25rem;
-}
-
-.visNotaterKnapp span {
-    font-weight: normal;
 }

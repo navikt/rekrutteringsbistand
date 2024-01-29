@@ -15,7 +15,6 @@ type Kandidatinformasjon = {
     status: Kandidatstatus;
     utfall: Kandidatutfall;
     utfallsendringer: Utfallsendring[];
-    antallNotater: number;
     lagtTilTidspunkt: string;
     lagtTilAv: LagtTilAv;
     arkivert: boolean;
