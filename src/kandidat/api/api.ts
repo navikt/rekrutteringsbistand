@@ -1,20 +1,12 @@
 import { api, post } from 'felles/api';
-import {
-    Kandidatstatus,
-    Kandidatutfall,
-    UsynligKandidat,
-} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { Kandidatstatus, Kandidatutfall } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { FormidlingAvUsynligKandidatOutboundDto } from '../kandidatliste/modaler/legg-til-kandidat-modal/LeggTilKandidatModal';
+import { FormidlingAvUsynligKandidatOutboundDto } from '../../api/server.dto';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
 import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
-
-export const endepunkter = {
-    lookupCv: `${api.kandidatSokApi}/api/lookup-cv`,
-};
 
 const convertToUrlParams = (query: object) =>
     Object.keys(query)
@@ -118,34 +110,6 @@ export const postDelteKandidater = (
         }
     );
 
-export const postKandidatTilKandidatliste = async (
-    kandidatlisteId: string,
-    kandidatnr: string,
-    notat?: string
-): Promise<Nettressurs<Kandidatliste>> => {
-    try {
-        const body = await postJson(
-            `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
-            JSON.stringify([
-                {
-                    kandidatnr,
-                    notat,
-                },
-            ])
-        );
-
-        return {
-            kind: Nettstatus.Suksess,
-            data: body,
-        };
-    } catch (e) {
-        return {
-            kind: Nettstatus.Feil,
-            error: e,
-        };
-    }
-};
-
 export const postFormidlingerAvUsynligKandidat = async (
     kandidatlisteId: string,
     dto: FormidlingAvUsynligKandidatOutboundDto
@@ -242,29 +206,6 @@ export const fetchKandidatlisterForKandidat = (
         })}`,
         true
     );
-};
-
-export const fetchUsynligKandidat = async (
-    fnr: string
-): Promise<Nettressurs<UsynligKandidat[]>> => {
-    try {
-        const body = await postJson(
-            `${api.kandidat}/veileder/kandidater/navn`,
-            JSON.stringify({
-                fnr,
-            })
-        );
-
-        return {
-            kind: Nettstatus.Suksess,
-            data: body,
-        };
-    } catch (e) {
-        return {
-            kind: Nettstatus.Feil,
-            error: e,
-        };
-    }
 };
 
 export const fetchArbeidsgivereEnhetsregister = (query) =>

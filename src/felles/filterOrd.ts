@@ -14,6 +14,7 @@ export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[
 
         const stillingsDatoForFilter = moment(stilling._source?.stilling?.publishedByAdmin);
         const seksMndSiden = moment().subtract(antallMåneder, 'months');
+
         if (!stillingsDatoForFilter.isBefore(seksMndSiden)) {
             return stilling;
         }

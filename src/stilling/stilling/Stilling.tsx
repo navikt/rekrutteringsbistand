@@ -5,10 +5,10 @@ import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'reac
 
 import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
 import store from '../../kandidat/state/reduxStore';
-import useKandidatlisteId from '../api/useKandidatlisteId';
 import DelayedSpinner from '../common/DelayedSpinner';
 import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
@@ -24,6 +24,7 @@ import PreviewHeader from './forhåndsvisning/header/PreviewHeader';
 import Stillingstittel from './forhåndsvisning/header/Stillingstittel';
 import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import css from './Stilling.module.css';
+import StillingKandidatKnapper from './StillingKandidatKnapper';
 import VisStillingBanner from './VisStillingBanner';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
@@ -246,6 +247,11 @@ const Stilling = () => {
                             <Tabs.Tab value="kandidater" label="Kandidater" />
                         )}
                     </Tabs.List>
+                    <StillingKandidatKnapper
+                        kandidatlisteId={kandidatlisteId}
+                        stillingId={stilling.uuid}
+                        erEier={erEier}
+                    />
                 </div>
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
                     {stillingsSide()}

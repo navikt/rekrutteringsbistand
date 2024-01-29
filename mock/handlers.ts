@@ -1,3 +1,4 @@
+import { kandidatHandlers } from '../src/api/kandidat-api/handlers';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
 import { kandidatApiMock } from './kandidat-api/mock';
 import { kandidatsøkMock } from './kandidatsok-proxy/mock';
@@ -24,6 +25,7 @@ const mswHandlers = [
     ...kandidatsøkMock,
     ...stillingssøkMock,
     ...modiaMock,
+    ...kandidatHandlers,
 ];
 
 export default mswHandlers;

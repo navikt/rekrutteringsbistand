@@ -26,13 +26,11 @@ import useFiltrerteKandidater from './hooks/useFiltrerteKandidater';
 import useHentForespørslerOmDelingAvCv from './hooks/useHentForespørslerOmDelingAvCv';
 import useHentSendteMeldinger from './hooks/useHentSendteMeldinger';
 import useSorterteKandidater from './hooks/useSorterteKandidater';
-import HvitBoks from './hvit-boks/HvitBoks';
 import IngenKandidater from './ingen-kandidater/IngenKandidater';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import { Hendelse } from './kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
 import KnappeRad from './knappe-rad/KnappeRad';
 import ListeHeader from './liste-header/ListeHeader';
-import Meny from './meny/Meny';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
 import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
 import SideHeader from './side-header/SideHeader';
@@ -176,17 +174,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
             <SideHeader kandidatliste={kandidatliste} skjulBanner={skjulBanner} />
             {listenInneholderKandidater ? (
                 <>
-                    <HvitBoks border>
-                        {kandidatlistenErÅpen ? (
-                            <Meny
-                                kandidatlisteId={kandidatliste.kandidatlisteId}
-                                stillingId={kandidatliste.stillingId}
-                                onLeggTilKandidat={onLeggTilKandidat}
-                            />
-                        ) : (
-                            <span />
-                        )}
-                    </HvitBoks>
                     <div className={css.grid}>
                         <div className={css.knapperad}>
                             {kandidatliste.kanEditere &&
@@ -280,17 +267,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
                     </div>
                 </>
             ) : (
-                <TomListe kandidatlistenErLukket={!kandidatlistenErÅpen}>
-                    {kandidatlistenErÅpen && (
-                        <HvitBoks>
-                            <Meny
-                                kandidatlisteId={kandidatliste.kandidatlisteId}
-                                stillingId={kandidatliste.stillingId}
-                                onLeggTilKandidat={onLeggTilKandidat}
-                            />
-                        </HvitBoks>
-                    )}
-                </TomListe>
+                <TomListe kandidatlistenErLukket={!kandidatlistenErÅpen}></TomListe>
             )}
         </div>
     );

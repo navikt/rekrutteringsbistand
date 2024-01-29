@@ -1,35 +1,37 @@
+import { Alert, BodyShort, Checkbox, CheckboxGroup, ErrorMessage } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Alert, BodyShort, Checkbox, CheckboxGroup, ErrorMessage } from '@navikt/ds-react';
 
-import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
-import { FormidlingAvUsynligKandidatOutboundDto } from './LeggTilKandidatModal';
-import { Nettressurs, ikkeLastet, senderInn, Nettstatus } from 'felles/nettressurs';
-import { postFormidlingerAvUsynligKandidat } from '../../../api/api';
 import { UsynligKandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
+import { Nettressurs, Nettstatus, ikkeLastet, senderInn } from 'felles/nettressurs';
+import { postFormidlingerAvUsynligKandidat } from '../../../api/api';
+import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
+import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
-import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
-import css from './LeggTilKandidatModal.module.css';
+
+import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
 
 type Props = {
     fnr: string;
-    usynligKandidat: UsynligKandidat[];
-    kandidatliste: Kandidatliste;
+    usynligKandidat: UsynligKandidat;
+    kandidatlisteId: string;
     stillingsId: string;
     valgtNavKontor: string;
     onClose: () => void;
+    handleBekreft: () => void;
 };
 
 const FormidleUsynligKandidat: FunctionComponent<Props> = ({
     fnr,
     usynligKandidat,
-    kandidatliste,
+    kandidatlisteId,
     stillingsId,
     valgtNavKontor,
     onClose,
+    handleBekreft,
 }) => {
     const dispatch = useDispatch();
     const [formidling, setFormidling] = useState<Nettressurs<Kandidatliste>>(ikkeLastet());
@@ -47,15 +49,12 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
             stillingsId,
         };
 
-        const resultat = await postFormidlingerAvUsynligKandidat(
-            kandidatliste.kandidatlisteId,
-            dto
-        );
+        const resultat = await postFormidlingerAvUsynligKandidat(kandidatlisteId, dto);
 
         setFormidling(resultat);
 
         if (resultat.kind === Nettstatus.Suksess) {
-            onClose();
+            handleBekreft();
             varsleKandidatlisteOmFormidling(resultat.data, dto);
         }
     };
@@ -81,14 +80,15 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
     return (
         <>
             <BodyShort spacing>
-                {hentNavnPåUsynligKandidat(usynligKandidat)} ({fnr})
+                {hentNavnPåUsynligKandidat([usynligKandidat])} ({fnr})
             </BodyShort>
-            <Alert variant="info" className={css.folkeregisterInfo}>
+            <Alert variant="info">
                 Navnet er hentet fra folkeregisteret. Selv om personen ikke er synlig i
                 Rekrutteringsbistand, kan du allikevel registrere formidlingen her for statistikkens
                 del. Personen vil vises øverst i kandidatlisten.
             </Alert>
-            <CheckboxGroup legend={`Registrer formidling for ${usynligKandidat[0].fornavn}:`}>
+            <br />
+            <CheckboxGroup legend={`Registrer formidling for ${usynligKandidat.fornavn}:`}>
                 <Checkbox
                     value={presentert}
                     onChange={(event) => setPresentert(event.target.checked)}
@@ -107,9 +107,7 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
                 avbrytDisabled={formidling.kind === Nettstatus.SenderInn}
             />
             {formidling.kind === Nettstatus.Feil && (
-                <ErrorMessage>
-                    Det skjedde noe galt under formidling av usynlig kandidat
-                </ErrorMessage>
+                <ErrorMessage>Det skjedde noe galt under formidling av kandidat</ErrorMessage>
             )}
         </>
     );

@@ -14,6 +14,7 @@ import { statistikkApiMock } from '../../mock/statistikk-api/mock';
 import { stillingApiMock } from '../../mock/stilling-api/mock';
 import { stillingssøkMock } from '../../mock/stillingssok-proxy/mock';
 import { synlighetApiMock } from '../../mock/synlighet-api/mock';
+import { kandidatHandlers } from '../api/kandidat-api/handlers';
 import DevMockApi from './DevMockApi';
 export interface IDevMockModal {
     children?: React.ReactNode | undefined;
@@ -71,6 +72,10 @@ const mockConfig = [
         mock: stillingssøkMock,
     },
     {
+        navn: 'Kandidat-API (ny)',
+        mock: kandidatHandlers,
+    },
+    {
         navn: 'Kandidatsøk api',
         mock: kandidatSokApiMock,
     },
@@ -114,7 +119,11 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
 
     return (
         <div className="py-16">
-            <Button type="button" variant="tertiary" onClick={() => ref.current?.showModal()}>
+            <Button
+                type="button"
+                variant={'secondary-neutral'}
+                onClick={() => ref.current?.showModal()}
+            >
                 Mocks
             </Button>
 

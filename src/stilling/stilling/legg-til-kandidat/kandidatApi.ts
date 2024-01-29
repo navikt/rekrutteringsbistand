@@ -1,10 +1,10 @@
 import { api, post } from 'felles/api';
-import { ApiError } from '../../api/apiUtils';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
-import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
+import { KandidatLookup } from 'felles/domene/kandidat/Kandidat';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
+import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { ApiError } from '../../api/apiUtils';
 
 export const fetchSynlighetsevaluering = async (
     fødselsnummer: string

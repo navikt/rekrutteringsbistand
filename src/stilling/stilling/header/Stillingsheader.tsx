@@ -1,19 +1,12 @@
-import { ReactNode } from 'react';
-import Kandidathandlinger from '../kandidathandlinger/Kandidathandlinger';
 import css from './Stillingsheader.module.css';
 
-type Props = {
-    kandidatlisteId: string;
-    children: ReactNode;
-    erEier: boolean;
-};
+interface IStillingsheader {
+    children?: React.ReactNode | undefined;
+}
 
-const Stillingsheader = ({ kandidatlisteId, children, erEier }: Props) => (
+const Stillingsheader: React.FC<IStillingsheader> = ({ children }) => (
     <div className={css.stillingsheader}>
-        <div>
-            <Kandidathandlinger erEier={erEier} kandidatlisteId={kandidatlisteId} />
-        </div>
-        <div className={css.knapper}>{children}</div>
+        <div /> <div className={css.knapper}>{children}</div>
     </div>
 );
 

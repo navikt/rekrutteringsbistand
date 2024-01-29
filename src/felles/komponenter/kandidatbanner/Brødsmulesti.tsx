@@ -25,7 +25,7 @@ const Brødsmulesti = ({ brødsmulesti }: Props) => (
                 );
 
                 return (
-                    <li aria-current="page" key={tekst}>
+                    <li aria-current="page" key={tekst + index}>
                         {brødsmule}
                     </li>
                 );

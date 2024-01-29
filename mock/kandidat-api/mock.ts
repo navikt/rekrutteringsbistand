@@ -1,6 +1,5 @@
 import { HttpResponse, delay, http } from 'msw';
 import { api } from '../../src/felles/api';
-import { LagreKandidaterDto } from '../../src/kandidatsok/kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { mockAvviksrapport } from './mockAvviksrapport';
 import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
@@ -30,7 +29,7 @@ export const kandidatApiMock = [
         );
 
         return kandidatlisteMedStilling
-            ? HttpResponse.json({ kandidatlisteId: kandidatlisteMedStilling.stillingId })
+            ? HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' })
             : new HttpResponse(null, { status: 404 });
     }),
 
@@ -52,28 +51,14 @@ export const kandidatApiMock = [
 
     http.post(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater`,
-        async ({ request, params }) => {
-            const lagreKandidaterDto: LagreKandidaterDto =
-                (await request.json()) as LagreKandidaterDto;
+        async ({ params }) => {
             const { kandidatlisteId } = params;
 
-            const kandidatliste = mockAlleKandidatlister.find(
-                (liste) => liste.kandidatlisteId === kandidatlisteId
-            );
-
-            if (!kandidatliste) {
+            if (!kandidatlisteId) {
                 return new HttpResponse(null, { status: 404 });
             }
 
-            const oppdatertListe = {
-                ...kandidatliste,
-                kandidater: [
-                    ...kandidatliste.kandidater,
-                    ...lagreKandidaterDto.map((k) => ({ kandidatnr: k.kandidatnr })),
-                ] as any,
-            };
-
-            return HttpResponse.json(oppdatertListe);
+            return new HttpResponse(null, { status: 201 });
         }
     ),
 
@@ -144,11 +129,9 @@ export const kandidatApiMock = [
         }
     ),
 
-    http.get(`${api.kandidat}/veileder/kandidater/navn`, todo),
-
     http.post(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/formidlingeravusynligkandidat`,
-        todo
+        () => new HttpResponse(null, { status: 201 })
     ),
 
     http.put(
