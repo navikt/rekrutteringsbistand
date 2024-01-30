@@ -28,7 +28,14 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                 boxShadow: 'inset 0 -1px 0 0 var(--ac-tabs-border, var(--a-border-divider))',
             }}
         >
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '0.75rem' }}>
+            <div
+                style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    marginBottom: '0.75rem',
+                    justifyContent: 'flex-end',
+                }}
+            >
                 {erEier && (
                     <Link to={lenkeTilFinnKandidater(stillingId, kandidatlisteId, true)}>
                         <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
