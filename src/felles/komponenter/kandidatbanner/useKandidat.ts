@@ -1,49 +1,16 @@
-import { api, post } from 'felles/api';
-import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import { postApi } from '../../../api/fetcher';
 import { kandidatSøkEndepunkter } from '../../../api/kandidat-søk-api/kandidat-søk.api';
 
-const useKandidat = (kandidatnr: string): Nettressurs<KandidatTilBanner> => {
-    const [kandidat, setKandidat] = useState<Nettressurs<KandidatTilBanner>>({
-        kind: Nettstatus.LasterInn,
-    });
+const useKandidat = (kandidatnr: string) => {
+    const swrData = useSWR(
+        { path: kandidatSøkEndepunkter.kandidatsammendrag, kandidatnr },
+        ({ path }) => postApi(path, { kandidatnr })
+    );
 
-    useEffect(() => {
-        const hentKandidat = async () => {
-            const response = await post<EsResponse<KandidatTilBanner>>(
-                kandidatSøkEndepunkter.kandidatsammendrag,
-                {
-                    kandidatnr,
-                }
-            );
+    const kandidatsammendrag = swrData?.data?.hits?.hits[0]?._source;
 
-            if (response.kind === Nettstatus.Suksess) {
-                const kandidat = response.data.hits.hits[0]?._source;
-
-                if (kandidat) {
-                    setKandidat({
-                        kind: Nettstatus.Suksess,
-                        data: kandidat,
-                    });
-                } else {
-                    setKandidat({
-                        kind: Nettstatus.FinnesIkke,
-                    });
-                }
-            } else {
-                setKandidat({
-                    kind: Nettstatus.Feil,
-                    error: { message: 'Klarte ikke å hente kandidaten' },
-                });
-            }
-        };
-
-        hentKandidat();
-    }, [kandidatnr]);
-
-    return kandidat;
+    return { ...swrData, kandidatsammendrag };
 };
 
 export default useKandidat;

@@ -22,13 +22,28 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) => {
-    const kandidat = useKandidat(kandidatnr);
+    const { kandidatsammendrag, error, isLoading } = useKandidat(kandidatnr);
+    /*
+    if (isLoading) {
+        return <>testloader</>;
+    }
+
+    if (error) {
+        return <>Klarte ikke å hente kandidaten</>;
+    }*/
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
     const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
 
-    const brødsmulesti = byggBrødsmulesti(kandidatnr, stilling, kandidat, state?.stillingssøk);
+    const brødsmulesti = byggBrødsmulesti(
+        kandidatnr,
+        stilling,
+        kandidatsammendrag,
+        error,
+        isLoading,
+        state?.stillingssøk
+    );
 
     const { navIdent } = useInnloggetBruker(null);
 
@@ -39,7 +54,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
         <div className={css.wrapperTilBanner}>
             <div className={css.innerWrapperTilBanner}>
                 <Kandidatbanner
-                    kandidat={kandidat}
+                    kandidat={kandidatsammendrag}
                     brødsmulesti={brødsmulesti}
                     nederstTilHøyre={
                         <div className={css.knapper}>
@@ -62,9 +77,9 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
                         </div>
                     }
                 />
-                {kandidat.kind === Nettstatus.Suksess && kandidatlisteId && (
+                {kandidatsammendrag && kandidatlisteId && (
                     <AnbefalKandidatModal
-                        kandidat={kandidat.data}
+                        kandidat={kandidatsammendrag.data}
                         kandidatlisteId={kandidatlisteId}
                         onClose={() => setVisModal(false)}
                         vis={visModal}
@@ -79,9 +94,11 @@ const byggBrødsmulesti = (
     kandidatnr: string,
     stilling: Stilling,
     kandidat: Nettressurs<KandidatTilBanner>,
+    error: boolean,
+    isLoading: boolean,
     stillingssøk?: string
 ) => {
-    if (kandidat.kind !== Nettstatus.Suksess) {
+    if (error || isLoading) {
         return undefined;
     }
 

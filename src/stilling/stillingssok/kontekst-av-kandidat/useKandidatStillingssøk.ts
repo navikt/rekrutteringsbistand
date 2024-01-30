@@ -1,7 +1,6 @@
 import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
-import { Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
 import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
@@ -15,15 +14,23 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
     const [hentetGeografiFraBosted, setHentetGeografiFraBosted] = useState<boolean>(false);
     const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
 
-    const kandidat = useKandidat(kandidatnr);
+    const { kandidatsammendrag, error, isLoading } = useKandidat(kandidatnr);
+    /*
+    if (isLoading) {
+        return <>testloader</>;
+    }
+
+    if (error) {
+        return <>Klarte ikke å hente kandidaten</>;
+    }*/
 
     useEffect(() => {
-        if (kandidat.kind === Nettstatus.Suksess) {
+        if (kandidatsammendrag && !isLoading && !error) {
             const brukKandidatkriterier =
                 searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
 
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
-                kandidat.data;
+                kandidatsammendrag.data;
 
             let fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
@@ -59,9 +66,9 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
                 navigate({ search: søk.toString() }, { replace: true });
             }
         }
-    }, [kandidatnr, navigate, kandidat, searchParams]);
+    }, [kandidatnr, navigate, kandidatsammendrag, searchParams]);
 
-    return { kandidat, hentetGeografiFraBosted, manglerØnsketYrke };
+    return { kandidatsammendrag, hentetGeografiFraBosted, manglerØnsketYrke };
 };
 
 const hentFylkestekstFraGeografiKode = (geografiKode: string) => {
