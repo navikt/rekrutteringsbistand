@@ -62,7 +62,6 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
 
         try {
             const markerteKandidatlister = Array.from(markerteLister);
-
             await lagreKandidaterIValgteKandidatlister(lagreKandidaterDto, markerteKandidatlister);
 
             setLagreIKandidatlister({ kind: Nettstatus.Suksess, data: lagreKandidaterDto });
