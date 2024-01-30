@@ -3,35 +3,7 @@ import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
-
-export const byggQuery = (kandidatnr: string): EsQuery<KandidatTilBanner> => ({
-    query: {
-        term: {
-            kandidatnr: kandidatnr,
-        },
-    },
-    size: 1,
-    _source: [
-        'fornavn',
-        'etternavn',
-        'arenaKandidatnr',
-        'fodselsdato',
-        'fodselsnummer',
-        'adresselinje1',
-        'postnummer',
-        'poststed',
-        'epostadresse',
-        'telefon',
-        'veileder',
-        'geografiJobbonsker',
-        'yrkeJobbonskerObj',
-        'kommunenummerstring',
-        'kommuneNavn',
-        'veilederIdent',
-        'veilederVisningsnavn',
-        'veilederEpost',
-    ],
-});
+import { kandidatSøkEndepunkter } from '../../../api/kandidat-søk-api/kandidat-søk.api';
 
 const useKandidat = (kandidatnr: string): Nettressurs<KandidatTilBanner> => {
     const [kandidat, setKandidat] = useState<Nettressurs<KandidatTilBanner>>({
@@ -41,8 +13,10 @@ const useKandidat = (kandidatnr: string): Nettressurs<KandidatTilBanner> => {
     useEffect(() => {
         const hentKandidat = async () => {
             const response = await post<EsResponse<KandidatTilBanner>>(
-                api.kandidatsøk,
-                byggQuery(kandidatnr)
+                kandidatSøkEndepunkter.kandidatsammendrag,
+                {
+                    kandidatnr,
+                }
             );
 
             if (response.kind === Nettstatus.Suksess) {
