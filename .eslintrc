@@ -35,7 +35,7 @@
                         "target": "kandidatsok",
                         "message": "Kandidatsøket kan kun importere filer fra egen mappe eller fellesmappen",
                         "from": ".",
-                        "except": ["kandidatsok", "felles"]
+                        "except": ["kandidatsok", "felles", "api"]
                     },
                     {
                         "target": "stilling",

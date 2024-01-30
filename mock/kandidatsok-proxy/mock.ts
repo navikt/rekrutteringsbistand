@@ -36,10 +36,10 @@ const treff: EsResponse<Kandidat> = {
     ...metainformasjon,
     hits: {
         total: {
-            value: 1,
+            value: 2,
             relation: 'eq',
         },
-        max_score: 1,
+        max_score: 2,
         hits: [
             {
                 _id: mockKandidat.kandidatnr,
@@ -47,6 +47,20 @@ const treff: EsResponse<Kandidat> = {
                 _score: 1,
                 _type: '',
                 _source: mockKandidat,
+            },
+            {
+                _id: '1337',
+                _index: '',
+                _score: 1,
+                _type: '',
+                _source: {
+                    ...mockKandidat,
+                    arenaKandidatnr: '1337',
+                    kandidatnr: '1337',
+                    fornavn: 'Ola',
+                    aktorId: '1337',
+                    fodselsnummer: '1337',
+                },
             },
         ],
     },
