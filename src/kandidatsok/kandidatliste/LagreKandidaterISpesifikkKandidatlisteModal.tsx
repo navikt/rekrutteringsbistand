@@ -35,7 +35,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         try {
             const response = await leggTilKandidaterKandidatliste(
                 kandidatlisteId,
-                lagreKandidaterDto as any
+                lagreKandidaterDto
             );
 
             if (response.ok) {
@@ -76,6 +76,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                         variant="secondary"
                         onClick={() => {
                             //todo bruk onClose og oppdater listen istedenfor reload.
+
                             window.location.reload();
                         }}
                     >
