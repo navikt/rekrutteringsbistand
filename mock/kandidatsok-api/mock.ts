@@ -14,4 +14,15 @@ export const kandidatSokApiMock = [
             },
         })
     ),
+    http.post(`${kandidatSøkEndepunkter.kandidatsammendrag}`, (_) =>
+        HttpResponse.json({
+            hits: {
+                hits: [
+                    {
+                        _source: mockKandidat,
+                    },
+                ],
+            },
+        })
+    ),
 ];

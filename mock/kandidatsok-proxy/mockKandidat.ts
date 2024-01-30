@@ -1,12 +1,56 @@
 import { Omfangenhet, Språkferdighetsnivå } from 'felles/domene/kandidat/Cv';
 import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import Kandidat, { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import {
     Formidlingsgruppe,
     Hovedmål,
     Innsatsgruppe,
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import { mockMeg } from '../meg/mock';
+
+export const mockKandidatSammendrag: KandidatTilBanner = {
+    yrkeJobbonskerObj: [
+        {
+            styrkBeskrivelse: 'Avisbud',
+            sokeTitler: [
+                'Avisbud',
+                'Avisbud',
+                'Bilagskontrollør (avisbud)',
+                'Avis- og reklamebrosjyrebud',
+                'Altmuligmann',
+                'Avis- og reklamedistributør',
+                'Utdeler (gratisavis)',
+                'Reklamebud',
+                'Reklame- og avisdistributør',
+                'Bud, utlevering',
+            ],
+            primaertJobbonske: false,
+            styrkKode: null,
+        },
+    ],
+    kommuneNavn: 'Sarpsborg',
+    adresselinje1: 'Kallastenveien 47B',
+    veilederVisningsnavn: null,
+    fornavn: 'Redd',
+    poststed: 'Sarpsborg',
+    kommunenummerstring: '3003',
+    veileder: null,
+    fodselsdato: '1987-12-04',
+    etternavn: 'Lukt',
+    epostadresse: null,
+    postnummer: '1708',
+    telefon: null,
+    arenaKandidatnr: 'PAM0152hb0wr4',
+    geografiJobbonsker: [
+        {
+            geografiKodeTekst: 'Norge',
+            geografiKode: 'NO',
+        },
+    ],
+    veilederIdent: null,
+    fodselsnummer: '04928797045',
+    veilederEpost: null,
+};
 
 export const mockKandidat: Kandidat = {
     // Personalia
