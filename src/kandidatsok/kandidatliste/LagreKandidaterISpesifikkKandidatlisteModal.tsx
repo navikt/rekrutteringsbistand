@@ -1,7 +1,7 @@
 import { Alert, BodyLong, Button, Loader, Modal } from '@navikt/ds-react';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useState } from 'react';
-import { leggTilKandidatKandidatliste } from '../../api/kandidat-api/kandidat.api';
+import { leggTilKandidaterKandidatliste } from '../../api/kandidat-api/kandidat.api';
 import { useHentStillingTittel } from '../../felles/hooks/useStilling';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from './LagreKandidaterIMineKandidatlisterModal';
@@ -23,7 +23,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
     const [lagreKandidater, setLagreKandidater] = useState<Nettressurs<LagreKandidaterDto>>({
         kind: Nettstatus.IkkeLastet,
     });
-    const [oppsummering, setOppsummering] = useState<any | null>(null);
+    const [innsendingOk, setInnsengingOk] = useState<boolean | null>(null);
 
     const onBekreftClick = (kandidatlisteId: string) => async () => {
         const lagreKandidaterDto = Array.from(markerteKandidater).map((kandidat) => ({
@@ -33,20 +33,16 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         setLagreKandidater({ kind: Nettstatus.SenderInn, data: lagreKandidaterDto });
 
         try {
-            const result = await Promise.all(
-                lagreKandidaterDto.map(async (kandidat) => {
-                    const leggTil = await leggTilKandidatKandidatliste(
-                        kandidatlisteId,
-                        kandidat.kandidatnr
-                    );
-                    return {
-                        kandidatnr: kandidat.kandidatnr,
-                        ok: leggTil.ok,
-                    };
-                })
+            const response = await leggTilKandidaterKandidatliste(
+                kandidatlisteId,
+                lagreKandidaterDto as any
             );
 
-            setOppsummering(result);
+            if (response.ok) {
+                setInnsengingOk(true);
+            } else {
+                setInnsengingOk(false);
+            }
         } catch (e) {
             setLagreKandidater({
                 kind: Nettstatus.Feil,
@@ -61,18 +57,17 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
             : undefined
     );
 
-    const visOppsummering = (oppsummering: any) => {
-        const kandidater = oppsummering.length > 1 ? 'kandidater' : 'kandidat';
+    const visOppsummering = () => {
         return (
             <div>
                 <Modal.Body>
-                    {oppsummering.some((kandidat: any) => kandidat.ok === false) ? (
+                    {!innsendingOk ? (
                         <Alert fullWidth variant="error" size="small">
-                            Klarte ikke å fullføre lagring av {kandidater}
+                            Feil under lagring
                         </Alert>
                     ) : (
                         <Alert fullWidth variant="success" size="small">
-                            Kandidater lagret {kandidater}
+                            Fullført
                         </Alert>
                     )}
                 </Modal.Body>
@@ -105,8 +100,8 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                     Nettstatus.LasterInn && <Loader variant="interaction" size="2xlarge" />}
                 {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === Nettstatus.Suksess && (
                     <>
-                        {oppsummering ? (
-                            visOppsummering(oppsummering)
+                        {innsendingOk !== null ? (
+                            visOppsummering()
                         ) : (
                             <>
                                 <Modal.Body>
