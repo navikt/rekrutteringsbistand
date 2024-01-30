@@ -1,6 +1,5 @@
-import { HttpResponse, delay, http } from 'msw';
+import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
-import { mockAvviksrapport } from './mockAvviksrapport';
 import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
 
@@ -144,15 +143,5 @@ export const kandidatApiMock = [
     http.put(
         `${api.kandidat}/veileder/kandidat/arbeidsgiverliste/:kandidatlisteId/:kandidatnummer`,
         todo
-    ),
-
-    http.post(`${api.kandidat}/avvik`, async () => {
-        await delay(1000);
-        return HttpResponse.json(mockAvviksrapport);
-    }),
-
-    http.get(
-        `${api.kandidat}/avvik/:kandidatlisteId`,
-        () => new HttpResponse(null, { status: 404 })
     ),
 ];
