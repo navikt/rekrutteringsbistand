@@ -62,6 +62,20 @@ const treff: EsResponse<Kandidat> = {
                     fodselsnummer: '1337',
                 },
             },
+            {
+                _id: '1338',
+                _index: '',
+                _score: 1,
+                _type: '',
+                _source: {
+                    ...mockKandidat,
+                    arenaKandidatnr: '1338',
+                    kandidatnr: '1338',
+                    fornavn: 'Kari',
+                    aktorId: '1338',
+                    fodselsnummer: '1338',
+                },
+            },
         ],
     },
 };
