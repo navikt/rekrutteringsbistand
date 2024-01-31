@@ -46,6 +46,14 @@ export const mockKandidatSammendrag: KandidatTilBanner = {
             geografiKodeTekst: 'Norge',
             geografiKode: 'NO',
         },
+        {
+            geografiKodeTekst: 'Geiranger',
+            geografiKode: '1000',
+        },
+        {
+            geografiKodeTekst: 'Larvik',
+            geografiKode: 'NO07.0712',
+        },
     ],
     veilederIdent: null,
     fodselsnummer: '04928797045',

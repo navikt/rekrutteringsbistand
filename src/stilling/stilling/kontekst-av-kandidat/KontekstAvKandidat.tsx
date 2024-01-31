@@ -6,8 +6,7 @@ import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import useKandidatsammendrag from 'felles/komponenter/kandidatbanner/useKandidatsammendrag';
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
@@ -22,7 +21,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) => {
-    const { kandidatsammendrag, error, isLoading } = useKandidat(kandidatnr);
+    const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag(kandidatnr);
     /*
     if (isLoading) {
         return <>testloader</>;
@@ -54,7 +53,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
         <div className={css.wrapperTilBanner}>
             <div className={css.innerWrapperTilBanner}>
                 <Kandidatbanner
-                    kandidat={kandidatsammendrag}
+                    kandidatnr={kandidatsammendrag.arenaKandidatnr}
                     brødsmulesti={brødsmulesti}
                     nederstTilHøyre={
                         <div className={css.knapper}>
@@ -79,7 +78,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
                 />
                 {kandidatsammendrag && kandidatlisteId && (
                     <AnbefalKandidatModal
-                        kandidat={kandidatsammendrag.data}
+                        kandidat={kandidatsammendrag}
                         kandidatlisteId={kandidatlisteId}
                         onClose={() => setVisModal(false)}
                         vis={visModal}
@@ -93,7 +92,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
 const byggBrødsmulesti = (
     kandidatnr: string,
     stilling: Stilling,
-    kandidat: Nettressurs<KandidatTilBanner>,
+    kandidatsammendrag: KandidatTilBanner,
     error: boolean,
     isLoading: boolean,
     stillingssøk?: string
@@ -113,8 +112,8 @@ const byggBrødsmulesti = (
             tekst: 'Kandidater',
         },
         {
-            href: `/kandidater/kandidat/${kandidat.data.arenaKandidatnr}/cv?fraKandidatsok=true`,
-            tekst: formaterNavn(kandidat.data),
+            href: `/kandidater/kandidat/${kandidatsammendrag.arenaKandidatnr}/cv?fraKandidatsok=true`,
+            tekst: formaterNavn(kandidatsammendrag),
         },
         {
             tekst: 'Finn stilling',

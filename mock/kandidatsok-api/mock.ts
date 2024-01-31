@@ -1,6 +1,6 @@
 import { HttpResponse, http } from 'msw';
 import { kandidatSøkEndepunkter } from '../../src/api/kandidat-søk-api/kandidat-søk.api';
-import { mockKandidat } from '../kandidatsok-proxy/mockKandidat';
+import { mockKandidat, mockKandidatSammendrag } from '../kandidatsok-proxy/mockKandidat';
 
 export const kandidatSokApiMock = [
     http.post(`${kandidatSøkEndepunkter.lookupCv}`, (_) =>
@@ -19,7 +19,7 @@ export const kandidatSokApiMock = [
             hits: {
                 hits: [
                     {
-                        _source: mockKandidat,
+                        _source: mockKandidatSammendrag,
                     },
                 ],
             },

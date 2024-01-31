@@ -1,5 +1,4 @@
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import { Nettstatus } from 'felles/nettressurs';
 import ManglerØnsketSted from './ManglerØnsketSted';
 import ManglerØnsketStedOgYrke from './ManglerØnsketStedOgYrke';
 import ManglerØnsketYrke from './ManglerØnsketYrke';
@@ -10,44 +9,44 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
-    const { kandidat, hentetGeografiFraBosted, manglerØnsketYrke } =
+    const { kandidatstillingssøk, hentetGeografiFraBosted, manglerØnsketYrke } =
         useKandidatStillingssøk(kandidatnr);
 
     let brødsmulesti = undefined;
-    if (kandidat.kind === Nettstatus.Suksess) {
+    if (kandidatstillingssøk) {
         brødsmulesti = [
             {
                 href: '/kandidatsok',
                 tekst: 'Kandidater',
             },
             {
-                href: `/kandidater/kandidat/${kandidat.data.arenaKandidatnr}/cv?fraKandidatsok=true`,
-                tekst: formaterNavn(kandidat.data),
+                href: `/kandidater/kandidat/${kandidatstillingssøk.arenaKandidatnr}/cv?fraKandidatsok=true`,
+                tekst: formaterNavn(kandidatstillingssøk),
             },
 
             {
                 tekst: 'Finn stilling',
             },
         ];
-    } else if (kandidat.kind === Nettstatus.Feil || kandidat.kind === Nettstatus.FinnesIkke) {
+    } else {
         brødsmulesti = [];
     }
 
     const utledBannerelement = () => {
-        if (kandidat.kind === Nettstatus.Suksess) {
+        if (kandidatstillingssøk) {
             if (manglerØnsketYrke && hentetGeografiFraBosted) {
-                return <ManglerØnsketStedOgYrke fnr={kandidat.data.fodselsnummer} />;
+                return <ManglerØnsketStedOgYrke fnr={kandidatstillingssøk.fodselsnummer} />;
             } else if (manglerØnsketYrke) {
-                return <ManglerØnsketYrke fnr={kandidat.data.fodselsnummer} />;
+                return <ManglerØnsketYrke fnr={kandidatstillingssøk.fodselsnummer} />;
             } else if (hentetGeografiFraBosted) {
-                return <ManglerØnsketSted fnr={kandidat.data.fodselsnummer} />;
+                return <ManglerØnsketSted fnr={kandidatstillingssøk.fodselsnummer} />;
             }
         }
     };
 
     return (
         <Kandidatbanner
-            kandidat={kandidat}
+            kandidatnr={kandidatstillingssøk?.arenaKandidatnr}
             brødsmulesti={brødsmulesti}
             nederst={utledBannerelement()}
         />

@@ -1,6 +1,6 @@
 import { Brødsmule } from 'felles/komponenter/kandidatbanner/Brødsmulesti';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
+import useKandidatsammendrag from 'felles/komponenter/kandidatbanner/useKandidatsammendrag';
 import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
@@ -14,27 +14,24 @@ type Props = {
 const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
 
-    const { kandidatsammendrag, error, isLoading } = useKandidat(kandidatnr);
-    /*if (isLoading) {
-        return <>testloader</>;
-    }
+    const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag(kandidatnr);
 
-    if (error) {
-        <>Klarte ikke å hente kandidaten</>;
-    }*/
+    if (isLoading) {
+        return <></>;
+    }
 
     const brødsmulestiMedNavn = error
         ? brødsmulesti
         : [
               ...(brødsmulesti ?? []),
               {
-                  tekst: formaterNavn(kandidatsammendrag.data),
+                  tekst: formaterNavn(kandidatsammendrag),
               },
           ];
     return (
         <>
             <Kandidatbanner
-                kandidat={kandidatsammendrag}
+                kandidatnr={kandidatsammendrag.arenaKandidatnr}
                 brødsmulesti={brødsmulestiMedNavn}
                 øverstTilHøyre={
                     kandidatnavigering && (

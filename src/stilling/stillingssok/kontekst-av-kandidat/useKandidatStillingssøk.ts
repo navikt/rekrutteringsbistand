@@ -1,6 +1,5 @@
 import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
-import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { useEffect, useState } from 'react';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
 import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
@@ -8,29 +7,31 @@ import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
+import useSWR from 'swr';
+import { kandidatSøkEndepunkter } from '../../../api/kandidat-søk-api/kandidat-søk.api';
+import { postApi } from '../../../api/fetcher';
 
 const useKandidatStillingssøk = (kandidatnr: string) => {
     const { searchParams, navigate } = useNavigering();
     const [hentetGeografiFraBosted, setHentetGeografiFraBosted] = useState<boolean>(false);
     const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
 
-    const { kandidatsammendrag, error, isLoading } = useKandidat(kandidatnr);
-    /*
-    if (isLoading) {
-        return <>testloader</>;
-    }
-
-    if (error) {
-        return <>Klarte ikke å hente kandidaten</>;
-    }*/
+    const {
+        data: swrData,
+        error,
+        isLoading,
+    } = useSWR({ path: kandidatSøkEndepunkter.kandidatstillingssøk, kandidatnr }, ({ path }) =>
+        postApi(path, { kandidatnr })
+    );
+    const kandidatstillingssøk = swrData?.data?.hits?.hits[0]?._source;
 
     useEffect(() => {
-        if (kandidatsammendrag && !isLoading && !error) {
+        if (kandidatstillingssøk && !isLoading && !error) {
             const brukKandidatkriterier =
                 searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
 
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
-                kandidatsammendrag.data;
+                kandidatstillingssøk;
 
             let fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
@@ -66,9 +67,9 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
                 navigate({ search: søk.toString() }, { replace: true });
             }
         }
-    }, [kandidatnr, navigate, kandidatsammendrag, searchParams]);
+    }, [kandidatnr, navigate, kandidatstillingssøk, error, isLoading, searchParams]);
 
-    return { kandidatsammendrag, hentetGeografiFraBosted, manglerØnsketYrke };
+    return { kandidatstillingssøk, hentetGeografiFraBosted, manglerØnsketYrke };
 };
 
 const hentFylkestekstFraGeografiKode = (geografiKode: string) => {
