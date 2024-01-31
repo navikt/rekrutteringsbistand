@@ -1,15 +1,15 @@
 import { Buldings2Icon, PersonIcon } from '@navikt/aksel-icons';
 import { CopyButton, Heading } from '@navikt/ds-react';
-import { ReactComponent as StillingIkon } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
+import StillingIkon from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
 import * as React from 'react';
 
 import { hentTittelFraStilling, Stilling, Stillingsinfo } from 'felles/domene/stilling/Stilling';
 import Grunnbanner from '../../felles/komponenter/grunnbanner/Grunnbanner';
 import Brødsmulesti from '../../felles/komponenter/kandidatbanner/Brødsmulesti';
 import TekstlinjeMedIkon from '../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
-import css from './VisStillingBanner.module.css';
 import { hentAnnonselenke, stillingErPublisert } from './adUtils';
 import capitalizeEmployerName from './edit/endre-arbeidsgiver/capitalizeEmployerName';
+import css from './VisStillingBanner.module.css';
 
 export interface IVisStillingBanner {
     stilling: Stilling;

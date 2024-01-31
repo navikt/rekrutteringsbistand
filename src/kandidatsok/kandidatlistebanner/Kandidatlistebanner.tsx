@@ -2,7 +2,7 @@ import { Buldings2Icon, PersonGroupIcon } from '@navikt/aksel-icons';
 import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
 import Grunnbanner from 'felles/komponenter/grunnbanner/Grunnbanner';
 import Brødsmulesti from 'felles/komponenter/kandidatbanner/Brødsmulesti';
-import { ReactComponent as FinnKandidaterIkon } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import FinnKandidaterIkon from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
 import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';

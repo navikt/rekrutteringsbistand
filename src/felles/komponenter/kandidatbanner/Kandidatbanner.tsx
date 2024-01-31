@@ -7,7 +7,7 @@ import {
 } from '@navikt/aksel-icons';
 import { BodyShort, CopyButton, Heading, Skeleton } from '@navikt/ds-react';
 import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
-import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/minekandidater.svg';
+import Piktogram from 'felles/komponenter/piktogrammer/minekandidater.svg';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { ReactNode } from 'react';
