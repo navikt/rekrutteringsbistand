@@ -84,21 +84,6 @@ export const kandidatApiMock = [
 
     http.put(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/eierskap`, todo),
 
-    http.get(
-        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
-        todo
-    ),
-
-    http.post(
-        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater`,
-        todo
-    ),
-
-    http.all(
-        `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/notater/:notatId`,
-        todo
-    ),
-
     http.put(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/kandidater/:kandidatnr/status`,
         todo

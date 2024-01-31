@@ -4,7 +4,7 @@ import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../api/server.dto';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
-import { deleteJsonMedType, deleteReq, fetchJson, postJson, putJson } from './fetchUtils';
+import { deleteJsonMedType, fetchJson, postJson, putJson } from './fetchUtils';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
@@ -87,12 +87,6 @@ export function fetchGeografiKode(geografiKode) {
 export const fetchStillingFraListe = (stillingsId) =>
     fetchJson(`${api.kandidat}/kandidatsok/stilling/sokeord/${stillingsId}`, true);
 
-export const fetchNotater = (kandidatlisteId, kandidatnr) =>
-    fetchJson(
-        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater`,
-        true
-    );
-
 export const postDelteKandidater = (
     beskjed: string,
     mailadresser: string[],
@@ -141,23 +135,6 @@ export const putFormidlingsutfallForUsynligKandidat = (
     putJson(
         `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/formidlingeravusynligkandidat/${formidlingId}/utfall`,
         JSON.stringify({ utfall, navKontor })
-    );
-
-export const postNotat = (kandidatlisteId, kandidatnr, tekst) =>
-    postJson(
-        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater`,
-        JSON.stringify({ tekst })
-    );
-
-export const putNotat = (kandidatlisteId, kandidatnr, notatId, tekst) =>
-    putJson(
-        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater/${notatId}`,
-        JSON.stringify({ tekst })
-    );
-
-export const deleteNotat = (kandidatlisteId, kandidatnr, notatId) =>
-    deleteReq(
-        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatnr}/notater/${notatId}`
     );
 
 export const putArkivert = (kandidatlisteId: string, kandidatNr: string, arkivert: boolean) => {

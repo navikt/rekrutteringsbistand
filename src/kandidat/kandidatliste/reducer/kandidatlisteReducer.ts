@@ -17,7 +17,6 @@ import { Reducer } from 'redux';
 import { SearchApiError } from '../../api/fetchUtils';
 import {
     Kandidatmeldinger,
-    Kandidatnotater,
     Kandidattilstand,
     Kandidattilstander,
     Visningsstatus,
@@ -48,7 +47,6 @@ export type KandidatlisteState = {
     id?: string;
     kandidatliste: Nettressurs<Kandidatliste>;
     kandidattilstander: Kandidattilstander;
-    kandidatnotater: Kandidatnotater;
     sms: {
         sendStatus: SmsStatus;
         sendteMeldinger: Nettressurs<Kandidatmeldinger>;
@@ -70,7 +68,6 @@ export type KandidatlisteState = {
     };
     sortering: Kandidatsortering;
     filter: Kandidatlistefilter;
-    notat?: string;
     søkPåusynligKandidat: Nettressurs<UsynligKandidat[]>;
     endreFormidlingsutfallForUsynligKandidat: Record<FormidlingId, Nettressurs<FormidlingId>>;
     endreKandidatlistestatus: Nettstatus;
@@ -87,7 +84,6 @@ export type Kandidatlistefilter = {
 const initialState: KandidatlisteState = {
     kandidatliste: ikkeLastet(),
     kandidattilstander: {},
-    kandidatnotater: {},
     fodselsnummer: undefined,
     sms: {
         sendStatus: SmsStatus.IkkeSendt,
@@ -136,17 +132,14 @@ const reducer: Reducer<KandidatlisteState, KandidatlisteAction> = (
             );
 
             let kandidattilstander = state.kandidattilstander;
-            let kandidatnotater = state.kandidatnotater;
 
             // Reset kandidattilstander hvis bruker laster inn ny liste eller
             // en kandidat er lagt til i listen siden sist.
             if (erNyListe || noenKandidaterManglerTilstand) {
                 kandidattilstander = {};
-                kandidatnotater = {};
 
                 action.kandidatliste.kandidater.forEach((kandidat) => {
                     kandidattilstander[kandidat.kandidatnr] = initialKandidattilstand();
-                    kandidatnotater[kandidat.kandidatnr] = ikkeLastet();
                 });
             }
 
@@ -155,7 +148,6 @@ const reducer: Reducer<KandidatlisteState, KandidatlisteAction> = (
                 id,
                 kandidatliste: suksess(action.kandidatliste),
                 kandidattilstander,
-                kandidatnotater,
             };
         }
         case KandidatlisteActionType.HentKandidatlisteMedStillingsIdFailure:
@@ -216,11 +208,6 @@ const reducer: Reducer<KandidatlisteState, KandidatlisteAction> = (
                 fodselsnummer: action.fodselsnummer,
             };
         }
-        case KandidatlisteActionType.SetNotat:
-            return {
-                ...state,
-                notat: action.notat,
-            };
         case KandidatlisteActionType.OppdaterKandidatlisteMedKandidat: {
             return {
                 ...state,
@@ -229,31 +216,8 @@ const reducer: Reducer<KandidatlisteState, KandidatlisteAction> = (
                     ...state.kandidattilstander,
                     [action.kandidatnr]: initialKandidattilstand(),
                 },
-                kandidatnotater: {
-                    ...state.kandidatnotater,
-                    [action.kandidatnr]: ikkeLastet(),
-                },
             };
         }
-        case KandidatlisteActionType.HentNotater:
-            return {
-                ...state,
-                kandidatnotater: {
-                    ...state.kandidatnotater,
-                    [action.kandidatnr]: lasterInn(),
-                },
-            };
-        case KandidatlisteActionType.HentNotaterSuccess:
-        case KandidatlisteActionType.OpprettNotatSuccess:
-        case KandidatlisteActionType.EndreNotatSuccess:
-        case KandidatlisteActionType.SlettNotatSuccess:
-            return {
-                ...state,
-                kandidatnotater: {
-                    ...state.kandidatnotater,
-                    [action.kandidatnr]: suksess(action.notater),
-                },
-            };
         case KandidatlisteActionType.ToggleArkivert:
             return {
                 ...state,
