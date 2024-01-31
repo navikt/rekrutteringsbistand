@@ -45,9 +45,9 @@ const Kandidatrad: FunctionComponent<Props> = ({
               )
             : false;
 
-    const kandidatlisteId =
+    const stillingId =
         kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === Nettstatus.Suksess
-            ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.kandidatlisteId
+            ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.stillingId
             : undefined;
     return (
         <RekBisKortKandidat
@@ -80,7 +80,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
             kandidat={
                 <Link
                     className={classNames(css.lenke, 'navds-link')}
-                    to={lenkeTilKandidat(kandidat.arenaKandidatnr, kandidatlisteId)}
+                    to={lenkeTilKandidat(kandidat.arenaKandidatnr, stillingId)}
                 >
                     {hentKandidatensNavn(kandidat)}
                 </Link>

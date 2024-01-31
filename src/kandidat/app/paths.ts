@@ -92,12 +92,10 @@ const queryParamsForKandidatside = (
     }
     const { kandidatlisteId, stillingId } = kandidatlistekontekst ?? {};
 
-    if (kandidatlisteId) {
-        queryParams.set(KandidatQueryParam.KandidatlisteId, kandidatlisteId);
-    }
-
     if (stillingId) {
         queryParams.set(KandidatQueryParam.StillingId, stillingId);
+    } else if (kandidatlisteId) {
+        queryParams.set(KandidatQueryParam.KandidatlisteId, kandidatlisteId);
     }
 
     return queryParams.size === 0 ? '' : `?${queryParams.toString()}`;
