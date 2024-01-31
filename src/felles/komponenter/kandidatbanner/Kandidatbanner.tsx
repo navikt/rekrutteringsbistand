@@ -12,8 +12,8 @@ import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { ReactNode } from 'react';
 import Grunnbanner from '../grunnbanner/Grunnbanner';
 import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
-import css from './Kandidatbanner.module.css';
 import useKandidatsammendrag from './useKandidatsammendrag';
+import css from './Kandidatbanner.module.css';
 
 export type Veileder = {
     navn: string;
@@ -50,7 +50,7 @@ const Kandidatbanner = ({
                         {øverstTilHøyre}
                     </div>
 
-                    {!kandidatsammendrag && (
+                    {isLoading && (
                         <Skeleton>
                             <Heading size="large">Placeholder</Heading>
                         </Skeleton>

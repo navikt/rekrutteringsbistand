@@ -21,15 +21,8 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) => {
-    const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag(kandidatnr);
-    /*
-    if (isLoading) {
-        return <>testloader</>;
-    }
+    const { kandidatsammendrag } = useKandidatsammendrag(kandidatnr);
 
-    if (error) {
-        return <>Klarte ikke å hente kandidaten</>;
-    }*/
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
@@ -39,8 +32,6 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
         kandidatnr,
         stilling,
         kandidatsammendrag,
-        error,
-        isLoading,
         state?.stillingssøk
     );
 
@@ -93,11 +84,9 @@ const byggBrødsmulesti = (
     kandidatnr: string,
     stilling: Stilling,
     kandidatsammendrag: KandidatTilBanner,
-    error: boolean,
-    isLoading: boolean,
     stillingssøk?: string
 ) => {
-    if (error || isLoading) {
+    if (!kandidatsammendrag) {
         return undefined;
     }
 

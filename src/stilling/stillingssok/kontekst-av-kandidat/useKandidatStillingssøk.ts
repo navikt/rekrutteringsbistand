@@ -16,17 +16,14 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
     const [hentetGeografiFraBosted, setHentetGeografiFraBosted] = useState<boolean>(false);
     const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
 
-    const {
-        data: swrData,
-        error,
-        isLoading,
-    } = useSWR({ path: kandidatSøkEndepunkter.kandidatstillingssøk, kandidatnr }, ({ path }) =>
-        postApi(path, { kandidatnr })
+    const { data: swrData } = useSWR(
+        { path: kandidatSøkEndepunkter.kandidatstillingssøk, kandidatnr },
+        ({ path }) => postApi(path, { kandidatnr })
     );
     const kandidatstillingssøk = swrData?.data?.hits?.hits[0]?._source;
 
     useEffect(() => {
-        if (kandidatstillingssøk && !isLoading && !error) {
+        if (kandidatstillingssøk) {
             const brukKandidatkriterier =
                 searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
 
@@ -67,7 +64,7 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
                 navigate({ search: søk.toString() }, { replace: true });
             }
         }
-    }, [kandidatnr, navigate, kandidatstillingssøk, error, isLoading, searchParams]);
+    }, [kandidatnr, navigate, kandidatstillingssøk, searchParams]);
 
     return { kandidatstillingssøk, hentetGeografiFraBosted, manglerØnsketYrke };
 };
