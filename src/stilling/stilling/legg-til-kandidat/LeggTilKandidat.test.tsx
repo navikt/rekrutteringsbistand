@@ -65,7 +65,7 @@ describe('<LeggTilKandidat />', () => {
     it('Skriver inn for gyldig fødselsnummer, men det finnes ingen kandidat i rekbis', async () => {
         const tekstfelt = screen.getByRole('textbox');
 
-        userEvent.type(tekstfelt, devFnr.ingentreff);
+        userEvent.type(tekstfelt, devFnr.iPDL);
 
         await waitFor(() =>
             expect(

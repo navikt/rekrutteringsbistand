@@ -18,5 +18,5 @@ export function useLocalStorageToggle(key: string) {
 export const devFnr = {
     ok: '28125314475',
     finnesIkke: '01098902216',
-    ingentreff: '22078738700',
+    iPDL: '22078738700',
 };

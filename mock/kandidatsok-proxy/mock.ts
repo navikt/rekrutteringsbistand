@@ -13,9 +13,7 @@ export const kandidatsøkMock = [
         const fnrRequest = data?.query?.term?.fodselsnummer;
 
         const respons =
-            fnrRequest === devFnr.ingentreff || fnrRequest === devFnr.finnesIkke
-                ? ingenTreff
-                : treff;
+            fnrRequest === devFnr.iPDL || fnrRequest === devFnr.finnesIkke ? ingenTreff : treff;
 
         return HttpResponse.json(respons);
     }),
