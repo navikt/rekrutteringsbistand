@@ -259,12 +259,7 @@ const Stilling = () => {
                 {harKandidatlisteSomKanÅpnes && (
                     <Tabs.Panel value="kandidater">
                         <Provider store={store}>
-                            <Kandidatlisteside
-                                skjulBanner={true}
-                                stillingsId={stilling.uuid}
-                                stilling={stilling}
-                                kandidatlisteId={kandidatlisteId}
-                            />
+                            <Kandidatlisteside skjulBanner={true} stilling={stilling} />
                         </Provider>
                     </Tabs.Panel>
                 )}

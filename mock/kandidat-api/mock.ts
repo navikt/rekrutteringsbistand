@@ -32,17 +32,6 @@ export const kandidatApiMock = [
             : new HttpResponse(null, { status: 404 });
     }),
 
-    http.get(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId`, ({ params }) => {
-        const { kandidatlisteId } = params;
-        const kandidatlisteUtenStilling = mockAlleKandidatlister.find(
-            (liste) => liste.kandidatlisteId === kandidatlisteId
-        );
-
-        return kandidatlisteUtenStilling
-            ? HttpResponse.json(kandidatlisteUtenStilling)
-            : new HttpResponse(null, { status: 404 });
-    }),
-
     http.delete(
         `${api.kandidat}/veileder/kandidatlister/:kandidatlisteId`,
         (_) => new HttpResponse(null, { status: 200 })

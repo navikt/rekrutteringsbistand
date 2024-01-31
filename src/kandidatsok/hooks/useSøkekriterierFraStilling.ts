@@ -6,8 +6,9 @@ import byggSuggestion, { Forslagsfelt } from '../api/query/byggSuggestion';
 import { encodeGeografiforslag } from '../filter/jobbønsker/ØnsketSted';
 import { Geografiforslag } from './useGeografiSuggestions';
 import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
-import { FilterParam, OtherParam } from './useQuery';
+import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
+import {KandidatsokQueryParam} from "felles/lenker";
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
@@ -91,8 +92,8 @@ const hentFylkeskodeMedFylkesnavn = async (
 };
 
 const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams) =>
-    Array.from(searchParams.keys()).every((param) => param === OtherParam.Kandidatliste) ||
-    Array.from(searchParams.keys()).every((param) => param === OtherParam.Stilling);
+    Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Kandidatliste) ||
+    Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Stilling);
 
 const formaterStedsnavnSlikDetErRegistrertPåKandidat = (stedsnavn: string) =>
     stedsnavn
