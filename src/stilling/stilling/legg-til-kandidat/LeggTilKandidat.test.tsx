@@ -1,4 +1,3 @@
-// FILEPATH: /Users/wiklem/NAV/TOI/rekrutteringsbistand/src/stilling/stilling/legg-til-kandidat/LeggTilKandidat.test.tsx
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { devFnr } from '../../../dev/DevUtil';

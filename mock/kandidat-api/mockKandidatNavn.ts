@@ -1,4 +1,4 @@
-import { kandidatNavnDTO } from './kandidatNav.dto';
+import { kandidatNavnDTO } from '../../src/api/kandidat-api/kandidat.dto';
 
 export function kandidatNavnMockGenerator(): kandidatNavnDTO {
     return {

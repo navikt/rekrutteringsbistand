@@ -1,6 +1,6 @@
 const basePath = import.meta.env.VITEST ? 'http://localhost:3000' : '';
 
-export const hentApi = async (url: string) => {
+export const getAPI = async (url: string) => {
     try {
         const response = await fetch(basePath + url, {
             method: 'GET',
