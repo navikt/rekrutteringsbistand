@@ -17,3 +17,9 @@ export const lenkeTilStilling = (props: ILenkeTilStilling) => {
 
     return path;
 };
+
+export enum KandidatsokQueryParam {
+    Stilling = 'stilling',
+    Kandidatliste = 'kandidatliste',
+    BrukKriterierFraStillingen = 'brukKriterierFraStillingen',
+}

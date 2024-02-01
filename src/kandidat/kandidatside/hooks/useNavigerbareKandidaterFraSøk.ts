@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Kandidatfane, lenkeTilKandidatside } from '../../app/paths';
+import { Kandidatfane, Kandidatlistekontekst, lenkeTilKandidatside } from '../../app/paths';
 import { hentØktFraKandidatsøk, skrivØktTilSessionStorage } from '../søkekontekst';
 import { Kandidatnavigering } from '../komponenter/header/forrige-neste/ForrigeNeste';
 import useFaner from './useFaner';
 
 const useNavigerbareKandidaterFraSøk = (
     kandidatnr: string,
-    kandidatlisteId?: string
+    kandidatlistekontekst?: Kandidatlistekontekst
 ): Kandidatnavigering | null => {
     const [fane] = useFaner();
     const [økt, setØkt] = useState(hentØktFraKandidatsøk());
@@ -16,7 +16,7 @@ const useNavigerbareKandidaterFraSøk = (
         kandidatnr,
         økt.navigerbareKandidater,
         fane,
-        kandidatlisteId
+        kandidatlistekontekst
     );
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const byggLenkeTilForrigeOgNesteKandidat = (
     currentKandidat: string,
     navigerbareKandidater: string[] | undefined,
     fane: Kandidatfane,
-    kandidatlisteId?: string
+    kandidatlistekontekst?: Kandidatlistekontekst
 ): [number, string | undefined, string | undefined] => {
     if (!navigerbareKandidater) {
         return [0, undefined, undefined];
@@ -69,11 +69,23 @@ const byggLenkeTilForrigeOgNesteKandidat = (
     }
 
     const forrige = navigerbareKandidater[index - 1]
-        ? lenkeTilKandidatside(navigerbareKandidater[index - 1], fane, kandidatlisteId, false, true)
+        ? lenkeTilKandidatside(
+              navigerbareKandidater[index - 1],
+              fane,
+              kandidatlistekontekst,
+              false,
+              true
+          )
         : undefined;
 
     const neste = navigerbareKandidater[index + 1]
-        ? lenkeTilKandidatside(navigerbareKandidater[index + 1], fane, kandidatlisteId, false, true)
+        ? lenkeTilKandidatside(
+              navigerbareKandidater[index + 1],
+              fane,
+              kandidatlistekontekst,
+              false,
+              true
+          )
         : undefined;
 
     return [index, forrige, neste];

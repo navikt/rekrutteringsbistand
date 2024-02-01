@@ -10,35 +10,22 @@ import KandidatlisteActionType from '../../kandidat/kandidatliste/reducer/Kandid
 import AppState from '../../kandidat/state/AppState';
 
 type Props = {
-    stillingsId?: string;
-    kandidatlisteId: string;
     skjulBanner?: boolean;
-    stilling?: Stilling;
+    stilling: Stilling;
 };
 
-const Kandidatlisteside: FunctionComponent<Props> = ({
-    stillingsId,
-    kandidatlisteId,
-    skjulBanner,
-    stilling,
-}) => {
+const Kandidatlisteside: FunctionComponent<Props> = ({ skjulBanner, stilling }) => {
     const dispatch = useDispatch();
     const { kandidatliste } = useSelector((state: AppState) => state.kandidatliste);
+    const stillingsId = stilling.uuid;
     useScrollTilToppen(kandidatliste);
 
     useEffect(() => {
-        if (stillingsId) {
-            dispatch({
-                type: KandidatlisteActionType.HentKandidatlisteMedStillingsId,
-                stillingsId,
-            });
-        } else if (kandidatlisteId) {
-            dispatch({
-                type: KandidatlisteActionType.HentKandidatlisteMedKandidatlisteId,
-                kandidatlisteId,
-            });
-        }
-    }, [dispatch, stillingsId, kandidatlisteId]);
+        dispatch({
+            type: KandidatlisteActionType.HentKandidatlisteMedStillingsId,
+            stillingsId,
+        });
+    }, [dispatch, stillingsId]);
 
     if (kandidatliste.kind === Nettstatus.LasterInn) {
         return <Sidelaster />;
@@ -48,7 +35,7 @@ const Kandidatlisteside: FunctionComponent<Props> = ({
 
     if (
         kandidatliste.kind === Nettstatus.Suksess &&
-        kandidatlisteId !== kandidatliste.data.kandidatlisteId
+        stillingsId !== kandidatliste.data.stillingId
     ) {
         return <Sidelaster />;
     }

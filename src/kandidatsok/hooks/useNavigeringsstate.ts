@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import { OtherParam } from './useQuery';
+
+import { KandidatsokQueryParam } from 'felles/lenker';
 
 export type Navigeringsstate = Partial<{
     scrollTilKandidat: boolean;
@@ -9,7 +10,7 @@ export type Navigeringsstate = Partial<{
 }>;
 
 const skalBrukeKriterierFraStillingen = (searchParams: URLSearchParams) =>
-    Boolean(searchParams.get(OtherParam.BrukKriterierFraStillingen));
+    Boolean(searchParams.get(KandidatsokQueryParam.BrukKriterierFraStillingen));
 
 const useNavigeringsstate = () => {
     const [search, setSearch] = useSearchParams();
@@ -21,7 +22,7 @@ const useNavigeringsstate = () => {
         if (skalBrukeKriterierFraStillingen(search)) {
             setBrukKriterierFraStillingen(true);
 
-            search.delete(OtherParam.BrukKriterierFraStillingen);
+            search.delete(KandidatsokQueryParam.BrukKriterierFraStillingen);
             setSearch(search, {
                 replace: true,
             });

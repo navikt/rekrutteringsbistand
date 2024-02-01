@@ -37,7 +37,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                 }}
             >
                 {erEier && (
-                    <Link to={lenkeTilFinnKandidater(stillingId, kandidatlisteId, true)}>
+                    <Link to={lenkeTilFinnKandidater(stillingId)}>
                         <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
                             Finn kandidater
                         </Button>

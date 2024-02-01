@@ -131,7 +131,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
                             className={classNames('navds-link', css.kolonneMedSmsLenke)}
                             to={lenkeTilCv(
                                 kandidat.kandidatnr,
-                                kandidatliste.kandidatlisteId,
+                                { stillingId: kandidatliste.stillingId },
                                 true
                             )}
                         >
