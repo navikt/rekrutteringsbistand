@@ -13,14 +13,11 @@ it('<ManglerØnsketSted/>', () => {
     vi.mock('./useKandidatStillingssøk', () => ({
         __esModule: true,
         default: vi.fn(() => ({
-            kandidat: {
-                kind: Nettstatus.Suksess,
-                data: {
-                    arenaKandidatnr: '123',
-                    fodselsnummer: '12345678901',
-                    fornavn: 'Ola',
-                    etternavn: 'Nordmann',
-                },
+            kandidatStillingssøk: {
+                arenaKandidatnr: '123',
+                fodselsnummer: '12345678901',
+                fornavn: 'Ola',
+                etternavn: 'Nordmann',
             },
             hentetGeografiFraBosted: true,
             manglerØnsketYrke: false,

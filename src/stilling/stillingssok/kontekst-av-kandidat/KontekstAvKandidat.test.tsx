@@ -12,14 +12,11 @@ const wrapper = () => (
 test('<KontekstAvKandidat/>', () => {
     vi.mock('./useKandidatStillingssøk', () => ({
         default: vi.fn(() => ({
-            kandidat: {
-                kind: Nettstatus.Suksess,
-                data: {
-                    arenaKandidatnr: '123',
-                    fodselsnummer: '12345678901',
-                    fornavn: 'Ola',
-                    etternavn: 'Nordmann',
-                },
+            kandidatStillingssøk: {
+                arenaKandidatnr: '123',
+                fodselsnummer: '12345678901',
+                fornavn: 'Ola',
+                etternavn: 'Nordmann',
             },
             hentetGeografiFraBosted: false,
             manglerØnsketYrke: false,

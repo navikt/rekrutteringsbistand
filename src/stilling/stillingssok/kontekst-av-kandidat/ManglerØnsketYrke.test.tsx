@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { Nettstatus } from 'felles/nettressurs';
 import { BrowserRouter } from 'react-router-dom';
 import KontekstAvKandidat from './KontekstAvKandidat';
 
@@ -12,14 +11,11 @@ const wrapper = () => (
 test('<ManglerØnsketYrke/>', () => {
     vi.mock('./useKandidatStillingssøk', () => ({
         default: vi.fn(() => ({
-            kandidat: {
-                kind: Nettstatus.Suksess,
-                data: {
-                    arenaKandidatnr: '123',
-                    fodselsnummer: '12345678901',
-                    fornavn: 'Ola',
-                    etternavn: 'Nordmann',
-                },
+            kandidatStillingssøk: {
+                arenaKandidatnr: '123',
+                fodselsnummer: '12345678901',
+                fornavn: 'Ola',
+                etternavn: 'Nordmann',
             },
             hentetGeografiFraBosted: false,
             manglerØnsketYrke: true,
