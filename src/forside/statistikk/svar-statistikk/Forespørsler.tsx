@@ -1,9 +1,9 @@
-import { Heading } from '@navikt/ds-react';
-import { Nettstatus } from 'felles/nettressurs';
+import { ErrorMessage, Heading, Loader } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
+import { useSvarstatistikk } from '../../../api/foresporsel-om-deling-av-cv-api/hooks/useSvarstatistikk';
 import css from './Forespørsler.module.css';
 import Svartelling, { SvartellingIkon } from './Svartelling';
-import useSvarstatistikk from './useSvarstatistikk';
+// import useSvarstatistikk from './useSvarstatistikk';
 
 type Props = {
     navKontor: string;
@@ -21,10 +21,18 @@ export const formaterSomProsentAvTotalen = (tall: number, antallTotalt: number) 
 };
 
 const Forespørsler: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed }) => {
-    const svarstatistikk = useSvarstatistikk(navKontor, fraOgMed, tilOgMed);
+    const svarstatistikk = useSvarstatistikk({ navKontor, fraOgMed, tilOgMed });
 
-    if (svarstatistikk.kind !== Nettstatus.Suksess) {
-        return null;
+    if (svarstatistikk.isLoading || svarstatistikk.isValidating) {
+        return <Loader />;
+    }
+
+    if (svarstatistikk.error) {
+        return (
+            <ErrorMessage>
+                {svarstatistikk.error?.message ?? 'Feil ved lasting av statistikk'}
+            </ErrorMessage>
+        );
     }
 
     const { antallSvartJa, antallSvartNei, antallUtløpteSvar, antallVenterPåSvar } =

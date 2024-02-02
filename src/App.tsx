@@ -9,7 +9,7 @@ import Appfeil from './felles/komponenter/feilmelding/Appfeil';
 import Header from './header/Header';
 
 import FormidlingsSide from './formidling/Formidling';
-import { Component as Forside } from './forside/index';
+import Forside from './forside/Forside';
 import { Component as Kandidat } from './kandidat/index';
 import { Component as Kandidatsøk } from './kandidatsok/index';
 import { Component as Stilling } from './stilling/index';

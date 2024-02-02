@@ -1,11 +1,11 @@
 import useSWR from 'swr';
-import { hentApi } from '../../api/fetcher';
+import { getAPI } from '../../api/fetcher';
 import { hentTittelFraStilling, Rekrutteringsbistandstilling } from '../domene/stilling/Stilling';
 
 const useHentStilling = (stillingsId?: string | null) => {
     const { data, error, isLoading } = useSWR<Rekrutteringsbistandstilling>(
         stillingsId ? `/stilling-api/rekrutteringsbistandstilling/${stillingsId}` : undefined,
-        hentApi
+        getAPI
     );
     return {
         stilling: data,

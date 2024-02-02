@@ -5,14 +5,14 @@ import mswHandlers from './mock/handlers';
 
 vi.mock('zustand');
 
-const server = setupServer(...mswHandlers);
+const testServer = setupServer(...mswHandlers);
 
-global.testServer = server;
+global.testServer = testServer;
 
 beforeAll(() => {
-    server.listen({ onUnhandledRequest: 'error' });
+    testServer.listen({ onUnhandledRequest: 'error' });
 });
 
-afterAll(() => server.close());
+afterAll(() => testServer.close());
 
-afterEach(() => server.resetHandlers());
+afterEach(() => testServer.resetHandlers());

@@ -1,13 +1,10 @@
 import { EyeIcon, HandshakeIcon } from '@navikt/aksel-icons';
-import { BodyShort, ErrorMessage, Skeleton } from '@navikt/ds-react';
-import { Nettstatus } from 'felles/nettressurs';
+import { BodyShort, ErrorMessage, Loader, Skeleton } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import statistikkCss from './Statistikk.module.css';
+import { useUtfallsstatistikk } from '../../../api/statistikk-api/hooks/useUtfallsstatistikk';
+import { AntallDTO } from '../../../api/statistikk-api/statistikk.dto';
+import statistikkCss from '../Statistikk.module.css';
 import Telling from './Telling';
-import useUtfallsstatistikk, {
-    Antall,
-    Utfallsstatistikk as UtfallsstatistikkType,
-} from './useUtfallsstatistikk';
 
 type Props = {
     navKontor: string;
@@ -16,36 +13,40 @@ type Props = {
 };
 
 const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed }) => {
-    const statistikk = useUtfallsstatistikk(navKontor, fraOgMed, tilOgMed);
+    const statistikk = useUtfallsstatistikk({ navKontor, fraOgMed, tilOgMed });
 
-    if (statistikk.kind === Nettstatus.Feil) {
-        return <ErrorMessage>{statistikk.error.message}</ErrorMessage>;
+    if (statistikk.isLoading || statistikk.isValidating) {
+        return <Loader />;
     }
 
-    let data: UtfallsstatistikkType | undefined;
-    if (statistikk.kind === Nettstatus.Suksess) {
-        data = statistikk.data;
+    if (statistikk.error) {
+        return (
+            <ErrorMessage>
+                {statistikk.error?.message ?? 'Feil ved lasting av statistikk'}
+            </ErrorMessage>
+        );
     }
+
     return (
         <div className={statistikkCss.tall}>
             <Telling
-                tall={data?.antPresentasjoner.totalt}
+                tall={statistikk.data?.antPresentasjoner.totalt}
                 beskrivelse="Delt med arbeidsgiver"
                 ikon={<EyeIcon aria-hidden />}
-                detaljer={<AntallPrioriterte antall={data?.antPresentasjoner} />}
+                detaljer={<AntallPrioriterte antall={statistikk.data?.antPresentasjoner} />}
             />
 
             <Telling
-                tall={data?.antFåttJobben.totalt}
+                tall={statistikk.data?.antFåttJobben.totalt}
                 beskrivelse="Fikk jobb"
                 ikon={<HandshakeIcon aria-hidden />}
-                detaljer={<AntallPrioriterte antall={data?.antFåttJobben} />}
+                detaljer={<AntallPrioriterte antall={statistikk.data?.antFåttJobben} />}
             />
         </div>
     );
 };
 
-const AntallPrioriterte = ({ antall }: { antall?: Antall }) => {
+const AntallPrioriterte = ({ antall }: { antall?: AntallDTO }) => {
     if (antall !== undefined) {
         return (
             <BodyShort size="small" as="ul" className={statistikkCss.talldetaljer}>

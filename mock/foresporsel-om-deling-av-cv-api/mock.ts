@@ -3,8 +3,8 @@ import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { AktørId } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { HttpResponse, http } from 'msw';
+import { SvarstatistikkDTO } from '../../src/api/foresporsel-om-deling-av-cv-api/forespørsel.dto';
 import { api } from '../../src/felles/api';
-import { Svarstatistikk } from '../../src/forside/statistikk/useSvarstatistikk';
 import {
     ForespørselDeltStatus,
     ForespørselOmDelingAvCv,
@@ -117,7 +117,7 @@ const opprettMockForespørselOmDelingAvCv = (
     },
 });
 
-export const hentForespørslerstatistikk = (navKontor: string | null): Svarstatistikk => {
+export const hentForespørslerstatistikk = (navKontor: string | null): SvarstatistikkDTO => {
     return navKontor === '0239'
         ? {
               antallSvartJa: 26,
