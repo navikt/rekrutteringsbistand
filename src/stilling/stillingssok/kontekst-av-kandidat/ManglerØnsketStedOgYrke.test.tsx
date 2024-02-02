@@ -17,7 +17,7 @@ test('<ManglerØnsketStedOgYrke/>', () => {
                 fornavn: 'Ola',
                 etternavn: 'Nordmann',
             },
-            hentetGeografiFraBosted: false,
+            hentetGeografiFraBosted: true,
             manglerØnsketYrke: true,
         })),
     }));
