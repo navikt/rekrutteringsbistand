@@ -17,18 +17,18 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
     const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
 
     const { data: swrData } = useSWR(
-        { path: kandidatSøkEndepunkter.kandidatstillingssøk, kandidatnr },
+        { path: kandidatSøkEndepunkter.kandidatStillingssøk, kandidatnr },
         ({ path }) => postApi(path, { kandidatnr })
     );
-    const kandidatstillingssøk = swrData?.data?.hits?.hits[0]?._source;
+    const kandidatStillingssøk = swrData?.data?.hits?.hits[0]?._source;
 
     useEffect(() => {
-        if (kandidatstillingssøk) {
+        if (kandidatStillingssøk) {
             const brukKandidatkriterier =
                 searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
 
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
-                kandidatstillingssøk;
+                kandidatStillingssøk;
 
             let fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
@@ -64,9 +64,9 @@ const useKandidatStillingssøk = (kandidatnr: string) => {
                 navigate({ search: søk.toString() }, { replace: true });
             }
         }
-    }, [kandidatnr, navigate, kandidatstillingssøk, searchParams]);
+    }, [kandidatnr, navigate, kandidatStillingssøk, searchParams]);
 
-    return { kandidatstillingssøk, hentetGeografiFraBosted, manglerØnsketYrke };
+    return { kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke };
 };
 
 const hentFylkestekstFraGeografiKode = (geografiKode: string) => {

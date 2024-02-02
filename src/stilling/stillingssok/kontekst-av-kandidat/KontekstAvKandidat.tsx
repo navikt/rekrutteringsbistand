@@ -9,19 +9,19 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
-    const { kandidatstillingssøk, hentetGeografiFraBosted, manglerØnsketYrke } =
+    const { kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke } =
         useKandidatStillingssøk(kandidatnr);
 
     let brødsmulesti = undefined;
-    if (kandidatstillingssøk) {
+    if (kandidatStillingssøk) {
         brødsmulesti = [
             {
                 href: '/kandidatsok',
                 tekst: 'Kandidater',
             },
             {
-                href: `/kandidater/kandidat/${kandidatstillingssøk.arenaKandidatnr}/cv?fraKandidatsok=true`,
-                tekst: formaterNavn(kandidatstillingssøk),
+                href: `/kandidater/kandidat/${kandidatStillingssøk.arenaKandidatnr}/cv?fraKandidatsok=true`,
+                tekst: formaterNavn(kandidatStillingssøk),
             },
 
             {
@@ -33,20 +33,20 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
     }
 
     const utledBannerelement = () => {
-        if (kandidatstillingssøk) {
+        if (kandidatStillingssøk) {
             if (manglerØnsketYrke && hentetGeografiFraBosted) {
-                return <ManglerØnsketStedOgYrke fnr={kandidatstillingssøk.fodselsnummer} />;
+                return <ManglerØnsketStedOgYrke fnr={kandidatStillingssøk.fodselsnummer} />;
             } else if (manglerØnsketYrke) {
-                return <ManglerØnsketYrke fnr={kandidatstillingssøk.fodselsnummer} />;
+                return <ManglerØnsketYrke fnr={kandidatStillingssøk.fodselsnummer} />;
             } else if (hentetGeografiFraBosted) {
-                return <ManglerØnsketSted fnr={kandidatstillingssøk.fodselsnummer} />;
+                return <ManglerØnsketSted fnr={kandidatStillingssøk.fodselsnummer} />;
             }
         }
     };
 
     return (
         <Kandidatbanner
-            kandidatnr={kandidatstillingssøk?.arenaKandidatnr}
+            kandidatnr={kandidatStillingssøk?.arenaKandidatnr}
             brødsmulesti={brødsmulesti}
             nederst={utledBannerelement()}
         />

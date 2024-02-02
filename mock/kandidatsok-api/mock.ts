@@ -1,6 +1,10 @@
 import { HttpResponse, http } from 'msw';
 import { kandidatSøkEndepunkter } from '../../src/api/kandidat-søk-api/kandidat-søk.api';
-import { mockKandidat, mockKandidatSammendrag } from '../kandidatsok-proxy/mockKandidat';
+import {
+    mockKandidat,
+    mockKandidatStillingssøk,
+    mockKandidatsammendrag,
+} from '../kandidatsok-proxy/mockKandidat';
 
 export const kandidatSokApiMock = [
     http.post(`${kandidatSøkEndepunkter.lookupCv}`, (_) =>
@@ -19,7 +23,18 @@ export const kandidatSokApiMock = [
             hits: {
                 hits: [
                     {
-                        _source: mockKandidatSammendrag,
+                        _source: mockKandidatsammendrag,
+                    },
+                ],
+            },
+        })
+    ),
+    http.post(`${kandidatSøkEndepunkter.kandidatStillingssøk}`, (_) =>
+        HttpResponse.json({
+            hits: {
+                hits: [
+                    {
+                        _source: mockKandidatStillingssøk,
                     },
                 ],
             },

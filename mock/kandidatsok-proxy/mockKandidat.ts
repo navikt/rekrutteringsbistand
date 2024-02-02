@@ -8,7 +8,45 @@ import {
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import { mockMeg } from '../meg/mock';
 
-export const mockKandidatSammendrag: KandidatTilBanner = {
+export const mockKandidatStillingssøk = {
+    yrkeJobbonskerObj: [
+        {
+            styrkBeskrivelse: 'Avisbud',
+            sokeTitler: [
+                'Avisbud',
+                'Avisbud',
+                'Bilagskontrollør (avisbud)',
+                'Avis- og reklamebrosjyrebud',
+                'Altmuligmann',
+                'Avis- og reklamedistributør',
+                'Utdeler (gratisavis)',
+                'Reklamebud',
+                'Reklame- og avisdistributør',
+                'Bud, utlevering',
+            ],
+            primaertJobbonske: false,
+            styrkKode: null,
+        },
+    ],
+    arenaKandidatnr: 'PAM0152hb0wr4',
+    geografiJobbonsker: [
+        {
+            geografiKodeTekst: 'Norge',
+            geografiKode: 'NO',
+        },
+        {
+            geografiKodeTekst: 'Geiranger',
+            geografiKode: '1000',
+        },
+        {
+            geografiKodeTekst: 'Larvik',
+            geografiKode: 'NO07.0712',
+        },
+    ],
+    fodselsnummer: '04928797045',
+};
+
+export const mockKandidatsammendrag: KandidatTilBanner = {
     yrkeJobbonskerObj: [
         {
             styrkBeskrivelse: 'Avisbud',
