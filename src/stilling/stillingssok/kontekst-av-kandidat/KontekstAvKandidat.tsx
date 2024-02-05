@@ -11,6 +11,7 @@ type Props = {
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
     const { kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke } =
         useKandidatStillingssøk(kandidatnr);
+    console.log('kandidatStillingssøkx', kandidatStillingssøk);
 
     let brødsmulesti = undefined;
     if (kandidatStillingssøk) {

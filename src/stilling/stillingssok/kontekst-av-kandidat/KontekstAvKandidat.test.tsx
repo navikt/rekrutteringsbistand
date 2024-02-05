@@ -22,7 +22,7 @@ test('<KontekstAvKandidat/>', () => {
         })),
     }));
 
-    vi.mock('./useKandidatsammendrag', () => ({
+    vi.mock('felles/komponenter/kandidatbanner/useKandidatsammendrag', () => ({
         default: vi.fn(() => ({
             kandidatsammendrag: {
                 arenaKandidatnr: '123',
@@ -30,8 +30,8 @@ test('<KontekstAvKandidat/>', () => {
                 fornavn: 'Ola',
                 etternavn: 'Nordmann',
             },
-            hentetGeografiFraBosted: false,
-            manglerØnsketYrke: false,
+            isLoading: false,
+            error: undefined,
         })),
     }));
 
