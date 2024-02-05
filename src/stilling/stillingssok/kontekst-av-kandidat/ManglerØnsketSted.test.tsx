@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { Nettstatus } from 'felles/nettressurs';
 import { BrowserRouter } from 'react-router-dom';
 import KontekstAvKandidat from './KontekstAvKandidat';
 

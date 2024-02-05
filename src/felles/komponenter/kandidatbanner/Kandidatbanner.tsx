@@ -37,6 +37,7 @@ const Kandidatbanner = ({
     kandidatnr,
 }: Props) => {
     const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag(kandidatnr);
+    console.log('kandidatsammendragx', kandidatsammendrag);
     return (
         <Grunnbanner ikon={<Piktogram />} nederst={nederst}>
             <div className={css.innhold}>

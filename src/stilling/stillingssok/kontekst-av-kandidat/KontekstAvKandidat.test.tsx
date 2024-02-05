@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { Nettstatus } from 'felles/nettressurs';
 import { BrowserRouter } from 'react-router-dom';
 import KontekstAvKandidat from './KontekstAvKandidat';
 
@@ -13,6 +12,19 @@ test('<KontekstAvKandidat/>', () => {
     vi.mock('./useKandidatStillingssøk', () => ({
         default: vi.fn(() => ({
             kandidatStillingssøk: {
+                arenaKandidatnr: '123',
+                fodselsnummer: '12345678901',
+                fornavn: 'Ola',
+                etternavn: 'Nordmann',
+            },
+            hentetGeografiFraBosted: false,
+            manglerØnsketYrke: false,
+        })),
+    }));
+
+    vi.mock('./useKandidatsammendrag', () => ({
+        default: vi.fn(() => ({
+            kandidatsammendrag: {
                 arenaKandidatnr: '123',
                 fodselsnummer: '12345678901',
                 fornavn: 'Ola',
