@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import Piktogram from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
-import { InnloggetBruker } from '../api/frackend/hooks/useInnloggetBruker';
 import Layout from '../felles/komponenter/layout/Layout';
 import css from './Kandidatsøk.module.css';
 import Filter from './filter/Filter';
@@ -20,9 +19,7 @@ import { Økt } from './Økt';
 export type KandidatsøkProps = {
     forrigeØkt: Økt | null;
     setØkt: (økt: Økt) => void;
-    innloggetBruker: InnloggetBruker;
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
-    navKontor: string | null;
 };
 
 enum Modal {
@@ -34,7 +31,6 @@ enum Modal {
 const Kandidatsøk = ({
     forrigeØkt,
     setØkt,
-    innloggetBruker,
     kontekstAvKandidatlisteEllerStilling,
 }: KandidatsøkProps) => {
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
@@ -43,7 +39,7 @@ const Kandidatsøk = ({
         forrigeØkt?.markerteKandidater
     );
 
-    useLagreØkt(innloggetBruker);
+    useLagreØkt();
     useEffect(() => {
         setØkt({
             markerteKandidater: Array.from(markerteKandidater),
@@ -74,7 +70,6 @@ const Kandidatsøk = ({
             <PorteføljeTabs>
                 <div className={css.hovedinnhold}>
                     <Kandidater
-                        innloggetBruker={innloggetBruker}
                         kontekstAvKandidatlisteEllerStilling={kontekstAvKandidatlisteEllerStilling}
                         onLagreIKandidatlisteClick={onLagreIKandidatlisteClick}
                         markerteKandidater={markerteKandidater}

@@ -2,13 +2,13 @@ import { Tabs } from '@navikt/ds-react';
 import Piktogram from 'felles/komponenter/piktogrammer/formidlinger.svg';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
-import useInnloggetBruker from '../api/frackend/hooks/useInnloggetBruker';
 import { sendEvent } from '../felles/amplitude';
 import Layout from '../felles/komponenter/layout/Layout';
 import useNavigering from '../stilling/stillingssok/useNavigering';
 import { QueryParam, oppdaterUrlMedParam } from '../stilling/stillingssok/utils/urlUtils';
 import Formidlingssøk from './Formidlingssøk';
 import FormidlingssøkSidebar from './FormidlingssøkSidebar';
+import useInnloggetBruker from '../api/frackend/hooks/useInnloggetBruker';
 
 enum TabVisning {
     VIS_ALLE = 'visAlle',
@@ -22,9 +22,7 @@ const Formidling: React.FC = () => {
     const queryParams = new URLSearchParams(search);
     const portefolje = queryParams.get('portefolje') ?? defaultTab;
     const { searchParams, navigate } = useNavigering();
-    const {
-        bruker: { navIdent },
-    } = useInnloggetBruker(null);
+    const { navIdent } = useInnloggetBruker();
 
     const oppdaterTab = (tab: TabVisning) => {
         if (tab === TabVisning.VIS_MINE) {

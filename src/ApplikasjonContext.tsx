@@ -13,12 +13,11 @@ interface IApplikasjonContextProvider {
 }
 
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
-    const bruker = useInnloggetBruker();
+    const { navIdent } = useInnloggetBruker();
 
-    console.log('🎺 bruker', bruker);
     return (
         <ApplikasjonContext.Provider value={{}}>
-            {bruker ? (
+            {navIdent ? (
                 children
             ) : (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>

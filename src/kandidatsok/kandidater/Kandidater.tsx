@@ -4,7 +4,6 @@ import { FunctionComponent, useEffect, useMemo } from 'react';
 
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { Nettstatus } from 'felles/nettressurs';
-import { InnloggetBruker } from '../../api/frackend/hooks/useInnloggetBruker';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useQuery from '../hooks/useQuery';
@@ -16,7 +15,6 @@ import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
 
 type Props = {
-    innloggetBruker: InnloggetBruker;
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
     onLagreIKandidatlisteClick: () => void;
     markerteKandidater: Set<string>;
@@ -27,7 +25,6 @@ type Props = {
 };
 
 const Kandidater: FunctionComponent<Props> = ({
-    innloggetBruker,
     kontekstAvKandidatlisteEllerStilling,
     onLagreIKandidatlisteClick,
     markerteKandidater,
@@ -36,7 +33,7 @@ const Kandidater: FunctionComponent<Props> = ({
     forrigeØkt,
     setKandidaterPåSiden,
 }) => {
-    const response = useQuery(innloggetBruker);
+    const response = useQuery();
 
     const totaltAntallKandidater = useMemo(() => {
         if (response.kind === Nettstatus.Suksess || response.kind === Nettstatus.Oppdaterer) {

@@ -1,23 +1,14 @@
 import useSWR from 'swr';
-import { getAPI } from '../../fetcher';
 import { frackendEndepunkter } from '../proxy.api';
+import { getAPI } from '../../fetcher';
 
-export type InnloggetBruker = {
-    navIdent: string | null;
-    navKontor: string | null;
-};
-
-const useInnloggetBruker = (navKontor?: string | null) => {
+const useInnloggetBruker = () => {
     const swrData = useSWR(frackendEndepunkter.innloggetBruker, getAPI);
 
-    const bruker: InnloggetBruker = {
-        navKontor,
-        navIdent: swrData.data?.navIdent,
-    };
     return {
         ...swrData,
-        bruker,
+        navIdent: swrData.data?.navIdent,
+        roller: swrData.data?.roller,
     };
 };
-
 export default useInnloggetBruker;
