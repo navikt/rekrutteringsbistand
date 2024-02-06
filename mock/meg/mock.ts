@@ -1,5 +1,5 @@
 import { HttpResponse, http } from 'msw';
-import { api } from '../../src/felles/api';
+import { frackendEndepunkter } from '../../src/api/frackend/proxy.api';
 
 export const mockVeileder = {
     fornavn: 'Varg',
@@ -13,5 +13,5 @@ export const mockMeg = {
 };
 
 export const innloggetBrukerMock = [
-    http.get(api.innloggetBruker, (_) => HttpResponse.json(mockMeg)),
+    http.get(frackendEndepunkter.innloggetBruker, (_) => HttpResponse.json(mockMeg)),
 ];

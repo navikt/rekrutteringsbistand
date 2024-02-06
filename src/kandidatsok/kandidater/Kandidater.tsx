@@ -3,8 +3,8 @@ import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useMemo } from 'react';
 
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Nettstatus } from 'felles/nettressurs';
+import { InnloggetBruker } from '../../api/frackend/hooks/useInnloggetBruker';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useQuery from '../hooks/useQuery';

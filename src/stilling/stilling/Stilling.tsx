@@ -4,7 +4,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
-import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import useInnloggetBruker from '../../api/frackend/hooks/useInnloggetBruker';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
@@ -48,11 +48,11 @@ const Stilling = () => {
 
     const { kandidatlisteId } = useKandidatlisteId(uuid);
 
-    const { navIdent: innloggetBruker } = useInnloggetBruker(null);
+    const { bruker } = useInnloggetBruker(null);
 
     const erEier =
-        stilling?.administration?.navIdent === innloggetBruker ||
-        stillingsinfo?.eierNavident === innloggetBruker;
+        stilling?.administration?.navIdent === bruker.navIdent ||
+        stillingsinfo?.eierNavident === bruker.navIdent;
 
     const harKandidatlisteSomKanÅpnes = erEier && kandidatlisteId;
 
@@ -174,7 +174,7 @@ const Stilling = () => {
                                     </>
                                 ) : (
                                     <Edit
-                                        innloggetBruker={innloggetBruker}
+                                        innloggetBruker={bruker.navIdent}
                                         erEier={erEier}
                                         onPreviewAdClick={onPreviewAdClick}
                                         kandidatlisteId={kandidatlisteId}

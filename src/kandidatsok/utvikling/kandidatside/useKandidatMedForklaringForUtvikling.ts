@@ -1,6 +1,6 @@
 import Kandidat from 'felles/domene/kandidat/Kandidat';
-import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import { useEffect, useState } from 'react';
+import useInnloggetBruker from '../../../api/frackend/hooks/useInnloggetBruker';
 import { get, post } from '../../api/api';
 import { byggIndreQuery } from '../../api/query/byggQuery';
 import { searchParamsTilSøkekriterier } from '../../hooks/useSøkekriterier';
@@ -17,7 +17,7 @@ const useKandidatMedForklaringForUtvikling = (
 
     const søkekriterier = searchParamsTilSøkekriterier(new URLSearchParams(searchParams));
     const bruktSøk = {
-        query: byggIndreQuery(søkekriterier, innloggetBruker),
+        query: byggIndreQuery(søkekriterier, innloggetBruker.bruker),
     };
 
     useEffect(() => {

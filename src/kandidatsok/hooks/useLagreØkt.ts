@@ -1,8 +1,8 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { InnloggetBruker } from '../../api/frackend/hooks/useInnloggetBruker';
 import { søk } from '../api/api';
 import { PAGE_SIZE, byggQuery } from '../api/query/byggQuery';
 import { ØktContext } from '../Økt';

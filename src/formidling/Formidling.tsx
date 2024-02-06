@@ -1,8 +1,8 @@
 import { Tabs } from '@navikt/ds-react';
-import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Piktogram from 'felles/komponenter/piktogrammer/formidlinger.svg';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
+import useInnloggetBruker from '../api/frackend/hooks/useInnloggetBruker';
 import { sendEvent } from '../felles/amplitude';
 import Layout from '../felles/komponenter/layout/Layout';
 import useNavigering from '../stilling/stillingssok/useNavigering';
@@ -22,7 +22,9 @@ const Formidling: React.FC = () => {
     const queryParams = new URLSearchParams(search);
     const portefolje = queryParams.get('portefolje') ?? defaultTab;
     const { searchParams, navigate } = useNavigering();
-    const { navIdent } = useInnloggetBruker(null);
+    const {
+        bruker: { navIdent },
+    } = useInnloggetBruker(null);
 
     const oppdaterTab = (tab: TabVisning) => {
         if (tab === TabVisning.VIS_MINE) {

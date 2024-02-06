@@ -4,8 +4,8 @@ import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import Piktogram from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import useInnloggetBruker from '../../api/frackend/hooks/useInnloggetBruker';
 import { sendEvent } from '../../felles/amplitude';
-import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
 import Layout from '../../felles/komponenter/layout/Layout';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
 import AlleStillinger from './AlleStillinger';
@@ -40,7 +40,9 @@ enum TabVisning {
 }
 
 const Stillingssøk = () => {
-    const { navIdent: innloggetBruker } = useInnloggetBruker(null);
+    const {
+        bruker: { navIdent },
+    } = useInnloggetBruker(null);
     const { searchParams, navigate } = useNavigering();
     const { kandidat: kandidatnr } = useParams<{ kandidat?: string }>();
     const { search } = useLocation();
@@ -113,9 +115,9 @@ const Stillingssøk = () => {
                     />
                 </Tabs.Panel>
                 <Tabs.Panel value={TabVisning.VIS_MINE}>
-                    {innloggetBruker ? (
+                    {navIdent ? (
                         <MineStillinger
-                            navIdent={innloggetBruker}
+                            navIdent={navIdent}
                             kandidatnr={kandidatnr}
                             finnerStillingForKandidat={finnerStillingForKandidat}
                         />

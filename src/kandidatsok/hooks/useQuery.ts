@@ -1,13 +1,13 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat, { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
+import { KandidatsokQueryParam } from 'felles/lenker';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
+import { InnloggetBruker } from '../../api/frackend/hooks/useInnloggetBruker';
 import { søk } from '../api/api';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
 import useSøkekriterier from './useSøkekriterier';
-import { KandidatsokQueryParam } from 'felles/lenker';
 
 export enum FilterParam {
     Fritekst = 'q',

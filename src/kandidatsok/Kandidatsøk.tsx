@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import Piktogram from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import { InnloggetBruker } from '../api/frackend/hooks/useInnloggetBruker';
 import Layout from '../felles/komponenter/layout/Layout';
 import css from './Kandidatsøk.module.css';
 import Filter from './filter/Filter';

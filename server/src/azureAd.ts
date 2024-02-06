@@ -54,16 +54,18 @@ export const hentNavIdent = (token: string) => {
     return String(claims[navIdentClaim]) || '';
 };
 
-export const hentGrupper = (token: string): string[] => {
+export const hentRoller = (token: string): string[] => {
     const claims = decodeJwt(token);
     return (claims.groups as string[]) || [];
 };
 
-export const responderMedBrukerinfo: RequestHandler = async (req, res) => {
+export const hentBrukerOgRoller: RequestHandler = async (req, res) => {
     const brukerensAccessToken = retrieveToken(req.headers);
     const navIdent = hentNavIdent(brukerensAccessToken);
+    const roller = hentRoller(brukerensAccessToken);
 
     res.status(200).json({
         navIdent,
+        roller,
     });
 };

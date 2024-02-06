@@ -1,4 +1,4 @@
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
+import { InnloggetBruker } from '../../../api/frackend/hooks/useInnloggetBruker';
 import { Portefølje } from '../../filter/porteføljetabs/PorteføljeTabs';
 
 export const queryMedPortefølje = (portefølje: Portefølje, innloggetBruker: InnloggetBruker) => {
