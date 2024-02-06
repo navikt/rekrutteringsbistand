@@ -1,6 +1,5 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat, { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { KandidatsokQueryParam } from 'felles/lenker';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 import { søk } from '../api/api';
@@ -29,8 +28,6 @@ export enum FilterParam {
     Språk = 'sprak',
     Sortering = 'sortering',
 }
-
-export type Param = FilterParam | KandidatsokQueryParam;
 
 const useQuery = (): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
     const navKontor = useNavKontor((state) => state.navKontor);

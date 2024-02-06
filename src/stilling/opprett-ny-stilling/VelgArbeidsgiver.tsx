@@ -18,10 +18,6 @@ type Props = {
     autoFocus?: boolean;
 };
 
-export type EmployerState = {
-    suggestions: Enhetsregistertreff[];
-};
-
 const VelgArbeidsgiver: FunctionComponent<Props> = ({
     arbeidsgiver,
     setArbeidsgiver,

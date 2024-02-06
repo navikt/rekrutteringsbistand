@@ -3,7 +3,6 @@ import { FunctionComponent } from 'react';
 import { useSvarstatistikk } from '../../../api/foresporsel-om-deling-av-cv-api/hooks/useSvarstatistikk';
 import css from './Forespørsler.module.css';
 import Svartelling, { SvartellingIkon } from './Svartelling';
-// import useSvarstatistikk from './useSvarstatistikk';
 
 type Props = {
     navKontor: string;

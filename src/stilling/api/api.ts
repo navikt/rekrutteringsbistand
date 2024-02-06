@@ -10,12 +10,6 @@ import { Miljø, getMiljø } from 'felles/miljø';
 import { fetchGet, fetchPost, fetchPut } from './apiUtils';
 import devVirksomheter from './devVirksomheter';
 
-export type Side<T> = {
-    content: T[];
-    totalElements: number;
-    totalPages: number;
-};
-
 export const postStilling = async (
     stilling: Partial<Stilling>,
     kategori: Stillingskategori

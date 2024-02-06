@@ -19,9 +19,3 @@ export const erKobletTilArbeidsgiver = (kandidatliste: Kandidatliste): boolean =
 export const erEierAvKandidatlisten = (
     kandidatliste: Kandidatliste | KandidatlisteSammendrag
 ): boolean => kandidatliste.erEier;
-
-export const harTilgangTilkandidatliste = (
-    kandidatliste: Kandidatliste | KandidatlisteSammendrag
-) => {
-    return erEierAvKandidatlisten(kandidatliste);
-};

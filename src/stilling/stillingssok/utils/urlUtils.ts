@@ -99,25 +99,3 @@ export const oppdaterUrlMedParam = ({
     let oppdaterteParams = oppdaterQueryParametere(searchParams, parameter, verdi);
     navigate({ search: oppdaterteParams }, { replace: true, state });
 };
-
-export const oppdaterUrlMedToParams = ({
-    navigate,
-    searchParams,
-    parameter,
-    verdi,
-    parameter2,
-    verdi2,
-    state,
-}: {
-    navigate: NavigateFunction;
-    searchParams: URLSearchParams;
-    parameter: QueryParam;
-    verdi: QueryParamValue;
-    parameter2: QueryParam;
-    verdi2: QueryParamValue;
-    state?: Navigeringsstate;
-}) => {
-    let search = oppdaterQueryParametere(searchParams, parameter, verdi);
-    search = oppdaterQueryParametere(searchParams, parameter2, verdi2);
-    navigate({ search }, { replace: true, state });
-};

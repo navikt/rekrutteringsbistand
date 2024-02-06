@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { lenkeTilKandidatside, Kandidatfane } from '../../app/paths';
+import { lenkeTilKandidatside } from '../../app/paths';
 import AppState from '../../state/AppState';
 import { erInaktiv } from '../../kandidatliste/domene/kandidatUtils';
 import useFiltrerteKandidater from '../../kandidatliste/hooks/useFiltrerteKandidater';
@@ -46,14 +46,6 @@ const useNavigerbareKandidater = (
         neste,
         antall: kandidatnumre.length,
     };
-};
-
-export const hentAktivFane = (path: string): Kandidatfane => {
-    if (path.split('/').pop() === 'cv') {
-        return Kandidatfane.Cv;
-    } else {
-        return Kandidatfane.Historikk;
-    }
 };
 
 export default useNavigerbareKandidater;

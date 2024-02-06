@@ -35,9 +35,6 @@ export const leggTilTimerPåISOString = (
     return dato.toISOString();
 };
 
-export const fjernTidspunktFraISOString = (dato: string | undefined) =>
-    typeof dato === 'string' ? dato.split('T')[0] : undefined;
-
 export const idagMidnatt = (): Date => {
     const idag = new Date();
     idag.setHours(0);

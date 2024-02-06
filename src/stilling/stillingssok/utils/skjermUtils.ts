@@ -35,12 +35,6 @@ const beregnEnhetstype = (vindusbredde: number) => {
     return Enhetstype.Desktop;
 };
 
-export const hentEnhetstype = (): Enhetstype => {
-    const { width } = getWindowDimensions();
-
-    return beregnEnhetstype(width);
-};
-
 export const useEnhetstype = (): Enhetstype => {
     const { width } = useWindowDimensions();
 

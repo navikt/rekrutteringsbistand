@@ -4,7 +4,7 @@ import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../api/server.dto';
 import { MineKandidatlister } from '../kandidatside/fraSøkUtenKontekst/lagre-kandidat-modal/useMineKandidatlister';
-import { deleteJsonMedType, fetchJson, postJson, putJson } from './fetchUtils';
+import { fetchJson, postJson, putJson } from './fetchUtils';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
@@ -66,26 +66,9 @@ export const putUtfallKandidat = (
         JSON.stringify({ utfall, navKontor })
     );
 
-export const postKandidatliste = (kandidatlisteDto: any) =>
-    postJson(`${api.kandidat}/veileder/me/kandidatlister`, JSON.stringify(kandidatlisteDto));
-
 export function putKandidatliste(stillingsId) {
     return putJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste/`);
 }
-
-export function endreKandidatliste(kandidatlisteId: string, kandidatlisteDto: any) {
-    return putJson(
-        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`,
-        JSON.stringify(kandidatlisteDto)
-    );
-}
-
-export function fetchGeografiKode(geografiKode) {
-    return fetchJson(`${api.kandidat}/kodeverk/arenageografikoder/${geografiKode}`, true);
-}
-
-export const fetchStillingFraListe = (stillingsId) =>
-    fetchJson(`${api.kandidat}/kandidatsok/stilling/sokeord/${stillingsId}`, true);
 
 export const postDelteKandidater = (
     beskjed: string,
@@ -158,9 +141,6 @@ export const putArkivertForFlereKandidater = (
     );
 };
 
-export const fetchKandidatlister = (query = {}) =>
-    fetchJson(`${api.kandidat}/veileder/kandidatlister?${convertToUrlParams(query)}`, true);
-
 export const fetchMineKandidatlister = async (
     side: number,
     pageSize: number
@@ -197,15 +177,6 @@ export const fetchArbeidsgivereEnhetsregisterOrgnr = (orgnr) => {
     return fetchJson(`${ENHETSREGISTER_API}/underenhet/_search?q=organisasjonsnummer:${query}*`);
 };
 
-export const markerKandidatlisteUtenStillingSomMin = (kandidatlisteId: string) =>
-    putJson(`${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/eierskap`);
-
-export async function deleteKandidatliste(kandidatlisteId: string): Promise<Nettressurs<any>> {
-    return await deleteJsonMedType<any>(
-        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`
-    );
-}
-
 export const fetchSendteMeldinger = (kandidatlisteId: string) =>
     fetchJson(`${api.sms}/${kandidatlisteId}`, true);
 
@@ -220,10 +191,6 @@ export const postSmsTilKandidater = (melding: string, fnr: string[], kandidatlis
             kandidatlisteId,
         })
     );
-
-export const fetchFerdigutfylteStillinger = () => {
-    return fetchJson(`${api.kandidat}/veileder/ferdigutfyltesok`, true);
-};
 
 export const putKandidatlistestatus = (
     kandidatlisteId: string,
