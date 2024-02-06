@@ -32,7 +32,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
 
     const {
         bruker: { navIdent },
-    } = useInnloggetBruker();
+    } = useInnloggetBruker(null);
 
     const erEier =
         stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;

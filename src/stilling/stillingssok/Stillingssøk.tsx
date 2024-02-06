@@ -42,7 +42,7 @@ enum TabVisning {
 const Stillingssøk = () => {
     const {
         bruker: { navIdent },
-    } = useInnloggetBruker();
+    } = useInnloggetBruker(null);
     const { searchParams, navigate } = useNavigering();
     const { kandidat: kandidatnr } = useParams<{ kandidat?: string }>();
     const { search } = useLocation();
