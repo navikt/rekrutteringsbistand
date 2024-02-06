@@ -25,7 +25,7 @@ if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
 async function enableMocking() {
     if (import.meta.env.DEV) {
         const { mswWorker } = await import('../mock/setup');
-        mswWorker.start({
+        await mswWorker.start({
             onUnhandledRequest: 'warn',
         });
     } else {
@@ -38,22 +38,17 @@ const root = createRoot(element as HTMLElement);
 
 enableMocking().then(() => {
     root.render(
-        <SWRConfig
-            value={{
-                revalidateOnFocus: false,
-            }}
-        >
-            <ApplikasjonContextProvider>
-                <React.StrictMode>
-                    {import.meta.env.DEV ? (
-                        <DevTools>
-                            <App />
-                        </DevTools>
-                    ) : (
-                        <App />
-                    )}
-                </React.StrictMode>
-            </ApplikasjonContextProvider>{' '}
-        </SWRConfig>
+        <React.StrictMode>
+            <SWRConfig
+                value={{
+                    revalidateOnFocus: false,
+                }}
+            >
+                {import.meta.env.DEV ? <DevTools /> : null}
+                <ApplikasjonContextProvider>
+                    <App />
+                </ApplikasjonContextProvider>
+            </SWRConfig>
+        </React.StrictMode>
     );
 });
