@@ -1,7 +1,6 @@
 import { Privacy } from 'felles/domene/stilling/Stilling';
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { State } from '../redux/store';
-import { SET_NOTAT } from '../stillingsinfo/stillingsinfoDataReducer';
 import { idagMidnatt, isValidISOString } from '../utils/datoUtils';
 import {
     ADD_LOCATION_AREA,
@@ -52,7 +51,6 @@ export type ValidertFelt =
     | 'contactPersonEmailOrPhone'
     | 'contactPersonEmail'
     | 'contactPersonPhone'
-    | 'notat'
     | 'applicationdue'
     | 'starttime'
     | 'engagementtype'
@@ -74,8 +72,6 @@ export const VALIDATE_CONTACTPERSON_NAME = 'VALIDATE_CONTACTPERSON_NAME';
 export const VALIDATE_CONTACTPERSON_TITLE = 'VALIDATE_CONTACTPERSON_TITLE';
 export const VALIDATE_LOCATION_AREA = 'VALIDATE_LOCATION_AREA';
 export const RESET_VALIDATION_ERROR = 'RESET_VALIDATION_ERROR';
-
-export const MAX_LENGTH_NOTAT = 500;
 
 const valueIsNotSet = (value: any) => value === undefined || value === null || value.length === 0;
 
@@ -347,19 +343,6 @@ function* validateContactPersonPhone() {
     }
 }
 
-export function* validateNotat() {
-    const notat = yield select((state) => state.stillingsinfoData.notat);
-
-    if (notat && notat.length > MAX_LENGTH_NOTAT) {
-        yield addValidationError({
-            field: 'notat',
-            message: 'Kommentaren inneholder for mange tegn',
-        });
-    } else {
-        yield removeValidationError({ field: 'notat' });
-    }
-}
-
 function* validateApplicationdueDate() {
     const state = yield select();
     const { applicationdue } = state.adData?.properties;
@@ -502,7 +485,6 @@ export function* validateAll() {
         yield validateAdtext();
         yield validateApplicationEmail();
         yield validatePostalCode();
-        yield validateNotat();
         yield validateApplicationdueDate();
         yield validateEngagementType();
         yield validatePositionCount();
@@ -531,7 +513,6 @@ export function hasValidationErrors(validation: Record<ValidertFelt, string | un
         validation.contactPersonTitle !== undefined ||
         validation.published !== undefined ||
         validation.postalCode !== undefined ||
-        validation.notat !== undefined ||
         validation.applicationdue !== undefined ||
         validation.engagementtype !== undefined ||
         validation.positioncount !== undefined ||
@@ -550,7 +531,6 @@ export function* validateBeforeSave() {
         yield validateStyrk();
         yield validateApplicationEmail();
         yield validateContactpersonEmailAndPhone();
-        yield validateNotat();
         yield validatePostalCode();
     }
 }
@@ -561,8 +541,7 @@ export function hasValidationErrorsOnSave(validation: Record<ValidertFelt, strin
         validation.applicationEmail !== undefined ||
         validation.contactPersonEmail !== undefined ||
         validation.contactPersonPhone !== undefined ||
-        validation.postalCode !== undefined ||
-        validation.notat !== undefined
+        validation.postalCode !== undefined
     );
 }
 
@@ -622,7 +601,6 @@ export const validationSaga = function* saga() {
     yield takeLatest(VALIDATE_CONTACTPERSON_EMAIL_AND_PHONE, validateContactpersonEmailAndPhone);
     yield takeLatest(VALIDATE_CONTACTPERSON_NAME, validateContactPersonName);
     yield takeLatest(VALIDATE_CONTACTPERSON_TITLE, validateContactPersonTitle);
-    yield takeLatest(SET_NOTAT, validateNotat);
     yield takeLatest(SET_APPLICATIONDUE, validateApplicationdueDate);
     yield takeLatest(SET_EMPLOYMENT_STARTTIME, validateEmploymentStartTime);
     yield takeLatest(SET_EMPLOYMENT_ENGAGEMENTTYPE, validateEngagementType);

@@ -21,7 +21,8 @@ import LagreKandidatIKandidatlisteModal from './LagreKandidatIKandidatlisteModal
 type Props = {
     tabs: ReactNode;
     kandidatnr: string;
-    kandidatlisteId: string;
+    kandidatlisteId: string | null;
+    stillingId: string | null;
     children?: ReactNode;
 };
 
@@ -29,6 +30,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     tabs,
     kandidatnr,
     kandidatlisteId,
+    stillingId,
     children,
 }) => {
     useScrollTilToppen(kandidatnr);
@@ -37,8 +39,8 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     const [visLagreKandidatModal, setVisLagreKandidatModal] = useState<boolean>(false);
 
     const { cv } = useCv(kandidatnr);
-    const kandidatliste = useKandidatliste(kandidatlisteId);
-    const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, kandidatlisteId);
+    const kandidatliste = useKandidatliste({ stillingId, kandidatlisteId });
+    const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, {stillingId, kandidatlisteId});
 
     const økt = hentØktFraKandidatsøk();
 

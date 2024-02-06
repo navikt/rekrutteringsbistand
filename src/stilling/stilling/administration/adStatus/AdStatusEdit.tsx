@@ -51,7 +51,6 @@ const AdStatusEdit = () => {
     const deactivatedByExpiry = useSelector((state: any) => state.adData?.deactivatedByExpiry);
     const isSavingAd = useSelector((state: any) => state.ad.isSavingAd);
     const uuid = useSelector((state: any) => state.adData?.uuid);
-    const validation = useSelector((state: any) => state.adValidation.errors);
 
     const onPublishClick = () => {
         dispatch({ type: PUBLISH_AD });
@@ -85,10 +84,7 @@ const AdStatusEdit = () => {
 
     const onSavePreviewAdClick = () => {
         dispatch({ type: SAVE_AD, showModal: true });
-        if (!(validation && validation.notat)) {
-            dispatch({ type: PREVIEW_EDIT_AD });
-        }
-
+        dispatch({ type: PREVIEW_EDIT_AD });
         setButtonClicked(undefined);
     };
 

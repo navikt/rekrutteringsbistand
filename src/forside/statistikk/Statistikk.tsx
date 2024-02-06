@@ -1,9 +1,9 @@
 import { BodyShort, Heading, Select } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
-import Forespørsler from './Forespørsler';
 import css from './Statistikk.module.css';
-import Utfallsstatistikk from './Utfallsstatistikk';
 import { formaterDatoTilVisning, førsteDagIMåned, sisteDagIMåned } from './datoUtils';
+import Forespørsler from './svar-statistikk/Forespørsler';
+import Utfallsstatistikk from './utfall-statistikk/Utfallsstatistikk';
 
 type Props = {
     navKontor: string;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
-import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import Piktogram from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
 import Layout from '../felles/komponenter/layout/Layout';
 import css from './Kandidatsøk.module.css';
 import Filter from './filter/Filter';
@@ -58,7 +58,6 @@ const Kandidatsøk = ({
                 : Modal.LagreIMineKandidatlister
         );
     };
-
 
     return (
         <Layout

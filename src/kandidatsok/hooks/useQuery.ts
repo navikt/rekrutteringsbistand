@@ -7,6 +7,7 @@ import { søk } from '../api/api';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
 import useSøkekriterier from './useSøkekriterier';
+import { KandidatsokQueryParam } from 'felles/lenker';
 
 export enum FilterParam {
     Fritekst = 'q',
@@ -28,13 +29,7 @@ export enum FilterParam {
     Sortering = 'sortering',
 }
 
-export enum OtherParam {
-    Stilling = 'stilling',
-    Kandidatliste = 'kandidatliste',
-    BrukKriterierFraStillingen = 'brukKriterierFraStillingen',
-}
-
-export type Param = FilterParam | OtherParam;
+export type Param = FilterParam | KandidatsokQueryParam;
 
 const useQuery = (
     innloggetBruker: InnloggetBruker

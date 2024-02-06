@@ -120,7 +120,6 @@ export const mockStilling: Stilling = {
 export const mockStillingsinfo: Stillingsinfo = {
     stillingsid: stillingsId,
     stillingsinfoid: '8e74803e-6973-4115-befe-6ee1e0f28533',
-    notat: 'Notat på stilling',
     eierNavident: null,
     eierNavn: null,
     stillingskategori: Stillingskategori.Stilling,
@@ -155,7 +154,6 @@ export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = 
     stillingsinfo: {
         stillingsid: '004aa428-8033-404a-bcf2-4dd5e33205c9',
         stillingsinfoid: 'a22d7b8c-23b4-48e5-9ad0-743e1b1da6b2',
-        notat: null,
         eierNavn: null,
         eierNavident: null,
         stillingskategori: Stillingskategori.Stilling,

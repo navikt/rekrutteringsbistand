@@ -1,7 +1,7 @@
 import { PlusCircleIcon } from '@navikt/aksel-icons';
 import { Button, Tabs } from '@navikt/ds-react';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import { ReactComponent as Piktogram } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
+import Piktogram from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { sendEvent } from '../../felles/amplitude';

@@ -90,6 +90,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                     <FødselsnummerPåKandidat
                         callBack={(fødselsnummer) => {
                             if (fødselsnummer) {
+                                tilbakestill();
                                 setFnr(fødselsnummer);
                             } else {
                                 tilbakestill();

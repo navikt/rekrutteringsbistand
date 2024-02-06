@@ -1,8 +1,15 @@
 import react from '@vitejs/plugin-react';
 import svgrPlugin from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
+
 export default defineConfig({
-    plugins: [react(), svgrPlugin()],
+    plugins: [
+        react(),
+        svgrPlugin({
+            include: ['**/*.svg'],
+            exclude: '',
+        }),
+    ],
     test: {
         globals: true,
         setupFiles: './setupTests.ts',
@@ -10,7 +17,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            felles: './src/felles',
+            felles: new URL('./src/felles', import.meta.url).pathname,
         },
     },
 });

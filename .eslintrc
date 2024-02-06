@@ -23,7 +23,7 @@
                         "target": "forside",
                         "message": "Forsiden kan kun importere filer fra egen mappe eller fellesmappen",
                         "from": ".",
-                        "except": ["forside", "felles"]
+                        "except": ["forside", "felles", "api"]
                     },
                     {
                         "target": "kandidat",

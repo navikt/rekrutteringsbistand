@@ -1,4 +1,3 @@
-// FILEPATH: /Users/wiklem/NAV/TOI/rekrutteringsbistand/src/stilling/stilling/legg-til-kandidat/LeggTilKandidat.test.tsx
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { devFnr } from '../../../dev/DevUtil';
@@ -65,7 +64,7 @@ describe('<LeggTilKandidat />', () => {
     it('Skriver inn for gyldig fødselsnummer, men det finnes ingen kandidat i rekbis', async () => {
         const tekstfelt = screen.getByRole('textbox');
 
-        userEvent.type(tekstfelt, devFnr.ingentreff);
+        userEvent.type(tekstfelt, devFnr.iPDL);
 
         await waitFor(() =>
             expect(

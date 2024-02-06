@@ -1,8 +1,8 @@
-import { FunctionComponent } from 'react';
+import { Chat2Icon, ChatCheckmarkIcon, ChatIcon } from '@navikt/aksel-icons';
 import { Detail, Label } from '@navikt/ds-react';
-import { ReactComponent as Kryssikon } from './kryss.svg';
-import { ChatCheckmarkIcon, ChatIcon, Chat2Icon } from '@navikt/aksel-icons';
+import { FunctionComponent } from 'react';
 import css from './Svartelling.module.css';
+import Kryssikon from './kryss.svg';
 
 export enum SvartellingIkon {
     Delt,

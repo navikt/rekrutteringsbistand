@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettstatus } from 'felles/nettressurs';
 import { lenkeTilCv } from '../../app/paths';
 import AppState from '../../state/AppState';
 import { formaterDato } from '../../utils/dateUtils';
@@ -16,15 +15,12 @@ import { Visningsstatus } from '../domene/Kandidatressurser';
 import { erInaktiv } from '../domene/kandidatUtils';
 import { erKobletTilStilling } from '../domene/kandidatlisteUtils';
 import useForespørselOmDelingAvCv from '../hooks/useForespørselOmDelingAvCv';
-import useKandidatnotater from '../hooks/useKandidatnotater';
 import useKandidattilstand from '../hooks/useKandidattilstand';
 import useSendtKandidatmelding from '../hooks/useSendtKandidatmelding';
 import { modifierTilListeradGrid } from '../liste-header/ListeHeader';
-import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
 import css from './Kandidatrad.module.css';
 import MerInfo from './mer-info/MerInfo';
-import Notater from './notater/Notater';
 import SmsStatusPopup from './smsstatus/SmsStatusPopup';
 import StatusOgHendelser from './status-og-hendelser/StatusOgHendelser';
 import StatusPåForespørselOmDelingAvCv from './status-på-forespørsel/StatusPåForespørselOmDelingAvCv';
@@ -55,7 +51,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
     const kandidatRadRef = useRef<HTMLDivElement>(null);
 
     const tilstand = useKandidattilstand(kandidat.kandidatnr);
-    const notater = useKandidatnotater(kandidat.kandidatnr);
     const melding = useSendtKandidatmelding(kandidat.fodselsnr);
     const forespørselOmDelingAvCv = useForespørselOmDelingAvCv(kandidat.aktørid);
 
@@ -69,9 +64,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
             kandidatRadRef?.current?.focus();
         }
     }, [sistValgteKandidat, kandidat.kandidatnr, kandidatliste.kandidatlisteId, kandidatRadRef]);
-
-    const antallNotater =
-        notater?.kind === Nettstatus.Suksess ? notater.data.length : kandidat.antallNotater;
 
     const endreVisningsstatus = (visningsstatus: Visningsstatus) => {
         dispatch({
@@ -87,34 +79,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
                 ? Visningsstatus.SkjulPanel
                 : Visningsstatus.VisMerInfo
         );
-    };
-
-    const onOpprettNotat = (tekst: string) => {
-        dispatch<KandidatlisteAction>({
-            type: KandidatlisteActionType.OpprettNotat,
-            kandidatlisteId: kandidatliste.kandidatlisteId,
-            kandidatnr: kandidat.kandidatnr,
-            tekst,
-        });
-    };
-
-    const onEndreNotat = (notatId: string, tekst: string) => {
-        dispatch<KandidatlisteAction>({
-            type: KandidatlisteActionType.EndreNotat,
-            kandidatlisteId: kandidatliste.kandidatlisteId,
-            kandidatnr: kandidat.kandidatnr,
-            notatId,
-            tekst,
-        });
-    };
-
-    const onSlettNotat = (notatId: string) => {
-        dispatch({
-            type: KandidatlisteActionType.SlettNotat,
-            kandidatlisteId: kandidatliste.kandidatlisteId,
-            kandidatnr: kandidat.kandidatnr,
-            notatId,
-        });
     };
 
     const onToggleArkivert = () => {
@@ -167,7 +131,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
                             className={classNames('navds-link', css.kolonneMedSmsLenke)}
                             to={lenkeTilCv(
                                 kandidat.kandidatnr,
-                                kandidatliste.kandidatlisteId,
+                                { stillingId: kandidatliste.stillingId },
                                 true
                             )}
                         >
@@ -225,17 +189,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
                     </div>
                 )}
             </div>
-            {tilstand?.visningsstatus === Visningsstatus.VisNotater && (
-                <Notater
-                    kandidat={kandidat}
-                    kandidatliste={kandidatliste}
-                    notater={notater}
-                    antallNotater={antallNotater}
-                    onOpprettNotat={onOpprettNotat}
-                    onEndreNotat={onEndreNotat}
-                    onSlettNotat={onSlettNotat}
-                />
-            )}
             {tilstand?.visningsstatus === Visningsstatus.VisMerInfo && (
                 <MerInfo kandidat={kandidat} />
             )}

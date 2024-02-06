@@ -1,9 +1,9 @@
 import { BodyShort } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { ReactComponent as FinnKandidaterIkon } from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
-import { ReactComponent as FinnStillinger } from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
-import { ReactComponent as OpprettNyStillingIkon } from 'felles/komponenter/piktogrammer/opprett-ny-stilling.svg';
-import { ReactComponent as SeMineStillingerIkon } from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
+import FinnKandidaterIkon from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import FinnStillinger from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
+import OpprettNyStillingIkon from 'felles/komponenter/piktogrammer/opprett-ny-stilling.svg';
+import SeMineStillingerIkon from 'felles/komponenter/piktogrammer/se-mine-stillinger.svg';
 import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { sendEvent } from '../../felles/amplitude';

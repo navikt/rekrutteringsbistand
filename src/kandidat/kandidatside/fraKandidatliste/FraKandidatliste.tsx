@@ -13,7 +13,6 @@ import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { lenkeTilStilling } from '../../../felles/lenker';
-import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
 import StatusOgHendelser from '../../kandidatliste/kandidatrad/status-og-hendelser/StatusOgHendelser';
 import KandidatlisteAction from '../../kandidatliste/reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../kandidatliste/reducer/KandidatlisteActionType';
@@ -33,25 +32,38 @@ import useValgtKandidatIKandidatliste from './useValgtKandidatIKandidatliste';
 type Props = {
     tabs: ReactNode;
     kandidatnr: string;
-    kandidatlisteId: string;
+    kandidatlisteId: string | null;
+    stillingId: string | null;
     children: React.ReactNode;
 };
 
-const FraKandidatliste = ({ tabs, kandidatnr, kandidatlisteId, children, ...props }: Props) => {
+const FraKandidatliste = ({ tabs, kandidatnr, kandidatlisteId, stillingId, children }: Props) => {
     useScrollTilToppen(kandidatnr);
     useValgtKandidatIKandidatliste(kandidatnr, kandidatlisteId);
 
     const { cv } = useCv(kandidatnr);
-    const kandidatliste = useKandidatliste(kandidatlisteId);
+    const kandidatliste = useKandidatliste({ stillingId, kandidatlisteId });
+
+    if (!kandidatlisteId && !stillingId) {
+        return <Sidefeil feilmelding="Mangler kandidatlisteId eller stillingId" />;
+    }
 
     if (kandidatliste.kind === Nettstatus.LasterInn) {
         return <Sidelaster />;
     } else if (kandidatliste.kind === Nettstatus.FinnesIkke) {
-        return <Sidefeil feilmelding={`Fant ikke kandidatlisten med id ${kandidatlisteId}`} />;
+        return (
+            <Sidefeil
+                feilmelding={`Fant ikke kandidatlisten med ${
+                    kandidatlisteId ? 'kandidatliste' : 'stilling'
+                }-id ${kandidatlisteId || stillingId}`}
+            />
+        );
     } else if (kandidatliste.kind === Nettstatus.Feil) {
         return (
             <Sidefeil
-                feilmelding={`Klarte ikke å laste kandidatlisten med id ${kandidatlisteId}`}
+                feilmelding={`Klarte ikke å laste kandidatlisten med ${
+                    kandidatlisteId ? 'kandidatliste' : 'stilling'
+                }-id ${kandidatlisteId || stillingId}`}
             />
         );
     } else if (kandidatliste.kind === Nettstatus.Suksess) {
@@ -105,14 +117,13 @@ const FraKandidatlisteInner = ({
         });
     };
 
-    const erStilling = erKobletTilStilling(kandidatliste);
-    const endreStatusTekst = erStilling ? 'Status/hendelse:' : 'Status:';
+    const endreStatusTekst = 'Status/hendelse:';
 
     const stillingTittel = useHentStillingTittel(kandidatliste.stillingId);
 
     const brødsmulesti = [
         {
-            tekst: erStilling ? stillingTittel : kandidatliste.tittel,
+            tekst: stillingTittel,
             href: lenkeTilStilling({ stillingsId: kandidatliste.stillingId, fane: 'kandidater' }),
         },
     ];

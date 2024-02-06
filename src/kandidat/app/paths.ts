@@ -1,6 +1,6 @@
 import { KandidatQueryParam } from '../kandidatside/Kandidatside';
 
-const nesteSeparator = (lenke: string) => (lenke.includes('?') ? '&' : '?');
+import { KandidatsokQueryParam } from 'felles/lenker';
 
 export const lenkeTilTilgangsside = `/kandidater/mangler-tilgang`;
 export const lenkeTilKandidatliste = (stillingId: string, filterQuery?: URLSearchParams) => {
@@ -13,18 +13,6 @@ export const lenkeTilKandidatliste = (stillingId: string, filterQuery?: URLSearc
     return lenke;
 };
 
-export const lenkeTilKandidat = (
-    kandidatnummer: string,
-    kandidatlisteId?: string,
-    stillingsId?: string
-) => {
-    const path = `/kandidater/kandidat/${kandidatnummer}/cv`;
-    if (kandidatlisteId) return path + `?${KandidatQueryParam.KandidatlisteId}=${kandidatlisteId}`;
-    if (stillingsId) return path + `?${KandidatQueryParam.StillingId}=${stillingsId}`;
-
-    return path;
-};
-
 export const lenkeTilKandidatsøk = (searchParams?: string) => {
     let url = '/kandidatsok';
 
@@ -35,82 +23,80 @@ export const lenkeTilKandidatsøk = (searchParams?: string) => {
     return url;
 };
 
-export const lenkeTilFinnKandidater = (
-    stillingId: string | null,
-    kandidatlisteId: string,
-    brukKriterierFraStillingen: boolean
-) => {
-    const brukKriterierFraStillingSuffiks = brukKriterierFraStillingen
-        ? '&brukKriterierFraStillingen=true'
-        : '';
-    return `/kandidatsok?kandidatliste=${kandidatlisteId}${brukKriterierFraStillingSuffiks}`;
+export const lenkeTilFinnKandidater = (stillingId: string) => {
+    const queryParams = new URLSearchParams();
+    queryParams.set(KandidatsokQueryParam.BrukKriterierFraStillingen, 'true');
+    queryParams.set(KandidatsokQueryParam.Stilling, stillingId);
+    return `/kandidatsok?${queryParams.toString()}`;
 };
-
-export const lenkeTilFinnKandidaterMedStilling = (stillingsId: string, params?: string) =>
-    `/kandidater/stilling/${stillingsId}${params ? '?' + params : ''}`;
-
-export const lenkeTilFinnKandidaterUtenStilling = (stillingsId: string, params?: string) =>
-    `/kandidater/kandidatliste/${stillingsId}${params ? '?' + params : ''}`;
-
-export const lenkeTilFinnKandidaterIKandidatsøk = (kandidatlisteId: string) =>
-    `/kandidatsok?kandidatliste=${kandidatlisteId}`;
 
 export enum Kandidatfane {
     Cv = 'cv',
     Historikk = 'historikk',
 }
 
+export type Kandidatlistekontekst = {
+    stillingId: string;
+    /** @deprecated  bruk stillingsId */
+    kandidatlisteId?: string;
+};
+
 export const lenkeTilKandidatside = (
     kandidatnr: string,
     aktivFane: Kandidatfane,
-    kandidatlisteId?: string,
+    kandidatlistekontekst?: Kandidatlistekontekst,
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) =>
     aktivFane === Kandidatfane.Cv
-        ? lenkeTilCv(kandidatnr, kandidatlisteId, fraKandidatliste, fraKandidatsøk)
-        : lenkeTilHistorikk(kandidatnr, kandidatlisteId, fraKandidatliste, fraKandidatsøk);
+        ? lenkeTilCv(kandidatnr, kandidatlistekontekst, fraKandidatliste, fraKandidatsøk)
+        : lenkeTilHistorikk(kandidatnr, kandidatlistekontekst, fraKandidatliste, fraKandidatsøk);
 
 export const lenkeTilCv = (
     kandidatnr: string,
-    kandidatlisteId?: string,
+    kandidatlistekontekst?: Kandidatlistekontekst,
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
     let lenke = `/kandidater/kandidat/${kandidatnr}/cv`;
-    return lenke + queryParamsForKandidatside(kandidatlisteId, fraKandidatliste, fraKandidatsøk);
+    return (
+        lenke + queryParamsForKandidatside(kandidatlistekontekst, fraKandidatliste, fraKandidatsøk)
+    );
 };
 
 export const lenkeTilHistorikk = (
     kandidatnr: string,
-    kandidatlisteId?: string,
+    kandidatlistekontekst?: Kandidatlistekontekst,
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
     let lenke = `/kandidater/kandidat/${kandidatnr}/historikk`;
-    return lenke + queryParamsForKandidatside(kandidatlisteId, fraKandidatliste, fraKandidatsøk);
+    return (
+        lenke + queryParamsForKandidatside(kandidatlistekontekst, fraKandidatliste, fraKandidatsøk)
+    );
 };
 
 const queryParamsForKandidatside = (
-    kandidatlisteId?: string,
+    kandidatlistekontekst?: Kandidatlistekontekst,
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
-    let queryParams = '';
+    let queryParams = new URLSearchParams();
 
     if (fraKandidatliste) {
-        queryParams += nesteSeparator(queryParams) + `${KandidatQueryParam.FraKandidatliste}=true`;
+        queryParams.set(KandidatQueryParam.FraKandidatliste, 'true');
     }
 
     if (fraKandidatsøk) {
-        queryParams += nesteSeparator(queryParams) + `${KandidatQueryParam.FraKandidatsøk}=true`;
+        queryParams.set(KandidatQueryParam.FraKandidatsøk, 'true');
+    }
+    const { kandidatlisteId, stillingId } = kandidatlistekontekst ?? {};
+
+    if (stillingId) {
+        queryParams.set(KandidatQueryParam.StillingId, stillingId);
+    } else if (kandidatlisteId) {
+        queryParams.set(KandidatQueryParam.KandidatlisteId, kandidatlisteId);
     }
 
-    if (kandidatlisteId) {
-        queryParams +=
-            nesteSeparator(queryParams) +
-            `${KandidatQueryParam.KandidatlisteId}=${kandidatlisteId}`;
-    }
-
-    return queryParams;
+    return queryParams.size === 0 ? '' : `?${queryParams.toString()}`;
 };

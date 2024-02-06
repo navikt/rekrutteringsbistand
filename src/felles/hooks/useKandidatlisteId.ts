@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import { hentApi } from '../../api/fetcher';
+import { getAPI } from '../../api/fetcher';
 
 interface KandidatlisteId {
     kandidatlisteId: string;
@@ -8,7 +8,7 @@ interface KandidatlisteId {
 const useKandidatlisteId = (stillingsId?: string) => {
     const { data, error, isLoading } = useSWR<KandidatlisteId>(
         stillingsId ? `/kandidat-api/veileder/stilling/${stillingsId}/kandidatlisteid` : undefined,
-        hentApi
+        getAPI
     );
 
     return {

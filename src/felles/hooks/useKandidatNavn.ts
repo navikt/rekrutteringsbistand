@@ -1,7 +1,7 @@
 import React from 'react';
 import { postApi } from '../../api/fetcher';
 import { hentKandidatFraPDL } from '../../api/kandidat-api/kandidat.api';
-import { kandidatNavnDTO } from '../../api/kandidat-api/kandidatNavn/kandidatNav.dto';
+import { kandidatNavnDTO } from '../../api/kandidat-api/kandidat.dto';
 import { api } from '../api';
 import { EsQuery } from '../domene/elastic/ElasticSearch';
 

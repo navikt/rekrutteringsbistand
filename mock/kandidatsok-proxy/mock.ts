@@ -13,9 +13,7 @@ export const kandidatsøkMock = [
         const fnrRequest = data?.query?.term?.fodselsnummer;
 
         const respons =
-            fnrRequest === devFnr.ingentreff || fnrRequest === devFnr.finnesIkke
-                ? ingenTreff
-                : treff;
+            fnrRequest === devFnr.iPDL || fnrRequest === devFnr.finnesIkke ? ingenTreff : treff;
 
         return HttpResponse.json(respons);
     }),
@@ -60,6 +58,20 @@ const treff: EsResponse<Kandidat> = {
                     fornavn: 'Ola',
                     aktorId: '1337',
                     fodselsnummer: '1337',
+                },
+            },
+            {
+                _id: '1338',
+                _index: '',
+                _score: 1,
+                _type: '',
+                _source: {
+                    ...mockKandidat,
+                    arenaKandidatnr: '1338',
+                    kandidatnr: '1338',
+                    fornavn: 'Kari',
+                    aktorId: '1338',
+                    fodselsnummer: '1338',
                 },
             },
         ],

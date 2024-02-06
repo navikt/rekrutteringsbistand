@@ -1,9 +1,9 @@
 import { HttpResponse, http } from 'msw';
-import { devFnr } from '../../../dev/DevUtil';
-import { kandidatEndepunkter } from '../kandidat.api';
-import { kandidatNavnMockGenerator } from './kandidatNavn.testdata';
+import { kandidatNavnMockGenerator } from '../../../mock/kandidat-api/mockKandidatNavn';
+import { devFnr } from '../../dev/DevUtil';
+import { kandidatEndepunkter } from './kandidat.api';
 
-export const kandidatNavnMockHandler = [
+export const kandidatMockHandlers = [
     http.post(kandidatEndepunkter.kandidatNavn, async ({ request }) => {
         const data = await request.json();
 

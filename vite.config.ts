@@ -15,7 +15,10 @@ export default defineConfig(({ mode }) => {
         },
         plugins: [
             reactPlugin(),
-            svgrPlugin(),
+            svgrPlugin({
+                include: ['**/*.svg'],
+                exclude: '',
+            }),
             checkerPlugin({
                 typescript: true,
                 eslint: {

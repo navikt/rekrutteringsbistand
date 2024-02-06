@@ -14,6 +14,15 @@ export const leggTilKandidatKandidatliste = async (kandidatlisteId: string, kand
     ]);
 };
 
+export const leggTilKandidaterKandidatliste = async (
+    kandidatlisteId: string,
+    kandidatnr: {
+        kandidatnr: string;
+    }[]
+) => {
+    return await postApiResponse(kandidatEndepunkter.leggTilKandidat(kandidatlisteId), kandidatnr);
+};
+
 export const hentKandidatFraPDL = async (fnr: string) => {
     return await postApiResponse(kandidatEndepunkter.kandidatNavn, { fnr });
 };

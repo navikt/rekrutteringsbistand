@@ -5,6 +5,8 @@ import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { Navigeringsstate } from './useNavigeringsstate';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 
+import { KandidatsokQueryParam } from 'felles/lenker';
+
 export type KontekstAvKandidatlisteEllerStilling = {
     kandidatliste: Nettressurs<Kandidatliste>;
     stilling: Nettressurs<Stilling>;
@@ -16,9 +18,9 @@ const useKontekstAvKandidatlisteEllerStilling = (
     navigeringsstate: Navigeringsstate
 ): KontekstAvKandidatlisteEllerStilling | null => {
     const [searchParams] = useSearchParams();
-    const kandidatlisteId = searchParams.get('kandidatliste');
+    const kandidatlisteId = searchParams.get(KandidatsokQueryParam.Kandidatliste);
 
-    const stillingId = searchParams.get('stilling');
+    const stillingId = searchParams.get(KandidatsokQueryParam.Stilling);
     const [kandidatliste, setKandidatliste] = useState<Nettressurs<Kandidatliste>>({
         kind: Nettstatus.IkkeLastet,
     });

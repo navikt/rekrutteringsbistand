@@ -9,7 +9,6 @@ export const mockKandidatIKandidatliste: KandidatIKandidatliste[] = [
     {
         kandidatnr: mockKandidat.kandidatnr,
         aktørid: mockKandidat.aktorId,
-        antallNotater: 0,
         arkivert: false,
         arkivertAv: null,
         arkivertTidspunkt: null,
