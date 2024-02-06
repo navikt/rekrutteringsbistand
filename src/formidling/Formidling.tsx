@@ -24,7 +24,7 @@ const Formidling: React.FC = () => {
     const { searchParams, navigate } = useNavigering();
     const {
         bruker: { navIdent },
-    } = useInnloggetBruker(null);
+    } = useInnloggetBruker();
 
     const oppdaterTab = (tab: TabVisning) => {
         if (tab === TabVisning.VIS_MINE) {

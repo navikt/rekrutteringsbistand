@@ -18,7 +18,7 @@ const App = () => {
             ? null
             : kandidatsøkØkt.forrigeØkt;
 
-    const { bruker } = useInnloggetBruker(navKontor);
+    const { bruker } = useInnloggetBruker();
     const kontekstAvKandidatlisteEllerStilling =
         useKontekstAvKandidatlisteEllerStilling(navigeringsstate);
 

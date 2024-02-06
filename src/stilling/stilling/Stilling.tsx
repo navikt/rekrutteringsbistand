@@ -48,7 +48,7 @@ const Stilling = () => {
 
     const { kandidatlisteId } = useKandidatlisteId(uuid);
 
-    const { bruker } = useInnloggetBruker(null);
+    const { bruker } = useInnloggetBruker();
 
     const erEier =
         stilling?.administration?.navIdent === bruker.navIdent ||
