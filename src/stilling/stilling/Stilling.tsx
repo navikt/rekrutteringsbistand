@@ -164,10 +164,7 @@ const Stilling = () => {
                             <>
                                 {erEksternStilling ? (
                                     <>
-                                        <PreviewHeader
-                                            kandidatlisteId={kandidatlisteId}
-                                            erEier={erEier}
-                                        />
+                                        <PreviewHeader erEier={erEier} />
                                         {optionalTittel}
                                         <Forhåndsvisning stilling={stilling} />
                                     </>
@@ -182,12 +179,7 @@ const Stilling = () => {
                             </>
                         ) : (
                             <>
-                                {!kandidatnrFraStillingssøk && (
-                                    <PreviewHeader
-                                        erEier={erEier}
-                                        kandidatlisteId={kandidatlisteId}
-                                    />
-                                )}
+                                {!kandidatnrFraStillingssøk && <PreviewHeader erEier={erEier} />}
                                 {optionalTittel}
                                 <Forhåndsvisning stilling={stilling} />
                             </>

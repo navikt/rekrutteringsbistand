@@ -1,6 +1,6 @@
 import { DocPencilIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
-import React from 'react';
+import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 
 import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
@@ -20,94 +20,77 @@ type Props = {
     editAd: () => void;
     leggTilIMineStillinger: () => void;
     erEier: boolean;
-    kandidatlisteId: string;
 };
 
-class PreviewMenu extends React.Component<Props> {
-    declare state: {
-        opprettKandidatlisteModalÅpen: boolean;
+const PreviewMenu: FC<Props> = ({
+    erEier,
+    stilling,
+    limitedAccess,
+    stillingsinfoData,
+    editAd,
+    copyAd,
+    leggTilIMineStillinger,
+}) => {
+    const [opprettKandidatlisteModalÅpen, setOpprettKandidatlisteModalÅpen] = useState(false);
+    const onLeggTilIMineStillingerClick = () => {
+        setOpprettKandidatlisteModalÅpen(true);
     };
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            opprettKandidatlisteModalÅpen: false,
-        };
-    }
-
-    onEditAdClick = () => {
-        this.props.editAd();
+    const lukkOpprettKandidatlisteModal = () => {
+        setOpprettKandidatlisteModalÅpen(false);
     };
 
-    onCopyAdClick = () => {
-        this.props.copyAd(this.props.stilling.uuid);
+    const bekreftOpprettKandidatliste = () => {
+        leggTilIMineStillinger();
+        lukkOpprettKandidatlisteModal();
     };
 
-    onPrintClick = () => {
-        window.print();
-    };
+    const kanOverfoereStilling =
+        stillingsinfoData && limitedAccess && !stillingsinfoData.eierNavident;
 
-    onLeggTilIMineStillingerClick = () => {
-        this.setState({
-            opprettKandidatlisteModalÅpen: true,
-        });
-    };
-
-    lukkOpprettKandidatlisteModal = () => {
-        this.setState({
-            opprettKandidatlisteModalÅpen: false,
-        });
-    };
-
-    bekreftOpprettKandidatliste = () => {
-        this.props.leggTilIMineStillinger();
-        this.lukkOpprettKandidatlisteModal();
-    };
-
-    render() {
-        const { limitedAccess, stillingsinfoData } = this.props;
-
-        const kanOverfoereStilling =
-            stillingsinfoData && limitedAccess && !stillingsinfoData.eierNavident;
-
-        return (
-            <>
-                <Stillingsheader>
-                    {!limitedAccess && this.props.erEier && (
-                        <Button onClick={this.onEditAdClick} size="small" icon={<DocPencilIcon />}>
-                            Rediger
-                        </Button>
-                    )}
-                    {!limitedAccess && (
-                        <Button onClick={this.onCopyAdClick} size="small" icon={<DocPencilIcon />}>
-                            Kopier
-                        </Button>
-                    )}
-                    {kanOverfoereStilling && (
-                        <Button onClick={this.onLeggTilIMineStillingerClick} size="small">
-                            Opprett kandidatliste
-                        </Button>
-                    )}
-
-                    <Button
-                        variant="secondary"
-                        onClick={this.onPrintClick}
-                        size="small"
-                        icon={<PrinterSmallIcon />}
-                    >
-                        Skriv ut
+    return (
+        <>
+            <Stillingsheader>
+                {!limitedAccess && erEier && (
+                    <Button onClick={() => {
+                        editAd();
+                    }} size="small" icon={<DocPencilIcon />}>
+                        Rediger
                     </Button>
-                </Stillingsheader>
-                {limitedAccess && <EksternStillingAdvarsel />}
-                <OpprettKandidatlisteModal
-                    åpen={this.state.opprettKandidatlisteModalÅpen}
-                    onClose={this.lukkOpprettKandidatlisteModal}
-                    onBekreft={this.bekreftOpprettKandidatliste}
-                />
-            </>
-        );
-    }
-}
+                )}
+                {!limitedAccess && (
+                    <Button onClick={() => {
+                        copyAd(stilling.uuid);
+                    }} size="small" icon={<DocPencilIcon />}>
+                        Kopier
+                    </Button>
+                )}
+                {kanOverfoereStilling && (
+                    <Button onClick={onLeggTilIMineStillingerClick} size="small">
+                        Opprett kandidatliste
+                    </Button>
+                )}
+
+                <Button
+                    variant="secondary"
+                    onClick={() => {
+                        window.print();
+                    }}
+                    size="small"
+                    icon={<PrinterSmallIcon />}
+                >
+                    Skriv ut
+                </Button>
+            </Stillingsheader>
+            {limitedAccess && <EksternStillingAdvarsel />}
+            <OpprettKandidatlisteModal
+                åpen={opprettKandidatlisteModalÅpen}
+                onClose={lukkOpprettKandidatlisteModal}
+                onBekreft={bekreftOpprettKandidatliste}
+            />
+        </>
+    );
+};
 
 const mapStateToProps = (state: State) => ({
     stillingsinfoData: state.stillingsinfoData,
