@@ -62,8 +62,8 @@ export const hentRoller = (token: string): string[] => {
 const { AD_GRUPPE_MODIA_GENERELL_TILGANG, AD_GRUPPE_MODIA_OPPFOLGING } = process.env;
 
 const navnForRolleId = (rolleId: string): string | null => {
+    if (rolleId === AD_GRUPPE_MODIA_GENERELL_TILGANG) return 'MODIA_GENERELL';
     if (rolleId === AD_GRUPPE_MODIA_OPPFOLGING) return 'MODIA_OPPFOLGING';
-    if (rolleId === AD_GRUPPE_MODIA_GENERELL_TILGANG) return 'MODIAL_GENRELL';
     return null;
 };
 
