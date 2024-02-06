@@ -4,7 +4,6 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
-import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
@@ -26,6 +25,7 @@ import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import css from './Stilling.module.css';
 import StillingKandidatKnapper from './StillingKandidatKnapper';
 import VisStillingBanner from './VisStillingBanner';
+import useInnloggetBruker from '../../api/frackend/hooks/useInnloggetBruker';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 
@@ -48,11 +48,10 @@ const Stilling = () => {
 
     const { kandidatlisteId } = useKandidatlisteId(uuid);
 
-    const { navIdent: innloggetBruker } = useInnloggetBruker(null);
+    const { navIdent } = useInnloggetBruker();
 
     const erEier =
-        stilling?.administration?.navIdent === innloggetBruker ||
-        stillingsinfo?.eierNavident === innloggetBruker;
+        stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;
 
     const harKandidatlisteSomKanÅpnes = erEier && kandidatlisteId;
 
@@ -174,7 +173,7 @@ const Stilling = () => {
                                     </>
                                 ) : (
                                     <Edit
-                                        innloggetBruker={innloggetBruker}
+                                        innloggetBruker={navIdent}
                                         erEier={erEier}
                                         onPreviewAdClick={onPreviewAdClick}
                                         kandidatlisteId={kandidatlisteId}

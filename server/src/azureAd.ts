@@ -54,16 +54,28 @@ export const hentNavIdent = (token: string) => {
     return String(claims[navIdentClaim]) || '';
 };
 
-export const hentGrupper = (token: string): string[] => {
+export const hentRoller = (token: string): string[] => {
     const claims = decodeJwt(token);
     return (claims.groups as string[]) || [];
 };
 
-export const responderMedBrukerinfo: RequestHandler = async (req, res) => {
+const { AD_GRUPPE_MODIA_GENERELL_TILGANG, AD_GRUPPE_MODIA_OPPFOLGING } = process.env;
+
+const navnForRolleId = (rolleId: string): string | null => {
+    if (rolleId === AD_GRUPPE_MODIA_GENERELL_TILGANG) return 'MODIA_GENERELL';
+    if (rolleId === AD_GRUPPE_MODIA_OPPFOLGING) return 'MODIA_OPPFOLGING';
+    return null;
+};
+
+export const hentBrukerOgRoller: RequestHandler = async (req, res) => {
     const brukerensAccessToken = retrieveToken(req.headers);
     const navIdent = hentNavIdent(brukerensAccessToken);
+    const roller = hentRoller(brukerensAccessToken)
+        .map(navnForRolleId)
+        .filter((navn): navn is string => navn !== null);
 
     res.status(200).json({
         navIdent,
+        roller,
     });
 };

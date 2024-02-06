@@ -17,7 +17,7 @@
                         "target": "header",
                         "message": "Headeren kan kun importere filer fra egen mappe eller fellesmappen",
                         "from": ".",
-                        "except": ["header", "felles", "dev"]
+                        "except": ["header", "felles", "dev", "api"]
                     },
                     {
                         "target": "forside",
@@ -41,13 +41,13 @@
                         "target": "stilling",
                         "message": "Stillingssiden kan kun importere filer fra egen mappe eller fellesmappen",
                         "from": ".",
-                        "except": ["stilling", "felles", "kandidat", "dev"]
+                        "except": ["stilling", "felles", "kandidat", "dev", "api"]
                     },
                     {
                         "target": "stillingssok",
                         "message": "Stillingssøket kan kun importere filer fra egen mappe eller fellesmappen",
                         "from": ".",
-                        "except": ["stillingssok", "felles"]
+                        "except": ["stillingssok", "felles", "api"]
                     }
                 ]
             }

@@ -2,7 +2,6 @@ import { erIkkeProd } from './miljø';
 import { Nettressurs, Nettstatus } from './nettressurs';
 
 export const api = {
-    innloggetBruker: '/meg',
     statistikk: '/statistikk-api',
     stillingssøk: '/stillingssok-proxy',
     stilling: '/stilling-api',

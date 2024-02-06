@@ -1,5 +1,5 @@
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Portefølje } from '../../filter/porteføljetabs/PorteføljeTabs';
+import { InnloggetBruker } from './byggQuery';
 
 export const queryMedPortefølje = (portefølje: Portefølje, innloggetBruker: InnloggetBruker) => {
     if (portefølje === Portefølje.MineBrukere) {
