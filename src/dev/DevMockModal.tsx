@@ -17,6 +17,7 @@ import { megMockMsw } from '../api/frackend/meg';
 import { hentKandidatFraPDLMockMsw } from '../api/kandidat-api/hentKandidatFraPDL';
 import { statistikkMockMsw } from '../api/statistikk-api/statistikk';
 import DevMockApi from './DevMockApi';
+import DevRoller from './DevMockMeg';
 export interface IDevMockModal {
     children?: React.ReactNode | undefined;
 }
@@ -26,10 +27,7 @@ const mockConfig = [
         navn: 'Mock modia',
         mock: [],
     },
-    {
-        navn: 'Innlogget bruker',
-        mock: [megMockMsw],
-    },
+
     {
         navn: 'Kaniddat',
         mock: kandidatApiMock,
@@ -91,8 +89,12 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
 
     const [loading, setLoading] = React.useState(false);
 
+    const navIdent = localStorage.getItem('mockNavIdent');
+    const roller = localStorage.getItem('mockRoller');
+
     const setupMocking = mockConfig.flatMap((e) => {
         const aktiv = localStorage.getItem(e.navn) !== 'false';
+
         return {
             ...e,
             aktiv,
@@ -118,9 +120,12 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
         const activeMocks = mocks.flatMap((e) => {
             return e.aktiv ? e.mock : [];
         });
-        mswWorker.use(...activeMocks);
+
+        const mockMeg = megMockMsw(navIdent ? navIdent : '', roller ? JSON.parse(roller) : []);
+
+        mswWorker.use(...activeMocks, mockMeg);
         setLoading(false);
-    }, [mocks]);
+    }, [mocks, navIdent, roller]);
 
     return (
         <div className="py-16">
@@ -134,6 +139,8 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
 
             <Modal width="medium" ref={ref} header={{ heading: 'Mocks' }}>
                 <Modal.Body>
+                    <DevRoller />
+                    <br />
                     <div>
                         {mocks.map((e, index) => (
                             <DevMockApi

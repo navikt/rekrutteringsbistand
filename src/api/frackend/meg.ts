@@ -28,9 +28,9 @@ export const useMegHook = () => {
     };
 };
 
-const megMock: MegDTO = {
-    navIdent: 'Z994161',
-    roller: [Rolle.ARBEIDSGIVERRETTET],
+export const megMockMsw = (navIdent: string, roller: Rolle[]) => {
+    return http.get(megEndepunkt, () => {
+        const mock: MegDTO = { navIdent: navIdent, roller: roller };
+        return HttpResponse.json(mock, { status: 200 });
+    });
 };
-
-export const megMockMsw = http.get(megEndepunkt, (_) => HttpResponse.json(megMock));
