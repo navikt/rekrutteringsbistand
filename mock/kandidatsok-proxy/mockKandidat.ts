@@ -1,12 +1,12 @@
 import { Omfangenhet, Språkferdighetsnivå } from 'felles/domene/kandidat/Cv';
 import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import {
     Formidlingsgruppe,
     Hovedmål,
     Innsatsgruppe,
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
-import { mockMeg } from '../meg/mock';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { mockVeileder } from '../mockVeileder';
 
 export const mockKandidat: Kandidat = {
     // Personalia
@@ -36,7 +36,7 @@ export const mockKandidat: Kandidat = {
     hovedmaalkode: Hovedmål.SkaffeArbeid,
     kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
     formidlingsgruppekode: Formidlingsgruppe.Arbeidssøker,
-    veileder: mockMeg.navIdent,
+    veileder: mockVeileder.navIdent,
 
     // Jobbprofil
     yrkeJobbonskerObj: [

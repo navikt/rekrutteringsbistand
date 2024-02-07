@@ -2,7 +2,7 @@ import { Alert } from '@navikt/ds-react';
 import { useState } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
-import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/kandidat.api';
+import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/leggTilKandidat';
 import Knapper from './Knapper';
 
 type IBekreftLeggTilKandidat = {

@@ -1,13 +1,13 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat, { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import useNavKontor from 'felles/store/navKontor';
 import { useEffect, useState } from 'react';
+import { useMegHook } from '../../api/frackend/meg';
 import { søk } from '../api/api';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
 import useSøkekriterier from './useSøkekriterier';
-import useNavKontor from 'felles/store/navKontor';
-import useInnloggetBruker from '../../api/frackend/hooks/useInnloggetBruker';
 
 export enum FilterParam {
     Fritekst = 'q',
@@ -31,7 +31,7 @@ export enum FilterParam {
 
 const useQuery = (): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
     const navKontor = useNavKontor((state) => state.navKontor);
-    const { navIdent } = useInnloggetBruker();
+    const { navIdent } = useMegHook();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
 
     const { søkekriterier } = useSøkekriterier();

@@ -1,6 +1,6 @@
 import { Alert, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useCallback, useState } from 'react';
-import { IuseKandidatNavnSøk, KandidatKilde } from '../../../felles/hooks/useKandidatNavn';
+import { IuseKandidatNavnSøk, KandidatKilde } from '../../../api/kandidat-api/useKandidatNavn';
 import FødselsnummerPåKandidat from '../../../felles/komponenter/fnr-på-kandidat/FødselsnummerTekstfelt';
 import KandidatNavn from '../../../felles/komponenter/kandidatNavn/KandidatNavnSøk';
 import BekreftLeggTilKandidat from '../../../felles/komponenter/legg-til-kandidat/BekreftLeggTilKandidat';

@@ -3,7 +3,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/kandidat.api';
+import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/leggTilKandidat';
 import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';

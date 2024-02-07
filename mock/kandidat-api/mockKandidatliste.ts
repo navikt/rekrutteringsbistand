@@ -8,7 +8,7 @@ import Kandidatliste, {
     OpprettetAv,
 } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import { mockMeg } from '../meg/mock';
+import { mockVeileder } from '../mockVeileder';
 import { mockStilling } from '../stilling-api/mockStilling';
 import { mockKandidatIKandidatliste } from './mockKandidatIKandidatliste';
 
@@ -96,7 +96,7 @@ export const mockMinKandidatlisteUtenStilling: Kandidatliste = {
     formidlingerAvUsynligKandidat: [],
 
     opprettetAv: {
-        ident: mockMeg.navIdent,
+        ident: mockVeileder.navIdent,
         navn: 'Varg Veileder',
     },
 };
@@ -120,7 +120,7 @@ export const mockMinKandidatlisteMedStilling: Kandidatliste = {
     kandidater: mockKandidatIKandidatliste,
 
     opprettetAv: {
-        ident: mockMeg.navIdent,
+        ident: mockVeileder.navIdent,
         navn: 'Varg Veileder',
     },
 };

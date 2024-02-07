@@ -1,5 +1,6 @@
 import * as React from 'react';
 import DevMockModal from './DevMockModal';
+import DevRoller from './DevRoller';
 
 const DevTools = () => {
     return (
@@ -22,6 +23,7 @@ const DevTools = () => {
                 <span style={{}}> DevToolZ: </span>
             </div>
             <DevMockModal />
+            <DevRoller />
         </div>
     );
 };

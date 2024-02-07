@@ -1,7 +1,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { HttpResponse, http } from 'msw';
-import { forespørselEndepunkter } from '../../../api/foresporsel-om-deling-av-cv-api/forespørsel.api';
-import { SvarstatistikkDTO } from '../../../api/foresporsel-om-deling-av-cv-api/forespørsel.dto';
+
+import {
+    ForesporselStatistikkDTO,
+    foresporselStatistikkEndepunkt,
+} from '../../../api/foresporsel-om-deling-av-cv-api/statistikk';
 import Forespørsler, { formaterSomProsentAvTotalen } from './Forespørsler';
 
 describe('<Forespørsler />', () => {
@@ -12,8 +15,8 @@ describe('<Forespørsler />', () => {
     test('Forespørsler rendrer med forventet data', async () => {
         // @ts-ignore TODO: written before strict-mode enabled
         global.testServer.use(
-            http.get(forespørselEndepunkter.statistikk(), () => {
-                const testSvar: SvarstatistikkDTO = {
+            http.get(foresporselStatistikkEndepunkt(), () => {
+                const testSvar: ForesporselStatistikkDTO = {
                     antallSvartJa: 111,
                     antallSvartNei: 222,
                     antallUtløpteSvar: 333,

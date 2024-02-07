@@ -5,7 +5,6 @@ import { forespørselOmDelingAvCvMock } from '../../mock/foresporsel-om-deling-a
 import { kandidatApiMock } from '../../mock/kandidat-api/mock';
 import { kandidatSokApiMock } from '../../mock/kandidatsok-api/mock';
 import { kandidatsøkMock } from '../../mock/kandidatsok-proxy/mock';
-import { innloggetBrukerMock } from '../../mock/meg/mock';
 import { modiaContextHolderMock } from '../../mock/modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from '../../mock/presenterte-kandidater-api/mock';
 import { mswWorker } from '../../mock/setup';
@@ -13,8 +12,10 @@ import { smsApiMock } from '../../mock/sms-api/mock';
 import { stillingApiMock } from '../../mock/stilling-api/mock';
 import { stillingssøkMock } from '../../mock/stillingssok-proxy/mock';
 import { synlighetApiMock } from '../../mock/synlighet-api/mock';
-import { kandidatMockHandlers } from '../api/kandidat-api/kandidat.msw';
-import { statistikkMockHandlers } from '../api/statistikk-api/statistikk.msw';
+import { foresporselStatistikkMockMsw } from '../api/foresporsel-om-deling-av-cv-api/statistikk';
+import { megMockMsw } from '../api/frackend/meg';
+import { hentKandidatFraPDLMockMsw } from '../api/kandidat-api/hentKandidatFraPDL';
+import { statistikkMockMsw } from '../api/statistikk-api/statistikk';
 import DevMockApi from './DevMockApi';
 export interface IDevMockModal {
     children?: React.ReactNode | undefined;
@@ -27,7 +28,7 @@ const mockConfig = [
     },
     {
         navn: 'Innlogget bruker',
-        mock: innloggetBrukerMock,
+        mock: [megMockMsw],
     },
     {
         navn: 'Kaniddat',
@@ -35,7 +36,11 @@ const mockConfig = [
     },
     {
         navn: 'Statistikk',
-        mock: statistikkMockHandlers,
+        mock: [statistikkMockMsw],
+    },
+    {
+        navn: 'Statistikk forespørsel',
+        mock: [foresporselStatistikkMockMsw],
     },
 
     {
@@ -73,7 +78,7 @@ const mockConfig = [
     },
     {
         navn: 'Kandidat-API (ny)',
-        mock: kandidatMockHandlers,
+        mock: [hentKandidatFraPDLMockMsw],
     },
     {
         navn: 'Kandidatsøk api',

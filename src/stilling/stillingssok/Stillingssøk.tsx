@@ -4,6 +4,7 @@ import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import Piktogram from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { useMegHook } from '../../api/frackend/meg';
 import { sendEvent } from '../../felles/amplitude';
 import Layout from '../../felles/komponenter/layout/Layout';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
@@ -17,7 +18,6 @@ import { Sortering } from './sorter/Sorter';
 import { Søkefelt } from './søkefelter/Søkefelter';
 import useNavigering from './useNavigering';
 import { QueryParam, oppdaterUrlMedParam } from './utils/urlUtils';
-import useInnloggetBruker from '../../api/frackend/hooks/useInnloggetBruker';
 
 export type Søkekriterier = {
     side: number;
@@ -40,7 +40,7 @@ enum TabVisning {
 }
 
 const Stillingssøk = () => {
-    const { navIdent } = useInnloggetBruker();
+    const { navIdent } = useMegHook();
     const { searchParams, navigate } = useNavigering();
     const { kandidat: kandidatnr } = useParams<{ kandidat?: string }>();
     const { search } = useLocation();
