@@ -19,26 +19,3 @@ export function adjustUrl(url: string) {
     }
     return url;
 }
-
-export function queryObjectToUrl(query: object): string {
-    let result = {};
-
-    Object.keys(query).forEach((key) => {
-        if (query[key] !== undefined) {
-            if (query[key] !== '') {
-                result = {
-                    ...result,
-                    [key]: query[key],
-                };
-            }
-        }
-    });
-
-    const urlQuery = Object.keys(result)
-        .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(result[key])}`)
-        .join('&')
-        .replace(/%20/g, '+')
-        .replace(/%2C/g, ',');
-
-    return urlQuery && urlQuery.length > 0 ? `?${urlQuery}` : '';
-}

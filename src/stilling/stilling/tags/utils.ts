@@ -38,8 +38,6 @@ export const fjernTagUnderRegistrering = (tags: Tag[], tagSomSkalFjernes: Tag): 
     return tagsUtenomTagSomSkalFjernes;
 };
 
-export const leggTilTagIFilteret = (tags: Tag[], nyTag: Tag): Tag[] => [...tags, nyTag];
-
 export const fjernTagFraFilteret = (tags: Tag[], tagSomSkalFjernes: Tag): Tag[] => {
     const erHovedtag = !tagSomSkalFjernes.includes(TAG_HIERARCHY_SPACER);
 

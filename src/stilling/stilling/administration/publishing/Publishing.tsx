@@ -6,11 +6,6 @@ import { DatePicker, DateValidationT, useDatepicker } from '@navikt/ds-react';
 import Skjemalabel from '../../edit/skjemaetikett/Skjemalabel';
 import css from './Publishing.module.css';
 
-export type Validation = {
-    expires: string;
-    published: string;
-};
-
 const Publishing = () => {
     const dispatch = useDispatch();
 

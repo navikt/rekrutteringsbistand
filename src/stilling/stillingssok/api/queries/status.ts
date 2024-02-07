@@ -49,37 +49,6 @@ const stillingenErEllerHarVærtPublisert = [
     },
 ];
 
-// const ikkePubliserteStillinger = {
-//     bool: {
-//         must: [
-//             { term: { 'stilling.status': 'INACTIVE' } },
-//             {
-//                 exists: {
-//                     field: 'stilling.publishedByAdmin',
-//                 },
-//             },
-//         ],
-//         must_not: {
-//             range: {
-//                 'stilling.expires': {
-//                     lt: 'now/d',
-//                 },
-//             },
-//         },
-//     },
-// };
-
-// const utkast = {
-//     bool: {
-//         must: [{ term: { 'stilling.status': 'INACTIVE' } }],
-//         must_not: {
-//             exists: {
-//                 field: 'stilling.publishedByAdmin',
-//             },
-//         },
-//     },
-// };
-
 export const alleStillinger = [
     {
         bool: {

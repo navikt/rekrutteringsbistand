@@ -1,26 +1,5 @@
 import capitalizeLocation from '../stilling/edit/arbeidssted/capitalizeLocation';
 
-export function getTruncatedWorkLocation(locationList) {
-    let workLocation = null;
-    if (locationList && locationList.length > 0) {
-        const location = locationList[0];
-        if (location.city) {
-            workLocation = capitalizeLocation(location.city);
-        } else if (location.municipal) {
-            workLocation = `${capitalizeLocation(location.municipal)}`;
-        } else if (location.county) {
-            workLocation = `${capitalizeLocation(location.county)}`;
-        } else if (location.country) {
-            workLocation = `${capitalizeLocation(location.country)}`;
-        }
-
-        if (locationList.length > 1) {
-            workLocation += '...';
-        }
-    }
-    return workLocation;
-}
-
 export function getWorkLocationsAsString(locationList) {
     const workLocations = [];
     if (!locationList) {

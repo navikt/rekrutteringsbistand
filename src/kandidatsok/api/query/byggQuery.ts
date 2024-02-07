@@ -63,18 +63,6 @@ const sorter = (sortering: Sortering) => {
     }
 };
 
-export const byggQueryForAktørIder = (
-    søkekriterier: Søkekriterier,
-    innloggetBruker: InnloggetBruker,
-    maksAntallKandidater: number
-): EsQuery<{ aktorId: string }> => {
-    return {
-        query: byggIndreQuery(søkekriterier, innloggetBruker),
-        size: maksAntallKandidater,
-        _source: ['aktorId'],
-    };
-};
-
 export const byggIndreQuery = (søkekriterier: Søkekriterier, innloggetBruker: InnloggetBruker) => {
     return {
         bool: {

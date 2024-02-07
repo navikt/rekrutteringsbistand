@@ -19,5 +19,3 @@ const mapFraGammeltTilNyttFylkesnummer: Record<string, string> = {
 export const brukNyttFylkesnummer = (fylkesnummer: string) => {
     return mapFraGammeltTilNyttFylkesnummer[fylkesnummer] ?? fylkesnummer;
 };
-
-export default mapFraGammeltTilNyttFylkesnummer;

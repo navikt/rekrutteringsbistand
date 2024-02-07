@@ -14,7 +14,6 @@ type Props = {
     lokasjon?: string;
     bosted?: string;
     innsatsgruppe?: string;
-    veilder?: string;
     fremhevet?: boolean;
     kandidatPåListe?: React.ReactNode;
     markert?: boolean;
@@ -27,7 +26,6 @@ const RekBisKortKandidat = ({
     lokasjon,
     bosted,
     innsatsgruppe,
-    veilder,
     kandidatnummer,
     fremhevet,
     kandidatPåListe,
