@@ -1,5 +1,5 @@
 import { apiMockHandlers } from '../src/api/api.msw';
-import { megMockMsw } from '../src/api/frackend/meg';
+import { Rolle, megMockMsw } from '../src/api/frackend/meg';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
 import { kandidatApiMock } from './kandidat-api/mock';
 import { kandidatsøkMock } from './kandidatsok-proxy/mock';
@@ -12,7 +12,12 @@ import { stillingssøkMock } from './stillingssok-proxy/mock';
 import { synlighetApiMock } from './synlighet-api/mock';
 
 const mswHandlers = [
-    megMockMsw,
+    megMockMsw('Z994161', [
+        Rolle.ARBEIDSGIVERRETTET,
+        Rolle.JOBBSØKERRETTET,
+        Rolle.MODIA_GENERELL,
+        Rolle.UTVIKLER,
+    ]),
     ...kandidatApiMock,
     ...forespørselOmDelingAvCvMock,
     ...stillingApiMock,
