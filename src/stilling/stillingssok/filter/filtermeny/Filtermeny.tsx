@@ -7,7 +7,7 @@ import ValgteKrierier from '../valgte-kriterier/ValgteKriterier';
 import css from './Filtermeny.module.css';
 
 type Props = {
-    finnerStillingForKandidat: boolean;
+    finnerStillingForKandidat?: boolean;
     skjulLagreStandardsøk?: boolean;
 };
 
@@ -34,7 +34,7 @@ const Filtermeny = ({ finnerStillingForKandidat, skjulLagreStandardsøk }: Props
     );
 };
 
-export const hentIgnorerteFiltre = (finnerStillingForKandidat: boolean) => {
+export const hentIgnorerteFiltre = (finnerStillingForKandidat: boolean | undefined) => {
     let ignorerteFiltre = [QueryParam.Sortering, QueryParam.Modal, QueryParam.Portofølje];
 
     if (finnerStillingForKandidat) {

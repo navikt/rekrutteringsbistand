@@ -37,7 +37,12 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                 }}
             >
                 {erEier && (
-                    <Link to={lenkeTilFinnKandidater(stillingId)}>
+                    <Link
+                        to={
+                            //@ts-ignore: TODO: written before strict-mode enabled
+                            lenkeTilFinnKandidater(stillingId)
+                        }
+                    >
                         <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
                             Finn kandidater
                         </Button>
@@ -55,6 +60,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     erEier={erEier}
                     vis={visLeggTilKandidatModal}
                     onClose={() => setVisLeggTilKandidatModal(false)}
+                    //@ts-ignore TODO: written before strict-mode enabled
                     stillingsId={stillingId}
                 />
             </div>

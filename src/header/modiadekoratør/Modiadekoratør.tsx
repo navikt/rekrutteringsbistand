@@ -61,6 +61,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
     return (
         <div className={css.wrapper}>
             {status === Status.Klar && (
+                // @ts-ignore TODO: written before strict-mode enabled
                 <microfrontend.current
                     appname="Rekrutteringsbistand"
                     useProxy={true}
@@ -92,7 +93,7 @@ const hentHostname = () => {
 };
 
 const hentNavKontoretsNavn = (navKontor: string) => {
-    let enhetElement = document.getElementsByClassName(
+    let enhetElement : HTMLSpanElement | undefined = document.getElementsByClassName(
         'dekorator__hode__enhet'
     )[0] as HTMLSpanElement;
 

@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import css from './Erfaring.module.css';
 
 type Props = {
-    overskrift?: string;
+    overskrift?: string | null;
     beskrivelse?: string | ReactNode;
     detaljer?: ReactNode;
 };

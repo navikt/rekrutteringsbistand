@@ -10,6 +10,7 @@ describe('<Forespørsler />', () => {
     const tilOgMed = new Date('2021-01-31');
 
     test('Forespørsler rendrer med forventet data', async () => {
+        // @ts-ignore TODO: written before strict-mode enabled
         global.testServer.use(
             http.get(statistikkEndepunkter.statistikk(), () => {
                 const testSvar: UtfallsstatistikkDTO = {

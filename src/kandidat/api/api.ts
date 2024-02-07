@@ -8,14 +8,17 @@ import { fetchJson, postJson, putJson } from './fetchUtils';
 
 export const ENHETSREGISTER_API = `/${api.stilling}/search-api`;
 
-const convertToUrlParams = (query: object) =>
+const convertToUrlParams = (query: any) =>
     Object.keys(query)
         .map((key) => {
             if (Array.isArray(query[key])) {
                 const encodedKey = encodeURIComponent(key);
                 return query[key]
-                    .map((v) => `${encodedKey}=${encodeURIComponent(v)}`)
-                    .reduce((accumulator, current) => `${accumulator}&${current}`, '');
+                    .map((v: any) => `${encodedKey}=${encodeURIComponent(v)}`)
+                    .reduce(
+                        (accumulator: unknown, current: unknown) => `${accumulator}&${current}`,
+                        ''
+                    );
             } else {
                 if (query[key]) {
                     return `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`;
@@ -27,7 +30,7 @@ const convertToUrlParams = (query: object) =>
         .join('&')
         .replace(/%20/g, '+');
 
-const employerNameCompletionQueryTemplate = (match) => ({
+const employerNameCompletionQueryTemplate = (match: unknown) => ({
     query: {
         match_phrase: {
             navn_ngram_completion: {
@@ -66,7 +69,7 @@ export const putUtfallKandidat = (
         JSON.stringify({ utfall, navKontor })
     );
 
-export function putKandidatliste(stillingsId) {
+export function putKandidatliste(stillingsId: string) {
     return putJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste/`);
 }
 
@@ -101,7 +104,7 @@ export const postFormidlingerAvUsynligKandidat = async (
             kind: Nettstatus.Suksess,
             data: body,
         };
-    } catch (e) {
+    } catch (e: any) {
         return {
             kind: Nettstatus.Feil,
             error: e,
@@ -165,14 +168,14 @@ export const fetchKandidatlisterForKandidat = (
     );
 };
 
-export const fetchArbeidsgivereEnhetsregister = (query) =>
+export const fetchArbeidsgivereEnhetsregister = (query: unknown) =>
     postJson(
         `${ENHETSREGISTER_API}/underenhet/_search`,
         JSON.stringify(employerNameCompletionQueryTemplate(query)),
         true
     );
 
-export const fetchArbeidsgivereEnhetsregisterOrgnr = (orgnr) => {
+export const fetchArbeidsgivereEnhetsregisterOrgnr = (orgnr: string) => {
     const query = orgnr.replace(/\s/g, '');
     return fetchJson(`${ENHETSREGISTER_API}/underenhet/_search?q=organisasjonsnummer:${query}*`);
 };

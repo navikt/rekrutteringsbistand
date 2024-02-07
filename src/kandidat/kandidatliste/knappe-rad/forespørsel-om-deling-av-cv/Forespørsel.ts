@@ -56,6 +56,7 @@ export const separerGjeldendeForespørselFraRespons = (
 
         const gjeldendeForespørsel = sorterteForespørsler.pop();
 
+        // @ts-ignore TODO: written before strict-mode enabled
         gruppertPåAktørId[aktørId] = {
             gjeldendeForespørsel,
             gamleForespørsler: sorterteForespørsler,

@@ -43,9 +43,11 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
     const alleForslag = respons.buckets.map((bucket) => bucket.key);
 
     const interessanteForslag = alleForslag.filter(
+        // @ts-ignore TODO: written before strict-mode enabled
         (forslag) => !uinteressanteForslag.includes(forslag)
     );
     const uvalgteForslag = interessanteForslag.filter(
+        // @ts-ignore TODO: written before strict-mode enabled
         (kompetanse) => !søkekriterier.kompetanse.has(kompetanse)
     );
     const forslag = visAlleForslag ? uvalgteForslag : uvalgteForslag.slice(0, 4);
@@ -67,6 +69,7 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
                     <Merkelapp
                         variant="oransje"
                         ariaLabel={`Legg til ${kompetanse}`}
+                        // @ts-ignore TODO: written before strict-mode enabled
                         onClick={onVelgForslag(kompetanse)}
                         key={kompetanse}
                     >

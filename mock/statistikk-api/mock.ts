@@ -1,4 +1,4 @@
-export const hentAntallFormidlinger = (navKontor: string) => {
+export const hentAntallFormidlinger = (navKontor: string | null) => {
     switch (navKontor) {
         case '0239':
             return {

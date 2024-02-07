@@ -1,3 +1,4 @@
+// @ts-ignore TODO: written before strict-mode enabled
 import deepEqual from 'deep-equal';
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { hentRekrutteringsbistandstilling, kopierStilling, postStilling } from '../api/api';
@@ -341,12 +342,12 @@ export default function adReducer(state = initialState, action: any) {
     }
 }
 
-function kanInkludere(tags) {
+function kanInkludere(tags: string | null) {
     if (tags == null) return null;
     return tagsInneholderInkluderingsmuligheter(tags) ? KanInkludere.Ja : KanInkludere.Nei;
 }
 
-function* getRekrutteringsbistandstilling(action) {
+function* getRekrutteringsbistandstilling(action: any): Generator<unknown, any, any> {
     yield put({ type: FETCH_AD_BEGIN });
     try {
         const response = yield hentRekrutteringsbistandstilling(action.uuid);
@@ -373,16 +374,16 @@ function* getRekrutteringsbistandstilling(action) {
     }
 }
 
-function* showStopModalMyAds(action) {
+function* showStopModalMyAds(action: any): Generator<unknown, any, any> {
     yield getRekrutteringsbistandstilling(action);
     yield put({ type: SHOW_STOP_AD_MODAL });
 }
 
-function needClassify(originalAdData, adData) {
+function needClassify(originalAdData: any, adData: any) {
     return !deepEqual(originalAdData.categoryList, adData.categoryList);
 }
 
-function* createAd(action) {
+function* createAd(action: any): Generator<unknown, any, any> {
     yield put({ type: CREATE_AD_BEGIN });
 
     try {
@@ -422,7 +423,7 @@ function* createAd(action) {
     }
 }
 
-function* saveRekrutteringsbistandStilling() {
+function* saveRekrutteringsbistandStilling(): Generator<unknown, any, any> {
     let state = yield select();
     yield put({ type: SAVE_AD_BEGIN });
     try {
@@ -458,7 +459,7 @@ function* saveRekrutteringsbistandStilling() {
     }
 }
 
-function* publishAd() {
+function* publishAd(): Generator<unknown, any, any> {
     yield validateAll();
     const state: State = yield select();
     if (hasValidationErrors(state.adValidation.errors)) {
@@ -480,7 +481,7 @@ function* stopAd() {
     yield saveRekrutteringsbistandStilling();
 }
 
-function* saveAd(action) {
+function* saveAd(action: any) {
     yield validateBeforeSave();
     const state: State = yield select();
 
@@ -498,7 +499,7 @@ function* saveAd(action) {
     }
 }
 
-function* publishAdChanges() {
+function* publishAdChanges(): Generator<unknown, any, any> {
     yield validateAll();
     let state: State = yield select();
 
@@ -523,7 +524,7 @@ function* publishAdChanges() {
     }
 }
 
-function* deleteAd() {
+function* deleteAd(): Generator<unknown, any, any> {
     yield put({ type: DELETE_AD_BEGIN });
     try {
         yield put({ type: SET_UPDATED_BY });
@@ -542,7 +543,7 @@ function* deleteAd() {
     }
 }
 
-function* forkastNyStilling() {
+function* forkastNyStilling(): Generator<unknown, any, any> {
     try {
         yield put({ type: SET_UPDATED_BY });
 
@@ -559,12 +560,12 @@ function* forkastNyStilling() {
     }
 }
 
-function* showDeleteModal(action) {
+function* showDeleteModal(action: any): Generator<unknown, any, any> {
     yield getRekrutteringsbistandstilling(action);
     yield put({ type: SHOW_DELETE_AD_MODAL });
 }
 
-function* leggTilIMineStillinger(action) {
+function* leggTilIMineStillinger(action: any): Generator<unknown, any, any> {
     let state = yield select();
 
     const { navIdent, displayName } = state.reportee.data;
@@ -572,7 +573,7 @@ function* leggTilIMineStillinger(action) {
     yield put({ type: OPPRETT_STILLINGSINFO, uuid: action.uuid });
 }
 
-function* markerEksternStillingSomMin(action) {
+function* markerEksternStillingSomMin(action: any): Generator<unknown, any, any> {
     let state = yield select();
 
     const { navIdent, displayName } = state.reportee.data;
@@ -580,7 +581,7 @@ function* markerEksternStillingSomMin(action) {
     yield put({ type: UPDATE_STILLINGSINFO, uuid: action.uuid });
 }
 
-function* markerInternStillingSomMin(action) {
+function* markerInternStillingSomMin(): Generator<unknown, any, any> {
     let state = yield select();
 
     const { navIdent, displayName } = state.reportee.data;
@@ -590,7 +591,7 @@ function* markerInternStillingSomMin(action) {
     yield saveRekrutteringsbistandStilling();
 }
 
-function* copyAdFromMyAds(action) {
+function* copyAdFromMyAds(action: any): Generator<unknown, any, any> {
     try {
         const response: Rekrutteringsbistandstilling = yield kopierStilling(action.uuid);
 

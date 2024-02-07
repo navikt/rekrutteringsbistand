@@ -30,9 +30,9 @@ export interface IuseKandidatNavnSøk extends kandidatNavnDTO {
     kilde: KandidatKilde;
 }
 export const useKandidatNavnSøk = (fnr: string): IuseKandidatNavnSøk => {
-    const [navneData, setNavneData] = React.useState<kandidatNavnDTO>(null);
+    const [navneData, setNavneData] = React.useState<kandidatNavnDTO | null>(null);
     const [laster, setLaster] = React.useState<boolean>(true);
-    const [kilde, setKilde] = React.useState<KandidatKilde>(null);
+    const [kilde, setKilde] = React.useState<KandidatKilde | null>(null);
 
     const reset = () => {
         setLaster(true);
@@ -73,5 +73,6 @@ export const useKandidatNavnSøk = (fnr: string): IuseKandidatNavnSøk => {
         hentData();
     }, [fnr]);
 
+    // @ts-ignore TODO: written before strict-mode enabled
     return { ...navneData, laster, kilde };
 };

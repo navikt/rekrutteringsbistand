@@ -93,6 +93,7 @@ const Stilling = () => {
     const onFaneChange = (fane: string) => {
         navigate(
             lenkeTilStilling({
+                /*@ts-ignore: TODO: written before strict-mode enabled */
                 stillingsId: stilling.uuid,
                 fane:
                     fane === 'om_stillingen' ? undefined : fane === 'kandidater' ? fane : undefined,
@@ -165,6 +166,7 @@ const Stilling = () => {
                                 {erEksternStilling ? (
                                     <>
                                         <PreviewHeader
+                                            /*@ts-ignore: TODO: written before strict-mode enabled */
                                             kandidatlisteId={kandidatlisteId}
                                             erEier={erEier}
                                         />
@@ -183,6 +185,7 @@ const Stilling = () => {
                                 {!kandidatnrFraStillingssøk && (
                                     <PreviewHeader
                                         erEier={erEier}
+                                        /*@ts-ignore: TODO: written before strict-mode enabled */
                                         kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
@@ -216,6 +219,7 @@ const Stilling = () => {
         return (
             <>
                 <KontekstAvKandidat
+                    /*@ts-ignore: TODO: written before strict-mode enabled */
                     kandidatlisteId={kandidatlisteId}
                     kandidatnr={kandidatnrFraStillingssøk}
                     stilling={stilling}
@@ -245,6 +249,7 @@ const Stilling = () => {
                         )}
                     </Tabs.List>
                     <StillingKandidatKnapper
+                        /*@ts-ignore: TODO: written before strict-mode enabled */
                         kandidatlisteId={kandidatlisteId}
                         stillingId={stilling.uuid}
                         erEier={erEier}

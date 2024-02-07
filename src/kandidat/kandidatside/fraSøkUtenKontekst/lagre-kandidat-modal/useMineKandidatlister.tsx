@@ -36,7 +36,7 @@ const useMineKandidatlister = (side: number) => {
                 kind: Nettstatus.Suksess,
                 data: nesteSideMedLister,
             });
-        } catch (e) {
+        } catch (e: any) {
             setMineKandidatlister({
                 kind: Nettstatus.Feil,
                 error: e,

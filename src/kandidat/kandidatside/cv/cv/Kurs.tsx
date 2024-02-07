@@ -30,6 +30,7 @@ const Kurs = ({ cv }: Props) => {
 };
 
 const TidsperiodeKurs = ({ kurs }: { kurs: Kurstype }) => {
+    // @ts-ignore TODO: written before strict-mode enabled
     if (kurs.fraDato && kurs.omfangEnhet.length > 0 && kurs.omfangVerdi > 0) {
         return (
             <Detaljer>
@@ -37,20 +38,28 @@ const TidsperiodeKurs = ({ kurs }: { kurs: Kurstype }) => {
                     Fullført {formaterDatoHvisIkkeNull(kurs.fraDato)}
                 </BodyShort>
                 <BodyShort size="small" className={css.tekst}>
-                    {hentKursvarighet(kurs.omfangEnhet, kurs.omfangVerdi)}
+                    {
+                        // @ts-ignore TODO: written before strict-mode enabled
+                        hentKursvarighet(kurs.omfangEnhet, kurs.omfangVerdi)
+                    }
                 </BodyShort>
             </Detaljer>
         );
+        // @ts-ignore TODO: written before strict-mode enabled
     } else if (kurs.fraDato && (kurs.omfangEnhet.length === 0 || kurs.omfangVerdi === 0)) {
         return (
             <BodyShort size="small" className={css.tekst}>
                 Fullført {formaterDatoHvisIkkeNull(kurs.fraDato)}
             </BodyShort>
         );
+        // @ts-ignore TODO: written before strict-mode enabled
     } else if (!kurs.fraDato && kurs.omfangEnhet.length > 0 && kurs.omfangVerdi > 0) {
         return (
             <BodyShort size="small" className={css.tekst}>
-                {hentKursvarighet(kurs.omfangEnhet, kurs.omfangVerdi)}
+                {
+                    // @ts-ignore TODO: written before strict-mode enabled
+                    hentKursvarighet(kurs.omfangEnhet, kurs.omfangVerdi)
+                }
             </BodyShort>
         );
     } else {

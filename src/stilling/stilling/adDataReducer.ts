@@ -77,7 +77,7 @@ const initialState = {
     privacy: Privacy.Intern,
 };
 
-const adDataReducer = (state = initialState, action) => {
+const adDataReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case CREATE_AD_BEGIN:
         case FETCH_AD_BEGIN:
@@ -87,7 +87,7 @@ const adDataReducer = (state = initialState, action) => {
             return {
                 ...action.response,
                 locationList: action.response.locationList.filter(
-                    (loc) =>
+                    (loc: any) =>
                         loc.postalCode || loc.municipal || loc.county || loc.country !== 'NORGE'
                 ), // filtrer vekk object med kun Norge
                 location: null,
@@ -105,7 +105,7 @@ const adDataReducer = (state = initialState, action) => {
     }
 };
 
-const manipulateAdReducer = (state: Stilling, action) => {
+const manipulateAdReducer = (state: Stilling, action: any) => {
     switch (action.type) {
         case SET_STYRK:
             return {
@@ -316,7 +316,7 @@ const manipulateAdReducer = (state: Stilling, action) => {
                     ...state.properties,
                     workday: JSON.stringify(
                         JSON.parse(state.properties.workday ?? '[]').filter(
-                            (m) => m !== action.value
+                            (m: any) => m !== action.value
                         )
                     ),
                 },
@@ -343,7 +343,7 @@ const manipulateAdReducer = (state: Stilling, action) => {
                     ...state.properties,
                     workhours: JSON.stringify(
                         JSON.parse(state.properties.workhours ?? '[]').filter(
-                            (m) => m !== action.value
+                            (m: any) => m !== action.value
                         )
                     ),
                 },
@@ -597,7 +597,7 @@ const manipulateAdReducer = (state: Stilling, action) => {
     }
 };
 
-export function* findLocationByPostalCode(value) {
+export function* findLocationByPostalCode(value: any): Generator<unknown, any, any> {
     let state = yield select();
     if (!state.locationCode.locations) {
         yield put({ type: FETCH_LOCATIONS });
@@ -605,12 +605,12 @@ export function* findLocationByPostalCode(value) {
         state = yield select();
     }
     if (state.locationCode.locations) {
-        return state.locationCode.locations.find((location) => location.postalCode === value);
+        return state.locationCode.locations.find((location: any) => location.postalCode === value);
     }
     return undefined;
 }
 
-function findStyrkAndSkipAlternativeNames(code) {
+function findStyrkAndSkipAlternativeNames(code: unknown) {
     const found = lookUpStyrk(code);
     if (found) {
         // eslint-disable-next-line no-unused-vars
@@ -620,13 +620,13 @@ function findStyrkAndSkipAlternativeNames(code) {
     return found;
 }
 
-function isLocationInList(location, locationList) {
+function isLocationInList(location: any, locationList: any) {
     let isAlreadyAdded = false;
     if (location.country) {
         isAlreadyAdded =
             locationList &&
             locationList.find(
-                (item) =>
+                (item: any) =>
                     item.country === location.country &&
                     !item.postalCode &&
                     !item.municipal &&
@@ -636,17 +636,20 @@ function isLocationInList(location, locationList) {
         isAlreadyAdded =
             locationList &&
             locationList.find(
-                (item) => item.county === location.county && !item.postalCode && !item.municipal
+                (item: any) =>
+                    item.county === location.county && !item.postalCode && !item.municipal
             );
     } else if (location.municipal) {
         isAlreadyAdded =
             locationList &&
-            locationList.find((item) => item.municipal === location.municipal && !item.postalCode);
+            locationList.find(
+                (item: any) => item.municipal === location.municipal && !item.postalCode
+            );
     }
     return isAlreadyAdded;
 }
 
-function* addLocationPostalCode(action) {
+function* addLocationPostalCode(action: any): Generator<unknown, any, any> {
     const location = yield findLocationByPostalCode(action.postalCode);
     if (location !== undefined) {
         yield put({
@@ -666,7 +669,7 @@ function* addLocationPostalCode(action) {
     }
 }
 
-function* setLocationAddress(action) {
+function* setLocationAddress(action: any): Generator<unknown, any, any> {
     yield put({
         type: ADD_POSTAL_CODE,
         location: {

@@ -63,6 +63,7 @@ const ListeHeader: FunctionComponent<Props> = ({
     const endreSortering = (sorteringsfeltIndex: number) => {
         const endringPåAktivtFelt = sortering?.felt === sorteringsfeltIndex;
 
+        //@ts-ignore TODO: written before strict-mode enabled
         const felt = KandidatSorteringsfelt[KandidatSorteringsfelt[sorteringsfeltIndex]];
         const retning = endringPåAktivtFelt
             ? nesteSorteringsretning(sortering?.retning || null)

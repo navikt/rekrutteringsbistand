@@ -90,7 +90,7 @@ function* removeValidationError({ field }: { field: ValidertFelt }) {
     });
 }
 
-function* validateLocation() {
+function* validateLocation(): Generator<unknown, any, any> {
     const state = yield select();
     const { locationList } = state.adData;
 
@@ -104,7 +104,7 @@ function* validateLocation() {
     }
 }
 
-function* validatePostalCode() {
+function* validatePostalCode(): Generator<unknown, any, any> {
     const state = yield select();
     const { typeAheadValue } = state.locationCode;
     if (typeAheadValue && typeAheadValue.match('^[0-9]{4}$')) {
@@ -127,7 +127,7 @@ function* validatePostalCode() {
     }
 }
 
-function* validateLocationArea() {
+function* validateLocationArea(): Generator<unknown, any, any> {
     const state = yield select();
     const { typeaheadValue } = state.locationArea;
 
@@ -141,7 +141,7 @@ function* validateLocationArea() {
     }
 }
 
-export function* validateStyrk() {
+export function* validateStyrk(): Generator<unknown, any, any> {
     const state = yield select();
     const { categoryList } = state.adData;
 
@@ -152,7 +152,7 @@ export function* validateStyrk() {
     }
 }
 
-function* validateAdtext() {
+function* validateAdtext(): Generator<unknown, any, any> {
     const adText = yield select((state) => state.adData?.properties.adtext);
     if (valueIsNotSet(adText)) {
         yield addValidationError({
@@ -164,7 +164,7 @@ function* validateAdtext() {
     }
 }
 
-function* validateExpireDate() {
+function* validateExpireDate(): Generator<unknown, any, any> {
     const state = yield select();
     const { expires } = state.adData;
     if (valueIsNotSet(expires)) {
@@ -189,6 +189,7 @@ function* validateExpireDate() {
 
 export function* validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen() {
     const state: State = yield select();
+    //@ts-ignore TODO: written before strict-mode enabled
     const { properties, privacy } = state.adData;
 
     if (
@@ -210,7 +211,7 @@ const erSattFørIdag = (datoString: string): boolean => {
     return new Date(datoString) <= idagMidnatt();
 };
 
-function* validatePublishDate() {
+function* validatePublishDate(): Generator<unknown, any, any> {
     const state = yield select();
     const { published } = state.adData;
 
@@ -234,7 +235,7 @@ function* validatePublishDate() {
     }
 }
 
-function* validateApplicationEmail() {
+function* validateApplicationEmail(): Generator<unknown, any, any> {
     const email = yield select((state) => state.adData?.properties.applicationemail);
 
     // E-postadressen må inneholde en '@' for å være gyldig
@@ -250,7 +251,7 @@ function* validateApplicationEmail() {
     }
 }
 
-function* validateContactPersonName() {
+function* validateContactPersonName(): Generator<unknown, any, any> {
     const contactperson = yield select((state) => state.adData?.contactList[0]);
 
     const error =
@@ -266,7 +267,7 @@ function* validateContactPersonName() {
     }
 }
 
-function* validateContactPersonTitle() {
+function* validateContactPersonTitle(): Generator<unknown, any, any> {
     const contactperson = yield select((state) => state.adData?.contactList[0]);
 
     const error =
@@ -282,7 +283,7 @@ function* validateContactPersonTitle() {
     }
 }
 
-function* validateContactPersonEmailOrPhoneRequired() {
+function* validateContactPersonEmailOrPhoneRequired(): Generator<unknown, any, any> {
     const contactperson = yield select((state) => state.adData?.contactList[0]);
 
     const error =
@@ -305,7 +306,7 @@ function* validateContactpersonEmailAndPhone() {
     yield validateContactPersonPhone();
 }
 
-function* validateContactPersonEmail() {
+function* validateContactPersonEmail(): Generator<unknown, any, any> {
     const contactperson = yield select((state) => state.adData?.contactList[0]);
 
     const manglerAlfakrøll =
@@ -324,7 +325,7 @@ function* validateContactPersonEmail() {
     }
 }
 
-function* validateContactPersonPhone() {
+function* validateContactPersonPhone(): Generator<unknown, any, any> {
     const contactperson = yield select((state) => state.adData?.contactList[0]);
 
     const error =
@@ -343,7 +344,7 @@ function* validateContactPersonPhone() {
     }
 }
 
-function* validateApplicationdueDate() {
+function* validateApplicationdueDate(): Generator<unknown, any, any> {
     const state = yield select();
     const { applicationdue } = state.adData?.properties;
 
@@ -362,7 +363,7 @@ function* validateApplicationdueDate() {
     }
 }
 
-function* validateEmploymentStartTime() {
+function* validateEmploymentStartTime(): Generator<unknown, any, any> {
     const state = yield select();
     const { starttime } = state.adData?.properties;
 
@@ -379,7 +380,7 @@ function* validateEmploymentStartTime() {
     }
 }
 
-function* validateEngagementType() {
+function* validateEngagementType(): Generator<unknown, any, any> {
     const state = yield select();
     const { engagementtype } = state.adData?.properties;
 
@@ -409,7 +410,7 @@ function* validatePositionCount() {
     }
 }
 
-function* validateExtent() {
+function* validateExtent(): Generator<unknown, any, any> {
     const state = yield select();
     const { extent } = state.adData?.properties;
 
@@ -420,7 +421,7 @@ function* validateExtent() {
     }
 }
 
-function* validateSector() {
+function* validateSector(): Generator<unknown, any, any> {
     const state = yield select();
     const { sector } = state.adData?.properties;
 
@@ -431,7 +432,7 @@ function* validateSector() {
     }
 }
 
-function* validateWorkday() {
+function* validateWorkday(): Generator<unknown, any, any> {
     const state = yield select();
     const { workday } = state.adData?.properties;
 
@@ -445,7 +446,7 @@ function* validateWorkday() {
     }
 }
 
-function* validateWorkhours() {
+function* validateWorkhours(): Generator<unknown, any, any> {
     const state: State = yield select();
     const workhours = state.adData?.properties.workhours;
 
@@ -459,7 +460,7 @@ function* validateWorkhours() {
     }
 }
 
-function* validateInkluderingsmuligheter() {
+function* validateInkluderingsmuligheter(): Generator<unknown, any, any> {
     const state: State = yield select();
     const { kanInkludere } = state.ad;
     const tags = state.adData?.properties.tags;
@@ -475,7 +476,7 @@ function* validateInkluderingsmuligheter() {
     }
 }
 
-export function* validateAll() {
+export function* validateAll(): Generator<unknown, any, any> {
     const state = yield select();
     if (state.adData !== null) {
         yield validateLocation();
@@ -525,7 +526,7 @@ export function hasValidationErrors(validation: Record<ValidertFelt, string | un
     );
 }
 
-export function* validateBeforeSave() {
+export function* validateBeforeSave(): Generator<unknown, any, any> {
     const state = yield select();
     if (state.adData !== null) {
         yield validateStyrk();
@@ -553,7 +554,7 @@ const initialState = {
     errors: {},
 };
 
-export default function adValidationReducer(state = initialState, action) {
+export default function adValidationReducer(state = initialState, action: any) {
     switch (action.type) {
         case ADD_VALIDATION_ERROR:
             return {

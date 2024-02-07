@@ -53,6 +53,7 @@ const LeggTilEpostadresse = ({ onLeggTil, onFjern, valgteEposter, feilmelding: f
             className={css.leggTilEpostadresse}
             label="E-posten til arbeidsgiveren"
             description="For eksempel «kari.nordmann@firma.no». Særnorske bokstaver støttes ikke."
+            // @ts-ignore TODO: written before strict-mode enabled
             onChange={handleChange}
             onClear={handleClear}
             selectedOptions={valgteEposter}

@@ -76,8 +76,10 @@ export const opprettMockForespørslerOmDelingAvCv = (
     kandidatliste: Kandidatliste,
     eier: any
 ): Record<AktørId, ForespørselOmDelingAvCv[]> => ({
+    // @ts-ignore TODO: written before strict-mode enabled
     [kandidatliste.kandidater[0].aktørid]: [
         opprettMockForespørselOmDelingAvCv(
+            // @ts-ignore TODO: written before strict-mode enabled
             kandidatliste.kandidater[0].aktørid,
             kandidatliste.stillingId,
             eier

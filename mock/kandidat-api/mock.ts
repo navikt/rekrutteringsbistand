@@ -3,7 +3,7 @@ import { api } from '../../src/felles/api';
 import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
 
-const todo = (info) => new HttpResponse('Mock er ikke implementert', { status: 500 });
+const todo = (info: unknown) => new HttpResponse('Mock er ikke implementert', { status: 500 });
 
 export const kandidatApiMock = [
     http.get(`${api.kandidat}/veileder/kandidatlister`, (_) =>
@@ -64,6 +64,7 @@ export const kandidatApiMock = [
         const kandidatlisterMedKandidaten = kandidatlister.map((liste) =>
             opprettMockKandidatlisteForKandidat(
                 liste,
+                // @ts-ignore TODO: written before strict-mode enabled
                 liste.kandidater.find((kandidat) => kandidat.kandidatnr === kandidatnr)
             )
         );

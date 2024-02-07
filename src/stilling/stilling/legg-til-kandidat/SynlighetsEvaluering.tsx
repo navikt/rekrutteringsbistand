@@ -4,10 +4,11 @@ import KandidatenFinnesIkke from '../../../felles/komponenter/legg-til-kandidat/
 import useSynlighetsevaluering from '../../../kandidat/kandidatliste/hooks/useSynlighetsevaluering';
 
 export interface ISynlighetsEvaluering {
-    fødselsnummer: string;
+    fødselsnummer: string | null;
 }
 
 const SynlighetsEvaluering: React.FC<ISynlighetsEvaluering> = ({ fødselsnummer }) => {
+    // @ts-ignore TODO: written before strict-mode enabled
     const { data, isLoading, error } = useSynlighetsevaluering(fødselsnummer);
 
     if (isLoading || !data) {

@@ -21,7 +21,11 @@ const Layout = ({ tittel, ikon, sidepanel, banner, knappIBanner, children }: Pro
                 {banner ? (
                     banner
                 ) : (
-                    <Banner ikon={ikon} tittel={tittel}>
+                    <Banner
+                        ikon={ikon}
+                        // @ts-ignore TODO: written before strict-mode enabled
+                        tittel={tittel}
+                    >
                         {knappIBanner}
                     </Banner>
                 )}

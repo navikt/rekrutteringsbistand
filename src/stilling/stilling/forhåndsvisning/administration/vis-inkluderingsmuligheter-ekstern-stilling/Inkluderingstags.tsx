@@ -31,7 +31,10 @@ const Inkluderingstags: FunctionComponent<Props> = ({ tittel, tags }) => {
             </BodyShort>
             {tags.map((tag: string) => (
                 <Tag size="small" variant="info" className={css.inkluderingstag} key={tag}>
-                    {formatterTittel(visningsnavnForRegistrering[tag])}
+                    {
+                        // @ts-ignore TODO: written before strict-mode enabled
+                        formatterTittel(visningsnavnForRegistrering[tag])
+                    }
                 </Tag>
             ))}
         </div>

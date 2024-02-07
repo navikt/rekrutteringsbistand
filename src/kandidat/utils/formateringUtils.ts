@@ -1,4 +1,4 @@
-export const capitalizeFirstLetter = (inputString) => {
+export const capitalizeFirstLetter = (inputString: string) => {
     const separators = [' ', '-'];
 
     if (inputString) {
@@ -17,7 +17,7 @@ export const capitalizeFirstLetter = (inputString) => {
     return inputString;
 };
 
-export const ordToCorrectCase = (ord, listeMedUpperCaseOrd, listeMedLowerCaseOrd) => {
+export const ordToCorrectCase = (ord: string, listeMedUpperCaseOrd: string[], listeMedLowerCaseOrd: string[]) => {
     if (listeMedUpperCaseOrd.includes(ord)) {
         return ord.toUpperCase();
     } else if (!listeMedLowerCaseOrd.includes(ord)) {
@@ -28,7 +28,7 @@ export const ordToCorrectCase = (ord, listeMedUpperCaseOrd, listeMedLowerCaseOrd
     return ord;
 };
 
-export const capitalizeEmployerName = (employerName) => {
+export const capitalizeEmployerName = (employerName: string | null) => {
     const separators = [' ', '-', '(', '/'];
 
     const lowerCaseOrd = ['i', 'og', 'for', 'på', 'avd', 'av'];
