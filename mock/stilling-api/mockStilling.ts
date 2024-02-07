@@ -13,7 +13,7 @@ import {
     Stillingskategori,
     System,
 } from 'felles/domene/stilling/Stilling';
-import { mockVeileder } from '../meg/mock';
+import { mockVeileder } from '../mockVeileder';
 
 const stillingsId = '1ea746af-66be-4cf8-a051-9e815f77b1d1';
 const iDag = new Date().toISOString();

@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { HttpResponse, http } from 'msw';
-import { statistikkEndepunkter } from '../../../api/statistikk-api/statistikk.api';
-import { UtfallsstatistikkDTO } from '../../../api/statistikk-api/statistikk.dto';
+import { StatistikkDTO, statistikkEndepunkt } from '../../../api/statistikk-api/statistikk';
 import Utfallsstatistikk from './Utfallsstatistikk';
 
 describe('<Forespørsler />', () => {
@@ -12,8 +11,8 @@ describe('<Forespørsler />', () => {
     test('Forespørsler rendrer med forventet data', async () => {
         // @ts-ignore TODO: written before strict-mode enabled
         global.testServer.use(
-            http.get(statistikkEndepunkter.statistikk(), () => {
-                const testSvar: UtfallsstatistikkDTO = {
+            http.get(statistikkEndepunkt(), () => {
+                const testSvar: StatistikkDTO = {
                     antFåttJobben: {
                         totalt: 111,
                         under30år: 222,

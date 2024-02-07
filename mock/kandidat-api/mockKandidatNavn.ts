@@ -1,6 +1,6 @@
-import { kandidatNavnDTO } from '../../src/api/kandidat-api/kandidat.dto';
+import { KandidatNavnDTO } from '../../src/api/kandidat-api/useKandidatNavn';
 
-export function kandidatNavnMockGenerator(): kandidatNavnDTO {
+export function kandidatNavnMockGenerator(): KandidatNavnDTO {
     return {
         fornavn: 'PersonForNavn',
         etternavn: 'PersonEtterNavn',

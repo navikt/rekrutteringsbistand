@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IuseKandidatNavnSøk } from '../../../felles/hooks/useKandidatNavn';
+import { IuseKandidatNavnSøk } from '../../../api/kandidat-api/useKandidatNavn';
 import useNavKontor from '../../../felles/store/navKontor';
 import FormidleUsynligKandidat from '../../../kandidat/kandidatliste/modaler/legg-til-kandidat-modal/FormidleUsynligKandidat';
 
@@ -27,9 +27,9 @@ const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
                 handleBekreft={handleBekreft}
                 fnr={fnr}
                 usynligKandidat={{
-                    fornavn: kandidatSøkResultat.fornavn,
-                    mellomnavn: kandidatSøkResultat.mellomnavn,
-                    etternavn: kandidatSøkResultat.etternavn,
+                    fornavn: kandidatSøkResultat.fornavn ?? '',
+                    mellomnavn: kandidatSøkResultat.mellomnavn ?? '',
+                    etternavn: kandidatSøkResultat.etternavn ?? '',
                 }}
                 kandidatlisteId={kandidatlisteId}
                 stillingsId={stillingsId}

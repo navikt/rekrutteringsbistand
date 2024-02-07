@@ -1,8 +1,8 @@
 import { apiMockHandlers } from '../src/api/api.msw';
+import { megMockMsw } from '../src/api/frackend/meg';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
 import { kandidatApiMock } from './kandidat-api/mock';
 import { kandidatsøkMock } from './kandidatsok-proxy/mock';
-import { innloggetBrukerMock } from './meg/mock';
 import { modiaMock } from './modia/modia';
 import { modiaContextHolderMock } from './modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from './presenterte-kandidater-api/mock';
@@ -12,7 +12,7 @@ import { stillingssøkMock } from './stillingssok-proxy/mock';
 import { synlighetApiMock } from './synlighet-api/mock';
 
 const mswHandlers = [
-    ...innloggetBrukerMock,
+    megMockMsw,
     ...kandidatApiMock,
     ...forespørselOmDelingAvCvMock,
     ...stillingApiMock,

@@ -3,7 +3,7 @@ import { ChangeEvent, Dispatch, FunctionComponent, useEffect, useState } from 'r
 import { useDispatch } from 'react-redux';
 
 import { Nettstatus } from 'felles/nettressurs';
-import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/kandidat.api';
+import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
 import KandidatlisteAction from '../../../kandidatliste/reducer/KandidatlisteAction';
 import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import css from './LagreKandidatIMineKandidatlisterModal.module.css';

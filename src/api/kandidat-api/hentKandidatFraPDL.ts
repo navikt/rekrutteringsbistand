@@ -1,10 +1,17 @@
 import { HttpResponse, http } from 'msw';
 import { kandidatNavnMockGenerator } from '../../../mock/kandidat-api/mockKandidatNavn';
 import { devFnr } from '../../dev/DevUtil';
-import { kandidatEndepunkter } from './kandidat.api';
+import { postApiResponse } from '../fetcher';
 
-export const kandidatMockHandlers = [
-    http.post(kandidatEndepunkter.kandidatNavn, async ({ request }) => {
+const hentKanidatNavnFraPDLEndepukt = `/kandidat-api/veileder/kandidater/navn`;
+
+export const hentKandidatFraPDL = async (fnr: string) => {
+    return await postApiResponse(hentKanidatNavnFraPDLEndepukt, { fnr });
+};
+
+export const hentKandidatFraPDLMockMsw = http.post(
+    hentKanidatNavnFraPDLEndepukt,
+    async ({ request }) => {
         const data = await request.json();
 
         //@ts-ignore
@@ -20,5 +27,5 @@ export const kandidatMockHandlers = [
                   },
               })
             : HttpResponse.json([kandidatNavnMockGenerator()], { status: 200 });
-    }),
-];
+    }
+);

@@ -1,6 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
-import useInnloggetBruker from './api/frackend/hooks/useInnloggetBruker';
+import { useMegHook } from './api/frackend/meg';
 
 interface ApplikasjonContextType {
     brukerRoller?: string[];
@@ -13,7 +13,7 @@ interface IApplikasjonContextProvider {
 }
 
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
-    const { navIdent } = useInnloggetBruker();
+    const { navIdent } = useMegHook();
 
     return (
         <ApplikasjonContext.Provider value={{}}>
