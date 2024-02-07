@@ -81,7 +81,7 @@ const useKandidatStillingssøk = ({
         }
     }, [kandidatnr, navigate, kandidatStillingssøk, searchParams]);
 
-    return { kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke };
+    return { ...swr, kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke };
 };
 
 const hentFylkestekstFraGeografiKode = (geografiKode: string) => {

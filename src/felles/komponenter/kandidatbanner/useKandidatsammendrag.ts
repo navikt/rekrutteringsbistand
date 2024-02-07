@@ -8,7 +8,7 @@ interface IuseKandidatsammendrag {
 }
 
 interface IUseKandidatsammendragRetur {
-    kandidatsammendrag: Kandidatsammendrag | null;
+    kandidatsammendrag?: Kandidatsammendrag;
     isLoading: boolean;
     error: any;
 }

@@ -14,7 +14,7 @@ type Props = {
 const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
 
-    const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag({ kandidatnr });
+    const { kandidatsammendrag, isLoading } = useKandidatsammendrag({ kandidatnr });
 
     if (isLoading) {
         return <></>;

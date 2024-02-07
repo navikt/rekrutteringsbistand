@@ -4,6 +4,7 @@ import ManglerØnsketStedOgYrke from './ManglerØnsketStedOgYrke';
 import ManglerØnsketYrke from './ManglerØnsketYrke';
 import useKandidatStillingssøk from './useKandidatStillingssøk';
 import useKandidatsammendrag from 'felles/komponenter/kandidatbanner/useKandidatsammendrag';
+import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 type Props = {
     kandidatnr: string;
@@ -32,7 +33,7 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
           ]
         : [];
 
-    const utledBannerelement = () => {
+    const utledBannerelement = (kandidatsammendrag: Kandidatsammendrag) => {
         if (kandidatStillingssøk) {
             if (manglerØnsketYrke && hentetGeografiFraBosted) {
                 return <ManglerØnsketStedOgYrke fnr={kandidatsammendrag.fodselsnummer} />;
@@ -44,14 +45,14 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
         }
     };
 
-    return (
-        kandidatsammendrag?.arenaKandidatnr && (
-            <Kandidatbanner
-                kandidatnr={kandidatsammendrag.arenaKandidatnr}
-                brødsmulesti={brødsmulesti}
-                nederst={utledBannerelement()}
-            />
-        )
+    return kandidatsammendrag?.arenaKandidatnr ? (
+        <Kandidatbanner
+            kandidatnr={kandidatsammendrag.arenaKandidatnr}
+            brødsmulesti={brødsmulesti}
+            nederst={utledBannerelement(kandidatsammendrag)}
+        />
+    ) : (
+        <> </>
     );
 };
 
