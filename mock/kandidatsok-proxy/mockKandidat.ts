@@ -1,14 +1,18 @@
 import { Omfangenhet, Språkferdighetsnivå } from 'felles/domene/kandidat/Cv';
 import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
-import Kandidat, { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 import {
     Formidlingsgruppe,
     Hovedmål,
     Innsatsgruppe,
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import { mockMeg } from '../meg/mock';
+import {
+    KandidatStillingssøk,
+    Kandidatsammendrag,
+} from '../../src/api/kandidat-søk-api/kandidat-søk-dto';
 
-export const mockKandidatStillingssøk = {
+export const mockKandidatStillingssøk: KandidatStillingssøk = {
     yrkeJobbonskerObj: [
         {
             styrkBeskrivelse: 'Avisbud',
@@ -44,28 +48,11 @@ export const mockKandidatStillingssøk = {
         },
     ],
     fodselsnummer: '04928797045',
+    kommunenummerstring: '0301',
+    kommuneNavn: 'Vestvågøy',
 };
 
-export const mockKandidatsammendrag: KandidatTilBanner = {
-    yrkeJobbonskerObj: [
-        {
-            styrkBeskrivelse: 'Avisbud',
-            sokeTitler: [
-                'Avisbud',
-                'Avisbud',
-                'Bilagskontrollør (avisbud)',
-                'Avis- og reklamebrosjyrebud',
-                'Altmuligmann',
-                'Avis- og reklamedistributør',
-                'Utdeler (gratisavis)',
-                'Reklamebud',
-                'Reklame- og avisdistributør',
-                'Bud, utlevering',
-            ],
-            primaertJobbonske: false,
-            styrkKode: null,
-        },
-    ],
+export const mockKandidatsammendrag: Kandidatsammendrag = {
     kommuneNavn: 'Sarpsborg',
     adresselinje1: 'Kallastenveien 47B',
     veilederVisningsnavn: null,
@@ -79,20 +66,6 @@ export const mockKandidatsammendrag: KandidatTilBanner = {
     postnummer: '1708',
     telefon: null,
     arenaKandidatnr: 'PAM0152hb0wr4',
-    geografiJobbonsker: [
-        {
-            geografiKodeTekst: 'Norge',
-            geografiKode: 'NO',
-        },
-        {
-            geografiKodeTekst: 'Geiranger',
-            geografiKode: '1000',
-        },
-        {
-            geografiKodeTekst: 'Larvik',
-            geografiKode: 'NO07.0712',
-        },
-    ],
     veilederIdent: null,
     fodselsnummer: '04928797045',
     veilederEpost: null,

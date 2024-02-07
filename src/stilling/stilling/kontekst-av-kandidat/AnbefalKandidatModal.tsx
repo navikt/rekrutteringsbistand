@@ -1,12 +1,12 @@
 import { Modal } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import BekreftLeggTilKandidat from '../../../felles/komponenter/legg-til-kandidat/BekreftLeggTilKandidat';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
+import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 type Props = {
-    kandidat: KandidatTilBanner;
+    kandidat: Kandidatsammendrag;
     kandidatlisteId: string;
     vis: boolean;
     onClose: () => void;

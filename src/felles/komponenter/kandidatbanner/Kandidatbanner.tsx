@@ -6,7 +6,6 @@ import {
     PinIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort, CopyButton, Heading, Skeleton } from '@navikt/ds-react';
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import Piktogram from 'felles/komponenter/piktogrammer/minekandidater.svg';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { ReactNode } from 'react';
@@ -14,6 +13,7 @@ import Grunnbanner from '../grunnbanner/Grunnbanner';
 import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
 import useKandidatsammendrag from './useKandidatsammendrag';
 import css from './Kandidatbanner.module.css';
+import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 export type Veileder = {
     navn: string;
@@ -36,8 +36,7 @@ const Kandidatbanner = ({
     nederst,
     kandidatnr,
 }: Props) => {
-    const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag(kandidatnr);
-    console.log('kandidatsammendragx', kandidatsammendrag);
+    const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag({ kandidatnr });
     return (
         <Grunnbanner ikon={<Piktogram />} nederst={nederst}>
             <div className={css.innhold}>
@@ -190,7 +189,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
     return `Født: ${fødselsdagString} (${alder} år)`;
 };
 
-const hentAdresse = (kandidat: KandidatTilBanner) => {
+const hentAdresse = (kandidat: Kandidatsammendrag) => {
     const { poststed, postnummer, adresselinje1 } = kandidat;
 
     if (!poststed && !postnummer && !adresselinje1) {
@@ -204,9 +203,9 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-export const formaterNavn = (kandidat: KandidatTilBanner) => {
-    const fornavn = brukStorForbokstav(kandidat.fornavn);
-    const etternavn = brukStorForbokstav(kandidat.etternavn);
+export const formaterNavn = (kandidat: Kandidatsammendrag) => {
+    const fornavn = brukStorForbokstav(kandidat?.fornavn);
+    const etternavn = brukStorForbokstav(kandidat?.etternavn);
 
     return `${fornavn} ${etternavn}`;
 };

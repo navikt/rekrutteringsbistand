@@ -11,16 +11,20 @@ import useSWR from 'swr';
 import { kandidatSøkEndepunkter } from '../../../api/kandidat-søk-api/kandidat-søk.api';
 import { postApi } from '../../../api/fetcher';
 
-const useKandidatStillingssøk = (kandidatnr: string) => {
+interface IuseKandidatStillingssøk {
+    kandidatnr: string;
+}
+
+const useKandidatStillingssøk = ({ kandidatnr }: IuseKandidatStillingssøk) => {
     const { searchParams, navigate } = useNavigering();
     const [hentetGeografiFraBosted, setHentetGeografiFraBosted] = useState<boolean>(false);
     const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
 
-    const { data: swrData } = useSWR(
+    const swr = useSWR(
         { path: kandidatSøkEndepunkter.kandidatStillingssøk, kandidatnr },
         ({ path }) => postApi(path, { kandidatnr })
     );
-    const kandidatStillingssøk = swrData?.data?.hits?.hits[0]?._source;
+    const kandidatStillingssøk = swr?.data?.hits?.hits[0]?._source;
 
     useEffect(() => {
         if (kandidatStillingssøk) {

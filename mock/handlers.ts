@@ -1,6 +1,7 @@
 import { apiMockHandlers } from '../src/api/api.msw';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
 import { kandidatApiMock } from './kandidat-api/mock';
+import { kandidatSokApiMock } from './kandidatsok-api/mock';
 import { kandidatsøkMock } from './kandidatsok-proxy/mock';
 import { innloggetBrukerMock } from './meg/mock';
 import { modiaMock } from './modia/modia';
@@ -24,6 +25,7 @@ const mswHandlers = [
     ...stillingssøkMock,
     ...modiaMock,
     ...apiMockHandlers,
+    ...kandidatSokApiMock,
 ];
 
 export default mswHandlers;

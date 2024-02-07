@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { CopyButton } from '@navikt/ds-react';
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
@@ -13,6 +12,7 @@ import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
+import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 type Props = {
     kandidatnr: string;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) => {
-    const { kandidatsammendrag } = useKandidatsammendrag(kandidatnr);
+    const { kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
 
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
@@ -83,7 +83,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
 const byggBrødsmulesti = (
     kandidatnr: string,
     stilling: Stilling,
-    kandidatsammendrag: KandidatTilBanner,
+    kandidatsammendrag: Kandidatsammendrag,
     stillingssøk?: string
 ) => {
     if (!kandidatsammendrag) {
