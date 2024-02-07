@@ -10,12 +10,23 @@ import { QueryParam } from '../utils/urlUtils';
 import useSWR from 'swr';
 import { kandidatSøkEndepunkter } from '../../../api/kandidat-søk-api/kandidat-søk.api';
 import { postApi } from '../../../api/fetcher';
+import { KandidatStillingssøk } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 interface IuseKandidatStillingssøk {
     kandidatnr: string;
 }
 
-const useKandidatStillingssøk = ({ kandidatnr }: IuseKandidatStillingssøk) => {
+interface IUseKandidatStillingssøkRetur {
+    kandidatStillingssøk: KandidatStillingssøk | null;
+    hentetGeografiFraBosted: boolean;
+    manglerØnsketYrke: boolean;
+    isLoading: boolean;
+    error: any;
+}
+
+const useKandidatStillingssøk = ({
+    kandidatnr,
+}: IuseKandidatStillingssøk): IUseKandidatStillingssøkRetur => {
     const { searchParams, navigate } = useNavigering();
     const [hentetGeografiFraBosted, setHentetGeografiFraBosted] = useState<boolean>(false);
     const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
@@ -24,7 +35,7 @@ const useKandidatStillingssøk = ({ kandidatnr }: IuseKandidatStillingssøk) => 
         { path: kandidatSøkEndepunkter.kandidatStillingssøk, kandidatnr },
         ({ path }) => postApi(path, { kandidatnr })
     );
-    const kandidatStillingssøk = swr?.data?.hits?.hits[0]?._source;
+    const kandidatStillingssøk: KandidatStillingssøk = swr?.data?.hits?.hits[0]?._source;
 
     useEffect(() => {
         if (kandidatStillingssøk) {
@@ -34,7 +45,7 @@ const useKandidatStillingssøk = ({ kandidatnr }: IuseKandidatStillingssøk) => 
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
                 kandidatStillingssøk;
 
-            let fylker: (string | undefined)[]  = hentFylkerFraJobbønsker(geografiJobbonsker);
+            let fylker: (string | undefined)[] = hentFylkerFraJobbønsker(geografiJobbonsker);
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
             const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 

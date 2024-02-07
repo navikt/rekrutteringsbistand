@@ -35,21 +35,23 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
     const utledBannerelement = () => {
         if (kandidatStillingssøk) {
             if (manglerØnsketYrke && hentetGeografiFraBosted) {
-                return <ManglerØnsketStedOgYrke fnr={kandidatStillingssøk.fodselsnummer} />;
+                return <ManglerØnsketStedOgYrke fnr={kandidatsammendrag.fodselsnummer} />;
             } else if (manglerØnsketYrke) {
-                return <ManglerØnsketYrke fnr={kandidatStillingssøk.fodselsnummer} />;
+                return <ManglerØnsketYrke fnr={kandidatsammendrag.fodselsnummer} />;
             } else if (hentetGeografiFraBosted) {
-                return <ManglerØnsketSted fnr={kandidatStillingssøk.fodselsnummer} />;
+                return <ManglerØnsketSted fnr={kandidatsammendrag.fodselsnummer} />;
             }
         }
     };
 
     return (
-        <Kandidatbanner
-            kandidatnr={kandidatStillingssøk?.arenaKandidatnr}
-            brødsmulesti={brødsmulesti}
-            nederst={utledBannerelement()}
-        />
+        kandidatsammendrag?.arenaKandidatnr && (
+            <Kandidatbanner
+                kandidatnr={kandidatsammendrag.arenaKandidatnr}
+                brødsmulesti={brødsmulesti}
+                nederst={utledBannerelement()}
+            />
+        )
     );
 };
 

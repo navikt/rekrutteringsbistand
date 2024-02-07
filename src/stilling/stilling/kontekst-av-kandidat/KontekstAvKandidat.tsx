@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom';
 
 import { CopyButton } from '@navikt/ds-react';
 import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
+import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidatsammendrag from 'felles/komponenter/kandidatbanner/useKandidatsammendrag';
 import { useSelector } from 'react-redux';
-import { useMegHook } from '../../../api/frackend/meg';
 import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
@@ -28,14 +28,11 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
 
     const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
 
-    const brødsmulesti = byggBrødsmulesti(
-        kandidatnr,
-        stilling,
-        kandidatsammendrag,
-        state?.stillingssøk
-    );
+    const brødsmulesti = kandidatsammendrag
+        ? byggBrødsmulesti(kandidatnr, stilling, kandidatsammendrag, state?.stillingssøk)
+        : [];
 
-    const { navIdent } = useMegHook();
+    const { navIdent } = useInnloggetBruker(null);
 
     const erEier =
         stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;
@@ -43,30 +40,32 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
     return (
         <div className={css.wrapperTilBanner}>
             <div className={css.innerWrapperTilBanner}>
-                <Kandidatbanner
-                    kandidatnr={kandidatsammendrag?.arenaKandidatnr}
-                    brødsmulesti={brødsmulesti}
-                    nederstTilHøyre={
-                        <div className={css.knapper}>
-                            {stillingErPublisert(stilling) && (
-                                <CopyButton
-                                    copyText={hentAnnonselenke(stilling.uuid)}
-                                    text="Kopier annonselenke"
-                                    size="small"
-                                    className={css.copyButton}
+                {kandidatsammendrag && (
+                    <Kandidatbanner
+                        kandidatnr={kandidatsammendrag.arenaKandidatnr}
+                        brødsmulesti={brødsmulesti}
+                        nederstTilHøyre={
+                            <div className={css.knapper}>
+                                {stillingErPublisert(stilling) && (
+                                    <CopyButton
+                                        copyText={hentAnnonselenke(stilling.uuid)}
+                                        text="Kopier annonselenke"
+                                        size="small"
+                                        className={css.copyButton}
+                                    />
+                                )}
+                                <Kandidatlistehandlinger
+                                    kandidatlisteId={kandidatlisteId}
+                                    stillingsId={stilling.uuid}
+                                    erEier={erEier}
+                                    onAnbefalClick={() => {
+                                        setVisModal(true);
+                                    }}
                                 />
-                            )}
-                            <Kandidatlistehandlinger
-                                kandidatlisteId={kandidatlisteId}
-                                stillingsId={stilling.uuid}
-                                erEier={erEier}
-                                onAnbefalClick={() => {
-                                    setVisModal(true);
-                                }}
-                            />
-                        </div>
-                    }
-                />
+                            </div>
+                        }
+                    />
+                )}
                 {kandidatsammendrag && kandidatlisteId && (
                     <AnbefalKandidatModal
                         kandidat={kandidatsammendrag}
@@ -94,6 +93,7 @@ const byggBrødsmulesti = (
     if (stillingssøk) {
         urlTilFinnStilling += `?${stillingssøk}`;
     }
+    console.log('kandidatsammendragyy', kandidatsammendrag);
 
     return [
         {

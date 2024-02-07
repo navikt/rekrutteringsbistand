@@ -67,7 +67,7 @@ const Kandidatbanner = ({
                     )}
 
                     {error?.message && error.message !== '404' && (
-                        <Heading size="large">{kandidatsammendrag.message}</Heading>
+                        <Heading size="large">{error.message}</Heading>
                     )}
 
                     <div className={css.bunnlinje}>
@@ -146,7 +146,7 @@ const Kandidatbanner = ({
                                                 size="small"
                                                 title="Kopier e-postadresse"
                                                 className={css.kopieringsknapp}
-                                                copyText={kandidatsammendrag.veilederEpost}
+                                                copyText={kandidatsammendrag.veilederEpost || ''}
                                             />
                                         </>
                                     ) : (
@@ -203,9 +203,9 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-export const formaterNavn = (kandidat: Kandidatsammendrag) => {
-    const fornavn = brukStorForbokstav(kandidat?.fornavn);
-    const etternavn = brukStorForbokstav(kandidat?.etternavn);
+export const formaterNavn = (kandidatsammendrag: Kandidatsammendrag) => {
+    const fornavn = brukStorForbokstav(kandidatsammendrag.fornavn);
+    const etternavn = brukStorForbokstav(kandidatsammendrag.etternavn);
 
     return `${fornavn} ${etternavn}`;
 };

@@ -20,27 +20,29 @@ const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props
         return <></>;
     }
 
-    const brødsmulestiMedNavn = error
-        ? brødsmulesti
-        : [
+    const brødsmulestiMedNavn = kandidatsammendrag
+        ? [
               ...(brødsmulesti ?? []),
               {
                   tekst: formaterNavn(kandidatsammendrag),
               },
-          ];
+          ]
+        : brødsmulesti;
     return (
         <>
-            <Kandidatbanner
-                kandidatnr={kandidatsammendrag?.arenaKandidatnr}
-                brødsmulesti={brødsmulestiMedNavn}
-                øverstTilHøyre={
-                    kandidatnavigering && (
-                        <div className={css.forrigeNeste}>
-                            <ForrigeNeste kandidatnavigering={kandidatnavigering} />
-                        </div>
-                    )
-                }
-            ></Kandidatbanner>
+            {kandidatsammendrag && kandidatsammendrag?.arenaKandidatnr && (
+                <Kandidatbanner
+                    kandidatnr={kandidatsammendrag.arenaKandidatnr}
+                    brødsmulesti={brødsmulestiMedNavn}
+                    øverstTilHøyre={
+                        kandidatnavigering && (
+                            <div className={css.forrigeNeste}>
+                                <ForrigeNeste kandidatnavigering={kandidatnavigering} />
+                            </div>
+                        )
+                    }
+                ></Kandidatbanner>
+            )}
         </>
     );
 };
