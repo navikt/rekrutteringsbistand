@@ -4,12 +4,12 @@ import { FunctionComponent, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Nettstatus } from 'felles/nettressurs';
+import { useLookupCvHook } from '../../../api/kandidat-søk-api/lookupCv';
 import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import { lenkeTilKandidatliste, lenkeTilKandidatsøk } from '../../app/paths';
 import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
-import useCv from '../hooks/useCv';
 import useFaner from '../hooks/useFaner';
 import useKandidatliste from '../hooks/useKandidatliste';
 import useNavigerbareKandidaterFraSøk from '../hooks/useNavigerbareKandidaterFraSøk';
@@ -38,10 +38,13 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     const [fane, setFane] = useFaner();
     const [visLagreKandidatModal, setVisLagreKandidatModal] = useState<boolean>(false);
 
-    const { cv } = useCv(kandidatnr);
+    const { cv } = useLookupCvHook(kandidatnr);
     const kandidatliste = useKandidatliste({ stillingId, kandidatlisteId });
     // @ts-ignore TODO: written before strict-mode enabled
-    const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, {stillingId, kandidatlisteId});
+    const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, {
+        stillingId,
+        kandidatlisteId: kandidatlisteId ?? undefined,
+    });
 
     const økt = hentØktFraKandidatsøk();
 

@@ -1,9 +1,11 @@
-import { foresporselStatistikkMockMsw } from './foresporsel-om-deling-av-cv-api/statistikk';
-import { hentKandidatFraPDLMockMsw } from './kandidat-api/hentKandidatFraPDL';
-import { statistikkMockMsw } from './statistikk-api/statistikk';
+import { foresporselApiMock } from './foresporsel-om-deling-av-cv-api/mock.msw';
+import { kandidatApiMock } from './kandidat-api/mock.msw';
+import { kandidatSokApiMock } from './kandidat-søk-api/mock.msw';
+import { statistikkApiMock } from './statistikk-api/mock.msw';
 
 export const apiMockHandlers = [
-    hentKandidatFraPDLMockMsw,
-    statistikkMockMsw,
-    foresporselStatistikkMockMsw,
+    ...kandidatApiMock,
+    ...foresporselApiMock,
+    ...statistikkApiMock,
+    ...kandidatSokApiMock,
 ];

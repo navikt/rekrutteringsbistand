@@ -1,7 +1,7 @@
 import { apiMockHandlers } from '../src/api/api.msw';
 import { Rolle, megMockMsw } from '../src/api/frackend/meg';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
-import { kandidatApiMock } from './kandidat-api/mock';
+import { gammelKandidatApiMock } from './kandidat-api/mock';
 import { kandidatsøkMock } from './kandidatsok-proxy/mock';
 import { modiaMock } from './modia/modia';
 import { modiaContextHolderMock } from './modiacontextholder/mock';
@@ -18,7 +18,7 @@ const mswHandlers = [
         Rolle.MODIA_GENERELL,
         Rolle.UTVIKLER,
     ]),
-    ...kandidatApiMock,
+    ...gammelKandidatApiMock,
     ...forespørselOmDelingAvCvMock,
     ...stillingApiMock,
     ...presenterteKandidaterApiMock,
