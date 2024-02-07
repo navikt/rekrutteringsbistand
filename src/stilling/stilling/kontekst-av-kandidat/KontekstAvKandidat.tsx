@@ -94,6 +94,7 @@ const byggBrødsmulesti = (
     if (stillingssøk) {
         urlTilFinnStilling += `?${stillingssøk}`;
     }
+    console.log('kandidatsammendragyy', kandidatsammendrag);
 
     return [
         {

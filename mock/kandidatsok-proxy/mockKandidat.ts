@@ -32,7 +32,6 @@ export const mockKandidatStillingssøk: KandidatStillingssøk = {
             styrkKode: null,
         },
     ],
-    arenaKandidatnr: 'PAM0152hb0wr4',
     geografiJobbonsker: [
         {
             geografiKodeTekst: 'Norge',
@@ -47,19 +46,15 @@ export const mockKandidatStillingssøk: KandidatStillingssøk = {
             geografiKode: 'NO07.0712',
         },
     ],
-    fodselsnummer: '04928797045',
     kommunenummerstring: '0301',
     kommuneNavn: 'Vestvågøy',
 };
 
 export const mockKandidatsammendrag: Kandidatsammendrag = {
-    kommuneNavn: 'Sarpsborg',
     adresselinje1: 'Kallastenveien 47B',
     veilederVisningsnavn: null,
     fornavn: 'Redd',
     poststed: 'Sarpsborg',
-    kommunenummerstring: '3003',
-    veileder: null,
     fodselsdato: '1987-12-04',
     etternavn: 'Lukt',
     epostadresse: null,
