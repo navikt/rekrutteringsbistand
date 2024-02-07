@@ -12,6 +12,7 @@ const wrapper = () => (
 );
 
 test('<ManglerØnsketSted />', async () => {
+    // @ts-ignore TODO: written before strict-mode enabled
     global.testServer.use(
         http.post(kandidatSøkEndepunkter.kandidatStillingssøk, () => {
             const dto = {

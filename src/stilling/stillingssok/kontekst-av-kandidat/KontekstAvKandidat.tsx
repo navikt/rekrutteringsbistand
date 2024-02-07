@@ -15,25 +15,22 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
 
     const { kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
 
-    let brødsmulesti = undefined;
-    if (kandidatsammendrag) {
-        brødsmulesti = [
-            {
-                href: '/kandidatsok',
-                tekst: 'Kandidater',
-            },
-            {
-                href: `/kandidater/kandidat/${kandidatsammendrag?.arenaKandidatnr}/cv?fraKandidatsok=true`,
-                tekst: formaterNavn(kandidatsammendrag),
-            },
+    const brødsmulesti = kandidatsammendrag
+        ? [
+              {
+                  href: '/kandidatsok',
+                  tekst: 'Kandidater',
+              },
+              {
+                  href: `/kandidater/kandidat/${kandidatsammendrag?.arenaKandidatnr}/cv?fraKandidatsok=true`,
+                  tekst: formaterNavn(kandidatsammendrag),
+              },
 
-            {
-                tekst: 'Finn stilling',
-            },
-        ];
-    } else {
-        brødsmulesti = [];
-    }
+              {
+                  tekst: 'Finn stilling',
+              },
+          ]
+        : [];
 
     const utledBannerelement = () => {
         if (kandidatStillingssøk) {
