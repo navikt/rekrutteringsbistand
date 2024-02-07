@@ -15,5 +15,6 @@ test('<KontekstAvKandidat/>', async () => {
         expect(screen.getByText('Kandidater')).toBeInTheDocument();
         expect(screen.getByRole('heading', { name: 'Redd Lukt' })).toBeInTheDocument();
         expect(screen.getByText('Finn stilling')).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: 'Redd Lukt' })).toBeInTheDocument();
     });
 });

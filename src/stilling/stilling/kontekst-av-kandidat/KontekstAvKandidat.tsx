@@ -44,7 +44,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
         <div className={css.wrapperTilBanner}>
             <div className={css.innerWrapperTilBanner}>
                 <Kandidatbanner
-                    kandidatnr={kandidatsammendrag.arenaKandidatnr}
+                    kandidatnr={kandidatsammendrag?.arenaKandidatnr}
                     brødsmulesti={brødsmulesti}
                     nederstTilHøyre={
                         <div className={css.knapper}>
@@ -94,7 +94,6 @@ const byggBrødsmulesti = (
     if (stillingssøk) {
         urlTilFinnStilling += `?${stillingssøk}`;
     }
-    console.log('kandidatsammendragyy', kandidatsammendrag);
 
     return [
         {
@@ -102,7 +101,7 @@ const byggBrødsmulesti = (
             tekst: 'Kandidater',
         },
         {
-            href: `/kandidater/kandidat/${kandidatsammendrag.arenaKandidatnr}/cv?fraKandidatsok=true`,
+            href: `/kandidater/kandidat/${kandidatsammendrag?.arenaKandidatnr}/cv?fraKandidatsok=true`,
             tekst: formaterNavn(kandidatsammendrag),
         },
         {

@@ -57,13 +57,13 @@ export const mockKandidatsammendrag: Kandidatsammendrag = {
     poststed: 'Sarpsborg',
     fodselsdato: '1987-12-04',
     etternavn: 'Lukt',
-    epostadresse: null,
+    epostadresse: 'a@a.com',
     postnummer: '1708',
-    telefon: null,
+    telefon: '123123123',
     arenaKandidatnr: 'PAM0152hb0wr4',
-    veilederIdent: null,
+    veilederIdent: 'A123123',
     fodselsnummer: '04928797045',
-    veilederEpost: null,
+    veilederEpost: 'v@v.com',
 };
 
 export const mockKandidat: Kandidat = {
