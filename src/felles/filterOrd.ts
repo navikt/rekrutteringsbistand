@@ -3,7 +3,7 @@ import { Hit } from './domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from './domene/stilling/EsStilling';
 
 const antallMåneder = 6;
-export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[]) => {
+export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[] | undefined) => {
     let antallFiltrertBort = 0;
     const filtrertListe = hits?.filter((stilling) => {
         // 6 mnd fra publishByAdmin

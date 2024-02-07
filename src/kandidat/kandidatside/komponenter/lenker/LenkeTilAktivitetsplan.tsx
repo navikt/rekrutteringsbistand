@@ -6,7 +6,7 @@ import navigerMedAktivBrukerIModia from 'felles/komponenter/lenker-til-modia/nav
 import { MouseEventHandler } from 'react';
 
 type Props = {
-    fnr: string;
+    fnr: string | null;
     somKnapp: boolean;
 };
 
@@ -17,6 +17,7 @@ const LenkeTilAktivitetsplan = ({ fnr, somKnapp }: Props) => {
         event.preventDefault();
 
         sendEvent('cv_aktivitetsplan_lenke', 'klikk');
+        // @ts-ignore TODO: written before strict-mode enabled
         navigerMedAktivBrukerIModia(lenke, fnr);
     };
 

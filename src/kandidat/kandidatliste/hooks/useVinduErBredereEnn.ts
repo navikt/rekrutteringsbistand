@@ -1,3 +1,4 @@
+// @ts-ignore TODO: written before strict-mode enabled
 import throttle from 'lodash.throttle';
 import { useState, useEffect } from 'react';
 

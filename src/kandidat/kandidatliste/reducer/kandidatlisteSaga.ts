@@ -57,7 +57,10 @@ const loggManglendeAktørId = (kandidatliste: Kandidatliste) => {
     }
 };
 
-function* opprettKandidatlisteForStilling(stillingsId, opprinneligError) {
+function* opprettKandidatlisteForStilling(
+    stillingsId: string,
+    opprinneligError: unknown
+): Generator<unknown, any, any> {
     try {
         yield putKandidatliste(stillingsId);
         const kandidatliste = yield fetchKandidatlisteMedStillingsId(stillingsId);
@@ -77,7 +80,9 @@ function* opprettKandidatlisteForStilling(stillingsId, opprinneligError) {
     }
 }
 
-function* hentKandidatlisteMedStillingsId(action: HentKandidatlisteMedStillingsIdAction) {
+function* hentKandidatlisteMedStillingsId(
+    action: HentKandidatlisteMedStillingsIdAction
+): Generator<unknown, any, any> {
     const { stillingsId } = action;
     try {
         const kandidatliste = yield fetchKandidatlisteMedStillingsId(stillingsId);
@@ -102,7 +107,9 @@ function* hentKandidatlisteMedStillingsId(action: HentKandidatlisteMedStillingsI
     }
 }
 
-function* hentKandidatlisteMedKandidatlisteId(action: HentKandidatlisteMedKandidatlisteIdAction) {
+function* hentKandidatlisteMedKandidatlisteId(
+    action: HentKandidatlisteMedKandidatlisteIdAction
+): Generator<unknown, any, any> {
     const { kandidatlisteId } = action;
     try {
         const kandidatliste = yield fetchKandidatlisteMedKandidatlisteId(kandidatlisteId);
@@ -123,7 +130,7 @@ function* hentKandidatlisteMedKandidatlisteId(action: HentKandidatlisteMedKandid
     }
 }
 
-function* endreKandidatstatus(action: EndreStatusKandidatAction) {
+function* endreKandidatstatus(action: EndreStatusKandidatAction): Generator<unknown, any, any> {
     const { status, kandidatlisteId, kandidatnr } = action;
     try {
         const response = yield putStatusKandidat(status, kandidatlisteId, kandidatnr);
@@ -213,7 +220,7 @@ function* endreKandidatlistestatus(action: EndreKandidatlistestatusAction) {
     }
 }
 
-function* toggleArkivert(action: ToggleArkivertAction) {
+function* toggleArkivert(action: ToggleArkivertAction): Generator<unknown, any, any> {
     try {
         const arkivertKandidat = yield putArkivert(
             action.kandidatlisteId,
@@ -256,11 +263,11 @@ function* angreArkiveringForKandidater(action: AngreArkiveringAction) {
     }
 }
 
-function* sjekkError(action) {
+function* sjekkError(action: any) {
     yield put({ type: ErrorActionType.VisError, error: action.error });
 }
 
-function* hentSendteMeldinger(action: HentSendteMeldingerAction) {
+function* hentSendteMeldinger(action: HentSendteMeldingerAction): Generator<unknown, any, any> {
     try {
         const sendteMeldinger = yield call(fetchSendteMeldinger, action.kandidatlisteId);
         yield put({
@@ -282,7 +289,9 @@ function* hentSendteMeldinger(action: HentSendteMeldingerAction) {
     }
 }
 
-function* hentForespørslerOmDelingAvCv(action: HentForespørslerOmDelingAvCvAction) {
+function* hentForespørslerOmDelingAvCv(
+    action: HentForespørslerOmDelingAvCvAction
+): Generator<unknown, any, any> {
     try {
         const forespørsler: ForespørslerForStillingInboundDto = yield call(
             fetchForespørslerOmDelingAvCv,
@@ -293,7 +302,7 @@ function* hentForespørslerOmDelingAvCv(action: HentForespørslerOmDelingAvCvAct
             type: KandidatlisteActionType.HentForespørslerOmDelingAvCvSuccess,
             forespørslerOmDelingAvCv: forespørsler,
         });
-    } catch (e) {
+    } catch (e: any) {
         yield put<KandidatlisteAction>({
             type: KandidatlisteActionType.HentForespørslerOmDelingAvCvFailure,
             error: e,
@@ -301,7 +310,7 @@ function* hentForespørslerOmDelingAvCv(action: HentForespørslerOmDelingAvCvAct
     }
 }
 
-function* sendSmsTilKandidater(action: SendSmsAction) {
+function* sendSmsTilKandidater(action: SendSmsAction): Generator<unknown, any, any> {
     try {
         yield call(postSmsTilKandidater, action.melding, action.fnr, action.kandidatlisteId);
         yield put({
@@ -323,7 +332,7 @@ function* sendSmsTilKandidater(action: SendSmsAction) {
     }
 }
 
-function* slettCv(action: SlettCvFraArbeidsgiversKandidatliste) {
+function* slettCv(action: SlettCvFraArbeidsgiversKandidatliste): Generator<unknown, any, any> {
     try {
         const kandidatliste = yield call(
             slettCvFraArbeidsgiversKandidatliste,

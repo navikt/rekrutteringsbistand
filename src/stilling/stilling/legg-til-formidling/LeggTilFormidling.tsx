@@ -4,7 +4,7 @@ import useNavKontor from '../../../felles/store/navKontor';
 import FormidleUsynligKandidat from '../../../kandidat/kandidatliste/modaler/legg-til-kandidat-modal/FormidleUsynligKandidat';
 
 export interface ILeggTilFormidling {
-    fnr: string;
+    fnr: string | null;
     kandidatlisteId: string;
     stillingsId: string;
     onClose: () => void;

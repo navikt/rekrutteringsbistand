@@ -1,5 +1,5 @@
 interface ILenkeTilStilling {
-    stillingsId: string;
+    stillingsId: string | null;
     redigeringsmodus?: boolean;
     fane?: 'kandidater';
 }

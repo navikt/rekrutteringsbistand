@@ -1,5 +1,5 @@
 import add from 'date-fns/add';
-import Stilling, {
+import {
     AdminStatus,
     Ansettelsesform,
     Arbeidsgiver,
@@ -37,7 +37,7 @@ export const mockArbeidsgiver: Arbeidsgiver = {
     parentOrgnr: '912819973',
 };
 
-export const mockStilling: Stilling = {
+export const mockStilling /* : Stilling */ = {
     id: 100,
     uuid: stillingsId,
     created: iDag,

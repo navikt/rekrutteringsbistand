@@ -1,12 +1,12 @@
 import { Omfangenhet, Språkferdighetsnivå } from 'felles/domene/kandidat/Cv';
 import { Oppstartkode } from 'felles/domene/kandidat/Jobbprofil';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 import {
     Formidlingsgruppe,
     Hovedmål,
     Innsatsgruppe,
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import { mockMeg } from '../meg/mock';
+import Kandidat from 'felles/domene/kandidat/Kandidat';
 
 export const mockKandidat: Kandidat = {
     // Personalia

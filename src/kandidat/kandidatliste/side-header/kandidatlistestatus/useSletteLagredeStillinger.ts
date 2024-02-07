@@ -6,7 +6,7 @@ const useSletteKandidatlisteIderFraLukkedata = (
     besatteStillinger: number,
     antallStillinger: number | null,
     lukkedata: KandidatlisteIder,
-    setLukkedata: (KandidatlisteIder) => void
+    setLukkedata: (_: KandidatlisteIder) => void
 ) => {
     useEffect(() => {
         if (

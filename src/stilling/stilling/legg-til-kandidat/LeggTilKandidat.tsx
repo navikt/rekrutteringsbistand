@@ -105,6 +105,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                     {kandidatSøkResultat &&
                         kandidatSøkResultat.kilde === KandidatKilde.REKRUTTERINGSBISTAND && (
                             <BekreftLeggTilKandidat
+                                // @ts-ignore TODO: written before strict-mode enabled
                                 kandidatnr={kandidatSøkResultat.kandidatnr}
                                 kandidatlisteId={kandidatlisteId}
                                 onAvbryt={onClose}

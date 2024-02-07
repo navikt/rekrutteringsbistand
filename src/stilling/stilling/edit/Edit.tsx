@@ -80,6 +80,7 @@ const Edit = ({ innloggetBruker, stilling, onPreviewAdClick, resetValidation }: 
                         tittel="Hvordan sende søknad?"
                         beskrivelse="Gjelder kun eksternt utlyste stillinger"
                     >
+                        {/* @ts-ignore TODO: written before strict-mode enabled */}
                         <HvordanSendeSøknad />
                     </Seksjon>
                     <Seksjon påkrevd tittel="Arbeidssted">
@@ -99,4 +100,5 @@ const mapStateToProps = (state: State) => ({
     stilling: state.adData,
 });
 
+// @ts-ignore TODO: written before strict-mode enabled
 export default connect(mapStateToProps, mapDispatchToProps)(Edit);

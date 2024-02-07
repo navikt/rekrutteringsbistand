@@ -39,6 +39,7 @@ type Props = {
 
 const FraKandidatliste = ({ tabs, kandidatnr, kandidatlisteId, stillingId, children }: Props) => {
     useScrollTilToppen(kandidatnr);
+    // @ts-ignore TODO: written before strict-mode enabled
     useValgtKandidatIKandidatliste(kandidatnr, kandidatlisteId);
 
     const { cv } = useCv(kandidatnr);
@@ -134,11 +135,16 @@ const FraKandidatlisteInner = ({
                 <Kandidatheader
                     kandidatnr={kandidat.kandidatnr}
                     kandidatnavigering={navigering}
+                    // @ts-ignore TODO: written before strict-mode enabled
                     brødsmulesti={brødsmulesti}
                 />
             }
         >
-            <Tabs value={fane} onChange={setFane}>
+            <Tabs
+                value={fane}
+                // @ts-ignore TODO: written before strict-mode enabled
+                onChange={setFane}
+            >
                 <Kandidatmeny tabs={tabs} cv={cv}>
                     <div className={css.velgStatus}>
                         <Label htmlFor="cv-status-og-hendelse">{endreStatusTekst}</Label>

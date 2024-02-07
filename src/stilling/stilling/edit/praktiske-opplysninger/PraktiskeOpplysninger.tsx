@@ -52,7 +52,7 @@ class PraktiskeOpplysninger extends React.Component<Props> {
         }
     };
 
-    onWorkhoursChange = (e) => {
+    onWorkhoursChange = (e: any) => {
         const { value } = e.target;
         if (e.target.checked) {
             this.props.checkWorkhours(value);
@@ -61,7 +61,7 @@ class PraktiskeOpplysninger extends React.Component<Props> {
         }
     };
 
-    onSectorChange = (e) => {
+    onSectorChange = (e: any) => {
         this.props.setSector(e.target.value);
     };
 
@@ -239,16 +239,18 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: (action: any) => void) => ({
-    setExtent: (extent) => dispatch({ type: SET_EMPLOYMENT_EXTENT, extent }),
-    checkWorkday: (value) => dispatch({ type: CHECK_EMPLOYMENT_WORKDAY, value }),
-    uncheckWorkday: (value) => dispatch({ type: UNCHECK_EMPLOYMENT_WORKDAY, value }),
-    checkWorkhours: (value) => dispatch({ type: CHECK_EMPLOYMENT_WORKHOURS, value }),
-    uncheckWorkhours: (value) => dispatch({ type: UNCHECK_EMPLOYMENT_WORKHOURS, value }),
-    setSector: (sector) => dispatch({ type: SET_EMPLOYMENT_SECTOR, sector }),
-    setPositionCount: (positioncount) =>
+    setExtent: (extent: unknown) => dispatch({ type: SET_EMPLOYMENT_EXTENT, extent }),
+    checkWorkday: (value: unknown) => dispatch({ type: CHECK_EMPLOYMENT_WORKDAY, value }),
+    uncheckWorkday: (value: unknown) => dispatch({ type: UNCHECK_EMPLOYMENT_WORKDAY, value }),
+    checkWorkhours: (value: unknown) => dispatch({ type: CHECK_EMPLOYMENT_WORKHOURS, value }),
+    uncheckWorkhours: (value: unknown) => dispatch({ type: UNCHECK_EMPLOYMENT_WORKHOURS, value }),
+    setSector: (sector: unknown) => dispatch({ type: SET_EMPLOYMENT_SECTOR, sector }),
+    setPositionCount: (positioncount: unknown) =>
         dispatch({ type: SET_EMPLOYMENT_POSITIONCOUNT, positioncount }),
-    setApplicationDue: (applicationdue) => dispatch({ type: SET_APPLICATIONDUE, applicationdue }),
-    setStartTime: (starttime) => dispatch({ type: SET_EMPLOYMENT_STARTTIME, starttime }),
+    setApplicationDue: (applicationdue: unknown) =>
+        dispatch({ type: SET_APPLICATIONDUE, applicationdue }),
+    setStartTime: (starttime: unknown) => dispatch({ type: SET_EMPLOYMENT_STARTTIME, starttime }),
 });
 
+// @ts-ignore TODO: written before strict-mode enabled
 export default connect(mapStateToProps, mapDispatchToProps)(PraktiskeOpplysninger);

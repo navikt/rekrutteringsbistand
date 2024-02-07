@@ -145,6 +145,7 @@ const Kandidatbanner = ({
                                                 size="small"
                                                 title="Kopier e-postadresse"
                                                 className={css.kopieringsknapp}
+                                                //@ts-ignore: TODO: written before strict-mode enabled
                                                 copyText={kandidat.data.veilederEpost}
                                             />
                                         </>

@@ -27,6 +27,7 @@ const useLagreØkt = () => {
             const til = søkekriterier.side * PAGE_SIZE - maksAntallNavigerbareKandidater / 2;
             const from = Math.max(0, til);
             const size = maksAntallNavigerbareKandidater;
+            //@ts-ignore: TODO: written before strict-mode enabled
             const query = byggQuery(søkekriterier, innloggetBruker);
             const queryNavigerbareKandidater = {
                 ...query,
@@ -42,6 +43,7 @@ const useLagreØkt = () => {
             }
         };
 
+        //@ts-ignore: TODO: written before strict-mode enabled
         if (innloggetBruker.navIdent && innloggetBruker.navKontor) {
             hentKandidatnumreForNavigering();
         }

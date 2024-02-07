@@ -131,10 +131,10 @@ export const opprettMockKandidatlisteForKandidat = (
 ): KandidatlisteForKandidat => ({
     uuid: kandidatliste.kandidatlisteId,
     tittel: kandidatliste.tittel,
-    organisasjonReferanse: kandidatliste.organisasjonReferanse,
-    organisasjonNavn: kandidatliste.organisasjonNavn,
-    stillingId: kandidatliste.stillingId,
-    antallStillinger: kandidatliste.antallStillinger,
+    organisasjonReferanse: kandidatliste.organisasjonReferanse ?? undefined,
+    organisasjonNavn: kandidatliste.organisasjonNavn ?? undefined,
+    stillingId: kandidatliste.stillingId ?? undefined,
+    antallStillinger: kandidatliste.antallStillinger ?? undefined,
     status: kandidat.status,
     utfall: kandidat.utfall,
 

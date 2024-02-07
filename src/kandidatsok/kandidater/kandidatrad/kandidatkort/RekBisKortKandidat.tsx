@@ -10,10 +10,10 @@ type Props = {
     kandidatnummer: string;
     kandidat?: React.ReactNode;
     checkbox?: React.ReactNode;
-    ønsker?: string;
-    lokasjon?: string;
-    bosted?: string;
-    innsatsgruppe?: string;
+    ønsker: string;
+    lokasjon: string;
+    bosted: string;
+    innsatsgruppe: string;
     fremhevet?: boolean;
     kandidatPåListe?: React.ReactNode;
     markert?: boolean;

@@ -80,6 +80,7 @@ const Publishing = () => {
         ...datePickerDefaultProps,
         locale: 'nb',
         defaultSelected: new Date(published),
+        // @ts-ignore TODO: written before strict-mode enabled
         onDateChange: onPublishChange,
         onValidate: onValidatePublished,
     });
@@ -88,6 +89,7 @@ const Publishing = () => {
         ...datePickerDefaultProps,
         locale: 'nb',
         defaultSelected: new Date(expires),
+        // @ts-ignore TODO: written before strict-mode enabled
         onDateChange: onExpirationDateChange,
         onValidate: onValidateExpirationDate,
     });

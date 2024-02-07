@@ -39,6 +39,7 @@ const useQuery = (): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
         kind: Nettstatus.IkkeLastet,
     });
 
+    // @ts-ignore TODO: written before strict-mode enabled
     const query = byggQuery(søkekriterier, innloggetBruker);
 
     const setOpptatt = () => {

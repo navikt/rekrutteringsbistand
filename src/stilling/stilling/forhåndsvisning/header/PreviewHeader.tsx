@@ -122,4 +122,5 @@ const mapDispatchToProps = (dispatch: (action: any) => void) => ({
     leggTilIMineStillinger: () => dispatch({ type: LEGG_TIL_I_MINE_STILLINGER }),
 });
 
+// @ts-ignore TODO: written before strict-mode enabled
 export default connect(mapStateToProps, mapDispatchToProps)(PreviewMenu);

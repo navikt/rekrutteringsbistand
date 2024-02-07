@@ -40,6 +40,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
 
     const { cv } = useCv(kandidatnr);
     const kandidatliste = useKandidatliste({ stillingId, kandidatlisteId });
+    // @ts-ignore TODO: written before strict-mode enabled
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, {stillingId, kandidatlisteId});
 
     const økt = hentØktFraKandidatsøk();
@@ -59,6 +60,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                       tekst: erKobletTilStilling(kandidatliste.data)
                           ? stillingTittel
                           : kandidatliste.data.tittel,
+                      // @ts-ignore TODO: written before strict-mode enabled
                       href: lenkeTilKandidatliste(kandidatliste.data.stillingId),
                   },
                   {
@@ -75,16 +77,22 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                 <Kandidatheader
                     kandidatnr={kandidatnr}
                     kandidatnavigering={kandidatnavigering}
+                    // @ts-ignore TODO: written before strict-mode enabled
                     brødsmulesti={brødsmulesti}
                 />
             }
         >
-            <Tabs value={fane} onChange={setFane}>
+            <Tabs
+                value={fane}
+                // @ts-ignore TODO: written before strict-mode enabled
+                onChange={setFane}
+            >
                 <Kandidatmeny tabs={tabs} cv={cv}>
                     {kandidatErAlleredeLagretIListen ? (
                         <BodyShort>
                             <span>Kandidaten er lagret i </span>
                             <Link
+                                // @ts-ignore TODO: written before strict-mode enabled
                                 to={lenkeTilKandidatliste(kandidatliste.data.stillingId)}
                                 className="navds-link"
                             >

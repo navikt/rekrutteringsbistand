@@ -30,8 +30,12 @@ class Ansettelsesform extends React.Component<Props> {
                 >
                     <option value="">Velg ansettelsesform</option>
                     {Object.keys(Type).map((key) => (
+                        // @ts-ignore TODO: written before strict-mode enabled
                         <option value={Type[key]} key={key}>
-                            {Type[key]}
+                            {
+                                // @ts-ignore TODO: written before strict-mode enabled
+                                Type[key]
+                            }
                         </option>
                     ))}
                 </Select>
@@ -50,4 +54,5 @@ const mapDispatchToProps = (dispatch: (action: any) => void) => ({
         dispatch({ type: SET_EMPLOYMENT_ENGAGEMENTTYPE, engagementType }),
 });
 
+// @ts-ignore TODO: written before strict-mode enabled
 export default connect(mapStateToProps, mapDispatchToProps)(Ansettelsesform);

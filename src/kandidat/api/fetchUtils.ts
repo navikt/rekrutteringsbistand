@@ -9,7 +9,7 @@ export const createCallIdHeader = () => ({
 export class SearchApiError {
     message: string;
     status: number;
-    constructor(error) {
+    constructor(error: any) {
         this.message = error.message;
         this.status = error.status;
     }
@@ -47,7 +47,7 @@ export async function fetchJson(url: string, includeCredentials: boolean = false
             message: error.message,
             status: error.status,
         });
-    } catch (e) {
+    } catch (e: any) {
         throw new SearchApiError({
             message: e.message,
             status: e.status,
@@ -75,7 +75,7 @@ export async function deleteJsonMedType<T>(
     }
 }
 
-const getCookie = (name) => {
+const getCookie = (name: string) => {
     const re = new RegExp(`${name}=([^;]+)`);
     const match = re.exec(document.cookie);
     return match !== null ? match[1] : '';
@@ -115,7 +115,7 @@ export async function postJson(
             status: response.status,
             message: feilmeldingFraBody,
         });
-    } catch (e) {
+    } catch (e: any) {
         throw new SearchApiError({
             message: e.message,
             status: e.status,
@@ -123,7 +123,7 @@ export async function postJson(
     }
 }
 
-export async function putJson(url, bodyString?: string) {
+export async function putJson(url: string | URL, bodyString?: string) {
     try {
         const response = await fetch(url, {
             credentials: 'include',
@@ -140,7 +140,7 @@ export async function putJson(url, bodyString?: string) {
         throw new SearchApiError({
             status: response.status,
         });
-    } catch (e) {
+    } catch (e: any) {
         throw new SearchApiError({
             message: e.message,
             status: e.status,
@@ -166,7 +166,7 @@ export async function deleteReq(url: string, bodyString?: string) {
         throw new SearchApiError({
             status: response.status,
         });
-    } catch (e) {
+    } catch (e: any) {
         throw new SearchApiError({
             message: e.message,
             status: e.status,
@@ -189,7 +189,7 @@ export async function deleteWithoutJson(url: string, bodyString?: string) {
                 status: response.status,
             });
         }
-    } catch (e) {
+    } catch (e: any) {
         throw new SearchApiError({
             message: e.message,
             status: e.status,

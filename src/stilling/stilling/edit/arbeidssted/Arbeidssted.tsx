@@ -76,7 +76,7 @@ const Arbeidssted: React.FC<IArbeidssted> = ({
         }
     };
 
-    const onTypeAheadSuggestionSelected = (location) => {
+    const onTypeAheadSuggestionSelected = (location: any) => {
         if (location) {
             setPostalCodeTypeAheadValue(location.value);
             addPostalCode(location.value);
@@ -132,6 +132,7 @@ const Arbeidssted: React.FC<IArbeidssted> = ({
                         className={css.postkode}
                         onSelect={onTypeAheadSuggestionSelected}
                         onChange={onTypeAheadValueChange}
+                        // @ts-ignore TODO: written before strict-mode enabled
                         onBlur={onBlur}
                         suggestions={suggestions.map((loc) => ({
                             value: loc.postalCode,
@@ -175,15 +176,17 @@ const mapStateToProps = (state: State) => ({
     validation: state.adValidation.errors,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    addPostalCodeAddress: (address) => dispatch({ type: ADD_POSTAL_CODE_ADDRESS_BEGIN, address }),
+const mapDispatchToProps = (dispatch: (_: any) => void) => ({
+    addPostalCodeAddress: (address: unknown) =>
+        dispatch({ type: ADD_POSTAL_CODE_ADDRESS_BEGIN, address }),
     fetchLocations: () => dispatch({ type: FETCH_LOCATIONS }),
-    setPostalCodeTypeAheadValue: (value) =>
+    setPostalCodeTypeAheadValue: (value: unknown) =>
         dispatch({ type: SET_POSTAL_CODE_TYPEAHEAD_VALUE, value }),
-    addPostalCode: (postalCode) => dispatch({ type: ADD_POSTAL_CODE_BEGIN, postalCode }),
+    addPostalCode: (postalCode: unknown) => dispatch({ type: ADD_POSTAL_CODE_BEGIN, postalCode }),
     removePostalCode: () => dispatch({ type: REMOVE_POSTAL_CODE }),
     removePostalCodeAddress: () => dispatch({ type: REMOVE_POSTAL_CODE_ADDRESS }),
     removeLocationAreas: () => dispatch({ type: REMOVE_LOCATION_AREAS }),
 });
 
+// @ts-ignore TODO: written before strict-mode enabled
 export default connect(mapStateToProps, mapDispatchToProps)(Arbeidssted);

@@ -35,17 +35,17 @@ class LocationArea extends React.Component<Props> {
         this.props.fetchLocationArea();
     }
 
-    onLocationAreaSelect = (suggestion) => {
+    onLocationAreaSelect = (suggestion: any) => {
         const { municipalsCounties, countries, addLocationArea, validateLocationArea } = this.props;
 
         const country = countries.find(
-            (c) => c.name.toLowerCase() === suggestion.name.toLowerCase()
+            (c: any) => c.name.toLowerCase() === suggestion.name.toLowerCase()
         );
         const county = municipalsCounties.find(
-            (c) => !c.countyCode && c.name.toLowerCase() === suggestion.name.toLowerCase()
+            (c: any) => !c.countyCode && c.name.toLowerCase() === suggestion.name.toLowerCase()
         );
         const municipal = municipalsCounties.find(
-            (m) => m.countyCode && m.name.toLowerCase() === suggestion.name.toLowerCase()
+            (m: any) => m.countyCode && m.name.toLowerCase() === suggestion.name.toLowerCase()
         );
 
         if (municipal) {
@@ -71,7 +71,7 @@ class LocationArea extends React.Component<Props> {
         }
     };
 
-    onBlur = (e) => {
+    onBlur = (e: unknown) => {
         this.onLocationAreaSelect({ label: e });
     };
 
@@ -87,22 +87,22 @@ class LocationArea extends React.Component<Props> {
         this.props.removeCounty(county);
     };
 
-    locationIsMunicipal = (location) => location && location.municipal && !location.postalCode;
+    locationIsMunicipal = (location: any) => location && location.municipal && !location.postalCode;
 
-    locationIsCountry = (location) =>
+    locationIsCountry = (location: any) =>
         location &&
         location.country &&
         !location.postalCode &&
         !location.municipal &&
         !location.county;
 
-    locationIsCounty = (location) => location && location.county && !location.postalCode;
+    locationIsCounty = (location: any) => location && location.county && !location.postalCode;
 
     render() {
         const { municipalsCounties, countries, typeaheadValue, validation, locationList } =
             this.props;
 
-        const municipalsCountiesSuggestions = municipalsCounties.map((suggestion) => ({
+        const municipalsCountiesSuggestions = municipalsCounties.map((suggestion: any) => ({
             value: suggestion.code,
             name: suggestion.name,
             label: (
@@ -113,7 +113,7 @@ class LocationArea extends React.Component<Props> {
             ),
         }));
 
-        const countrySuggestions = countries.map((country) => ({
+        const countrySuggestions = countries.map((country: any) => ({
             value: country.code,
             name: country.name,
             label: (
@@ -190,12 +190,13 @@ const mapStateToProps = (state: State) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
     fetchLocationArea: () => dispatch({ type: FETCH_LOCATION_AREA_BEGIN }),
-    setTypeAheadValue: (value) => dispatch({ type: SET_LOCATION_AREA_TYPEAHEAD, value }),
-    addLocationArea: (location) => dispatch({ type: ADD_LOCATION_AREA, location }),
-    removeMunicipal: (value) => dispatch({ type: REMOVE_MUNICIPAL, value }),
-    removeCountry: (value) => dispatch({ type: REMOVE_COUNTRY, value }),
-    removeCounty: (value) => dispatch({ type: REMOVE_COUNTY, value }),
+    setTypeAheadValue: (value: unknown) => dispatch({ type: SET_LOCATION_AREA_TYPEAHEAD, value }),
+    addLocationArea: (location: unknown) => dispatch({ type: ADD_LOCATION_AREA, location }),
+    removeMunicipal: (value: unknown) => dispatch({ type: REMOVE_MUNICIPAL, value }),
+    removeCountry: (value: unknown) => dispatch({ type: REMOVE_COUNTRY, value }),
+    removeCounty: (value: unknown) => dispatch({ type: REMOVE_COUNTY, value }),
     validateLocationArea: () => dispatch({ type: VALIDATE_LOCATION_AREA }),
 });
 
+// @ts-ignore TODO: written before strict-mode enabled
 export default connect(mapStateToProps, mapDispatchToProps)(LocationArea);

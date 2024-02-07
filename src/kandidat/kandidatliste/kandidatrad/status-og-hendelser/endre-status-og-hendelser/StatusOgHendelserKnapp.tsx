@@ -8,6 +8,7 @@ type Props = {
 };
 
 const StatusOgHendelserKnapp = forwardRef(
+    // @ts-ignore TODO: written before strict-mode enabled
     ({ kanEndre, onClick }: Props, ref: MutableRefObject<HTMLButtonElement>) => {
         return (
             <Button

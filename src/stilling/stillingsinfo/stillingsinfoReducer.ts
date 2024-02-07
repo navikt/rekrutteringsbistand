@@ -33,7 +33,10 @@ const initialState = {
     isLoadingStillingsinfo: false,
 };
 
-export default function stillingsinfoReducer(state: StillingsinfoState = initialState, action) {
+export default function stillingsinfoReducer(
+    state: StillingsinfoState = initialState,
+    action: any
+) {
     switch (action.type) {
         case FETCH_STILLINGSINFO_BEGIN:
             return {
@@ -84,7 +87,7 @@ export default function stillingsinfoReducer(state: StillingsinfoState = initial
     }
 }
 
-function* getStillingsinfo(action) {
+function* getStillingsinfo(action: any) {
     yield put({ type: FETCH_STILLINGSINFO_BEGIN });
     try {
         const response = action.stillingsinfo;
@@ -108,7 +111,7 @@ function* getStillingsinfo(action) {
     }
 }
 
-function* opprettStillingsinfo() {
+function* opprettStillingsinfo(): Generator<unknown, any, any> {
     yield put({ type: OPPRETT_STILLINGSINFO_BEGIN });
 
     try {
@@ -138,7 +141,7 @@ function* opprettStillingsinfo() {
     }
 }
 
-function* updateStillingsinfo() {
+function* updateStillingsinfo(): Generator<unknown, any, any> {
     yield put({ type: UPDATE_STILLINGSINFO_BEGIN });
 
     try {

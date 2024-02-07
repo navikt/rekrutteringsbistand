@@ -9,7 +9,7 @@ import { publisertTilVisningsnavn } from '../om-annonsen/HvorErAnnonsenPublisert
 import { stillingskategoriTilVisningsnavn } from '../om-annonsen/VelgStillingskategori';
 
 type Props = {
-    finnerStillingForKandidat: boolean;
+    finnerStillingForKandidat: boolean | undefined;
 };
 
 const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {

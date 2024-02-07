@@ -4,7 +4,7 @@ import RekBisKort from './RekBisKort';
 import css from './RekBisKortStilling.module.css';
 
 type Props = {
-    publisertDato?: string;
+    publisertDato?: string | null;
     etiketter?: React.ReactNode;
     arbeidsgiversNavn?: string;
     lenkeTilStilling?: React.ReactNode;
@@ -12,8 +12,8 @@ type Props = {
     knapper?: React.ReactNode;
     erEier?: boolean;
     erUtløpt?: boolean;
-    score?: number;
-    erIkkePublisert?: boolean;
+    score?: number | null;
+    erIkkePublisert?: boolean | '' | null;
     erUtkast?: boolean;
     erStoppet?: boolean;
     erJobbmesse?: boolean;
@@ -86,7 +86,7 @@ const RekBisKortStilling = ({
                     {arbeidsgiversNavn && <BodyShort>{arbeidsgiversNavn}</BodyShort>}
                     <Heading size="small">{lenkeTilStilling}</Heading>
                 </div>
-                {import.meta.env.DEV && score !== null && (
+                {import.meta.env.DEV && score !== null && score !== undefined && (
                     <div>
                         <code className={css.score} title="Score">
                             {score.toFixed(2)}

@@ -1,6 +1,7 @@
 import { ChevronUpDoubleIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import classNames from 'classnames';
+// @ts-ignore TODO: written before strict-mode enabled
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import css from './TilToppenKnapp.module.css';
