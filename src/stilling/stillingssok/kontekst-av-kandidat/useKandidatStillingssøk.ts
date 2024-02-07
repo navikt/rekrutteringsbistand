@@ -34,7 +34,7 @@ const useKandidatStillingssøk = ({ kandidatnr }: IuseKandidatStillingssøk) => 
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
                 kandidatStillingssøk;
 
-            let fylker = hentFylkerFraJobbønsker(geografiJobbonsker);
+            let fylker: (string | undefined)[]  = hentFylkerFraJobbønsker(geografiJobbonsker);
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
             const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 
@@ -99,7 +99,7 @@ const hentKommunerFraJobbønsker = (geografijobbønsker: JobbønskeSted[]): stri
         });
 };
 
-const hentFylkeFraBosted = (kommunenummer: string) => {
+const hentFylkeFraBosted = (kommunenummer: string): [] | [string | undefined] => {
     if (kommunenummer) {
         const fylkeskode = kommunenummer.substring(0, 2);
         return [hentFylkestekstFraGeografiKode(`NO${fylkeskode}`)];

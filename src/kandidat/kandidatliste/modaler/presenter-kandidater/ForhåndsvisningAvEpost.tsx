@@ -13,8 +13,9 @@ const ForhåndsvisningAvEpost = ({ kandidatliste, melding, stillingstittel }: Pr
     const iframeRef = useRef<HTMLIFrameElement>();
 
     const erstattPlaceholders = useCallback(
-        (iframe: HTMLIFrameElement | null) => {
+        (iframe: HTMLIFrameElement | null | undefined) => {
             if (iframe) {
+                // @ts-ignore TODO: written before strict-mode enabled
                 const iframeDocument = iframe.contentWindow.document;
 
                 const tittelElement = iframeDocument.getElementById('tittel');

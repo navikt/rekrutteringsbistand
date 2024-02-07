@@ -4,7 +4,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
-import useInnloggetBruker from '../../felles/hooks/useInnloggetBruker';
+import { useMegHook } from '../../api/frackend/meg';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
@@ -48,11 +48,10 @@ const Stilling = () => {
 
     const { kandidatlisteId } = useKandidatlisteId(uuid);
 
-    const { navIdent: innloggetBruker } = useInnloggetBruker(null);
+    const { navIdent } = useMegHook();
 
     const erEier =
-        stilling?.administration?.navIdent === innloggetBruker ||
-        stillingsinfo?.eierNavident === innloggetBruker;
+        stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;
 
     const harKandidatlisteSomKanÅpnes = erEier && kandidatlisteId;
 
@@ -94,6 +93,7 @@ const Stilling = () => {
     const onFaneChange = (fane: string) => {
         navigate(
             lenkeTilStilling({
+                /*@ts-ignore: TODO: written before strict-mode enabled */
                 stillingsId: stilling.uuid,
                 fane:
                     fane === 'om_stillingen' ? undefined : fane === 'kandidater' ? fane : undefined,
@@ -166,6 +166,7 @@ const Stilling = () => {
                                 {erEksternStilling ? (
                                     <>
                                         <PreviewHeader
+                                            /*@ts-ignore: TODO: written before strict-mode enabled */
                                             kandidatlisteId={kandidatlisteId}
                                             erEier={erEier}
                                         />
@@ -174,10 +175,8 @@ const Stilling = () => {
                                     </>
                                 ) : (
                                     <Edit
-                                        innloggetBruker={innloggetBruker}
-                                        erEier={erEier}
+                                        innloggetBruker={navIdent}
                                         onPreviewAdClick={onPreviewAdClick}
-                                        kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
                             </>
@@ -186,6 +185,7 @@ const Stilling = () => {
                                 {!kandidatnrFraStillingssøk && (
                                     <PreviewHeader
                                         erEier={erEier}
+                                        /*@ts-ignore: TODO: written before strict-mode enabled */
                                         kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
@@ -219,6 +219,7 @@ const Stilling = () => {
         return (
             <>
                 <KontekstAvKandidat
+                    /*@ts-ignore: TODO: written before strict-mode enabled */
                     kandidatlisteId={kandidatlisteId}
                     kandidatnr={kandidatnrFraStillingssøk}
                     stilling={stilling}
@@ -248,6 +249,7 @@ const Stilling = () => {
                         )}
                     </Tabs.List>
                     <StillingKandidatKnapper
+                        /*@ts-ignore: TODO: written before strict-mode enabled */
                         kandidatlisteId={kandidatlisteId}
                         stillingId={stilling.uuid}
                         erEier={erEier}

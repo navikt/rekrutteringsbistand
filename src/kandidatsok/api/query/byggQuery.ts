@@ -1,6 +1,5 @@
 import { EsQuery, Sorteringsrekkefølge } from 'felles/domene/elastic/ElasticSearch';
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import { Sortering } from '../../kandidater/sortering/Sortering';
 import { queryMedArbeidserfaring } from './queryMedArbeidserfaring';
@@ -32,6 +31,11 @@ const interessanteKandidatfelter: Array<keyof KandidatTilKandidatsøk> = [
     'postnummer',
 ];
 
+export type InnloggetBruker = {
+    navIdent: string | null;
+    navKontor: string | null;
+};
+
 export const byggQuery = (
     søkekriterier: Søkekriterier,
     innloggetBruker: InnloggetBruker
@@ -57,18 +61,6 @@ const sorter = (sortering: Sortering) => {
         default:
             return undefined;
     }
-};
-
-export const byggQueryForAktørIder = (
-    søkekriterier: Søkekriterier,
-    innloggetBruker: InnloggetBruker,
-    maksAntallKandidater: number
-): EsQuery<{ aktorId: string }> => {
-    return {
-        query: byggIndreQuery(søkekriterier, innloggetBruker),
-        size: maksAntallKandidater,
-        _source: ['aktorId'],
-    };
 };
 
 export const byggIndreQuery = (søkekriterier: Søkekriterier, innloggetBruker: InnloggetBruker) => {

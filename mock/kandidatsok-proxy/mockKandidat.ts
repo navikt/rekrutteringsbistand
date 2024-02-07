@@ -6,11 +6,12 @@ import {
     Hovedmål,
     Innsatsgruppe,
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
-import { mockMeg } from '../meg/mock';
+
 import {
     KandidatStillingssøk,
     Kandidatsammendrag,
 } from '../../src/api/kandidat-søk-api/kandidat-søk-dto';
+import { mockVeileder } from '../mockVeileder';
 
 export const mockKandidatStillingssøk: KandidatStillingssøk = {
     yrkeJobbonskerObj: [
@@ -94,7 +95,7 @@ export const mockKandidat: Kandidat = {
     hovedmaalkode: Hovedmål.SkaffeArbeid,
     kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
     formidlingsgruppekode: Formidlingsgruppe.Arbeidssøker,
-    veileder: mockMeg.navIdent,
+    veileder: mockVeileder.navIdent,
 
     // Jobbprofil
     yrkeJobbonskerObj: [

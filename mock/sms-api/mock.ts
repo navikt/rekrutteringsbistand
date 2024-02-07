@@ -2,7 +2,7 @@ import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
 import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 import { mockKandidatlisteMedStilling } from '../kandidat-api/mockKandidatliste';
-import { mockMeg } from '../meg/mock';
+import { mockVeileder } from '../mockVeileder';
 
 export const smsApiMock = [
     http.get(`${api.sms}/:kandidatlisteId`, ({ params }) => {
@@ -38,6 +38,6 @@ const mockSms: Sms[] = [
         opprettet: new Date().toISOString(),
         sendt: new Date().toISOString(),
         status: SmsStatus.Sendt,
-        navIdent: mockMeg.navIdent,
+        navIdent: mockVeileder.navIdent,
     },
 ];

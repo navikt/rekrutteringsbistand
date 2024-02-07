@@ -5,7 +5,7 @@ import {
     IuseKandidatNavnSøk,
     KandidatKilde,
     useKandidatNavnSøk,
-} from '../../hooks/useKandidatNavn';
+} from '../../../api/kandidat-api/useKandidatNavn';
 
 export interface IKandidatNavn {
     fnr: string;

@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 
-import { initializeAzureAd, responderMedBrukerinfo } from './azureAd';
+import { hentBrukerOgRoller, initializeAzureAd } from './azureAd';
 import { logger } from './logger';
 import { redirectIfUnauthorized, respondUnauthorizedIfNotLoggedIn } from './middlewares';
 import { proxyMedOboToken, proxyTilKandidatsøkEs, proxyUtenToken } from './proxy';
@@ -57,7 +57,7 @@ const startServer = () => {
 
     app.get([`/internal/isAlive`, `/internal/isReady`], (_, res) => res.sendStatus(200));
 
-    app.get('/meg', respondUnauthorizedIfNotLoggedIn, responderMedBrukerinfo);
+    app.get('/meg', respondUnauthorizedIfNotLoggedIn, hentBrukerOgRoller);
 
     proxyUtenToken('/arbeidsgiver-notifikasjon-api', ARBEIDSGIVER_NOTIFIKASJON_API);
 

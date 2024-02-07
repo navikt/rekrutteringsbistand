@@ -14,7 +14,7 @@ const mockProps = vi.fn(); // lagre props for videre testing
 
 // Mocker komponenter som ikke er en del av det som testes
 vi.mock('./statistikk/Statistikk', () => ({
-    default: (props) => {
+    default: (props: unknown) => {
         mockProps(props); // set props sendt ned
         return <div data-testid="mock-statistikk">MOCK-statistikk</div>;
     },

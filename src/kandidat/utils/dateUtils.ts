@@ -2,13 +2,6 @@ enum Språk {
     Norsk = 'nb-NO',
 }
 
-export const formaterTidspunkt = (isoDato: string) => {
-    const dato = formaterDato(isoDato);
-    const klokkeslett = formaterKlokkeslett(isoDato);
-
-    return `${dato} kl. ${klokkeslett}`;
-};
-
 export const formaterDato = (isoDato: string, year?: 'numeric' | '2-digit') =>
     new Date(isoDato).toLocaleDateString(Språk.Norsk, {
         day: '2-digit',
@@ -30,23 +23,9 @@ export const formaterDatoNaturlig = (isoDato: string) =>
         year: 'numeric',
     });
 
-export const formaterKlokkeslett = (isoDato: string, visSekunder = false) =>
-    new Date(isoDato).toLocaleTimeString(Språk.Norsk, {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: visSekunder ? 'numeric' : undefined,
-    });
-
 export const formaterDatoTilMånedOgÅr = (isoDato: string) => {
     return new Date(isoDato).toLocaleString(Språk.Norsk, {
         month: 'short',
-        year: 'numeric',
-    });
-};
-
-export const formaterDatoTilKortMånedOgÅr = (isoDato: string) => {
-    return new Date(isoDato).toLocaleString(Språk.Norsk, {
-        month: '2-digit',
         year: 'numeric',
     });
 };

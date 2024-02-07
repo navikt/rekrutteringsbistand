@@ -27,7 +27,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
 
     test('En bruker med ModiaGenerellTilgang skal få tilgang til kandidatsøket', async () => {
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue('A123456');
-        jest.spyOn(azureAd, 'hentGrupper').mockReturnValue([
+        jest.spyOn(azureAd, 'hentRoller').mockReturnValue([
             kandidatsøk.AD_GRUPPE_MODIA_GENERELL_TILGANG!,
         ]);
 
@@ -42,7 +42,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
 
     test('En bruker med ModiaOppfølging skal få tilgang til kandidatsøket', async () => {
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue('A123456');
-        jest.spyOn(azureAd, 'hentGrupper').mockReturnValue([
+        jest.spyOn(azureAd, 'hentRoller').mockReturnValue([
             kandidatsøk.AD_GRUPPE_MODIA_OPPFOLGING!,
         ]);
 
@@ -59,7 +59,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
         const andreTilganger = ['en-annen-tilgang'];
 
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue('A123456');
-        jest.spyOn(azureAd, 'hentGrupper').mockReturnValue(andreTilganger);
+        jest.spyOn(azureAd, 'hentRoller').mockReturnValue(andreTilganger);
 
         kandidatsøk.harTilgangTilKandidatsøk(
             mockRequest as Request,
@@ -74,7 +74,7 @@ describe('Tilgangskontroll for kandidatsøket', () => {
     test('En bruker uten noen tilganger skal ikke få tilgang til kandidatsøket', async () => {
         jest.spyOn(middlewares, 'retrieveToken').mockReturnValue('');
         jest.spyOn(azureAd, 'hentNavIdent').mockReturnValue('A123456');
-        jest.spyOn(azureAd, 'hentGrupper').mockReturnValue([]);
+        jest.spyOn(azureAd, 'hentRoller').mockReturnValue([]);
 
         kandidatsøk.harTilgangTilKandidatsøk(
             mockRequest as Request,

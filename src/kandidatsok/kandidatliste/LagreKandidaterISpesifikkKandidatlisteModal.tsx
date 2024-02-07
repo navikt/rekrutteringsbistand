@@ -1,7 +1,7 @@
 import { Alert, BodyLong, Button, Loader, Modal } from '@navikt/ds-react';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useState } from 'react';
-import { leggTilKandidaterKandidatliste } from '../../api/kandidat-api/kandidat.api';
+import { leggTilKandidaterKandidatliste } from '../../api/kandidat-api/leggTilKandidat';
 import { useHentStillingTittel } from '../../felles/hooks/useStilling';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from './LagreKandidaterIMineKandidatlisterModal';

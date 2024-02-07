@@ -1,8 +1,9 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
+import useNavKontor from 'felles/store/navKontor';
 import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useMegHook } from '../../api/frackend/meg';
 import { søk } from '../api/api';
 import { PAGE_SIZE, byggQuery } from '../api/query/byggQuery';
 import { ØktContext } from '../Økt';
@@ -10,7 +11,10 @@ import { searchParamsTilSøkekriterier } from './useSøkekriterier';
 
 const maksAntallNavigerbareKandidater = 500;
 
-const useLagreØkt = (innloggetBruker: InnloggetBruker) => {
+const useLagreØkt = () => {
+    const navKontor = useNavKontor((state) => state.navKontor);
+    const { navIdent } = useMegHook();
+    const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
     const { setØkt } = useContext(ØktContext);
     const [navigerbareKandidater, setNavigerbareKandidater] = useState<
         EsResponse<Kandidat> | undefined
@@ -23,6 +27,7 @@ const useLagreØkt = (innloggetBruker: InnloggetBruker) => {
             const til = søkekriterier.side * PAGE_SIZE - maksAntallNavigerbareKandidater / 2;
             const from = Math.max(0, til);
             const size = maksAntallNavigerbareKandidater;
+            //@ts-ignore: TODO: written before strict-mode enabled
             const query = byggQuery(søkekriterier, innloggetBruker);
             const queryNavigerbareKandidater = {
                 ...query,
@@ -38,6 +43,7 @@ const useLagreØkt = (innloggetBruker: InnloggetBruker) => {
             }
         };
 
+        //@ts-ignore: TODO: written before strict-mode enabled
         if (innloggetBruker.navIdent && innloggetBruker.navKontor) {
             hentKandidatnumreForNavigering();
         }

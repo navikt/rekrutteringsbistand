@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
+import Stilling, { System } from 'felles/domene/stilling/Stilling';
 import { State } from '../../redux/store';
 import { RESET_VALIDATION_ERROR } from '../adValidationReducer';
 import EksternStillingAdvarsel from '../forhåndsvisning/header/EksternStillingAdvarsel';
@@ -23,22 +23,11 @@ import css from './Edit.module.css';
 type Props = {
     innloggetBruker: string;
     onPreviewAdClick: () => void;
-    erEier: boolean;
     resetValidation: () => void;
     stilling: Stilling;
-    hasChanges: boolean;
-    stillingsinfoData: Stillingsinfo;
-    kandidatlisteId: string;
 };
 
-const Edit = ({
-    innloggetBruker,
-    stilling,
-    onPreviewAdClick,
-    resetValidation,
-    erEier,
-    kandidatlisteId,
-}: Props) => {
+const Edit = ({ innloggetBruker, stilling, onPreviewAdClick, resetValidation }: Props) => {
     const stillingenErEkstern = stilling.createdBy !== System.Rekrutteringsbistand;
 
     useEffect(() => {
@@ -91,6 +80,7 @@ const Edit = ({
                         tittel="Hvordan sende søknad?"
                         beskrivelse="Gjelder kun eksternt utlyste stillinger"
                     >
+                        {/* @ts-ignore TODO: written before strict-mode enabled */}
                         <HvordanSendeSøknad />
                     </Seksjon>
                     <Seksjon påkrevd tittel="Arbeidssted">
@@ -107,9 +97,8 @@ const mapDispatchToProps = (dispatch: (action: any) => void) => ({
 });
 
 const mapStateToProps = (state: State) => ({
-    stillingsinfoData: state.stillingsinfoData,
     stilling: state.adData,
-    hasChanges: state.ad.hasChanges,
 });
 
+// @ts-ignore TODO: written before strict-mode enabled
 export default connect(mapStateToProps, mapDispatchToProps)(Edit);

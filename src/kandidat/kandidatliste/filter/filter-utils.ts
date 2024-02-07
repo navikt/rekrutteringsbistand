@@ -89,6 +89,7 @@ export const queryParamsTilFilter = (queryParams: URLSearchParams): Kandidatlist
     const statusParams = queryParams.get('status');
     if (statusParams) {
         statusParams.split(QUERY_PARAM_SEPARATOR).forEach((param) => {
+            //@ts-ignore: TODO: written before strict-mode enabled
             status[param] = true;
         });
     }
@@ -96,6 +97,7 @@ export const queryParamsTilFilter = (queryParams: URLSearchParams): Kandidatlist
     const hendelseParams = queryParams.get('hendelse');
     if (hendelseParams) {
         hendelseParams.split(QUERY_PARAM_SEPARATOR).forEach((param) => {
+            //@ts-ignore: TODO: written before strict-mode enabled
             hendelse[param] = true;
         });
     }

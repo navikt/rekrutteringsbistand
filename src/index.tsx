@@ -2,11 +2,12 @@ import { getWebInstrumentations, initializeFaro } from '@grafana/faro-web-sdk';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { SWRConfig } from 'swr';
 import App from './App';
+import { ApplikasjonContextProvider } from './ApplikasjonContext';
 import DevTools from './dev/DevTools';
 import faroConfig from './faroConfig';
 import './index.css';
-import { SWRConfig } from 'swr';
 
 if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
     initializeFaro({
@@ -24,7 +25,7 @@ if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
 async function enableMocking() {
     if (import.meta.env.DEV) {
         const { mswWorker } = await import('../mock/setup');
-        mswWorker.start({
+        await mswWorker.start({
             onUnhandledRequest: 'warn',
         });
     } else {
@@ -43,13 +44,10 @@ enableMocking().then(() => {
                     revalidateOnFocus: false,
                 }}
             >
-                {import.meta.env.DEV ? (
-                    <DevTools>
-                        <App />
-                    </DevTools>
-                ) : (
+                {import.meta.env.DEV ? <DevTools /> : null}
+                <ApplikasjonContextProvider>
                     <App />
-                )}
+                </ApplikasjonContextProvider>
             </SWRConfig>
         </React.StrictMode>
     );

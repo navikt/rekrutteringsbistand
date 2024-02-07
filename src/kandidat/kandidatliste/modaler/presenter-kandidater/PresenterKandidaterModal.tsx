@@ -60,6 +60,7 @@ const PresenterKandidaterModal = ({
             epostadresser,
             kandidatliste.kandidatlisteId,
             kandidatnumre,
+            // @ts-ignore TODO: written before strict-mode enabled
             valgtNavKontor
         );
 

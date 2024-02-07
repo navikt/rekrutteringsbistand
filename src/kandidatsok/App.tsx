@@ -1,6 +1,4 @@
 import '@reach/combobox/styles.css';
-import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
-import useNavKontor from 'felles/store/navKontor';
 import { useContext } from 'react';
 import Kandidatsøk from './Kandidatsøk';
 import useKontekstAvKandidatlisteEllerStilling from './hooks/useKontekstAvKandidatlisteEllerStilling';
@@ -8,8 +6,6 @@ import useNavigeringsstate from './hooks/useNavigeringsstate';
 import { ØktContext, ØktContextProvider } from './Økt';
 
 const App = () => {
-    const navKontor = useNavKontor((state) => state.navKontor);
-
     const kandidatsøkØkt = useContext(ØktContext);
     const navigeringsstate = useNavigeringsstate();
 
@@ -18,7 +14,6 @@ const App = () => {
             ? null
             : kandidatsøkØkt.forrigeØkt;
 
-    const innloggetBruker = useInnloggetBruker(navKontor);
     const kontekstAvKandidatlisteEllerStilling =
         useKontekstAvKandidatlisteEllerStilling(navigeringsstate);
 
@@ -26,8 +21,6 @@ const App = () => {
         <Kandidatsøk
             forrigeØkt={forrigeØkt}
             setØkt={kandidatsøkØkt.setØkt}
-            navKontor={navKontor}
-            innloggetBruker={innloggetBruker}
             kontekstAvKandidatlisteEllerStilling={kontekstAvKandidatlisteEllerStilling}
         />
     );

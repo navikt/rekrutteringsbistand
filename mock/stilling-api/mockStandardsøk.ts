@@ -6,7 +6,7 @@ export const mockStandardsøk: StandardsøkDto = {
     tidspunkt: '2021-03-26T10:19:50.601956',
 };
 
-export const mockPutStandardsøk = async (request): Promise<StandardsøkDto> => {
+export const mockPutStandardsøk = async (request: any): Promise<StandardsøkDto> => {
     const nyttSøk = await request.json();
 
     return {

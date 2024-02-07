@@ -1,5 +1,5 @@
 import add from 'date-fns/add';
-import Stilling, {
+import {
     AdminStatus,
     Ansettelsesform,
     Arbeidsgiver,
@@ -13,7 +13,7 @@ import Stilling, {
     Stillingskategori,
     System,
 } from 'felles/domene/stilling/Stilling';
-import { mockVeileder } from '../meg/mock';
+import { mockVeileder } from '../mockVeileder';
 
 const stillingsId = '1ea746af-66be-4cf8-a051-9e815f77b1d1';
 const iDag = new Date().toISOString();
@@ -37,7 +37,7 @@ export const mockArbeidsgiver: Arbeidsgiver = {
     parentOrgnr: '912819973',
 };
 
-export const mockStilling: Stilling = {
+export const mockStilling /* : Stilling */ = {
     id: 100,
     uuid: stillingsId,
     created: iDag,

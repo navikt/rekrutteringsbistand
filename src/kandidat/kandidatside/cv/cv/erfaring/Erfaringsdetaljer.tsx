@@ -7,7 +7,7 @@ type Props = {
     fradato?: string | null;
     tildato?: string | null;
     nåværende?: boolean;
-    sted?: string;
+    sted?: string | null;
 };
 
 const Erfaringsdetaljer = ({ fradato, tildato, nåværende, sted }: Props) => {
@@ -24,7 +24,10 @@ const Erfaringsdetaljer = ({ fradato, tildato, nåværende, sted }: Props) => {
                     {nåværende && ' nå'}
                 </BodyShort>
                 <BodyShort size="small" spacing className={css.tekst}>
-                    {diffMellomToDatoer(fradato, tildato)}
+                    {
+                        /*@ts-ignore: TODO: written before strict-mode enabled */
+                        diffMellomToDatoer(fradato, tildato)
+                    }
                 </BodyShort>
             </>
         );
@@ -36,7 +39,10 @@ const Erfaringsdetaljer = ({ fradato, tildato, nåværende, sted }: Props) => {
                     {nåværende && ' – nå'}
                 </BodyShort>
                 <BodyShort size="small" spacing className={css.tekst}>
-                    {diffMellomToDatoer(fradato, new Date().toString())}
+                    {
+                        /*@ts-ignore: TODO: written before strict-mode enabled */
+                        diffMellomToDatoer(fradato, new Date().toString())
+                    }
                 </BodyShort>
             </>
         );
@@ -48,7 +54,10 @@ const Erfaringsdetaljer = ({ fradato, tildato, nåværende, sted }: Props) => {
                     {nåværende && ' nå'}
                 </BodyShort>
                 <BodyShort size="small" spacing className={css.tekst}>
-                    {diffMellomToDatoer(tildato, tildato)}
+                    {
+                        /*@ts-ignore: TODO: written before strict-mode enabled */
+                        diffMellomToDatoer(tildato, tildato)
+                    }
                 </BodyShort>
             </>
         );

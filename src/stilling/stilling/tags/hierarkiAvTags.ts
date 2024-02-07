@@ -147,6 +147,3 @@ export const hentSubtagsForMulighetForDirektemeldtStilling = (
 export const hentSubtagsForMulighetForEksternStilling = (
     inkluderingsmulighet: InkluderingsmulighetForEksternStilling
 ) => hierarkiAvTagsForEksterneStillinger[inkluderingsmulighet].subtags;
-
-export const hentSubtagsForMulighetForFilter = (inkluderingsmulighet: Inkluderingsmulighet) =>
-    hierarkiAvTagsForFilter[inkluderingsmulighet].subtags;

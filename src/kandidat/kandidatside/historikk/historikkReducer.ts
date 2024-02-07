@@ -65,7 +65,9 @@ export const historikkReducer = (
     }
 };
 
-function* hentKandidatlisterForKandidat(action: FetchKandidatlisterForKandidatAction) {
+function* hentKandidatlisterForKandidat(
+    action: FetchKandidatlisterForKandidatAction
+): Generator<unknown, any, any> {
     try {
         const response = yield call(
             fetchKandidatlisterForKandidat,

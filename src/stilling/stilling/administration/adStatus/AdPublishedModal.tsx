@@ -7,7 +7,7 @@ import { Status } from 'felles/domene/stilling/Stilling';
 import { formatISOString } from '../../../utils/datoUtils';
 import { HIDE_AD_PUBLISHED_MODAL } from '../../adReducer';
 
-const AdPublishedModal = ({ stillingId }) => {
+const AdPublishedModal = ({ stillingId }: { stillingId: string }) => {
     const dispatch = useDispatch();
 
     const showAdPublishedModal = useSelector((state: any) => state.ad.showAdPublishedModal);

@@ -48,6 +48,7 @@ const useForespørselOmDelingAvCv = (
     }
 
     if (forespørslerOmDelingAvCv.kind === Nettstatus.Suksess) {
+        // @ts-ignore TODO: written before strict-mode enabled
         const forespørsel = forespørslerOmDelingAvCv[kandidat.aktørid];
 
         if (forespørsel) {

@@ -10,11 +10,11 @@ export type Suggestion = {
 };
 
 type Props = {
-    value: string;
+    value: string | undefined;
     label?: string;
     onChange: (value: string) => void;
     onSelect: (suggestion: Suggestion) => void;
-    onBlur: (value: string) => void;
+    onBlur: (value: string | undefined) => void;
     placeholder?: string;
     suggestions: Suggestion[];
     error?: string;

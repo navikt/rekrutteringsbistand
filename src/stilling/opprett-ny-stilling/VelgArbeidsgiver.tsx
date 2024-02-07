@@ -18,10 +18,6 @@ type Props = {
     autoFocus?: boolean;
 };
 
-export type EmployerState = {
-    suggestions: Enhetsregistertreff[];
-};
-
 const VelgArbeidsgiver: FunctionComponent<Props> = ({
     arbeidsgiver,
     setArbeidsgiver,
@@ -53,7 +49,7 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
                     kind: Nettstatus.Suksess,
                     data: response,
                 });
-            } catch (e) {
+            } catch (e: any) {
                 setAlleForslag({
                     kind: Nettstatus.Feil,
                     error: e,
@@ -105,6 +101,7 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
                 autoFocus={autoFocus}
                 className={css.typeahead}
                 value={input}
+                //@ts-ignore: TODO: written before strict-mode enabled
                 onBlur={onInputBlur}
                 onSelect={onForslagValgt}
                 onChange={onInputChange}

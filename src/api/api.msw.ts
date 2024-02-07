@@ -1,4 +1,9 @@
-import { kandidatMockHandlers } from './kandidat-api/kandidat.msw';
-import { statistikkMockHandlers } from './statistikk-api/statistikk.msw';
+import { foresporselStatistikkMockMsw } from './foresporsel-om-deling-av-cv-api/statistikk';
+import { hentKandidatFraPDLMockMsw } from './kandidat-api/hentKandidatFraPDL';
+import { statistikkMockMsw } from './statistikk-api/statistikk';
 
-export const apiMockHandlers = [...kandidatMockHandlers, ...statistikkMockHandlers];
+export const apiMockHandlers = [
+    hentKandidatFraPDLMockMsw,
+    statistikkMockMsw,
+    foresporselStatistikkMockMsw,
+];

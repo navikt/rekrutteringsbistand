@@ -1,9 +1,8 @@
 import { ErrorMessage, Heading, Loader } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { useSvarstatistikk } from '../../../api/foresporsel-om-deling-av-cv-api/hooks/useSvarstatistikk';
+import { useForesporselStatistikkHook } from '../../../api/foresporsel-om-deling-av-cv-api/statistikk';
 import css from './Forespørsler.module.css';
 import Svartelling, { SvartellingIkon } from './Svartelling';
-// import useSvarstatistikk from './useSvarstatistikk';
 
 type Props = {
     navKontor: string;
@@ -21,7 +20,7 @@ export const formaterSomProsentAvTotalen = (tall: number, antallTotalt: number) 
 };
 
 const Forespørsler: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed }) => {
-    const svarstatistikk = useSvarstatistikk({ navKontor, fraOgMed, tilOgMed });
+    const svarstatistikk = useForesporselStatistikkHook({ navKontor, fraOgMed, tilOgMed });
 
     if (svarstatistikk.isLoading || svarstatistikk.isValidating) {
         return <Loader />;

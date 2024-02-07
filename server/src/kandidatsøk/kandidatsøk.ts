@@ -1,5 +1,5 @@
 import { Request, RequestHandler } from 'express';
-import { hentGrupper, hentNavIdent } from '../azureAd';
+import { hentRoller, hentNavIdent } from '../azureAd';
 import { auditLog, logger, opprettLoggmeldingForAuditlogg, secureLog } from '../logger';
 import { retrieveToken } from '../middlewares';
 import { SearchQuery } from './elasticSearchTyper';
@@ -14,7 +14,7 @@ export const adGrupperMedTilgangTilKandidatsøket = [
 const sjekkTilgang = (
     accessToken: string
 ): { harTilgang: boolean; brukerensAdGrupper: string[] } => {
-    const brukerensAdGrupper = hentGrupper(accessToken);
+    const brukerensAdGrupper = hentRoller(accessToken);
     const harTilgang = brukerensAdGrupper.some((adGruppeBrukerErMedlemAv) =>
         adGrupperMedTilgangTilKandidatsøket.includes(adGruppeBrukerErMedlemAv)
     );

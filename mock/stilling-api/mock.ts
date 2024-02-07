@@ -1,7 +1,6 @@
 import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 import { Reportee } from '../../src/stilling/reportee/reporteeReducer';
-import { mockVeileder } from '../meg/mock';
 import { mockEnhetsregistersøk } from './mockEnhetsregister';
 import {
     mockCategoriesWithAltnames,
@@ -16,6 +15,7 @@ import {
     mockRekrutteringsbistandstilling,
     mockStillingsinfo,
 } from './mockStilling';
+import { mockVeileder } from '../mockVeileder';
 
 export const stillingApiMock = [
     http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, () =>

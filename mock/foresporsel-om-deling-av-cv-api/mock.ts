@@ -3,7 +3,6 @@ import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { AktørId } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { HttpResponse, http } from 'msw';
-import { SvarstatistikkDTO } from '../../src/api/foresporsel-om-deling-av-cv-api/forespørsel.dto';
 import { api } from '../../src/felles/api';
 import {
     ForespørselDeltStatus,
@@ -13,7 +12,7 @@ import {
 } from '../../src/kandidat/kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { mockAlleKandidatlister } from '../kandidat-api/mockKandidatliste';
 import { mockAlleKandidater } from '../kandidatsok-proxy/mockKandidat';
-import { mockVeileder } from '../meg/mock';
+import { mockVeileder } from '../mockVeileder';
 import { mockStilling } from '../stilling-api/mockStilling';
 
 export const forespørselOmDelingAvCvMock = [
@@ -62,22 +61,16 @@ export const forespørselOmDelingAvCvMock = [
         `${api.forespørselOmDelingAvCv}/foresporsler/kandidat/:aktorId`,
         (_) => new HttpResponse(null, { status: 201 })
     ),
-
-    http.get(`${api.forespørselOmDelingAvCv}/statistikk`, ({ request }) => {
-        const url = new URL(request.url);
-        const searchParams = url.searchParams;
-        const navKontor = searchParams.get('navKontor');
-
-        return HttpResponse.json(hentForespørslerstatistikk(navKontor));
-    }),
 ];
 
 export const opprettMockForespørslerOmDelingAvCv = (
     kandidatliste: Kandidatliste,
     eier: any
 ): Record<AktørId, ForespørselOmDelingAvCv[]> => ({
+    // @ts-ignore TODO: written before strict-mode enabled
     [kandidatliste.kandidater[0].aktørid]: [
         opprettMockForespørselOmDelingAvCv(
+            // @ts-ignore TODO: written before strict-mode enabled
             kandidatliste.kandidater[0].aktørid,
             kandidatliste.stillingId,
             eier
@@ -116,19 +109,3 @@ const opprettMockForespørselOmDelingAvCv = (
         },
     },
 });
-
-export const hentForespørslerstatistikk = (navKontor: string | null): SvarstatistikkDTO => {
-    return navKontor === '0239'
-        ? {
-              antallSvartJa: 26,
-              antallSvartNei: 108,
-              antallUtløpteSvar: 22,
-              antallVenterPåSvar: 0,
-          }
-        : {
-              antallSvartJa: 13,
-              antallSvartNei: 78,
-              antallUtløpteSvar: 100,
-              antallVenterPåSvar: 0,
-          };
-};

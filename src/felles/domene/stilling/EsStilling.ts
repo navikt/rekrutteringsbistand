@@ -1,4 +1,4 @@
-import { isAfter, startOfDay } from 'date-fns';
+import { startOfDay } from 'date-fns';
 import {
     AdminStatus,
     EsStyrkCategory,
@@ -71,17 +71,5 @@ export const stillingErUtløpt = (stilling: EsStilling): boolean => {
         stilling.status === Status.Inaktiv &&
         utløperFørIdag(stilling.expires) &&
         stilling.administration?.status === AdminStatus.Done
-    );
-};
-
-export const stillingKommerTilÅBliAktiv = (stilling: EsStilling): boolean => {
-    if (stilling.published === null || stilling.expires === null) return false;
-
-    return (
-        stilling.publishedByAdmin !== null &&
-        stilling.administration?.status === AdminStatus.Done &&
-        stilling.status === Status.Inaktiv &&
-        isAfter(new Date(stilling.published), new Date()) &&
-        isAfter(new Date(stilling.expires), new Date(stilling.published))
     );
 };

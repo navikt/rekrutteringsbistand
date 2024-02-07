@@ -1,9 +1,10 @@
 import React from 'react';
-import { postApi } from '../../api/fetcher';
-import { hentKandidatFraPDL } from '../../api/kandidat-api/kandidat.api';
-import { kandidatNavnDTO } from '../../api/kandidat-api/kandidat.dto';
-import { api } from '../api';
-import { EsQuery } from '../domene/elastic/ElasticSearch';
+import { postApi } from '../fetcher';
+// import { hentKandidatFraPDL } from '../../api/kandidat-api/kandidat.api';
+// import { kandidatNavnDTO } from '../../api/kandidat-api/kandidat.dto';
+import { api } from '../../felles/api';
+import { EsQuery } from '../../felles/domene/elastic/ElasticSearch';
+import { hentKandidatFraPDL } from './hentKandidatFraPDL';
 
 export enum KandidatKilde {
     REKRUTTERINGSBISTAND = 'REKRUTTERINGSBISTAND',
@@ -11,7 +12,11 @@ export enum KandidatKilde {
     FINNES_IKKE = 'FINNES_IKKE',
 }
 
-//todo midlertidig:
+/**
+ *
+ * TODO Midlertidig kode til nytt hent navn endepunkt er på plass
+ *
+ */
 const byggQueryFnr = (
     fodselsnummer: string
 ): EsQuery<{
@@ -25,14 +30,21 @@ const byggQueryFnr = (
     size: 1,
 });
 
-export interface IuseKandidatNavnSøk extends kandidatNavnDTO {
+export interface KandidatNavnDTO {
+    fornavn?: string;
+    mellomnavn?: string | null;
+    etternavn?: string;
+    kandidatnr?: string | null;
+}
+
+export interface IuseKandidatNavnSøk extends KandidatNavnDTO {
     laster: boolean;
-    kilde: KandidatKilde;
+    kilde: KandidatKilde | null;
 }
 export const useKandidatNavnSøk = (fnr: string): IuseKandidatNavnSøk => {
-    const [navneData, setNavneData] = React.useState<kandidatNavnDTO>(null);
+    const [navneData, setNavneData] = React.useState<KandidatNavnDTO | null>(null);
     const [laster, setLaster] = React.useState<boolean>(true);
-    const [kilde, setKilde] = React.useState<KandidatKilde>(null);
+    const [kilde, setKilde] = React.useState<KandidatKilde | null>(null);
 
     const reset = () => {
         setLaster(true);

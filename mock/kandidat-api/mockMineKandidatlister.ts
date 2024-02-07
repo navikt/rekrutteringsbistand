@@ -14,6 +14,7 @@ function tilKandidatlistesammendrag(kandidatliste: Kandidatliste): Kandidatliste
         ...kandidatliste,
     };
 
+    // @ts-ignore TODO: written before strict-mode enabled
     delete sammendrag.kandidater;
 
     return {

@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom';
 
 import { CopyButton } from '@navikt/ds-react';
 import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
-import useInnloggetBruker from 'felles/hooks/useInnloggetBruker';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import useKandidatsammendrag from 'felles/komponenter/kandidatbanner/useKandidatsammendrag';
 import { useSelector } from 'react-redux';
+import { useMegHook } from '../../../api/frackend/meg';
 import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
@@ -35,7 +35,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
         state?.stillingssøk
     );
 
-    const { navIdent } = useInnloggetBruker(null);
+    const { navIdent } = useMegHook();
 
     const erEier =
         stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;

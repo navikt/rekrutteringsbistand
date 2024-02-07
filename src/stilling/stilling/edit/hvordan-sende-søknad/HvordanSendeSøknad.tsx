@@ -131,11 +131,12 @@ const mapStateToProps = (state: State) => ({
     validation: state.adValidation.errors,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    setApplicationEmail: (applicationemail) =>
+const mapDispatchToProps = (dispatch: (_: unknown) => unknown) => ({
+    setApplicationEmail: (applicationemail: unknown) =>
         dispatch({ type: SET_APPLICATIONEMAIL, applicationemail }),
-    setApplicationUrl: (applicationurl) => dispatch({ type: SET_APPLICATIONURL, applicationurl }),
+    setApplicationUrl: (applicationurl: unknown) => dispatch({ type: SET_APPLICATIONURL, applicationurl }),
     validateEmail: () => dispatch({ type: VALIDATE_APPLICATION_EMAIL }),
 });
 
+// @ts-ignore TODO: written before strict-mode enabled
 export default connect(mapStateToProps, mapDispatchToProps)(Application);

@@ -32,6 +32,7 @@ const ContactInfo = () => {
 
     const isDir = stilling && erDirektemeldtStilling(stilling.source);
     const hasStillingsinfo = stillingsinfo && stillingsinfo.eierNavident;
+    //@ts-ignore: TODO: written before strict-mode enabled
     const { reportee, navIdent } = stilling.administration;
 
     const markerSomMinKnappOgModal = () => (
@@ -55,6 +56,7 @@ const ContactInfo = () => {
 
     const visMarkerSomMinKnapp =
         innlogget &&
+        //@ts-ignore: TODO: written before strict-mode enabled
         innlogget.navIdent !== stilling.administration.navIdent &&
         stillingsinfo.stillingskategori !== Stillingskategori.Formidling;
 

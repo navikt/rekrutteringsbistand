@@ -53,7 +53,7 @@ export default function reporteeReducer(
     }
 }
 
-export function* getReportee() {
+export function* getReportee(): Generator<unknown, any, any> {
     let state = yield select();
 
     if (!state.reportee.data) {

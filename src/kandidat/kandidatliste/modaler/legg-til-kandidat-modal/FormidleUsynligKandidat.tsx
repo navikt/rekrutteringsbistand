@@ -15,11 +15,11 @@ import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
 
 type Props = {
-    fnr: string;
+    fnr: string | null;
     usynligKandidat: UsynligKandidat;
     kandidatlisteId: string;
     stillingsId: string;
-    valgtNavKontor: string;
+    valgtNavKontor: string | null;
     onClose: () => void;
     handleBekreft: () => void;
 };
@@ -42,9 +42,11 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
         setFormidling(senderInn());
 
         const dto: FormidlingAvUsynligKandidatOutboundDto = {
+            // @ts-ignore TODO: written before strict-mode enabled
             fnr,
             presentert,
             fåttJobb,
+            // @ts-ignore TODO: written before strict-mode enabled
             navKontor: valgtNavKontor,
             stillingsId,
         };

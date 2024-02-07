@@ -8,7 +8,7 @@ type Props = {
 };
 
 const SmsSendt: FunctionComponent<Props> = ({ sms }) => {
-    function smstekst(smsMelding) {
+    function smstekst(smsMelding: any) {
         return `${formaterDatoNaturlig(smsMelding.opprettet)} av ${smsMelding.navIdent}`;
     }
 

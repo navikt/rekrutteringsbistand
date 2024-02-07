@@ -16,14 +16,3 @@ export const stillingErPublisert = (ad: any) => {
 export const hentAnnonselenke = (uuid?: string) => `${visStillingUrl}/${uuid}`;
 
 export const erDirektemeldtStilling = (source?: string): boolean => source === 'DIR';
-
-export const stillingenHarKandidatliste = (
-    eierNavident: string | null,
-    publishedByAdmin: string | null,
-    source?: string
-) => {
-    const erPublisertOgDirektemeldt = publishedByAdmin && erDirektemeldtStilling(source);
-    const noenHarTattEierskapTilStillingen = typeof eierNavident === 'string';
-
-    return erPublisertOgDirektemeldt || noenHarTattEierskapTilStillingen;
-};

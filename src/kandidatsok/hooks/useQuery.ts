@@ -1,13 +1,13 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat, { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { InnloggetBruker } from 'felles/hooks/useInnloggetBruker';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import useNavKontor from 'felles/store/navKontor';
 import { useEffect, useState } from 'react';
+import { useMegHook } from '../../api/frackend/meg';
 import { søk } from '../api/api';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
 import useSøkekriterier from './useSøkekriterier';
-import { KandidatsokQueryParam } from 'felles/lenker';
 
 export enum FilterParam {
     Fritekst = 'q',
@@ -29,16 +29,17 @@ export enum FilterParam {
     Sortering = 'sortering',
 }
 
-export type Param = FilterParam | KandidatsokQueryParam;
+const useQuery = (): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
+    const navKontor = useNavKontor((state) => state.navKontor);
+    const { navIdent } = useMegHook();
+    const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
 
-const useQuery = (
-    innloggetBruker: InnloggetBruker
-): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
     const { søkekriterier } = useSøkekriterier();
     const [response, setResponse] = useState<Nettressurs<EsResponse<Kandidat>>>({
         kind: Nettstatus.IkkeLastet,
     });
 
+    // @ts-ignore TODO: written before strict-mode enabled
     const query = byggQuery(søkekriterier, innloggetBruker);
 
     const setOpptatt = () => {

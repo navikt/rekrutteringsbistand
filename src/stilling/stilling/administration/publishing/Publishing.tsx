@@ -6,11 +6,6 @@ import { DatePicker, DateValidationT, useDatepicker } from '@navikt/ds-react';
 import Skjemalabel from '../../edit/skjemaetikett/Skjemalabel';
 import css from './Publishing.module.css';
 
-export type Validation = {
-    expires: string;
-    published: string;
-};
-
 const Publishing = () => {
     const dispatch = useDispatch();
 
@@ -85,6 +80,7 @@ const Publishing = () => {
         ...datePickerDefaultProps,
         locale: 'nb',
         defaultSelected: new Date(published),
+        // @ts-ignore TODO: written before strict-mode enabled
         onDateChange: onPublishChange,
         onValidate: onValidatePublished,
     });
@@ -93,6 +89,7 @@ const Publishing = () => {
         ...datePickerDefaultProps,
         locale: 'nb',
         defaultSelected: new Date(expires),
+        // @ts-ignore TODO: written before strict-mode enabled
         onDateChange: onExpirationDateChange,
         onValidate: onValidateExpirationDate,
     });

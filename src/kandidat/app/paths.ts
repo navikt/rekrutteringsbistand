@@ -36,7 +36,7 @@ export enum Kandidatfane {
 }
 
 export type Kandidatlistekontekst = {
-    stillingId: string;
+    stillingId: string | null;
     /** @deprecated  bruk stillingsId */
     kandidatlisteId?: string;
 };

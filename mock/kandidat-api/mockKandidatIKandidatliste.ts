@@ -3,7 +3,7 @@ import KandidatIKandidatliste, {
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { mockKandidat } from '../kandidatsok-proxy/mockKandidat';
-import { mockMeg } from '../meg/mock';
+import { mockVeileder } from '../mockVeileder';
 
 export const mockKandidatIKandidatliste: KandidatIKandidatliste[] = [
     {
@@ -15,12 +15,12 @@ export const mockKandidatIKandidatliste: KandidatIKandidatliste[] = [
         epost: mockKandidat.epostadresse,
         erSynlig: true,
         etternavn: mockKandidat.etternavn,
-        fodselsdato: mockKandidat.fodselsdato,
+        fodselsdato: mockKandidat.fodselsdato!!,
         fodselsnr: mockKandidat.fodselsnummer,
         fornavn: mockKandidat.fornavn,
         innsatsgruppe: 'Situasjonsbestemt innsats',
         lagtTilAv: {
-            ident: mockMeg.navIdent,
+            ident: mockVeileder.navIdent,
             navn: 'Varg Veileder',
         },
         lagtTilTidspunkt: new Date().toISOString(),
