@@ -19,7 +19,7 @@ export interface MegDTO {
     roller: Rolle[];
 }
 
-export const useMegHook = () => {
+export const useMeg = () => {
     const swrData = useSWR(megEndepunkt, getAPI);
     return {
         ...swrData,

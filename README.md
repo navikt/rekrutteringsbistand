@@ -16,13 +16,6 @@ Følgende kommando starter appen i et utviklingsmiljø. Alle API-kall er mocket 
 npm run start
 ```
 
-### Modia
-
-I utviklingsmiljøet er Modia-dekoratøren erstattet med en placeholder. Slik laster du heller inn den ekte Modia-dekoratøren:
-
-```sh
-npm run start:modia
-```
 
 ### Mock
 

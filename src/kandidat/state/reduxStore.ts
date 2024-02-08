@@ -3,10 +3,6 @@ import createSagaMiddleware from 'redux-saga';
 import kandidatlisteReducer from '../kandidatliste/reducer/kandidatlisteReducer';
 import kandidatlisteSaga from '../kandidatliste/reducer/kandidatlisteSaga';
 
-import { historikkReducer, historikkSaga } from '../kandidatside/historikk/historikkReducer';
-import enhetsregisterReducer, {
-    enhetsregisterSaga,
-} from '../komponenter/typeahead/enhetsregisterReducer';
 import varslingReducer, { varslingSaga } from '../varsling/varslingReducer';
 import errorReducer from './errorReducer';
 
@@ -16,8 +12,6 @@ const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
 
 const store = legacy_createStore(
     combineReducers({
-        enhetsregister: enhetsregisterReducer,
-        historikk: historikkReducer,
         kandidatliste: kandidatlisteReducer,
         varsling: varslingReducer,
         error: errorReducer,
@@ -25,9 +19,7 @@ const store = legacy_createStore(
     composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run(historikkSaga);
 sagaMiddleware.run(kandidatlisteSaga);
-sagaMiddleware.run(enhetsregisterSaga);
 sagaMiddleware.run(varslingSaga);
 
 export default store;

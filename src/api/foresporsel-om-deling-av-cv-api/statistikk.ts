@@ -16,17 +16,17 @@ export interface ForesporselStatistikkDTO {
     antallUtløpteSvar: number;
 }
 
-interface IuseSvarstatistikk {
+interface ForesporselStatistikkProps {
     navKontor: string;
     fraOgMed: Date;
     tilOgMed: Date;
 }
 
-export const useForesporselStatistikkHook = ({
+export const useForesporselStatistikk = ({
     navKontor,
     fraOgMed,
     tilOgMed,
-}: IuseSvarstatistikk) =>
+}: ForesporselStatistikkProps) =>
     useSWR(
         foresporselStatistikkEndepunkt(
             new URLSearchParams({

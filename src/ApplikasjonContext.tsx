@@ -1,6 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
-import { useMegHook } from './api/frackend/meg';
+import { useMeg } from './api/frackend/meg';
 
 interface ApplikasjonContextType {
     brukerRoller?: string[];
@@ -13,7 +13,7 @@ interface IApplikasjonContextProvider {
 }
 
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
-    const { navIdent } = useMegHook();
+    const { navIdent } = useMeg();
 
     return (
         <ApplikasjonContext.Provider value={{}}>

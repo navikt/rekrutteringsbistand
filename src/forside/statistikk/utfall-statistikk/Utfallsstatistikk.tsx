@@ -1,7 +1,7 @@
 import { EyeIcon, HandshakeIcon } from '@navikt/aksel-icons';
 import { BodyShort, ErrorMessage, Loader, Skeleton } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { AntallDTO, useStatistikkHook } from '../../../api/statistikk-api/statistikk';
+import { AntallDTO, useStatistikk } from '../../../api/statistikk-api/statistikk';
 import statistikkCss from '../Statistikk.module.css';
 import Telling from './Telling';
 
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Utfallsstatistikk: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed }) => {
-    const statistikk = useStatistikkHook({ navKontor, fraOgMed, tilOgMed });
+    const statistikk = useStatistikk({ navKontor, fraOgMed, tilOgMed });
 
     if (statistikk.isLoading || statistikk.isValidating) {
         return <Loader />;

@@ -1,36 +1,34 @@
 import { Ingress } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { sendEvent } from 'felles/amplitude';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Sms } from 'felles/domene/sms/Sms';
-import { ikkeLastet, lasterInn, Nettressurs, Nettstatus, suksess } from 'felles/nettressurs';
+import { ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs';
+import { useHentKandidatHistorikk } from '../../../api/kandidat-api/hentKandidatHistorikk';
+import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { fetchSmserForKandidat } from '../../api/api';
 import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
 import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import AppState from '../../state/AppState';
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
-import useCv from '../hooks/useCv';
 import { KandidatQueryParam } from '../Kandidatside';
-import { KandidatlisterForKandidatActionType } from './historikkReducer';
 import css from './Historikkside.module.css';
 import { Historikktabell } from './historikktabell/Historikktabell';
 
 const Historikkside: FunctionComponent = () => {
-    const dispatch = useDispatch();
-
     const { search } = useLocation();
     const { kandidatnr } = useParams<{ kandidatnr: string }>();
+
+    const { data, isLoading, error } = useHentKandidatHistorikk({ kandidatnr: kandidatnr });
+
     const queryParams = new URLSearchParams(search);
     const kandidatlisteId = queryParams.get(KandidatQueryParam.KandidatlisteId);
 
-    const historikk = useSelector((state: AppState) => state.historikk);
-    const { cv } = useCv(kandidatnr);
-    const kandidatStatus = useSelector(hentStatus(kandidatnr!));
+    const { cv } = useLookupCv(kandidatnr);
     const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] = useState<
         Nettressurs<ForespørselOmDelingAvCv[]>
     >(ikkeLastet());
@@ -55,47 +53,37 @@ const Historikkside: FunctionComponent = () => {
     }, [cv]);
 
     useEffect(() => {
-        dispatch({
-            type: KandidatlisterForKandidatActionType.Fetch,
-            kandidatnr,
-        });
-    }, [kandidatnr, kandidatStatus, dispatch]);
-
-    useEffect(() => {
-        if (historikk.kandidatlisterForKandidat.kind === Nettstatus.Suksess) {
+        if (data) {
             sendEvent('historikk', 'hentet', {
-                antallLister: historikk.kandidatlisterForKandidat.data.length,
+                antallLister: data.length,
             });
         }
-    }, [kandidatnr, historikk.kandidatlisterForKandidat]);
+    }, [kandidatnr, data]);
 
-    if (
-        historikk.kandidatlisterForKandidat.kind === Nettstatus.IkkeLastet ||
-        historikk.kandidatlisterForKandidat.kind === Nettstatus.LasterInn
-    ) {
+    if (isLoading) {
         return <Sidelaster />;
     }
 
-    if (historikk.kandidatlisterForKandidat.kind === Nettstatus.Suksess) {
-        const kandidatlister = sorterPåDato(historikk.kandidatlisterForKandidat.data);
-        const navn = hentKandidatensNavnFraCvEllerKandidatlister(cv, kandidatlister);
-
-        return (
-            <div className={css.historikk}>
-                <Ingress className={css.ingress}>
-                    <b>{navn}</b> er lagt til i <b>{kandidatlister.length}</b> kandidatlister
-                </Ingress>
-                <Historikktabell
-                    kandidatlister={kandidatlister}
-                    aktivKandidatlisteId={kandidatlisteId}
-                    forespørslerOmDelingAvCvForKandidat={forespørslerOmDelingAvCv}
-                    smser={smser}
-                />
-            </div>
-        );
+    if (error) {
+        return <span> Feil ved lasting av historikk...</span>;
     }
 
-    return null;
+    const kandidatlister = sorterPåDato(data);
+    const navn = hentKandidatensNavnFraCvEllerKandidatlister(cv, kandidatlister);
+
+    return (
+        <div className={css.historikk}>
+            <Ingress className={css.ingress}>
+                <b>{navn}</b> er lagt til i <b>{kandidatlister.length}</b> kandidatlister
+            </Ingress>
+            <Historikktabell
+                kandidatlister={kandidatlister}
+                aktivKandidatlisteId={kandidatlisteId}
+                forespørslerOmDelingAvCvForKandidat={forespørslerOmDelingAvCv}
+                smser={smser}
+            />
+        </div>
+    );
 };
 
 const formaterNavn = (fornavn: string, etternavn: string) => {
@@ -119,15 +107,6 @@ export const hentKandidatensNavnFraCvEllerKandidatlister = (
     }
 
     return null;
-};
-
-const hentStatus = (kandidatnr: string) => (state: AppState) => {
-    const kandidatliste = state.kandidatliste.kandidatliste;
-
-    if (kandidatliste.kind !== Nettstatus.Suksess) return;
-
-    const kandidat = kandidatliste.data.kandidater.find((k) => k.kandidatnr === kandidatnr);
-    return kandidat?.status;
 };
 
 const sorterPåDato = (kandidatlister: KandidatlisteForKandidat[]) => {
