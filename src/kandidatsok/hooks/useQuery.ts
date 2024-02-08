@@ -3,7 +3,7 @@ import Kandidat, { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandid
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import useNavKontor from 'felles/store/navKontor';
 import { useEffect, useState } from 'react';
-import { useMegHook } from '../../api/frackend/meg';
+import { useMeg } from '../../api/frackend/meg';
 import { søk } from '../api/api';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
@@ -31,7 +31,7 @@ export enum FilterParam {
 
 const useQuery = (): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
     const navKontor = useNavKontor((state) => state.navKontor);
-    const { navIdent } = useMegHook();
+    const { navIdent } = useMeg();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
 
     const { søkekriterier } = useSøkekriterier();

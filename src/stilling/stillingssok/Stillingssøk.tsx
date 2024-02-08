@@ -4,7 +4,7 @@ import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import Piktogram from 'felles/komponenter/piktogrammer/finn-stillinger.svg';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useMegHook } from '../../api/frackend/meg';
+import { useMeg } from '../../api/frackend/meg';
 import { sendEvent } from '../../felles/amplitude';
 import Layout from '../../felles/komponenter/layout/Layout';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
@@ -40,7 +40,7 @@ enum TabVisning {
 }
 
 const Stillingssøk = () => {
-    const { navIdent } = useMegHook();
+    const { navIdent } = useMeg();
     const { searchParams, navigate } = useNavigering();
     const { kandidat: kandidatnr } = useParams<{ kandidat?: string }>();
     const { search } = useLocation();

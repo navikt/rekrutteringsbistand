@@ -33,12 +33,12 @@ const convertToUrlParams = (query: any) =>
         .join('&')
         .replace(/%20/g, '+');
 
-interface IhentKandidatHistorikkHook {
+interface HentKandidatHistorikkProps {
     kandidatnr?: string;
     filtrerPaaStilling?: string;
 }
 
-const hentKandidatHistorikkEndepunkt = (props: IhentKandidatHistorikkHook) =>
+const hentKandidatHistorikkEndepunkt = (props: HentKandidatHistorikkProps) =>
     props.kandidatnr
         ? `/kandidat-api/veileder/kandidater/${props.kandidatnr}/listeoversikt?${convertToUrlParams(
               {
@@ -48,9 +48,7 @@ const hentKandidatHistorikkEndepunkt = (props: IhentKandidatHistorikkHook) =>
           )}`
         : undefined;
 
-export interface hentKandidatHistorikkDTO {}
-
-export const useHentKandidatHistorikkHook = (props: IhentKandidatHistorikkHook) => {
+export const useHentKandidatHistorikk = (props: HentKandidatHistorikkProps) => {
     const swrData = useSWR(hentKandidatHistorikkEndepunkt(props), getAPI);
     return {
         ...swrData,

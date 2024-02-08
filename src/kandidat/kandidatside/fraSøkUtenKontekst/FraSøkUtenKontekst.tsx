@@ -3,7 +3,7 @@ import { FunctionComponent, MouseEvent, ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { TasklistIcon } from '@navikt/aksel-icons';
-import { useLookupCvHook } from '../../../api/kandidat-søk-api/lookupCv';
+import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import { lenkeTilKandidatsøk } from '../../app/paths';
 import useScrollTilToppen from '../../utils/useScrollTilToppen';
@@ -26,7 +26,7 @@ const FraSøkUtenKontekst: FunctionComponent<Props> = ({ tabs, kandidatnr, child
 
     const navigate = useNavigate();
     const [fane, setFane] = useFaner();
-    const { cv } = useLookupCvHook(kandidatnr);
+    const { cv } = useLookupCv(kandidatnr);
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr);
     const [visKandidatlisterModal, setVisKandidatlisterModal] = useState<boolean>(false);
 

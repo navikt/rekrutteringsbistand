@@ -8,8 +8,8 @@ import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Sms } from 'felles/domene/sms/Sms';
 import { ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs';
-import { useHentKandidatHistorikkHook } from '../../../api/kandidat-api/hentKandidatHistorikk';
-import { useLookupCvHook } from '../../../api/kandidat-søk-api/lookupCv';
+import { useHentKandidatHistorikk } from '../../../api/kandidat-api/hentKandidatHistorikk';
+import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { fetchSmserForKandidat } from '../../api/api';
 import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
@@ -23,12 +23,12 @@ const Historikkside: FunctionComponent = () => {
     const { search } = useLocation();
     const { kandidatnr } = useParams<{ kandidatnr: string }>();
 
-    const { data, isLoading, error } = useHentKandidatHistorikkHook({ kandidatnr: kandidatnr });
+    const { data, isLoading, error } = useHentKandidatHistorikk({ kandidatnr: kandidatnr });
 
     const queryParams = new URLSearchParams(search);
     const kandidatlisteId = queryParams.get(KandidatQueryParam.KandidatlisteId);
 
-    const { cv } = useLookupCvHook(kandidatnr);
+    const { cv } = useLookupCv(kandidatnr);
     const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] = useState<
         Nettressurs<ForespørselOmDelingAvCv[]>
     >(ikkeLastet());

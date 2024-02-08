@@ -26,7 +26,7 @@ interface IuseUtfallsstatistikk {
     tilOgMed: Date;
 }
 
-export const useStatistikkHook = ({ navKontor, fraOgMed, tilOgMed }: IuseUtfallsstatistikk) =>
+export const useStatistikk = ({ navKontor, fraOgMed, tilOgMed }: IuseUtfallsstatistikk) =>
     useSWR(
         statistikkEndepunkt(
             new URLSearchParams({

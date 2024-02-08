@@ -8,9 +8,7 @@ import { postApi } from '../fetcher';
 
 const lookupCvEndepunkt = '/kandidatsok-api/api/lookupCv';
 
-export interface lookupCvDTO {}
-
-export const useLookupCvHook = (kandidatnr?: string) => {
+export const useLookupCv = (kandidatnr?: string) => {
     const swrData = useSWR({ path: lookupCvEndepunkt, kandidatnr }, ({ path }) =>
         postApi(path, { kandidatnr })
     );

@@ -9,7 +9,7 @@ import {
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import { useLookupCvHook } from '../../../api/kandidat-søk-api/lookupCv';
+import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
@@ -42,7 +42,7 @@ const FraKandidatliste = ({ tabs, kandidatnr, kandidatlisteId, stillingId, child
     // @ts-ignore TODO: written before strict-mode enabled
     useValgtKandidatIKandidatliste(kandidatnr, kandidatlisteId);
 
-    const { cv } = useLookupCvHook(kandidatnr);
+    const { cv } = useLookupCv(kandidatnr);
     const kandidatliste = useKandidatliste({ stillingId, kandidatlisteId });
 
     if (!kandidatlisteId && !stillingId) {

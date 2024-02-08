@@ -4,7 +4,7 @@ import { FunctionComponent, ReactNode, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Nettstatus } from 'felles/nettressurs';
-import { useLookupCvHook } from '../../../api/kandidat-søk-api/lookupCv';
+import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Layout from '../../../felles/komponenter/layout/Layout';
 import { lenkeTilKandidatliste, lenkeTilKandidatsøk } from '../../app/paths';
@@ -38,7 +38,7 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
     const [fane, setFane] = useFaner();
     const [visLagreKandidatModal, setVisLagreKandidatModal] = useState<boolean>(false);
 
-    const { cv } = useLookupCvHook(kandidatnr);
+    const { cv } = useLookupCv(kandidatnr);
     const kandidatliste = useKandidatliste({ stillingId, kandidatlisteId });
     // @ts-ignore TODO: written before strict-mode enabled
     const kandidatnavigering = useNavigerbareKandidaterFraSøk(kandidatnr, {
