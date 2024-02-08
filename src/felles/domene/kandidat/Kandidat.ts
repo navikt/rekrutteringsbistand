@@ -69,28 +69,6 @@ export type KandidatLookup = {
     arenaKandidatnr: Id['arenaKandidatnr'];
 };
 
-/* Brukes i Kandidatbanneret. */
-export type KandidatTilBanner = {
-    fornavn: Personalia['fornavn'];
-    etternavn: Personalia['etternavn'];
-    fodselsnummer: Id['fodselsnummer'];
-    arenaKandidatnr: Id['arenaKandidatnr'];
-    fodselsdato: Personalia['fodselsdato'];
-    adresselinje1: Geografi['adresselinje1'];
-    postnummer: Geografi['postnummer'];
-    poststed: Geografi['poststed'];
-    epostadresse: Personalia['epostadresse'];
-    telefon: Personalia['telefon'];
-    veileder: Oppfølgingsinformasjon['veileder'];
-    veilederIdent: Oppfølgingsinformasjon['veilederIdent'];
-    veilederVisningsnavn: Oppfølgingsinformasjon['veilederVisningsnavn'];
-    veilederEpost: Oppfølgingsinformasjon['veilederEpost'];
-    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
-    yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
-    kommunenummerstring: Geografi['kommunenummerstring'];
-    kommuneNavn: Geografi['kommuneNavn'];
-};
-
 export type KandidatTilKandidatsøk = {
     fodselsnummer: Id['fodselsnummer'];
     aktorId: Id['aktorId'];

@@ -55,8 +55,6 @@ export const useHentKandidatHistorikk = (props: HentKandidatHistorikkProps) => {
     };
 };
 
-// const hentKandidatHistorikkMock: hentKandidatHistorikkDTO = {};
-
 export const hentKandidatHistorikkMockMsw = http.get(
     `/kandidat-api/veileder/kandidater/:kandidatnr/listeoversikt`,
     ({ params }) => {

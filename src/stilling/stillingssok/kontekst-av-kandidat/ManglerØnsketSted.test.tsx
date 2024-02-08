@@ -1,6 +1,10 @@
-import { render, screen } from '@testing-library/react';
-import { Nettstatus } from 'felles/nettressurs';
+import { render, screen, waitFor } from '@testing-library/react';
+import { HttpResponse, http } from 'msw';
 import { BrowserRouter } from 'react-router-dom';
+import {
+    KandidatStillingssøkES,
+    kandidatStillingssøkEndepunkt,
+} from '../../../api/kandidat-søk-api/kandidatStillingssøk';
 import KontekstAvKandidat from './KontekstAvKandidat';
 
 const wrapper = () => (
@@ -9,25 +13,52 @@ const wrapper = () => (
     </BrowserRouter>
 );
 
-it('<ManglerØnsketSted/>', () => {
-    vi.mock('./useKandidatStillingssøk', () => ({
-        __esModule: true,
-        default: vi.fn(() => ({
-            kandidat: {
-                kind: Nettstatus.Suksess,
-                data: {
-                    arenaKandidatnr: '123',
-                    fodselsnummer: '12345678901',
-                    fornavn: 'Ola',
-                    etternavn: 'Nordmann',
+test('<ManglerØnsketSted />', async () => {
+    // @ts-ignore TODO: written before strict-mode enabled
+    global.testServer.use(
+        http.post(kandidatStillingssøkEndepunkt, () => {
+            const dto = {
+                yrkeJobbonskerObj: [
+                    {
+                        styrkBeskrivelse: 'Avisbud',
+                        sokeTitler: [
+                            'Avisbud',
+                            'Avisbud',
+                            'Bilagskontrollør (avisbud)',
+                            'Avis- og reklamebrosjyrebud',
+                            'Altmuligmann',
+                            'Avis- og reklamedistributør',
+                            'Utdeler (gratisavis)',
+                            'Reklamebud',
+                            'Reklame- og avisdistributør',
+                            'Bud, utlevering',
+                        ],
+                        primaertJobbonske: false,
+                        styrkKode: null,
+                    },
+                ],
+                arenaKandidatnr: 'PAM0152hb0wr4',
+                geografiJobbonsker: [],
+                fodselsnummer: '04928797045',
+                kommunenummerstring: '0301',
+                kommuneNavn: 'Vestvågøy',
+            };
+
+            const testSvar: KandidatStillingssøkES = {
+                hits: {
+                    hits: [
+                        {
+                            _source: dto,
+                        },
+                    ],
                 },
-            },
-            hentetGeografiFraBosted: true,
-            manglerØnsketYrke: false,
-        })),
-    }));
+            };
+            return HttpResponse.json(testSvar);
+        })
+    );
 
     render(wrapper());
-
-    expect(screen.getByText('Vi vet ikke hvor kandidaten ønsker å jobbe')).toBeInTheDocument();
+    await waitFor(() => {
+        expect(screen.getByText('Vi vet ikke hvor kandidaten ønsker å jobbe')).toBeInTheDocument();
+    });
 });

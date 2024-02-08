@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react';
-import { Nettstatus } from 'felles/nettressurs';
+import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import KontekstAvKandidat from './KontekstAvKandidat';
 
@@ -9,26 +8,13 @@ const wrapper = () => (
     </BrowserRouter>
 );
 
-test('<KontekstAvKandidat/>', () => {
-    vi.mock('./useKandidatStillingssøk', () => ({
-        default: vi.fn(() => ({
-            kandidat: {
-                kind: Nettstatus.Suksess,
-                data: {
-                    arenaKandidatnr: '123',
-                    fodselsnummer: '12345678901',
-                    fornavn: 'Ola',
-                    etternavn: 'Nordmann',
-                },
-            },
-            hentetGeografiFraBosted: false,
-            manglerØnsketYrke: false,
-        })),
-    }));
-
+test('<KontekstAvKandidat/>', async () => {
     render(wrapper());
 
-    expect(screen.getByText('Kandidater')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Ola Nordmann' })).toBeInTheDocument();
-    expect(screen.getByText('Finn stilling')).toBeInTheDocument();
+    await waitFor(() => {
+        expect(screen.getByText('Kandidater')).toBeInTheDocument();
+        expect(screen.getByRole('heading', { name: 'Redd Lukt' })).toBeInTheDocument();
+        expect(screen.getByText('Finn stilling')).toBeInTheDocument();
+        expect(screen.getByRole('link', { name: 'Redd Lukt' })).toBeInTheDocument();
+    });
 });

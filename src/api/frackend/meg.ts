@@ -14,10 +14,10 @@ export enum Rolle {
     MODIA_GENERELL = 'MODIA_GENERELL',
 }
 
-export interface MegDTO {
+export type MegDTO = {
     navIdent: string;
     roller: Rolle[];
-}
+};
 
 export const useMeg = () => {
     const swrData = useSWR(megEndepunkt, getAPI);

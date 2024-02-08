@@ -17,7 +17,11 @@ export const capitalizeFirstLetter = (inputString: string) => {
     return inputString;
 };
 
-export const ordToCorrectCase = (ord: string, listeMedUpperCaseOrd: string[], listeMedLowerCaseOrd: string[]) => {
+export const ordToCorrectCase = (
+    ord: string,
+    listeMedUpperCaseOrd: string[],
+    listeMedLowerCaseOrd: string[]
+) => {
     if (listeMedUpperCaseOrd.includes(ord)) {
         return ord.toUpperCase();
     } else if (!listeMedLowerCaseOrd.includes(ord)) {

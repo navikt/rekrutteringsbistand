@@ -1,56 +1,60 @@
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import { Nettstatus } from 'felles/nettressurs';
+import {
+    Kandidatsammendrag,
+    useKandidatsammendrag,
+} from '../../../api/kandidat-søk-api/kandidatsammendrag';
 import ManglerØnsketSted from './ManglerØnsketSted';
 import ManglerØnsketStedOgYrke from './ManglerØnsketStedOgYrke';
 import ManglerØnsketYrke from './ManglerØnsketYrke';
-import useKandidatStillingssøk from './useKandidatStillingssøk';
+import { useKandidatStillingssøkData } from './useKandidatStillingssøkData';
 
 type Props = {
     kandidatnr: string;
 };
 
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
-    const { kandidat, hentetGeografiFraBosted, manglerØnsketYrke } =
-        useKandidatStillingssøk(kandidatnr);
+    const { kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke } =
+        useKandidatStillingssøkData({ kandidatnr });
 
-    let brødsmulesti = undefined;
-    if (kandidat.kind === Nettstatus.Suksess) {
-        brødsmulesti = [
-            {
-                href: '/kandidatsok',
-                tekst: 'Kandidater',
-            },
-            {
-                href: `/kandidater/kandidat/${kandidat.data.arenaKandidatnr}/cv?fraKandidatsok=true`,
-                tekst: formaterNavn(kandidat.data),
-            },
+    const { kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
 
-            {
-                tekst: 'Finn stilling',
-            },
-        ];
-    } else if (kandidat.kind === Nettstatus.Feil || kandidat.kind === Nettstatus.FinnesIkke) {
-        brødsmulesti = [];
-    }
+    const brødsmulesti = kandidatsammendrag
+        ? [
+              {
+                  href: '/kandidatsok',
+                  tekst: 'Kandidater',
+              },
+              {
+                  href: `/kandidater/kandidat/${kandidatsammendrag?.arenaKandidatnr}/cv?fraKandidatsok=true`,
+                  tekst: formaterNavn(kandidatsammendrag),
+              },
 
-    const utledBannerelement = () => {
-        if (kandidat.kind === Nettstatus.Suksess) {
+              {
+                  tekst: 'Finn stilling',
+              },
+          ]
+        : [];
+
+    const utledBannerelement = (kandidatsammendrag: Kandidatsammendrag) => {
+        if (kandidatStillingssøk) {
             if (manglerØnsketYrke && hentetGeografiFraBosted) {
-                return <ManglerØnsketStedOgYrke fnr={kandidat.data.fodselsnummer} />;
+                return <ManglerØnsketStedOgYrke fnr={kandidatsammendrag.fodselsnummer} />;
             } else if (manglerØnsketYrke) {
-                return <ManglerØnsketYrke fnr={kandidat.data.fodselsnummer} />;
+                return <ManglerØnsketYrke fnr={kandidatsammendrag.fodselsnummer} />;
             } else if (hentetGeografiFraBosted) {
-                return <ManglerØnsketSted fnr={kandidat.data.fodselsnummer} />;
+                return <ManglerØnsketSted fnr={kandidatsammendrag.fodselsnummer} />;
             }
         }
     };
 
-    return (
+    return kandidatsammendrag?.arenaKandidatnr ? (
         <Kandidatbanner
-            kandidat={kandidat}
+            kandidatnr={kandidatsammendrag.arenaKandidatnr}
             brødsmulesti={brødsmulesti}
-            nederst={utledBannerelement()}
+            nederst={utledBannerelement(kandidatsammendrag)}
         />
+    ) : (
+        <> </>
     );
 };
 

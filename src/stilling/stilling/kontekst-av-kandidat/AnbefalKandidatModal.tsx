@@ -1,12 +1,12 @@
 import { Modal } from '@navikt/ds-react';
 import { useDispatch } from 'react-redux';
 
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
+import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidatsammendrag';
 import BekreftLeggTilKandidat from '../../../felles/komponenter/legg-til-kandidat/BekreftLeggTilKandidat';
 import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
 
 type Props = {
-    kandidat: KandidatTilBanner;
+    kandidat: Kandidatsammendrag;
     kandidatlisteId: string;
     vis: boolean;
     onClose: () => void;
@@ -24,7 +24,6 @@ const AnbefalKandidatModal = ({ kandidat, kandidatlisteId, vis, onClose }: Props
         });
     };
 
-    //TODO 24.01.24, Sjekk denne (arenaKandiatnr)
     return (
         <Modal open={vis} onClose={onClose} header={{ heading: 'Anbefal kandidat' }}>
             <BekreftLeggTilKandidat

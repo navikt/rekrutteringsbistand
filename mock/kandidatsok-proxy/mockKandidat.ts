@@ -6,7 +6,64 @@ import {
     Hovedmål,
     Innsatsgruppe,
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
+
+import { KandidatStillingssøkDTO } from '../../src/api/kandidat-søk-api/kandidatStillingssøk';
+import { Kandidatsammendrag } from '../../src/api/kandidat-søk-api/kandidatsammendrag';
 import { mockVeileder } from '../mockVeileder';
+
+export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
+    yrkeJobbonskerObj: [
+        {
+            styrkBeskrivelse: 'Avisbud',
+            sokeTitler: [
+                'Avisbud',
+                'Avisbud',
+                'Bilagskontrollør (avisbud)',
+                'Avis- og reklamebrosjyrebud',
+                'Altmuligmann',
+                'Avis- og reklamedistributør',
+                'Utdeler (gratisavis)',
+                'Reklamebud',
+                'Reklame- og avisdistributør',
+                'Bud, utlevering',
+            ],
+            primaertJobbonske: false,
+            styrkKode: null,
+        },
+    ],
+    geografiJobbonsker: [
+        {
+            geografiKodeTekst: 'Norge',
+            geografiKode: 'NO',
+        },
+        {
+            geografiKodeTekst: 'Geiranger',
+            geografiKode: '1000',
+        },
+        {
+            geografiKodeTekst: 'Larvik',
+            geografiKode: 'NO07.0712',
+        },
+    ],
+    kommunenummerstring: '0301',
+    kommuneNavn: 'Vestvågøy',
+};
+
+export const mockKandidatsammendrag: Kandidatsammendrag = {
+    adresselinje1: 'Kallastenveien 47B',
+    veilederVisningsnavn: null,
+    fornavn: 'Redd',
+    poststed: 'Sarpsborg',
+    fodselsdato: '1987-12-04',
+    etternavn: 'Lukt',
+    epostadresse: 'a@a.com',
+    postnummer: '1708',
+    telefon: '123123123',
+    arenaKandidatnr: 'PAM0152hb0wr4',
+    veilederIdent: 'A123123',
+    fodselsnummer: '04928797045',
+    veilederEpost: 'v@v.com',
+};
 
 export const mockKandidat: Kandidat = {
     // Personalia

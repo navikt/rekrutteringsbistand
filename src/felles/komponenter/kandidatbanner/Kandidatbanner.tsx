@@ -6,11 +6,13 @@ import {
     PinIcon,
 } from '@navikt/aksel-icons';
 import { BodyShort, CopyButton, Heading, Skeleton } from '@navikt/ds-react';
-import { KandidatTilBanner } from 'felles/domene/kandidat/Kandidat';
 import Piktogram from 'felles/komponenter/piktogrammer/minekandidater.svg';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { ReactNode } from 'react';
+import {
+    Kandidatsammendrag,
+    useKandidatsammendrag,
+} from '../../../api/kandidat-søk-api/kandidatsammendrag';
 import Grunnbanner from '../grunnbanner/Grunnbanner';
 import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
 import css from './Kandidatbanner.module.css';
@@ -22,7 +24,7 @@ export type Veileder = {
 };
 
 type Props = {
-    kandidat: Nettressurs<KandidatTilBanner>;
+    kandidatnr: string;
     brødsmulesti?: Brødsmule[];
     øverstTilHøyre?: ReactNode;
     nederstTilHøyre?: ReactNode;
@@ -30,12 +32,13 @@ type Props = {
 };
 
 const Kandidatbanner = ({
-    kandidat,
     brødsmulesti,
     nederstTilHøyre,
     øverstTilHøyre,
     nederst,
+    kandidatnr,
 }: Props) => {
+    const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag({ kandidatnr });
     return (
         <Grunnbanner ikon={<Piktogram />} nederst={nederst}>
             <div className={css.innhold}>
@@ -49,34 +52,34 @@ const Kandidatbanner = ({
                         {øverstTilHøyre}
                     </div>
 
-                    {kandidat.kind === Nettstatus.LasterInn && (
+                    {isLoading && (
                         <Skeleton>
                             <Heading size="large">Placeholder</Heading>
                         </Skeleton>
                     )}
 
-                    {kandidat.kind === Nettstatus.Suksess && (
+                    {kandidatsammendrag && (
                         <Heading size="large" level="2">
-                            {formaterNavn(kandidat.data)}
+                            {formaterNavn(kandidatsammendrag)}
                         </Heading>
                     )}
 
-                    {kandidat.kind === Nettstatus.FinnesIkke && (
+                    {error?.message === '404' && (
                         <Heading size="large">Fant ikke kandidaten</Heading>
                     )}
 
-                    {kandidat.kind === Nettstatus.Feil && (
-                        <Heading size="large">{kandidat.error.message}</Heading>
+                    {error?.message && error.message !== '404' && (
+                        <Heading size="large">{error.message}</Heading>
                     )}
 
                     <div className={css.bunnlinje}>
-                        {kandidat.kind === Nettstatus.FinnesIkke && (
+                        {error?.message === '404' && (
                             <div className={css.personalia}>
                                 Kandidaten er ikke tilgjengelig i Rekrutteringsbistand
                             </div>
                         )}
 
-                        {kandidat.kind === Nettstatus.LasterInn && (
+                        {isLoading && (
                             <div className={css.personalia}>
                                 <div>
                                     <CandleIcon />
@@ -101,52 +104,51 @@ const Kandidatbanner = ({
                             </div>
                         )}
 
-                        {kandidat.kind === Nettstatus.Suksess && (
+                        {kandidatsammendrag && (
                             <div className={css.personalia}>
                                 <BodyShort aria-label="Fødselsdato">
                                     <CandleIcon title="Fødselsdato" aria-hidden />
-                                    {lagFødselsdagtekst(kandidat.data.fodselsdato)} (
-                                    {kandidat.data.fodselsnummer})
+                                    {lagFødselsdagtekst(kandidatsammendrag.fodselsdato)} (
+                                    {kandidatsammendrag.fodselsnummer})
                                 </BodyShort>
 
                                 <BodyShort aria-label="Adresse">
                                     <PinIcon title="Adresse" aria-hidden />
-                                    {hentAdresse(kandidat.data) ?? '-'}
+                                    {hentAdresse(kandidatsammendrag) ?? '-'}
                                 </BodyShort>
 
                                 <BodyShort aria-label="E-post">
                                     <EnvelopeClosedIcon title="E-post" aria-hidden />
-                                    {kandidat.data.epostadresse ?? '-'}
-                                    {kandidat.data.epostadresse && (
+                                    {kandidatsammendrag.epostadresse ?? '-'}
+                                    {kandidatsammendrag.epostadresse && (
                                         <CopyButton
                                             size="small"
                                             title="Kopier e-postadresse"
                                             className={css.kopieringsknapp}
-                                            copyText={kandidat.data.epostadresse}
+                                            copyText={kandidatsammendrag.epostadresse}
                                         />
                                     )}
                                 </BodyShort>
 
                                 <BodyShort aria-label="Telefon">
                                     <PhoneIcon title="Telefon" aria-hidden />
-                                    {kandidat.data.telefon ?? '-'}
+                                    {kandidatsammendrag.telefon ?? '-'}
                                 </BodyShort>
 
                                 <BodyShort aria-label="Veileder">
                                     <PersonIcon title="Veileder" aria-hidden />
-                                    {kandidat.data.veilederIdent ? (
+                                    {kandidatsammendrag.veilederIdent ? (
                                         <>
                                             <span>
-                                                Veileder: {kandidat.data.veilederVisningsnavn} (
-                                                {kandidat.data.veilederIdent?.toUpperCase()}){' '}
-                                                {kandidat.data.veilederEpost}
+                                                Veileder: {kandidatsammendrag.veilederVisningsnavn}{' '}
+                                                ({kandidatsammendrag.veilederIdent?.toUpperCase()}){' '}
+                                                {kandidatsammendrag.veilederEpost}
                                             </span>
                                             <CopyButton
                                                 size="small"
                                                 title="Kopier e-postadresse"
                                                 className={css.kopieringsknapp}
-                                                //@ts-ignore: TODO: written before strict-mode enabled
-                                                copyText={kandidat.data.veilederEpost}
+                                                copyText={kandidatsammendrag.veilederEpost || ''}
                                             />
                                         </>
                                     ) : (
@@ -189,7 +191,7 @@ const lagFødselsdagtekst = (inputdato?: string | null) => {
     return `Født: ${fødselsdagString} (${alder} år)`;
 };
 
-const hentAdresse = (kandidat: KandidatTilBanner) => {
+const hentAdresse = (kandidat: Kandidatsammendrag) => {
     const { poststed, postnummer, adresselinje1 } = kandidat;
 
     if (!poststed && !postnummer && !adresselinje1) {
@@ -203,9 +205,9 @@ const formaterAdresse = (input: string | null): string | null => {
     return !input ? null : input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
 };
 
-export const formaterNavn = (kandidat: KandidatTilBanner) => {
-    const fornavn = brukStorForbokstav(kandidat.fornavn);
-    const etternavn = brukStorForbokstav(kandidat.etternavn);
+export const formaterNavn = (kandidatsammendrag: Kandidatsammendrag) => {
+    const fornavn = brukStorForbokstav(kandidatsammendrag.fornavn);
+    const etternavn = brukStorForbokstav(kandidatsammendrag.etternavn);
 
     return `${fornavn} ${etternavn}`;
 };
