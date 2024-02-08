@@ -30,12 +30,12 @@ const byggQueryFnr = (
     size: 1,
 });
 
-export interface KandidatNavnDTO {
+export type KandidatNavnDTO = {
     fornavn?: string;
     mellomnavn?: string | null;
     etternavn?: string;
     kandidatnr?: string | null;
-}
+};
 
 export interface IuseKandidatNavnSøk extends KandidatNavnDTO {
     laster: boolean;

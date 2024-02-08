@@ -1,9 +1,11 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { HttpResponse, http } from 'msw';
 import { BrowserRouter } from 'react-router-dom';
+import {
+    KandidatStillingssøkES,
+    kandidatStillingssøkEndepunkt,
+} from '../../../api/kandidat-søk-api/kandidatStillingssøk';
 import KontekstAvKandidat from './KontekstAvKandidat';
-import { kandidatSøkEndepunkter } from '../../../api/kandidat-søk-api/kandidat-søk.api';
-import { KandidatStillingssøkDto } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 const wrapper = () => (
     <BrowserRouter>
@@ -14,7 +16,7 @@ const wrapper = () => (
 test('<ManglerØnsketStedOgYrke/>', async () => {
     // @ts-ignore TODO: written before strict-mode enabled
     global.testServer.use(
-        http.post(kandidatSøkEndepunkter.kandidatStillingssøk, () => {
+        http.post(kandidatStillingssøkEndepunkt, () => {
             const dto = {
                 yrkeJobbonskerObj: [],
                 arenaKandidatnr: 'PAM0152hb0wr4',
@@ -24,7 +26,7 @@ test('<ManglerØnsketStedOgYrke/>', async () => {
                 kommuneNavn: 'Vestvågøy',
             };
 
-            const testSvar: KandidatStillingssøkDto = {
+            const testSvar: KandidatStillingssøkES = {
                 hits: {
                     hits: [
                         {
@@ -39,10 +41,10 @@ test('<ManglerØnsketStedOgYrke/>', async () => {
 
     render(wrapper());
     await waitFor(() => {
-        expect(
-            screen.getByRole('heading', {
-                name: /vi vet ikke hva kandidaten ønsker å jobbe med, eller hvor de ønsker å jobbe/i,
-            })
+expect(
+        screen.getByRole('heading', {
+            name: /vi vet ikke hva kandidaten ønsker å jobbe med, eller hvor de ønsker å jobbe/i,
+        })
         ).toBeInTheDocument();
     });
 });

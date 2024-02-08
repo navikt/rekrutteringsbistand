@@ -9,11 +9,13 @@ import { BodyShort, CopyButton, Heading, Skeleton } from '@navikt/ds-react';
 import Piktogram from 'felles/komponenter/piktogrammer/minekandidater.svg';
 import { brukStorForbokstav } from 'felles/utils/stringUtils';
 import { ReactNode } from 'react';
+import {
+    Kandidatsammendrag,
+    useKandidatsammendrag,
+} from '../../../api/kandidat-søk-api/kandidatsammendrag';
 import Grunnbanner from '../grunnbanner/Grunnbanner';
 import Brødsmulesti, { Brødsmule } from './Brødsmulesti';
-import useKandidatsammendrag from './useKandidatsammendrag';
 import css from './Kandidatbanner.module.css';
-import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 export type Veileder = {
     navn: string;

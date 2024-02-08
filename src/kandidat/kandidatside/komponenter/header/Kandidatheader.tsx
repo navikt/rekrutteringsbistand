@@ -1,6 +1,8 @@
+import { ErrorMessage } from '@navikt/ds-react';
 import { Brødsmule } from 'felles/komponenter/kandidatbanner/Brødsmulesti';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidatsammendrag from 'felles/komponenter/kandidatbanner/useKandidatsammendrag';
+import { useKandidatsammendrag } from '../../../../api/kandidat-søk-api/kandidatsammendrag';
+import Sidelaster from '../../../../felles/komponenter/sidelaster/Sidelaster';
 import useMaskerFødselsnumre from '../../../app/useMaskerFødselsnumre';
 import css from './Kandidatheader.module.css';
 import ForrigeNeste, { Kandidatnavigering } from './forrige-neste/ForrigeNeste';
@@ -14,10 +16,14 @@ type Props = {
 const Kandidatheader = ({ kandidatnavigering, kandidatnr, brødsmulesti }: Props) => {
     useMaskerFødselsnumre();
 
-    const { kandidatsammendrag, isLoading } = useKandidatsammendrag({ kandidatnr });
+    const { kandidatsammendrag, isLoading, error } = useKandidatsammendrag({ kandidatnr });
 
     if (isLoading) {
-        return <></>;
+        return <Sidelaster />;
+    }
+
+    if (error) {
+        return <ErrorMessage> Klarte ikke å laste inn informasjon om kandidat </ErrorMessage>;
     }
 
     const brødsmulestiMedNavn = kandidatsammendrag

@@ -4,15 +4,17 @@ import { useLocation } from 'react-router-dom';
 import { CopyButton } from '@navikt/ds-react';
 import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
-import useKandidatsammendrag from 'felles/komponenter/kandidatbanner/useKandidatsammendrag';
 import { useSelector } from 'react-redux';
 import { useMeg } from '../../../api/frackend/meg';
+import {
+    Kandidatsammendrag,
+    useKandidatsammendrag,
+} from '../../../api/kandidat-søk-api/kandidatsammendrag';
 import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
 import Kandidatlistehandlinger from './Kandidatlistehandlinger';
 import css from './KontekstAvKandidat.module.css';
-import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 type Props = {
     kandidatnr: string;

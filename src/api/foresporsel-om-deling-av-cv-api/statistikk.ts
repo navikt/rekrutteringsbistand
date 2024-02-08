@@ -9,12 +9,12 @@ import { getAPI } from '../fetcher';
 export const foresporselStatistikkEndepunkt = (param?: URLSearchParams) =>
     `/foresporsel-om-deling-av-cv-api/statistikk${param ? `?${param}` : ''}`;
 
-export interface ForesporselStatistikkDTO {
+export type ForesporselStatistikkDTO = {
     antallSvartJa: number;
     antallSvartNei: number;
     antallVenterPåSvar: number;
     antallUtløpteSvar: number;
-}
+};
 
 interface ForesporselStatistikkProps {
     navKontor: string;

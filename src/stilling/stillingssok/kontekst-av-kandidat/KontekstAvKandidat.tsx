@@ -1,10 +1,12 @@
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
+import {
+    Kandidatsammendrag,
+    useKandidatsammendrag,
+} from '../../../api/kandidat-søk-api/kandidatsammendrag';
 import ManglerØnsketSted from './ManglerØnsketSted';
 import ManglerØnsketStedOgYrke from './ManglerØnsketStedOgYrke';
 import ManglerØnsketYrke from './ManglerØnsketYrke';
-import useKandidatStillingssøk from './useKandidatStillingssøk';
-import useKandidatsammendrag from 'felles/komponenter/kandidatbanner/useKandidatsammendrag';
-import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
+import { useKandidatStillingssøkData } from './useKandidatStillingssøkData';
 
 type Props = {
     kandidatnr: string;
@@ -12,7 +14,7 @@ type Props = {
 
 const KontekstAvKandidat = ({ kandidatnr }: Props) => {
     const { kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke } =
-        useKandidatStillingssøk({ kandidatnr });
+        useKandidatStillingssøkData({ kandidatnr });
 
     const { kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
 

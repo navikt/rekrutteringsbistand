@@ -7,13 +7,11 @@ import {
     Innsatsgruppe,
 } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 
-import {
-    KandidatStillingssøk,
-    Kandidatsammendrag,
-} from '../../src/api/kandidat-søk-api/kandidat-søk-dto';
+import { KandidatStillingssøkDTO } from '../../src/api/kandidat-søk-api/kandidatStillingssøk';
+import { Kandidatsammendrag } from '../../src/api/kandidat-søk-api/kandidatsammendrag';
 import { mockVeileder } from '../mockVeileder';
 
-export const mockKandidatStillingssøk: KandidatStillingssøk = {
+export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
     yrkeJobbonskerObj: [
         {
             styrkBeskrivelse: 'Avisbud',

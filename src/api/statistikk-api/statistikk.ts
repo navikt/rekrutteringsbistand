@@ -15,10 +15,10 @@ export type AntallDTO = {
     innsatsgruppeIkkeStandard: number;
 };
 
-export interface StatistikkDTO {
+export type StatistikkDTO = {
     antPresentasjoner: AntallDTO;
     antFåttJobben: AntallDTO;
-}
+};
 
 interface IuseUtfallsstatistikk {
     navKontor: string;

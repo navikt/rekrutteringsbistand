@@ -1,49 +1,45 @@
 import { sendEvent } from 'felles/amplitude';
 import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
 import { useEffect, useState } from 'react';
+import {
+    KandidatStillingssøkDTO,
+    useKandidatStillingssøk,
+} from '../../../api/kandidat-søk-api/kandidatStillingssøk';
 import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
 import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
-import useSWR from 'swr';
-import { kandidatSøkEndepunkter } from '../../../api/kandidat-søk-api/kandidat-søk.api';
-import { postApi } from '../../../api/fetcher';
-import { KandidatStillingssøk } from '../../../api/kandidat-søk-api/kandidat-søk-dto';
 
 interface IuseKandidatStillingssøk {
     kandidatnr: string;
 }
 
 interface IUseKandidatStillingssøkRetur {
-    kandidatStillingssøk: KandidatStillingssøk | null;
+    kandidatStillingssøk: KandidatStillingssøkDTO | null;
     hentetGeografiFraBosted: boolean;
     manglerØnsketYrke: boolean;
     isLoading: boolean;
     error: any;
 }
 
-const useKandidatStillingssøk = ({
+export const useKandidatStillingssøkData = ({
     kandidatnr,
 }: IuseKandidatStillingssøk): IUseKandidatStillingssøkRetur => {
     const { searchParams, navigate } = useNavigering();
     const [hentetGeografiFraBosted, setHentetGeografiFraBosted] = useState<boolean>(false);
     const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
 
-    const swr = useSWR(
-        { path: kandidatSøkEndepunkter.kandidatStillingssøk, kandidatnr },
-        ({ path }) => postApi(path, { kandidatnr })
-    );
-    const kandidatStillingssøk: KandidatStillingssøk = swr?.data?.hits?.hits[0]?._source;
+    const swrHook = useKandidatStillingssøk({ kandidatnr });
 
     useEffect(() => {
-        if (kandidatStillingssøk) {
+        if (swrHook.kandidatStillingssøk) {
             const brukKandidatkriterier =
                 searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
 
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
-                kandidatStillingssøk;
+                swrHook.kandidatStillingssøk;
 
             let fylker: (string | undefined)[] = hentFylkerFraJobbønsker(geografiJobbonsker);
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
@@ -79,9 +75,9 @@ const useKandidatStillingssøk = ({
                 navigate({ search: søk.toString() }, { replace: true });
             }
         }
-    }, [kandidatnr, navigate, kandidatStillingssøk, searchParams]);
+    }, [kandidatnr, navigate, searchParams, swrHook]);
 
-    return { ...swr, kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke };
+    return { ...swrHook, hentetGeografiFraBosted, manglerØnsketYrke };
 };
 
 const hentFylkestekstFraGeografiKode = (geografiKode: string) => {
@@ -129,5 +125,3 @@ const hentKommuneFraBosted = (kommunenummer: string, kommunenavn: string) => {
 const hentYrkerFraJobbønsker = (yrkesønsker: Jobbønske[]): string[] => {
     return [...new Set(yrkesønsker.flatMap((yrkesønske) => yrkesønske.sokeTitler))];
 };
-
-export default useKandidatStillingssøk;
