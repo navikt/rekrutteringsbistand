@@ -8,7 +8,7 @@ import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/
 import useKandidat from 'felles/komponenter/kandidatbanner/useKandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useSelector } from 'react-redux';
-import { useMegHook } from '../../../api/frackend/meg';
+import { useMeg } from '../../../api/frackend/meg';
 import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
@@ -30,7 +30,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
 
     const brødsmulesti = byggBrødsmulesti(kandidatnr, stilling, kandidat, state?.stillingssøk);
 
-    const { navIdent } = useMegHook();
+    const { navIdent } = useMeg();
 
     const erEier =
         stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;

@@ -2,8 +2,8 @@ import { Button, Modal } from '@navikt/ds-react';
 import * as React from 'react';
 import { useRef } from 'react';
 import { forespørselOmDelingAvCvMock } from '../../mock/foresporsel-om-deling-av-cv-api/mock';
-import { kandidatApiMock } from '../../mock/kandidat-api/mock';
-import { kandidatSokApiMock } from '../../mock/kandidatsok-api/mock';
+import { gammelKandidatApiMock } from '../../mock/kandidat-api/mock';
+
 import { kandidatsøkMock } from '../../mock/kandidatsok-proxy/mock';
 import { modiaContextHolderMock } from '../../mock/modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from '../../mock/presenterte-kandidater-api/mock';
@@ -12,10 +12,11 @@ import { smsApiMock } from '../../mock/sms-api/mock';
 import { stillingApiMock } from '../../mock/stilling-api/mock';
 import { stillingssøkMock } from '../../mock/stillingssok-proxy/mock';
 import { synlighetApiMock } from '../../mock/synlighet-api/mock';
-import { foresporselStatistikkMockMsw } from '../api/foresporsel-om-deling-av-cv-api/statistikk';
+import { foresporselApiMock } from '../api/foresporsel-om-deling-av-cv-api/mock.msw';
 import { megMockMsw } from '../api/frackend/meg';
-import { hentKandidatFraPDLMockMsw } from '../api/kandidat-api/hentKandidatFraPDL';
-import { statistikkMockMsw } from '../api/statistikk-api/statistikk';
+import { kandidatApiMock } from '../api/kandidat-api/mock.msw';
+import { kandidatSokApiMock } from '../api/kandidat-søk-api/mock.msw';
+import { statistikkApiMock } from '../api/statistikk-api/mock.msw';
 import DevMockApi from './DevMockApi';
 import DevRoller from './DevMockMeg';
 export interface IDevMockModal {
@@ -30,15 +31,15 @@ const mockConfig = [
 
     {
         navn: 'Kaniddat',
-        mock: kandidatApiMock,
+        mock: [...kandidatApiMock, ...gammelKandidatApiMock],
     },
     {
         navn: 'Statistikk',
-        mock: [statistikkMockMsw],
+        mock: statistikkApiMock,
     },
     {
         navn: 'Statistikk forespørsel',
-        mock: [foresporselStatistikkMockMsw],
+        mock: foresporselApiMock,
     },
 
     {
@@ -76,7 +77,7 @@ const mockConfig = [
     },
     {
         navn: 'Kandidat-API (ny)',
-        mock: [hentKandidatFraPDLMockMsw],
+        mock: kandidatApiMock,
     },
     {
         navn: 'Kandidatsøk api',

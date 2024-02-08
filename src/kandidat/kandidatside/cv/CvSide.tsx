@@ -3,7 +3,7 @@ import { FunctionComponent } from 'react';
 import { Alert, BodyLong, Heading } from '@navikt/ds-react';
 import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 import { useParams } from 'react-router';
-import useCv from '../hooks/useCv';
+import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import css from './CvSide.module.css';
 import Erfaringer from './cv/Erfaringer';
 import Fagbrev from './cv/Fagbrev';
@@ -19,7 +19,7 @@ import Jobbønsker from './cv/jobbønsker/Jobbønsker';
 const CvSide: FunctionComponent = () => {
     const { kandidatnr } = useParams();
 
-    const { cv, error, isLoading } = useCv(kandidatnr);
+    const { cv, error, isLoading } = useLookupCv(kandidatnr);
 
     if (isLoading) {
         return <Sidelaster />;

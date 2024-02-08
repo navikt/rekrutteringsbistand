@@ -1,11 +1,11 @@
 import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
-import { mockAlleKandidatlister, opprettMockKandidatlisteForKandidat } from './mockKandidatliste';
+import { mockAlleKandidatlister } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
 
 const todo = (info: unknown) => new HttpResponse('Mock er ikke implementert', { status: 500 });
 
-export const kandidatApiMock = [
+export const gammelKandidatApiMock = [
     http.get(`${api.kandidat}/veileder/kandidatlister`, (_) =>
         HttpResponse.json(mockMineKandidatlister)
     ),
@@ -54,23 +54,6 @@ export const kandidatApiMock = [
         `${api.kandidat}/veileder/me/kandidatlister`,
         (_) => new HttpResponse(null, { status: 201 })
     ),
-
-    http.get(`${api.kandidat}/veileder/kandidater/:kandidatnr/listeoversikt`, ({ params }) => {
-        const { kandidatnr } = params;
-        const kandidatlister = mockAlleKandidatlister.filter((liste) =>
-            liste.kandidater.some((kandidat) => kandidat.kandidatnr === kandidatnr)
-        );
-
-        const kandidatlisterMedKandidaten = kandidatlister.map((liste) =>
-            opprettMockKandidatlisteForKandidat(
-                liste,
-                // @ts-ignore TODO: written before strict-mode enabled
-                liste.kandidater.find((kandidat) => kandidat.kandidatnr === kandidatnr)
-            )
-        );
-
-        return HttpResponse.json(kandidatlisterMedKandidaten);
-    }),
 
     http.put(`${api.kandidat}/veileder/kandidatlister/:kandidatlisteId/eierskap`, todo),
 

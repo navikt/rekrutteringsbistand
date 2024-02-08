@@ -3,7 +3,7 @@ import Kandidat from 'felles/domene/kandidat/Kandidat';
 import useNavKontor from 'felles/store/navKontor';
 import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useMegHook } from '../../api/frackend/meg';
+import { useMeg } from '../../api/frackend/meg';
 import { søk } from '../api/api';
 import { PAGE_SIZE, byggQuery } from '../api/query/byggQuery';
 import { ØktContext } from '../Økt';
@@ -13,7 +13,7 @@ const maksAntallNavigerbareKandidater = 500;
 
 const useLagreØkt = () => {
     const navKontor = useNavKontor((state) => state.navKontor);
-    const { navIdent } = useMegHook();
+    const { navIdent } = useMeg();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
     const { setØkt } = useContext(ØktContext);
     const [navigerbareKandidater, setNavigerbareKandidater] = useState<

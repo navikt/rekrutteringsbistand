@@ -4,7 +4,7 @@ import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
 import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
-import { useMegHook } from '../../api/frackend/meg';
+import { useMeg } from '../../api/frackend/meg';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
@@ -48,7 +48,7 @@ const Stilling = () => {
 
     const { kandidatlisteId } = useKandidatlisteId(uuid);
 
-    const { navIdent } = useMegHook();
+    const { navIdent } = useMeg();
 
     const erEier =
         stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;
