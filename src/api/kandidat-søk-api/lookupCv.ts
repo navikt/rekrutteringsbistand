@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { mockKandidat } from '../../../mock/kandidatsok-proxy/mockKandidat';
 import { postApi } from '../fetcher';
 
-const lookupCvEndepunkt = '/kandidatsok-api/api/lookupCv';
+const lookupCvEndepunkt = '/kandidatsok-api/api/lookup-cv';
 
 export const useLookupCv = (kandidatnr?: string) => {
     const swrData = useSWR({ path: lookupCvEndepunkt, kandidatnr }, ({ path }) =>
