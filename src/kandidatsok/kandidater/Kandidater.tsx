@@ -3,16 +3,16 @@ import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useMemo } from 'react';
 
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { Nettstatus } from 'felles/nettressurs';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
-import useQuery from '../hooks/useQuery';
 import { Økt } from '../Økt';
 import AntallKandidater from './AntallKandidater';
 import css from './Kandidater.module.css';
 import MarkerAlle from './MarkerAlle';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
+import useSøkekriterier from '../hooks/useSøkekriterier';
+import { useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
 
 type Props = {
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
@@ -33,35 +33,36 @@ const Kandidater: FunctionComponent<Props> = ({
     forrigeØkt,
     setKandidaterPåSiden,
 }) => {
-    const response = useQuery();
+    const { søkekriterier } = useSøkekriterier();
+    const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(søkekriterier);
+
+    const suksessEllerLaster =
+        (kandidatsøkKandidater && kandidatsøkKandidater.length > 0) || isLoading;
 
     const totaltAntallKandidater = useMemo(() => {
-        if (response.kind === Nettstatus.Suksess || response.kind === Nettstatus.Oppdaterer) {
-            const hits = response.data.hits;
-            return hits.total.value;
+        if (suksessEllerLaster) {
+            return totalHits;
         } else {
             return 0;
         }
-    }, [response]);
+    }, [suksessEllerLaster, totalHits]);
 
     const kandidater = useMemo(() => {
-        if (response.kind === Nettstatus.Suksess || response.kind === Nettstatus.Oppdaterer) {
-            const hits = response.data.hits;
-            const kandidater = hits.hits.map((t) => t._source);
-            return kandidater;
+        if (suksessEllerLaster) {
+            return kandidatsøkKandidater;
         } else {
             return [];
         }
-    }, [response]);
+    }, [suksessEllerLaster, kandidatsøkKandidater]);
 
     useEffect(() => {
-        setKandidaterPåSiden(kandidater);
-    }, [kandidater, setKandidaterPåSiden]);
+        setKandidaterPåSiden(kandidatsøkKandidater);
+    }, [kandidatsøkKandidater, setKandidaterPåSiden]);
 
     return (
         <div className={css.kandidater}>
             <div className={css.handlinger}>
-                <AntallKandidater response={response} />
+                {!suksessEllerLaster ? <div /> : <AntallKandidater antallTreff={totalHits} />}
                 <div className={css.knapper}>
                     {markerteKandidater.size > 0 && (
                         <Button
@@ -87,19 +88,17 @@ const Kandidater: FunctionComponent<Props> = ({
                 </div>
             </div>
 
-            {response.kind === Nettstatus.LasterInn && (
-                <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />
-            )}
+            {isLoading && <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />}
 
-            {response.kind === Nettstatus.Feil && (
+            {error && (
                 <BodyShort className={css.feilmelding} aria-live="assertive">
-                    {response.error.status === 403
+                    {error.message === 403
                         ? 'Du har ikke tilgang til kandidatsøket'
-                        : response.error.message}
+                        : error.message}
                 </BodyShort>
             )}
 
-            {kandidater.length > 0 && (
+            {kandidatsøkKandidater.length > 0 && (
                 <>
                     <div className={css.overKandidater}>
                         <MarkerAlle

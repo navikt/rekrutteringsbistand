@@ -31,6 +31,8 @@ export const postApi = async (url: string, body: any) => {
         return await response.json();
     } else if (response.status === 404) {
         throw new Error('404');
+    } else if (response.status === 403) {
+        throw new Error('403');
     } else {
         throw new Error('Feil respons fra server');
     }
