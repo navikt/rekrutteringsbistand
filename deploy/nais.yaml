@@ -26,6 +26,9 @@ spec:
                 groups:
                     - id: {{ adGruppeModiaGenerellTilgang }}
                     - id: {{ adGruppeModiaOppfolging }}
+                    - id: {{ adGruppeRekrutteringsbistandArbeidsgiverrettet }}
+                    - id: {{ adGruppeRekrutteringsbistandJobbsokerrettet }}
+                    - id: {{ adGruppeRekrutteringsbistandUtvikler }}
                 extra:
                     - NAVident
         sidecar:
