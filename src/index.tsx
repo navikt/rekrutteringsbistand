@@ -4,9 +4,9 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { SWRConfig } from 'swr';
 import App from './App';
-import { ApplikasjonContextProvider } from './ApplikasjonContext';
 import DevTools from './dev/DevTools';
 import faroConfig from './faroConfig';
+import { ApplikasjonContextProvider } from './felles/ApplikasjonContext';
 import './index.css';
 
 if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {

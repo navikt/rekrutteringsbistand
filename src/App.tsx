@@ -11,7 +11,7 @@ import Header from './header/Header';
 import FormidlingsSide from './formidling/Formidling';
 import Forside from './forside/Forside';
 import { Component as Kandidat } from './kandidat/index';
-import { Component as Kandidatsøk } from './kandidatsok/index';
+import { KandidatSøkIndex } from './kandidatsok/index';
 import { Component as Stilling } from './stilling/index';
 import InngangFraArbop from './stilling/stillingssok/inngang-fra-arbop/InngangFraArbop';
 
@@ -21,7 +21,11 @@ const App = () => {
             <Route path="/" element={<Header />}>
                 <Route path="/" element={<Forside />} />
                 <Route path="stillinger/*" element={<Stilling />} errorElement={<Appfeil />} />
-                <Route path="kandidatsok" element={<Kandidatsøk />} errorElement={<Appfeil />} />
+                <Route
+                    path="kandidatsok"
+                    element={<KandidatSøkIndex />}
+                    errorElement={<Appfeil />}
+                />
                 <Route path="kandidater/*" element={<Kandidat />} errorElement={<Appfeil />} />
                 <Route
                     path="formidlinger/*"
