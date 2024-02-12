@@ -82,9 +82,6 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
             });
         }
     };
-    if (!kandidaterPåSiden) {
-        return <div />;
-    }
 
     return (
         <Modal
