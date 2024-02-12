@@ -8,7 +8,7 @@ import { postApi } from '../fetcher';
 import { Søkekriterier } from '../../kandidatsok/hooks/useSøkekriterier';
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 
-const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsøk';
+const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
 
 export type KandidatsøkDTO = {
     kandidatsøkKandidater: KandidatTilKandidatsøk[];
@@ -20,30 +20,29 @@ export type KandidatsøkDTO = {
 type KandidatsøkProps = Søkekriterier;
 
 export const useKandidatsøk = (props: KandidatsøkProps): KandidatsøkDTO => {
-    const swrData = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
+    const swr = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
         postApi(path, { ...props })
     );
-    const kandidatsøkKandidater: KandidatTilKandidatsøk[] = swrData?.data?.hits?.hits.map(
+
+    const kandidatsøkKandidater: KandidatTilKandidatsøk[] = swr?.data?.hits?.hits.map(
         (k: any) => k._source
     );
 
-    const totalHits = swrData?.data?.hits?.total.value;
+    const totalHits = swr?.data?.hits?.total?.value;
 
     return {
-        ...swrData,
+        ...swr,
         kandidatsøkKandidater,
         totalHits,
     };
 };
 
-export const kandidatsøkMockMsw = http.get(kandidatsøkEndepunkt, (_) =>
+export const kandidatsøkMockMsw = http.post(kandidatsøkEndepunkt, (_) =>
     HttpResponse.json({
         hits: {
-            hits: [
-                {
-                    _source: mockKandidatsøkKandidater,
-                },
-            ],
+            hits: mockKandidatsøkKandidater.map((kandidat) => ({
+                _source: kandidat,
+            })),
         },
     })
 );

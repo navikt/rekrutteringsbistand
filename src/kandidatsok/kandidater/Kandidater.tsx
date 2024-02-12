@@ -36,33 +36,30 @@ const Kandidater: FunctionComponent<Props> = ({
     const { søkekriterier } = useSøkekriterier();
     const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(søkekriterier);
 
-    const suksessEllerLaster =
-        (kandidatsøkKandidater && kandidatsøkKandidater.length > 0) || isLoading;
-
     const totaltAntallKandidater = useMemo(() => {
-        if (suksessEllerLaster) {
+        if (totalHits) {
             return totalHits;
         } else {
             return 0;
         }
-    }, [suksessEllerLaster, totalHits]);
+    }, [totalHits]);
 
-    const kandidater = useMemo(() => {
-        if (suksessEllerLaster) {
+    const kandidater: KandidatTilKandidatsøk[] = useMemo(() => {
+        if (kandidatsøkKandidater) {
             return kandidatsøkKandidater;
         } else {
             return [];
         }
-    }, [suksessEllerLaster, kandidatsøkKandidater]);
+    }, [kandidatsøkKandidater]);
 
     useEffect(() => {
-        setKandidaterPåSiden(kandidatsøkKandidater);
-    }, [kandidatsøkKandidater, setKandidaterPåSiden]);
+        setKandidaterPåSiden(kandidater);
+    }, [kandidater, setKandidaterPåSiden]);
 
     return (
         <div className={css.kandidater}>
             <div className={css.handlinger}>
-                {!suksessEllerLaster ? <div /> : <AntallKandidater antallTreff={totalHits} />}
+                {!totalHits ? <div /> : <AntallKandidater antallTreff={totalHits} />}
                 <div className={css.knapper}>
                     {markerteKandidater.size > 0 && (
                         <Button
@@ -87,9 +84,7 @@ const Kandidater: FunctionComponent<Props> = ({
                     </Button>
                 </div>
             </div>
-
             {isLoading && <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />}
-
             {error && (
                 <BodyShort className={css.feilmelding} aria-live="assertive">
                     {error.message === 403
@@ -97,8 +92,7 @@ const Kandidater: FunctionComponent<Props> = ({
                         : error.message}
                 </BodyShort>
             )}
-
-            {kandidatsøkKandidater.length > 0 && (
+            {kandidater?.length > 0 && (
                 <>
                     <div className={css.overKandidater}>
                         <MarkerAlle
@@ -112,7 +106,7 @@ const Kandidater: FunctionComponent<Props> = ({
                         <Sortering />
                     </div>
                     <ul className={css.kandidatrader}>
-                        {kandidater.map((kandidat) => (
+                        {kandidater.map((kandidat: KandidatTilKandidatsøk) => (
                             <Kandidatrad
                                 key={kandidat.arenaKandidatnr}
                                 kandidat={kandidat}
