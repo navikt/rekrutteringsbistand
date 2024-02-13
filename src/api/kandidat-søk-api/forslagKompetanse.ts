@@ -36,16 +36,18 @@ interface AggregationsData {
 }
 
 export const useForslagKompetanse = (props: ForslagKompetanseProps): ForslagKompetanseDTO => {
-    const swrData = useSWR({ path: forslagKompetanseEndepunkt, props }, ({ path }) =>
+    const swr = useSWR({ path: forslagKompetanseEndepunkt, props }, ({ path }) =>
         postApi(path, { ...props })
     );
 
-    const kompetanseforslag = swrData?.data.aggregations.kompetanse.buckets.map(
+    const swrData: AggregationsData = swr.data;
+
+    const kompetanseforslag = swrData.aggregations.kompetanse.buckets.map(
         (bucket: Bucket) => bucket.key
     );
 
     return {
-        ...swrData,
+        ...swr,
         kompetanseforslag,
     };
 };
