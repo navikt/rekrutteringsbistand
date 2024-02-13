@@ -24,7 +24,7 @@ export const postApi = async (url: string, body: any) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify(body, (_key, value) => (value instanceof Set ? [...value] : value)),
     });
 
     if (response.ok) {
