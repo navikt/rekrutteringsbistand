@@ -17,6 +17,8 @@ export interface ITilgangskontrollForInnhold {
 }
 
 const rolleTilNavn = (rolle: Rolle): string | null => {
+    console.log('🎺 rolle', rolle);
+    console.log('🎺 rolle ok:.', rolle === Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER);
     switch (rolle) {
         case Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET:
             return 'Arbeidsgiverrettet';
@@ -38,8 +40,14 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
 }) => {
     const { roller } = React.useContext(ApplikasjonContext);
 
-    const harTilgang = kreverRoller.some((r) => roller?.includes(r));
+    console.log('🎺 kreverRoller', kreverRoller);
+    console.log('🎺 roller', roller);
+    const harTilgang = kreverRoller.some((r) => {
+        console.log('🎺 r', r);
+        return roller?.includes(r);
+    });
 
+    console.log('🎺 harTilgang', harTilgang);
     //todo temp
     if (!tilgangsKontrollAktiv) {
         return <>{children}</>;

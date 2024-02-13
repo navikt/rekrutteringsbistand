@@ -3,16 +3,10 @@
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
+import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { getAPI } from '../fetcher';
 
 const megEndepunkt = '/meg';
-
-export enum Rolle {
-    UTVIKLER = 'UTVIKLER',
-    ARBEIDSGIVERRETTET = 'ARBEIDSGIVERRETTET',
-    JOBBSØKERRETTET = 'JOBBSØKERRETTET',
-    MODIA_GENERELL = 'MODIA_GENERELL',
-}
 
 export type MegDTO = {
     navIdent: string;

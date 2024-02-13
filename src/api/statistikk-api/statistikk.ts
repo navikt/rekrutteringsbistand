@@ -3,23 +3,26 @@
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
+import { z } from 'zod';
 import { formaterDatoTilApi } from '../../forside/statistikk/datoUtils';
 import { getAPI } from '../fetcher';
 
 export const statistikkEndepunkt = (param?: URLSearchParams) =>
     `/statistikk-api/statistikk${param ? `?${param}` : ''}`;
 
-export type AntallDTO = {
-    totalt: number;
-    under30år: number;
-    innsatsgruppeIkkeStandard: number;
-};
+export const antallDTOSchema = z.object({
+    totalt: z.number(),
+    under30år: z.number(),
+    innsatsgruppeIkkeStandard: z.number(),
+});
 
-export type StatistikkDTO = {
-    antPresentasjoner: AntallDTO;
-    antFåttJobben: AntallDTO;
-};
+export const statistikkDTOSchema = z.object({
+    antPresentasjoner: antallDTOSchema,
+    antFåttJobben: antallDTOSchema,
+});
 
+export type AntallDTO = z.infer<typeof antallDTOSchema>;
+export type StatistikkDTO = z.infer<typeof statistikkDTOSchema>;
 interface IuseUtfallsstatistikk {
     navKontor: string;
     fraOgMed: Date;

@@ -17,6 +17,11 @@ npm run start
 ```
 
 
+### For typing:
+json til type: https://quicktype.io/
+Type til zod: https://transform.tools/typescript-to-zod
+
+
 ### Mock
 
 Noen ganger er det ønskelig å koble appen direkte backend i stedet for å mocke 

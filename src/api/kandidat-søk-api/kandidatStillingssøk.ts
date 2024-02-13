@@ -3,9 +3,9 @@
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
+import { z } from 'zod';
 import { mockKandidatStillingssøk } from '../../../mock/kandidatsok-proxy/mockKandidat';
 import { postApi } from '../fetcher';
-
 export const kandidatStillingssøkEndepunkt = '/kandidatsok-api/api/kandidat-stillingssok';
 
 export type KandidatStillingssøkES = {
@@ -16,24 +16,26 @@ export type KandidatStillingssøkES = {
     };
 };
 
-export type KandidatStillingssøkDTO = {
-    yrkeJobbonskerObj: YrkeJobbonske[];
-    geografiJobbonsker: GeografiJobbonske[];
-    kommunenummerstring: string;
-    kommuneNavn: string;
-};
+const yrkeJobbonskeSchema = z.object({
+    styrkBeskrivelse: z.string(),
+    sokeTitler: z.array(z.string()),
+    primaertJobbonske: z.boolean(),
+    styrkKode: z.string().nullable(),
+});
 
-type YrkeJobbonske = {
-    styrkBeskrivelse: string;
-    sokeTitler: string[];
-    primaertJobbonske: boolean;
-    styrkKode: null | string;
-};
+const geografiJobbonskeSchema = z.object({
+    geografiKodeTekst: z.string(),
+    geografiKode: z.string(),
+});
 
-type GeografiJobbonske = {
-    geografiKodeTekst: string;
-    geografiKode: string;
-};
+export const kandidatStillingssøkDTOSchema = z.object({
+    yrkeJobbonskerObj: z.array(yrkeJobbonskeSchema),
+    geografiJobbonsker: z.array(geografiJobbonskeSchema),
+    kommunenummerstring: z.string(),
+    kommuneNavn: z.string(),
+});
+
+export type KandidatStillingssøkDTO = z.infer<typeof kandidatStillingssøkDTOSchema>;
 
 export interface KandidatStillingssøkProps {
     kandidatnr: string;

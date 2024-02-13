@@ -1,16 +1,17 @@
 import { Chips, TextField } from '@navikt/ds-react';
 import * as React from 'react';
-import { Rolle } from '../api/frackend/meg';
+import { Rolle } from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
 
 export interface IDevMockMeg {
     children?: React.ReactNode | undefined;
 }
 
 const roller = [
-    Rolle.UTVIKLER,
-    Rolle.ARBEIDSGIVERRETTET,
-    Rolle.JOBBSØKERRETTET,
-    Rolle.MODIA_GENERELL,
+    Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER,
+    Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+    Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+    Rolle.AD_GRUPPE_MODIA_GENERELL_TILGANG,
+    Rolle.AD_GRUPPE_MODIA_OPPFOLGING,
 ];
 
 const DevMockMeg: React.FC<IDevMockMeg> = () => {
