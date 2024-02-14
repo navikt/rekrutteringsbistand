@@ -6,7 +6,7 @@ export const status = (statuser: Set<Status>, ikkePubliserte: boolean) => {
 
     if (ingenFiltreValgt || alleFiltreValgt) {
         if (ikkePubliserte) {
-            return [];
+            return alleUtenSlettetStillinger;
         }
         return alleStillinger;
     }
@@ -28,6 +28,20 @@ export const status = (statuser: Set<Status>, ikkePubliserte: boolean) => {
         },
     ];
 };
+
+export const alleUtenSlettetStillinger = [
+    {
+        bool: {
+            must_not: [
+                {
+                    term: {
+                        'stilling.status': 'DELETED',
+                    },
+                },
+            ],
+        },
+    },
+];
 
 const stillingenErEllerHarVærtPublisert = [
     {
