@@ -1,5 +1,5 @@
 /**
- * Endepunkt /forslagKompetanse
+ * Endepunkt /kandidatsok-api/api/kompetanseforslag
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
@@ -10,7 +10,7 @@ const kompetanseforslagEndepunkt = '/kandidatsok-api/api/kompetanseforslag';
 export type KompetanseforslagDTO = {
     kompetanseforslag: Kompetanseforslag;
     isLoading: boolean;
-    error: any;
+    error?: Error;
 };
 
 export interface KompetanseforslagProps {
@@ -33,21 +33,19 @@ interface AggregationsData {
 }
 
 export const useKompetanseforslag = (props: KompetanseforslagProps[]): KompetanseforslagDTO => {
-    const swr = useSWR({ path: kompetanseforslagEndepunkt, props }, ({ path }) =>
-        postApi(path, { ...props })
+    const { data, error, isValidating } = useSWR<AggregationsData, Error>(
+        kompetanseforslagEndepunkt,
+        () => postApi(kompetanseforslagEndepunkt, props)
     );
 
-    const swrData: AggregationsData = swr.data;
-
     const kompetanseforslag: Kompetanseforslag = {
-        kompetanser: swrData?.aggregations?.kompetanse?.buckets
-            ? swrData?.aggregations?.kompetanse?.buckets
-            : [],
+        kompetanser: data?.aggregations?.kompetanse?.buckets ?? [],
     };
 
     return {
-        ...swr,
         kompetanseforslag,
+        isLoading: isValidating,
+        error,
     };
 };
 
@@ -63,9 +61,7 @@ export const kompetanseforslagMockMsw = http.post(kompetanseforslagEndepunkt, (_
     HttpResponse.json({
         aggregations: {
             kompetanse: {
-                buckets: kompetanseforslagMock.kompetanser.map((kompetanse) => ({
-                    key: kompetanse.key,
-                })),
+                buckets: kompetanseforslagMock.kompetanser,
             },
         },
     })

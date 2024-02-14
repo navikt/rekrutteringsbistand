@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useMemo, useState } from 'react';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import Merkelapp from '../merkelapp/Merkelapp';
 import Merkelapper from '../merkelapp/Merkelapper';
@@ -26,23 +26,25 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
 
     const [visAlleForslag, setVisAlleForslag] = useState<boolean>(false);
 
-    if (kompetanseforslag === null) {
-        return null;
-    }
-
-    const alleForslag = kompetanseforslag.kompetanser.map((kompetanse) => kompetanse.key);
-
-    const interessanteForslag = alleForslag.filter(
-        // @ts-ignore TODO: written before strict-mode enabled
-        (forslag) => !uinteressanteForslag.includes(forslag)
+    const alleForslag = useMemo(
+        () => kompetanseforslag?.kompetanser?.map((k) => k.key),
+        [kompetanseforslag]
     );
-    const uvalgteForslag = interessanteForslag.filter(
-        // @ts-ignore TODO: written before strict-mode enabled
-        (kompetanse) => !søkekriterier.kompetanse.has(kompetanse)
+    const interessanteForslag = useMemo(
+        () => alleForslag.filter((forslag) => !uinteressanteForslag.includes(forslag)),
+        [alleForslag]
     );
-    const forslag = visAlleForslag ? uvalgteForslag : uvalgteForslag.slice(0, 4);
+    const uvalgteForslag = useMemo(
+        () => interessanteForslag.filter((kompetanse) => !søkekriterier.kompetanse.has(kompetanse)),
+        [interessanteForslag, søkekriterier.kompetanse]
+    );
 
-    if (søkekriterier.ønsketYrke.size === 0 || forslag.length === 0) {
+    const forslag = useMemo(
+        () => (visAlleForslag ? uvalgteForslag : uvalgteForslag.slice(0, 4)),
+        [uvalgteForslag, visAlleForslag]
+    );
+
+    if (!kompetanseforslag || søkekriterier.ønsketYrke.size === 0 || forslag.length === 0) {
         return null;
     }
 
