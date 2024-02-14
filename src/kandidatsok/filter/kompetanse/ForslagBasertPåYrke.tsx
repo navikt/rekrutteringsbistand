@@ -1,13 +1,14 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { Aggregation } from 'felles/domene/elastic/ElasticSearch';
-import { FunctionComponent, useEffect, useState } from 'react';
-import { søk } from '../../api/api';
-import { Aggregering, byggAggregeringerQuery } from '../../api/query/byggAggregeringer';
+import { FunctionComponent, useState } from 'react';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import Merkelapp from '../merkelapp/Merkelapp';
 import Merkelapper from '../merkelapp/Merkelapper';
 import css from './Kompetanse.module.css';
+import {
+    KompetanseforslagProps,
+    useKompetanseforslag,
+} from '../../../api/kandidat-søk-api/kompetanseforslag';
 
 type Props = {
     søkekriterier: Søkekriterier;
@@ -17,30 +18,19 @@ type Props = {
 const uinteressanteForslag = ['Fagbrev/svennebrev', 'Mesterbrev', 'Autorisasjon'];
 
 const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelgForslag }) => {
-    const [respons, setRespons] = useState<Aggregation | null>(null);
+    const yrker: KompetanseforslagProps[] = Array.from(søkekriterier.ønsketYrke).map((yrke) => ({
+        yrke,
+    }));
+
+    const { kompetanseforslag } = useKompetanseforslag(yrker);
+
     const [visAlleForslag, setVisAlleForslag] = useState<boolean>(false);
 
-    useEffect(() => {
-        const hentForslag = async () => {
-            const query = byggAggregeringerQuery(søkekriterier);
-            const respons = await søk(query);
-
-            if (respons.aggregations) {
-                const aggregering = respons.aggregations[Aggregering.Kompetanse] as Aggregation;
-
-                setRespons(aggregering);
-            }
-        };
-
-        hentForslag();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(Array.from(søkekriterier.ønsketYrke))]);
-
-    if (respons === null) {
+    if (kompetanseforslag === null) {
         return null;
     }
 
-    const alleForslag = respons.buckets.map((bucket) => bucket.key);
+    const alleForslag = kompetanseforslag.kompetanser.map((kompetanse) => kompetanse.key);
 
     const interessanteForslag = alleForslag.filter(
         // @ts-ignore TODO: written before strict-mode enabled
