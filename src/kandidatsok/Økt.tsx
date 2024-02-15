@@ -9,18 +9,17 @@ export type Økt = Partial<{
     navigerbareKandidater: string[];
     totaltAntallKandidater: number;
     pageSize: number;
+    fritekst: string;
 }>;
 
 export const ØktContext = createContext<{
     forrigeØkt: Økt;
+    økt: Økt;
     setØkt: (økt: Økt) => void;
-    kandidatFritekstSøk: string | null;
-    setKandidatFritekstSøk: (tekst: string | null) => void;
 }>({
     forrigeØkt: {},
+    økt: {},
     setØkt: () => {},
-    kandidatFritekstSøk: null,
-    setKandidatFritekstSøk: () => {},
 });
 
 type Props = {
@@ -30,7 +29,6 @@ type Props = {
 export const ØktContextProvider: FunctionComponent<Props> = ({ children }) => {
     const forrigeØkt = useRef(lesSessionStorage());
 
-    const [kandidatFritekstSøk, setKandidatFritekstSøk] = useState<string | null>(null);
     const [økt, setØkt] = useState<Økt>(forrigeØkt.current);
 
     const context = useMemo(() => {
@@ -46,19 +44,16 @@ export const ØktContextProvider: FunctionComponent<Props> = ({ children }) => {
 
         return {
             forrigeØkt: forrigeØkt.current,
+            økt,
             setØkt: onSetØkt,
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(økt)]);
 
-    return (
-        <ØktContext.Provider value={{ ...context, kandidatFritekstSøk, setKandidatFritekstSøk }}>
-            {children}
-        </ØktContext.Provider>
-    );
+    return <ØktContext.Provider value={context}>{children}</ØktContext.Provider>;
 };
 
-export const lesSessionStorage = (): Økt => {
+const lesSessionStorage = (): Økt => {
     const session = window.sessionStorage.getItem(SessionStorageKey);
 
     if (session) {

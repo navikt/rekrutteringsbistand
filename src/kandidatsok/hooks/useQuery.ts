@@ -2,12 +2,11 @@ import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import Kandidat, { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import useNavKontor from 'felles/store/navKontor';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useMeg } from '../../api/frackend/meg';
 import { søk } from '../api/api';
 import { byggQuery } from '../api/query/byggQuery';
 import { målQuery } from '../api/query/målQuery';
-import { ØktContext } from '../Økt';
 import useSøkekriterier from './useSøkekriterier';
 
 export enum FilterParam {
@@ -37,14 +36,12 @@ const useQuery = (): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
 
     const { søkekriterier } = useSøkekriterier();
 
-    const { kandidatFritekstSøk } = useContext(ØktContext);
-
     const [response, setResponse] = useState<Nettressurs<EsResponse<Kandidat>>>({
         kind: Nettstatus.IkkeLastet,
     });
 
     // @ts-ignore TODO: written before strict-mode enabled
-    const query = byggQuery({ ...søkekriterier, fritekst: kandidatFritekstSøk }, innloggetBruker);
+    const query = byggQuery(søkekriterier, innloggetBruker);
 
     const setOpptatt = () => {
         setResponse(
