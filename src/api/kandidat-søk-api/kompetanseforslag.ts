@@ -54,6 +54,9 @@ const kompetanseforslagMock: Kompetanseforslag = {
         { key: 'kompetanse1', doc_count: 1 },
         { key: 'kompetanse2', doc_count: 2 },
         { key: 'kompetanse3', doc_count: 3 },
+        { key: 'kompetanse4', doc_count: 4 },
+        { key: 'kompetanse5', doc_count: 5 },
+        { key: 'kompetanse6', doc_count: 6 },
     ],
 };
 

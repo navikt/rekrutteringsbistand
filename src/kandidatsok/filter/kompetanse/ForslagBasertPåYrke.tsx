@@ -1,11 +1,12 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { FunctionComponent, useMemo, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import Merkelapp from '../merkelapp/Merkelapp';
 import Merkelapper from '../merkelapp/Merkelapper';
 import css from './Kompetanse.module.css';
 import {
+    Kompetanseforslag,
     KompetanseforslagProps,
     useKompetanseforslag,
 } from '../../../api/kandidat-søk-api/kompetanseforslag';
@@ -26,22 +27,10 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
 
     const [visAlleForslag, setVisAlleForslag] = useState<boolean>(false);
 
-    const alleForslag = useMemo(
-        () => kompetanseforslag?.kompetanser?.map((k) => k.key),
-        [kompetanseforslag]
-    );
-    const interessanteForslag = useMemo(
-        () => alleForslag.filter((forslag) => !uinteressanteForslag.includes(forslag)),
-        [alleForslag]
-    );
-    const uvalgteForslag = useMemo(
-        () => interessanteForslag.filter((kompetanse) => !søkekriterier.kompetanse.has(kompetanse)),
-        [interessanteForslag, søkekriterier.kompetanse]
-    );
-
-    const forslag = useMemo(
-        () => (visAlleForslag ? uvalgteForslag : uvalgteForslag.slice(0, 4)),
-        [uvalgteForslag, visAlleForslag]
+    const { uvalgteForslag, forslag } = finnForslag(
+        kompetanseforslag,
+        visAlleForslag,
+        søkekriterier
     );
 
     if (!kompetanseforslag || søkekriterier.ønsketYrke.size === 0 || forslag.length === 0) {
@@ -82,6 +71,28 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
             )}
         </div>
     );
+};
+
+const finnForslag = (
+    kompetanseforslag: Kompetanseforslag,
+    visAlleForslag: boolean,
+    søkekriterier: Søkekriterier
+) => {
+    const alleForslag: string[] = kompetanseforslag?.kompetanser?.map((k) => k.key) || [];
+    const interessanteForslag: string[] = alleForslag.filter(
+        (forslag) => !uinteressanteForslag.includes(forslag)
+    );
+
+    const uvalgteForslag: string[] = interessanteForslag.filter(
+        (kompetanse) => !søkekriterier.kompetanse.has(kompetanse)
+    );
+
+    const forslag: string[] = visAlleForslag ? uvalgteForslag : uvalgteForslag.slice(0, 4);
+
+    return {
+        uvalgteForslag,
+        forslag,
+    };
 };
 
 const visYrker = (ønskedeYrker: Set<string>) => {
