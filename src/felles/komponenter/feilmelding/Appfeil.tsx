@@ -4,7 +4,7 @@ import css from './Appfeil.module.css';
 
 const Appfeil = () => {
     const error = useRouteError();
-
+    //TODO Samkjør med ERRORBoundary
     return (
         <div className={css.appfeil}>
             <Alert variant="error">

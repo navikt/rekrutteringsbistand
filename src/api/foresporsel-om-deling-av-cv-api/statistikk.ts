@@ -10,14 +10,14 @@ import { getAPI } from '../fetcher';
 export const foresporselStatistikkEndepunkt = (param?: URLSearchParams) =>
     `/foresporsel-om-deling-av-cv-api/statistikk${param ? `?${param}` : ''}`;
 
-const ForesporselStatistikkSchema = z.object({
+const foresporselStatistikkSchema = z.object({
     antallSvartJa: z.number(),
     antallSvartNei: z.number(),
     antallVenterPåSvar: z.number(),
     antallUtløpteSvar: z.number(),
 });
 
-export type ForesporselStatistikkDTO = z.infer<typeof ForesporselStatistikkSchema>;
+export type ForesporselStatistikkDTO = z.infer<typeof foresporselStatistikkSchema>;
 
 interface ForesporselStatistikkProps {
     navKontor: string;
@@ -42,10 +42,9 @@ export const useForesporselStatistikk = ({
     );
 
     if (swrData.data) {
-        const validatedData = ForesporselStatistikkSchema.parse(swrData.data);
         return {
             ...swrData,
-            data: validatedData,
+            data: foresporselStatistikkSchema.parse(swrData.data),
         };
     }
     return swrData;

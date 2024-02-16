@@ -3,29 +3,37 @@
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
+import { z } from 'zod';
 import { mockKandidatsøkKandidater } from '../../../mock/kandidatsok-proxy/mockKandidat';
 import { postApi } from '../fetcher';
-import { Jobbønske, JobbønskeSted } from 'felles/domene/kandidat/Jobbprofil';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsøk';
 
-export type KandidatsøkDTO = {
-    kandidatsøkKandidater: KandidatsøkKandidater;
-    isLoading: boolean;
-    error: any;
-};
+const jobbønskeSchema = z.object({
+    styrkKode: z.string().nullable(),
+    styrkBeskrivelse: z.string().nullable(),
+    primaertJobbonske: z.boolean(),
+    sokeTitler: z.array(z.string()),
+});
 
-export type KandidatsøkKandidat = {
-    fodselsnummer: string;
-    fornavn: string;
-    etternavn: string;
-    arenaKandidatnr: string;
-    kvalifiseringsgruppekode: string;
-    yrkeJobbonskerObj: Jobbønske[];
-    geografiJobbonsker: JobbønskeSted[];
-    kommuneNavn: string;
-    postnummer: string;
-};
+const jobbønskeStedSchema = z.object({
+    geografiKodeTekst: z.string(),
+    geografiKode: z.string(),
+});
+
+const kandidatsøkKandidatSchema = z.object({
+    fodselsnummer: z.string(),
+    fornavn: z.string(),
+    etternavn: z.string(),
+    arenaKandidatnr: z.string(),
+    kvalifiseringsgruppekode: z.string(),
+    yrkeJobbonskerObj: z.array(jobbønskeSchema),
+    geografiJobbonsker: z.array(jobbønskeStedSchema),
+    kommuneNavn: z.string(),
+    postnummer: z.string(),
+});
+
+export type KandidatsøkKandidat = z.infer<typeof kandidatsøkKandidatSchema>;
 
 export type KandidatsøkKandidater = KandidatsøkKandidat[];
 
@@ -47,18 +55,24 @@ export interface KandidatsøkProps {
     navKontor: string[];
 }
 
-export const useKandidatsøk = (props: KandidatsøkProps): KandidatsøkDTO => {
+export const useKandidatsøk = (props: KandidatsøkProps) => {
     const swrData = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
         postApi(path, { ...props })
     );
-    const kandidatsøkKandidater: KandidatsøkKandidater = swrData?.data?.hits?.hits.map(
-        (k: any) => k._source
-    );
 
-    return {
-        ...swrData,
-        kandidatsøkKandidater,
-    };
+    if (swrData.data) {
+        const kandidatsøkKandidaterData: KandidatsøkKandidater = swrData?.data?.hits?.hits.map(
+            (k: any) => k._source
+        );
+        const kandidatsøkKandidater = kandidatsøkKandidatSchema.parse(kandidatsøkKandidaterData);
+
+        return {
+            ...swrData,
+            kandidatsøkKandidater,
+        };
+    }
+
+    return swrData;
 };
 
 export const kandidatsøkMockMsw = http.get(kandidatsøkEndepunkt, (_) =>

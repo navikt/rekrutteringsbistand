@@ -43,12 +43,16 @@ export const useKandidatsammendrag = (props: KandidatsammendragProps): Kandidats
         postApi(path, { ...props })
     );
 
-    const kandidatsammendrag: Kandidatsammendrag | null = swrData?.data?.hits?.hits[0]?._source;
-
-    return {
-        ...swrData,
-        kandidatsammendrag,
-    };
+    if (swrData.data) {
+        const kandidatsammendragData: Kandidatsammendrag | null =
+            swrData?.data?.hits?.hits[0]?._source;
+        const kandidatsammendrag = kandidatsammendragSchema.parse(kandidatsammendragData);
+        return {
+            ...swrData,
+            kandidatsammendrag,
+        };
+    }
+    return swrData;
 };
 
 export const kandidatsammendragMockMsw = http.post(kandidatsammendragEndepunkt, (_) =>

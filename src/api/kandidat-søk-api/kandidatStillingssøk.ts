@@ -45,11 +45,17 @@ export const useKandidatStillingssøk = (props: KandidatStillingssøkProps) => {
     const swrData = useSWR({ path: kandidatStillingssøkEndepunkt, props }, ({ path }) =>
         postApi(path, props)
     );
-    const kandidatStillingssøk: KandidatStillingssøkDTO = swrData?.data?.hits?.hits[0]?._source;
-    return {
-        ...swrData,
-        kandidatStillingssøk,
-    };
+
+    if (swrData.data) {
+        const kandidatStillingssøkData: KandidatStillingssøkDTO =
+            swrData?.data?.hits?.hits[0]?._source;
+
+        return {
+            ...swrData,
+            data: kandidatStillingssøkDTOSchema.parse(kandidatStillingssøkData),
+        };
+    }
+    return swrData;
 };
 
 export const kandidatStillingssøkMockMsw = http.post(kandidatStillingssøkEndepunkt, (_) =>
