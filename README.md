@@ -54,6 +54,15 @@ KANDIDAT_ES_URI=<url>
 
 ```
 
+### Test brukere:
+
+| Rolle | Email |
+| ---- | ---- |
+| Modia-Generell | F_Z993163.E_Z993163@----- |
+| Jobbrettet | F_Z993098.E_Z993098@----- |
+| Arbeidsgiverrettet | F_Z993141.E_Z993141@----- |
+| Utvikler | F_Z994886.E_Z994886@----- |
+
 # Rekrutteringsbistand #Frackend
 
 Følgende kommando starter serveren for lokal utvikling:
