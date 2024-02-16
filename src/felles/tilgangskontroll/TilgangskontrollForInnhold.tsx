@@ -64,6 +64,7 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
                     </ul>
                 </div>
             </Alert>
+            {children}
         </div>
     );
 };
