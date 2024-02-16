@@ -2,7 +2,7 @@ import { Alert, BodyShort, Label } from '@navikt/ds-react';
 import { useRouteError } from 'react-router-dom';
 import css from './Appfeil.module.css';
 
-const Appfeil = () => {
+const RouterFeil = () => {
     const error = useRouteError();
     //TODO Samkjør med ERRORBoundary
     return (
@@ -20,4 +20,4 @@ const Appfeil = () => {
     );
 };
 
-export default Appfeil;
+export default RouterFeil;
