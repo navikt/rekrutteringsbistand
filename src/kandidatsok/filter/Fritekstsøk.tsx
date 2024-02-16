@@ -1,34 +1,19 @@
 import { Search } from '@navikt/ds-react';
-import { FormEventHandler, FunctionComponent, useEffect, useState } from 'react';
-import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier from '../hooks/useSøkekriterier';
+import { FormEventHandler, FunctionComponent, useContext, useState } from 'react';
+import { ØktContext } from '../Økt';
 import css from './Fritekstsøk.module.css';
 
 const Fritekstsøk: FunctionComponent = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
-    const [query, setQuery] = useState<string>(søkekriterier.fritekst || '');
-
-    useEffect(() => {
-        if (søkekriterier.fritekst === null) {
-            setQuery('');
-        }
-    }, [søkekriterier]);
-
-    const onSearchChange = (query: string) => {
-        setQuery(query);
-    };
-
-    const onSearchApply = () => {
-        setSearchParam(FilterParam.Fritekst, query.trim());
-    };
+    const { forrigeØkt, setØkt } = useContext(ØktContext);
+    const [fritekstSøk, setFritekstSøk] = useState(forrigeØkt.fritekst ?? '');
 
     const onClear = () => {
-        setSearchParam(FilterParam.Fritekst, null);
+        setØkt({ fritekst: '' });
     };
 
     const onFormSubmit: FormEventHandler = (event) => {
         event.preventDefault();
-        onSearchApply();
+        setØkt({ fritekst: fritekstSøk });
     };
 
     return (
@@ -37,9 +22,9 @@ const Fritekstsøk: FunctionComponent = () => {
                 label="Søk i kandidater"
                 hideLabel={true}
                 type="text"
-                value={query}
+                value={fritekstSøk}
                 placeholder="Søk i kandidater"
-                onChange={onSearchChange}
+                onChange={setFritekstSøk}
                 onClear={onClear}
             />
         </form>

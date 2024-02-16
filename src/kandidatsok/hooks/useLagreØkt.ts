@@ -15,7 +15,7 @@ const useLagreØkt = () => {
     const navKontor = useNavKontor((state) => state.navKontor);
     const { navIdent } = useMeg();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
-    const { setØkt } = useContext(ØktContext);
+    const { økt, setØkt } = useContext(ØktContext);
     const [navigerbareKandidater, setNavigerbareKandidater] = useState<
         EsResponse<Kandidat> | undefined
     >();
@@ -23,7 +23,7 @@ const useLagreØkt = () => {
 
     useEffect(() => {
         const hentKandidatnumreForNavigering = async () => {
-            const søkekriterier = searchParamsTilSøkekriterier(searchParams);
+            const søkekriterier = searchParamsTilSøkekriterier(searchParams, økt);
             const til = søkekriterier.side * PAGE_SIZE - maksAntallNavigerbareKandidater / 2;
             const from = Math.max(0, til);
             const size = maksAntallNavigerbareKandidater;

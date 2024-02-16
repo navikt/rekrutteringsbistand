@@ -38,9 +38,9 @@ const VelgKandidatlister: FunctionComponent<Props> = ({
                     legend="Velg blant dine kandidatlister"
                     value={avhukedeLister}
                 >
-                    {mineKandidatlister.data.liste.map((kandidatliste) => (
+                    {mineKandidatlister.data.liste.map((kandidatliste, i) => (
                         <VelgbarKandidatliste
-                            key={kandidatliste.kandidatlisteId}
+                            key={kandidatliste.kandidatlisteId + i}
                             kandidatliste={kandidatliste}
                             lagredeLister={lagredeLister}
                             onKandidatlisteMarkert={onKandidatlisteMarkert}
