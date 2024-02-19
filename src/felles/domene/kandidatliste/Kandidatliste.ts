@@ -12,7 +12,7 @@ type Kandidatliste = {
     tittel: string;
     organisasjonReferanse: string | null;
     organisasjonNavn: string | null;
-    stillingId: string | null;
+    stillingId: string;
     opprettetAv: OpprettetAv;
     opprettetTidspunkt: string;
     erEier: boolean;

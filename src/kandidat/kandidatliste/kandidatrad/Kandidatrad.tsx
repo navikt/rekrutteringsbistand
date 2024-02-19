@@ -129,11 +129,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
                             role="cell"
                             title="Vis profil"
                             className={classNames('navds-link', css.kolonneMedSmsLenke)}
-                            to={lenkeTilCv(
-                                kandidat.kandidatnr,
-                                { stillingId: kandidatliste.stillingId },
-                                true
-                            )}
+                            to={lenkeTilCv(kandidat.kandidatnr, kandidatliste.stillingId, true)}
                         >
                             {fulltNavn}
                         </Link>

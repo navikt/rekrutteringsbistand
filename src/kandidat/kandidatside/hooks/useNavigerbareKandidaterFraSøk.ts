@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Kandidatfane, Kandidatlistekontekst, lenkeTilKandidatside } from '../../app/paths';
+import { Kandidatfane, lenkeTilKandidatside } from '../../app/paths';
 import { hentØktFraKandidatsøk, skrivØktTilSessionStorage } from '../søkekontekst';
 import { Kandidatnavigering } from '../komponenter/header/forrige-neste/ForrigeNeste';
 import useFaner from './useFaner';
 
 const useNavigerbareKandidaterFraSøk = (
     kandidatnr: string,
-    kandidatlistekontekst?: Kandidatlistekontekst
+    stillingId?: string
 ): Kandidatnavigering | null => {
     const [fane] = useFaner();
     const [økt, setØkt] = useState(hentØktFraKandidatsøk());
@@ -16,7 +16,7 @@ const useNavigerbareKandidaterFraSøk = (
         kandidatnr,
         økt.navigerbareKandidater,
         fane,
-        kandidatlistekontekst
+        stillingId
     );
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const byggLenkeTilForrigeOgNesteKandidat = (
     currentKandidat: string,
     navigerbareKandidater: string[] | undefined,
     fane: Kandidatfane,
-    kandidatlistekontekst?: Kandidatlistekontekst
+    stillingId?: string
 ): [number, string | undefined, string | undefined] => {
     if (!navigerbareKandidater) {
         return [0, undefined, undefined];
@@ -72,7 +72,7 @@ const byggLenkeTilForrigeOgNesteKandidat = (
         ? lenkeTilKandidatside(
               navigerbareKandidater[index - 1],
               fane,
-              kandidatlistekontekst,
+              stillingId,
               false,
               true
           )
@@ -82,7 +82,7 @@ const byggLenkeTilForrigeOgNesteKandidat = (
         ? lenkeTilKandidatside(
               navigerbareKandidater[index + 1],
               fane,
-              kandidatlistekontekst,
+              stillingId,
               false,
               true
           )

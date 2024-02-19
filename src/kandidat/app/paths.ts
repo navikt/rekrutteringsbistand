@@ -35,49 +35,39 @@ export enum Kandidatfane {
     Historikk = 'historikk',
 }
 
-export type Kandidatlistekontekst = {
-    stillingId: string | null;
-    /** @deprecated  bruk stillingsId */
-    kandidatlisteId?: string;
-};
-
 export const lenkeTilKandidatside = (
     kandidatnr: string,
     aktivFane: Kandidatfane,
-    kandidatlistekontekst?: Kandidatlistekontekst,
+    stillingId?: string | null,
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) =>
     aktivFane === Kandidatfane.Cv
-        ? lenkeTilCv(kandidatnr, kandidatlistekontekst, fraKandidatliste, fraKandidatsøk)
-        : lenkeTilHistorikk(kandidatnr, kandidatlistekontekst, fraKandidatliste, fraKandidatsøk);
+        ? lenkeTilCv(kandidatnr, stillingId, fraKandidatliste, fraKandidatsøk)
+        : lenkeTilHistorikk(kandidatnr, stillingId, fraKandidatliste, fraKandidatsøk);
 
 export const lenkeTilCv = (
     kandidatnr: string,
-    kandidatlistekontekst?: Kandidatlistekontekst,
+    stillingId?: string | null,
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
     let lenke = `/kandidater/kandidat/${kandidatnr}/cv`;
-    return (
-        lenke + queryParamsForKandidatside(kandidatlistekontekst, fraKandidatliste, fraKandidatsøk)
-    );
+    return lenke + queryParamsForKandidatside(stillingId, fraKandidatliste, fraKandidatsøk);
 };
 
 export const lenkeTilHistorikk = (
     kandidatnr: string,
-    kandidatlistekontekst?: Kandidatlistekontekst,
+    stillingId?: string | null,
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
     let lenke = `/kandidater/kandidat/${kandidatnr}/historikk`;
-    return (
-        lenke + queryParamsForKandidatside(kandidatlistekontekst, fraKandidatliste, fraKandidatsøk)
-    );
+    return lenke + queryParamsForKandidatside(stillingId, fraKandidatliste, fraKandidatsøk);
 };
 
 const queryParamsForKandidatside = (
-    kandidatlistekontekst?: Kandidatlistekontekst,
+    stillingId?: string | null,
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
@@ -90,12 +80,9 @@ const queryParamsForKandidatside = (
     if (fraKandidatsøk) {
         queryParams.set(KandidatQueryParam.FraKandidatsøk, 'true');
     }
-    const { kandidatlisteId, stillingId } = kandidatlistekontekst ?? {};
 
     if (stillingId) {
         queryParams.set(KandidatQueryParam.StillingId, stillingId);
-    } else if (kandidatlisteId) {
-        queryParams.set(KandidatQueryParam.KandidatlisteId, kandidatlisteId);
     }
 
     return queryParams.size === 0 ? '' : `?${queryParams.toString()}`;

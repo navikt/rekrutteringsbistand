@@ -25,12 +25,7 @@ const useNavigerbareKandidater = (
 
     const hentLenkeTilKandidat = (kandidatnummer: string) =>
         kandidatnummer
-            ? lenkeTilKandidatside(
-                  kandidatnummer,
-                  fane,
-                  { stillingId: kandidatliste.stillingId },
-                  true
-              )
+            ? lenkeTilKandidatside(kandidatnummer, fane, kandidatliste.stillingId, true)
             : undefined;
 
     const index = kandidatnumre.indexOf(kandidatnr);

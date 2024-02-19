@@ -17,43 +17,6 @@ const enAnnenVeileder: OpprettetAv = {
     navn: 'Vilde Veileder',
 };
 
-export const mockKandidatlisteUtenStilling: Kandidatliste = {
-    kandidatlisteId: '123-test-uten-stilling',
-    tittel: 'Volleyballskuespiller på Pescara Beach',
-
-    erEier: false,
-    kanEditere: false,
-    kanSlette: KanSletteKandidatliste.KanSlettes,
-    opprettetTidspunkt: new Date().toISOString(),
-    status: Kandidatlistestatus.Åpen,
-
-    stillingskategori: null,
-    organisasjonNavn: null,
-    organisasjonReferanse: null,
-    stillingId: null,
-    antallStillinger: null,
-
-    kandidater: mockKandidatIKandidatliste,
-    formidlingerAvUsynligKandidat: [
-        {
-            fornavn: 'Fornavn',
-            mellomnavn: 'Mellomnavn',
-            etternavn: 'Etternavn',
-            id: '12345678910',
-            utfall: Kandidatutfall.FåttJobben,
-            lagtTilTidspunkt: new Date().toISOString(),
-            lagtTilAvIdent: 'Z999999',
-            lagtTilAvNavn: 'Veileder Navn',
-            arkivert: true,
-            arkivertTidspunkt: new Date().toISOString(),
-            arkivertAvIdent: 'Z999998',
-            arkivertAvNavn: 'Arkivist Navn',
-        },
-    ],
-
-    opprettetAv: enAnnenVeileder,
-};
-
 export const mockKandidatlisteMedStilling: Kandidatliste = {
     kandidatlisteId: 'abc-test-med-stilling',
     tittel: 'Er du en bedreviter?',
@@ -76,30 +39,6 @@ export const mockKandidatlisteMedStilling: Kandidatliste = {
     opprettetAv: enAnnenVeileder,
 };
 
-export const mockMinKandidatlisteUtenStilling: Kandidatliste = {
-    kandidatlisteId: '123-test-uten-stilling',
-    tittel: 'Min Kandidatliste uten stilling',
-
-    erEier: true,
-    kanEditere: false,
-    kanSlette: KanSletteKandidatliste.KanSlettes,
-    opprettetTidspunkt: new Date().toISOString(),
-    status: Kandidatlistestatus.Åpen,
-
-    stillingskategori: null,
-    organisasjonNavn: null,
-    organisasjonReferanse: null,
-    stillingId: null,
-    antallStillinger: null,
-
-    kandidater: mockKandidatIKandidatliste,
-    formidlingerAvUsynligKandidat: [],
-
-    opprettetAv: {
-        ident: mockVeileder.navIdent,
-        navn: 'Varg Veileder',
-    },
-};
 export const mockMinKandidatlisteMedStilling: Kandidatliste = {
     kandidatlisteId: 'abc-test-med-stilling',
     tittel: 'Min Kandidatliste med stilling',
@@ -154,7 +93,5 @@ export const opprettMockKandidatlisteForKandidat = (
 
 export const mockAlleKandidatlister = [
     mockKandidatlisteMedStilling,
-    mockKandidatlisteUtenStilling,
-    mockMinKandidatlisteUtenStilling,
     mockMinKandidatlisteMedStilling,
 ];
