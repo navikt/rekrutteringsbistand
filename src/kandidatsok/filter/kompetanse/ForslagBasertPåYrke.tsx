@@ -1,13 +1,15 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
-import { Aggregation } from 'felles/domene/elastic/ElasticSearch';
-import { FunctionComponent, useEffect, useState } from 'react';
-import { søk } from '../../api/api';
-import { Aggregering, byggAggregeringerQuery } from '../../api/query/byggAggregeringer';
+import { FunctionComponent, useState } from 'react';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
 import Merkelapp from '../merkelapp/Merkelapp';
 import Merkelapper from '../merkelapp/Merkelapper';
 import css from './Kompetanse.module.css';
+import {
+    Kompetanseforslag,
+    KompetanseforslagProps,
+    useKompetanseforslag,
+} from '../../../api/kandidat-søk-api/kompetanseforslag';
 
 type Props = {
     søkekriterier: Søkekriterier;
@@ -17,42 +19,23 @@ type Props = {
 const uinteressanteForslag = ['Fagbrev/svennebrev', 'Mesterbrev', 'Autorisasjon'];
 
 const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelgForslag }) => {
-    const [respons, setRespons] = useState<Aggregation | null>(null);
+    const yrker: KompetanseforslagProps = {
+        yrker: Array.from(søkekriterier.ønsketYrke).map((yrke) => ({
+            yrke,
+        })),
+    };
+
+    const { kompetanseforslag } = useKompetanseforslag(yrker);
+
     const [visAlleForslag, setVisAlleForslag] = useState<boolean>(false);
 
-    useEffect(() => {
-        const hentForslag = async () => {
-            const query = byggAggregeringerQuery(søkekriterier);
-            const respons = await søk(query);
-
-            if (respons.aggregations) {
-                const aggregering = respons.aggregations[Aggregering.Kompetanse] as Aggregation;
-
-                setRespons(aggregering);
-            }
-        };
-
-        hentForslag();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(Array.from(søkekriterier.ønsketYrke))]);
-
-    if (respons === null) {
-        return null;
-    }
-
-    const alleForslag = respons.buckets.map((bucket) => bucket.key);
-
-    const interessanteForslag = alleForslag.filter(
-        // @ts-ignore TODO: written before strict-mode enabled
-        (forslag) => !uinteressanteForslag.includes(forslag)
+    const { uvalgteForslag, forslag } = finnForslag(
+        kompetanseforslag,
+        visAlleForslag,
+        søkekriterier
     );
-    const uvalgteForslag = interessanteForslag.filter(
-        // @ts-ignore TODO: written before strict-mode enabled
-        (kompetanse) => !søkekriterier.kompetanse.has(kompetanse)
-    );
-    const forslag = visAlleForslag ? uvalgteForslag : uvalgteForslag.slice(0, 4);
 
-    if (søkekriterier.ønsketYrke.size === 0 || forslag.length === 0) {
+    if (!kompetanseforslag || søkekriterier.ønsketYrke.size === 0 || forslag.length === 0) {
         return null;
     }
 
@@ -90,6 +73,28 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
             )}
         </div>
     );
+};
+
+const finnForslag = (
+    kompetanseforslag: Kompetanseforslag,
+    visAlleForslag: boolean,
+    søkekriterier: Søkekriterier
+) => {
+    const alleForslag: string[] = kompetanseforslag?.kompetanser?.map((k) => k.key) || [];
+    const interessanteForslag: string[] = alleForslag.filter(
+        (forslag) => !uinteressanteForslag.includes(forslag)
+    );
+
+    const uvalgteForslag: string[] = interessanteForslag.filter(
+        (kompetanse) => !søkekriterier.kompetanse.has(kompetanse)
+    );
+
+    const forslag: string[] = visAlleForslag ? uvalgteForslag : uvalgteForslag.slice(0, 4);
+
+    return {
+        uvalgteForslag,
+        forslag,
+    };
 };
 
 const visYrker = (ønskedeYrker: Set<string>) => {
