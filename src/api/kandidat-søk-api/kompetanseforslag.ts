@@ -13,8 +13,12 @@ export type KompetanseforslagDTO = {
     error?: Error;
 };
 
-export interface KompetanseforslagProps {
+export interface Yrke {
     yrke: string;
+}
+
+export interface KompetanseforslagProps {
+    yrker: Yrke[];
 }
 
 export type Kompetanseforslag = { kompetanser: Bucket[] };
@@ -32,7 +36,7 @@ interface AggregationsData {
     };
 }
 
-export const useKompetanseforslag = (props: KompetanseforslagProps[]): KompetanseforslagDTO => {
+export const useKompetanseforslag = (props: KompetanseforslagProps): KompetanseforslagDTO => {
     const { data, error, isLoading } = useSWR<AggregationsData, Error>(
         kompetanseforslagEndepunkt,
         () => postApi(kompetanseforslagEndepunkt, props)

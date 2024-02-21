@@ -19,9 +19,11 @@ type Props = {
 const uinteressanteForslag = ['Fagbrev/svennebrev', 'Mesterbrev', 'Autorisasjon'];
 
 const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelgForslag }) => {
-    const yrker: KompetanseforslagProps[] = Array.from(søkekriterier.ønsketYrke).map((yrke) => ({
-        yrke,
-    }));
+    const yrker: KompetanseforslagProps = {
+        yrker: Array.from(søkekriterier.ønsketYrke).map((yrke) => ({
+            yrke,
+        })),
+    };
 
     const { kompetanseforslag } = useKompetanseforslag(yrker);
 
