@@ -17,6 +17,7 @@ type Props = {
     erUtkast?: boolean;
     erStoppet?: boolean;
     erJobbmesse?: boolean;
+    erSlettet?: boolean;
 };
 
 const RekBisKortStilling = ({
@@ -33,6 +34,7 @@ const RekBisKortStilling = ({
     erUtkast,
     erStoppet,
     erJobbmesse,
+    erSlettet,
 }: Props) => {
     return (
         <RekBisKort
@@ -67,6 +69,11 @@ const RekBisKortStilling = ({
                         {erStoppet && (
                             <Tag size="small" variant="error" className={css.utløptTag}>
                                 Stoppet
+                            </Tag>
+                        )}
+                        {erSlettet && (
+                            <Tag size="small" variant="error" className={css.utløptTag}>
+                                Slettet
                             </Tag>
                         )}
                         <Detail> {publisertDato}</Detail>

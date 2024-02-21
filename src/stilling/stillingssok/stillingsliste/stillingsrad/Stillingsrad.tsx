@@ -65,6 +65,8 @@ const Stillingsrad: FunctionComponent<Props> = ({
     const publisertDato = konverterTilPresenterbarDato(stilling.published);
     const utløpsDato = konverterTilPresenterbarDato(stilling.expires);
 
+    const erSlettet = status === 'DELETED';
+
     return (
         <RekBisKortStilling
             erJobbmesse={stillingskategori === Stillingskategori.Jobbmesse}
@@ -75,6 +77,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
             erUtkast={!rekrutteringsbistandstilling.stilling.publishedByAdmin}
             erUtløpt={status === 'INACTIVE' && erUtløptStilling}
             erStoppet={status === 'STOPPED' || status === 'REJECTED'}
+            erSlettet={erSlettet}
             publisertDato={
                 rekrutteringsbistandstilling.stilling.publishedByAdmin
                     ? publisertDato !== utløpsDato
@@ -86,15 +89,19 @@ const Stillingsrad: FunctionComponent<Props> = ({
             arbeidsgiversNavn={arbeidsgiversNavn}
             score={score}
             lenkeTilStilling={
-                <Link
-                    className={classNames(css.stillingslenke, 'navds-link')}
-                    to={urlTilStilling}
-                    state={{
-                        stillingssøk: searchParams.toString(),
-                    }}
-                >
-                    {stilling[tittelfelt]}
-                </Link>
+                erSlettet ? (
+                    stilling[tittelfelt]
+                ) : (
+                    <Link
+                        className={classNames(css.stillingslenke, 'navds-link')}
+                        to={urlTilStilling}
+                        state={{
+                            stillingssøk: searchParams.toString(),
+                        }}
+                    >
+                        {stilling[tittelfelt]}
+                    </Link>
+                )
             }
             stillingsinfo={
                 <div className={css.tekstrad}>
@@ -128,7 +135,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
             }
             knapper={
                 <div className={css.lenker}>
-                    {erEier && (
+                    {erEier && !erSlettet && (
                         <Link
                             className={css.lenke}
                             to={`/stillinger/stilling/${stilling.uuid}?${REDIGERINGSMODUS_QUERY_PARAM}=true`}
@@ -137,6 +144,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
                         </Link>
                     )}
                     {erEier &&
+                        !erSlettet &&
                         rekrutteringsbistandstilling.stilling.publishedByAdmin &&
                         skalViseLenkeTilKandidatliste(rekrutteringsbistandstilling) && (
                             <Link

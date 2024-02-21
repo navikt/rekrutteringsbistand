@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Klasse as Førerkortklasse } from '../api/query/queryMedFørerkort';
 import { Mål as Hovedmål } from '../filter/Hovedmål';
@@ -7,6 +7,7 @@ import { Nivå as Utdanningsnivå } from '../filter/Utdanningsnivå';
 import { Portefølje } from '../filter/porteføljetabs/PorteføljeTabs';
 import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Sortering } from '../kandidater/sortering/Sortering';
+import { Økt, ØktContext } from '../Økt';
 import { FilterParam } from './useQuery';
 
 export const LISTEPARAMETER_SEPARATOR = ';';
@@ -40,15 +41,16 @@ type Returverdi = {
 
 const useSøkekriterier = (): Returverdi => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const { økt } = useContext(ØktContext);
     const [søkekriterier, setSøkekriterier] = useState<Søkekriterier>(
-        searchParamsTilSøkekriterier(searchParams)
+        searchParamsTilSøkekriterier(searchParams, økt)
     );
 
     useEffect(() => {
-        setSøkekriterier(searchParamsTilSøkekriterier(searchParams));
+        setSøkekriterier(searchParamsTilSøkekriterier(searchParams, økt));
 
         /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    }, [searchParams]);
+    }, [searchParams, økt]);
 
     const setSearchParam = (parameter: FilterParam, value: string | null) => {
         if (value !== null && value.length > 0) {
@@ -59,6 +61,9 @@ const useSøkekriterier = (): Returverdi => {
 
         if (parameter !== FilterParam.Side && søkekriterier.side > 1) {
             searchParams.delete(FilterParam.Side);
+        }
+        if (parameter !== FilterParam.Fritekst) {
+            searchParams.delete(FilterParam.Fritekst);
         }
 
         setSearchParams(searchParams, {
@@ -80,8 +85,11 @@ const useSøkekriterier = (): Returverdi => {
     };
 };
 
-export const searchParamsTilSøkekriterier = (searchParams: URLSearchParams): Søkekriterier => ({
-    fritekst: searchParams.get(FilterParam.Fritekst),
+export const searchParamsTilSøkekriterier = (
+    searchParams: URLSearchParams,
+    økt: Økt
+): Søkekriterier => ({
+    fritekst: økt.fritekst ? økt.fritekst : null,
     portefølje: (searchParams.get(FilterParam.Portefølje) as Portefølje) || Portefølje.Alle,
     valgtKontor: searchParamTilSet(searchParams.get(FilterParam.ValgtKontor)),
     innsatsgruppe: searchParamTilSet(searchParams.get(FilterParam.Innsatsgruppe)),
