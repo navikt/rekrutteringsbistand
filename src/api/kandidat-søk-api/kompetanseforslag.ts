@@ -13,12 +13,8 @@ export type KompetanseforslagDTO = {
     error?: Error;
 };
 
-export interface Yrke {
-    yrke: string;
-}
-
 export interface KompetanseforslagProps {
-    yrker: Yrke[];
+    yrker: { yrke: string }[];
 }
 
 export type Kompetanseforslag = { kompetanser: Bucket[] };
