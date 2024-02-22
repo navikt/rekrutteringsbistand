@@ -1,4 +1,4 @@
-import { enkelAutocompleteMockMsw } from './enkelautocomplete';
+import { enkelAutocompleteMockMsw } from './enkelAutocomplete';
 import { kandidatStillingssøkMockMsw } from './kandidatStillingssøk';
 import { kandidatsammendragMockMsw } from './kandidatsammendrag';
 import { kompetanseforslagMockMsw } from './kompetanseforslag';

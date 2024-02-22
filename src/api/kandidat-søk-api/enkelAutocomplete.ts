@@ -4,29 +4,31 @@
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { postApi } from '../fetcher';
+import { Geografiforslag } from '../../kandidatsok/hooks/useGeografiSuggestions';
 
 export const enkelAutocompleteEndepunkt = '/kandidatsok-api/api/enkel-autocomplete';
 
 export interface EnkelAutocompleteProps {
     felt: string;
+    prefix: string;
 }
 
 export type EnkelAutocompleteDTO = {
-    tekst: string;
+    geografiforslag: Geografiforslag[];
     isLoading: boolean;
     error?: Error;
 };
 
-export const useEnkelAutocomplete = (props: EnkelAutocompleteProps) => {
-    const swrData = useSWR({ path: enkelAutocompleteEndepunkt, props }, ({ path }) =>
-        postApi(path, props)
-    );
-    const enkelAutocomplete: EnkelAutocompleteDTO = swrData?.data?.suggest?.forslag[0]?.options.map(
-        (option: { text: string }) => option.text
+export const useEnkelAutocomplete = (props: EnkelAutocompleteProps): EnkelAutocompleteDTO => {
+    const swrKey = props.prefix.length >= 2 ? { path: enkelAutocompleteEndepunkt, props } : null;
+
+    const swrData = useSWR(swrKey, ({ path }) => postApi(path, props));
+    const geografiforslag = swrData?.data?.suggest?.forslag[0]?.options?.map(
+        (option: { _source: Geografiforslag }) => option._source
     );
     return {
         ...swrData,
-        enkelAutocomplete,
+        geografiforslag,
     };
 };
 
@@ -37,13 +39,22 @@ export const enkelAutocompleteMockMsw = http.post(enkelAutocompleteEndepunkt, (_
                 {
                     options: [
                         {
-                            text: 'Autocomplete1',
+                            _source: {
+                                geografiKodeTekst: 'Oslo',
+                                geografiKode: 'NO03.0301',
+                            },
                         },
                         {
-                            text: 'Autocomplete2',
+                            _source: {
+                                geografiKodeTekst: 'Oslo/Bydel Alna',
+                                geografiKode: 'NO03.03017',
+                            },
                         },
                         {
-                            text: 'Autocomplete3',
+                            _source: {
+                                geografiKodeTekst: 'Oslo/Bydel Bjerke',
+                                geografiKode: 'NO03.030112',
+                            },
                         },
                     ],
                 },

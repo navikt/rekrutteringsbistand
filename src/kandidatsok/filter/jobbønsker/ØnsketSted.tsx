@@ -1,16 +1,19 @@
-import { Nettstatus } from 'felles/nettressurs';
 import React, { useState } from 'react';
-import useGeografiSuggestions, { Geografiforslag } from '../../hooks/useGeografiSuggestions';
+import { Geografiforslag } from '../../hooks/useGeografiSuggestions';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import { Typeahead } from '../typeahead/Typeahead';
+import { useEnkelAutocomplete } from '../../../api/kandidat-søk-api/enkelAutocomplete';
 
 export const GEOGRAFI_SEPARATOR = '.';
 
 const ØnsketSted = () => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const [input, setInput] = useState<string>('');
-    const forslag = useGeografiSuggestions(input);
+    const { geografiforslag } = useEnkelAutocomplete({
+        felt: 'geografiJobbonsker.geografiKodeTekst.completion',
+        prefix: input,
+    });
 
     const valgteSteder = Array.from(søkekriterier.ønsketSted).map((encoded) =>
         decodeGeografiforslag(encoded)
@@ -19,8 +22,8 @@ const ØnsketSted = () => {
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 
     const onSelect = (selection: string) => {
-        if (forslag.kind === Nettstatus.Suksess) {
-            const korresponderendeForslag = forslag.data.find(
+        if (geografiforslag) {
+            const korresponderendeForslag = geografiforslag.find(
                 (forslag) => forslag.geografiKodeTekst === selection
             );
 
@@ -49,10 +52,9 @@ const ØnsketSted = () => {
         setSearchParam(FilterParam.ØnsketSted, alleØnskedeSteder.join('_'));
     };
 
-    const suggestions =
-        forslag.kind === Nettstatus.Suksess
-            ? forslag.data.map((sted) => sted.geografiKodeTekst)
-            : [];
+    const suggestions: string[] = geografiforslag
+        ? geografiforslag.map((sted) => sted.geografiKodeTekst)
+        : [];
 
     return (
         <Typeahead
