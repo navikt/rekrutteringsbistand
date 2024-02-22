@@ -18,7 +18,7 @@ const enAnnenVeileder: OpprettetAv = {
 };
 
 export const mockKandidatlisteUtenStilling: Kandidatliste = {
-    kandidatlisteId: '123-test-uten-stilling',
+    kandidatlisteId: '124-test-uten-stilling',
     tittel: 'Volleyballskuespiller på Pescara Beach',
 
     erEier: false,
@@ -101,7 +101,7 @@ export const mockMinKandidatlisteUtenStilling: Kandidatliste = {
     },
 };
 export const mockMinKandidatlisteMedStilling: Kandidatliste = {
-    kandidatlisteId: 'abc-test-med-stilling',
+    kandidatlisteId: 'abc-test-med-stilling2',
     tittel: 'Min Kandidatliste med stilling',
 
     erEier: true,

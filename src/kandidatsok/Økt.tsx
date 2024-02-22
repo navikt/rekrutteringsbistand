@@ -9,13 +9,16 @@ export type Økt = Partial<{
     navigerbareKandidater: string[];
     totaltAntallKandidater: number;
     pageSize: number;
+    fritekst: string;
 }>;
 
 export const ØktContext = createContext<{
     forrigeØkt: Økt;
+    økt: Økt;
     setØkt: (økt: Økt) => void;
 }>({
     forrigeØkt: {},
+    økt: {},
     setØkt: () => {},
 });
 
@@ -41,6 +44,7 @@ export const ØktContextProvider: FunctionComponent<Props> = ({ children }) => {
 
         return {
             forrigeØkt: forrigeØkt.current,
+            økt,
             setØkt: onSetØkt,
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,7 +53,7 @@ export const ØktContextProvider: FunctionComponent<Props> = ({ children }) => {
     return <ØktContext.Provider value={context}>{children}</ØktContext.Provider>;
 };
 
-export const lesSessionStorage = (): Økt => {
+const lesSessionStorage = (): Økt => {
     const session = window.sessionStorage.getItem(SessionStorageKey);
 
     if (session) {

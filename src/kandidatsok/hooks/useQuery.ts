@@ -35,6 +35,7 @@ const useQuery = (): Nettressurs<EsResponse<KandidatTilKandidatsøk>> => {
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
 
     const { søkekriterier } = useSøkekriterier();
+
     const [response, setResponse] = useState<Nettressurs<EsResponse<Kandidat>>>({
         kind: Nettstatus.IkkeLastet,
     });

@@ -35,6 +35,7 @@ jobs:
               run: cd server && npm run test
             - name: Push docker image to GAR
               uses: nais/docker-build-push@v0
+              if: github.actor != 'dependabot[bot]'
               id: docker-build-push
               with:
                   team: toi
@@ -44,7 +45,7 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/bruk-backend-for-kandidatsammendrag'
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/kompetanseforslag-endepunkt-ny-backend'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
