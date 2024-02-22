@@ -21,7 +21,6 @@ const Fritekstsøk: FunctionComponent = () => {
             <Search
                 label="Søk i kandidater"
                 hideLabel={true}
-                type="text"
                 value={fritekstSøk}
                 placeholder="Søk i kandidater"
                 onChange={setFritekstSøk}

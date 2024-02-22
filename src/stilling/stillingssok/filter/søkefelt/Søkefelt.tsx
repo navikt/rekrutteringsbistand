@@ -43,7 +43,6 @@ const Søkefelt: FunctionComponent = () => {
             <Search
                 label="Søk i stillinger"
                 hideLabel={true}
-                type="text"
                 value={input}
                 placeholder="Søk i stillinger"
                 onChange={onInputChange}

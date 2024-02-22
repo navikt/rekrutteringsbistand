@@ -1,4 +1,3 @@
-import add from 'date-fns/add';
 import {
     AdminStatus,
     Ansettelsesform,
@@ -13,6 +12,7 @@ import {
     Stillingskategori,
     System,
 } from 'felles/domene/stilling/Stilling';
+import moment from 'moment';
 import { mockVeileder } from '../mockVeileder';
 
 const stillingsId = '1ea746af-66be-4cf8-a051-9e815f77b1d1';
@@ -53,7 +53,7 @@ export const mockStilling /* : Stilling */ = {
     medium: Medium.Dir,
     reference: stillingsId,
     published: iDag,
-    expires: add(new Date(), { days: 7 }).toISOString(),
+    expires: moment().add(7, 'days').toISOString(),
     employer: mockArbeidsgiver,
     businessName: 'Tullekontoret',
     firstPublished: true,
