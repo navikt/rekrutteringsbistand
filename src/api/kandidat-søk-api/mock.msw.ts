@@ -1,3 +1,4 @@
+import { enkelAutocompleteMockMsw } from './enkelautocomplete';
 import { kandidatStillingssøkMockMsw } from './kandidatStillingssøk';
 import { kandidatsammendragMockMsw } from './kandidatsammendrag';
 import { kompetanseforslagMockMsw } from './kompetanseforslag';
@@ -8,4 +9,5 @@ export const kandidatSokApiMock = [
     kandidatStillingssøkMockMsw,
     kandidatsammendragMockMsw,
     kompetanseforslagMockMsw,
+    enkelAutocompleteMockMsw,
 ];
