@@ -134,7 +134,8 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: (_: unknown) => unknown) => ({
     setApplicationEmail: (applicationemail: unknown) =>
         dispatch({ type: SET_APPLICATIONEMAIL, applicationemail }),
-    setApplicationUrl: (applicationurl: unknown) => dispatch({ type: SET_APPLICATIONURL, applicationurl }),
+    setApplicationUrl: (applicationurl: unknown) =>
+        dispatch({ type: SET_APPLICATIONURL, applicationurl }),
     validateEmail: () => dispatch({ type: VALIDATE_APPLICATION_EMAIL }),
 });
 

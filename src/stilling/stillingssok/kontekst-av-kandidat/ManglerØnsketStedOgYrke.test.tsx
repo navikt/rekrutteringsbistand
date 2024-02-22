@@ -41,10 +41,10 @@ test('<ManglerØnsketStedOgYrke/>', async () => {
 
     render(wrapper());
     await waitFor(() => {
-expect(
-        screen.getByRole('heading', {
-            name: /vi vet ikke hva kandidaten ønsker å jobbe med, eller hvor de ønsker å jobbe/i,
-        })
+        expect(
+            screen.getByRole('heading', {
+                name: /vi vet ikke hva kandidaten ønsker å jobbe med, eller hvor de ønsker å jobbe/i,
+            })
         ).toBeInTheDocument();
     });
 });
