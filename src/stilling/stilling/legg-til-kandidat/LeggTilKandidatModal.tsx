@@ -22,7 +22,7 @@ const LeggTilKandidatModal: React.FC<ILeggTilKandidatModal> = ({
         <Modal
             open={vis}
             aria-label="Legg til kandidat"
-            onBeforeClose={onClose}
+            onClose={onClose}
             header={{
                 heading: 'Legg til kandidat',
             }}

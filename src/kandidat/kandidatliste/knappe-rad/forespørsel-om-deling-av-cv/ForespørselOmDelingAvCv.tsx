@@ -159,7 +159,7 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
                 open={modalErÅpen}
                 aria-label="Del stillingen med de markerte kandidatene2"
                 className={css.foresporselOmDelingAvCvModal}
-                onBeforeClose={lukkModal}
+                onClose={lukkModal}
                 header={{
                     heading: `Del med ${markerteKandidaterSomIkkeErForespurt.length} ${
                         markerteKandidaterSomIkkeErForespurt.length === 1

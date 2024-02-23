@@ -1,5 +1,5 @@
 import { Søkefelt } from '../../søkefelter/Søkefelter';
-import {tittelfelt} from "../../stillingsliste/stillingsrad/Stillingsrad";
+import { tittelfelt } from '../../stillingsliste/stillingsrad/Stillingsrad';
 
 const søkefelt = (søketermer: Set<string>, felter: Set<Søkefelt>) => {
     if (søketermer.size === 0) return [];

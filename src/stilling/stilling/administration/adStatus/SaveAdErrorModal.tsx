@@ -16,7 +16,7 @@ const SaveAdErrorModal = () => {
         showAdSavedErrorModal && (
             <Modal
                 open={showAdSavedErrorModal}
-                onBeforeClose={onClose}
+                onClose={onClose}
                 header={{
                     heading: 'Kan ikke lagre stillingen',
                     closeButton: true,

@@ -93,7 +93,7 @@ const hentHostname = () => {
 };
 
 const hentNavKontoretsNavn = (navKontor: string) => {
-    let enhetElement : HTMLSpanElement | undefined = document.getElementsByClassName(
+    let enhetElement: HTMLSpanElement | undefined = document.getElementsByClassName(
         'dekorator__hode__enhet'
     )[0] as HTMLSpanElement;
 

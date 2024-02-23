@@ -1,15 +1,15 @@
-import { ChangeEvent, FunctionComponent } from 'react';
-import css from './ForespørselOmDelingAvCv.module.css';
-import moment from 'moment';
 import {
     BodyShort,
+    DatePicker,
     DateValidationT,
     Label,
     Radio,
     RadioGroup,
-    DatePicker,
     useDatepicker,
 } from '@navikt/ds-react';
+import moment from 'moment';
+import { ChangeEvent, FunctionComponent } from 'react';
+import css from './ForespørselOmDelingAvCv.module.css';
 
 export enum Svarfrist {
     ToDager = 'TO_DAGER',
@@ -69,7 +69,6 @@ const VelgSvarfrist: FunctionComponent<Props> = ({
         toDate: moment().add(1, 'month').toDate(),
         onDateChange: onEgenvalgtChange,
         onValidate: onEgenvalgValidation,
-        openOnFocus: false,
         inputFormat: 'dd.MM.yyyy',
         allowTwoDigitYear: false,
     });
