@@ -3,31 +3,34 @@
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
+import { z } from 'zod';
 import { formaterDatoTilApi } from '../../forside/statistikk/datoUtils';
 import { getAPI } from '../fetcher';
 
 export const statistikkEndepunkt = (param?: URLSearchParams) =>
     `/statistikk-api/statistikk${param ? `?${param}` : ''}`;
 
-export type AntallDTO = {
-    totalt: number;
-    under30år: number;
-    innsatsgruppeIkkeStandard: number;
-};
+const antallDTOSchema = z.object({
+    totalt: z.number(),
+    under30år: z.number(),
+    innsatsgruppeIkkeStandard: z.number(),
+});
 
-export type StatistikkDTO = {
-    antPresentasjoner: AntallDTO;
-    antFåttJobben: AntallDTO;
-};
+const statistikkDTOSchema = z.object({
+    antPresentasjoner: antallDTOSchema,
+    antFåttJobben: antallDTOSchema,
+});
 
+export type AntallDTO = z.infer<typeof antallDTOSchema>;
+export type StatistikkDTO = z.infer<typeof statistikkDTOSchema>;
 interface IuseUtfallsstatistikk {
     navKontor: string;
     fraOgMed: Date;
     tilOgMed: Date;
 }
 
-export const useStatistikk = ({ navKontor, fraOgMed, tilOgMed }: IuseUtfallsstatistikk) =>
-    useSWR(
+export const useStatistikk = ({ navKontor, fraOgMed, tilOgMed }: IuseUtfallsstatistikk) => {
+    const swrData = useSWR(
         statistikkEndepunkt(
             new URLSearchParams({
                 fraOgMed: formaterDatoTilApi(fraOgMed),
@@ -37,6 +40,15 @@ export const useStatistikk = ({ navKontor, fraOgMed, tilOgMed }: IuseUtfallsstat
         ),
         getAPI
     );
+
+    if (swrData.data) {
+        return {
+            ...swrData,
+            data: statistikkDTOSchema.parse(swrData.data),
+        };
+    }
+    return swrData;
+};
 
 const statistikkMock = (navKontor: string | null): StatistikkDTO | null => {
     switch (navKontor) {

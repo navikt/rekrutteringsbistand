@@ -11,7 +11,7 @@ import Varsling from '../varsling/Varsling';
 import css from './KandidatApp.module.css';
 import ManglerTilgang from './ManglerTilgang';
 
-const KandidatApp = () => {
+const App = () => {
     return (
         <>
             <Varsling />
@@ -32,10 +32,10 @@ const KandidatApp = () => {
     );
 };
 
-const MedProvider = () => (
+const KandidatApp = () => (
     <Provider store={store}>
-        <KandidatApp />
+        <App />
     </Provider>
 );
 
-export default MedProvider;
+export default KandidatApp;

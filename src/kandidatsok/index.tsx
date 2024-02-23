@@ -1,3 +1,38 @@
-import App from './App';
+import '@reach/combobox/styles.css';
+import { useContext } from 'react';
+import Tilgangskontroll, { Rolle } from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import Kandidatsøk from './Kandidatsøk';
+import useKontekstAvKandidatlisteEllerStilling from './hooks/useKontekstAvKandidatlisteEllerStilling';
+import useNavigeringsstate from './hooks/useNavigeringsstate';
+import { ØktContext, ØktContextProvider } from './Økt';
 
-export const Component = () => <App />;
+const App = () => {
+    const kandidatsøkØkt = useContext(ØktContext);
+    const navigeringsstate = useNavigeringsstate();
+
+    const forrigeØkt =
+        navigeringsstate.brukKriterierFraStillingen || navigeringsstate.fraMeny
+            ? null
+            : kandidatsøkØkt.forrigeØkt;
+
+    const kontekstAvKandidatlisteEllerStilling =
+        useKontekstAvKandidatlisteEllerStilling(navigeringsstate);
+
+    return (
+        <Kandidatsøk
+            forrigeØkt={forrigeØkt}
+            setØkt={kandidatsøkØkt.setØkt}
+            kontekstAvKandidatlisteEllerStilling={kontekstAvKandidatlisteEllerStilling}
+        />
+    );
+};
+
+export const KandidatSøkIndex = () => {
+    return (
+        <Tilgangskontroll kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER]}>
+            <ØktContextProvider>
+                <App />
+            </ØktContextProvider>
+        </Tilgangskontroll>
+    );
+};

@@ -3,18 +3,21 @@
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
+import { z } from 'zod';
 import { formaterDatoTilApi } from '../../forside/statistikk/datoUtils';
 import { getAPI } from '../fetcher';
 
 export const foresporselStatistikkEndepunkt = (param?: URLSearchParams) =>
     `/foresporsel-om-deling-av-cv-api/statistikk${param ? `?${param}` : ''}`;
 
-export type ForesporselStatistikkDTO = {
-    antallSvartJa: number;
-    antallSvartNei: number;
-    antallVenterPåSvar: number;
-    antallUtløpteSvar: number;
-};
+const foresporselStatistikkSchema = z.object({
+    antallSvartJa: z.number(),
+    antallSvartNei: z.number(),
+    antallVenterPåSvar: z.number(),
+    antallUtløpteSvar: z.number(),
+});
+
+export type ForesporselStatistikkDTO = z.infer<typeof foresporselStatistikkSchema>;
 
 interface ForesporselStatistikkProps {
     navKontor: string;
@@ -26,8 +29,8 @@ export const useForesporselStatistikk = ({
     navKontor,
     fraOgMed,
     tilOgMed,
-}: ForesporselStatistikkProps) =>
-    useSWR(
+}: ForesporselStatistikkProps) => {
+    const swrData = useSWR(
         foresporselStatistikkEndepunkt(
             new URLSearchParams({
                 fraOgMed: formaterDatoTilApi(fraOgMed),
@@ -37,6 +40,15 @@ export const useForesporselStatistikk = ({
         ),
         getAPI
     );
+
+    if (swrData.data) {
+        return {
+            ...swrData,
+            data: foresporselStatistikkSchema.parse(swrData.data),
+        };
+    }
+    return swrData;
+};
 
 const statistikkMock = (navKontor: string | null): ForesporselStatistikkDTO => {
     return navKontor === '0239'

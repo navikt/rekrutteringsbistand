@@ -26,6 +26,9 @@ spec:
                 groups:
                     - id: {{ adGruppeModiaGenerellTilgang }}
                     - id: {{ adGruppeModiaOppfolging }}
+                    - id: {{ adGruppeRekrutteringsbistandArbeidsgiverrettet }}
+                    - id: {{ adGruppeRekrutteringsbistandJobbsokerrettet }}
+                    - id: {{ adGruppeRekrutteringsbistandUtvikler }}
                 extra:
                     - NAVident
         sidecar:
@@ -58,6 +61,12 @@ spec:
           value: {{ adGruppeModiaGenerellTilgang }}
         - name: AD_GRUPPE_MODIA_OPPFOLGING
           value: {{ adGruppeModiaOppfolging }}
+        - name: AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET
+          value: {{ adGruppeRekrutteringsbistandArbeidsgiverrettet }}
+        - name: AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET
+          value: {{ adGruppeRekrutteringsbistandJobbsokerrettet }}
+        - name: AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER
+          value: {{ adGruppeRekrutteringsbistandUtvikler }}
           
         - name: STATISTIKK_API_URL
           value: {{ statistikkApiUrl }}

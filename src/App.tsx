@@ -5,13 +5,13 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
 } from 'react-router-dom';
-import Appfeil from './felles/komponenter/feilmelding/Appfeil';
+import RouterFeil from './felles/feilhåndtering/RouterFeil';
 import Header from './header/Header';
 
 import FormidlingsSide from './formidling/Formidling';
 import Forside from './forside/Forside';
-import { Component as Kandidat } from './kandidat/index';
-import { Component as Kandidatsøk } from './kandidatsok/index';
+import KandidatApp from './kandidat/app/KandidatApp';
+import { KandidatSøkIndex } from './kandidatsok/index';
 import { Component as Stilling } from './stilling/index';
 import InngangFraArbop from './stilling/stillingssok/inngang-fra-arbop/InngangFraArbop';
 
@@ -19,20 +19,28 @@ const App = () => {
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<Header />}>
-                <Route path="/" element={<Forside />} />
-                <Route path="stillinger/*" element={<Stilling />} errorElement={<Appfeil />} />
-                <Route path="kandidatsok" element={<Kandidatsøk />} errorElement={<Appfeil />} />
-                <Route path="kandidater/*" element={<Kandidat />} errorElement={<Appfeil />} />
+                <Route path="/" element={<Forside />} errorElement={<RouterFeil />} />
+                <Route path="stillinger/*" element={<Stilling />} errorElement={<RouterFeil />} />
+                <Route
+                    path="kandidatsok"
+                    element={<KandidatSøkIndex />}
+                    errorElement={<RouterFeil />}
+                />
+                <Route
+                    path="kandidater/*"
+                    element={<KandidatApp />}
+                    errorElement={<RouterFeil />}
+                />
                 <Route
                     path="formidlinger/*"
                     element={<FormidlingsSide />}
-                    errorElement={<Appfeil />}
+                    errorElement={<RouterFeil />}
                 />
 
                 <Route
                     path="stillingssok/personbruker"
                     element={<InngangFraArbop />}
-                    errorElement={<Appfeil />}
+                    errorElement={<RouterFeil />}
                 />
 
                 <Route

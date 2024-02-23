@@ -4,6 +4,7 @@ import { FlattenedJWSInput, GetKeyFunction, JWSHeaderParameters } from 'jose/dis
 import { Client, Issuer } from 'openid-client';
 import { logger } from './logger';
 import { retrieveToken } from './middlewares';
+import { Roller } from './roller';
 
 const discoveryUrl = process.env.AZURE_APP_WELL_KNOWN_URL;
 const clientId = process.env.AZURE_APP_CLIENT_ID;
@@ -59,12 +60,29 @@ export const hentRoller = (token: string): string[] => {
     return (claims.groups as string[]) || [];
 };
 
-const { AD_GRUPPE_MODIA_GENERELL_TILGANG, AD_GRUPPE_MODIA_OPPFOLGING } = process.env;
+const {
+    AD_GRUPPE_MODIA_GENERELL_TILGANG,
+    AD_GRUPPE_MODIA_OPPFOLGING,
+    AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+    AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+    AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER,
+} = process.env;
 
 const navnForRolleId = (rolleId: string): string | null => {
-    if (rolleId === AD_GRUPPE_MODIA_GENERELL_TILGANG) return 'MODIA_GENERELL';
-    if (rolleId === AD_GRUPPE_MODIA_OPPFOLGING) return 'MODIA_OPPFOLGING';
-    return null;
+    switch (rolleId) {
+        case AD_GRUPPE_MODIA_GENERELL_TILGANG:
+            return Roller.AD_GRUPPE_MODIA_GENERELL_TILGANG;
+        case AD_GRUPPE_MODIA_OPPFOLGING:
+            return Roller.AD_GRUPPE_MODIA_OPPFOLGING;
+        case AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET:
+            return Roller.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET;
+        case AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET:
+            return Roller.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET;
+        case AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER:
+            return Roller.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER;
+        default:
+            return null;
+    }
 };
 
 export const hentBrukerOgRoller: RequestHandler = async (req, res) => {

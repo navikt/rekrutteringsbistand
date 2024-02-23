@@ -33,13 +33,14 @@ export const useKandidatStillingssøkData = ({
 
     const swrHook = useKandidatStillingssøk({ kandidatnr });
 
+    const kandidatStillingssøk = swrHook.data;
     useEffect(() => {
-        if (swrHook.kandidatStillingssøk) {
+        if (kandidatStillingssøk) {
             const brukKandidatkriterier =
                 searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
 
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
-                swrHook.kandidatStillingssøk;
+                kandidatStillingssøk;
 
             let fylker: (string | undefined)[] = hentFylkerFraJobbønsker(geografiJobbonsker);
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
@@ -75,9 +76,9 @@ export const useKandidatStillingssøkData = ({
                 navigate({ search: søk.toString() }, { replace: true });
             }
         }
-    }, [kandidatnr, navigate, searchParams, swrHook]);
+    }, [kandidatnr, navigate, searchParams, swrHook, kandidatStillingssøk]);
 
-    return { ...swrHook, hentetGeografiFraBosted, manglerØnsketYrke };
+    return { ...swrHook, hentetGeografiFraBosted, manglerØnsketYrke, kandidatStillingssøk };
 };
 
 const hentFylkestekstFraGeografiKode = (geografiKode: string) => {
