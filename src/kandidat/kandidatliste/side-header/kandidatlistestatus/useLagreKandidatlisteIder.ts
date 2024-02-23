@@ -18,7 +18,7 @@ const hentKandidatlisteIder = (): KandidatlisteIder => {
 
 const useLagreKandidatlisteIder = (): [
     KandidatlisteIder,
-    (kandidatlisteIder: KandidatlisteIder) => void
+    (kandidatlisteIder: KandidatlisteIder) => void,
 ] => {
     const [lukkedata, setLukkedata] = useState<KandidatlisteIder>(hentKandidatlisteIder);
 

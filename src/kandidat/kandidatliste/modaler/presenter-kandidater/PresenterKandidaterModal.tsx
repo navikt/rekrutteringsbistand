@@ -126,7 +126,7 @@ const PresenterKandidaterModal = ({
     return (
         <Modal
             open={vis}
-            onBeforeClose={() => onClose(false)}
+            onClose={() => onClose(false)}
             aria-label="Del kandidater med arbeidsgiver"
             className={css.presenterKandidaterModal}
             header={{
