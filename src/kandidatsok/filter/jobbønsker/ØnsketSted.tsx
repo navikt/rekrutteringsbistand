@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Geografiforslag } from '../../hooks/useGeografiSuggestions';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import { Typeahead } from '../typeahead/Typeahead';
 import { useEnkelAutocomplete } from '../../../api/kandidat-søk-api/enkelAutocomplete';
 
 export const GEOGRAFI_SEPARATOR = '.';
+
+export type Geografiforslag = {
+    geografiKodeTekst: string;
+    geografiKode: string;
+};
 
 const ØnsketSted = () => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();

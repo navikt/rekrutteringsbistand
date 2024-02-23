@@ -4,7 +4,7 @@
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { postApi } from '../fetcher';
-import { Geografiforslag } from '../../kandidatsok/hooks/useGeografiSuggestions';
+import { Geografiforslag } from '../../kandidatsok/filter/jobbønsker/ØnsketSted';
 
 export const enkelAutocompleteEndepunkt = '/kandidatsok-api/api/enkel-autocomplete';
 
