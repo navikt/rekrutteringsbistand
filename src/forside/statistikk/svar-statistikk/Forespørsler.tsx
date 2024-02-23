@@ -26,7 +26,7 @@ const Forespørsler: FunctionComponent<Props> = ({ navKontor, fraOgMed, tilOgMed
         return <Loader />;
     }
 
-    if (svarstatistikk.error) {
+    if (svarstatistikk.error || svarstatistikk.data === undefined) {
         return (
             <ErrorMessage>
                 {svarstatistikk.error?.message ?? 'Feil ved lasting av statistikk'}

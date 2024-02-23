@@ -1,11 +1,11 @@
 /**
  * Endepunkt /statistikk
  */
-import { HttpResponse, http } from 'msw';
-import useSWR from 'swr';
+import { http, HttpResponse } from 'msw';
+import useSWR, { SWRResponse } from 'swr';
 import { z } from 'zod';
 import { formaterDatoTilApi } from '../../forside/statistikk/datoUtils';
-import { getAPI } from '../fetcher';
+import { getAPIwithSchema } from '../fetcher';
 
 export const foresporselStatistikkEndepunkt = (param?: URLSearchParams) =>
     `/foresporsel-om-deling-av-cv-api/statistikk${param ? `?${param}` : ''}`;
@@ -29,8 +29,8 @@ export const useForesporselStatistikk = ({
     navKontor,
     fraOgMed,
     tilOgMed,
-}: ForesporselStatistikkProps) => {
-    const swrData = useSWR(
+}: ForesporselStatistikkProps): SWRResponse<ForesporselStatistikkDTO> => {
+    return useSWR(
         foresporselStatistikkEndepunkt(
             new URLSearchParams({
                 fraOgMed: formaterDatoTilApi(fraOgMed),
@@ -38,16 +38,8 @@ export const useForesporselStatistikk = ({
                 navKontor,
             })
         ),
-        getAPI
+        getAPIwithSchema(foresporselStatistikkSchema)
     );
-
-    if (swrData.data) {
-        return {
-            ...swrData,
-            data: foresporselStatistikkSchema.parse(swrData.data),
-        };
-    }
-    return swrData;
 };
 
 const statistikkMock = (navKontor: string | null): ForesporselStatistikkDTO => {

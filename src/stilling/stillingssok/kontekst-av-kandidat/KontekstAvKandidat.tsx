@@ -16,7 +16,7 @@ const KontekstAvKandidat = ({ kandidatnr }: Props) => {
     const { kandidatStillingssøk, hentetGeografiFraBosted, manglerØnsketYrke } =
         useKandidatStillingssøkData({ kandidatnr });
 
-    const { kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
+    const { data: kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
 
     const brødsmulesti = kandidatsammendrag
         ? [

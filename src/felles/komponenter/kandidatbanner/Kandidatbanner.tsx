@@ -38,7 +38,7 @@ const Kandidatbanner = ({
     nederst,
     kandidatnr,
 }: Props) => {
-    const { kandidatsammendrag, error, isLoading } = useKandidatsammendrag({ kandidatnr });
+    const { data: kandidatsammendrag, error, isLoading } = useKandidatsammendrag({ kandidatnr });
     return (
         <Grunnbanner ikon={<Piktogram />} nederst={nederst}>
             <div className={css.innhold}>

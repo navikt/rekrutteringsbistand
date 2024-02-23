@@ -23,7 +23,7 @@ type Props = {
 };
 
 const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) => {
-    const { kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
+    const { data: kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
 
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);

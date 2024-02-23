@@ -60,7 +60,7 @@ export const useKandidatNavnSøk = (fnr: string): IuseKandidatNavnSøk => {
     React.useEffect(() => {
         const hentData = async () => {
             reset();
-            const rekbisData = await postApi(api.kandidatsøk, byggQueryFnr(fnr));
+            const rekbisData = await postApi({ url: api.kandidatsøk, body: byggQueryFnr(fnr) });
             const rekbisKandidat = rekbisData?.hits?.hits[0]?._source;
             if (rekbisKandidat && rekbisKandidat.kandidatnr) {
                 setNavneData(rekbisKandidat);

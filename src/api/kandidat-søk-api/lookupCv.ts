@@ -10,7 +10,7 @@ const lookupCvEndepunkt = '/kandidatsok-api/api/lookup-cv';
 
 export const useLookupCv = (kandidatnr?: string) => {
     const swrData = useSWR({ path: lookupCvEndepunkt, kandidatnr }, ({ path }) =>
-        postApi(path, { kandidatnr })
+        postApi({url: path, body: { kandidatnr }})
     );
 
     const cv = swrData?.data?.hits?.hits[0]?._source;
