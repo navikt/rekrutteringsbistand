@@ -57,7 +57,7 @@ export interface KandidatsøkProps {
 
 export const useKandidatsøk = (props: KandidatsøkProps) => {
     const swrData = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
-        postApi(path, { ...props })
+        postApi({ url: path, body: { ...props }})
     );
 
     if (swrData.data) {

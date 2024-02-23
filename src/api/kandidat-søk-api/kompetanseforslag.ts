@@ -35,7 +35,7 @@ interface AggregationsData {
 export const useKompetanseforslag = (props: KompetanseforslagProps): KompetanseforslagDTO => {
     const { data, error, isLoading } = useSWR<AggregationsData, Error>(
         [kompetanseforslagEndepunkt, props.yrker],
-        () => postApi(kompetanseforslagEndepunkt, props)
+        () => postApi({ url: kompetanseforslagEndepunkt, body: props})
     );
 
     const kompetanseforslag: Kompetanseforslag = {
