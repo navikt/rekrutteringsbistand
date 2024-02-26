@@ -10,13 +10,13 @@ import { postApi } from '../fetcher';
 const kandidatsammendragEndepunkt = '/kandidatsok-api/api/kandidatsammendrag';
 
 export const kandidatsammendragSchema = z.object({
-    adresselinje1: z.string(),
+    adresselinje1: z.string().nullable(),
     fornavn: z.string(),
-    poststed: z.string(),
+    poststed: z.string().nullable(),
     fodselsdato: z.string(),
     etternavn: z.string(),
     epostadresse: z.string().nullable(),
-    postnummer: z.string(),
+    postnummer: z.string().nullable(),
     telefon: z.string().nullable(),
     veilederIdent: z.string().nullable(),
     veilederEpost: z.string().nullable(),
