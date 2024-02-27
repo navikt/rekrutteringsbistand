@@ -73,7 +73,7 @@ const Publishing = () => {
         locale: 'nb',
         defaultSelected: new Date(published),
         onDateChange: (date) => setPublishDateInput(date),
-        onValidate: onValidatePublished,
+        // onValidate: onValidatePublished,
     });
 
     const datepickerPropsExpirationDate = useDatepicker({
@@ -81,7 +81,7 @@ const Publishing = () => {
         locale: 'nb',
         defaultSelected: new Date(expires),
         onDateChange: (date) => setExpirationDateInput(date),
-        onValidate: onValidateExpirationDate,
+        // onValidate: onValidateExpirationDate,
     });
 
     return (
