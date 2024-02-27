@@ -39,6 +39,7 @@ const KnappeRad: FunctionComponent<Props> = ({
     const markerteKandidater = useMarkerteKandidater(kandidatliste.kandidater);
     const minstEnKandidatErMarkert = markerteKandidater.length > 0;
     const markerteAktiveKandidater = markerteKandidater.filter((kandidat) => kandidat.fodselsnr);
+    const smsApiFeil = sendteMeldinger.kind === Nettstatus.Feil;
     const minstEnKandidatHarIkkeFåttSms =
         sendteMeldinger.kind === Nettstatus.Suksess &&
         markerteAktiveKandidater.some(
@@ -68,29 +69,25 @@ const KnappeRad: FunctionComponent<Props> = ({
             <div className={css.venstre}>{children}</div>
             {kandidatliste.status === Kandidatlistestatus.Åpen && (
                 <div className={css.høyre}>
-                    {skalViseEkstraKnapper &&
-                        (minstEnKandidatErMarkert && minstEnKandidatHarIkkeFåttSms ? (
-                            <Button
-                                variant="tertiary"
-                                onClick={onSendSmsClick}
-                                icon={<MobileIcon />}
-                            >
+                    {skalViseEkstraKnapper && smsApiFeil ? null : minstEnKandidatErMarkert &&
+                      minstEnKandidatHarIkkeFåttSms ? (
+                        <Button variant="tertiary" onClick={onSendSmsClick} icon={<MobileIcon />}>
+                            Send SMS
+                        </Button>
+                    ) : (
+                        <MedPopover
+                            tittel="Send SMS til de markerte kandidatene"
+                            hjelpetekst={
+                                minstEnKandidatErMarkert
+                                    ? 'Du har allerede sendt SMS til alle markerte kandidater.'
+                                    : 'Du må huke av for kandidatene du ønsker å sende SMS til.'
+                            }
+                        >
+                            <Button variant="tertiary" icon={<MobileIcon />}>
                                 Send SMS
                             </Button>
-                        ) : (
-                            <MedPopover
-                                tittel="Send SMS til de markerte kandidatene"
-                                hjelpetekst={
-                                    minstEnKandidatErMarkert
-                                        ? 'Du har allerede sendt SMS til alle markerte kandidater.'
-                                        : 'Du må huke av for kandidatene du ønsker å sende SMS til.'
-                                }
-                            >
-                                <Button variant="tertiary" icon={<MobileIcon />}>
-                                    Send SMS
-                                </Button>
-                            </MedPopover>
-                        ))}
+                        </MedPopover>
+                    )}
                     {skalViseDelMedKandidatKnapp && (
                         <ForespørselOmDelingAvCv
                             stillingsId={kandidatliste.stillingId!}
