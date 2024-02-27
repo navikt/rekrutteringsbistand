@@ -66,8 +66,8 @@ const startServer = () => {
     proxyMedOboToken('/stillingssok-proxy', STILLINGSSOK_PROXY_URL, scopes.stillingssøk);
     proxyMedOboToken('/stilling-api', STILLING_API_URL, scopes.stilling);
     proxyMedOboToken('/kandidat-api', KANDIDAT_API_URL, scopes.kandidat);
-    proxyMedOboToken('/kandidatsok-api', KANDIDATSOK_API_URL, scopes.kandidatsøk);
-    proxyMedOboToken('/sms-api', SMS_API, scopes.sms);
+    // proxyMedOboToken('/kandidatsok-api', KANDIDATSOK_API_URL, scopes.kandidatsøk);
+    // proxyMedOboToken('/sms-api', SMS_API, scopes.sms);
     proxyMedOboToken(
         '/foresporsel-om-deling-av-cv-api',
         FORESPORSEL_OM_DELING_AV_CV_API,
