@@ -69,7 +69,8 @@ const KnappeRad: FunctionComponent<Props> = ({
             <div className={css.venstre}>{children}</div>
             {kandidatliste.status === Kandidatlistestatus.Åpen && (
                 <div className={css.høyre}>
-                    {skalViseEkstraKnapper && smsApiFeil ? null : minstEnKandidatErMarkert &&
+                    {skalViseEkstraKnapper &&
+                    smsApiFeil ? /* TODO: burde ideelt sett vise en feilmelding om at vi ikke kan hente SMS-status. */ null : minstEnKandidatErMarkert &&
                       minstEnKandidatHarIkkeFåttSms ? (
                         <Button variant="tertiary" onClick={onSendSmsClick} icon={<MobileIcon />}>
                             Send SMS
