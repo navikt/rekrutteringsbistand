@@ -1,19 +1,15 @@
 const basePath = import.meta.env.VITEST ? 'http://localhost:3000' : '';
 
 export const getAPI = async (url: string) => {
-    try {
-        const response = await fetch(basePath + url, {
-            method: 'GET',
-            credentials: 'include',
-        });
+    const response = await fetch(basePath + url, {
+        method: 'GET',
+        credentials: 'include',
+    });
 
-        if (response.ok) {
-            return await response.json();
-        } else {
-            throw new Error('Feil respons fra server');
-        }
-    } catch (e) {
-        throw e;
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error(`Feil respons fra server (http-status: ${response.status})`);
     }
 };
 
@@ -32,7 +28,7 @@ export const postApi = async (url: string, body: any) => {
     } else if (response.status === 404) {
         throw new Error('404');
     } else {
-        throw new Error('Feil respons fra server');
+        throw new Error(`Feil respons fra server (http-status: ${response.status})`);
     }
 };
 
