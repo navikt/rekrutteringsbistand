@@ -1,6 +1,3 @@
-/* eslint-disable no-unreachable */
-// noinspection UnreachableCodeJS
-
 import {
     Navigate,
     Route,
@@ -17,33 +14,8 @@ import KandidatApp from './kandidat/app/KandidatApp';
 import { KandidatSøkIndex } from './kandidatsok/index';
 import { Component as Stilling } from './stilling/index';
 import InngangFraArbop from './stilling/stillingssok/inngang-fra-arbop/InngangFraArbop';
-import { Alert } from '@navikt/ds-react';
-import Layout from 'felles/komponenter/layout/Layout';
 
 const App = () => {
-    return (
-        <RouterProvider
-            router={createBrowserRouter(
-                createRoutesFromElements(
-                    <Route
-                        path={'*'}
-                        element={
-                            <>
-                                <Header />
-                                <Layout>
-                                    <Alert variant="info">
-                                        Rekrutteringsbistand er nede for vedlikehold. Vi regner med
-                                        å være tilbake XX i dag (...).
-                                    </Alert>
-                                </Layout>
-                            </>
-                        }
-                    />
-                )
-            )}
-        />
-    );
-
     const router = createBrowserRouter(
         createRoutesFromElements(
             <Route path="/" element={<Header />}>
