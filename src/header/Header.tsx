@@ -31,8 +31,8 @@ const Header = () => {
                         window.localStorage.setItem('nedetid pg11-oppgradering', 'false');
                     }}
                 >
-                    Statistikk og utsending av SMS vil være skrudd av i dag (XX. februar) mellom
-                    XX:XX og YY:YY for vedlikehold. Vi beklager ulempen.
+                    Sending av SMS og visning av kontorstatistikk vil være skrudd av onsdag 28.
+                    februar mellom 16:00 og 17:00 for vedlikehold. Vi beklager ulempen.
                 </Alert>
             ) : null}
             <Navigeringsmeny />
