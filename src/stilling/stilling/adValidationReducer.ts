@@ -1,7 +1,8 @@
 import { Privacy } from 'felles/domene/stilling/Stilling';
+import moment from 'moment';
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { State } from '../redux/store';
-import { idagMidnatt, isValidISOString } from '../utils/datoUtils';
+import { isValidISOString } from '../utils/datoUtils';
 import {
     ADD_LOCATION_AREA,
     ADD_POSTAL_CODE,
@@ -208,7 +209,7 @@ export function* validateSøknadsmetodeForStillingerPublisertPåArbeidsplassen()
 }
 
 const erSattFørIdag = (datoString: string): boolean => {
-    return new Date(datoString) <= idagMidnatt();
+    return moment(datoString).isBefore(new Date(), 'day');
 };
 
 function* validatePublishDate(): Generator<unknown, any, any> {
