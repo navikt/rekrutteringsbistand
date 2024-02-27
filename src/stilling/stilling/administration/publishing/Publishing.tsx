@@ -1,5 +1,5 @@
 import { DatePicker, DateValidationT, useDatepicker } from '@navikt/ds-react';
-import { BaseSyntheticEvent, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { leggTilTimerPåISOString } from '../../../utils/datoUtils';
 import { SET_EXPIRATION_DATE, SET_PUBLISHED } from '../../adDataReducer';
@@ -24,31 +24,23 @@ const Publishing = () => {
         return iGår;
     };
 
-    const onBlurPublishDate = (input: BaseSyntheticEvent) => {
-        const dateString = input.target.value;
-
-        if (!dateString || !publishDateInput) {
-            dispatch({ type: SET_PUBLISHED, published: dateString });
-            return;
+    React.useEffect(() => {
+        if (publishDateInput) {
+            dispatch({
+                type: SET_PUBLISHED,
+                published: leggTilTimerPåISOString(publishDateInput.toISOString(), 3),
+            });
         }
-        dispatch({
-            type: SET_PUBLISHED,
-            published: leggTilTimerPåISOString(publishDateInput.toISOString(), 3),
-        });
-    };
+    }, [publishDateInput, dispatch]);
 
-    const onBlurExpirationDate = (input: BaseSyntheticEvent) => {
-        const dateString = input.target.value;
-
-        if (!dateString || !expirationDateInput) {
-            dispatch({ type: SET_EXPIRATION_DATE, expires: dateString });
-            return;
+    React.useEffect(() => {
+        if (expirationDateInput) {
+            dispatch({
+                type: SET_EXPIRATION_DATE,
+                expires: leggTilTimerPåISOString(expirationDateInput.toISOString(), 3),
+            });
         }
-        dispatch({
-            type: SET_EXPIRATION_DATE,
-            expires: leggTilTimerPåISOString(expirationDateInput.toISOString(), 3),
-        });
-    };
+    }, [expirationDateInput, dispatch]);
 
     const onValidatePublished = (validation: DateValidationT) => {
         if (validation.isBefore) {
@@ -73,7 +65,7 @@ const Publishing = () => {
         locale: 'nb',
         defaultSelected: new Date(published),
         onDateChange: (date) => setPublishDateInput(date),
-        // onValidate: onValidatePublished,
+        onValidate: onValidatePublished,
     });
 
     const datepickerPropsExpirationDate = useDatepicker({
@@ -81,7 +73,7 @@ const Publishing = () => {
         locale: 'nb',
         defaultSelected: new Date(expires),
         onDateChange: (date) => setExpirationDateInput(date),
-        // onValidate: onValidateExpirationDate,
+        onValidate: onValidateExpirationDate,
     });
 
     return (
@@ -90,7 +82,6 @@ const Publishing = () => {
                 <DatePicker {...datepickerPropsPublished.datepickerProps}>
                     <DatePicker.Input
                         {...datepickerPropsPublished.inputProps}
-                        onBlur={onBlurPublishDate}
                         error={validation.published}
                         label={<Skjemalabel>Publiseringsdato</Skjemalabel>}
                         placeholder="dd.mm.yyyy"
@@ -101,7 +92,6 @@ const Publishing = () => {
                 <DatePicker {...datepickerPropsExpirationDate.datepickerProps}>
                     <DatePicker.Input
                         {...datepickerPropsExpirationDate.inputProps}
-                        onBlur={onBlurExpirationDate}
                         error={validation.expires}
                         label={<Skjemalabel>Siste visningsdato</Skjemalabel>}
                         placeholder="dd.mm.yyyy"
