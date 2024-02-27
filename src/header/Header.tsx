@@ -31,8 +31,8 @@ const Header = () => {
                         window.localStorage.setItem('nedetid pg11-oppgradering', 'false');
                     }}
                 >
-                    Rekrutteringsbistand vil være skrudd av i dag (XX. februar) mellom XX:XX og
-                    YY:YY for vedlikehold. Vi beklager ulempen.
+                    Statistikk og utsending av SMS vil være skrudd av i dag (XX. februar) mellom
+                    XX:XX og YY:YY for vedlikehold. Vi beklager ulempen.
                 </Alert>
             ) : null}
             <Navigeringsmeny />
