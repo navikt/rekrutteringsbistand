@@ -21,20 +21,22 @@ const Header = () => {
     return (
         <>
             <Modiadekoratør navKontor={navKontor} onNavKontorChange={setNavKontor} />
-            {visNedetidvarsel ? (
-                <Alert
-                    variant="warning"
-                    closeButton
-                    onClose={() => {
-                        setVisNedetidvarsel(false);
-                        window.localStorage.setItem('nedetid pg11-oppgradering', 'false');
-                    }}
-                >
-                    Sending av SMS og visning av kontorstatistikk vil være skrudd av torsdag 29.
-                    februar fra 16:00 til 17:00 for vedlikehold. Vi beklager ulempen.
-                </Alert>
-            ) : null}
             <Navigeringsmeny />
+            {visNedetidvarsel ? (
+                <div style={{ maxWidth: '60rem', margin: '8px auto' }}>
+                    <Alert
+                        variant="warning"
+                        closeButton
+                        onClose={() => {
+                            setVisNedetidvarsel(false);
+                            window.localStorage.setItem('nedetid pg11-oppgradering', 'false');
+                        }}
+                    >
+                        Sending av SMS og visning av kontorstatistikk vil være skrudd av torsdag 29.
+                        februar fra 16:00 til 17:00 for vedlikehold. Vi beklager ulempen.
+                    </Alert>
+                </div>
+            ) : null}
             <Outlet />
         </>
     );
