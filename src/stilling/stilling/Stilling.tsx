@@ -102,8 +102,7 @@ const Stilling = () => {
     };
 
     if (isEditingAd && !erEier) {
-        fjernRedigeringsmodusFraUrl();
-        window.location.reload();
+        navigate(`/stillinger/stilling/${stilling?.uuid}`);
     }
 
     useEffect(() => {
