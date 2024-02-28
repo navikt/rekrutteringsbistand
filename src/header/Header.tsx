@@ -24,15 +24,14 @@ const Header = () => {
             {visNedetidvarsel ? (
                 <Alert
                     variant="warning"
-                    fullWidth={true}
                     closeButton
                     onClose={() => {
                         setVisNedetidvarsel(false);
                         window.localStorage.setItem('nedetid pg11-oppgradering', 'false');
                     }}
                 >
-                    Sending av SMS og visning av kontorstatistikk vil være skrudd av onsdag 28.
-                    februar mellom 16:00 og 17:00 for vedlikehold. Vi beklager ulempen.
+                    Sending av SMS og visning av kontorstatistikk vil være skrudd av torsdag 29.
+                    februar fra 16:00 til 17:00 for vedlikehold. Vi beklager ulempen.
                 </Alert>
             ) : null}
             <Navigeringsmeny />
