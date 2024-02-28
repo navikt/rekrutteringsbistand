@@ -102,6 +102,7 @@ const Stilling = () => {
     };
 
     if (isEditingAd && !erEier) {
+        dispatch({ type: REMOVE_AD_DATA });
         navigate(`/stillinger/stilling/${stilling?.uuid}`);
     }
 
