@@ -101,6 +101,11 @@ const Stilling = () => {
         );
     };
 
+    if (isEditingAd && !erEier) {
+        fjernRedigeringsmodusFraUrl();
+        window.location.reload();
+    }
+
     useEffect(() => {
         const erRedigeringsmodus = searchParams.get(REDIGERINGSMODUS_QUERY_PARAM) === 'true';
 
