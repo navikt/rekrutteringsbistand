@@ -1,14 +1,14 @@
-import { BaseSyntheticEvent, useState } from 'react';
+import { DatePicker, DateValidationT, useDatepicker } from '@navikt/ds-react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { leggTilTimerPåISOString } from '../../../utils/datoUtils';
-import { SET_PUBLISHED, SET_EXPIRATION_DATE } from '../../adDataReducer';
-import { DatePicker, DateValidationT, useDatepicker } from '@navikt/ds-react';
+import { SET_EXPIRATION_DATE, SET_PUBLISHED } from '../../adDataReducer';
 import Skjemalabel from '../../edit/skjemaetikett/Skjemalabel';
 import css from './Publishing.module.css';
 
 const Publishing = () => {
     const dispatch = useDispatch();
-
+    const currentDate = new Date();
     const published = useSelector((state: any) => state.adData?.published);
     const expires = useSelector((state: any) => state.adData?.expires);
     const validation = useSelector((state: any) => state.adValidation.errors);
@@ -20,48 +20,32 @@ const Publishing = () => {
 
     const iGår = () => {
         const iGår = new Date();
-        iGår.setDate(iGår.getDate() - 1);
+        iGår.setDate(currentDate.getDate() - 1);
         return iGår;
     };
 
-    const onBlurPublishDate = (input: BaseSyntheticEvent) => {
-        const dateString = input.target.value;
-
-        if (!dateString || !publishDateInput) {
-            dispatch({ type: SET_PUBLISHED, published: dateString });
-            return;
+    React.useEffect(() => {
+        if (publishDateInput) {
+            dispatch({
+                type: SET_PUBLISHED,
+                published: leggTilTimerPåISOString(publishDateInput.toISOString(), 3),
+            });
         }
-        dispatch({
-            type: SET_PUBLISHED,
-            published: leggTilTimerPåISOString(publishDateInput.toISOString(), 3),
-        });
-    };
+    }, [publishDateInput, dispatch]);
 
-    const onBlurExpirationDate = (input: BaseSyntheticEvent) => {
-        const dateString = input.target.value;
-
-        if (!dateString || !expirationDateInput) {
-            dispatch({ type: SET_EXPIRATION_DATE, expires: dateString });
-            return;
+    React.useEffect(() => {
+        if (expirationDateInput) {
+            dispatch({
+                type: SET_EXPIRATION_DATE,
+                expires: leggTilTimerPåISOString(expirationDateInput.toISOString(), 3),
+            });
         }
-        dispatch({
-            type: SET_EXPIRATION_DATE,
-            expires: leggTilTimerPåISOString(expirationDateInput.toISOString(), 3),
-        });
-    };
-
-    const onPublishChange = (date: Date) => {
-        setPublishDateInput(date);
-    };
+    }, [expirationDateInput, dispatch]);
 
     const onValidatePublished = (validation: DateValidationT) => {
         if (validation.isBefore) {
             setPublishDateInput(iGår());
         }
-    };
-
-    const onExpirationDateChange = (date: Date) => {
-        setExpirationDateInput(date);
     };
 
     const onValidateExpirationDate = (validation: DateValidationT) => {
@@ -71,7 +55,7 @@ const Publishing = () => {
     };
 
     const datePickerDefaultProps = {
-        fromDate: new Date(),
+        fromDate: currentDate,
         openOnFocus: false,
         inputFormat: 'dd.MM.yyyy',
         allowTwoDigitYear: false,
@@ -80,8 +64,7 @@ const Publishing = () => {
         ...datePickerDefaultProps,
         locale: 'nb',
         defaultSelected: new Date(published),
-        // @ts-ignore TODO: written before strict-mode enabled
-        onDateChange: onPublishChange,
+        onDateChange: (date) => setPublishDateInput(date),
         onValidate: onValidatePublished,
     });
 
@@ -89,8 +72,7 @@ const Publishing = () => {
         ...datePickerDefaultProps,
         locale: 'nb',
         defaultSelected: new Date(expires),
-        // @ts-ignore TODO: written before strict-mode enabled
-        onDateChange: onExpirationDateChange,
+        onDateChange: (date) => setExpirationDateInput(date),
         onValidate: onValidateExpirationDate,
     });
 
@@ -100,7 +82,6 @@ const Publishing = () => {
                 <DatePicker {...datepickerPropsPublished.datepickerProps}>
                     <DatePicker.Input
                         {...datepickerPropsPublished.inputProps}
-                        onBlur={onBlurPublishDate}
                         error={validation.published}
                         label={<Skjemalabel>Publiseringsdato</Skjemalabel>}
                         placeholder="dd.mm.yyyy"
@@ -111,7 +92,6 @@ const Publishing = () => {
                 <DatePicker {...datepickerPropsExpirationDate.datepickerProps}>
                     <DatePicker.Input
                         {...datepickerPropsExpirationDate.inputProps}
-                        onBlur={onBlurExpirationDate}
                         error={validation.expires}
                         label={<Skjemalabel>Siste visningsdato</Skjemalabel>}
                         placeholder="dd.mm.yyyy"
