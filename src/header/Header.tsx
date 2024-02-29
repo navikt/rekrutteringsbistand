@@ -5,16 +5,20 @@ import Dekoratør from './modiadekoratør/Modiadekoratør';
 import Placeholder from './modiadekoratør/Placeholder';
 import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
 import useAmplitude from './useAmplitude';
-import React, { useState } from 'react';
-import { Alert } from '@navikt/ds-react';
+import React, { useEffect } from 'react';
 
 const Header = () => {
     const { navKontor, setNavKontor } = useNavKontor();
     const [mockAktiv] = useLocalStorageToggle('Mock modia');
-    const [visNedetidvarsel, setVisNedetidvarsel] = useState(
-        () => window.localStorage.getItem('nedetid pg11-oppgradering') !== 'false'
-    );
     useAmplitude(navKontor);
+
+    useEffect(() => {
+        // Vi hadde en alert i en periode som brukte keyen under for å huske
+        // om brukeren hadde lukket alerten. Dette er bare litt cleanup hos
+        // i brukerens nettleser. Er ikke farlig å slette. Slett gjerne koden
+        // etter 2024-03-15, f.eks.
+        window.localStorage.removeItem('nedetid pg11-oppgradering');
+    }, []);
 
     const Modiadekoratør = import.meta.env.DEV && mockAktiv ? Placeholder : Dekoratør;
 
@@ -22,21 +26,6 @@ const Header = () => {
         <>
             <Modiadekoratør navKontor={navKontor} onNavKontorChange={setNavKontor} />
             <Navigeringsmeny />
-            {visNedetidvarsel ? (
-                <div style={{ maxWidth: '60rem', margin: '8px auto' }}>
-                    <Alert
-                        variant="warning"
-                        closeButton
-                        onClose={() => {
-                            setVisNedetidvarsel(false);
-                            window.localStorage.setItem('nedetid pg11-oppgradering', 'false');
-                        }}
-                    >
-                        Sending av SMS og visning av kontorstatistikk vil være skrudd av torsdag 29.
-                        februar fra 16:00 til 17:00 for vedlikehold. Vi beklager ulempen.
-                    </Alert>
-                </div>
-            ) : null}
             <Outlet />
         </>
     );
