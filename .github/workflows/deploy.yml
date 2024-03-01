@@ -1,6 +1,6 @@
 name: Bygg og deploy
 
-on: [push]
+on: [push, workflow_dispatch]
 
 permissions:
     contents: read
@@ -45,7 +45,7 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/varsel_nedetid'
+        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/varsel_nedetid'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
