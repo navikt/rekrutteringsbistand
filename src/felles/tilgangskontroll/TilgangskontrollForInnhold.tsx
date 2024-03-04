@@ -1,7 +1,7 @@
 import { Alert } from '@navikt/ds-react';
 import * as React from 'react';
 import { ApplikasjonContext } from '../ApplikasjonContext';
-import { tilgangsKontrollAktiv } from './tilgangskontroll_aktiv';
+import { erIkkeProd } from '../miljø';
 
 export enum Rolle {
     AD_GRUPPE_MODIA_GENERELL_TILGANG = 'AD_GRUPPE_MODIA_GENERELL_TILGANG',
@@ -38,12 +38,13 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
 }) => {
     const { roller } = React.useContext(ApplikasjonContext);
 
+    const aktivTilgangskontroll = erIkkeProd;
+
     const harTilgang = kreverRoller.some((r) => {
         return roller?.includes(r);
     });
 
-    //todo temp
-    if (!tilgangsKontrollAktiv) {
+    if (!aktivTilgangskontroll) {
         return <>{children}</>;
     }
 
