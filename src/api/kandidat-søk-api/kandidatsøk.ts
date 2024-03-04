@@ -6,8 +6,22 @@ import useSWR from 'swr';
 import { z } from 'zod';
 import { mockKandidatsøkKandidater } from '../../../mock/kandidatsok-proxy/mockKandidat';
 import { postApi } from '../fetcher';
+import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
+import { Portefølje } from '../../kandidatsok/filter/porteføljetabs/PorteføljeTabs';
+import { FiltrerbarInnsatsgruppe } from '../../kandidatsok/filter/Jobbmuligheter';
+import { Nivå } from '../../kandidatsok/filter/Utdanningsnivå';
+import { PrioritertMålgruppe } from '../../kandidatsok/filter/prioriterte-målgrupper/PrioriterteMålgrupper';
+import { Klasse } from '../../kandidatsok/api/query/queryMedFørerkort';
+import { Mål } from '../../kandidatsok/filter/Hovedmål';
 
-const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsøk';
+const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
+
+export type KandidatsøkDTO = {
+    kandidatsøkKandidater: KandidatTilKandidatsøk[];
+    isLoading: boolean;
+    error: any;
+    totalHits: number;
+};
 
 const jobbønskeSchema = z.object({
     styrkKode: z.string().nullable(),
@@ -22,6 +36,7 @@ const jobbønskeStedSchema = z.object({
 });
 
 const kandidatsøkKandidatSchema = z.object({
+    aktorId: z.string(),
     fodselsnummer: z.string(),
     fornavn: z.string(),
     etternavn: z.string(),
@@ -37,52 +52,61 @@ export type KandidatsøkKandidat = z.infer<typeof kandidatsøkKandidatSchema>;
 
 export type KandidatsøkKandidater = KandidatsøkKandidat[];
 
-export interface KandidatsøkProps {
-    multisøkefelt: string;
-    arbeidsønsker: string;
-    sted: string;
-    innsatsgrupper: string[];
-    hovedmål: string[];
-    kompetanse: string[];
-    førerkort: string[];
-    språk: string[];
-    arbeidserfaring: string[];
-    nyligArbeidserfaring: string;
-    utdanningsnivå: string[];
-    prioriterteMålgrupper: string[];
-    veilederIdent: string; //(evt isteden boolean + hente fra context)
-    kontorOrgEnhet: string;
-    navKontor: string[];
-}
-
-export const useKandidatsøk = (props: KandidatsøkProps) => {
-    const swrData = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
-        postApi(path, { ...props })
-    );
-
-    if (swrData.data) {
-        const kandidatsøkKandidaterData: KandidatsøkKandidater = swrData?.data?.hits?.hits.map(
-            (k: any) => k._source
-        );
-        const kandidatsøkKandidater = kandidatsøkKandidatSchema.parse(kandidatsøkKandidaterData);
-
-        return {
-            ...swrData,
-            kandidatsøkKandidater,
-        };
-    }
-
-    return swrData;
+export type SøkekriterierDto = {
+    fritekst: string | null;
+    portefølje: Portefølje;
+    valgtKontor: Set<string>;
+    innsatsgruppe: Set<FiltrerbarInnsatsgruppe>;
+    ønsketYrke: Set<string>;
+    ønsketSted: Set<string>;
+    borPåØnsketSted: boolean | null;
+    kompetanse: Set<string>;
+    førerkort: Set<Klasse>;
+    prioritertMålgruppe: Set<PrioritertMålgruppe>;
+    hovedmål: Set<Mål>;
+    utdanningsnivå: Set<Nivå>;
+    arbeidserfaring: Set<string>;
+    ferskhet: number | null;
+    språk: Set<string>;
 };
 
-export const kandidatsøkMockMsw = http.get(kandidatsøkEndepunkt, (_) =>
+export type KandidatsøkProps = {
+    søkekriterier: SøkekriterierDto;
+    side: number;
+    sortering: string;
+};
+
+export const useKandidatsøk = (props: KandidatsøkProps): KandidatsøkDTO => {
+    const søkekriterier: SøkekriterierDto = props.søkekriterier;
+
+    const queryParams = new URLSearchParams({
+        side: String(props.side),
+        sortering: props.sortering,
+    });
+
+    const swr = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
+        postApi(path, { ...søkekriterier }, queryParams)
+    );
+
+    const kandidatsøkKandidater: KandidatTilKandidatsøk[] = swr?.data?.hits?.hits.map(
+        (k: any) => k._source
+    );
+
+    const totalHits = swr?.data?.hits?.total?.value;
+
+    return {
+        ...swr,
+        kandidatsøkKandidater,
+        totalHits,
+    };
+};
+
+export const kandidatsøkMockMsw = http.post(kandidatsøkEndepunkt, (_) =>
     HttpResponse.json({
         hits: {
-            hits: [
-                {
-                    _source: mockKandidatsøkKandidater,
-                },
-            ],
+            hits: mockKandidatsøkKandidater.map((kandidat) => ({
+                _source: kandidat,
+            })),
         },
     })
 );
