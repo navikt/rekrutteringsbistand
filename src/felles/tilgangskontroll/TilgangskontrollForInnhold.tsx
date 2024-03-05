@@ -25,7 +25,7 @@ const rolleTilNavn = (rolle: Rolle): string | null => {
             return 'Jobbsøkerrettet';
 
         case Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER:
-            return null;
+            return 'Utvikler';
 
         default:
             return null;
@@ -59,9 +59,11 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
                     <strong>Du har ikke tistrekkelig tilgang til å se denne siden.</strong>
                     <p>Du må ha en av følgende roller:</p>
                     <ul>
-                        {kreverRoller.map((rolle) => (
-                            <li>{rolleTilNavn(rolle)}</li>
-                        ))}
+                        {kreverRoller
+                            .filter((r) => r !== Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)
+                            .map((rolle) => (
+                                <li>{rolleTilNavn(rolle)}</li>
+                            ))}
                     </ul>
                 </div>
             </Alert>
