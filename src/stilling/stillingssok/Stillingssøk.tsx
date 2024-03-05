@@ -7,6 +7,8 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useMeg } from '../../api/frackend/meg';
 import { sendEvent } from '../../felles/amplitude';
 import Layout from '../../felles/komponenter/layout/Layout';
+import SkjulInnhold from '../../felles/tilgangskontroll/SkjulInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
 import AlleStillinger from './AlleStillinger';
 import MineStillinger from './MineStillinger';
@@ -90,13 +92,17 @@ const Stillingssøk = () => {
             tittel="Stillinger"
             ikon={<Piktogram />}
             knappIBanner={
-                <Button
-                    variant="secondary"
-                    onClick={onOpprettNyClick}
-                    icon={<PlusCircleIcon aria-hidden />}
+                <SkjulInnhold
+                    kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
                 >
-                    Opprett ny
-                </Button>
+                    <Button
+                        variant="secondary"
+                        onClick={onOpprettNyClick}
+                        icon={<PlusCircleIcon aria-hidden />}
+                    >
+                        Opprett ny
+                    </Button>
+                </SkjulInnhold>
             }
             banner={kandidatnr !== undefined && <KontekstAvKandidat kandidatnr={kandidatnr} />}
             sidepanel={<Filter finnerStillingForKandidat={finnerStillingForKandidat} />}

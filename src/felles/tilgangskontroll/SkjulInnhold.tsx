@@ -15,7 +15,9 @@ const SkjulInnhold: React.FC<ISkjulInnhold> = ({ kreverRoller, children }) => {
     const aktivTilgangskontroll = erIkkeProd;
 
     const harTilgang = kreverRoller.some((r) => {
-        return roller?.includes(r);
+        return (
+            roller?.includes(r) || roller?.includes(Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)
+        );
     });
 
     if (!aktivTilgangskontroll) {

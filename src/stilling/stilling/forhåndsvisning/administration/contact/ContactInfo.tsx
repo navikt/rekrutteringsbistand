@@ -38,12 +38,7 @@ const ContactInfo = () => {
     const { reportee, navIdent } = stilling.administration;
 
     const markerSomMinKnappOgModal = () => (
-        <SkjulInnhold
-            kreverRoller={[
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER,
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-            ]}
-        >
+        <SkjulInnhold kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}>
             <Button
                 variant="secondary"
                 size="small"

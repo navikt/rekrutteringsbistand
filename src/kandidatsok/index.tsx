@@ -32,10 +32,7 @@ const App = () => {
 export const KandidatSøkIndex = () => {
     return (
         <TilgangskontrollForInnhold
-            kreverRoller={[
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER,
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-            ]}
+            kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
         >
             <ØktContextProvider>
                 <App />

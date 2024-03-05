@@ -7,6 +7,8 @@ import SeMineStillingerIkon from 'felles/komponenter/piktogrammer/se-mine-stilli
 import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { sendEvent } from '../../felles/amplitude';
+import SkjulInnhold from '../../felles/tilgangskontroll/SkjulInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import css from './Hurtiglenker.module.css';
 
 const Hurtiglenker: FunctionComponent = () => {
@@ -28,11 +30,13 @@ const Hurtiglenker: FunctionComponent = () => {
                 ikon={<SeMineStillingerIkon />}
                 onClick={() => sendEvent('oversikt', 'vis_mine_stillinger_knapp')}
             />
-            <LenkepanelMedIkon
-                href="/stillinger/stillingssok?modal=opprettStillingModal"
-                tittel="Opprett ny stilling"
-                ikon={<OpprettNyStillingIkon />}
-            />
+            <SkjulInnhold kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}>
+                <LenkepanelMedIkon
+                    href="/stillinger/stillingssok?modal=opprettStillingModal"
+                    tittel="Opprett ny stilling"
+                    ikon={<OpprettNyStillingIkon />}
+                />
+            </SkjulInnhold>
         </nav>
     );
 };

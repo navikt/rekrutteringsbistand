@@ -37,10 +37,7 @@ const App = () => {
 
 const KandidatApp = () => (
     <TilgangskontrollForInnhold
-        kreverRoller={[
-            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER,
-            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-        ]}
+        kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
     >
         <Provider store={store}>
             <App />
