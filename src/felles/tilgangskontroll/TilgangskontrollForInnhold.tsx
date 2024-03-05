@@ -25,7 +25,7 @@ const rolleTilNavn = (rolle: Rolle): string | null => {
             return 'Jobbsøkerrettet';
 
         case Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER:
-            return 'Utvikler';
+            return null;
 
         default:
             return null;
@@ -37,7 +37,7 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
     children,
 }) => {
     const { roller } = React.useContext(ApplikasjonContext);
-
+    //todo
     const aktivTilgangskontroll = erIkkeProd;
 
     const harTilgang = kreverRoller.some((r) => {

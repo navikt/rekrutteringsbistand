@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import SkjulInnhold from '../../../../../felles/tilgangskontroll/SkjulInnhold';
+import { Rolle } from '../../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { State } from '../../../../redux/store';
 import {
     MARKER_EKSTERN_STILLING_SOM_MIN,
@@ -36,7 +38,12 @@ const ContactInfo = () => {
     const { reportee, navIdent } = stilling.administration;
 
     const markerSomMinKnappOgModal = () => (
-        <>
+        <SkjulInnhold
+            kreverRoller={[
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER,
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+            ]}
+        >
             <Button
                 variant="secondary"
                 size="small"
@@ -51,7 +58,7 @@ const ContactInfo = () => {
                     isDir ? onMarkerSomMinKlikkInternStilling : onMarkerSomMinKlikkEksternStilling
                 }
             />
-        </>
+        </SkjulInnhold>
     );
 
     const visMarkerSomMinKnapp =
