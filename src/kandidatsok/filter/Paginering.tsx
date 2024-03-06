@@ -13,9 +13,9 @@ const Paginering: FunctionComponent<Props> = ({ antallTreff }) => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const antallSider = Math.ceil(antallTreff / PAGE_SIZE);
 
-    const setSidetall = (nySide: number) => {
-        console.log('nySide:', nySide);
-        setSearchParam(FilterParam.Side, nySide > 1 ? String(nySide) : null);
+    const setSidetall = (page: number) => {
+        console.log('nySide:', page);
+        setSearchParam(FilterParam.Side, page > 1 ? String(page) : null);
         scrollTilToppen();
     };
 
