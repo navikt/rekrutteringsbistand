@@ -4,7 +4,7 @@ import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
 
-export type Førerkortklasse = {
+type Førerkortklasse = {
     klasse: Klasse;
     kode: string;
     navn: string;
