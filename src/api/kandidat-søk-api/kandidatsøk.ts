@@ -85,10 +85,7 @@ export const useKandidatsøk = (props: KandidatsøkProps): KandidatsøkDTO => {
         sortering: props.sortering,
     });
 
-    const propsString = JSON.stringify(props);
-    console.log('propsString', propsString);
-
-    const swr = useSWR({ path: kandidatsøkEndepunkt, props: propsString }, ({ path }) =>
+    const swr = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
         postApi(path, { ...søkekriterier }, queryParams)
     );
 
