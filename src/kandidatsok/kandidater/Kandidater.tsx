@@ -35,7 +35,6 @@ const Kandidater: FunctionComponent<Props> = ({
     setKandidaterPåSiden,
 }) => {
     const { søkekriterier } = useSøkekriterier();
-    console.log('søkekriterier', søkekriterier);
     const navKontor = useNavKontor((state) => state.navKontor);
 
     const kandidatsøkProps: KandidatsøkProps = {
