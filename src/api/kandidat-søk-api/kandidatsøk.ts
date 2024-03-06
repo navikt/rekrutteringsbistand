@@ -85,9 +85,9 @@ export const useKandidatsøk = (props: KandidatsøkProps): KandidatsøkDTO => {
         sortering: props.sortering,
     });
 
-    const key = `${kandidatsøkEndepunkt}?${props.toString()}`;
-
-    const swr = useSWR(key, () => postApi(kandidatsøkEndepunkt, { ...søkekriterier }, queryParams));
+    const swr = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
+        postApi(path, { ...søkekriterier }, queryParams)
+    );
 
     const kandidatsøkKandidater: KandidatTilKandidatsøk[] = swr?.data?.hits?.hits.map(
         (k: any) => k._source
