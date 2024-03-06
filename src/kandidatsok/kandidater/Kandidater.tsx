@@ -13,6 +13,7 @@ import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
 import useSøkekriterier from '../hooks/useSøkekriterier';
 import { KandidatsøkProps, useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
+import useNavKontor from 'felles/store/navKontor';
 
 type Props = {
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
@@ -34,12 +35,14 @@ const Kandidater: FunctionComponent<Props> = ({
     setKandidaterPåSiden,
 }) => {
     const { søkekriterier } = useSøkekriterier();
+    const navKontor = useNavKontor((state) => state.navKontor);
 
     const kandidatsøkProps: KandidatsøkProps = {
         søkekriterier: {
             fritekst: søkekriterier.fritekst,
             portefølje: søkekriterier.portefølje,
             valgtKontor: søkekriterier.valgtKontor,
+            orgenhet: navKontor,
             innsatsgruppe: søkekriterier.innsatsgruppe,
             ønsketYrke: søkekriterier.ønsketYrke,
             ønsketSted: søkekriterier.ønsketSted,

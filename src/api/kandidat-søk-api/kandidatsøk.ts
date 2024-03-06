@@ -68,6 +68,7 @@ export type SøkekriterierDto = {
     arbeidserfaring: Set<string>;
     ferskhet: number | null;
     språk: Set<string>;
+    orgenhet: string | null;
 };
 
 export type KandidatsøkProps = {
