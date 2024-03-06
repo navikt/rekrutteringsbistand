@@ -113,7 +113,7 @@ const Kandidater: FunctionComponent<Props> = ({
             {isLoading && <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />}
             {error && (
                 <BodyShort className={css.feilmelding} aria-live="assertive">
-                    {error.message === 403
+                    {error.message === '403'
                         ? 'Du har ikke tilgang til kandidatsøket'
                         : error.message}
                 </BodyShort>
