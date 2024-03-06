@@ -13,10 +13,10 @@ const Paginering: FunctionComponent<Props> = ({ antallTreff }) => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const antallSider = Math.ceil(antallTreff / PAGE_SIZE);
 
-    /*const setSidetall = (nySide: number) => {
+    const setSidetall = (nySide: number) => {
         setSearchParam(FilterParam.Side, nySide > 1 ? String(nySide) : null);
         scrollTilToppen();
-    };*/
+    };
 
     if (antallSider < 2) {
         return null;
@@ -26,7 +26,7 @@ const Paginering: FunctionComponent<Props> = ({ antallTreff }) => {
                 size="medium"
                 className={css.wrapper}
                 page={søkekriterier.side}
-                onPageChange={(x) => console.log('side', x)}
+                onPageChange={setSidetall}
                 count={antallSider}
             />
         );

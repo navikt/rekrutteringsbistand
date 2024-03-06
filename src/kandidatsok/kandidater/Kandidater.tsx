@@ -1,6 +1,6 @@
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Loader } from '@navikt/ds-react';
-import { FunctionComponent, useEffect, useMemo } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import Paginering from '../filter/Paginering';
@@ -61,25 +61,9 @@ const Kandidater: FunctionComponent<Props> = ({
     };
     const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(kandidatsøkProps);
 
-    const totaltAntallKandidater = useMemo(() => {
-        if (totalHits) {
-            return totalHits;
-        } else {
-            return 0;
-        }
-    }, [totalHits]);
-
-    const kandidater: KandidatTilKandidatsøk[] = useMemo(() => {
-        if (kandidatsøkKandidater) {
-            return kandidatsøkKandidater;
-        } else {
-            return [];
-        }
-    }, [kandidatsøkKandidater]);
-
     useEffect(() => {
-        setKandidaterPåSiden(kandidater);
-    }, [kandidater, setKandidaterPåSiden]);
+        setKandidaterPåSiden(kandidatsøkKandidater || []);
+    }, [kandidatsøkKandidater, setKandidaterPåSiden]);
 
     return (
         <div className={css.kandidater}>
@@ -119,11 +103,11 @@ const Kandidater: FunctionComponent<Props> = ({
                 </BodyShort>
             )}
 
-            {kandidater?.length > 0 && (
+            {kandidatsøkKandidater && kandidatsøkKandidater.length > 0 && (
                 <>
                     <div className={css.overKandidater}>
                         <MarkerAlle
-                            kandidater={kandidater}
+                            kandidater={kandidatsøkKandidater || []}
                             markerteKandidater={markerteKandidater}
                             onMarkerKandidat={onMarkerKandidat}
                             kontekstAvKandidatlisteEllerStilling={
@@ -133,7 +117,7 @@ const Kandidater: FunctionComponent<Props> = ({
                         <Sortering />
                     </div>
                     <ul className={css.kandidatrader}>
-                        {kandidater.map((kandidat: KandidatTilKandidatsøk) => (
+                        {(kandidatsøkKandidater || []).map((kandidat: KandidatTilKandidatsøk) => (
                             <Kandidatrad
                                 key={kandidat.arenaKandidatnr}
                                 kandidat={kandidat}
@@ -148,7 +132,7 @@ const Kandidater: FunctionComponent<Props> = ({
                             />
                         ))}
                     </ul>
-                    <Paginering antallTreff={totaltAntallKandidater} />
+                    <Paginering antallTreff={totalHits || 0} />
                 </>
             )}
         </div>
