@@ -62,7 +62,8 @@ const Kandidater: FunctionComponent<Props> = ({
     const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(kandidatsøkProps);
 
     useEffect(() => {
-        setKandidaterPåSiden(kandidatsøkKandidater || []);
+        console.log('Kandidatsøk: kandidatsøkKandidater', kandidatsøkKandidater);
+        //setKandidaterPåSiden(kandidatsøkKandidater || []);
     }, [kandidatsøkKandidater, setKandidaterPåSiden]);
 
     return (
