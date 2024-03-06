@@ -3,7 +3,7 @@ import KandidatIKandidatliste, {
     UsynligKandidat,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
+import { SmsStatus } from '../../../api/sms-api/sms';
 import {
     Nettressurs,
     Nettstatus,

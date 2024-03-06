@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
+import { SmsStatus } from '../../api/sms-api/sms';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Stilling from '../../felles/domene/stilling/Stilling';
 import AppState from '../state/AppState';

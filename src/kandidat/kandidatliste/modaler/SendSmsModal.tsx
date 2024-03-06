@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 
 import { Alert, BodyShort, Label, Link, Select } from '@navikt/ds-react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
+import { SmsStatus } from '../../../api/sms-api/sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import AppState from '../../state/AppState';
 import { Kandidatmeldinger } from '../domene/Kandidatressurser';

@@ -4,8 +4,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import {
     fetchKandidatlisteMedKandidatlisteId,
     fetchKandidatlisteMedStillingsId,
-    fetchSendteMeldinger,
-    postSmsTilKandidater,
     putArkivert,
     putArkivertForFlereKandidater,
     putFormidlingsutfallForUsynligKandidat,
@@ -43,6 +41,7 @@ import KandidatlisteAction, {
     ToggleArkivertSuccessAction,
 } from './KandidatlisteAction';
 import KandidatlisteActionType from './KandidatlisteActionType';
+import { fetchSendteMeldinger, postSmsTilKandidater } from '../../../api/sms-api/sms';
 
 const loggManglendeAktørId = (kandidatliste: Kandidatliste) => {
     const aktøridRegex = /[0-9]{13}/;

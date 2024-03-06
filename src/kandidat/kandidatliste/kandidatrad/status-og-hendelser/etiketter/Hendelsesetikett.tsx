@@ -1,5 +1,5 @@
 import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
+import { Sms, SmsStatus } from '../../../../../api/sms-api/sms';
 import moment from 'moment';
 import { FunctionComponent } from 'react';
 import { formaterDato, formaterDatoUtenÅrstall } from '../../../../utils/dateUtils';

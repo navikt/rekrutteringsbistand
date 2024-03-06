@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
+import { SmsStatus } from '../../../api/sms-api/sms';
 import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import css from './smsFeilAlertStripe.module.css';
 

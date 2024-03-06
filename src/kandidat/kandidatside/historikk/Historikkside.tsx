@@ -6,12 +6,11 @@ import { useLocation, useParams } from 'react-router-dom';
 import { sendEvent } from 'felles/amplitude';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { fetchSmserForKandidat, Sms } from '../../../api/sms-api/sms';
 import { ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs';
 import { useHentKandidatHistorikk } from '../../../api/kandidat-api/hentKandidatHistorikk';
 import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
-import { fetchSmserForKandidat } from '../../api/api';
 import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
 import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
@@ -29,10 +28,9 @@ const Historikkside: FunctionComponent = () => {
     const kandidatlisteId = queryParams.get(KandidatQueryParam.KandidatlisteId);
 
     const { cv } = useLookupCv(kandidatnr);
-    const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] = useState<
-        Nettressurs<ForespørselOmDelingAvCv[]>
-    >(ikkeLastet());
-    const [smser, setSmser] = useState<Nettressurs<[Sms]>>(ikkeLastet());
+    const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] =
+        useState<Nettressurs<ForespørselOmDelingAvCv[]>>(ikkeLastet());
+    const [smser, setSmser] = useState<Nettressurs<Sms[]>>(ikkeLastet());
 
     useEffect(() => {
         const hentForespørslerOmDelingAvCvForKandidat = async (aktørId: string) => {

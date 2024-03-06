@@ -3,7 +3,7 @@ import KandidatIKandidatliste, {
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms } from '../../../api/sms-api/sms';
 import { Error } from 'felles/nettressurs';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../api/server.dto';
 import { SearchApiError } from '../../api/fetchUtils';

@@ -1,6 +1,6 @@
 import { MobileFillIcon, MobileIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
-import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
+import { Sms, SmsStatus } from '../../../../api/sms-api/sms';
 import { FunctionComponent } from 'react';
 import MedPopover from '../../med-popover/MedPopover';
 import css from './SmsStatusPopup.module.css';
