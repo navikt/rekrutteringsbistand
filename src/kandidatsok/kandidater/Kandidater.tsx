@@ -63,8 +63,9 @@ const Kandidater: FunctionComponent<Props> = ({
 
     useEffect(() => {
         console.log('Kandidatsøk: kandidatsøkKandidater', kandidatsøkKandidater);
-        //setKandidaterPåSiden(kandidatsøkKandidater || []);
-    }, [kandidatsøkKandidater, setKandidaterPåSiden]);
+        setKandidaterPåSiden(kandidatsøkKandidater || []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(kandidatsøkKandidater), setKandidaterPåSiden]);
 
     return (
         <div className={css.kandidater}>
