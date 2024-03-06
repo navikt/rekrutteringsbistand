@@ -1,23 +1,14 @@
 import { Heading } from '@navikt/ds-react';
-import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 
 type Props = {
-    response: Nettressurs<EsResponse<KandidatTilKandidatsøk>>;
+    antallTreff: number;
 };
 
-const AntallKandidater: FunctionComponent<Props> = ({ response }) => {
-    if (response.kind !== Nettstatus.Suksess && response.kind !== Nettstatus.Oppdaterer) {
-        return <div />;
-    }
-
-    const antallTreff = formaterStortTall(response.data.hits.total.value);
-
+const AntallKandidater: FunctionComponent<Props> = ({ antallTreff }) => {
     return (
         <Heading size="medium" level="2">
-            {antallTreff} kandidater
+            {formaterStortTall(antallTreff)} kandidater
         </Heading>
     );
 };
