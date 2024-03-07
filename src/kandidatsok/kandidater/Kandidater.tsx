@@ -1,8 +1,7 @@
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Loader } from '@navikt/ds-react';
-import { FunctionComponent, useEffect } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
-import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { Økt } from '../Økt';
@@ -12,30 +11,47 @@ import MarkerAlle from './MarkerAlle';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
 import useSøkekriterier from '../hooks/useSøkekriterier';
-import { KandidatsøkProps, useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
+import {
+    KandidatsøkKandidat,
+    KandidatsøkProps,
+    useKandidatsøk,
+} from '../../api/kandidat-søk-api/kandidatsøk';
 import useNavKontor from 'felles/store/navKontor';
+import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
+import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 
 type Props = {
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
-    onLagreIKandidatlisteClick: () => void;
     markerteKandidater: Set<string>;
     onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
     forrigeØkt: Økt | null;
-    setKandidaterPåSiden: (kandidater: KandidatTilKandidatsøk[]) => void;
 };
+
+enum Modal {
+    IngenModal,
+    LagreIMineKandidatlister,
+    BekreftLagreIKandidatliste,
+}
 
 const Kandidater: FunctionComponent<Props> = ({
     kontekstAvKandidatlisteEllerStilling,
-    onLagreIKandidatlisteClick,
     markerteKandidater,
     onMarkerKandidat,
     fjernMarkering,
     forrigeØkt,
-    setKandidaterPåSiden,
 }) => {
     const { søkekriterier } = useSøkekriterier();
     const navKontor = useNavKontor((state) => state.navKontor);
+    const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
+
+    const onLagreIKandidatlisteClick = () => {
+        setAktivModal(
+            kontekstAvKandidatlisteEllerStilling
+                ? Modal.BekreftLagreIKandidatliste
+                : Modal.LagreIMineKandidatlister
+        );
+    };
 
     const kandidatsøkProps: KandidatsøkProps = {
         søkekriterier: {
@@ -60,12 +76,6 @@ const Kandidater: FunctionComponent<Props> = ({
         sortering: søkekriterier.sortering,
     };
     const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(kandidatsøkProps);
-
-    useEffect(() => {
-        console.log('Kandidatsøk: kandidatsøkKandidater', kandidatsøkKandidater);
-        setKandidaterPåSiden(kandidatsøkKandidater || []);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(kandidatsøkKandidater), setKandidaterPåSiden]);
 
     return (
         <div className={css.kandidater}>
@@ -119,7 +129,7 @@ const Kandidater: FunctionComponent<Props> = ({
                         <Sortering />
                     </div>
                     <ul className={css.kandidatrader}>
-                        {(kandidatsøkKandidater || []).map((kandidat: KandidatTilKandidatsøk) => (
+                        {(kandidatsøkKandidater || []).map((kandidat: KandidatsøkKandidat) => (
                             <Kandidatrad
                                 key={kandidat.arenaKandidatnr}
                                 kandidat={kandidat}
@@ -136,6 +146,21 @@ const Kandidater: FunctionComponent<Props> = ({
                     </ul>
                     <Paginering antallTreff={totalHits || 0} />
                 </>
+            )}
+            {kontekstAvKandidatlisteEllerStilling === null ? (
+                <LagreKandidaterIMineKandidatlisterModal
+                    vis={aktivModal === Modal.LagreIMineKandidatlister}
+                    onClose={() => setAktivModal(Modal.IngenModal)}
+                    markerteKandidater={markerteKandidater}
+                    kandidaterPåSiden={kandidatsøkKandidater || []}
+                />
+            ) : (
+                <LagreKandidaterISpesifikkKandidatlisteModal
+                    vis={aktivModal === Modal.BekreftLagreIKandidatliste}
+                    onClose={() => setAktivModal(Modal.IngenModal)}
+                    markerteKandidater={markerteKandidater}
+                    kontekstAvKandidatlisteEllerStilling={kontekstAvKandidatlisteEllerStilling}
+                />
             )}
         </div>
     );

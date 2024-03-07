@@ -69,17 +69,4 @@ export type KandidatLookup = {
     arenaKandidatnr: Id['arenaKandidatnr'];
 };
 
-export type KandidatTilKandidatsøk = {
-    fodselsnummer: Id['fodselsnummer'];
-    aktorId: Id['aktorId'];
-    fornavn: Personalia['fornavn'];
-    etternavn: Personalia['etternavn'];
-    arenaKandidatnr: Id['arenaKandidatnr'];
-    kvalifiseringsgruppekode: Oppfølgingsinformasjon['kvalifiseringsgruppekode'];
-    yrkeJobbonskerObj: Jobbprofil['yrkeJobbonskerObj'];
-    geografiJobbonsker: Jobbprofil['geografiJobbonsker'];
-    kommuneNavn: Geografi['kommuneNavn'];
-    postnummer: Geografi['postnummer'];
-};
-
 export default Kandidat;
