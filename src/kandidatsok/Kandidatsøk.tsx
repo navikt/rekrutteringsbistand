@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Piktogram from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
 import Layout from '../felles/komponenter/layout/Layout';
