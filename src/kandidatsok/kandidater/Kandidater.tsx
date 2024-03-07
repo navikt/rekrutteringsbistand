@@ -62,7 +62,6 @@ const Kandidater: FunctionComponent<Props> = ({
     const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(kandidatsøkProps);
 
     useEffect(() => {
-        console.log('Kandidatsøk: kandidatsøkKandidater', kandidatsøkKandidater);
         setKandidaterPåSiden(kandidatsøkKandidater || []);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [JSON.stringify(kandidatsøkKandidater), setKandidaterPåSiden]);
