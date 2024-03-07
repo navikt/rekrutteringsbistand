@@ -1,18 +1,19 @@
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Loader } from '@navikt/ds-react';
-import { FunctionComponent, useEffect, useMemo } from 'react';
+import { FunctionComponent, useEffect } from 'react';
 
 import { KandidatTilKandidatsøk } from 'felles/domene/kandidat/Kandidat';
-import { Nettstatus } from 'felles/nettressurs';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
-import useQuery from '../hooks/useQuery';
 import { Økt } from '../Økt';
 import AntallKandidater from './AntallKandidater';
 import css from './Kandidater.module.css';
 import MarkerAlle from './MarkerAlle';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
+import useSøkekriterier from '../hooks/useSøkekriterier';
+import { KandidatsøkProps, useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
+import useNavKontor from 'felles/store/navKontor';
 
 type Props = {
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
@@ -33,35 +34,43 @@ const Kandidater: FunctionComponent<Props> = ({
     forrigeØkt,
     setKandidaterPåSiden,
 }) => {
-    const response = useQuery();
+    const { søkekriterier } = useSøkekriterier();
+    const navKontor = useNavKontor((state) => state.navKontor);
 
-    const totaltAntallKandidater = useMemo(() => {
-        if (response.kind === Nettstatus.Suksess || response.kind === Nettstatus.Oppdaterer) {
-            const hits = response.data.hits;
-            return hits.total.value;
-        } else {
-            return 0;
-        }
-    }, [response]);
-
-    const kandidater = useMemo(() => {
-        if (response.kind === Nettstatus.Suksess || response.kind === Nettstatus.Oppdaterer) {
-            const hits = response.data.hits;
-            const kandidater = hits.hits.map((t) => t._source);
-            return kandidater;
-        } else {
-            return [];
-        }
-    }, [response]);
+    const kandidatsøkProps: KandidatsøkProps = {
+        søkekriterier: {
+            fritekst: søkekriterier.fritekst,
+            portefølje: søkekriterier.portefølje,
+            valgtKontor: søkekriterier.valgtKontor,
+            orgenhet: navKontor,
+            innsatsgruppe: søkekriterier.innsatsgruppe,
+            ønsketYrke: søkekriterier.ønsketYrke,
+            ønsketSted: søkekriterier.ønsketSted,
+            borPåØnsketSted: søkekriterier.borPåØnsketSted,
+            kompetanse: søkekriterier.kompetanse,
+            førerkort: søkekriterier.førerkort,
+            prioritertMålgruppe: søkekriterier.prioritertMålgruppe,
+            hovedmål: søkekriterier.hovedmål,
+            utdanningsnivå: søkekriterier.utdanningsnivå,
+            arbeidserfaring: søkekriterier.arbeidserfaring,
+            ferskhet: søkekriterier.ferskhet,
+            språk: søkekriterier.språk,
+        },
+        side: søkekriterier.side,
+        sortering: søkekriterier.sortering,
+    };
+    const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(kandidatsøkProps);
 
     useEffect(() => {
-        setKandidaterPåSiden(kandidater);
-    }, [kandidater, setKandidaterPåSiden]);
+        console.log('Kandidatsøk: kandidatsøkKandidater', kandidatsøkKandidater);
+        setKandidaterPåSiden(kandidatsøkKandidater || []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(kandidatsøkKandidater), setKandidaterPåSiden]);
 
     return (
         <div className={css.kandidater}>
             <div className={css.handlinger}>
-                <AntallKandidater response={response} />
+                {!totalHits ? <div /> : <AntallKandidater antallTreff={totalHits} />}
                 <div className={css.knapper}>
                     {markerteKandidater.size > 0 && (
                         <Button
@@ -87,23 +96,20 @@ const Kandidater: FunctionComponent<Props> = ({
                 </div>
             </div>
 
-            {response.kind === Nettstatus.LasterInn && (
-                <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />
-            )}
-
-            {response.kind === Nettstatus.Feil && (
+            {isLoading && <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />}
+            {error && (
                 <BodyShort className={css.feilmelding} aria-live="assertive">
-                    {response.error.status === 403
+                    {error.message === '403'
                         ? 'Du har ikke tilgang til kandidatsøket'
-                        : response.error.message}
+                        : error.message}
                 </BodyShort>
             )}
 
-            {kandidater.length > 0 && (
+            {kandidatsøkKandidater && kandidatsøkKandidater.length > 0 && (
                 <>
                     <div className={css.overKandidater}>
                         <MarkerAlle
-                            kandidater={kandidater}
+                            kandidater={kandidatsøkKandidater || []}
                             markerteKandidater={markerteKandidater}
                             onMarkerKandidat={onMarkerKandidat}
                             kontekstAvKandidatlisteEllerStilling={
@@ -113,7 +119,7 @@ const Kandidater: FunctionComponent<Props> = ({
                         <Sortering />
                     </div>
                     <ul className={css.kandidatrader}>
-                        {kandidater.map((kandidat) => (
+                        {(kandidatsøkKandidater || []).map((kandidat: KandidatTilKandidatsøk) => (
                             <Kandidatrad
                                 key={kandidat.arenaKandidatnr}
                                 kandidat={kandidat}
@@ -128,7 +134,7 @@ const Kandidater: FunctionComponent<Props> = ({
                             />
                         ))}
                     </ul>
-                    <Paginering antallTreff={totaltAntallKandidater} />
+                    <Paginering antallTreff={totalHits || 0} />
                 </>
             )}
         </div>

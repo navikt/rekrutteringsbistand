@@ -68,6 +68,7 @@ export const mockKandidatsammendrag: Kandidatsammendrag = {
 
 export const mockKandidatsøkKandidater: KandidatsøkKandidater = [
     {
+        aktorId: '1000102960567',
         yrkeJobbonskerObj: [
             {
                 styrkBeskrivelse: 'Sauegjeter',
@@ -119,9 +120,10 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidater = [
         ],
         fornavn: 'Patent',
         fodselsnummer: '17907096467',
-        kvalifiseringsgruppekode: 'BFORM',
+        kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
     },
     {
+        aktorId: '1000102960568',
         yrkeJobbonskerObj: [
             {
                 styrkBeskrivelse: 'Sauegjeter',
@@ -173,9 +175,10 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidater = [
         ],
         fornavn: 'Ufruktbar',
         fodselsnummer: '22899497590',
-        kvalifiseringsgruppekode: 'BFORM',
+        kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
     },
     {
+        aktorId: '1000102960569',
         yrkeJobbonskerObj: [
             {
                 styrkBeskrivelse: 'Butikkmedarbeider',
@@ -267,7 +270,7 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidater = [
         ],
         fornavn: 'Selvhjulpen',
         fodselsnummer: '10870396894',
-        kvalifiseringsgruppekode: 'BFORM',
+        kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
     },
 ];
 
