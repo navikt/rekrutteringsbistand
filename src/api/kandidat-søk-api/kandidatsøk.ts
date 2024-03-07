@@ -39,7 +39,7 @@ export const kandidatsøkKandidatSchema = z.object({
     yrkeJobbonskerObj: z.array(yrkeJobbonskerObjSchema),
     etternavn: z.string(),
     postnummer: z.string(),
-    arenaKandidatnr: z.string(),
+    arenaKandidatnr: z.string().nullable(),
     kommuneNavn: z.string().nullable(),
     geografiJobbonsker: z.array(geografiJobbonskerSchema),
     fornavn: z.string(),
