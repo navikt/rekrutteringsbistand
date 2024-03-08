@@ -10,7 +10,10 @@ import {
 import { KandidatStillingssøkDTO } from '../../src/api/kandidat-søk-api/kandidatStillingssøk';
 import { Kandidatsammendrag } from '../../src/api/kandidat-søk-api/kandidatsammendrag';
 import { mockVeileder } from '../mockVeileder';
-import { KandidatsøkKandidater } from '../../src/api/kandidat-søk-api/kandidatsøk';
+import {
+    KandidatsøkKandidat,
+    Kvalifiseringsgruppekode,
+} from '../../src/api/kandidat-søk-api/kandidatsøk';
 
 export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
     yrkeJobbonskerObj: [
@@ -66,9 +69,8 @@ export const mockKandidatsammendrag: Kandidatsammendrag = {
     veilederEpost: 'v@v.com',
 };
 
-export const mockKandidatsøkKandidater: KandidatsøkKandidater = [
+export const mockKandidatsøkKandidater: KandidatsøkKandidat[] = [
     {
-        aktorId: '1000102960567',
         yrkeJobbonskerObj: [
             {
                 styrkBeskrivelse: 'Sauegjeter',
@@ -120,10 +122,9 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidater = [
         ],
         fornavn: 'Patent',
         fodselsnummer: '17907096467',
-        kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
+        kvalifiseringsgruppekode: Kvalifiseringsgruppekode.Batt,
     },
     {
-        aktorId: '1000102960568',
         yrkeJobbonskerObj: [
             {
                 styrkBeskrivelse: 'Sauegjeter',
@@ -175,10 +176,9 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidater = [
         ],
         fornavn: 'Ufruktbar',
         fodselsnummer: '22899497590',
-        kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
+        kvalifiseringsgruppekode: Kvalifiseringsgruppekode.Batt,
     },
     {
-        aktorId: '1000102960569',
         yrkeJobbonskerObj: [
             {
                 styrkBeskrivelse: 'Butikkmedarbeider',
@@ -270,7 +270,7 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidater = [
         ],
         fornavn: 'Selvhjulpen',
         fodselsnummer: '10870396894',
-        kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
+        kvalifiseringsgruppekode: Kvalifiseringsgruppekode.Batt,
     },
 ];
 
