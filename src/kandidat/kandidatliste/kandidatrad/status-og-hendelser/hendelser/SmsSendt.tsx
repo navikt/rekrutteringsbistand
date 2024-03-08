@@ -1,4 +1,4 @@
-import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
+import { Sms, ServerSmsStatus } from '../../../../../api/sms-api/sms';
 import { FunctionComponent } from 'react';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
@@ -8,7 +8,7 @@ type Props = {
 };
 
 const SmsSendt: FunctionComponent<Props> = ({ sms }) => {
-    function smstekst(smsMelding: any) {
+    function smstekst(smsMelding: Sms) {
         return `${formaterDatoNaturlig(smsMelding.opprettet)} av ${smsMelding.navIdent}`;
     }
 
@@ -17,7 +17,7 @@ const SmsSendt: FunctionComponent<Props> = ({ sms }) => {
     }
 
     switch (sms.status) {
-        case SmsStatus.Feil:
+        case ServerSmsStatus.Feil:
             return (
                 <Hendelse
                     status={Hendelsesstatus.Rød}
@@ -25,7 +25,7 @@ const SmsSendt: FunctionComponent<Props> = ({ sms }) => {
                     beskrivelse={smstekst(sms)}
                 />
             );
-        case SmsStatus.Sendt:
+        case ServerSmsStatus.Sendt:
             return (
                 <Hendelse
                     status={Hendelsesstatus.Grønn}

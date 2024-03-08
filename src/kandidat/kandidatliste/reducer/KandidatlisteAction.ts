@@ -3,7 +3,7 @@ import KandidatIKandidatliste, {
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Meldingsmal, Sms } from '../../../api/sms-api/sms';
 import { Error } from 'felles/nettressurs';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../api/server.dto';
 import { SearchApiError } from '../../api/fetchUtils';
@@ -177,9 +177,9 @@ export interface VelgKandidatAction {
 
 export interface SendSmsAction {
     type: KandidatlisteActionType.SendSms;
-    melding: string;
+    mal: Meldingsmal;
     fnr: string[];
-    kandidatlisteId: string;
+    stillingId: string;
 }
 
 export interface SendSmsSuccessAction {
@@ -197,7 +197,7 @@ export interface ResetSendSmsStatusAction {
 
 export interface HentSendteMeldingerAction {
     type: KandidatlisteActionType.HentSendteMeldinger;
-    kandidatlisteId: string;
+    stillingId: string;
 }
 
 export interface HentSendteMeldingerSuccessAction {

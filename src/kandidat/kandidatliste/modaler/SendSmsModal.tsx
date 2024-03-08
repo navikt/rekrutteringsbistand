@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 
 import { Alert, BodyShort, Label, Link, Select } from '@navikt/ds-react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
+import { Meldingsmal } from '../../../api/sms-api/sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import AppState from '../../state/AppState';
 import { Kandidatmeldinger } from '../domene/Kandidatressurser';
@@ -13,46 +13,38 @@ import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
 import KandidatlisteAction from '../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
 import css from './SendSmsModal.module.css';
-
-enum Meldingsmal {
-    VurdertSomAktuell = 'vurdert-som-aktuell',
-    FunnetPassendeStilling = 'funnet-passende-stilling',
-    Jobbarrangement = 'jobbarrangement',
-    // EtterspurtPgaKorona = 'etterspurt_pga_korona',
-    // Webinar = 'webinar',
-}
+import { SmsStatus } from '../reducer/kandidatlisteReducer';
 
 type Props = {
     vis: boolean;
     onClose: () => void;
     kandidater: KandidatIKandidatliste[];
-    kandidatlisteId: string;
     stillingId: string;
     sendteMeldinger: Kandidatmeldinger;
     stillingskategori: Stillingskategori | null;
 };
 
 const SendSmsModal: FunctionComponent<Props> = (props) => {
-    const {
-        vis,
-        onClose,
-        kandidater,
-        kandidatlisteId,
-        stillingId,
-        sendteMeldinger,
-        stillingskategori,
-    } = props;
+    const { vis, onClose, kandidater, stillingId, sendteMeldinger, stillingskategori } = props;
 
     const dispatch: Dispatch<KandidatlisteAction> = useDispatch();
     const { sendStatus } = useSelector((state: AppState) => state.kandidatliste.sms);
     const markerteKandidater = useMarkerteKandidater(kandidater);
 
-    const sendSmsTilKandidater = (melding: string, fnr: string[], kandidatlisteId: string) => {
+    const sendSmsTilKandidater = ({
+        mal,
+        fnr,
+        stillingId,
+    }: {
+        mal: Meldingsmal;
+        fnr: string[];
+        stillingId: string;
+    }) => {
         dispatch({
             type: KandidatlisteActionType.SendSms,
-            melding,
+            mal,
             fnr,
-            kandidatlisteId,
+            stillingId,
         });
     };
 
@@ -76,16 +68,15 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
     );
 
     const onSendSms = () => {
-        const melding = genererMelding(valgtMal, stillingId);
         const korrektLengdeFødselsnummer = 11;
 
-        sendSmsTilKandidater(
-            melding,
-            kandidaterSomIkkeHarFåttSms
+        sendSmsTilKandidater({
+            mal: valgtMal,
+            fnr: kandidaterSomIkkeHarFåttSms
                 .map((kandidat) => kandidat.fodselsnr || '')
                 .filter((fnr) => fnr && fnr.length === korrektLengdeFødselsnummer),
-            kandidatlisteId
-        );
+            stillingId,
+        });
     };
 
     return (
@@ -187,6 +178,9 @@ const genererLenkeTilStilling = (stillingId: string) => {
     return `nav.no/arbeid/stilling/${stillingId}`;
 };
 
+/* nb: Det er ikke lenger frontend som styrer teksten. Så disse
+ * tekstene kan være ute av sync med backend.
+ */
 const genererMeldingUtenLenke = (valgtMal: Meldingsmal) => {
     if (valgtMal === Meldingsmal.VurdertSomAktuell) {
         return `Hei, vi har vurdert at kompetansen din kan passe til denne stillingen, hilsen NAV`;
@@ -195,10 +189,6 @@ const genererMeldingUtenLenke = (valgtMal: Meldingsmal) => {
     } else if (valgtMal === Meldingsmal.Jobbarrangement) {
         return `Hei, vi har et jobbarrangement som kan passe for deg, hilsen NAV. Se mer info:`;
     }
-};
-
-const genererMelding = (valgtMal: Meldingsmal, stillingId: string) => {
-    return `${genererMeldingUtenLenke(valgtMal)} ${genererLenkeTilStilling(stillingId)}`;
 };
 
 export default SendSmsModal;

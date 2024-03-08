@@ -4,8 +4,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import {
     fetchKandidatlisteMedKandidatlisteId,
     fetchKandidatlisteMedStillingsId,
-    fetchSendteMeldinger,
-    postSmsTilKandidater,
     putArkivert,
     putArkivertForFlereKandidater,
     putFormidlingsutfallForUsynligKandidat,
@@ -43,6 +41,7 @@ import KandidatlisteAction, {
     ToggleArkivertSuccessAction,
 } from './KandidatlisteAction';
 import KandidatlisteActionType from './KandidatlisteActionType';
+import { fetchSmserForStilling, postSmsTilKandidater } from '../../../api/sms-api/sms';
 
 const loggManglendeAktørId = (kandidatliste: Kandidatliste) => {
     const aktøridRegex = /[0-9]{13}/;
@@ -269,7 +268,9 @@ function* sjekkError(action: any) {
 
 function* hentSendteMeldinger(action: HentSendteMeldingerAction): Generator<unknown, any, any> {
     try {
-        const sendteMeldinger = yield call(fetchSendteMeldinger, action.kandidatlisteId);
+        const sendteMeldinger = yield call(fetchSmserForStilling, {
+            stillingId: action.stillingId,
+        });
         yield put({
             type: KandidatlisteActionType.HentSendteMeldingerSuccess,
             sendteMeldinger,
@@ -312,10 +313,14 @@ function* hentForespørslerOmDelingAvCv(
 
 function* sendSmsTilKandidater(action: SendSmsAction): Generator<unknown, any, any> {
     try {
-        yield call(postSmsTilKandidater, action.melding, action.fnr, action.kandidatlisteId);
+        yield call(postSmsTilKandidater, {
+            mal: action.mal,
+            fnr: action.fnr,
+            stillingId: action.stillingId,
+        });
         yield put({
             type: KandidatlisteActionType.SendSmsSuccess,
-            kandidatlisteId: action.kandidatlisteId,
+            kandidatlisteId: action.stillingId,
         });
     } catch (e) {
         if (e instanceof SearchApiError) {

@@ -65,7 +65,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
     skjulBanner,
 }) => {
     useMaskerFødselsnumre();
-    useHentSendteMeldinger(kandidatliste.kandidatlisteId);
+    useHentSendteMeldinger({ stillingId: kandidatliste.stillingId });
     useHentForespørslerOmDelingAvCv(kandidatliste.stillingId);
 
     const dispatch = useDispatch();

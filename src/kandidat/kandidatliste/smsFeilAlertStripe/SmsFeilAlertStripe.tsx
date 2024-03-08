@@ -4,9 +4,10 @@ import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
+import { ServerSmsStatus, Sms } from '../../../api/sms-api/sms';
 import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import css from './smsFeilAlertStripe.module.css';
+import { z } from 'zod';
 
 const LESTE_SMS_IDER_KEY = 'lesteSmsIder';
 
@@ -15,44 +16,39 @@ type Props = {
     sendteMeldinger: Kandidatmeldinger;
 };
 
-const hentLesteSmsIder = () => {
-    const lagredeIderJson = window.localStorage.getItem(LESTE_SMS_IDER_KEY);
+const storageSchema = z
+    .array(z.number()) /* gammelt format */
+    .or(z.array(z.string())); /* nytt format */
 
-    if (!lagredeIderJson) {
+const hentLesteSmsIder = (): string[] => {
+    const lagredeIderJson = window.localStorage.getItem(LESTE_SMS_IDER_KEY) ?? '[]';
+    const lagredeIder = storageSchema.safeParse(JSON.parse(lagredeIderJson));
+    if (lagredeIder.success) {
+        return lagredeIder.data.map((it) => it.toString());
+    } else {
         return [];
     }
-
-    const lagredeIder = JSON.parse(lagredeIderJson);
-    if (!Array.isArray(lagredeIder)) {
-        return [];
-    }
-
-    return lagredeIder;
 };
 
 const SmsFeilAlertStripe: FunctionComponent<Props> = ({ kandidater, sendteMeldinger }) => {
-    const [lesteSmsIder, setLesteSmsIder] = useState<number[]>(hentLesteSmsIder());
+    const [lesteSmsIder, setLesteSmsIder] = useState<string[]>(hentLesteSmsIder);
+
+    const smsMedFeil = (sms: Sms | undefined) => sms && sms.status === ServerSmsStatus.Feil;
+    const ulestSms = (sms: Sms | undefined) => sms && !lesteSmsIder.includes(sms.id);
 
     const kandidaterMedUlesteSmsFeil = kandidater.filter((kandidat) => {
         if (!kandidat.fodselsnr) {
             return false;
         }
-
         const sms = sendteMeldinger[kandidat.fodselsnr];
-        if (sms && sms.status === SmsStatus.Feil) {
-            const erUlest = !lesteSmsIder.includes(sms.id);
-
-            return erUlest;
-        }
-
-        return false;
+        return smsMedFeil(sms) && ulestSms(sms);
     });
 
     const harLestAlleFeil = kandidaterMedUlesteSmsFeil.length === 0;
     if (harLestAlleFeil) return null;
 
     const lukkAlert = () => {
-        const oppdatertLesteSmsIder = new Set<number>(lesteSmsIder);
+        const oppdatertLesteSmsIder = new Set<string>(lesteSmsIder);
 
         kandidaterMedUlesteSmsFeil
             .filter((kandidat) => kandidat.fodselsnr)

@@ -1,5 +1,5 @@
 import { Fødselsnummer } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms } from '../../../api/sms-api/sms';
 import { Nettstatus } from 'felles/nettressurs';
 import { useSelector } from 'react-redux';
 import AppState from '../../state/AppState';

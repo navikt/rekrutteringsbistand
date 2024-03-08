@@ -19,9 +19,9 @@ const useSendtKandidatmelding = (
     useEffect(() => {
         dispatch({
             type: KandidatlisteActionType.HentSendteMeldinger,
-            kandidatlisteId: kandidatliste.kandidatlisteId,
+            stillingId: kandidatliste.stillingId!,
         });
-    }, [dispatch, kandidatliste.kandidatlisteId]);
+    }, [dispatch, kandidatliste.stillingId]);
 
     if (sendteMeldinger.kind !== Nettstatus.Suksess || kandidat.fodselsnr === null) {
         return undefined;

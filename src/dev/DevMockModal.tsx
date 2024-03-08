@@ -7,7 +7,7 @@ import { gammelKandidatApiMock } from '../../mock/kandidat-api/mock';
 import { modiaContextHolderMock } from '../../mock/modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from '../../mock/presenterte-kandidater-api/mock';
 import { mswWorker } from '../../mock/setup';
-import { smsApiMock } from '../../mock/sms-api/mock';
+import { smsApiMock } from '../api/sms-api/sms';
 import { stillingApiMock } from '../../mock/stilling-api/mock';
 import { stillingssøkMock } from '../../mock/stillingssok-proxy/mock';
 import { synlighetApiMock } from '../../mock/synlighet-api/mock';
