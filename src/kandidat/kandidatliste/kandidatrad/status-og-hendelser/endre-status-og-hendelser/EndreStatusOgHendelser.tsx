@@ -6,7 +6,7 @@ import {
     Kandidatstatus,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms } from '../../../../../api/sms-api/sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Nettressurs } from 'felles/nettressurs';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../../domene/kandidatlisteUtils';

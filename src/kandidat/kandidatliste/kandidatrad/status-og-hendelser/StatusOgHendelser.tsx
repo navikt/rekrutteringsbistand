@@ -8,7 +8,7 @@ import {
     Kandidatstatus,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms } from '../../../../api/sms-api/sms';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { erKobletTilStilling } from '../../domene/kandidatlisteUtils';
 import { ForespørslerForKandidatForStilling } from '../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';

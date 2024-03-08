@@ -3,7 +3,6 @@ import KandidatIKandidatliste, {
     UsynligKandidat,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
 import {
     Nettressurs,
     Nettstatus,
@@ -42,6 +41,13 @@ export type Kandidatsortering = null | {
     felt: KandidatSorteringsfelt;
     retning: Retning | null;
 };
+
+export enum SmsStatus {
+    IkkeSendt = 'IKKE_SENDT',
+    UnderUtsending = 'UNDER_UTSENDING',
+    Sendt = 'SENDT',
+    Feil = 'FEIL',
+}
 
 export type KandidatlisteState = {
     id?: string;

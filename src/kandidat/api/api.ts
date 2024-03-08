@@ -180,21 +180,6 @@ export const fetchArbeidsgivereEnhetsregisterOrgnr = (orgnr: string) => {
     return fetchJson(`${ENHETSREGISTER_API}/underenhet/_search?q=organisasjonsnummer:${query}*`);
 };
 
-export const fetchSendteMeldinger = (kandidatlisteId: string) =>
-    fetchJson(`${api.sms}/${kandidatlisteId}`, true);
-
-export const fetchSmserForKandidat = (fnr: string) => fetchJson(`${api.sms}/fnr/${fnr}`, true);
-
-export const postSmsTilKandidater = (melding: string, fnr: string[], kandidatlisteId: string) =>
-    postJson(
-        `${api.sms}`,
-        JSON.stringify({
-            melding,
-            fnr,
-            kandidatlisteId,
-        })
-    );
-
 export const putKandidatlistestatus = (
     kandidatlisteId: string,
     status: Kandidatlistestatus

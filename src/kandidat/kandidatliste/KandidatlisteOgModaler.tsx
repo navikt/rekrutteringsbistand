@@ -4,7 +4,6 @@ import { Dispatch } from 'redux';
 
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Stilling from '../../felles/domene/stilling/Stilling';
 import AppState from '../state/AppState';
@@ -20,6 +19,7 @@ import SendSmsModal from './modaler/SendSmsModal';
 import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
 import KandidatlisteAction from './reducer/KandidatlisteAction';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
+import { SmsStatus } from './reducer/kandidatlisteReducer';
 
 type OwnProps = {
     kandidatliste: Kandidatlistetype;
@@ -229,7 +229,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                             <SendSmsModal
                                 vis={this.state.sendSmsModalOpen}
                                 onClose={() => this.onToggleSendSmsModal(false)}
-                                kandidatlisteId={kandidatliste.kandidatlisteId}
                                 kandidater={kandidater}
                                 sendteMeldinger={this.props.sendteMeldinger.data}
                                 stillingskategori={kandidatliste.stillingskategori}

@@ -2,7 +2,7 @@ import { Table } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms } from '../../../../api/sms-api/sms';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { ForespørselOmDelingAvCv } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Historikkrad } from './Historikkrad/Historikkrad';
@@ -42,7 +42,7 @@ export const Historikktabell: FunctionComponent<Props> = ({
                             forespørslerOmDelingAvCvForKandidat,
                             liste
                         )}
-                        sms={finnSms(smser, liste.uuid)}
+                        sms={finnSms(smser, liste.stillingId)}
                     />
                 ))}
             </Table.Body>
@@ -63,9 +63,9 @@ export const finnForespørselOmDelingAvCv = (
     );
 };
 
-const finnSms = (sms: Nettressurs<Sms[]>, kandidatlisteId: string) => {
+const finnSms = (sms: Nettressurs<Sms[]>, stillingId: string | undefined) => {
     if (sms.kind !== Nettstatus.Suksess) {
         return undefined;
     }
-    return sms.data.find((sms) => sms.kandidatlisteId === kandidatlisteId);
+    return sms.data.find((sms) => sms.stillingId === stillingId);
 };

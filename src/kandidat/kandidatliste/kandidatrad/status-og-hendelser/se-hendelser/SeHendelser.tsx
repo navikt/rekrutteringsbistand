@@ -2,7 +2,7 @@ import { Heading } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms } from '../../../../../api/sms-api/sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Nettressurs } from 'felles/nettressurs';
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
