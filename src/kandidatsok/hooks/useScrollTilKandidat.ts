@@ -5,7 +5,7 @@ type StateFraKandidatside = null | {
     scrollTilKandidat?: undefined;
 };
 
-const useScrollTilKandidat = (kandidatnr: string | null, sistBesøkteKandidatnr?: string) => {
+const useScrollTilKandidat = (kandidatnr: string, sistBesøkteKandidatnr?: string) => {
     const { state } = useLocation();
     const [harScrollet, setHarScrollet] = useState<boolean>(false);
 

@@ -30,8 +30,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
     forrigeØkt,
 }) => {
     const fremhevet = kandidat.arenaKandidatnr === forrigeØkt?.sistBesøkteKandidat;
-    const markert =
-        kandidat.arenaKandidatnr != null && markerteKandidater.has(kandidat.arenaKandidatnr);
+    const markert = markerteKandidater.has(kandidat.arenaKandidatnr);
 
     useScrollTilKandidat(kandidat.arenaKandidatnr, forrigeØkt?.sistBesøkteKandidat);
 
@@ -50,10 +49,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
         kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === Nettstatus.Suksess
             ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.stillingId
             : undefined;
-
-    if (kandidat.arenaKandidatnr === null || kandidat.arenaKandidatnr === undefined) {
-        return null;
-    }
     return (
         <RekBisKortKandidat
             markert={markert}

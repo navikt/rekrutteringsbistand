@@ -23,7 +23,7 @@ import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreK
 type Props = {
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
     markerteKandidater: Set<string>;
-    onMarkerKandidat: (kandidatnr: string | string[] | null) => void;
+    onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
     forrigeØkt: Økt | null;
 };
