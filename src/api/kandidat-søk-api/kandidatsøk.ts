@@ -19,6 +19,7 @@ export enum Kvalifiseringsgruppekode {
     Batt = 'BATT',
     Ikval = 'IKVAL',
     Varig = 'VARIG',
+    Bform = 'BFORM',
 }
 
 export const yrkeJobbonskerObjSchema = z.object({
