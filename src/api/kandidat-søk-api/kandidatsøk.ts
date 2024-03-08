@@ -39,7 +39,7 @@ export const kvalifiseringsgruppekodeSchema = z.nativeEnum(Kvalifiseringsgruppek
 export const kandidatsøkKandidatSchema = z.object({
     yrkeJobbonskerObj: z.array(yrkeJobbonskerObjSchema),
     etternavn: z.string(),
-    postnummer: z.string(),
+    postnummer: z.string().nullable(),
     arenaKandidatnr: z.string(),
     kommuneNavn: z.string().nullable(),
     geografiJobbonsker: z.array(geografiJobbonskerSchema),
