@@ -20,6 +20,12 @@ export enum Kvalifiseringsgruppekode {
     Ikval = 'IKVAL',
     Varig = 'VARIG',
     Bform = 'BFORM',
+    Andre = 'ANDRE',
+    Ivurd = 'IVURD',
+    Bkart = 'BKART',
+    Oppfi = 'OPPFI',
+    Vurdi = 'VURDI',
+    Vurdu = 'VURDU',
 }
 
 export const yrkeJobbonskerObjSchema = z.object({
