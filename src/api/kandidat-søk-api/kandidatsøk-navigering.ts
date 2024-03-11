@@ -11,7 +11,7 @@ import { mockKandidatsøkNavigering } from '../../../mock/kandidatsok-proxy/mock
 const kandidatsøkNavigeringEndepunkt = '/kandidatsok-api/api/kandidatsok/navigering';
 
 export const kandidatsøkKandidatNavigeringSchema = z.object({
-    totalHits: z.number(),
+    antall: z.number(),
     kandidatnumre: z.array(z.string()),
 });
 
@@ -43,7 +43,7 @@ export const useKandidatsøkNavigering = (props: KandidatsøkNavigeringProps) =>
     return {
         ...swr,
         kandidatsøkKandidatNavigering: kandidatsøkKandidatNavigering?.kandidatnumre,
-        totalHits: kandidatsøkKandidatNavigering?.totalHits,
+        totalHits: kandidatsøkKandidatNavigering?.antall,
     };
 };
 

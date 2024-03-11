@@ -71,7 +71,7 @@ export const mockKandidatsammendrag: Kandidatsammendrag = {
 };
 
 export const mockKandidatsøkNavigering: KandidatsøkKandidatNavigering = {
-    totalHits: 3,
+    antall: 3,
     kandidatnumre: ['PAM0yp25c81t', 'PAM0164961vts', 'PAM0ylhyjvkv'],
 };
 
