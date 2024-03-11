@@ -11,19 +11,19 @@ import { mockKandidatsøkNavigering } from '../../../mock/kandidatsok-proxy/mock
 const kandidatsøkNavigeringEndepunkt = '/kandidatsok-api/api/kandidatsok/navigering';
 
 export const kandidatsøkKandidatNavigeringSchema = z.object({
-    totalHits: z.string(),
-    hits: z.array(z.string()),
+    totalHits: z.number(),
+    kandidatnumre: z.array(z.string()),
 });
 
 export type KandidatsøkKandidatNavigering = z.infer<typeof kandidatsøkKandidatNavigeringSchema>;
 
-export type KandidatsøkProps = {
+export type KandidatsøkNavigeringProps = {
     søkekriterier: SøkekriterierDto;
     side: number;
     sortering: string;
 };
 
-export const useKandidatsøkNavigering = (props: KandidatsøkProps) => {
+export const useKandidatsøkNavigering = (props: KandidatsøkNavigeringProps) => {
     const søkekriterier: SøkekriterierDto = props.søkekriterier;
 
     const queryParams = new URLSearchParams({
@@ -41,11 +41,11 @@ export const useKandidatsøkNavigering = (props: KandidatsøkProps) => {
 
     return {
         ...swr,
-        kandidatsøkKandidatNavigering: kandidatsøkKandidatNavigering.hits,
-        totalHits: kandidatsøkKandidatNavigering.totalHits,
+        kandidatsøkKandidatNavigering: kandidatsøkKandidatNavigering?.kandidatnumre,
+        totalHits: kandidatsøkKandidatNavigering?.totalHits,
     };
 };
 
-export const kandidatsøkMockMsw = http.post(kandidatsøkNavigeringEndepunkt, (_) =>
+export const kandidatsøkNavigeringMockMsw = http.post(kandidatsøkNavigeringEndepunkt, (_) =>
     HttpResponse.json(mockKandidatsøkNavigering)
 );

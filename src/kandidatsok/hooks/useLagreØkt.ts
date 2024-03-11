@@ -1,43 +1,67 @@
-import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
 import useNavKontor from 'felles/store/navKontor';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useMeg } from '../../api/frackend/meg';
-import { søk } from '../api/api';
-import { PAGE_SIZE, byggQuery } from '../api/query/byggQuery';
+import { PAGE_SIZE } from '../api/query/byggQuery';
 import { ØktContext } from '../Økt';
 import { searchParamsTilSøkekriterier } from './useSøkekriterier';
-
-const maksAntallNavigerbareKandidater = 500;
+import {
+    KandidatsøkNavigeringProps,
+    useKandidatsøkNavigering,
+} from '../../api/kandidat-søk-api/kandidatsøk-navigering';
 
 const useLagreØkt = () => {
     const navKontor = useNavKontor((state) => state.navKontor);
     const { navIdent } = useMeg();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
     const { økt, setØkt } = useContext(ØktContext);
-    const [navigerbareKandidater, setNavigerbareKandidater] = useState<
-        EsResponse<Kandidat> | undefined
-    >();
     const [searchParams] = useSearchParams();
 
+    const søkekriterier = searchParamsTilSøkekriterier(searchParams, økt);
+
+    const kandidatsøkNavigeringProps: KandidatsøkNavigeringProps = {
+        søkekriterier: {
+            fritekst: søkekriterier.fritekst,
+            portefølje: søkekriterier.portefølje,
+            valgtKontor: søkekriterier.valgtKontor,
+            orgenhet: navKontor,
+            innsatsgruppe: søkekriterier.innsatsgruppe,
+            ønsketYrke: søkekriterier.ønsketYrke,
+            ønsketSted: søkekriterier.ønsketSted,
+            borPåØnsketSted: søkekriterier.borPåØnsketSted,
+            kompetanse: søkekriterier.kompetanse,
+            førerkort: søkekriterier.førerkort,
+            prioritertMålgruppe: søkekriterier.prioritertMålgruppe,
+            hovedmål: søkekriterier.hovedmål,
+            utdanningsnivå: søkekriterier.utdanningsnivå,
+            arbeidserfaring: søkekriterier.arbeidserfaring,
+            ferskhet: søkekriterier.ferskhet,
+            språk: søkekriterier.språk,
+        },
+        side: søkekriterier.side,
+        sortering: søkekriterier.sortering,
+    };
+
+    const { kandidatsøkKandidatNavigering, totalHits } = useKandidatsøkNavigering(
+        kandidatsøkNavigeringProps
+    );
+
+    const deps = [
+        searchParams.toString(),
+        JSON.stringify(kandidatsøkKandidatNavigering),
+        JSON.stringify(innloggetBruker),
+    ];
     useEffect(() => {
         const hentKandidatnumreForNavigering = async () => {
-            const søkekriterier = searchParamsTilSøkekriterier(searchParams, økt);
-            const til = søkekriterier.side * PAGE_SIZE - maksAntallNavigerbareKandidater / 2;
-            const from = Math.max(0, til);
-            const size = maksAntallNavigerbareKandidater;
-            //@ts-ignore: TODO: written before strict-mode enabled
-            const query = byggQuery(søkekriterier, innloggetBruker);
-            const queryNavigerbareKandidater = {
-                ...query,
-                from,
-                size,
-                _source: false,
-            };
-
             try {
-                setNavigerbareKandidater(await søk(queryNavigerbareKandidater));
+                if (kandidatsøkKandidatNavigering) {
+                    setØkt({
+                        searchParams: searchParams.toString(),
+                        navigerbareKandidater: kandidatsøkKandidatNavigering,
+                        totaltAntallKandidater: totalHits,
+                        pageSize: PAGE_SIZE,
+                    });
+                }
             } catch (e) {
                 console.error('Klarte ikke å hente navigerbare kandidater:', e);
             }
@@ -48,20 +72,7 @@ const useLagreØkt = () => {
             hentKandidatnumreForNavigering();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchParams.toString(), JSON.stringify(innloggetBruker)]);
-
-    useEffect(() => {
-        if (navigerbareKandidater) {
-            setØkt({
-                searchParams: searchParams.toString(),
-                navigerbareKandidater: navigerbareKandidater.hits.hits.map((hit) => hit._id),
-                totaltAntallKandidater: navigerbareKandidater.hits.total.value,
-                pageSize: PAGE_SIZE,
-            });
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [navigerbareKandidater]);
+    }, deps);
 };
 
 export default useLagreØkt;
