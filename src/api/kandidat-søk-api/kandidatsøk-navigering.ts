@@ -34,10 +34,11 @@ export const useKandidatsøkNavigering = (props: KandidatsøkNavigeringProps) =>
     const swr = useSWR({ path: kandidatsøkNavigeringEndepunkt, props }, ({ path }) =>
         postApi(path, { ...søkekriterier }, queryParams)
     );
+    console.log('data', swr?.data);
 
-    const kandidatsøkKandidatNavigering: KandidatsøkKandidatNavigering = swr?.data?.map((k: any) =>
-        kandidatsøkKandidatNavigeringSchema.parse(k._source)
-    );
+    const kandidatsøkKandidatNavigering: KandidatsøkKandidatNavigering | undefined = swr?.data
+        ? kandidatsøkKandidatNavigeringSchema.parse(swr?.data)
+        : undefined;
 
     return {
         ...swr,

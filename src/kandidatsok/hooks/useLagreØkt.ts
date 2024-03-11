@@ -1,10 +1,9 @@
 import useNavKontor from 'felles/store/navKontor';
 import { useContext, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useMeg } from '../../api/frackend/meg';
 import { PAGE_SIZE } from '../api/query/byggQuery';
 import { ØktContext } from '../Økt';
-import { searchParamsTilSøkekriterier } from './useSøkekriterier';
+import useSøkekriterier from './useSøkekriterier';
 import {
     KandidatsøkNavigeringProps,
     useKandidatsøkNavigering,
@@ -14,10 +13,8 @@ const useLagreØkt = () => {
     const navKontor = useNavKontor((state) => state.navKontor);
     const { navIdent } = useMeg();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
-    const { økt, setØkt } = useContext(ØktContext);
-    const [searchParams] = useSearchParams();
-
-    const søkekriterier = searchParamsTilSøkekriterier(searchParams, økt);
+    const { setØkt } = useContext(ØktContext);
+    const { søkekriterier } = useSøkekriterier();
 
     const kandidatsøkNavigeringProps: KandidatsøkNavigeringProps = {
         søkekriterier: {
@@ -47,16 +44,17 @@ const useLagreØkt = () => {
     );
 
     const deps = [
-        searchParams.toString(),
+        søkekriterier.toString(),
         JSON.stringify(kandidatsøkKandidatNavigering),
         JSON.stringify(innloggetBruker),
+        setØkt,
     ];
     useEffect(() => {
         const hentKandidatnumreForNavigering = async () => {
             try {
                 if (kandidatsøkKandidatNavigering) {
                     setØkt({
-                        searchParams: searchParams.toString(),
+                        searchParams: søkekriterier.toString(),
                         navigerbareKandidater: kandidatsøkKandidatNavigering,
                         totaltAntallKandidater: totalHits,
                         pageSize: PAGE_SIZE,
