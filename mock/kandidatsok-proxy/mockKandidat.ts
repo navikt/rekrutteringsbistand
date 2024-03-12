@@ -14,6 +14,7 @@ import {
     KandidatsøkKandidat,
     Kvalifiseringsgruppekode,
 } from '../../src/api/kandidat-søk-api/kandidatsøk';
+import { KandidatsøkKandidatNavigering } from '../../src/api/kandidat-søk-api/kandidatsøk-navigering';
 
 export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
     yrkeJobbonskerObj: [
@@ -67,6 +68,11 @@ export const mockKandidatsammendrag: Kandidatsammendrag = {
     veilederIdent: 'A123123',
     fodselsnummer: '04928797045',
     veilederEpost: 'v@v.com',
+};
+
+export const mockKandidatsøkNavigering: KandidatsøkKandidatNavigering = {
+    antall: 3,
+    kandidatnumre: ['PAM0yp25c81t', 'PAM0164961vts', 'PAM0ylhyjvkv'],
 };
 
 export const mockKandidatsøkKandidater: KandidatsøkKandidat[] = [
