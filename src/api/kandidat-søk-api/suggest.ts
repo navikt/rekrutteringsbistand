@@ -24,18 +24,10 @@ export enum SuggestType {
 }
 
 export const useSuggest = (props: SuggestProps) => {
-    const swr = useSWR({ path: suggestEndepunkt, props }, ({ path }) => postApi(path, props));
-
-    if (props.query.length < 3) {
-        return {
-            data: [],
-            error: undefined,
-            isValidating: false,
-            revalidate: () => {},
-            mutate: () => {},
-            suggestions: [],
-        };
-    }
+    const harNokTegn = props.query.length >= 3;
+    const swr = useSWR(harNokTegn ? { path: suggestEndepunkt, props } : undefined, ({ path }) =>
+        postApi(path, props)
+    );
 
     return {
         ...swr,
