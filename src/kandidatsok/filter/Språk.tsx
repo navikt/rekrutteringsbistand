@@ -1,4 +1,4 @@
-import { Forslagsfelt } from '../api/query/byggSuggestion';
+import { SuggestType } from '../../api/kandidat-søk-api/suggest';
 import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier from '../hooks/useSøkekriterier';
 import FilterMedTypeahead from './FilterMedTypeahead';
@@ -14,7 +14,7 @@ const Språk = () => {
         <FilterMedTypeahead
             label="Språk"
             description="For eksempel «norsk»"
-            suggestionField={Forslagsfelt.Språk}
+            suggestType={SuggestType.Språk}
             value={søkekriterier.språk}
             setValue={setValue}
         />

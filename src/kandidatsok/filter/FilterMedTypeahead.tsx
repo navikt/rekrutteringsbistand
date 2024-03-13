@@ -1,14 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Forslagsfelt } from '../api/query/byggSuggestion';
-import useSuggestions from '../hooks/useSuggestions';
 import { kombinerStringsTilSearchParam } from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
-import { Nettstatus } from 'felles/nettressurs';
+import { SuggestType, useSuggest } from '../../api/kandidat-søk-api/suggest';
 
 type Props = {
     label: string;
     description?: string;
-    suggestionField: Forslagsfelt;
+    suggestType: SuggestType;
     value: Set<string>;
     setValue: (value: string | null) => void;
 };
@@ -16,14 +14,14 @@ type Props = {
 const FilterMedTypeahead: FunctionComponent<Props> = ({
     label,
     description,
-    suggestionField,
+    suggestType,
     value,
     setValue,
 }) => {
     const valgteVerdier = Array.from(value);
 
     const [input, setInput] = useState<string>('');
-    const forslag = useSuggestions(suggestionField, input);
+    const forslag = useSuggest({ query: input, type: suggestType });
 
     useEffect(() => {
         if (value.size === 0) {
@@ -58,7 +56,7 @@ const FilterMedTypeahead: FunctionComponent<Props> = ({
             label={label}
             description={description}
             value={input}
-            suggestions={forslag.kind === Nettstatus.Suksess ? forslag.data : []}
+            suggestions={forslag.suggestions}
             selectedSuggestions={valgteVerdier}
             onRemoveSuggestion={onFjernValgtVerdi}
             onSelect={onSelect}
