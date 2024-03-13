@@ -1,4 +1,4 @@
-import { Forslagsfelt } from '../../api/query/byggSuggestion';
+import { SuggestType } from '../../../api/kandidat-søk-api/suggest';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier, { kombinerStringsTilSearchParam } from '../../hooks/useSøkekriterier';
 import FilterMedTypeahead from '../FilterMedTypeahead';
@@ -23,7 +23,7 @@ const Kompetanse = () => {
             <FilterMedTypeahead
                 label="Kompetanse"
                 description="For eksempel fagbrev, sertifisering, ferdigheter eller programmer"
-                suggestionField={Forslagsfelt.Kompetanse}
+                suggestType={SuggestType.Kompetanse}
                 value={søkekriterier.kompetanse}
                 setValue={setValue}
             />

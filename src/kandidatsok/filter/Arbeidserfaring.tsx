@@ -1,8 +1,8 @@
 import { Radio, RadioGroup } from '@navikt/ds-react';
-import { Forslagsfelt } from '../api/query/byggSuggestion';
 import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier from '../hooks/useSøkekriterier';
 import FilterMedTypeahead from './FilterMedTypeahead';
+import { SuggestType } from '../../api/kandidat-søk-api/suggest';
 
 const Arbeidserfaring = () => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
@@ -24,7 +24,7 @@ const Arbeidserfaring = () => {
             <FilterMedTypeahead
                 label="Arbeidserfaring"
                 description={`For eksempel «barnehagelærer»`}
-                suggestionField={Forslagsfelt.Arbeidserfaring}
+                suggestType={SuggestType.Arbeidserfaring}
                 value={søkekriterier.arbeidserfaring}
                 setValue={setArbeidserfaring}
             />
