@@ -22,7 +22,7 @@ export interface SuggestStedProps {
 }
 
 export const useSuggestSted = (props: SuggestStedProps) => {
-    const harNokTegn = props.query.length >= 3;
+    const harNokTegn = props.query.length >= 2;
     const swr = useSWR(harNokTegn ? { path: suggestStedEndepunkt, props } : undefined, ({ path }) =>
         postApi(path, props)
     );
