@@ -1,9 +1,8 @@
-import { Nettstatus } from 'felles/nettressurs';
 import React, { FunctionComponent, useState } from 'react';
-import useFuzzySuggestions from '../hooks/useFuzzySuggestions';
 import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
+import { useSuggestKontor } from '../../api/kandidat-søk-api/suggestKontor';
 
 type Props = {
     forslagId: string;
@@ -12,7 +11,7 @@ type Props = {
 const VelgKontor: FunctionComponent<Props> = ({ forslagId }) => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const [input, setInput] = useState<string>('');
-    const kontorforslag = useFuzzySuggestions('navkontor', 'navkontor.text', input);
+    const { suggestions } = useSuggestKontor({ query: input });
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 
@@ -43,7 +42,7 @@ const VelgKontor: FunctionComponent<Props> = ({ forslagId }) => {
             label="Velg kontor"
             description="For eksempel «NAV Kristiansand»"
             value={input}
-            suggestions={kontorforslag.kind === Nettstatus.Suksess ? kontorforslag.data : []}
+            suggestions={suggestions}
             suggestionsId={forslagId}
             selectedSuggestions={Array.from(søkekriterier.valgtKontor)}
             onRemoveSuggestion={onFjernValgtKontor}
