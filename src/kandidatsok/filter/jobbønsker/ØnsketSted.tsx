@@ -4,13 +4,15 @@ import useGeografiSuggestions, { Geografiforslag } from '../../hooks/useGeografi
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import { Typeahead } from '../typeahead/Typeahead';
+import { useSuggestSted } from '../../../api/kandidat-søk-api/suggestSted';
 
 export const GEOGRAFI_SEPARATOR = '.';
 
 const ØnsketSted = () => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const [input, setInput] = useState<string>('');
-    const forslag = useGeografiSuggestions(input);
+    //const forslag = useGeografiSuggestions(input);
+    const forslag = useSuggestSted({ query: input });
 
     const valgteSteder = Array.from(søkekriterier.ønsketSted).map((encoded) =>
         decodeGeografiforslag(encoded)
