@@ -8,10 +8,14 @@ import { postApi } from '../fetcher';
 
 const suggestStedEndepunkt = '/kandidatsok-api/api/suggest/sted';
 
-export const suggestionsStedSchema = z.array(
-    z.object({ geografiKode: z.string(), geografiKodeTekst: z.string() })
-);
+export const suggestionsStedSchema = z.object({
+    geografiKode: z.string(),
+    geografiKodeTekst: z.string(),
+});
+
+export const suggestionsStederSchema = z.array(suggestionsStedSchema);
 export type SuggestionsSted = z.infer<typeof suggestionsStedSchema>;
+export type SuggestionsSteder = z.infer<typeof suggestionsStederSchema>;
 
 export interface SuggestStedProps {
     query: string;
@@ -25,11 +29,11 @@ export const useSuggestSted = (props: SuggestStedProps) => {
 
     return {
         ...swr,
-        suggestions: swr?.data ? suggestionsStedSchema.parse(swr?.data) : [],
+        suggestions: swr?.data ? suggestionsStederSchema.parse(swr?.data) : [],
     };
 };
 
-export const suggestMockMsw = http.post(suggestStedEndepunkt, async (_) => {
+export const suggestStedMockMsw = http.post(suggestStedEndepunkt, async (_) => {
     return HttpResponse.json([
         {
             geografiKode: 'NO12',
