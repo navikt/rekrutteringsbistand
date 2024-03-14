@@ -1,4 +1,4 @@
-import { BodyShort, Detail, Label } from '@navikt/ds-react';
+import { BodyShort, Detail, ErrorMessage, Label } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 
 import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
@@ -26,9 +26,11 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
     autoFocus,
 }) => {
     const [input, setInput] = useState<string>('');
-    const [alleForslag, setAlleForslag] = useState<Nettressurs<Enhetsregistertreff[]>>(
-        ikkeLastet()
-    );
+
+    const [fantIkkeOrgnr, setFantIkkeOrgnr] = useState<boolean>(false);
+
+    const [alleForslag, setAlleForslag] =
+        useState<Nettressurs<Enhetsregistertreff[]>>(ikkeLastet());
 
     useEffect(() => {
         const hentArbeidsgiversForslag = async (navn: string) => {
@@ -78,7 +80,13 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
             if (valgtForslag) {
                 const found = finnArbeidsgiver(alleForslag.data, valgtForslag.value);
 
-                setArbeidsgiver(found || null);
+                if (found?.orgnr) {
+                    setFantIkkeOrgnr(false);
+                    setArbeidsgiver(found);
+                } else {
+                    setFantIkkeOrgnr(true);
+                    setArbeidsgiver(null);
+                }
                 setInput(capitalizeEmployerName(found ? found.name : null) || '');
             } else {
                 setArbeidsgiver(null);
@@ -114,6 +122,9 @@ const VelgArbeidsgiver: FunctionComponent<Props> = ({
                 <Detail className={css.valgtArbeidsgiver}>
                     {formaterDataFraEnhetsregisteret(arbeidsgiver)}
                 </Detail>
+            )}
+            {fantIkkeOrgnr && (
+                <ErrorMessage>Fikk ikke hentet virksomhetsnummer, prøv igjen senere.</ErrorMessage>
             )}
         </>
     );

@@ -17,7 +17,7 @@ const DeleteAdModal = () => {
         if (hasDeletedAd) {
             navigate(
                 {
-                    pathname: `/stillinger/minestillinger`,
+                    pathname: `/stillinger/stillingssok`,
                 },
                 {
                     replace: true,
