@@ -4,8 +4,7 @@ import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { ServerSmsStatus, Sms } from '../../../api/sms-api/sms';
-import { Kandidatmeldinger } from '../domene/Kandidatressurser';
+import { SmsStatus, Sms, useSmserForStilling } from '../../../api/sms-api/sms';
 import css from './smsFeilAlertStripe.module.css';
 import { z } from 'zod';
 
@@ -13,7 +12,7 @@ const LESTE_SMS_IDER_KEY = 'lesteSmsIder';
 
 type Props = {
     kandidater: KandidatIKandidatliste[];
-    sendteMeldinger: Kandidatmeldinger;
+    stillingId: string | null;
 };
 
 const storageSchema = z
@@ -30,10 +29,15 @@ const hentLesteSmsIder = (): string[] => {
     }
 };
 
-const SmsFeilAlertStripe: FunctionComponent<Props> = ({ kandidater, sendteMeldinger }) => {
+const SmsFeilAlertStripe: FunctionComponent<Props> = ({ kandidater, stillingId }) => {
+    const { data: sendteMeldinger } = useSmserForStilling(stillingId);
     const [lesteSmsIder, setLesteSmsIder] = useState<string[]>(hentLesteSmsIder);
 
-    const smsMedFeil = (sms: Sms | undefined) => sms && sms.status === ServerSmsStatus.Feil;
+    if (sendteMeldinger === undefined) {
+        return null;
+    }
+
+    const smsMedFeil = (sms: Sms | undefined) => sms && sms.status === SmsStatus.Feil;
     const ulestSms = (sms: Sms | undefined) => sms && !lesteSmsIder.includes(sms.id);
 
     const kandidaterMedUlesteSmsFeil = kandidater.filter((kandidat) => {

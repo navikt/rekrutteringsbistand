@@ -1,58 +1,40 @@
-import { Button, Modal } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Label, Link, Modal, Select } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
-
-import { Alert, BodyShort, Label, Link, Select } from '@navikt/ds-react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Meldingsmal } from '../../../api/sms-api/sms';
+import {
+    Meldingsmal,
+    usePostSmsTilKandidater,
+    useSmserForStilling,
+} from '../../../api/sms-api/sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import AppState from '../../state/AppState';
-import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
-import KandidatlisteAction from '../reducer/KandidatlisteAction';
-import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
 import css from './SendSmsModal.module.css';
-import { SmsStatus } from '../reducer/kandidatlisteReducer';
+import { useVisVarsling } from 'felles/varsling/Varsling';
 
 type Props = {
     vis: boolean;
     onClose: () => void;
+    fjernAllMarkering: () => void;
     kandidater: KandidatIKandidatliste[];
     stillingId: string;
-    sendteMeldinger: Kandidatmeldinger;
     stillingskategori: Stillingskategori | null;
 };
 
 const SendSmsModal: FunctionComponent<Props> = (props) => {
-    const { vis, onClose, kandidater, stillingId, sendteMeldinger, stillingskategori } = props;
+    const { vis, onClose, kandidater, stillingId, stillingskategori, fjernAllMarkering } = props;
+    const visVarsling = useVisVarsling();
 
-    const dispatch: Dispatch<KandidatlisteAction> = useDispatch();
-    const { sendStatus } = useSelector((state: AppState) => state.kandidatliste.sms);
+    const { data: smser = {} } = useSmserForStilling(stillingId);
+
     const markerteKandidater = useMarkerteKandidater(kandidater);
-
-    const sendSmsTilKandidater = ({
-        mal,
-        fnr,
-        stillingId,
-    }: {
-        mal: Meldingsmal;
-        fnr: string[];
-        stillingId: string;
-    }) => {
-        dispatch({
-            type: KandidatlisteActionType.SendSms,
-            mal,
-            fnr,
-            stillingId,
-        });
-    };
+    const postSmsTilKandidater = usePostSmsTilKandidater();
+    const [sendSmsLoading, setSendSmsLoading] = useState(false);
 
     const kandidaterSomHarFåttSms = markerteKandidater.filter(
-        (kandidat) => kandidat.fodselsnr && sendteMeldinger[kandidat.fodselsnr]
+        (kandidat) => kandidat.fodselsnr && smser[kandidat.fodselsnr]
     );
     const kandidaterSomIkkeHarFåttSms = markerteKandidater.filter(
-        (kandidat) => !(kandidat.fodselsnr && sendteMeldinger[kandidat.fodselsnr])
+        (kandidat) => !(kandidat.fodselsnr && smser[kandidat.fodselsnr])
     );
     const harInaktiveKandidater = markerteKandidater.some(
         (kandidat) => kandidat.fodselsnr === null
@@ -67,16 +49,30 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             : Meldingsmal.VurdertSomAktuell
     );
 
-    const onSendSms = () => {
+    const onSendSms = async () => {
         const korrektLengdeFødselsnummer = 11;
-
-        sendSmsTilKandidater({
+        setSendSmsLoading(true);
+        const result = await postSmsTilKandidater({
             mal: valgtMal,
             fnr: kandidaterSomIkkeHarFåttSms
                 .map((kandidat) => kandidat.fodselsnr || '')
                 .filter((fnr) => fnr && fnr.length === korrektLengdeFødselsnummer),
             stillingId,
         });
+
+        setSendSmsLoading(false);
+        if (result === 'ok') {
+            visVarsling({
+                innhold: 'SMS-en er sendt',
+            });
+            fjernAllMarkering();
+        } else if (result === 'error') {
+            visVarsling({
+                innhold: 'Det skjedde en feil',
+                alertType: 'error',
+            });
+        }
+        onClose();
     };
 
     return (
@@ -159,11 +155,7 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button
-                    variant="primary"
-                    loading={sendStatus === SmsStatus.UnderUtsending}
-                    onClick={onSendSms}
-                >
+                <Button variant="primary" loading={sendSmsLoading} onClick={onSendSms}>
                     Send SMS
                 </Button>
                 <Button variant="secondary" onClick={onClose}>

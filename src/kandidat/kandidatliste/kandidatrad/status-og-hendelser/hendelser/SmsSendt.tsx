@@ -1,4 +1,4 @@
-import { Sms, ServerSmsStatus } from '../../../../../api/sms-api/sms';
+import { Sms, SmsStatus } from '../../../../../api/sms-api/sms';
 import { FunctionComponent } from 'react';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
@@ -17,7 +17,7 @@ const SmsSendt: FunctionComponent<Props> = ({ sms }) => {
     }
 
     switch (sms.status) {
-        case ServerSmsStatus.Feil:
+        case SmsStatus.Feil:
             return (
                 <Hendelse
                     status={Hendelsesstatus.Rød}
@@ -25,7 +25,7 @@ const SmsSendt: FunctionComponent<Props> = ({ sms }) => {
                     beskrivelse={smstekst(sms)}
                 />
             );
-        case ServerSmsStatus.Sendt:
+        case SmsStatus.Sendt:
             return (
                 <Hendelse
                     status={Hendelsesstatus.Grønn}

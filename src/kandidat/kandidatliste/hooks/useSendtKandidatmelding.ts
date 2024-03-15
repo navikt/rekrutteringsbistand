@@ -1,15 +1,16 @@
 import { Fødselsnummer } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Sms } from '../../../api/sms-api/sms';
-import { Nettstatus } from 'felles/nettressurs';
-import { useSelector } from 'react-redux';
-import AppState from '../../state/AppState';
+import { Sms, useSmserForStilling } from '../../../api/sms-api/sms';
 
-const useSendtKandidatmelding = (kandidatensFnr: Fødselsnummer | null): Sms | undefined => {
-    const { sendteMeldinger } = useSelector((state: AppState) => state.kandidatliste.sms);
+const useSendtKandidatmelding = (
+    kandidatensFnr: Fødselsnummer | null,
+    stillingId: string | null
+): Sms | undefined => {
+    const { data: smser } = useSmserForStilling(stillingId);
 
-    return sendteMeldinger.kind === Nettstatus.Suksess && kandidatensFnr
-        ? sendteMeldinger.data[kandidatensFnr]
-        : undefined;
+    if (typeof kandidatensFnr === 'string' && smser !== undefined) {
+        return smser[kandidatensFnr];
+    }
+    return undefined;
 };
 
 export default useSendtKandidatmelding;

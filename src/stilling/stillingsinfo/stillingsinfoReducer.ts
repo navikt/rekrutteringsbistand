@@ -125,6 +125,7 @@ function* opprettStillingsinfo(): Generator<unknown, any, any> {
         });
 
         yield put({ type: OPPRETT_STILLINGSINFO_SUCCESS, response });
+
         yield put<VarslingAction>({
             type: VarslingActionType.VisVarsling,
             innhold: 'Kandidatlisten er opprettet. Du er nå eier av stillingen og kandidatlisten.',

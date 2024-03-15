@@ -1,13 +1,11 @@
 import { Button, Modal } from '@navikt/ds-react';
-import { ChangeEvent, Dispatch, FunctionComponent, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 
 import { Nettstatus } from 'felles/nettressurs';
 import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
-import KandidatlisteAction from '../../../kandidatliste/reducer/KandidatlisteAction';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import css from './LagreKandidatIMineKandidatlisterModal.module.css';
 import VelgKandidatlister from './VelgKandidatlister';
+import {useVisVarsling} from "felles/varsling/Varsling";
 
 type Props = {
     vis: boolean;
@@ -20,8 +18,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     onClose,
     kandidatnr,
 }) => {
-    const dispatch: Dispatch<KandidatlisteAction | VarslingAction> = useDispatch();
-
+    const visVarsling = useVisVarsling()
     const [markerteLister, setMarkerteLister] = useState<Set<string>>(new Set());
     const [lagredeLister, setLagredeLister] = useState<Set<string>>(new Set());
     const [lagreIKandidatlister, setLagreIKandidatlister] = useState<Nettstatus>(
@@ -78,8 +75,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     };
 
     const visMeldingOmLagredeKandidater = (antallKandidatlister: number) => {
-        dispatch({
-            type: VarslingActionType.VisVarsling,
+        visVarsling({
             alertType: 'success',
             innhold: `Kandidaten er lagret i ${antallKandidatlister} kandidatliste${
                 antallKandidatlister > 1 ? 'r' : ''

@@ -13,13 +13,7 @@ import {
     suksess,
 } from 'felles/nettressurs';
 import { Reducer } from 'redux';
-import { SearchApiError } from '../../api/fetchUtils';
-import {
-    Kandidatmeldinger,
-    Kandidattilstand,
-    Kandidattilstander,
-    Visningsstatus,
-} from '../domene/Kandidatressurser';
+import { Kandidattilstand, Kandidattilstander, Visningsstatus } from '../domene/Kandidatressurser';
 import {
     filtrerKandidater,
     lagTomtHendelsefilter,
@@ -42,22 +36,10 @@ export type Kandidatsortering = null | {
     retning: Retning | null;
 };
 
-export enum SmsStatus {
-    IkkeSendt = 'IKKE_SENDT',
-    UnderUtsending = 'UNDER_UTSENDING',
-    Sendt = 'SENDT',
-    Feil = 'FEIL',
-}
-
 export type KandidatlisteState = {
     id?: string;
     kandidatliste: Nettressurs<Kandidatliste>;
     kandidattilstander: Kandidattilstander;
-    sms: {
-        sendStatus: SmsStatus;
-        sendteMeldinger: Nettressurs<Kandidatmeldinger>;
-        error?: SearchApiError;
-    };
     sendForespørselOmDelingAvCv: Nettressurs<ForespørslerGruppertPåAktørId>;
     forespørslerOmDelingAvCv: Nettressurs<ForespørslerGruppertPåAktørId>;
     fodselsnummer?: string;
@@ -91,10 +73,6 @@ const initialState: KandidatlisteState = {
     kandidatliste: ikkeLastet(),
     kandidattilstander: {},
     fodselsnummer: undefined,
-    sms: {
-        sendStatus: SmsStatus.IkkeSendt,
-        sendteMeldinger: ikkeLastet(),
-    },
     sendForespørselOmDelingAvCv: ikkeLastet(),
     forespørslerOmDelingAvCv: ikkeLastet(),
     arkivering: {
@@ -270,72 +248,6 @@ const reducer: Reducer<KandidatlisteState, KandidatlisteAction> = (
                 arkivering: {
                     ...state.arkivering,
                     statusDearkivering: Nettstatus.Suksess,
-                },
-            };
-        case KandidatlisteActionType.SendSms:
-            return {
-                ...state,
-                sms: {
-                    ...state.sms,
-                    sendStatus: SmsStatus.UnderUtsending,
-                },
-            };
-        case KandidatlisteActionType.SendSmsSuccess:
-            return {
-                ...state,
-                sms: {
-                    ...state.sms,
-                    sendStatus: SmsStatus.Sendt,
-                },
-            };
-        case KandidatlisteActionType.SendSmsFailure:
-            return {
-                ...state,
-                sms: {
-                    ...state.sms,
-                    sendStatus: SmsStatus.Feil,
-                    error: action.error,
-                },
-            };
-        case KandidatlisteActionType.ResetSendSmsStatus:
-            return {
-                ...state,
-                sms: {
-                    ...state.sms,
-                    sendStatus: SmsStatus.IkkeSendt,
-                },
-            };
-        case KandidatlisteActionType.HentSendteMeldinger:
-            return {
-                ...state,
-                sms: {
-                    ...state.sms,
-                    sendteMeldinger: lasterInn(),
-                },
-            };
-        case KandidatlisteActionType.HentSendteMeldingerSuccess:
-            const kandidatmeldinger: Kandidatmeldinger = {};
-
-            action.sendteMeldinger.forEach((sendtMelding) => {
-                kandidatmeldinger[sendtMelding.fnr] = sendtMelding;
-            });
-
-            return {
-                ...state,
-                sms: {
-                    ...state.sms,
-                    sendteMeldinger: {
-                        kind: Nettstatus.Suksess,
-                        data: kandidatmeldinger,
-                    },
-                },
-            };
-        case KandidatlisteActionType.HentSendteMeldingerFailure:
-            return {
-                ...state,
-                sms: {
-                    ...state.sms,
-                    sendteMeldinger: feil(action.error),
                 },
             };
         case KandidatlisteActionType.SendForespørselOmDelingAvCv:
