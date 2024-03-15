@@ -12,7 +12,7 @@ import { useHentArenaKandidatnr } from '../../../api/kandidat-søk-api/hentArena
 const InngangFraArbop = () => {
     const navigate = useNavigate();
     const [fnr, setFnr] = useState<string | null>(null);
-    const arenaKandidatnr = useHentArenaKandidatnr({ fnr });
+    const { arenaKandidatnr } = useHentArenaKandidatnr({ fnr });
 
     const [personbruker, setPersonbruker] = useState<Nettressurs<string>>({
         kind: Nettstatus.IkkeLastet,
