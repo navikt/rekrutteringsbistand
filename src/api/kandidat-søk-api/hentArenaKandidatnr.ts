@@ -9,7 +9,7 @@ import { postApi } from '../fetcher';
 const hentArenaKandidatnrEndepunkt = '/kandidatsok-api/api/arena-kandidatnr';
 
 export const arenaKandidatnrSchema = z.object({
-    arenaKandidatnr: z.string(),
+    arenaKandidatnr: z.string().nullable(),
 });
 
 export interface hentArenaKandidatnrProps {
