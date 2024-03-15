@@ -42,8 +42,10 @@ const employerNameCompletionQueryTemplate = (match: unknown) => ({
     size: 50,
 });
 
-export const fetchKandidatlisteMedStillingsId = (stillingsId: string) =>
-    fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`, true);
+export const fetchKandidatlisteMedStillingsId = (stillingsId: string) => {
+    if (stillingsId === undefined) throw new Error('stillingId is undefined');
+    return fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`, true);
+};
 
 export const fetchKandidatlisteMedKandidatlisteId = (kandidatlisteId: string) =>
     fetchJson(`${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`, true);
