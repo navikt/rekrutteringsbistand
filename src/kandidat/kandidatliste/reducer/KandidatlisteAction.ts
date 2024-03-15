@@ -3,7 +3,6 @@ import KandidatIKandidatliste, {
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Meldingsmal, Sms } from '../../../api/sms-api/sms';
 import { Error } from 'felles/nettressurs';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../api/server.dto';
 import { SearchApiError } from '../../api/fetchUtils';
@@ -175,41 +174,6 @@ export interface VelgKandidatAction {
     kandidatnr?: string;
 }
 
-export interface SendSmsAction {
-    type: KandidatlisteActionType.SendSms;
-    mal: Meldingsmal;
-    fnr: string[];
-    stillingId: string;
-}
-
-export interface SendSmsSuccessAction {
-    type: KandidatlisteActionType.SendSmsSuccess;
-}
-
-export interface SendSmsFailureAction {
-    type: KandidatlisteActionType.SendSmsFailure;
-    error: SearchApiError;
-}
-
-export interface ResetSendSmsStatusAction {
-    type: KandidatlisteActionType.ResetSendSmsStatus;
-}
-
-export interface HentSendteMeldingerAction {
-    type: KandidatlisteActionType.HentSendteMeldinger;
-    stillingId: string;
-}
-
-export interface HentSendteMeldingerSuccessAction {
-    type: KandidatlisteActionType.HentSendteMeldingerSuccess;
-    sendteMeldinger: Sms[];
-}
-
-export interface HentSendteMeldingerFailureAction {
-    type: KandidatlisteActionType.HentSendteMeldingerFailure;
-    error: SearchApiError;
-}
-
 export interface NullstillForespørslerOmDelingAvCv {
     type: KandidatlisteActionType.NullstillForespørslerOmDelingAvCv;
 }
@@ -316,13 +280,6 @@ type KandidatlisteAction =
     | ToggleArkivertAction
     | ToggleArkivertSuccessAction
     | ToggleArkivertFailureAction
-    | SendSmsAction
-    | SendSmsSuccessAction
-    | SendSmsFailureAction
-    | ResetSendSmsStatusAction
-    | HentSendteMeldingerAction
-    | HentSendteMeldingerSuccessAction
-    | HentSendteMeldingerFailureAction
     | AngreArkiveringAction
     | AngreArkiveringSuccessAction
     | AngreArkiveringFailureAction

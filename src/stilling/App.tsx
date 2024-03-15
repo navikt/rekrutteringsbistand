@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { Route, Routes } from 'react-router-dom';
-import Varsling from './common/varsling/Varsling';
+import { Varsling } from 'felles/varsling/Varsling';
 import { ReporteeAction, ReporteeActionType } from './reportee/ReporteeAction';
 import Stilling from './stilling/Stilling';
 import { Component as StillingsSøkIndex } from './stillingssok/index';

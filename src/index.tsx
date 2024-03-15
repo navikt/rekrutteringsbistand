@@ -8,6 +8,7 @@ import DevTools from './dev/DevTools';
 import faroConfig from './faroConfig';
 import { ApplikasjonContextProvider } from './felles/ApplikasjonContext';
 import './index.css';
+import { VarslingContextProvider } from 'felles/varsling/Varsling';
 
 if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
     initializeFaro({
@@ -45,9 +46,11 @@ enableMocking().then(() => {
                 }}
             >
                 {import.meta.env.DEV ? <DevTools /> : null}
-                <ApplikasjonContextProvider>
-                    <App />
-                </ApplikasjonContextProvider>
+                <VarslingContextProvider>
+                    <ApplikasjonContextProvider>
+                        <App />
+                    </ApplikasjonContextProvider>
+                </VarslingContextProvider>
             </SWRConfig>
         </React.StrictMode>
     );

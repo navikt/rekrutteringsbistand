@@ -1,5 +1,5 @@
 import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Sms, ServerSmsStatus } from '../../../../../api/sms-api/sms';
+import { Sms, SmsStatus } from '../../../../../api/sms-api/sms';
 import moment from 'moment';
 import { FunctionComponent } from 'react';
 import { formaterDato, formaterDatoUtenÅrstall } from '../../../../utils/dateUtils';
@@ -86,9 +86,9 @@ export const hentKandidatensSisteHendelse = (
         } else {
             return Hendelse.DeltMedKandidat;
         }
-    } else if (sms?.status === ServerSmsStatus.Sendt) {
+    } else if (sms?.status === SmsStatus.Sendt) {
         return Hendelse.SmsSendt;
-    } else if (sms?.status === ServerSmsStatus.Feil) {
+    } else if (sms?.status === SmsStatus.Feil) {
         return Hendelse.SmsFeilet;
     }
 

@@ -3,6 +3,7 @@ import { http, HttpResponse } from 'msw';
 import { mockKandidatlisteMedStilling } from '../../../mock/kandidat-api/mockKandidatliste';
 import { mockVeileder } from '../../../mock/mockVeileder';
 import { fetchJson, postJson } from '../../kandidat/api/fetchUtils';
+import useSWR, { SWRResponse, useSWRConfig } from 'swr';
 
 const varselStillingEndepunkt = (stillingId: string) => {
     if (stillingId === undefined) throw new Error('stillingId === undefined');
@@ -18,16 +19,16 @@ export enum Meldingsmal {
     // Webinar = 'webinar',
 }
 
-export enum ServerSmsStatus {
+export enum SmsStatus {
     UnderUtsending = 'UNDER_UTSENDING',
     Sendt = 'SENDT',
     Feil = 'FEIL',
 }
 
 const SmsStatusSchema = z
-    .literal(ServerSmsStatus.UnderUtsending)
-    .or(z.literal(ServerSmsStatus.Sendt))
-    .or(z.literal(ServerSmsStatus.Feil));
+    .literal(SmsStatus.UnderUtsending)
+    .or(z.literal(SmsStatus.Sendt))
+    .or(z.literal(SmsStatus.Feil));
 
 const SmsSchema = z.object({
     id: z.string(),
@@ -42,36 +43,65 @@ export type Sms = z.infer<typeof SmsSchema>;
 
 const SmsArraySchema = z.array(SmsSchema);
 
-/* Ikke skrevet om til useSwr siden disse brukes i redux-reducer */
+export const useSmserForStilling = (
+    stillingId: string | null | undefined
+): SWRResponse<Record<string, Sms>> =>
+    useSWR(stillingId ? varselStillingEndepunkt(stillingId) : null, async (url: string) => {
+        const rawResponse = await fetchJson(url);
+        const parsedResponse = SmsArraySchema.parse(rawResponse);
+        const smser: Record<string, Sms> = {};
+        parsedResponse.forEach((sms) => {
+            smser[sms.fnr] = sms;
+        });
+        return smser;
+    });
 
-type smserForStillingRequest = { stillingId: string };
-export const fetchSmserForStilling = async ({
-    stillingId,
-}: smserForStillingRequest): Promise<Sms[]> =>
-    SmsArraySchema.parse(await fetchJson(varselStillingEndepunkt(stillingId)));
+type smserForKandidatRequest = { fnr: string | undefined | null };
 
-type smserForKandidatRequest = { fnr: string };
-export const fetchSmserForKandidat = async ({ fnr }: smserForKandidatRequest): Promise<Sms[]> =>
-    SmsArraySchema.parse(await postJson(varselQueryEndepunkt, JSON.stringify({ fnr })));
+export const useSmserForKandidat = ({ fnr }: smserForKandidatRequest): SWRResponse<Sms[]> =>
+    useSWR(
+        typeof fnr === 'string' ? { url: varselQueryEndepunkt, fnr } : null,
+        async ({ url, fnr }) => SmsArraySchema.parse(await postJson(url, JSON.stringify({ fnr })))
+    );
 
 type postSmsTilKandidaterRequest = {
     mal: Meldingsmal;
     fnr: string[];
     stillingId: string;
 };
-export const postSmsTilKandidater = ({
+
+export const usePostSmsTilKandidater = (): (({
     mal,
     fnr,
     stillingId,
-}: postSmsTilKandidaterRequest): Promise<void> =>
-    postJson(
-        varselStillingEndepunkt(stillingId),
-        JSON.stringify({
-            mal,
-            fnr,
-        })
-    );
+}: postSmsTilKandidaterRequest) => Promise<'ok' | 'error'>) => {
+    const { mutate } = useSWRConfig();
 
+    return async ({ stillingId, mal, fnr }) => {
+        let result: 'ok' | 'error' = 'ok';
+        try {
+            await postJson(
+                varselStillingEndepunkt(stillingId),
+                JSON.stringify({
+                    mal,
+                    fnr,
+                })
+            );
+        } catch (e) {
+            result = 'error';
+        }
+
+        mutate(varselStillingEndepunkt(stillingId)).then();
+        mutate(
+            (key) =>
+                key !== null &&
+                typeof key === 'object' &&
+                'url' in key &&
+                key.url === varselQueryEndepunkt
+        ).then();
+        return result;
+    };
+};
 export const smsApiMock = [
     http.post<{ stillingId: string }>(
         varselStillingEndepunkt(':stillingId'),
@@ -107,7 +137,7 @@ const mockSms: Sms[] = [
         stillingId: mockKandidatlisteMedStilling.stillingId!,
         fnr: '14114536327', //mockKandidatlisteMedStilling.kandidater[0].fodselsnr,
         opprettet: new Date().toISOString(),
-        status: ServerSmsStatus.Sendt,
+        status: SmsStatus.Sendt,
         navIdent: mockVeileder.navIdent,
     },
 ];

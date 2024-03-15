@@ -7,9 +7,8 @@ import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import Stilling from '../../felles/domene/stilling/Stilling';
 import AppState from '../state/AppState';
-import { AlertType, VarslingAction, VarslingActionType } from '../varsling/varslingReducer';
 import Kandidatliste from './Kandidatliste';
-import { Kandidatmeldinger, Kandidattilstander } from './domene/Kandidatressurser';
+import { Kandidattilstander } from './domene/Kandidatressurser';
 import { erKobletTilStilling, kandidaterMåGodkjenneDelingAvCv } from './domene/kandidatlisteUtils';
 import {
     ForespørslerGruppertPåAktørId,
@@ -19,7 +18,7 @@ import SendSmsModal from './modaler/SendSmsModal';
 import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
 import KandidatlisteAction from './reducer/KandidatlisteAction';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
-import { SmsStatus } from './reducer/kandidatlisteReducer';
+import { AlertType, useVisVarsling, VisVarslingAction } from 'felles/varsling/Varsling';
 
 type OwnProps = {
     kandidatliste: Kandidatlistetype;
@@ -29,8 +28,6 @@ type OwnProps = {
 
 type ConnectedProps = {
     endreStatusKandidat: any;
-    smsSendStatus: SmsStatus;
-    resetSmsSendStatus: () => void;
     fodselsnummer?: string;
     toggleArkivert: (kandidatlisteId: string, kandidatnr: string, arkivert: boolean) => void;
     angreArkiveringForKandidater: (kandidatlisteId: string, kandidatnumre: string[]) => void;
@@ -39,17 +36,14 @@ type ConnectedProps = {
     toggleMarkeringAvKandidat: (kandidatnr: string) => void;
     endreMarkeringAvKandidater: (kandidatnumre: string[]) => void;
     kandidattilstander: Kandidattilstander;
-    sendteMeldinger: Nettressurs<Kandidatmeldinger>;
     forespørslerOmDelingAvCv: Nettressurs<ForespørslerGruppertPåAktørId>;
-    visVarsling: (innhold: string, alertType: AlertType) => void;
 };
 
-type Props = ConnectedProps & OwnProps;
+type Props = ConnectedProps & OwnProps & { visVarsling: (props: VisVarslingAction) => void };
 
-class KandidatlisteOgModaler extends React.Component<Props> {
+class LegacyKandidatlisteOgModaler extends React.Component<Props> {
     declare state: {
         deleModalOpen: boolean;
-        leggTilModalOpen: boolean; // TODO: Deprecated
         sendSmsModalOpen: boolean;
     };
 
@@ -57,20 +51,11 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         super(props);
         this.state = {
             deleModalOpen: false,
-            leggTilModalOpen: false,
             sendSmsModalOpen: false,
         };
     }
 
     componentDidUpdate(prevProps: Props) {
-        const smsErNettoppSendtTilKandidater =
-            this.props.smsSendStatus !== prevProps.smsSendStatus &&
-            this.props.smsSendStatus === SmsStatus.Sendt;
-
-        const feilMedSmsUtsending =
-            this.props.smsSendStatus !== prevProps.smsSendStatus &&
-            this.props.smsSendStatus === SmsStatus.Feil;
-
         const enKandidatErNettoppArkivert =
             prevProps.statusArkivering === Nettstatus.LasterInn &&
             this.props.statusArkivering === Nettstatus.Suksess;
@@ -105,23 +90,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                 'error'
             );
         }
-
-        if (smsErNettoppSendtTilKandidater) {
-            this.props.resetSmsSendStatus();
-            this.visInfobanner('SMS-en er sendt');
-            this.fjernAllMarkering();
-            this.setState({
-                sendSmsModalOpen: false,
-            });
-        }
-
-        if (feilMedSmsUtsending) {
-            this.props.resetSmsSendStatus();
-            this.visInfobanner('Det skjedde en feil', 'error');
-            this.setState({
-                sendSmsModalOpen: false,
-            });
-        }
     }
 
     fjernAllMarkering = () => {
@@ -150,13 +118,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
         if (fjernMarkering) {
             this.fjernAllMarkering();
         }
-    };
-
-    onToggleLeggTilKandidatModal = () => {
-        // TODO: Deprecated
-        this.setState({
-            leggTilModalOpen: !this.state.leggTilModalOpen,
-        });
     };
 
     onToggleSendSmsModal = (vis: boolean = !this.state.sendSmsModalOpen) => {
@@ -198,7 +159,7 @@ class KandidatlisteOgModaler extends React.Component<Props> {
     };
 
     visInfobanner = (tekst: string, type: AlertType = 'success') => {
-        this.props.visVarsling(tekst, type);
+        this.props.visVarsling({ innhold: tekst, alertType: type });
     };
 
     render() {
@@ -223,19 +184,18 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                     }
                     stilling={this.props.stilling}
                 />
-                {kandidatliste.stillingId &&
-                    this.props.sendteMeldinger.kind === Nettstatus.Suksess && (
-                        <>
-                            <SendSmsModal
-                                vis={this.state.sendSmsModalOpen}
-                                onClose={() => this.onToggleSendSmsModal(false)}
-                                kandidater={kandidater}
-                                sendteMeldinger={this.props.sendteMeldinger.data}
-                                stillingskategori={kandidatliste.stillingskategori}
-                                stillingId={kandidatliste.stillingId}
-                            />
-                        </>
-                    )}
+                {kandidatliste.stillingId && (
+                    <>
+                        <SendSmsModal
+                            vis={this.state.sendSmsModalOpen}
+                            onClose={() => this.onToggleSendSmsModal(false)}
+                            kandidater={kandidater}
+                            stillingskategori={kandidatliste.stillingskategori}
+                            stillingId={kandidatliste.stillingId}
+                            fjernAllMarkering={this.fjernAllMarkering}
+                        />
+                    </>
+                )}
                 <Kandidatliste
                     skjulBanner={this.props.skjulBanner}
                     kandidatliste={kandidatliste}
@@ -246,7 +206,6 @@ class KandidatlisteOgModaler extends React.Component<Props> {
                     onKandidatShare={this.onToggleDeleModal}
                     onKandidaterAngreArkivering={this.onKandidaterAngreArkivering}
                     onSendSmsClick={() => this.onToggleSendSmsModal(true)}
-                    onLeggTilKandidat={this.onToggleLeggTilKandidatModal} // TODO: Deprecated
                     onToggleArkivert={toggleArkivert}
                 />
             </div>
@@ -255,23 +214,14 @@ class KandidatlisteOgModaler extends React.Component<Props> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-    smsSendStatus: state.kandidatliste.sms.sendStatus,
     fodselsnummer: state.kandidatliste.fodselsnummer,
-    sendteMeldinger: state.kandidatliste.sms.sendteMeldinger,
     statusArkivering: state.kandidatliste.arkivering.statusArkivering,
     statusDearkivering: state.kandidatliste.arkivering.statusDearkivering,
     kandidattilstander: state.kandidatliste.kandidattilstander,
     forespørslerOmDelingAvCv: state.kandidatliste.forespørslerOmDelingAvCv,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<KandidatlisteAction | VarslingAction>) => ({
-    visVarsling: (innhold: string, alertType: AlertType) => {
-        dispatch({
-            type: VarslingActionType.VisVarsling,
-            innhold,
-            alertType,
-        });
-    },
+const mapDispatchToProps = (dispatch: Dispatch<KandidatlisteAction>) => ({
     endreStatusKandidat: (status: Kandidatstatus, kandidatlisteId: string, kandidatnr: string) => {
         dispatch({
             type: KandidatlisteActionType.EndreStatusKandidat,
@@ -279,9 +229,6 @@ const mapDispatchToProps = (dispatch: Dispatch<KandidatlisteAction | VarslingAct
             kandidatlisteId,
             kandidatnr,
         });
-    },
-    resetSmsSendStatus: () => {
-        dispatch({ type: KandidatlisteActionType.ResetSendSmsStatus });
     },
     toggleArkivert: (kandidatlisteId: string, kandidatnr: string, arkivert: boolean) => {
         dispatch({
@@ -312,4 +259,14 @@ const mapDispatchToProps = (dispatch: Dispatch<KandidatlisteAction | VarslingAct
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(KandidatlisteOgModaler);
+const ConnectedLegacyKandidatlisteOgModaler = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(LegacyKandidatlisteOgModaler);
+
+const KandidatlisteOgModaler = (props: OwnProps) => {
+    const visVarsling = useVisVarsling();
+
+    return <ConnectedLegacyKandidatlisteOgModaler visVarsling={visVarsling} {...props} />;
+};
+export default KandidatlisteOgModaler;
