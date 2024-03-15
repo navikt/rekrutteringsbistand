@@ -24,7 +24,7 @@ export const useHentArenaKandidatnr = (props: hentArenaKandidatnrProps) => {
 
     return {
         ...swr,
-        arenaKandidatnr: arenaKandidatnrSchema.parse(swr?.data)?.arenaKandidatnr,
+        arenaKandidatnr: arenaKandidatnrSchema.parse(swr?.data).arenaKandidatnr,
     };
 };
 
