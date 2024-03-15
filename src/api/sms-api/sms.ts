@@ -4,8 +4,10 @@ import { mockKandidatlisteMedStilling } from '../../../mock/kandidat-api/mockKan
 import { mockVeileder } from '../../../mock/mockVeileder';
 import { fetchJson, postJson } from '../../kandidat/api/fetchUtils';
 
-const varselStillingEndepunkt = (stillingId: string) =>
-    `/kandidatvarsel-api/varsel/stilling/${stillingId}`;
+const varselStillingEndepunkt = (stillingId: string) => {
+    if (stillingId === undefined) throw new Error('stillingId === undefined');
+    return `/kandidatvarsel-api/varsel/stilling/${stillingId}`;
+};
 const varselQueryEndepunkt = '/kandidatvarsel-api/varsel/query';
 
 export enum Meldingsmal {
