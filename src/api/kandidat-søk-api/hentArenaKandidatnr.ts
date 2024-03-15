@@ -21,10 +21,19 @@ export const useHentArenaKandidatnr = (props: hentArenaKandidatnrProps) => {
         props.fnr ? { path: hentArenaKandidatnrEndepunkt, props } : undefined,
         ({ path }) => postApi(path, props)
     );
+    if (!props.fnr) {
+        return {
+            ...swr,
+            arenaKandidatnr: undefined,
+        };
+    }
+    const arenaKandidatnr = swr?.data
+        ? arenaKandidatnrSchema.parse(swr?.data).arenaKandidatnr
+        : undefined;
 
     return {
         ...swr,
-        arenaKandidatnr: arenaKandidatnrSchema.parse(swr?.data).arenaKandidatnr,
+        arenaKandidatnr,
     };
 };
 
