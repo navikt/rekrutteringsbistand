@@ -59,7 +59,7 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
                     <p>Du må ha en av følgende roller:</p>
                     <ul>
                         {kreverRoller.map((rolle) => (
-                            <li>{rolleTilNavn(rolle)}</li>
+                            <li key={rolle}>{rolleTilNavn(rolle)}</li>
                         ))}
                     </ul>
                 </div>
