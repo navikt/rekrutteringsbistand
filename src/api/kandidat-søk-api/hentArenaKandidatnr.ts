@@ -13,12 +13,13 @@ export const arenaKandidatnrSchema = z.object({
 });
 
 export interface hentArenaKandidatnrProps {
-    fnr: string;
+    fnr: string | null;
 }
 
-export const usehentArenaKandidatnr = (props: hentArenaKandidatnrProps) => {
-    const swr = useSWR({ path: hentArenaKandidatnrEndepunkt, props }, ({ path }) =>
-        postApi(path, props)
+export const useHentArenaKandidatnr = (props: hentArenaKandidatnrProps) => {
+    const swr = useSWR(
+        props.fnr ? { path: hentArenaKandidatnrEndepunkt, props } : undefined,
+        ({ path }) => postApi(path, props)
     );
 
     return {
@@ -28,5 +29,5 @@ export const usehentArenaKandidatnr = (props: hentArenaKandidatnrProps) => {
 };
 
 export const hentArenaKandidatnrMockMsw = http.post(hentArenaKandidatnrEndepunkt, async (_) => {
-    return HttpResponse.json({ arenaKandidatnrSchema: '1234567890' });
+    return HttpResponse.json({ arenaKandidatnr: '1234567890' });
 });
