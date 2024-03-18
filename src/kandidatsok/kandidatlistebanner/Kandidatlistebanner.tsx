@@ -65,7 +65,7 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                                 {kandidatliste.data.opprettetAv.ident})
                             </span>
                         ) : (
-                            <Skeleton width={100} />
+                            <Skeleton as="span" width={100} />
                         )}
                     </BodyShort>
                 </div>
