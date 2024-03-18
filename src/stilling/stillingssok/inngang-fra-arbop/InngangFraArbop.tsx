@@ -1,7 +1,5 @@
 import { BodyLong, ErrorMessage, Heading } from '@navikt/ds-react';
-import { api, post } from 'felles/api';
-import { EsQuery, EsResponse } from 'felles/domene/elastic/ElasticSearch';
-import Kandidat from 'felles/domene/kandidat/Kandidat';
+import { api } from 'felles/api';
 import Synlighetsevaluering from 'felles/domene/synlighet/Synlighetsevaluering';
 import KandidatenFinnesIkke from 'felles/komponenter/legg-til-kandidat/KandidatenFinnesIkke';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
@@ -9,13 +7,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import css from './InngangFraArbop.module.css';
-
-type KunKandidatnr = {
-    arenaKandidatnr: Kandidat['arenaKandidatnr'];
-};
+import { useHentArenaKandidatnr } from '../../../api/kandidat-søk-api/hentArenaKandidatnr';
 
 const InngangFraArbop = () => {
     const navigate = useNavigate();
+    const [fnr, setFnr] = useState<string | null>(null);
+    const { arenaKandidatnr } = useHentArenaKandidatnr({ fodselsnummer: fnr });
 
     const [personbruker, setPersonbruker] = useState<Nettressurs<string>>({
         kind: Nettstatus.IkkeLastet,
@@ -38,7 +35,7 @@ const InngangFraArbop = () => {
                 });
             }
 
-            const fnr: string | null = (await modiaRespons.json()).aktivBruker;
+            setFnr((await modiaRespons.json()).aktivBruker);
 
             if (fnr === null) {
                 return setPersonbruker({
@@ -52,26 +49,10 @@ const InngangFraArbop = () => {
                 });
             }
 
-            const esQuery: EsQuery<KunKandidatnr> = {
-                query: {
-                    term: {
-                        fodselsnummer: fnr,
-                    },
-                },
-                size: 1,
-                _source: ['arenaKandidatnr'],
-            };
-
-            const esRespons = await post<EsResponse<KunKandidatnr>>(api.kandidatsøk, esQuery);
-
-            if (esRespons.kind === Nettstatus.Suksess) {
-                const kandidatnr = esRespons.data.hits.hits[0]?._source?.arenaKandidatnr;
-
-                if (kandidatnr) {
-                    return navigate(
-                        `/stillinger/stillingssok/kandidat/${kandidatnr}?brukKriterierFraKandidat=true`
-                    );
-                }
+            if (arenaKandidatnr) {
+                return navigate(
+                    `/stillinger/stillingssok/kandidat/${arenaKandidatnr}?brukKriterierFraKandidat=true`
+                );
             }
 
             const response = await fetch(`${api.synlighet}/evaluering/${fnr}`);
@@ -90,7 +71,7 @@ const InngangFraArbop = () => {
         };
 
         hentAktivPersonbruker();
-    }, [navigate]);
+    }, [navigate, fnr, setFnr, arenaKandidatnr]);
 
     if (personbruker.kind === Nettstatus.Feil) {
         return (
