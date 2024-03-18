@@ -1,5 +1,5 @@
 /**
- * Endepunkt /kandidatsok-api/api/suggest/kontor
+ * Endepunkt /kandidatsok-api/api/suggest/arena-kandidatnr
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
@@ -13,15 +13,15 @@ export const arenaKandidatnrSchema = z.object({
 });
 
 export interface hentArenaKandidatnrProps {
-    fnr: string | null;
+    fodselsnummer: string | null;
 }
 
 export const useHentArenaKandidatnr = (props: hentArenaKandidatnrProps) => {
     const swr = useSWR(
-        props.fnr ? { path: hentArenaKandidatnrEndepunkt, props } : undefined,
+        props.fodselsnummer ? { path: hentArenaKandidatnrEndepunkt, props } : undefined,
         ({ path }) => postApi(path, props)
     );
-    if (!props.fnr) {
+    if (!props.fodselsnummer) {
         return {
             ...swr,
             arenaKandidatnr: undefined,
