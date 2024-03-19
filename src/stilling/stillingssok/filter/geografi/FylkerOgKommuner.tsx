@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup, Loader } from '@navikt/ds-react';
+import { Checkbox, CheckboxGroup, ErrorMessage, Loader } from '@navikt/ds-react';
 import { ChangeEvent, Fragment, useEffect, useState } from 'react';
 
 // import { fylkerMedKommuner } from '../../../../felles/geografi/geografi';
@@ -129,7 +129,17 @@ const FylkerOgKommuner: React.FC = () => {
         })
         .sort((a: FylkeDTO, b: FylkeDTO) => a.name.localeCompare(b.name));
 
-    return <FylkerOgKommunerValgboks fylkerMedKommuner={fylkerMedKommuner} />;
+    return (
+        <>
+            {fylker.error && (
+                <ErrorMessage>Klarte ikke å hente fylker fra Arbeidsplassen</ErrorMessage>
+            )}
+            {kommuner.error && (
+                <ErrorMessage>Klarte ikke å hente kommuner fra Arbeidsplassen</ErrorMessage>
+            )}
+            <FylkerOgKommunerValgboks fylkerMedKommuner={fylkerMedKommuner} />
+        </>
+    );
 };
 
 export default FylkerOgKommuner;

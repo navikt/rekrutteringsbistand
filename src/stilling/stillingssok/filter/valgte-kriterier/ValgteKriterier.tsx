@@ -136,7 +136,8 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                     }}
                 >
                     {capitalizeLocation(
-                        fylkerData?.data?.find((fylkeData: any) => fylkeData.code === fylke)?.name
+                        fylkerData?.data?.find((fylkeData: any) => fylkeData.code === fylke)
+                            ?.name ?? `Ukjent fylkesnummer (${fylke})`
                     )}
                 </Chips.Removable>
             ))}
@@ -150,7 +151,7 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                 >
                     {capitalizeLocation(
                         kommunerData?.data?.find((kommuneData: any) => kommuneData.code === kommune)
-                            ?.name
+                            ?.name ?? `Ukjent kommunenummer (${kommune})`
                     )}
                 </Chips.Removable>
             ))}
