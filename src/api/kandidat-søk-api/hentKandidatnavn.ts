@@ -1,5 +1,5 @@
 /**
- * Endepunkt /kandidatsok-api/api/suggest/arena-kandidatnr
+ * Endepunkt /kandidatsok-api/api/suggest/navn
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
@@ -8,17 +8,19 @@ import { postApi } from '../fetcher';
 
 const hentNavnEndepunkt = '/kandidatsok-api/api/navn';
 
-export const arenaKandidatnrSchema = z.object({
+export const navnSchema = z.object({
     fornavn: z.string().nullable(),
     etternavn: z.string().nullable(),
     kilde: z.string(),
 });
 
-export interface hentArenaKandidatnrProps {
+export type Navn = z.infer<typeof navnSchema> | undefined;
+
+export interface hentKandidatnavnProps {
     fodselsnummer: string | null;
 }
 
-export const useHentArenaKandidatnr = (props: hentArenaKandidatnrProps) => {
+export const useHentKandidatnavn = (props: hentKandidatnavnProps) => {
     const swr = useSWR(
         props.fodselsnummer ? { path: hentNavnEndepunkt, props } : undefined,
         ({ path }) => postApi(path, props)
@@ -26,16 +28,18 @@ export const useHentArenaKandidatnr = (props: hentArenaKandidatnrProps) => {
     if (!props.fodselsnummer) {
         return {
             ...swr,
-            arenaKandidatnr: undefined,
+            navn: undefined,
         };
     }
 
+    const navn: Navn = navnSchema.parse(swr?.data);
+
     return {
         ...swr,
-        navn: swr?.data ? arenaKandidatnrSchema.parse(swr?.data) : undefined,
+        navn,
     };
 };
 
-export const hentArenaKandidatnrMockMsw = http.post(hentNavnEndepunkt, async (_) => {
+export const hentKandidatnavnMockMsw = http.post(hentNavnEndepunkt, async (_) => {
     return HttpResponse.json({ fornavn: 'Ola', etternavn: 'Nordmann', kilde: 'PDL' });
 });
