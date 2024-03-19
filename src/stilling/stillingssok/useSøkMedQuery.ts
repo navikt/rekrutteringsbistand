@@ -2,6 +2,7 @@ import { sendEvent } from 'felles/amplitude';
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import { useEffect, useState } from 'react';
+import { KommuneDTO, useHentKommuner } from '../../api/stillings-api/hentKommuner';
 import { Stillingskategori } from '../../felles/domene/stilling/Stilling';
 import { søk } from './api/api';
 import { lagQuery } from './api/queries/queries';
@@ -28,6 +29,16 @@ const useSøkMedQuery = ({
     const { standardsøk } = useStandardsøk();
     const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);
 
+    const [kommuneNummer, setKommuneNummer] = useState<string[]>();
+    const kommuneData = useHentKommuner();
+
+    useEffect(() => {
+        if (!kommuneNummer && kommuneData.data && !kommuneData.isLoading) {
+            const kommunenummer = kommuneData.data.map((kommune: KommuneDTO) => kommune.code);
+            setKommuneNummer(kommunenummer);
+        }
+    }, [kommuneData.data, kommuneNummer, kommuneData.isLoading]);
+
     useEffect(() => {
         const skalBrukeStandardsøk = searchParams.has(QueryParam.BrukStandardsøk);
         if (skalBrukeStandardsøk) return;
@@ -40,8 +51,30 @@ const useSøkMedQuery = ({
             };
         }
 
+        const fylkerUtenValgteKommuner = Array.from(søkekriterier.fylker).filter(
+            (fylke) =>
+                !Array.from(søkekriterier.kommuner).some((kommune) => kommune.startsWith(fylke))
+        );
+
         const harByttetSide = state?.harByttetSide;
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
+
+        if (fylkerUtenValgteKommuner && kommuneNummer) {
+            const kommunerFraFylker = fylkerUtenValgteKommuner.map((fylke) => {
+                return kommuneNummer.filter((kommune: string) => kommune.startsWith(fylke));
+            });
+
+            const kommuner = new Set<string>(
+                kommunerFraFylker.reduce((acc, val) => acc.concat(val), [])
+            );
+
+            const eksisterendeKommuner = søkekriterier.kommuner;
+
+            søkekriterier = {
+                ...søkekriterier,
+                kommuner: new Set([...eksisterendeKommuner, ...kommuner]),
+            };
+        }
 
         const søkMedQuery = async () => {
             let respons = await søk(
@@ -73,6 +106,7 @@ const useSøkMedQuery = ({
         ikkePubliserte,
         overstyrValgteStillingskategorier,
         fallbackIngenValgteStillingskategorier,
+        kommuneNummer,
     ]);
 
     useEffect(() => {

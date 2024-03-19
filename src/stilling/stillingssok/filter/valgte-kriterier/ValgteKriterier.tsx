@@ -1,6 +1,9 @@
-import { Chips } from '@navikt/ds-react';
+import { Chips, Loader } from '@navikt/ds-react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
+import { useHentFylker } from '../../../../api/stillings-api/hentFylker';
+import { useHentKommuner } from '../../../../api/stillings-api/hentKommuner';
+import capitalizeLocation from '../../../stilling/edit/arbeidssted/capitalizeLocation';
 import { hentSøkekriterier, oppdaterUrlMedParam, QueryParam } from '../../utils/urlUtils';
 import { hentIgnorerteFiltre } from '../filtermeny/Filtermeny';
 import { Hovedtag, Subtag, visningsnavnForFilter } from '../inkludering/tags';
@@ -28,6 +31,12 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
         tekst,
     } = hentSøkekriterier(searchParams);
 
+    const fylkerData = useHentFylker();
+    const kommunerData = useHentKommuner();
+
+    if (fylkerData.isLoading || kommunerData.isLoading) {
+        return <Loader />;
+    }
     const handleTømFiltreClick = () => {
         const parametre = new URLSearchParams(searchParams);
 
@@ -67,7 +76,7 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
 
     const valgteKommuner = Array.from(kommuner);
     const fylkerUtenValgteKommuner = Array.from(fylker).filter(
-        (fylke) => !valgteKommuner.some((kommune) => kommune.startsWith(`${fylke}.`))
+        (fylke) => !valgteKommuner.some((kommune) => kommune.startsWith(fylke))
     );
 
     const valgteSubinkluderingstags = Array.from(subinkluderingstags);
@@ -126,7 +135,9 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                         handleClick(fylke, fylker, QueryParam.Fylker);
                     }}
                 >
-                    {fylke}
+                    {capitalizeLocation(
+                        fylkerData?.data?.find((fylkeData: any) => fylkeData.code === fylke)?.name
+                    )}
                 </Chips.Removable>
             ))}
             {valgteKommuner.map((kommune) => (
@@ -137,7 +148,10 @@ const ValgteKrierier = ({ finnerStillingForKandidat }: Props) => {
                         handleClick(kommune, kommuner, QueryParam.Kommuner);
                     }}
                 >
-                    {kommune.split('.')[1]}
+                    {capitalizeLocation(
+                        kommunerData?.data?.find((kommuneData: any) => kommuneData.code === kommune)
+                            ?.name
+                    )}
                 </Chips.Removable>
             ))}
             {hovedInkluderingstagsUtenValgteSubinkluderingtags.map((hovedinkluderingtag) => (
