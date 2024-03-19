@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { getAPI } from '../fetcher';
 import geografiMock from './kommunemock.json';
 
-const hentKommunerEndepunkt = '/stilling-api/rekrutteringsbistand/api/v1/geography/Kommuner';
+const hentKommunerEndepunkt = '/stilling-api/rekrutteringsbistand/api/v1/geography/municipals';
 
 const kommuneSchema = z.object({
     code: z.string(),

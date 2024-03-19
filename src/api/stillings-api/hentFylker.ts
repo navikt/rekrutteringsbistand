@@ -8,7 +8,7 @@ import { getAPI } from '../fetcher';
 
 import hentFylkerMock from './fylkemock.json';
 
-const hentFylkerEndepunkt = '/hentFylker';
+const hentFylkerEndepunkt = '/stilling-api/rekrutteringsbistand/api/v1/geography/counties';
 
 export const fylkeSchema = z.object({
     code: z.string(),
