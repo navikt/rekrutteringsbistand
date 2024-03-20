@@ -8,6 +8,7 @@ import { suggestMockMsw } from './suggest';
 import { suggestStedMockMsw } from './suggestSted';
 import { suggestKontorMockMsw } from './suggestKontor';
 import { hentKandidatnavnMockMsw } from './hentKandidatnavn';
+import { hentArenaKandidatnrMockMsw } from './hentArenaKandidatnr';
 
 export const kandidatSokApiMock = [
     lookupCvMockMsw,
@@ -20,4 +21,5 @@ export const kandidatSokApiMock = [
     suggestStedMockMsw,
     suggestKontorMockMsw,
     hentKandidatnavnMockMsw,
+    hentArenaKandidatnrMockMsw,
 ];
