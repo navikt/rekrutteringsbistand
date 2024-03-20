@@ -6,15 +6,20 @@ import useSWR from 'swr';
 import { z } from 'zod';
 import { postApi } from '../fetcher';
 
-const hentNavnEndepunkt = '/kandidatsok-api/api/navn';
+export enum KandidatKilde {
+    REKRUTTERINGSBISTAND = 'REKRUTTERINGSBISTAND',
+    PDL = 'PDL',
+}
+
+export const hentNavnEndepunkt = '/kandidatsok-api/api/navn';
 
 export const navnSchema = z.object({
     fornavn: z.string().nullable(),
     etternavn: z.string().nullable(),
-    kilde: z.string(),
+    kilde: z.nativeEnum(KandidatKilde),
 });
 
-export type Navn = z.infer<typeof navnSchema>;
+export type Kandidatnavn = z.infer<typeof navnSchema>;
 
 export interface hentKandidatnavnProps {
     fodselsnummer: string | null;
@@ -32,7 +37,7 @@ export const useHentKandidatnavn = (props: hentKandidatnavnProps) => {
         };
     }
 
-    const navn: Navn | undefined = swr?.data ? navnSchema.parse(swr?.data) : undefined;
+    const navn: Kandidatnavn | undefined = swr?.data ? navnSchema.parse(swr?.data) : undefined;
 
     return {
         ...swr,

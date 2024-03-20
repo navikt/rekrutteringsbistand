@@ -1,4 +1,3 @@
-import { hentKandidatFraPDLMockMsw } from './hentKandidatFraPDL';
 import { hentKandidatHistorikkMockMsw } from './hentKandidatHistorikk';
 
-export const kandidatApiMock = [hentKandidatFraPDLMockMsw, hentKandidatHistorikkMockMsw];
+export const kandidatApiMock = [hentKandidatHistorikkMockMsw];

@@ -1,14 +1,12 @@
 import { Alert, Loader } from '@navikt/ds-react';
 import * as React from 'react';
-import { IuseKandidatNavnSøk, KandidatKilde } from '../../../api/kandidat-api/useKandidatNavn';
-import { useHentKandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
+import { KandidatKilde, useHentKandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
 
 export interface IKandidatNavn {
     fnr: string;
-    callback: (resultat: IuseKandidatNavnSøk) => void;
 }
 
-const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
+const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr }) => {
     const { navn, isLoading } = useHentKandidatnavn({ fodselsnummer: fnr });
 
     if (isLoading) {
@@ -21,7 +19,7 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
                 <strong>Navn</strong>
                 <br />
                 <span>
-                    {navn.fornavn} {navn.etternavn}
+                    {navn?.fornavn} {navn?.etternavn}
                 </span>
             </div>
         );
@@ -33,7 +31,7 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
                 <strong>Kandidaten er hentet fra folkeregistret</strong>
                 <br />
                 <span>
-                    {navn.fornavn} {navn.etternavn}
+                    {navn?.fornavn} {navn?.etternavn}
                 </span>
             </div>
         );

@@ -2,6 +2,13 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { devFnr } from '../../../dev/DevUtil';
 import LeggTilKandidat from './LeggTilKandidat';
+import { HttpResponse, http } from 'msw';
+import {
+    KandidatKilde,
+    Kandidatnavn,
+    hentNavnEndepunkt,
+} from '../../../api/kandidat-søk-api/hentKandidatnavn';
+import { hentArenaKandidatnrEndepunkt } from '../../../api/kandidat-søk-api/hentArenaKandidatnr';
 
 describe('<LeggTilKandidat />', () => {
     const onCloseMock = vi.fn();
@@ -50,18 +57,52 @@ describe('<LeggTilKandidat />', () => {
     });
 
     it('Skriver inn for gyldig fødselsnummer for kandidat i rekrutteringsbistand', async () => {
+        // @ts-ignore TODO: written before strict-mode enabled
+        global.testServer.use(
+            http.post(hentNavnEndepunkt, () => {
+                const testSvar: Kandidatnavn = {
+                    fornavn: 'Ola',
+                    etternavn: 'Nordmann',
+                    kilde: KandidatKilde.REKRUTTERINGSBISTAND,
+                };
+                return HttpResponse.json(testSvar);
+            })
+        );
+        // @ts-ignore TODO: written before strict-mode enabled
+        global.testServer.use(
+            http.post(hentArenaKandidatnrEndepunkt, () => {
+                const testSvar: Kandidatnavn = {
+                    fornavn: 'Ola',
+                    etternavn: 'Nordmann',
+                    kilde: KandidatKilde.REKRUTTERINGSBISTAND,
+                };
+                return HttpResponse.json({ arenaKandidatnr: 'abc123' });
+            })
+        );
         const tekstfelt = screen.getByRole('textbox');
 
-        expect(screen.queryByText(/Navn/i)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Ola Nordmann/i)).not.toBeInTheDocument();
 
         userEvent.type(tekstfelt, devFnr.ok);
 
-        await waitFor(() => expect(screen.getByText(/Navn/i)).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText(/Ola Nordmann/i)).toBeInTheDocument());
 
         expect(screen.getByRole('button', { name: /legg til/i })).not.toBeDisabled();
     });
 
     it('Skriver inn for gyldig fødselsnummer, men det finnes ingen kandidat i rekbis', async () => {
+        // @ts-ignore TODO: written before strict-mode enabled
+        global.testServer.use(
+            http.post(hentNavnEndepunkt, () => {
+                const testSvar: Kandidatnavn = {
+                    fornavn: 'Ola',
+                    etternavn: 'Nordmann',
+                    kilde: KandidatKilde.PDL,
+                };
+                return HttpResponse.json(testSvar);
+            })
+        );
+
         const tekstfelt = screen.getByRole('textbox');
 
         userEvent.type(tekstfelt, devFnr.iPDL);
@@ -87,6 +128,13 @@ describe('<LeggTilKandidat />', () => {
     });
 
     it('Skriver inn for gyldig fødselsnummer, men fødselsnummeret finnes ikke ', async () => {
+        // @ts-ignore TODO: written before strict-mode enabled
+        global.testServer.use(
+            http.post(hentNavnEndepunkt, () => {
+                return HttpResponse.text('', { status: 404 });
+            })
+        );
+
         const tekstfelt = screen.getByRole('textbox');
 
         userEvent.type(tekstfelt, devFnr.finnesIkke);

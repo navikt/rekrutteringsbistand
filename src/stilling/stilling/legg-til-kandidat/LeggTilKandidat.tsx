@@ -1,6 +1,5 @@
 import { Alert, Button, Modal } from '@navikt/ds-react';
-import { FunctionComponent, useCallback, useState } from 'react';
-import { IuseKandidatNavnSøk, KandidatKilde } from '../../../api/kandidat-api/useKandidatNavn';
+import { FunctionComponent, useState } from 'react';
 import FødselsnummerPåKandidat from '../../../felles/komponenter/fnr-på-kandidat/FødselsnummerTekstfelt';
 import KandidatNavn from '../../../felles/komponenter/kandidatNavn/KandidatNavnSøk';
 import BekreftLeggTilKandidat from '../../../felles/komponenter/legg-til-kandidat/BekreftLeggTilKandidat';
@@ -10,6 +9,8 @@ import kandidatStore from '../../../kandidat/state/reduxStore';
 import LeggTilFormidling from '../legg-til-formidling/LeggTilFormidling';
 import css from './LeggTilKandidat.module.css';
 import SynlighetsEvaluering from './SynlighetsEvaluering';
+import { KandidatKilde, useHentKandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
+import { useHentArenaKandidatnr } from '../../../api/kandidat-søk-api/hentArenaKandidatnr';
 
 type ILeggTilKandidat = {
     onClose: () => void;
@@ -28,29 +29,13 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     const [visSynlighetsEvaluering, setVisSynlighetsEvaluering] = useState<boolean>(false);
     const [fnr, setFnr] = useState<string | null>(null);
     const [registrerFormidling, setRegistrerFormidling] = useState<boolean>(false);
-
-    const [kandidatSøkResultat, setKandidatSøkResultat] = useState<IuseKandidatNavnSøk | null>(
-        null
-    );
-
-    const kandidatSøkResultatCallback = useCallback(
-        (resultat: IuseKandidatNavnSøk) => {
-            setKandidatSøkResultat((prevResultat) => {
-                // Only update if resultat has actually changed
-                if (JSON.stringify(prevResultat) !== JSON.stringify(resultat)) {
-                    return resultat ?? null;
-                }
-                return prevResultat;
-            });
-        },
-        [setKandidatSøkResultat]
-    );
+    const { navn: kandidatnavn } = useHentKandidatnavn({ fodselsnummer: fnr });
+    const { arenaKandidatnr } = useHentArenaKandidatnr({ fodselsnummer: fnr });
 
     const tilbakestill = () => {
         setFnr(null);
         setVisSynlighetsEvaluering(false);
         setRegistrerFormidling(false);
-        setKandidatSøkResultat(null);
     };
 
     const handleBekreft = () => {
@@ -71,8 +56,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
         return (
             <div style={{ margin: '1rem' }}>
                 <Alert variant="success">
-                    Kandidat {kandidatSøkResultat?.fornavn} {kandidatSøkResultat?.etternavn} ({fnr})
-                    er lagt til
+                    Kandidat {kandidatnavn?.fornavn} {kandidatnavn?.etternavn} ({fnr}) er lagt til
                 </Alert>
                 <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1rem' }}>
                     <Button variant="secondary" onClick={onClose}>
@@ -98,27 +82,24 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                         }}
                     />
 
-                    {fnr && !registrerFormidling && (
-                        <KandidatNavn fnr={fnr} callback={kandidatSøkResultatCallback} />
+                    {fnr && !registrerFormidling && <KandidatNavn fnr={fnr} />}
+
+                    {kandidatnavn && kandidatnavn.kilde === KandidatKilde.REKRUTTERINGSBISTAND && (
+                        <BekreftLeggTilKandidat
+                            // @ts-ignore TODO: written before strict-mode enabled
+                            kandidatnr={arenaKandidatnr}
+                            kandidatlisteId={kandidatlisteId}
+                            onAvbryt={onClose}
+                            onBekreft={handleBekreft}
+                        />
                     )}
 
-                    {kandidatSøkResultat &&
-                        kandidatSøkResultat.kilde === KandidatKilde.REKRUTTERINGSBISTAND && (
-                            <BekreftLeggTilKandidat
-                                // @ts-ignore TODO: written before strict-mode enabled
-                                kandidatnr={kandidatSøkResultat.kandidatnr}
-                                kandidatlisteId={kandidatlisteId}
-                                onAvbryt={onClose}
-                                onBekreft={handleBekreft}
-                            />
-                        )}
-
-                    {kandidatSøkResultat && kandidatSøkResultat.kilde === KandidatKilde.PDL && (
+                    {kandidatnavn && kandidatnavn.kilde === KandidatKilde.PDL && (
                         <>
                             {registrerFormidling ? (
                                 <LeggTilFormidling
                                     handleBekreft={handleBekreft}
-                                    kandidatSøkResultat={kandidatSøkResultat}
+                                    kandidatSøkResultat={kandidatnavn}
                                     fnr={fnr}
                                     stillingsId={stillingsId}
                                     onClose={onClose}
@@ -189,10 +170,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                         </>
                     )}
 
-                    {(!kandidatSøkResultat ||
-                        kandidatSøkResultat.kilde === KandidatKilde.FINNES_IKKE) && (
-                        <Knapper leggTilDisabled onAvbrytClick={onClose} />
-                    )}
+                    {!kandidatnavn && <Knapper leggTilDisabled onAvbrytClick={onClose} />}
                 </div>
             </Modal.Body>
         </div>

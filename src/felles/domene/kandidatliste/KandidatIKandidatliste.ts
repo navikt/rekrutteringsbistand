@@ -68,7 +68,6 @@ export type LagtTilAv = {
 
 export type UsynligKandidat = {
     fornavn: string;
-    mellomnavn: string | null;
     etternavn: string;
 };
 
