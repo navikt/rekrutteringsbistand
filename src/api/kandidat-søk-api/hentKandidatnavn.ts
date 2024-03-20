@@ -8,13 +8,11 @@ import { postApi } from '../fetcher';
 
 const hentNavnEndepunkt = '/kandidatsok-api/api/navn';
 
-export const navnSchema = z
-    .object({
-        fornavn: z.string().nullable(),
-        etternavn: z.string().nullable(),
-        kilde: z.string(),
-    })
-    .nullable();
+export const navnSchema = z.object({
+    fornavn: z.string().nullable(),
+    etternavn: z.string().nullable(),
+    kilde: z.string(),
+});
 
 export type Navn = z.infer<typeof navnSchema>;
 
@@ -34,7 +32,7 @@ export const useHentKandidatnavn = (props: hentKandidatnavnProps) => {
         };
     }
 
-    const navn: Navn = navnSchema.parse(swr?.data);
+    const navn: Navn | undefined = swr?.data ? navnSchema.parse(swr?.data) : undefined;
 
     return {
         ...swr,
