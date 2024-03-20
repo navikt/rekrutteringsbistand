@@ -8,13 +8,15 @@ import { postApi } from '../fetcher';
 
 const hentNavnEndepunkt = '/kandidatsok-api/api/navn';
 
-export const navnSchema = z.object({
-    fornavn: z.string().nullable(),
-    etternavn: z.string().nullable(),
-    kilde: z.string(),
-});
+export const navnSchema = z
+    .object({
+        fornavn: z.string().nullable(),
+        etternavn: z.string().nullable(),
+        kilde: z.string(),
+    })
+    .nullable();
 
-export type Navn = z.infer<typeof navnSchema> | undefined;
+export type Navn = z.infer<typeof navnSchema>;
 
 export interface hentKandidatnavnProps {
     fodselsnummer: string | null;
@@ -28,7 +30,7 @@ export const useHentKandidatnavn = (props: hentKandidatnavnProps) => {
     if (!props.fodselsnummer) {
         return {
             ...swr,
-            navn: undefined,
+            navn: null,
         };
     }
 
