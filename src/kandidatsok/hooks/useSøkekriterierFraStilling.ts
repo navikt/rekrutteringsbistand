@@ -40,7 +40,7 @@ const useSøkekriterierFraStilling = (
             anvendSøkekriterier(stilling.data);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stilling, brukKriterierFraStillingen]);
+    }, [stilling, brukKriterierFraStillingen, fylker]);
 };
 
 const hentØnsketYrkeFraStilling = (stilling: Stilling) => {
