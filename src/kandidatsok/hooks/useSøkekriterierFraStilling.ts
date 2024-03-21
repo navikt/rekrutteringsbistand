@@ -104,7 +104,7 @@ const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams, harFylker: boo
         (param) => param === KandidatsokQueryParam.Kandidatliste
     ) ||
     Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Stilling) ||
-    (searchParams.get('sted') === undefined && harFylker);
+    (!searchParams.has('sted') && harFylker);
 
 const formaterStedsnavnSlikDetErRegistrertPåKandidat = (stedsnavn: string) =>
     stedsnavn
