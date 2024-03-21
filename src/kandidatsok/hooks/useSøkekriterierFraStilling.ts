@@ -36,6 +36,7 @@ const useSøkekriterierFraStilling = (
                 setSearchParam(FilterParam.ØnsketSted, stedFraStilling);
             }
         };
+        console.log('søkeKriterierIkkeLagtTil', søkeKriterierIkkeLagtTil);
 
         if (
             stilling.kind === Nettstatus.Suksess &&
