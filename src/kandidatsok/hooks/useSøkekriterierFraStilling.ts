@@ -37,11 +37,7 @@ const useSøkekriterierFraStilling = (
             }
         };
 
-        if (
-            stilling.kind === Nettstatus.Suksess &&
-            brukKriterierFraStillingen &&
-            søkeKriterierIkkeLagtTil(searchParams)
-        ) {
+        if (stilling.kind === Nettstatus.Suksess && brukKriterierFraStillingen) {
             anvendSøkekriterier(stilling.data);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
