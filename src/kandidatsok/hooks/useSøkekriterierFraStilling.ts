@@ -41,7 +41,8 @@ const useSøkekriterierFraStilling = (
         if (
             stilling.kind === Nettstatus.Suksess &&
             brukKriterierFraStillingen &&
-            søkeKriterierIkkeLagtTil(searchParams)
+            (søkeKriterierIkkeLagtTil(searchParams) ||
+                (searchParams.get('sted') === undefined && fylker))
         ) {
             anvendSøkekriterier(stilling.data);
         }
