@@ -119,9 +119,8 @@ const hentNavnPåUsynligKandidat = (navn: UsynligKandidat[]) =>
     navn
         .map((n) => {
             const fornavn = capitalizeFirstLetter(n.fornavn);
-            const mellomnavn = n.mellomnavn ? capitalizeFirstLetter(n.mellomnavn) : '';
             const etternavn = capitalizeFirstLetter(n.etternavn);
-            return `${fornavn}${mellomnavn ? ' ' + mellomnavn : ''} ${etternavn}`;
+            return `${fornavn} ${etternavn}`;
         })
         .join(', ');
 

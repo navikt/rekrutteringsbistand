@@ -56,9 +56,6 @@ const FormidlingAvUsynligKandidatrad: FunctionComponent<Props> = ({
     }) ${formaterDatoNaturlig(formidling.lagtTilTidspunkt)}`;
 
     let fulltNavn = `${formidling.etternavn}, ${formidling.fornavn}`;
-    if (formidling.mellomnavn) {
-        fulltNavn += ' ' + formidling.mellomnavn;
-    }
 
     return (
         <div

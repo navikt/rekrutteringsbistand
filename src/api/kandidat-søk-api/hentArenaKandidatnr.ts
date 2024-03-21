@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { z } from 'zod';
 import { postApi } from '../fetcher';
 
-const hentArenaKandidatnrEndepunkt = '/kandidatsok-api/api/arena-kandidatnr';
+export const hentArenaKandidatnrEndepunkt = '/kandidatsok-api/api/arena-kandidatnr';
 
 export const arenaKandidatnrSchema = z.object({
     arenaKandidatnr: z.string().nullable(),

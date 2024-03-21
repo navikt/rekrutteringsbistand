@@ -37,7 +37,6 @@ export const mockKandidatlisteUtenStilling: Kandidatliste = {
     formidlingerAvUsynligKandidat: [
         {
             fornavn: 'Fornavn',
-            mellomnavn: 'Mellomnavn',
             etternavn: 'Etternavn',
             id: '12345678910',
             utfall: Kandidatutfall.FåttJobben,
