@@ -18,7 +18,10 @@ const useSøkekriterierFraStilling = (
     const county =
         (stilling.kind === Nettstatus.Suksess && stilling.data?.stilling.location.county) || null;
 
+    console.log('county', county);
+
     const { suggestions: fylker } = useSuggestSted({ query: county });
+    console.log('fylker', fylker);
 
     useEffect(() => {
         const anvendSøkekriterier = async (stilling: Stilling) => {
@@ -27,7 +30,9 @@ const useSøkekriterierFraStilling = (
             setSearchParam(FilterParam.ØnsketYrke, yrkerFraStilling);
 
             const stedFraStilling = await hentØnsketStedFraStilling(stilling, fylker);
+            console.log('stedFraStilling', stedFraStilling, 'fylker', fylker);
             if (stedFraStilling) {
+                console.log('setSearchParam', FilterParam.ØnsketSted, stedFraStilling);
                 setSearchParam(FilterParam.ØnsketSted, stedFraStilling);
             }
         };
