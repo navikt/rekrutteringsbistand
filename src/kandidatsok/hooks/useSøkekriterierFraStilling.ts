@@ -41,8 +41,7 @@ const useSøkekriterierFraStilling = (
         if (
             stilling.kind === Nettstatus.Suksess &&
             brukKriterierFraStillingen &&
-            (søkeKriterierIkkeLagtTil(searchParams) ||
-                (searchParams.get('sted') === undefined && fylker))
+            søkeKriterierIkkeLagtTil(searchParams, !!fylker)
         ) {
             anvendSøkekriterier(stilling.data);
         }
@@ -93,10 +92,12 @@ const hentØnsketStedFraStilling = async (
     }
 };
 
-const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams) =>
+const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams, harFylker: boolean) =>
     Array.from(searchParams.keys()).every(
         (param) => param === KandidatsokQueryParam.Kandidatliste
-    ) || Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Stilling);
+    ) ||
+    Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Stilling) ||
+    (searchParams.get('sted') === undefined && harFylker);
 
 const formaterStedsnavnSlikDetErRegistrertPåKandidat = (stedsnavn: string) =>
     stedsnavn
