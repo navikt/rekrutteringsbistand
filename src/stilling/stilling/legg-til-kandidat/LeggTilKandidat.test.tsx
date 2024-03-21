@@ -71,11 +71,6 @@ describe('<LeggTilKandidat />', () => {
         // @ts-ignore TODO: written before strict-mode enabled
         global.testServer.use(
             http.post(hentArenaKandidatnrEndepunkt, () => {
-                const testSvar: Kandidatnavn = {
-                    fornavn: 'Ola',
-                    etternavn: 'Nordmann',
-                    kilde: KandidatKilde.REKRUTTERINGSBISTAND,
-                };
                 return HttpResponse.json({ arenaKandidatnr: 'abc123' });
             })
         );
