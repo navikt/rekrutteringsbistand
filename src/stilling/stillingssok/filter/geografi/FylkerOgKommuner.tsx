@@ -84,7 +84,7 @@ const FylkerOgKommunerValgboks: React.FC<IFylkerOgKommunerValgboks> = ({ fylkerM
                     <Checkbox value={fylke.code} onChange={onFylkeChange}>
                         {capitalizeLocation(fylke.name)}
                     </Checkbox>
-                    {valgteFylker.has(fylke.code) && fylke.kommuner.length > 0 && (
+                    {valgteFylker.has(fylke.code) && fylke.kommuner.length > 1 && (
                         <CheckboxGroup
                             hideLegend
                             className={css.indentertCheckboxgruppe}
