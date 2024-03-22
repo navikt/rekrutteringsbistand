@@ -1,7 +1,3 @@
-export const mockCounties = [{ code: '03', name: 'OSLO' }];
-export const mockCountries = [{ code: 'NO', name: 'NORGE' }];
-export const mockMunicipals = [{ code: '0301', name: 'OSLO', countyCode: '03' }];
-
 export const mockCategoriesWithAltnames = [
     {
         id: 939,

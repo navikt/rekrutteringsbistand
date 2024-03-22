@@ -1,7 +1,8 @@
 import { sendEvent } from 'felles/amplitude';
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { FylkeDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
 import { Stillingskategori } from '../../felles/domene/stilling/Stilling';
 import { søk } from './api/api';
 import { lagQuery } from './api/queries/queries';
@@ -28,6 +29,15 @@ const useSøkMedQuery = ({
     const { standardsøk } = useStandardsøk();
     const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);
 
+    const { data: fylkeData } = useHentFylker();
+
+    const hentFylkeNavn = useCallback(
+        (fylke: string) => {
+            return fylkeData?.find((f: FylkeDTO) => f.code === fylke)?.name ?? 'Ukjent fylke';
+        },
+        [fylkeData]
+    );
+
     useEffect(() => {
         const skalBrukeStandardsøk = searchParams.has(QueryParam.BrukStandardsøk);
         if (skalBrukeStandardsøk) return;
@@ -40,8 +50,22 @@ const useSøkMedQuery = ({
             };
         }
 
+        const fylkerUtenValgteKommuner = Array.from(søkekriterier.fylker).filter(
+            (fylke) =>
+                !Array.from(søkekriterier.kommuner).some((kommune) => kommune.startsWith(fylke))
+        );
+
         const harByttetSide = state?.harByttetSide;
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
+
+        if (fylkerUtenValgteKommuner) {
+            const fylkeNavn = fylkerUtenValgteKommuner.map((f) => hentFylkeNavn(f));
+
+            søkekriterier = {
+                ...søkekriterier,
+                fylker: new Set(fylkeNavn),
+            };
+        }
 
         const søkMedQuery = async () => {
             let respons = await søk(
@@ -73,6 +97,7 @@ const useSøkMedQuery = ({
         ikkePubliserte,
         overstyrValgteStillingskategorier,
         fallbackIngenValgteStillingskategorier,
+        hentFylkeNavn,
     ]);
 
     useEffect(() => {

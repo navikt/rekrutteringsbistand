@@ -1,5 +1,6 @@
 import { EsQuery } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
+import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Søkekriterier } from '../../Stillingssøk';
 import { Søkefelt } from '../../søkefelter/Søkefelter';
 import geografi from './geografi';
@@ -10,7 +11,6 @@ import sorterTreff from './sortering';
 import { status } from './status';
 import { stillingskategori } from './stillingskategori';
 import søkefelt from './søkefelt';
-import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 
 export const maksAntallTreffPerSøk = 40;
 
