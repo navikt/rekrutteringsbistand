@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { z } from 'zod';
 import { postApi } from '../fetcher';
 import { SøkekriterierDto } from './kandidatsøk';
-import { mockKandidatsøkNavigering } from '../../../mock/kandidatsok-proxy/mockKandidat';
+import { mockKandidatsøkNavigering } from './mockKandidatsøk';
 
 const kandidatsøkNavigeringEndepunkt = '/kandidatsok-api/api/kandidatsok/navigering';
 

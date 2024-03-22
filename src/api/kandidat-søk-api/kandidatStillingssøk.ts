@@ -4,8 +4,8 @@
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { z } from 'zod';
-import { mockKandidatStillingssøk } from '../../../mock/kandidatsok-proxy/mockKandidat';
 import { postApi } from '../fetcher';
+import { mockKandidatStillingssøk } from './mockKandidatsøk';
 export const kandidatStillingssøkEndepunkt = '/kandidatsok-api/api/kandidat-stillingssok';
 
 export type KandidatStillingssøkES = {

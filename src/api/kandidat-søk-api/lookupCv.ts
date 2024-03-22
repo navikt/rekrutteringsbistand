@@ -3,7 +3,7 @@
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
-import { mockKandidat } from '../../../mock/kandidatsok-proxy/mockKandidat';
+import { mockKandidat } from '../../../mock/kandidat-api/mockKandidat';
 import { postApi } from '../fetcher';
 
 const lookupCvEndepunkt = '/kandidatsok-api/api/lookup-cv';

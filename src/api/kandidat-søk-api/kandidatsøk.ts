@@ -4,7 +4,6 @@
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { z } from 'zod';
-import { mockKandidatsøkKandidater } from '../../../mock/kandidatsok-proxy/mockKandidat';
 import { postApi } from '../fetcher';
 import { Portefølje } from '../../kandidatsok/filter/porteføljetabs/PorteføljeTabs';
 import { FiltrerbarInnsatsgruppe } from '../../kandidatsok/filter/Jobbmuligheter';
@@ -12,6 +11,7 @@ import { Nivå } from '../../kandidatsok/filter/Utdanningsnivå';
 import { PrioritertMålgruppe } from '../../kandidatsok/filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Klasse } from '../../kandidatsok/api/query/queryMedFørerkort';
 import { Mål } from '../../kandidatsok/filter/Hovedmål';
+import { mockKandidatsøkKandidater } from './mockKandidatsøk';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
 

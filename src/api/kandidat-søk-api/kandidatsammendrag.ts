@@ -4,8 +4,8 @@
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { z } from 'zod';
-import { mockKandidatsammendrag } from '../../../mock/kandidatsok-proxy/mockKandidat';
 import { postApi } from '../fetcher';
+import { mockKandidatsammendrag } from './mockKandidatsøk';
 
 const kandidatsammendragEndepunkt = '/kandidatsok-api/api/kandidatsammendrag';
 

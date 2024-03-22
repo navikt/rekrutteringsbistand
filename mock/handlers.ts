@@ -3,7 +3,6 @@ import { megMockMsw } from '../src/api/frackend/meg';
 import { Rolle } from '../src/felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
 import { gammelKandidatApiMock } from './kandidat-api/mock';
-import { kandidatsøkMock } from './kandidatsok-proxy/mock';
 import { modiaMock } from './modia/modia';
 import { modiaContextHolderMock } from './modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from './presenterte-kandidater-api/mock';
@@ -27,7 +26,6 @@ const mswHandlers = [
     ...smsApiMock,
     ...synlighetApiMock,
     ...modiaContextHolderMock,
-    ...kandidatsøkMock,
     ...stillingssøkMock,
     ...modiaMock,
     ...apiMockHandlers,
