@@ -1,21 +1,15 @@
 import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
 import { Reportee } from '../../src/stilling/reportee/reporteeReducer';
+import { mockVeileder } from '../mockVeileder';
 import { mockEnhetsregistersøk } from './mockEnhetsregister';
-import {
-    mockCategoriesWithAltnames,
-    mockCounties,
-    mockCountries,
-    mockMunicipals,
-    mockPostdata,
-} from './mockGeografi';
+import { mockCategoriesWithAltnames, mockPostdata } from './mockGeografi';
 import { mockPutStandardsøk, mockStandardsøk } from './mockStandardsøk';
 import {
     mockNyRekrutteringsbistandstilling,
     mockRekrutteringsbistandstilling,
     mockStillingsinfo,
 } from './mockStilling';
-import { mockVeileder } from '../mockVeileder';
 
 export const stillingApiMock = [
     http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, () =>
@@ -58,18 +52,6 @@ export const stillingApiMock = [
 
     http.post(`${api.stilling}/rekrutteringsbistandstilling/kopier/:stillingsId`, () =>
         HttpResponse.json(mockRekrutteringsbistandstilling)
-    ),
-
-    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/counties`, () =>
-        HttpResponse.json(mockCounties)
-    ),
-
-    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/countries`, () =>
-        HttpResponse.json(mockCountries)
-    ),
-
-    http.get(`${api.stilling}/rekrutteringsbistand/api/v1/geography/municipals`, () =>
-        HttpResponse.json(mockMunicipals)
     ),
 
     http.get(`${api.stilling}/rekrutteringsbistand/api/v1/categories-with-altnames`, () =>

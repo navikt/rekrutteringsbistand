@@ -1,5 +1,6 @@
 import { apiMockHandlers } from '../src/api/api.msw';
 import { megMockMsw } from '../src/api/frackend/meg';
+import { stillingsapiMock } from '../src/api/stillings-api/mock.msw';
 import { Rolle } from '../src/felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
 import { gammelKandidatApiMock } from './kandidat-api/mock';
@@ -29,6 +30,7 @@ const mswHandlers = [
     ...stillingssøkMock,
     ...modiaMock,
     ...apiMockHandlers,
+    ...stillingsapiMock,
 ];
 
 export default mswHandlers;

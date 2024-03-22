@@ -16,6 +16,7 @@ import { megMockMsw } from '../api/frackend/meg';
 import { kandidatApiMock } from '../api/kandidat-api/mock.msw';
 import { kandidatSokApiMock } from '../api/kandidat-søk-api/mock.msw';
 import { statistikkApiMock } from '../api/statistikk-api/mock.msw';
+import { stillingsapiMock } from '../api/stillings-api/mock.msw';
 import DevMockApi from './DevMockApi';
 import DevRoller from './DevMockMeg';
 export interface IDevMockModal {
@@ -77,6 +78,10 @@ const mockConfig = [
     {
         navn: 'Kandidatsøk api',
         mock: kandidatSokApiMock,
+    },
+    {
+        navn: 'Stilling api',
+        mock: stillingsapiMock,
     },
 ];
 

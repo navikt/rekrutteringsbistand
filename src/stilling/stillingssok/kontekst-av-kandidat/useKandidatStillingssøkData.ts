@@ -5,8 +5,6 @@ import {
     KandidatStillingssøkDTO,
     useKandidatStillingssøk,
 } from '../../../api/kandidat-søk-api/kandidatStillingssøk';
-import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
-import { brukNyttFylkesnummer } from '../filter/geografi/regionsreformen';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
@@ -39,10 +37,11 @@ export const useKandidatStillingssøkData = ({
             const brukKandidatkriterier =
                 searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
 
-            const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring, kommuneNavn } =
+            const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring } =
                 kandidatStillingssøk;
 
             let fylker: (string | undefined)[] = hentFylkerFraJobbønsker(geografiJobbonsker);
+
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
             const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 
@@ -50,10 +49,9 @@ export const useKandidatStillingssøkData = ({
                 setManglerØnsketYrke(true);
             }
 
-            if (fylker.length === 0 && kommuner.length === 0) {
-                fylker = hentFylkeFraBosted(kommunenummerstring);
-                kommuner = hentKommuneFraBosted(kommunenummerstring, kommuneNavn);
-
+            if (kommuner.length === 0) {
+                // Sett kommune fra bosted
+                kommuner = kommunenummerstring;
                 setHentetGeografiFraBosted(true);
             }
 
@@ -81,18 +79,18 @@ export const useKandidatStillingssøkData = ({
     return { ...swrHook, hentetGeografiFraBosted, manglerØnsketYrke, kandidatStillingssøk };
 };
 
-const hentFylkestekstFraGeografiKode = (geografiKode: string) => {
+const hentFylkeskode = (geografiKode: string) => {
     const fylkesnummerFraKandidat = geografiKode.split('.')[0].substring(2);
 
-    return fylkerOgKommuner.find((fylke) => {
-        return fylke.fylkesnummer === brukNyttFylkesnummer(fylkesnummerFraKandidat);
-    })?.fylkesnavn;
+    if (fylkesnummerFraKandidat.match(/^\d+$/)) {
+        return fylkesnummerFraKandidat;
+    }
 };
 
 const hentFylkerFraJobbønsker = (geografijobbønsker: JobbønskeSted[]): string[] => {
     return geografijobbønsker
         .map((jobbønske) => jobbønske.geografiKode)
-        .map((geografiKode) => hentFylkestekstFraGeografiKode(geografiKode))
+        .map((geografiKode) => hentFylkeskode(geografiKode))
         .filter((fylke) => fylke !== undefined) as string[];
 };
 
@@ -100,27 +98,9 @@ const hentKommunerFraJobbønsker = (geografijobbønsker: JobbønskeSted[]): stri
     return geografijobbønsker
         .filter((jobbønske) => jobbønske.geografiKode.includes('.'))
         .map((jobbønske) => {
-            const kommunetekst = jobbønske.geografiKodeTekst;
-            const fylkestekst = hentFylkestekstFraGeografiKode(jobbønske.geografiKode);
-
-            return `${fylkestekst}.${kommunetekst}`;
+            const kommune = jobbønske.geografiKode.split('.')[1];
+            return kommune;
         });
-};
-
-const hentFylkeFraBosted = (kommunenummer: string): [] | [string | undefined] => {
-    if (kommunenummer) {
-        const fylkeskode = kommunenummer.substring(0, 2);
-        return [hentFylkestekstFraGeografiKode(`NO${fylkeskode}`)];
-    }
-
-    return [];
-};
-
-const hentKommuneFraBosted = (kommunenummer: string, kommunenavn: string) => {
-    const fylkeskode = kommunenummer.substring(0, 2);
-    const fylkestekst = hentFylkestekstFraGeografiKode(`NO${fylkeskode}`);
-
-    return [`${fylkestekst}.${kommunenavn}`];
 };
 
 const hentYrkerFraJobbønsker = (yrkesønsker: Jobbønske[]): string[] => {

@@ -21,9 +21,7 @@ const geografi = (alleFylker: Set<string>, kommuner: Set<string>) => {
             : [
                   {
                       terms: {
-                          'stilling.locations.municipal.keyword': Array.from(kommuner).map(
-                              (kommune) => kommune.split('.')[1].toUpperCase()
-                          ),
+                          'stilling.locations.municipalCode': Array.from(kommuner),
                       },
                   },
               ];

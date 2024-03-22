@@ -15,4 +15,6 @@ beforeAll(() => {
 
 afterAll(() => testServer.close());
 
-afterEach(() => testServer.resetHandlers());
+afterEach(() => {
+    testServer.resetHandlers();
+});
