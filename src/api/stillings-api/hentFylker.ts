@@ -6,9 +6,7 @@ import useSWR from 'swr';
 import { z } from 'zod';
 import { getAPI } from '../fetcher';
 
-import hentFylkerMock from './fylkemock.json';
-
-const hentFylkerEndepunkt = '/stilling-api/rekrutteringsbistand/api/v1/geography/counties';
+export const hentFylkerEndepunkt = '/stilling-api/rekrutteringsbistand/api/v1/geography/counties';
 
 export const fylkeSchema = z.object({
     code: z.string(),
@@ -35,6 +33,16 @@ export const useHentFylker = () => {
     return swrData;
 };
 
-export const hentFylkerMockMsw = http.get(hentFylkerEndepunkt, (_) =>
-    HttpResponse.json(hentFylkerMock)
-);
+const fylkeMock: FylkeDTO[] = [
+    {
+        code: '01',
+        name: 'Fylke 1',
+        capitalizedName: 'Fylke1',
+    },
+    {
+        code: '02',
+        name: 'Fylke 2',
+        capitalizedName: 'Fylke2',
+    },
+];
+export const hentFylkerMockMsw = http.get(hentFylkerEndepunkt, (_) => HttpResponse.json(fylkeMock));

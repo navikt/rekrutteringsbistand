@@ -11,10 +11,10 @@ import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils
 import css from '../Filter.module.css';
 
 interface IFylkerOgKommunerValgboks {
-    fylkerMedKommuner: any;
+    fylkerMedKommuner: FylkeMedKommuneDTO[];
 }
 
-interface FylkeMedKommuneDTO extends FylkeDTO {
+export interface FylkeMedKommuneDTO extends FylkeDTO {
     kommuner: KommuneDTO[];
 }
 
