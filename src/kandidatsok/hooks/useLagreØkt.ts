@@ -1,13 +1,13 @@
 import useNavKontor from 'felles/store/navKontor';
 import { useContext, useEffect } from 'react';
 import { useMeg } from '../../api/frackend/meg';
-import { PAGE_SIZE } from '../api/query/byggQuery';
 import { ØktContext } from '../Økt';
 import useSøkekriterier from './useSøkekriterier';
 import {
     KandidatsøkNavigeringProps,
     useKandidatsøkNavigering,
 } from '../../api/kandidat-søk-api/kandidatsøk-navigering';
+import { PAGE_SIZE } from '../filter/Paginering';
 
 const useLagreØkt = () => {
     const navKontor = useNavKontor((state) => state.navKontor);

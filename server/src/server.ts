@@ -6,7 +6,7 @@ import path from 'path';
 import { hentBrukerOgRoller, initializeAzureAd } from './azureAd';
 import { logger } from './logger';
 import { redirectIfUnauthorized, respondUnauthorizedIfNotLoggedIn } from './middlewares';
-import { proxyMedOboToken, proxyTilKandidatsøkEs, proxyUtenToken } from './proxy';
+import { proxyMedOboToken, proxyUtenToken } from './proxy';
 
 // Last inn miljøvariabler for lokal utvikling
 dotenv.config({ path: `.env.local` });
@@ -45,9 +45,6 @@ const {
     SYNLIGHETSMOTOR_API,
     ARBEIDSGIVER_NOTIFIKASJON_API,
     PRESENTERTE_KANDIDATER_API,
-    OPEN_SEARCH_URI,
-    OPEN_SEARCH_USERNAME,
-    OPEN_SEARCH_PASSWORD,
     MODIA_CONTEXT_HOLDER_API,
 } = process.env;
 
@@ -79,12 +76,6 @@ const startServer = () => {
         '/presenterte-kandidater-api',
         PRESENTERTE_KANDIDATER_API,
         scopes.presenterteKandidater
-    );
-    proxyTilKandidatsøkEs(
-        '/kandidatsok-proxy',
-        OPEN_SEARCH_URI,
-        OPEN_SEARCH_USERNAME,
-        OPEN_SEARCH_PASSWORD
     );
 
     app.use(

@@ -11,7 +11,7 @@ import {
     TilstandPåForespørsel,
 } from '../../src/kandidat/kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { mockAlleKandidatlister } from '../kandidat-api/mockKandidatliste';
-import { mockAlleKandidater } from '../kandidatsok-proxy/mockKandidat';
+import { mockAlleKandidater } from '../kandidat-api/mockKandidat';
 import { mockVeileder } from '../mockVeileder';
 import { mockStilling } from '../stilling-api/mockStilling';
 

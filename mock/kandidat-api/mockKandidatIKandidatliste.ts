@@ -2,7 +2,7 @@ import KandidatIKandidatliste, {
     Kandidatstatus,
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { mockKandidat } from '../kandidatsok-proxy/mockKandidat';
+import { mockKandidat } from './mockKandidat';
 import { mockVeileder } from '../mockVeileder';
 
 export const mockKandidatIKandidatliste: KandidatIKandidatliste[] = [

@@ -42,16 +42,6 @@ STILLING_ES_PASSWORD=<passord>
 
 STILLING_ES_URI=<url>
 
-  
-
-# Kandidatsøk
-
-KANDIDAT_ES_USERNAME=<brukernavn>
-
-KANDIDAT_ES_PASSWORD=<passord>
-
-KANDIDAT_ES_URI=<url>
-
 ```
 
 ### Test brukere:

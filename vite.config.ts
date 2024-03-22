@@ -33,12 +33,6 @@ export default defineConfig(({ mode }) => {
         server: {
             port: 3000,
             proxy: {
-                '/kandidatsok-proxy': {
-                    changeOrigin: true,
-                    target: `${env.KANDIDAT_ES_URI}/veilederkandidat_current/_search`,
-                    rewrite: (path) => path.replace('/kandidatsok-proxy', ''),
-                    auth: `${env.KANDIDAT_ES_USERNAME}:${env.KANDIDAT_ES_PASSWORD}`,
-                },
                 '/stillingssok-proxy': {
                     changeOrigin: true,
                     target: `${env.STILLING_ES_URI}`,

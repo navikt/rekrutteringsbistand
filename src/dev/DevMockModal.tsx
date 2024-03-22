@@ -4,7 +4,6 @@ import { useRef } from 'react';
 import { forespørselOmDelingAvCvMock } from '../../mock/foresporsel-om-deling-av-cv-api/mock';
 import { gammelKandidatApiMock } from '../../mock/kandidat-api/mock';
 
-import { kandidatsøkMock } from '../../mock/kandidatsok-proxy/mock';
 import { modiaContextHolderMock } from '../../mock/modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from '../../mock/presenterte-kandidater-api/mock';
 import { mswWorker } from '../../mock/setup';
@@ -67,10 +66,6 @@ const mockConfig = [
     {
         navn: 'Modia context',
         mock: modiaContextHolderMock,
-    },
-    {
-        navn: 'Kandidat søk ES',
-        mock: kandidatsøkMock,
     },
     {
         navn: 'Stillings søk ES',
