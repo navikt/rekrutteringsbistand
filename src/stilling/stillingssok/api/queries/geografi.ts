@@ -1,25 +1,50 @@
-const geografi = (kommuner: Set<string>) => {
-    if (kommuner.size === 0) return [];
+const geografi = (alleFylker: Set<string>, kommuner: Set<string>) => {
+    const fylker = beholdFylkerUtenValgteKommuner(alleFylker, kommuner);
+    if (fylker.size === 0 && kommuner.size === 0) return [];
 
-    const kommunerArray = Array.from(kommuner);
+    const shouldFylker =
+        fylker.size === 0
+            ? []
+            : [
+                  {
+                      terms: {
+                          'stilling.locations.county.keyword': Array.from(fylker).map((fylke) =>
+                              fylke.toUpperCase()
+                          ),
+                      },
+                  },
+              ];
+
+    const shouldKommuner =
+        kommuner.size === 0
+            ? []
+            : [
+                  {
+                      terms: {
+                          'stilling.locations.municipalCode': Array.from(kommuner),
+                      },
+                  },
+              ];
+
     return [
         {
             nested: {
                 path: 'stilling.locations',
                 query: {
                     bool: {
-                        should: [
-                            {
-                                terms: {
-                                    'stilling.locations.municipalCode': kommunerArray,
-                                },
-                            },
-                        ],
+                        should: [...shouldFylker, ...shouldKommuner],
                     },
                 },
             },
         },
     ];
+};
+
+const beholdFylkerUtenValgteKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
+    const kommuneArray = Array.from(kommuner);
+    const fylkerForKommuner = kommuneArray.map((kommune) => kommune.split('.')[0]);
+
+    return new Set(Array.from(fylker).filter((fylke) => !fylkerForKommuner.includes(fylke)));
 };
 
 export default geografi;

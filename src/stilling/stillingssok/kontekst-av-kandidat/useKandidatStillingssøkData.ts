@@ -42,6 +42,7 @@ export const useKandidatStillingssøkData = ({
                 kandidatStillingssøk;
 
             let fylker: (string | undefined)[] = hentFylkerFraJobbønsker(geografiJobbonsker);
+
             let kommuner = hentKommunerFraJobbønsker(geografiJobbonsker);
             const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 

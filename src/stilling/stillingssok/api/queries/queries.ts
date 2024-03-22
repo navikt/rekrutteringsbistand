@@ -72,7 +72,7 @@ export const lagIndreQuery = ({
             filter: [
                 ...identSøk,
                 ...publisert(søkekriterier.publisert),
-                ...geografi(søkekriterier.kommuner),
+                ...geografi(søkekriterier.fylker, søkekriterier.kommuner),
                 // @ts-ignore TODO: written before strict-mode enabled
                 ...status(søkekriterier.statuser, ikkePubliserte),
                 ...stillingskategori({
