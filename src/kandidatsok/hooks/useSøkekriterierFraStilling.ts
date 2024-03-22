@@ -89,9 +89,7 @@ const hentØnsketStedFraStilling = async (
 const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams, harFylker: boolean) =>
     Array.from(searchParams.keys()).every(
         (param) => param === KandidatsokQueryParam.Kandidatliste
-    ) ||
-    Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Stilling) ||
-    (!searchParams.has('sted') && harFylker);
+    ) || Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Stilling);
 
 const formaterStedsnavnSlikDetErRegistrertPåKandidat = (stedsnavn: string) =>
     stedsnavn
