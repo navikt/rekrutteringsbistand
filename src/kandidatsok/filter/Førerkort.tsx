@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Klasse } from '../api/query/queryMedFørerkort';
 import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
+import useSøkekriterier, {
+    LISTEPARAMETER_SEPARATOR,
+    Førerkortklasse,
+} from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
 
-export type Førerkortklasse = {
-    klasse: Klasse;
+type FørerkortklasseWrapper = {
+    klasse: Førerkortklasse;
     kode: string;
     navn: string;
 };
 
-const alleKlasser: Førerkortklasse[] = Object.values(Klasse).map((esValue) => {
+const alleKlasser: FørerkortklasseWrapper[] = Object.values(Førerkortklasse).map((esValue) => {
     const [kode, navn] = esValue.split(' - ');
 
     return {
@@ -36,7 +38,7 @@ const Førerkort = () => {
         }
     }, [input]);
 
-    const setValue = (valgteKlasser: Set<Klasse>) => {
+    const setValue = (valgteKlasser: Set<Førerkortklasse>) => {
         setSearchParam(
             FilterParam.Førerkort,
             Array.from(valgteKlasser).join(LISTEPARAMETER_SEPARATOR)
@@ -47,13 +49,13 @@ const Førerkort = () => {
         setInput('');
 
         const valgteKlasser = new Set(søkekriterier.førerkort);
-        valgteKlasser.add(klasse as Klasse);
+        valgteKlasser.add(klasse as Førerkortklasse);
         setValue(valgteKlasser);
     };
 
     const onFjernValgtKlasse = (valgtKlasse: string) => () => {
         const valgteKlasser = new Set(søkekriterier.førerkort);
-        valgteKlasser.delete(valgtKlasse as Klasse);
+        valgteKlasser.delete(valgtKlasse as Førerkortklasse);
 
         setValue(valgteKlasser);
     };
@@ -75,7 +77,7 @@ const Førerkort = () => {
 
 const klasseInneholderInput =
     (input: string) =>
-    ({ klasse }: Førerkortklasse) => {
+    ({ klasse }: FørerkortklasseWrapper) => {
         const inputWords = input.toLowerCase().split(' ');
 
         return inputWords.every((inputWord) => klasse.toLowerCase().includes(inputWord));

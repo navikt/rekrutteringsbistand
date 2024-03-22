@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Klasse as Førerkortklasse } from '../api/query/queryMedFørerkort';
 import { Mål as Hovedmål } from '../filter/Hovedmål';
 import { FiltrerbarInnsatsgruppe } from '../filter/Jobbmuligheter';
 import { Nivå as Utdanningsnivå } from '../filter/Utdanningsnivå';
@@ -12,6 +11,24 @@ import { FilterParam } from './useQuery';
 
 export const LISTEPARAMETER_SEPARATOR = ';';
 export const LISTEPARAMETER_SEPARATOR_REPLACEMENT = '·';
+
+export enum Førerkortklasse {
+    LettMotorsykkel = 'A1 - Lett motorsykkel',
+    MellomtungMotorsykkel = 'A2 - Mellomtung motorsykkel',
+    TungMotorsykkel = 'A - Tung motorsykkel',
+    Personbil = 'B - Personbil',
+    PersonbilMedTilhenger = 'BE - Personbil med tilhenger',
+    LettLastebil = 'C1 - Lett lastebil',
+    LettLastebilMedTilhenger = 'C1E - Lett lastebil med tilhenger',
+    Lastebil = 'C - Lastebil',
+    LastebilMedTilhenger = 'CE - Lastebil med tilhenger',
+    Minibuss = 'D1 - Minibuss',
+    MinibussMedTilhenger = 'D1E - Minibuss med tilhenger',
+    Buss = 'D - Buss',
+    BussMedTilhenger = 'DE - Buss med tilhenger',
+    Traktor = 'T - Traktor',
+    Snøscooter = 'S - Snøscooter',
+}
 
 export type Søkekriterier = {
     fritekst: string | null;

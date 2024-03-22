@@ -1,6 +1,5 @@
 import { Pagination } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
-import { PAGE_SIZE } from '../api/query/byggQuery';
 import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier from '../hooks/useSøkekriterier';
 import css from './Paginering.module.css';
@@ -8,6 +7,8 @@ import css from './Paginering.module.css';
 type Props = {
     antallTreff: number;
 };
+
+export const PAGE_SIZE = 25;
 
 const Paginering: FunctionComponent<Props> = ({ antallTreff }) => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
