@@ -1,9 +1,8 @@
 import { Modal } from '@navikt/ds-react';
-import { useDispatch } from 'react-redux';
 
 import { Kandidatsammendrag } from '../../../api/kandidat-søk-api/kandidatsammendrag';
 import BekreftLeggTilKandidat from '../../../felles/komponenter/legg-til-kandidat/BekreftLeggTilKandidat';
-import { VarslingAction, VarslingActionType } from '../../common/varsling/varslingReducer';
+import { useVisVarsling } from 'felles/varsling/Varsling';
 
 type Props = {
     kandidat: Kandidatsammendrag;
@@ -13,13 +12,11 @@ type Props = {
 };
 
 const AnbefalKandidatModal = ({ kandidat, kandidatlisteId, vis, onClose }: Props) => {
-    const dispatch = useDispatch();
+    const visVarsling = useVisVarsling();
 
     const handleBekreft = () => {
         onClose();
-
-        dispatch<VarslingAction>({
-            type: VarslingActionType.VisVarsling,
+        visVarsling({
             innhold: `Kandidat ${kandidat.fornavn} ${kandidat.etternavn} (${kandidat.fodselsnummer}) er anbefalt til stillingen`,
         });
     };

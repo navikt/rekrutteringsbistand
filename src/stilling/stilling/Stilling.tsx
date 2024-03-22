@@ -10,7 +10,6 @@ import { lenkeTilStilling } from '../../felles/lenker';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
 import store from '../../kandidat/state/reduxStore';
 import DelayedSpinner from '../common/DelayedSpinner';
-import { VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
 import { REMOVE_AD_DATA } from './adDataReducer';
 import Administration from './administration/Administration';
@@ -26,6 +25,7 @@ import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import css from './Stilling.module.css';
 import StillingKandidatKnapper from './StillingKandidatKnapper';
 import VisStillingBanner from './VisStillingBanner';
+import { useVisVarsling } from 'felles/varsling/Varsling';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 
@@ -34,6 +34,7 @@ type QueryParams = { uuid: string };
 const Stilling = () => {
     const params = useParams<{ fane: string | undefined }>();
     const fane = params.fane ?? 'om_stillingen';
+    const visVarsling = useVisVarsling();
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -71,13 +72,6 @@ const Stilling = () => {
         dispatch({ type: EDIT_AD });
     };
 
-    const showRecoveryMessage = (message: string) => {
-        dispatch({
-            type: VarslingActionType.VisVarsling,
-            innhold: message,
-        });
-    };
-
     const fjernRedigeringsmodusFraUrl = () => {
         const newSearchParams = new URLSearchParams(searchParams.toString());
         newSearchParams.delete(REDIGERINGSMODUS_QUERY_PARAM);
@@ -111,9 +105,10 @@ const Stilling = () => {
 
         if (isEditingAd && isSavingAd) {
             enableEditMode();
-            showRecoveryMessage(
-                'Vi beholdt endringene dine, men de er ennå ikke publisert fordi sesjonen din utløp'
-            );
+            visVarsling({
+                innhold:
+                    'Vi beholdt endringene dine, men de er ennå ikke publisert fordi sesjonen din utløp',
+            });
         } else if (uuid) {
             getStilling(uuid, erRedigeringsmodus);
         }

@@ -2,13 +2,14 @@ import { BodyLong, Button, Modal } from '@navikt/ds-react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { VarslingAction, VarslingActionType } from '../../../common/varsling/varslingReducer';
 import { State } from '../../../redux/store';
 import { DELETE_AD, HIDE_DELETE_AD_MODAL } from '../../adReducer';
+import { useVisVarsling } from 'felles/varsling/Varsling';
 
 const DeleteAdModal = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const visVarsling = useVisVarsling();
 
     const { showDeleteAdModal, hasDeletedAd } = useSelector((state: State) => state.ad);
     const title = useSelector((state: State) => state.adData?.title);
@@ -24,12 +25,11 @@ const DeleteAdModal = () => {
                 }
             );
 
-            dispatch<VarslingAction>({
-                type: VarslingActionType.VisVarsling,
+            visVarsling({
                 innhold: `Slettet stilling ${title}`,
             });
         }
-    }, [hasDeletedAd, title, dispatch, navigate]);
+    }, [hasDeletedAd, title, dispatch, navigate, visVarsling]);
 
     const onClose = () => {
         dispatch({ type: HIDE_DELETE_AD_MODAL });

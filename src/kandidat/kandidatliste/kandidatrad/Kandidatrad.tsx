@@ -51,7 +51,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
     const kandidatRadRef = useRef<HTMLDivElement>(null);
 
     const tilstand = useKandidattilstand(kandidat.kandidatnr);
-    const melding = useSendtKandidatmelding(kandidat.fodselsnr);
+    const melding = useSendtKandidatmelding(kandidat.fodselsnr, kandidatliste.stillingId);
     const forespørselOmDelingAvCv = useForespørselOmDelingAvCv(kandidat.aktørid);
 
     useEffect(() => {

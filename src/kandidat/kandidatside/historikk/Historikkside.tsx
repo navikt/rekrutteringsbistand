@@ -1,17 +1,14 @@
 import { Ingress } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
-// import { useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { sendEvent } from 'felles/amplitude';
 import Kandidat from 'felles/domene/kandidat/Kandidat';
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
 import { ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs';
 import { useHentKandidatHistorikk } from '../../../api/kandidat-api/hentKandidatHistorikk';
 import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
-import { fetchSmserForKandidat } from '../../api/api';
 import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
 import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
@@ -29,10 +26,8 @@ const Historikkside: FunctionComponent = () => {
     const kandidatlisteId = queryParams.get(KandidatQueryParam.KandidatlisteId);
 
     const { cv } = useLookupCv(kandidatnr);
-    const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] = useState<
-        Nettressurs<ForespørselOmDelingAvCv[]>
-    >(ikkeLastet());
-    const [smser, setSmser] = useState<Nettressurs<[Sms]>>(ikkeLastet());
+    const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] =
+        useState<Nettressurs<ForespørselOmDelingAvCv[]>>(ikkeLastet());
 
     useEffect(() => {
         const hentForespørslerOmDelingAvCvForKandidat = async (aktørId: string) => {
@@ -40,15 +35,9 @@ const Historikkside: FunctionComponent = () => {
             setForespørslerOmDelingAvCv(suksess(forespørsler));
         };
 
-        const hentSmserForKandidat = async (fnr: string) => {
-            const smser = await fetchSmserForKandidat(fnr);
-            setSmser(suksess(smser));
-        };
-
         if (cv) {
             setForespørslerOmDelingAvCv(lasterInn());
             hentForespørslerOmDelingAvCvForKandidat(cv.aktorId);
-            hentSmserForKandidat(cv.fodselsnummer);
         }
     }, [cv]);
 
@@ -80,7 +69,6 @@ const Historikkside: FunctionComponent = () => {
                 kandidatlister={kandidatlister}
                 aktivKandidatlisteId={kandidatlisteId}
                 forespørslerOmDelingAvCvForKandidat={forespørslerOmDelingAvCv}
-                smser={smser}
             />
         </div>
     );

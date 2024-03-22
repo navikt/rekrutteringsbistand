@@ -1,6 +1,6 @@
 import { MobileFillIcon, MobileIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
-import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
+import { Sms, SmsStatus } from '../../../../api/sms-api/sms';
 import { FunctionComponent } from 'react';
 import MedPopover from '../../med-popover/MedPopover';
 import css from './SmsStatusPopup.module.css';
@@ -20,11 +20,17 @@ type Props = {
 };
 
 const Popuptekst: FunctionComponent<{ sms: Sms }> = ({ sms }) => {
-    const popupTekst =
-        sms.status === SmsStatus.Feil
-            ? 'SMS-en ble dessverre ikke sendt. ' +
-              'En mulig årsak kan være ugyldig telefonnummer i Kontakt- og reservasjonsregisteret.'
-            : 'En SMS blir sendt til kandidaten.';
+    let popupTekst: string;
+
+    if (sms.status === SmsStatus.UnderUtsending) {
+        popupTekst = 'En SMS blir sendt til kandidaten.';
+    } else if (sms.status === SmsStatus.Sendt) {
+        popupTekst = 'En SMS ble sendt til kandidaten.';
+    } else {
+        popupTekst =
+            'SMS-en ble dessverre ikke sendt. ' +
+            'En mulig årsak kan være ugyldig telefonnummer i Kontakt- og reservasjonsregisteret.';
+    }
 
     return (
         <>
@@ -36,8 +42,6 @@ const Popuptekst: FunctionComponent<{ sms: Sms }> = ({ sms }) => {
 };
 
 const SmsStatusIkon: FunctionComponent<Props> = ({ sms }) => {
-    if (sms.status === SmsStatus.IkkeSendt) return null;
-
     return (
         <MedPopover className={css.smsStatusPopup} hjelpetekst={<Popuptekst sms={sms} />}>
             <>

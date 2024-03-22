@@ -40,9 +40,9 @@ import Stilling, {
 } from 'felles/domene/stilling/Stilling';
 import { Nettstatus } from 'felles/nettressurs';
 import { ApiError, fetchDelete, fetchPut } from '../api/apiUtils';
-import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
 import { formatISOString } from '../utils/datoUtils';
+import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
 
 export const FETCH_AD = 'FETCH_AD';
 export const FETCH_AD_BEGIN = 'FETCH_AD_BEGIN';

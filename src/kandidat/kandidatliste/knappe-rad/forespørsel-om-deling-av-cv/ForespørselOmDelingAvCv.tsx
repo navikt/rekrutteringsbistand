@@ -7,13 +7,13 @@ import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKan
 import { Nettstatus } from 'felles/nettressurs';
 import useNavKontor from 'felles/store/navKontor';
 import AppState from '../../../state/AppState';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import { ForespørselOutboundDto } from './Forespørsel';
 import css from './ForespørselOmDelingAvCv.module.css';
 import VelgSvarfrist, { Svarfrist, lagSvarfristPåSekundet } from './VelgSvarfrist';
 import useIkkeForespurteKandidater from './useIkkeForespurteKandidater';
+import {useVisVarsling } from "felles/varsling/Varsling";
 
 type Props = {
     stillingsId: string;
@@ -31,6 +31,7 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
     const [egenvalgtFristFeilmelding, setEgenvalgtFristFeilmelding] = useState<
         string | undefined
     >();
+    const visVarsling = useVisVarsling()
 
     const markerteKandidaterSomIkkeErForespurt = useIkkeForespurteKandidater(markerteKandidater);
     const antallSpurtFraFør =
@@ -63,20 +64,15 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
             });
         };
 
-        const visVarsling = () => {
-            dispatch<VarslingAction>({
-                type: VarslingActionType.VisVarsling,
-                innhold: 'Forespørselen ble sendt til kandidatene',
-                alertType: 'success',
-            });
-        };
 
         if (sendForespørselOmDelingAvCv.kind === Nettstatus.Suksess) {
             lukkModal();
-            visVarsling();
+            visVarsling({
+                innhold: 'Forespørselen ble sendt til kandidatene',
+            });
             fjernMarkeringAvAlleKandidater();
         }
-    }, [sendForespørselOmDelingAvCv.kind, dispatch]);
+    }, [sendForespørselOmDelingAvCv.kind, dispatch, visVarsling]);
 
     const onSvarfristChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSvarfrist(event.target.value as Svarfrist);

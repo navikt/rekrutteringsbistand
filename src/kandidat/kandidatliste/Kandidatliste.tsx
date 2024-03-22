@@ -24,7 +24,6 @@ import useAntallFiltertreff from './hooks/useAntallFiltertreff';
 import useErAlleMarkerte from './hooks/useErAlleMarkerte';
 import useFiltrerteKandidater from './hooks/useFiltrerteKandidater';
 import useHentForespørslerOmDelingAvCv from './hooks/useHentForespørslerOmDelingAvCv';
-import useHentSendteMeldinger from './hooks/useHentSendteMeldinger';
 import useSorterteKandidater from './hooks/useSorterteKandidater';
 import IngenKandidater from './ingen-kandidater/IngenKandidater';
 import Kandidatrad from './kandidatrad/Kandidatrad';
@@ -46,7 +45,6 @@ type Props = {
     onKandidatShare: any;
     onKandidaterAngreArkivering: any;
     onSendSmsClick: any;
-    onLeggTilKandidat: any;
     onToggleArkivert: any;
     skjulBanner?: boolean;
 };
@@ -55,7 +53,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
     kandidatliste,
     onFjernAllMarkering,
     onMarkerKandidater,
-    onLeggTilKandidat,
     onSendSmsClick,
     onKandidatShare,
     onKandidaterAngreArkivering,
@@ -65,17 +62,15 @@ const Kandidatliste: FunctionComponent<Props> = ({
     skjulBanner,
 }) => {
     useMaskerFødselsnumre();
-    useHentSendteMeldinger(kandidatliste.kandidatlisteId);
     useHentForespørslerOmDelingAvCv(kandidatliste.stillingId);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { filter, sms, forespørslerOmDelingAvCv } = useSelector(
+    const { filter, forespørslerOmDelingAvCv } = useSelector(
         (state: AppState) => state.kandidatliste
     );
-    const { sendteMeldinger } = sms;
 
     const filtrerteKandidater = useFiltrerteKandidater(kandidatliste.kandidater);
     const alleFiltrerteErMarkerte = useErAlleMarkerte(filtrerteKandidater);
@@ -176,13 +171,12 @@ const Kandidatliste: FunctionComponent<Props> = ({
                 <>
                     <div className={css.grid}>
                         <div className={css.knapperad}>
-                            {kandidatliste.kanEditere &&
-                                sendteMeldinger.kind === Nettstatus.Suksess && (
-                                    <SmsFeilAlertStripe
-                                        kandidater={kandidatliste.kandidater}
-                                        sendteMeldinger={sendteMeldinger.data}
-                                    />
-                                )}
+                            {kandidatliste.kanEditere && (
+                                <SmsFeilAlertStripe
+                                    kandidater={kandidatliste.kandidater}
+                                    stillingId={kandidatliste.stillingId ?? null}
+                                />
+                            )}
                             {erKobletTilStilling(kandidatliste) &&
                                 forespørslerOmDelingAvCv.kind === Nettstatus.Suksess && (
                                     <FeilVedSendingAvForespørsel
@@ -195,9 +189,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
                                 onSendSmsClick={onSendSmsClick}
                                 onKandidatShare={onKandidatShare}
                                 onKandidaterAngreArkivering={onKandidaterAngreArkivering}
-                                onLeggTilKandidat={onLeggTilKandidat}
                                 visArkiverte={filter.visArkiverte}
-                                sendteMeldinger={sendteMeldinger}
                             >
                                 <Search
                                     label="Søk alle NAV sine sider"

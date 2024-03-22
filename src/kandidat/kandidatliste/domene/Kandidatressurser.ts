@@ -1,5 +1,5 @@
 import { Fødselsnummer, Kandidatnr } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms } from '../../../api/sms-api/sms';
 
 export type Kandidattilstand = {
     markert: boolean;

@@ -1,68 +1,53 @@
+import {
+    AlertType,
+    type VisVarslingAction as RealVisVarslingAction,
+} from 'felles/varsling/Varsling';
 import { ReactNode } from 'react';
-import { takeLatest, put } from 'redux-saga/effects';
-
-const standardVarighet = 4000;
-
-type Alerttype = 'error' | 'warning' | 'info' | 'success';
 
 export type VarslingState = {
-    innhold: ReactNode;
-    alertType: Alerttype;
+    visVarsling?: (prop: RealVisVarslingAction) => void;
 };
 
 const initialState: VarslingState = {
-    innhold: null,
-    alertType: 'info',
+    visVarsling: undefined,
 };
 
 export enum VarslingActionType {
+    SetVisVarsling = 'SET_VIS_VARSLING',
     VisVarsling = 'VIS_VARSLING',
-    SkjulVarsling = 'SKJUL_VARSLING',
 }
 
 type VisVarslingAction = {
     type: VarslingActionType.VisVarsling;
     innhold: ReactNode;
-    alertType?: Alerttype;
+    alertType?: AlertType;
     varighetMs?: number;
 };
 
-type SkjulVarslingAction = {
-    type: VarslingActionType.SkjulVarsling;
+type SetVisVarslingAction = {
+    type: VarslingActionType.SetVisVarsling;
+    visVarsling?: (prop: RealVisVarslingAction) => void;
 };
 
-export type VarslingAction = VisVarslingAction | SkjulVarslingAction;
+export type VarslingAction = SetVisVarslingAction | VisVarslingAction;
 
 const varslingReducer = (
     state: VarslingState = initialState,
     action: VarslingAction
 ): VarslingState => {
     switch (action.type) {
+        case VarslingActionType.SetVisVarsling:
+            const { visVarsling } = action;
+            return { visVarsling };
+
         case VarslingActionType.VisVarsling:
-            const { innhold, alertType = 'success' } = action;
-
-            return {
-                innhold,
-                alertType,
-            };
-
-        case VarslingActionType.SkjulVarsling:
-            return initialState;
+            const { innhold, alertType, varighetMs } = action;
+            state.visVarsling?.({ innhold, alertType, varighetMs });
+            return state;
 
         default:
             return state;
     }
 };
-
-function* skjulVarslingEtterGittVarighet(action: VisVarslingAction) {
-    yield new Promise((resolve) => setTimeout(resolve, action.varighetMs || standardVarighet));
-    yield put({
-        type: VarslingActionType.SkjulVarsling,
-    });
-}
-
-export function* varslingSaga() {
-    yield takeLatest(VarslingActionType.VisVarsling, skjulVarslingEtterGittVarighet);
-}
 
 export default varslingReducer;
