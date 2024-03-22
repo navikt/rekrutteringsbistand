@@ -18,7 +18,7 @@ const useSøkekriterierFraStilling = (
     const county =
         (stilling.kind === Nettstatus.Suksess && stilling.data?.stilling.location.county) || null;
 
-    const { suggestions: fylker } = useSuggestSted({ query: county });
+    const { suggestions: fylker, isLoading: fylkeIsLoading } = useSuggestSted({ query: county });
 
     useEffect(() => {
         const anvendSøkekriterier = async (stilling: Stilling) => {
@@ -35,7 +35,8 @@ const useSøkekriterierFraStilling = (
         if (
             stilling.kind === Nettstatus.Suksess &&
             brukKriterierFraStillingen &&
-            søkeKriterierIkkeLagtTil(searchParams, !!fylker)
+            søkeKriterierIkkeLagtTil(searchParams) &&
+            !fylkeIsLoading
         ) {
             anvendSøkekriterier(stilling.data);
         }
@@ -86,7 +87,7 @@ const hentØnsketStedFraStilling = async (
     }
 };
 
-const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams, harFylker: boolean) =>
+const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams) =>
     Array.from(searchParams.keys()).every(
         (param) => param === KandidatsokQueryParam.Kandidatliste
     ) || Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Stilling);
