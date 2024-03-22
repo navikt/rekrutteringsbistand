@@ -5,7 +5,6 @@ import {
     KandidatStillingssøkDTO,
     useKandidatStillingssøk,
 } from '../../../api/kandidat-søk-api/kandidatStillingssøk';
-// import fylkerOgKommuner from '../filter/geografi/fylkerOgKommuner.json';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';

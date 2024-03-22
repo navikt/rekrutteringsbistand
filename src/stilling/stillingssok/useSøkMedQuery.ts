@@ -1,9 +1,8 @@
 import { sendEvent } from 'felles/amplitude';
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FylkeDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
-import { KommuneDTO, useHentKommuner } from '../../api/stillings-api/hentKommuner';
 import { Stillingskategori } from '../../felles/domene/stilling/Stilling';
 import { søk } from './api/api';
 import { lagQuery } from './api/queries/queries';
@@ -30,24 +29,14 @@ const useSøkMedQuery = ({
     const { standardsøk } = useStandardsøk();
     const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);
 
-    const [kommuneNummer, setKommuneNummer] = useState<string[]>();
-    const [fylker, setFylker] = useState<FylkeDTO[]>();
+    const { data: fylkeData } = useHentFylker();
 
-    const kommuneData = useHentKommuner();
-    const fylkeData = useHentFylker();
-
-    useEffect(() => {
-        if (!kommuneNummer && kommuneData.data && !kommuneData.isLoading) {
-            const kommunenummer = kommuneData.data.map((kommune: KommuneDTO) => kommune.code);
-            setKommuneNummer(kommunenummer);
-        }
-    }, [kommuneData.data, kommuneNummer, kommuneData.isLoading]);
-
-    useEffect(() => {
-        if (!fylker && fylkeData.data && !fylkeData.isLoading) {
-            setFylker(fylkeData.data);
-        }
-    }, [fylkeData.data, fylker, fylkeData.isLoading]);
+    const hentFylkeNavn = useCallback(
+        (fylke: string) => {
+            return fylkeData?.find((f: FylkeDTO) => f.code === fylke)?.name ?? 'Ukjent fylke';
+        },
+        [fylkeData]
+    );
 
     useEffect(() => {
         const skalBrukeStandardsøk = searchParams.has(QueryParam.BrukStandardsøk);
@@ -69,10 +58,8 @@ const useSøkMedQuery = ({
         const harByttetSide = state?.harByttetSide;
         const resetSidetall = !harByttetSide && søkekriterier.side > 1;
 
-        if (fylkerUtenValgteKommuner && kommuneNummer && fylker) {
-            const fylkeNavn = fylkerUtenValgteKommuner.map(
-                (fylke) => fylker.find((f) => f.code === fylke)?.name ?? 'Ukjent fylke'
-            );
+        if (fylkerUtenValgteKommuner) {
+            const fylkeNavn = fylkerUtenValgteKommuner.map((f) => hentFylkeNavn(f));
 
             søkekriterier = {
                 ...søkekriterier,
@@ -110,8 +97,7 @@ const useSøkMedQuery = ({
         ikkePubliserte,
         overstyrValgteStillingskategorier,
         fallbackIngenValgteStillingskategorier,
-        kommuneNummer,
-        fylker,
+        hentFylkeNavn,
     ]);
 
     useEffect(() => {

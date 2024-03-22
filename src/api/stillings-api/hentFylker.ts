@@ -2,7 +2,7 @@
  * Endepunkt /hentFylker
  */
 import { HttpResponse, http } from 'msw';
-import useSWR from 'swr';
+import useSWRImmutable from 'swr';
 import { z } from 'zod';
 import { getAPI } from '../fetcher';
 
@@ -22,14 +22,15 @@ export type FylkeDTO = z.infer<typeof fylkeSchema>;
 export interface HentFylkerProps {}
 
 export const useHentFylker = () => {
-    const swrData = useSWR(hentFylkerEndepunkt, getAPI);
+    const swrData = useSWRImmutable(hentFylkerEndepunkt, getAPI);
 
-    if (swrData.data) {
-        return {
-            ...swrData,
-            data: hentFylkerSchema.parse(swrData.data),
-        };
-    }
+    // TODO Implementer  / bytt ut når getApiWithSchema er implementert
+    // if (swrData.data) {
+    //     return {
+    //         ...swrData,
+    //         data: hentFylkerSchema.parse(swrData.data),
+    //     };
+    // }
     return swrData;
 };
 

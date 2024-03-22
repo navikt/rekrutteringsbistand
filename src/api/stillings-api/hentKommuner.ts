@@ -2,7 +2,7 @@
  * Endepunkt /hentKommuner
  */
 import { HttpResponse, http } from 'msw';
-import useSWR from 'swr';
+import useSWRImmutable from 'swr';
 import { z } from 'zod';
 import { getAPI } from '../fetcher';
 
@@ -22,7 +22,7 @@ export type HentKommunerDTO = z.infer<typeof hentKommunerSchema>;
 export type KommuneDTO = z.infer<typeof kommuneSchema>;
 
 export const useHentKommuner = () => {
-    const swrData = useSWR(hentKommunerEndepunkt, getAPI);
+    const swrData = useSWRImmutable(hentKommunerEndepunkt, getAPI);
 
     if (swrData.data) {
         return {
