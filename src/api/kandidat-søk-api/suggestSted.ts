@@ -18,11 +18,11 @@ export type SuggestionsSted = z.infer<typeof suggestionsStedSchema>;
 export type SuggestionsSteder = z.infer<typeof suggestionsStederSchema>;
 
 export interface SuggestStedProps {
-    query: string;
+    query: string | null;
 }
 
 export const useSuggestSted = (props: SuggestStedProps) => {
-    const harNokTegn = props.query.length >= 2;
+    const harNokTegn = props.query && props.query.length >= 2;
     const swr = useSWR(harNokTegn ? { path: suggestStedEndepunkt, props } : undefined, ({ path }) =>
         postApi(path, props)
     );

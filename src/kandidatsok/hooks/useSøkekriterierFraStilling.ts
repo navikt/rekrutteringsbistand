@@ -1,14 +1,12 @@
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { suggest } from '../api/api';
-import byggSuggestion, { Forslagsfelt } from '../api/query/byggSuggestion';
 import { encodeGeografiforslag } from '../filter/jobbønsker/ØnsketSted';
-import { Geografiforslag } from './useGeografiSuggestions';
 import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
 import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 import { KandidatsokQueryParam } from 'felles/lenker';
+import { SuggestionsSteder, useSuggestSted } from '../../api/kandidat-søk-api/suggestSted';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
@@ -17,13 +15,18 @@ const useSøkekriterierFraStilling = (
     const { setSearchParam } = useSøkekriterier();
     const [searchParams] = useSearchParams();
 
+    const county =
+        (stilling.kind === Nettstatus.Suksess && stilling.data?.stilling.location.county) || null;
+
+    const { suggestions: fylker, isLoading: fylkeIsLoading } = useSuggestSted({ query: county });
+
     useEffect(() => {
         const anvendSøkekriterier = async (stilling: Stilling) => {
             const yrkerFraStilling = hentØnsketYrkeFraStilling(stilling);
 
             setSearchParam(FilterParam.ØnsketYrke, yrkerFraStilling);
 
-            const stedFraStilling = await hentØnsketStedFraStilling(stilling);
+            const stedFraStilling = await hentØnsketStedFraStilling(stilling, fylker);
             if (stedFraStilling) {
                 setSearchParam(FilterParam.ØnsketSted, stedFraStilling);
             }
@@ -32,12 +35,13 @@ const useSøkekriterierFraStilling = (
         if (
             stilling.kind === Nettstatus.Suksess &&
             brukKriterierFraStillingen &&
-            søkeKriterierIkkeLagtTil(searchParams)
+            søkeKriterierIkkeLagtTil(searchParams) &&
+            !fylkeIsLoading
         ) {
             anvendSøkekriterier(stilling.data);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stilling, brukKriterierFraStillingen]);
+    }, [stilling, brukKriterierFraStillingen, fylker]);
 };
 
 const hentØnsketYrkeFraStilling = (stilling: Stilling) => {
@@ -51,7 +55,10 @@ const hentØnsketYrkeFraStilling = (stilling: Stilling) => {
         .join(LISTEPARAMETER_SEPARATOR);
 };
 
-const hentØnsketStedFraStilling = async (stilling: Stilling): Promise<string | null> => {
+const hentØnsketStedFraStilling = async (
+    stilling: Stilling,
+    fylker: SuggestionsSteder | undefined
+): Promise<string | null> => {
     const { location } = stilling.stilling;
     const { municipal, municipalCode, county } = location;
 
@@ -63,10 +70,10 @@ const hentØnsketStedFraStilling = async (stilling: Stilling): Promise<string | 
             geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
         });
     } else if (county) {
-        const fylkeFraEs = await hentFylkeskodeMedFylkesnavn(county);
+        const fylke = fylker && fylker.length > 0 ? fylker[0] : undefined;
 
-        if (fylkeFraEs) {
-            const { geografiKode, geografiKodeTekst } = fylkeFraEs;
+        if (fylke) {
+            const { geografiKode, geografiKodeTekst } = fylke;
 
             return encodeGeografiforslag({
                 geografiKode,
@@ -78,17 +85,6 @@ const hentØnsketStedFraStilling = async (stilling: Stilling): Promise<string | 
     } else {
         return null;
     }
-};
-
-const hentFylkeskodeMedFylkesnavn = async (
-    fylkesnavn: string
-): Promise<Geografiforslag | undefined> => {
-    const respons = await suggest(byggSuggestion(Forslagsfelt.ØnsketSted, fylkesnavn, 20, true));
-    const forslag = respons.suggest.forslag[0].options.find(
-        (option) => option.text.toLowerCase() === fylkesnavn.toLowerCase()
-    );
-
-    return forslag?._source as Geografiforslag;
 };
 
 const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams) =>

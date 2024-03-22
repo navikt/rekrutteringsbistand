@@ -1,48 +1,37 @@
 import { Alert, Loader } from '@navikt/ds-react';
 import * as React from 'react';
-import { useEffect } from 'react';
-import {
-    IuseKandidatNavnSøk,
-    KandidatKilde,
-    useKandidatNavnSøk,
-} from '../../../api/kandidat-api/useKandidatNavn';
+import { KandidatKilde, useHentKandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
 
 export interface IKandidatNavn {
     fnr: string;
-    callback: (resultat: IuseKandidatNavnSøk) => void;
 }
 
-const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr, callback }) => {
-    const resultat = useKandidatNavnSøk(fnr);
-    const { fornavn, mellomnavn, etternavn, laster, kilde } = resultat;
+const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr }) => {
+    const { navn, isLoading } = useHentKandidatnavn({ fodselsnummer: fnr });
 
-    useEffect(() => {
-        callback(resultat);
-    }, [callback, resultat]);
-
-    if (laster) {
+    if (isLoading) {
         return <Loader size="medium" />;
     }
 
-    if (kilde === KandidatKilde.REKRUTTERINGSBISTAND) {
+    if (navn?.kilde === KandidatKilde.REKRUTTERINGSBISTAND) {
         return (
             <div style={{ marginTop: '1rem' }}>
                 <strong>Navn</strong>
                 <br />
                 <span>
-                    {fornavn} {mellomnavn} {etternavn}
+                    {navn?.fornavn} {navn?.etternavn}
                 </span>
             </div>
         );
     }
 
-    if (kilde === KandidatKilde.PDL) {
+    if (navn?.kilde === KandidatKilde.PDL) {
         return (
             <div style={{ marginTop: '1rem' }}>
                 <strong>Kandidaten er hentet fra folkeregistret</strong>
                 <br />
                 <span>
-                    {fornavn} {mellomnavn} {etternavn}
+                    {navn?.fornavn} {navn?.etternavn}
                 </span>
             </div>
         );
