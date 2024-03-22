@@ -9,9 +9,9 @@ import { Portefølje } from '../../kandidatsok/filter/porteføljetabs/Portefølj
 import { FiltrerbarInnsatsgruppe } from '../../kandidatsok/filter/Jobbmuligheter';
 import { Nivå } from '../../kandidatsok/filter/Utdanningsnivå';
 import { PrioritertMålgruppe } from '../../kandidatsok/filter/prioriterte-målgrupper/PrioriterteMålgrupper';
-import { Klasse } from '../../kandidatsok/api/query/queryMedFørerkort';
 import { Mål } from '../../kandidatsok/filter/Hovedmål';
 import { mockKandidatsøkKandidater } from './mockKandidatsøk';
+import { Førerkortklasse } from '../../kandidatsok/hooks/useSøkekriterier';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
 
@@ -65,7 +65,7 @@ export type SøkekriterierDto = {
     ønsketSted: Set<string>;
     borPåØnsketSted: boolean | null;
     kompetanse: Set<string>;
-    førerkort: Set<Klasse>;
+    førerkort: Set<Førerkortklasse>;
     prioritertMålgruppe: Set<PrioritertMålgruppe>;
     hovedmål: Set<Mål>;
     utdanningsnivå: Set<Nivå>;

@@ -8,7 +8,6 @@ export const api = {
     sms: '/sms-api',
     synlighet: '/synlighet-api',
     kandidat: '/kandidat-api',
-    kandidatsøk: '/kandidatsok-proxy',
     forespørselOmDelingAvCv: '/foresporsel-om-deling-av-cv-api',
     presenterteKandidaterApi: '/presenterte-kandidater-api',
     modiaContextHolder: '/modiacontextholder/api',
