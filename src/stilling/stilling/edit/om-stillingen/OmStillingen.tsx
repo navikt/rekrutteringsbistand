@@ -1,5 +1,5 @@
 import { TextField } from '@navikt/ds-react';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Stilling from 'felles/domene/stilling/Stilling';
@@ -11,9 +11,10 @@ import Styrk from './styrk/Styrk';
 
 type Props = {
     stilling: Stilling;
+    erFormidling: boolean;
 };
 
-const OmStillingen = ({ stilling }: Props) => {
+const OmStillingen = ({ stilling, erFormidling }: Props) => {
     const dispatch = useDispatch();
     const errors = useSelector((state: State) => state.adValidation.errors);
 
@@ -31,6 +32,12 @@ const OmStillingen = ({ stilling }: Props) => {
         dispatch({ type: SET_AD_TEXT, adtext });
     };
 
+    useEffect(() => {
+        if (erFormidling) {
+            dispatch({ type: SET_AD_TEXT, adtext: 'Formidling' });
+        }
+    }, [erFormidling, dispatch]);
+
     return (
         <>
             <Styrk />
@@ -39,18 +46,20 @@ const OmStillingen = ({ stilling }: Props) => {
                 label="Yrkestittel som vises på stillingen"
                 onChange={handleYrkestittelChange}
             />
-            <div>
-                <Skjemalabel påkrevd inputId="endre-stilling-annonsetekst">
-                    Annonsetekst
-                </Skjemalabel>
-                <RichTextEditor
-                    id="endre-stilling-annonsetekst"
-                    text={stilling.properties.adtext ?? ''}
-                    onChange={onAdTextChange}
-                    errorMessage={errors.adText}
-                    ariaDescribedBy="stillingstekst"
-                />
-            </div>
+            {!erFormidling && (
+                <div>
+                    <Skjemalabel påkrevd inputId="endre-stilling-annonsetekst">
+                        Annonsetekst
+                    </Skjemalabel>
+                    <RichTextEditor
+                        id="endre-stilling-annonsetekst"
+                        text={stilling.properties.adtext ?? ''}
+                        onChange={onAdTextChange}
+                        errorMessage={errors.adText}
+                        ariaDescribedBy="stillingstekst"
+                    />
+                </div>
+            )}
         </>
     );
 };

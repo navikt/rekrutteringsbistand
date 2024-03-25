@@ -3,7 +3,12 @@ import { ReactNode, useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
-import { hentTittelFraStilling, Status, System } from 'felles/domene/stilling/Stilling';
+import {
+    hentTittelFraStilling,
+    Status,
+    Stillingskategori,
+    System,
+} from 'felles/domene/stilling/Stilling';
 import { useMeg } from '../../api/frackend/meg';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
@@ -45,6 +50,8 @@ const Stilling = () => {
     const navigate = useNavigate();
     const stilling = useSelector((state: State) => state.adData);
     const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
+
+    const erFormidling = stillingsinfo.stillingskategori === Stillingskategori.Formidling;
 
     const { kandidatlisteId } = useKandidatlisteId(uuid);
 
@@ -176,10 +183,14 @@ const Stilling = () => {
                                             erEier={erEier}
                                         />
                                         {optionalTittel}
-                                        <Forhåndsvisning stilling={stilling} />
+                                        <Forhåndsvisning
+                                            stilling={stilling}
+                                            erFormidling={erFormidling}
+                                        />
                                     </>
                                 ) : (
                                     <Edit
+                                        erFormidling={erFormidling}
                                         innloggetBruker={navIdent}
                                         onPreviewAdClick={onPreviewAdClick}
                                     />
@@ -195,7 +206,7 @@ const Stilling = () => {
                                     />
                                 )}
                                 {optionalTittel}
-                                <Forhåndsvisning stilling={stilling} />
+                                <Forhåndsvisning stilling={stilling} erFormidling={erFormidling} />
                             </>
                         )}
                     </div>

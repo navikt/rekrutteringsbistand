@@ -13,14 +13,19 @@ import Søknad from './søknad/Søknad';
 
 type Props = {
     stilling: Stilling;
+    erFormidling: boolean;
 };
 
-const Forhåndsvisning = ({ stilling }: Props) => {
+const Forhåndsvisning = ({ stilling, erFormidling }: Props) => {
     return (
         <div className={css.forhåndsvisning}>
             <div className={css.venstre}>
                 <Panel as="article" className={css.annonsetekst}>
-                    {parse(stilling.properties.adtext || '')}
+                    {erFormidling ? (
+                        <span>Formidling</span>
+                    ) : (
+                        parse(stilling.properties.adtext || '')
+                    )}
                 </Panel>
                 {erDirektemeldtStilling(stilling.source) && (
                     <MulighetForÅInkludere tags={stilling.properties.tags} />

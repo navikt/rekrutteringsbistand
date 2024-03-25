@@ -25,9 +25,16 @@ type Props = {
     onPreviewAdClick: () => void;
     resetValidation: () => void;
     stilling: Stilling;
+    erFormidling: boolean;
 };
 
-const Edit = ({ innloggetBruker, stilling, onPreviewAdClick, resetValidation }: Props) => {
+const Edit = ({
+    innloggetBruker,
+    stilling,
+    onPreviewAdClick,
+    resetValidation,
+    erFormidling,
+}: Props) => {
     const stillingenErEkstern = stilling.createdBy !== System.Rekrutteringsbistand;
 
     useEffect(() => {
@@ -66,7 +73,7 @@ const Edit = ({ innloggetBruker, stilling, onPreviewAdClick, resetValidation }: 
                         <RegistrerInkluderingsmuligheter />
                     </Seksjon>
                     <Seksjon spacing tittel="Om stillingen">
-                        <OmStillingen stilling={stilling} />
+                        <OmStillingen stilling={stilling} erFormidling={erFormidling} />
                     </Seksjon>
                 </Accordion>
                 <Accordion className={classNames(css.høyre, css.accordions)}>
