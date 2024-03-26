@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import { Typeahead } from '../typeahead/Typeahead';
@@ -17,44 +17,44 @@ const ØnsketSted = () => {
     const { data: kommuner, isLoading: kommunerIsLoading } = useHentKommuner();
     const { data: landliste, isLoading: landlisteIsLoading } = useHentLandliste();
 
-    if (fylkerIsLoading || kommunerIsLoading || landlisteIsLoading) {
-        return null;
-    }
+    const filteredSuggestions = useMemo(() => {
+        if (fylkerIsLoading || kommunerIsLoading || landlisteIsLoading) {
+            return null;
+        }
 
-    const fylkeSteder: SuggestionsSted[] = fylker.map((fylke: FylkeDTO) => {
-        return {
-            geografiKode: `NO${fylke.code}`,
-            geografiKodeTekst: fylke.capitalizedName,
-        };
-    });
+        const fylkeSteder: SuggestionsSted[] = fylker.map((fylke: FylkeDTO) => {
+            return {
+                geografiKode: `NO${fylke.code}`,
+                geografiKodeTekst: fylke.capitalizedName,
+            };
+        });
 
-    const kommuneSteder: SuggestionsSted[] = kommuner.map((kommune: KommuneDTO) => {
-        return {
-            geografiKode: `NO${kommune.countyCode}.${kommune.code}`,
-            geografiKodeTekst: kommune.capitalizedName,
-        };
-    });
+        const kommuneSteder: SuggestionsSted[] = kommuner.map((kommune: KommuneDTO) => {
+            return {
+                geografiKode: `NO${kommune.countyCode}.${kommune.code}`,
+                geografiKodeTekst: kommune.capitalizedName,
+            };
+        });
 
-    const landSteder: SuggestionsSted[] = landliste.map((land: LandDTO) => {
-        return {
-            geografiKode: `${land.code}`,
-            geografiKodeTekst: land.capitalizedName,
-        };
-    });
+        const landSteder: SuggestionsSted[] = landliste.map((land: LandDTO) => {
+            return {
+                geografiKode: `${land.code}`,
+                geografiKodeTekst: land.capitalizedName,
+            };
+        });
 
-    const unikeKommuneSteder = kommuneSteder.filter(
-        (kommune) =>
-            !new Set(fylkeSteder.map((fylke) => fylke.geografiKodeTekst.toLowerCase())).has(
-                kommune.geografiKodeTekst.toLowerCase()
-            )
-    );
+        const unikeKommuneSteder = kommuneSteder.filter(
+            (kommune) =>
+                !new Set(fylkeSteder.map((fylke) => fylke.geografiKodeTekst.toLowerCase())).has(
+                    kommune.geografiKodeTekst.toLowerCase()
+                )
+        );
 
-    const suggestions = [...fylkeSteder, ...unikeKommuneSteder, ...landSteder];
+        const suggestions = [...fylkeSteder, ...unikeKommuneSteder, ...landSteder];
 
-    const inputNormalized = input.toLowerCase();
+        const inputNormalized = input.toLowerCase();
 
-    const filteredSuggestions =
-        inputNormalized && inputNormalized.length > 1
+        return inputNormalized && inputNormalized.length > 1
             ? suggestions
                   .filter((suggestion) =>
                       suggestion.geografiKodeTekst.toLowerCase().includes(inputNormalized)
@@ -62,11 +62,21 @@ const ØnsketSted = () => {
                   .sort((a, b) => {
                       return (
                           a.geografiKodeTekst.toLowerCase().indexOf(inputNormalized) -
-                          b.geografiKodeTekst.toLowerCase().indexOf(inputNormalized)
+                              b.geografiKodeTekst.toLowerCase().indexOf(inputNormalized) ||
+                          a.geografiKodeTekst.length - b.geografiKodeTekst.length
                       );
                   })
                   .slice(0, 10)
             : [];
+    }, [
+        input,
+        fylker,
+        kommuner,
+        landliste,
+        fylkerIsLoading,
+        kommunerIsLoading,
+        landlisteIsLoading,
+    ]);
 
     const valgteSteder = Array.from(søkekriterier.ønsketSted).map((encoded) =>
         decodeGeografiforslag(encoded)
@@ -111,7 +121,11 @@ const ØnsketSted = () => {
             description="Hvor ønsker kandidaten å jobbe?"
             allowUnmatchedInputs={false}
             value={input}
-            suggestions={filteredSuggestions.map((forslag) => forslag.geografiKodeTekst)}
+            suggestions={
+                filteredSuggestions
+                    ? filteredSuggestions.map((forslag) => forslag.geografiKodeTekst)
+                    : []
+            }
             selectedSuggestions={valgteSteder.map((valgt) => valgt.geografiKodeTekst)}
             onRemoveSuggestion={onFjernValgtSted}
             onSelect={onSelect}
