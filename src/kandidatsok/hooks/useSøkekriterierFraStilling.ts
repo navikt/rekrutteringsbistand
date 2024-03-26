@@ -1,5 +1,5 @@
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { encodeGeografiforslag } from '../filter/jobbønsker/ØnsketSted';
 import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
@@ -14,6 +14,7 @@ const useSøkekriterierFraStilling = (
 ) => {
     const { setSearchParam } = useSøkekriterier();
     const [searchParams] = useSearchParams();
+    const [harLagtTilKriterier, setHarLagtTilKriterier] = useState(false);
 
     const county =
         (stilling.kind === Nettstatus.Suksess && stilling.data?.stilling.location.county) || null;
@@ -30,13 +31,15 @@ const useSøkekriterierFraStilling = (
             if (stedFraStilling) {
                 setSearchParam(FilterParam.ØnsketSted, stedFraStilling);
             }
+            setHarLagtTilKriterier(true);
         };
 
         if (
             stilling.kind === Nettstatus.Suksess &&
             brukKriterierFraStillingen &&
             søkeKriterierIkkeLagtTil(searchParams) &&
-            !fylkeIsLoading
+            !fylkeIsLoading &&
+            !harLagtTilKriterier
         ) {
             anvendSøkekriterier(stilling.data);
         }
