@@ -2,14 +2,42 @@ import React, { useState } from 'react';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import { Typeahead } from '../typeahead/Typeahead';
-import { SuggestionsSted, useSuggestSted } from '../../../api/kandidat-søk-api/suggestSted';
+import { SuggestionsSted } from '../../../api/kandidat-søk-api/suggestSted';
+import { KommuneDTO, useHentKommuner } from '../../../api/stillings-api/hentKommuner';
+import { FylkeDTO, useHentFylker } from '../../../api/stillings-api/hentFylker';
 
 export const GEOGRAFI_SEPARATOR = '.';
 
 const ØnsketSted = () => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const [input, setInput] = useState<string>('');
-    const { suggestions } = useSuggestSted({ query: input });
+
+    const { data: fylker, isLoading: fylkerIsLoading } = useHentFylker();
+    const { data: kommuner, isLoading: kommunerIsLoading } = useHentKommuner();
+
+    if (fylkerIsLoading || kommunerIsLoading) {
+        return null;
+    }
+
+    const fylkeSteder: SuggestionsSted[] = fylker.map((fylke: FylkeDTO) => {
+        return {
+            geografiKode: fylke.code,
+            geografiKodeTekst: fylke.name,
+        };
+    });
+
+    const kommuneSteder: SuggestionsSted[] = kommuner.map((kommune: KommuneDTO) => {
+        return {
+            geografiKode: kommune.code,
+            geografiKodeTekst: kommune.name,
+        };
+    });
+
+    const suggestions = [...fylkeSteder, ...kommuneSteder];
+
+    suggestions.sort((a, b) => {
+        return a.geografiKodeTekst.localeCompare(b.geografiKodeTekst);
+    });
 
     const valgteSteder = Array.from(søkekriterier.ønsketSted).map((encoded) =>
         decodeGeografiforslag(encoded)
