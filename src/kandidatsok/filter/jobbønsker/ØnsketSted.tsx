@@ -5,6 +5,7 @@ import { Typeahead } from '../typeahead/Typeahead';
 import { SuggestionsSted } from '../../../api/kandidat-søk-api/suggestSted';
 import { KommuneDTO, useHentKommuner } from '../../../api/stillings-api/hentKommuner';
 import { FylkeDTO, useHentFylker } from '../../../api/stillings-api/hentFylker';
+import { LandDTO, useHentLandliste } from '../../../api/stillings-api/hentLand';
 
 export const GEOGRAFI_SEPARATOR = '.';
 
@@ -14,26 +15,34 @@ const ØnsketSted = () => {
 
     const { data: fylker, isLoading: fylkerIsLoading } = useHentFylker();
     const { data: kommuner, isLoading: kommunerIsLoading } = useHentKommuner();
+    const { data: landliste, isLoading: landlisteIsLoading } = useHentLandliste();
 
-    if (fylkerIsLoading || kommunerIsLoading) {
+    if (fylkerIsLoading || kommunerIsLoading || landlisteIsLoading) {
         return null;
     }
 
     const fylkeSteder: SuggestionsSted[] = fylker.map((fylke: FylkeDTO) => {
         return {
-            geografiKode: fylke.code,
-            geografiKodeTekst: fylke.name,
+            geografiKode: `NO${fylke.code}`,
+            geografiKodeTekst: fylke.capitalizedName,
         };
     });
 
     const kommuneSteder: SuggestionsSted[] = kommuner.map((kommune: KommuneDTO) => {
         return {
-            geografiKode: kommune.code,
-            geografiKodeTekst: kommune.name,
+            geografiKode: `NO${kommune.countyCode}.${kommune.code}`,
+            geografiKodeTekst: kommune.capitalizedName,
         };
     });
 
-    const suggestions = [...fylkeSteder, ...kommuneSteder];
+    const landSteder: SuggestionsSted[] = landliste.map((land: LandDTO) => {
+        return {
+            geografiKode: `${land.code}`,
+            geografiKodeTekst: land.capitalizedName,
+        };
+    });
+
+    const suggestions = [...fylkeSteder, ...kommuneSteder, ...landSteder];
 
     suggestions.sort((a, b) => {
         return a.geografiKodeTekst.localeCompare(b.geografiKodeTekst);
