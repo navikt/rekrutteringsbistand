@@ -42,11 +42,31 @@ const ØnsketSted = () => {
         };
     });
 
-    const suggestions = [...fylkeSteder, ...kommuneSteder, ...landSteder];
+    const unikeKommuneSteder = kommuneSteder.filter(
+        (kommune) =>
+            !new Set(fylkeSteder.map((fylke) => fylke.geografiKodeTekst.toLowerCase())).has(
+                kommune.geografiKodeTekst.toLowerCase()
+            )
+    );
 
-    suggestions.sort((a, b) => {
-        return a.geografiKodeTekst.localeCompare(b.geografiKodeTekst);
-    });
+    const suggestions = [...fylkeSteder, ...unikeKommuneSteder, ...landSteder];
+
+    const inputNormalized = input.toLowerCase();
+
+    const filteredSuggestions =
+        inputNormalized && inputNormalized.length > 1
+            ? suggestions
+                  .filter((suggestion) =>
+                      suggestion.geografiKodeTekst.toLowerCase().includes(inputNormalized)
+                  )
+                  .sort((a, b) => {
+                      return (
+                          a.geografiKodeTekst.toLowerCase().indexOf(inputNormalized) -
+                          b.geografiKodeTekst.toLowerCase().indexOf(inputNormalized)
+                      );
+                  })
+                  .slice(0, 10)
+            : [];
 
     const valgteSteder = Array.from(søkekriterier.ønsketSted).map((encoded) =>
         decodeGeografiforslag(encoded)
@@ -55,8 +75,8 @@ const ØnsketSted = () => {
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 
     const onSelect = (selection: string) => {
-        if (suggestions) {
-            const korresponderendeForslag = suggestions.find(
+        if (filteredSuggestions) {
+            const korresponderendeForslag = filteredSuggestions.find(
                 (forslag) => forslag.geografiKodeTekst === selection
             );
 
@@ -91,7 +111,7 @@ const ØnsketSted = () => {
             description="Hvor ønsker kandidaten å jobbe?"
             allowUnmatchedInputs={false}
             value={input}
-            suggestions={suggestions.map((forslag) => forslag.geografiKodeTekst)}
+            suggestions={filteredSuggestions.map((forslag) => forslag.geografiKodeTekst)}
             selectedSuggestions={valgteSteder.map((valgt) => valgt.geografiKodeTekst)}
             onRemoveSuggestion={onFjernValgtSted}
             onSelect={onSelect}
