@@ -16,13 +16,13 @@ describe('FylkerOgKommuner', () => {
     });
 
     it('Viser fylker checkbox', async () => {
-        await waitFor(() => expect(screen.getByText('Fylke 1')).toBeInTheDocument());
-        expect(screen.getByText('Fylke 1')).toBeInTheDocument();
+        await waitFor(() => expect(screen.getByText('Akershus')).toBeInTheDocument());
+        expect(screen.getByText('Akershus')).toBeInTheDocument();
     });
 
     it('Viser kommuner for fylke1', async () => {
-        await waitFor(() => expect(screen.getByText('Fylke 1')).toBeInTheDocument());
-        userEvent.click(screen.getByText('Fylke 1'));
-        await waitFor(() => expect(screen.getByText('Kommune1')).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText('Akershus')).toBeInTheDocument());
+        userEvent.click(screen.getByText('Akershus'));
+        await waitFor(() => expect(screen.getByText('Akershus')).toBeInTheDocument());
     });
 });
