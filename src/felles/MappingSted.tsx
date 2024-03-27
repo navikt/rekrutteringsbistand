@@ -6,6 +6,15 @@ export const finnAlleVersjonerAvStedkoder = (sted2024: Set<string>): Set<string>
     return new Set(resultatArray);
 };
 
+export const finn2024KodeForGammelKode = (gammelKode: string): string => {
+    for (let [nøkkel2024, tidligereKoder] of stedMapping2024.entries()) {
+        if (tidligereKoder.includes(gammelKode)) {
+            return nøkkel2024;
+        }
+    }
+    return gammelKode;
+};
+
 const stedMapping2024 = new Map<string, string[]>([
     // Oslo
 
@@ -87,21 +96,22 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Buskerud.NO33', ['Buskerud.NO06', 'Viken.NO30']],
     [
         'Drammen.NO33.3301',
-        ['Drammen.NO06.0602', 'Drammen.NO30.3005', 'Svelvik.NO07.0711', 'Nedre Eiker.NO06.0625'],
+        ['Drammen.NO06.0602', 'Svelvik.NO07.0711', 'Nedre Eiker.NO06.0625', 'Drammen.NO30.3005'],
     ],
     ['Kongsberg.NO33.3303', ['Kongsberg.NO06.0604', 'Kongsberg.NO30.3006']],
     ['Ringerike.NO33.3305', ['Ringerike.NO06.0605', 'Ringerike.NO30.3007']],
     ['Hole.NO33.3310', ['Hole.NO06.0612', 'Hole.NO30.3038']],
-    ['Øvre Eiker.NO33.3314', ['Øvre Eiker.NO06.0624', 'Øvre Eiker.NO30.3048']],
-    ['Nedre Eiker.NO33.3301', ['Nedre Eiker.NO06.0625', 'Drammen.NO30.3005']],
     ['Lier.NO33.3312', ['Lier.NO06.0626', 'Lier.NO30.3049']],
+    ['Øvre Eiker.NO33.3314', ['Øvre Eiker.NO06.0624', 'Øvre Eiker.NO30.3048']],
     ['Modum.NO33.3316', ['Modum.NO06.0623', 'Modum.NO30.3047']],
+    ['Krødsherad.NO33.3318', ['Krødsherad.NO06.0622', 'Krødsherad.NO30.3046']],
+    ['Flå.NO33.3320', ['Flå.NO06.0615', 'Flå.NO30.3039']],
+    ['Nesbyen.NO33.3322', ['Nes.NO06.0616', 'Nesbyen.NO30.3040']],
+    ['Gol.NO33.3324', ['Gol.NO06.0617', 'Gol.NO30.3041']],
+    ['Hemsedal.NO33.3326', ['Hemsedal.NO06.0618', 'Hemsedal.NO30.3042']],
     ['Ål.NO33.3328', ['Ål.NO06.0619', 'Ål.NO30.3043']],
     ['Hol.NO33.3330', ['Hol.NO06.0620', 'Hol.NO30.3044']],
     ['Sigdal.NO33.3332', ['Sigdal.NO06.0621', 'Sigdal.NO30.3045']],
-    ['Krødsherad.NO33.3318', ['Krødsherad.NO06.0622', 'Krødsherad.NO30.3046']],
-    ['Røyken.NO33.3301', ['Røyken.NO06.0627', 'Asker.NO30.3025']],
-    ['Hurum.NO33.3301', ['Hurum.NO06.0628', 'Asker.NO30.3025']],
     ['Flesberg.NO33.3334', ['Flesberg.NO06.0631', 'Flesberg.NO30.3050']],
     ['Rollag.NO33.3336', ['Rollag.NO06.0632', 'Rollag.NO30.3051']],
     ['Nore og Uvdal.NO33.3338', ['Nore og Uvdal.NO06.0633', 'Nore og Uvdal.NO30.3052']],
@@ -202,6 +212,7 @@ const stedMapping2024 = new Map<string, string[]>([
     // Svalbard
 
     // Trøndelag
+    ['Trøndelag.NO50', ['Sør-Trøndelag.NO16', 'Nord-Trøndelag.NO17']],
     ['Steinkjer.NO50.5006', ['Steinkjer.NO17.1702', 'Verran.NO17.1724']],
     ['Namsos.NO50.5007', ['Namsos.NO17.1703', 'Namdalseid.NO17.1725', 'Fosnes.NO17.1748']],
     ['Heim.NO50.5055', ['Hemne.NO16.1612', 'Halsa.NO16.1573', 'Snillfjord.NO16.1613']],
@@ -298,14 +309,78 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Aremark.NO31.3124', ['Aremark.NO01.0118', 'Aremark.NO30.3012']],
 
     // Agder
-    ['Agder.NO42', ['Aust-Agder.NO09', 'Vest-Agder.NO10', 'Agder.NO42']],
-    //TODO
+    ['Agder.NO42', ['Aust-Agder.NO09', 'Vest-Agder.NO10']],
+    ['Risør.NO42.4201', ['Risør.NO09.0901']],
+    ['Grimstad.NO42.4202', ['Grimstad.NO09.0904']],
+    ['Arendal.NO42.4203', ['Arendal.NO09.0906']],
+    [
+        'Kristiansand.NO42.4204',
+        ['Kristiansand.NO10.1001', 'Songdalen.NO10.1017', 'Søgne.NO10.1018'],
+    ],
+    ['Lindesnes.NO42.4205', ['Mandal.NO10.1002', 'Marnardal.NO10.1021', 'Lindesnes.NO10.1029']],
+    ['Farsund.NO42.4206', ['Farsund.NO10.1003']],
+    ['Flekkefjord.NO42.4207', ['Flekkefjord.NO10.1004']],
+    ['Gjerstad.NO42.4211', ['Gjerstad.NO09.0911']],
+    ['Vegårshei.NO42.4212', ['Vegårshei.NO09.0912']],
+    ['Tvedestrand.NO42.4213', ['Tvedestrand.NO09.0914']],
+    ['Froland.NO42.4214', ['Froland.NO09.0919']],
+    ['Lillesand.NO42.4215', ['Lillesand.NO09.0926']],
+    ['Birkenes.NO42.4216', ['Birkenes.NO09.0928']],
+    ['Åmli.NO42.4217', ['Åmli.NO09.0929']],
+    ['Iveland.NO42.4218', ['Iveland.NO09.0935']],
+    ['Evje og Hornnes.NO42.4219', ['Evje og Hornnes.NO09.0937']],
+    ['Bygland.NO42.4220', ['Bygland.NO09.0938']],
+    ['Valle.NO42.4221', ['Valle.NO09.0940']],
+    ['Bykle.NO42.4222', ['Bykle.NO09.0941']],
+    ['Vennesla.NO42.4223', ['Vennesla.NO10.1014']],
+    ['Åseral.NO42.4224', ['Åseral.NO10.1026']],
+    ['Lyngdal.NO42.4225', ['Audnedal.NO10.1027', 'Lyngdal.NO10.1032']],
+    ['Hægebostad.NO42.4226', ['Hægebostad.NO10.1034']],
+    ['Kvinesdal.NO42.4227', ['Kvinesdal.NO10.1037']],
+    ['Sirdal.NO42.4228', ['Sirdal.NO10.1046']],
 
     // Vestfold
-    ['Vestfold.NO39', ['Vestfold.NO07', 'Vestfold og Telemark.NO38', 'Vestfold.NO39']],
-    //TODO
+    ['Vestfold.NO39', ['Vestfold.NO07', 'Vestfold og Telemark.NO38']],
+    ['Horten.NO39.3901', ['Horten.NO07.0701', 'Horten.NO38.3801']],
+    [
+        'Holmestrand.NO39.3903',
+        ['Holmestrand.NO07.0715', 'Holmestrand.NO38.3802', 'Sande (Vestf.) NO07.0713'],
+    ],
+    ['Tønsberg.NO39.3905', ['Tønsberg.NO07.0704', 'Tønsberg.NO38.3803', 'Re NO07.0716']],
+    ['Sandefjord.NO39.3907', ['Sandefjord.NO07.0710', 'Sandefjord.NO38.3804']],
+    ['Larvik.NO39.3909', ['Larvik.NO07.0712', 'Larvik.NO38.3805']],
+    ['Færder.NO39.3911', ['Færder.NO07.0729', 'Færder.NO38.3811']],
 
     // Troms
-    ['Vestfold.NO39', ['Vestfold.NO07', 'Vestfold og Telemark.NO38', 'Vestfold.NO39']],
-    //TODO
+    ['Troms.NO55', ['Troms.NO19', 'Troms og Finnmark.NO54']],
+    ['Tromsø.NO55.5501', ['Tromsø.NO19.1902', 'Tromsø.NO54.5401']],
+    ['Harstad.NO55.5503', ['Harstad.NO19.1903', 'Harstad.NO54.5402']],
+    ['Kvæfjord.NO55.5510', ['Kvæfjord.NO19.1911', 'Kvæfjord.NO54.5411']],
+    ['Tjeldsund.NO55.5512', ['Tjeldsund.NO19.1913', 'Tjeldsund.NO54.5412']],
+    ['Ibestad.NO55.5514', ['Ibestad.NO19.1917', 'Ibestad.NO54.5413']],
+    ['Gratangen.NO55.5516', ['Gratangen.NO19.1919', 'Gratangen.NO54.5414']],
+    ['Lavangen.NO55.5518', ['Lavangen.NO19.1920', 'Lavangen.NO54.5415']],
+    ['Bardu.NO55.5520', ['Bardu.NO19.1922', 'Bardu.NO54.5416']],
+    ['Salangen.NO55.5522', ['Salangen.NO19.1923', 'Salangen.NO54.5417']],
+    ['Målselv.NO55.5524', ['Målselv.NO19.1924', 'Målselv.NO54.5418']],
+    ['Sørreisa.NO55.5526', ['Sørreisa.NO19.1925', 'Sørreisa.NO54.5419']],
+    ['Dyrøy.NO55.5528', ['Dyrøy.NO19.1926', 'Dyrøy.NO54.5420']],
+    [
+        'Senja.NO55.5530',
+        [
+            'Berg.NO19.1929',
+            'Torsken.NO19.1928',
+            'Tranøy.NO19.1927',
+            'Lenvik.NO19.1931',
+            'Senja.NO54.5421',
+        ],
+    ],
+    ['Balsfjord.NO55.5532', ['Balsfjord.NO19.1933', 'Balsfjord.NO54.5422']],
+    ['Karlsøy.NO55.5534', ['Karlsøy.NO19.1936', 'Karlsøy.NO54.5423']],
+    ['Lyngen.NO55.5536', ['Lyngen.NO19.1938', 'Lyngen.NO54.5424']],
+    ['Storfjord.NO55.5538', ['Storfjord.NO19.1939', 'Storfjord.NO54.5425']],
+    ['Kåfjord.NO55.5540', ['Kåfjord.NO19.1940', 'Kåfjord.NO54.5426']],
+    ['Skjervøy.NO55.5542', ['Skjervøy.NO19.1941', 'Skjervøy.NO54.5427']],
+    ['Nordreisa.NO55.5544', ['Nordreisa.NO19.1942', 'Nordreisa.NO54.5428']],
+    ['Kvænangen.NO55.5546', ['Kvænangen.NO19.1943', 'Kvænangen.NO54.5429']],
 ]);
