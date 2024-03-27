@@ -1,6 +1,5 @@
 import { Response as ExpressResponse, NextFunction, Request, RequestHandler } from 'express';
 import { IncomingHttpHeaders } from 'http';
-import { Response } from 'node-fetch';
 import { tokenIsValid } from './azureAd';
 import { logger } from './logger';
 import { hentOnBehalfOfToken } from './onBehalfOfToken';
