@@ -27,7 +27,7 @@ const useSøkekriterierFraStilling = (
 
             setSearchParam(FilterParam.ØnsketYrke, yrkerFraStilling);
 
-            const stedFraStilling = await hentØnsketStedFraStilling(stilling, fylker);
+            const stedFraStilling = hentØnsketStedFraStilling(stilling, fylker);
             if (stedFraStilling) {
                 setSearchParam(FilterParam.ØnsketSted, stedFraStilling);
             }
@@ -58,12 +58,13 @@ const hentØnsketYrkeFraStilling = (stilling: Stilling) => {
         .join(LISTEPARAMETER_SEPARATOR);
 };
 
-const hentØnsketStedFraStilling = async (
+const hentØnsketStedFraStilling = (
     stilling: Stilling,
     fylker: SuggestionsSteder | undefined
-): Promise<string | null> => {
+): string | null => {
     const { location } = stilling.stilling;
     const { municipal, municipalCode, county } = location;
+    console.log('municipal', municipal, 'municipalCode', municipalCode, 'county', county);
 
     if (municipal && municipalCode) {
         const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
@@ -73,6 +74,7 @@ const hentØnsketStedFraStilling = async (
             geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
         });
     } else if (county) {
+        console.log('fylker', fylker);
         const fylke = fylker && fylker.length > 0 ? fylker[0] : undefined;
 
         if (fylke) {
