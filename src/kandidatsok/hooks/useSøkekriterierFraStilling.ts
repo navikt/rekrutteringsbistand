@@ -72,10 +72,8 @@ const hentØnsketStedFraStilling = (
         });
     } else if (county) {
         console.log('fylker', fylker, 'county', county);
-        const fylke =
-            fylker && fylker.length > 0
-                ? fylker.find((f) => f.name.toLowerCase === county.toLowerCase)
-                : undefined;
+        const fylke = fylker ? fylker.find((f) => f.name === county) : undefined;
+        console.log('fylke funnet', fylke);
 
         if (fylke) {
             const { code, capitalizedName } = fylke;
