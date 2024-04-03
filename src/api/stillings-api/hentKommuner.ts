@@ -36,13 +36,13 @@ const kommuneMock: KommuneDTO[] = [
         code: '0102',
         name: 'Kommune1-2',
         countyCode: '01',
-        capitalizedName: 'Kommune1',
+        capitalizedName: 'Kommune1-2',
     },
     {
         code: '0103',
         name: 'Kommune1-3',
         countyCode: '01',
-        capitalizedName: 'Kommune1',
+        capitalizedName: 'Kommune1-3',
     },
     {
         code: '0201',

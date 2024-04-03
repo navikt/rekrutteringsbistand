@@ -4,7 +4,7 @@ const basePath = import.meta.env.VITEST ? 'http://localhost:3000' : '';
 
 export const getAPIwithSchema = <T>(schema: ZodSchema<T>): ((url: string) => Promise<T>) => {
     return async (url: string) => {
-        const data = getAPI(url);
+        const data = await getAPI(url);
         return schema.parse(data);
     };
 };
