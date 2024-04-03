@@ -90,13 +90,19 @@ const hentØnsketStedFraStilling = (
         );
     } else if (county) {
         const fylke = fylker
-            ? fylker.find(
-                  (f) => f.name.toLocaleLowerCase === finnNåværendeNavnUppercase(county).toLowerCase
-              )
+            ? fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
             : undefined;
 
         if (fylke) {
             const { code, capitalizedName } = fylke;
+
+            console.log(
+                'nåværende county',
+                finnNåværendeNavnUppercase(county),
+                'element',
+                fylker &&
+                    fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
+            );
 
             return encodeGeografiforslag({
                 geografiKode: `NO${code}`,

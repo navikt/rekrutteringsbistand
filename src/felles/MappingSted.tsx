@@ -24,7 +24,7 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Vestland.NO46', ['Hordaland.NO12', 'Sogn og Fjordane.NO14']],
     ['Bergen.NO46.4601TEST', ['Bergen.NO12.1201', 'Bergen.NO46.4601']], // TODO: Fjern og fiks testdata
     ['Kinn.NO46.4602', ['Flora.NO14.1401', 'Vågsøy.NO14.1439']],
-    ['Etne.NO46.4611', ['Etne.NO12.1211']],
+    ['Etne.NO46.4611TEST', ['Etne.NO12.1211', 'Etne.NO46.4611']], // TODO fjern testdata
     ['Sveio.NO46.4612', ['Sveio.NO12.1216']],
     ['Bømlo.NO46.4613', ['Bømlo.NO12.1219']],
     ['Stord.NO46.4614', ['Stord.NO12.1221']],
@@ -70,7 +70,7 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Årdal.NO46.4643', ['Årdal.NO14.1424']],
 
     // Akershus
-    ['Akershus.NO32', ['Akershus.NO02', 'Viken.NO30']],
+    ['Akershus.NO32TEST', ['Akershus.NO02', 'Viken.NO30', 'Akershus.NO32']], // TODO fjern testdata
     ['Bærum.NO32.3201', ['Bærum.NO02.0219', 'Bærum.NO30.3024']],
     [
         'Lillestrøm.NO32.3205',
@@ -191,7 +191,7 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Volda.NO15.1577', ['Volda.NO15.1519', 'Hornindal.NO14.1444']],
     ['Fjord.NO15.1578', ['Norddal.NO15.1524', 'Stordal.NO15.1526']],
     ['Hustadvika.NO15.1579', ['Fræna.NO15.1548', 'Eide.NO15.1551']],
-    ['Haram.NO15.1580', ['Haram.NO15.1534', 'Ålesund.NO15.1507', 'Ålesund.NO15.1508']],
+    ['Haram.NO15.1580', ['Haram.NO15.1534', 'Ålesund.NO15.1507']],
 
     // Telemark
     ['Telemark.NO40', ['Telemark.NO08', 'Vestfold og Telemark.NO38']],
