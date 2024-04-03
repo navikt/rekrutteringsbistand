@@ -21,8 +21,8 @@ const stedMapping2024 = new Map<string, string[]>([
     // Kontinentalsokkelen
 
     // Vestland
-    ['Vestland.NO46', ['Hordaland.NO12', 'Sogn og Fjordane.NO14']],
-    ['Bergen.NO46.4601', ['Bergen.NO12.1201']],
+    ['VestlandTEST.NO46', ['Hordaland.NO12', 'Sogn og Fjordane.NO14', 'Vestland.NO46']],
+    ['Bergen.NO46.4601TEST', ['Bergen.NO12.1201', 'Bergen.NO46.4601']],
     ['Kinn.NO46.4602', ['Flora.NO14.1401', 'Vågsøy.NO14.1439']],
     ['Etne.NO46.4611', ['Etne.NO12.1211']],
     ['Sveio.NO46.4612', ['Sveio.NO12.1216']],
@@ -441,6 +441,16 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Nordreisa.NO55.5544', ['Nordreisa.NO19.1942', 'Nordreisa.NO54.5428']],
     ['Kvænangen.NO55.5546', ['Kvænangen.NO54.5429', 'Kvænangen.NO19.1943']],
 ]);
+
+const stedMapping2024FinnNåværendeKode = new Map(
+    Array.from(stedMapping2024).flatMap(([key, values]): [string, string][] =>
+        values.map((value) => [value, key])
+    )
+);
+
+export const finnNåværendeKode = (sted: string): string => {
+    return stedMapping2024FinnNåværendeKode.get(sted) ?? sted;
+};
 
 const stedMapping2024FinnNåværendeNavn = new Map(
     Array.from(stedMapping2024).flatMap(([key, values]): [string, string][] =>
