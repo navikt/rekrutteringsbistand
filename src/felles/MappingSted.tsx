@@ -441,3 +441,13 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Nordreisa.NO55.5544', ['Nordreisa.NO19.1942', 'Nordreisa.NO54.5428']],
     ['Kvænangen.NO55.5546', ['Kvænangen.NO54.5429', 'Kvænangen.NO19.1943']],
 ]);
+
+const stedMapping2024FinnNåværendeNavn = new Map(
+    Array.from(stedMapping2024).flatMap(([key, values]): [string, string][] =>
+        values.map((value) => [value.split('.')[0], key.split('.')[0]])
+    )
+);
+
+export const finnNåværendeNavn = (sted: string): string => {
+    return stedMapping2024FinnNåværendeNavn.get(sted) ?? sted;
+};

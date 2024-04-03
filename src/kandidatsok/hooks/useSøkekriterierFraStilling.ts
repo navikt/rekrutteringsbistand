@@ -7,6 +7,7 @@ import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 import { KandidatsokQueryParam } from 'felles/lenker';
 import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
+import { finnNåværendeNavn } from 'felles/MappingSted';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
@@ -72,7 +73,11 @@ const hentØnsketStedFraStilling = (
         });
     } else if (county) {
         console.log('fylker', fylker, 'county', county);
-        const fylke = fylker ? fylker.find((f) => f.name === county) : undefined;
+        const fylke = fylker
+            ? fylker.find((f) => f.name === county) ||
+              fylker.find((f) => f.name === finnNåværendeNavn(county))
+            : undefined;
+
         console.log('fylke funnet', fylke);
 
         if (fylke) {
