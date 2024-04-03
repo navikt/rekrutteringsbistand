@@ -452,15 +452,16 @@ export const finnNåværendeKode = (sted: string): string => {
     return stedMapping2024FinnNåværendeKode.get(sted) ?? sted;
 };
 
-const stedMapping2024FinnNåværendeNavn = new Map(
+const stedMapping2024FinnNåværendeNavnUppercase = new Map(
     Array.from(stedMapping2024).flatMap(([key, values]): [string, string][] =>
-        values.map((value) => [value.split('.')[0], key.split('.')[0]])
+        values.map((value) => [value.split('.')[0].toUpperCase(), key.split('.')[0].toUpperCase()])
     )
 );
 
 export const finnNåværendeNavn = (sted: string): string => {
-    console.log('mapping for', sted, stedMapping2024FinnNåværendeNavn);
-    const nåværende = stedMapping2024FinnNåværendeNavn.get(sted) ?? sted;
-    console.log('mapping for ${sted} resultat', nåværende);
+    console.log(`mapping for${sted}`, stedMapping2024FinnNåværendeNavnUppercase);
+    const nåværende =
+        stedMapping2024FinnNåværendeNavnUppercase.get(sted.toUpperCase()) ?? sted.toUpperCase();
+    console.log(`mapping for ${sted} resultat`, nåværende);
     return nåværende;
 };

@@ -84,7 +84,9 @@ const hentØnsketStedFraStilling = (
             'mappet',
             fylker && fylker.find((f) => f.name === finnNåværendeNavn(county))
         );
-        const fylke = fylker ? fylker.find((f) => f.name === finnNåværendeNavn(county)) : undefined;
+        const fylke = fylker
+            ? fylker.find((f) => f.name.toLocaleLowerCase === finnNåværendeNavn(county).toLowerCase)
+            : undefined;
 
         console.log('fylke funnet', fylke);
 
