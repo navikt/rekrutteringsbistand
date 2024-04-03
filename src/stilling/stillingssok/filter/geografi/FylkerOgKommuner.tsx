@@ -1,7 +1,6 @@
 import { Checkbox, CheckboxGroup, ErrorMessage, Loader } from '@navikt/ds-react';
 import { ChangeEvent, Fragment, useEffect, useState } from 'react';
 
-// import { fylkerMedKommuner } from '../../../../felles/geografi/geografi';
 import React from 'react';
 import { FylkeDTO, useHentFylker } from '../../../../api/stillings-api/hentFylker';
 import { KommuneDTO, useHentKommuner } from '../../../../api/stillings-api/hentKommuner';
@@ -11,11 +10,11 @@ import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils
 import css from '../Filter.module.css';
 
 interface IFylkerOgKommunerValgboks {
-    fylkerMedKommuner: FylkeMedKommuneDTO[];
+    fylkerMedKommuner: FylkeMedKommuneDTO[] | undefined;
 }
 
 export interface FylkeMedKommuneDTO extends FylkeDTO {
-    kommuner: KommuneDTO[];
+    kommuner: KommuneDTO[] | undefined;
 }
 
 const FylkerOgKommunerValgboks: React.FC<IFylkerOgKommunerValgboks> = ({ fylkerMedKommuner }) => {
@@ -84,24 +83,26 @@ const FylkerOgKommunerValgboks: React.FC<IFylkerOgKommunerValgboks> = ({ fylkerM
                     <Checkbox value={fylke.code} onChange={onFylkeChange}>
                         {capitalizeLocation(fylke.name)}
                     </Checkbox>
-                    {valgteFylker.has(fylke.code) && fylke.kommuner.length > 1 && (
-                        <CheckboxGroup
-                            hideLegend
-                            className={css.indentertCheckboxgruppe}
-                            legend={`Velg kommuner i ${fylke}`}
-                            value={Array.from(valgteKommuner)}
-                        >
-                            {fylke.kommuner.map((kommune: KommuneDTO) => (
-                                <Checkbox
-                                    key={kommune.code}
-                                    value={kommune.code}
-                                    onChange={onKommuneChange}
-                                >
-                                    {capitalizeLocation(kommune.name)}
-                                </Checkbox>
-                            ))}
-                        </CheckboxGroup>
-                    )}
+                    {valgteFylker.has(fylke.code) &&
+                        fylke.kommuner &&
+                        fylke.kommuner.length > 1 && (
+                            <CheckboxGroup
+                                hideLegend
+                                className={css.indentertCheckboxgruppe}
+                                legend={`Velg kommuner i ${fylke}`}
+                                value={Array.from(valgteKommuner)}
+                            >
+                                {fylke.kommuner.map((kommune: KommuneDTO) => (
+                                    <Checkbox
+                                        key={kommune.code}
+                                        value={kommune.code}
+                                        onChange={onKommuneChange}
+                                    >
+                                        {capitalizeLocation(kommune.name)}
+                                    </Checkbox>
+                                ))}
+                            </CheckboxGroup>
+                        )}
                 </Fragment>
             ))}
         </CheckboxGroup>
