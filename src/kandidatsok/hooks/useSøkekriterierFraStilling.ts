@@ -66,13 +66,28 @@ const hentØnsketStedFraStilling = (
 
     if (municipal && municipalCode) {
         const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
-
-        return encodeGeografiforslag({
-            geografiKode: kommunekode,
-            geografiKodeTekst: finnNåværendeKode(
-                formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal)
-            ),
-        });
+        console.log(
+            'kommunekode',
+            kommunekode,
+            'encode',
+            encodeGeografiforslag({
+                geografiKode: kommunekode,
+                geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
+            }),
+            'retur',
+            finnNåværendeKode(
+                encodeGeografiforslag({
+                    geografiKode: kommunekode,
+                    geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
+                })
+            )
+        );
+        return finnNåværendeKode(
+            encodeGeografiforslag({
+                geografiKode: kommunekode,
+                geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
+            })
+        );
     } else if (county) {
         const fylke = fylker
             ? fylker.find(
