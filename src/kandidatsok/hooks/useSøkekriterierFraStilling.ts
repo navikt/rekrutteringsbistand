@@ -74,7 +74,16 @@ const hentØnsketStedFraStilling = (
             ),
         });
     } else if (county) {
-        console.log('fylker', fylker, 'county', county, 'nåværende', finnNåværendeNavn(county));
+        console.log(
+            'fylker',
+            fylker,
+            'county',
+            county,
+            'nåværende',
+            finnNåværendeNavn(county),
+            'mappet',
+            fylker && fylker.find((f) => f.name === finnNåværendeNavn(county))
+        );
         const fylke = fylker ? fylker.find((f) => f.name === finnNåværendeNavn(county)) : undefined;
 
         console.log('fylke funnet', fylke);
