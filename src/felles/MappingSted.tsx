@@ -467,5 +467,13 @@ const stedMapping2024FinnNåværendeNavnUppercase = new Map(
 );
 
 export const finnNåværendeNavnUppercase = (sted: string): string => {
+    console.log(
+        'sted',
+        sted,
+        'mapping',
+        stedMapping2024FinnNåværendeNavnUppercase,
+        'element',
+        stedMapping2024FinnNåværendeNavnUppercase.get(sted.toUpperCase())
+    );
     return stedMapping2024FinnNåværendeNavnUppercase.get(sted.toUpperCase()) ?? sted.toUpperCase();
 };
