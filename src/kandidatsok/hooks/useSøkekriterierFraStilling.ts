@@ -7,7 +7,7 @@ import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 import { KandidatsokQueryParam } from 'felles/lenker';
 import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
-import { finnNåværendeKode, finnNåværendeNavn } from 'felles/MappingSted';
+import { finnNåværendeKode, finnNåværendeNavnUppercase } from 'felles/MappingSted';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
@@ -74,21 +74,11 @@ const hentØnsketStedFraStilling = (
             ),
         });
     } else if (county) {
-        console.log(
-            'fylker',
-            fylker,
-            'county',
-            county,
-            'nåværende',
-            finnNåværendeNavn(county),
-            'mappet',
-            fylker && fylker.find((f) => f.name === finnNåværendeNavn(county))
-        );
         const fylke = fylker
-            ? fylker.find((f) => f.name.toLocaleLowerCase === finnNåværendeNavn(county).toLowerCase)
+            ? fylker.find(
+                  (f) => f.name.toLocaleLowerCase === finnNåværendeNavnUppercase(county).toLowerCase
+              )
             : undefined;
-
-        console.log('fylke funnet', fylke);
 
         if (fylke) {
             const { code, capitalizedName } = fylke;
