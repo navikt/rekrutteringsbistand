@@ -70,7 +70,7 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Årdal.NO46.4643', ['Årdal.NO14.1424']],
 
     // Akershus
-    ['Akershus.NO32TEST', ['Akershus.NO02', 'Viken.NO30', 'Akershus.NO32']], // TODO fjern testdata
+    ['AkershusTEST.NO32', ['Akershus.NO02', 'Viken.NO30', 'Akershus.NO32']], // TODO fjern testdata
     ['Bærum.NO32.3201', ['Bærum.NO02.0219', 'Bærum.NO30.3024']],
     [
         'Lillestrøm.NO32.3205',
