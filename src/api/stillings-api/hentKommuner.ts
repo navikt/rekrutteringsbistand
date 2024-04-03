@@ -4,7 +4,7 @@
 import { HttpResponse, http } from 'msw';
 import useSWRImmutable from 'swr';
 import { z } from 'zod';
-import { getAPI } from '../fetcher';
+import { getAPIwithSchema } from '../fetcher';
 
 export const hentKommunerEndepunkt =
     '/stilling-api/rekrutteringsbistand/api/v1/geography/municipals';
@@ -22,15 +22,7 @@ export type HentKommunerDTO = z.infer<typeof hentKommunerSchema>;
 export type KommuneDTO = z.infer<typeof kommuneSchema>;
 
 export const useHentKommuner = () => {
-    const swrData = useSWRImmutable(hentKommunerEndepunkt, getAPI);
-
-    if (swrData.data) {
-        return {
-            ...swrData,
-            data: hentKommunerSchema.parse(swrData.data),
-        };
-    }
-    return swrData;
+    return useSWRImmutable(hentKommunerEndepunkt, getAPIwithSchema(hentKommunerSchema));
 };
 
 const kommuneMock: KommuneDTO[] = [

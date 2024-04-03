@@ -4,7 +4,7 @@
 import { HttpResponse, http } from 'msw';
 import useSWRImmutable from 'swr';
 import { z } from 'zod';
-import { getAPI } from '../fetcher';
+import { getAPIwithSchema } from '../fetcher';
 
 export const hentFylkerEndepunkt = '/stilling-api/rekrutteringsbistand/api/v1/geography/counties';
 
@@ -22,16 +22,7 @@ export type FylkeDTO = z.infer<typeof fylkeSchema>;
 export interface HentFylkerProps {}
 
 export const useHentFylker = () => {
-    const swrData = useSWRImmutable(hentFylkerEndepunkt, getAPI);
-
-    // TODO Implementer  / bytt ut når getApiWithSchema er implementert
-    // if (swrData.data) {
-    //     return {
-    //         ...swrData,
-    //         data: hentFylkerSchema.parse(swrData.data),
-    //     };
-    // }
-    return swrData;
+    return useSWRImmutable(hentFylkerEndepunkt, getAPIwithSchema(hentFylkerSchema));
 };
 
 const fylkeMock: FylkeDTO[] = [
