@@ -459,6 +459,8 @@ const stedMapping2024FinnNåværendeNavn = new Map(
 );
 
 export const finnNåværendeNavn = (sted: string): string => {
-    console.log('mapping', stedMapping2024FinnNåværendeNavn);
-    return stedMapping2024FinnNåværendeNavn.get(sted) ?? sted;
+    console.log('mapping for ${sted}', stedMapping2024FinnNåværendeNavn);
+    const nåværende = stedMapping2024FinnNåværendeNavn.get(sted) ?? sted;
+    console.log('mapping for ${sted} resultat', nåværende);
+    return nåværende;
 };
