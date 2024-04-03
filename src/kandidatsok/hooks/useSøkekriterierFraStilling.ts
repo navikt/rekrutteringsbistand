@@ -74,7 +74,7 @@ const hentØnsketStedFraStilling = (
             ),
         });
     } else if (county) {
-        console.log('fylker', fylker, 'county', county);
+        console.log('fylker', fylker, 'county', county, 'nåværende', finnNåværendeNavn(county));
         const fylke = fylker ? fylker.find((f) => f.name === finnNåværendeNavn(county)) : undefined;
 
         console.log('fylke funnet', fylke);
@@ -83,7 +83,7 @@ const hentØnsketStedFraStilling = (
             const { code, capitalizedName } = fylke;
 
             return encodeGeografiforslag({
-                geografiKode: code,
+                geografiKode: `NO${code}`,
                 geografiKodeTekst: capitalizedName,
             });
         } else {

@@ -21,8 +21,8 @@ const stedMapping2024 = new Map<string, string[]>([
     // Kontinentalsokkelen
 
     // Vestland
-    ['VestlandTEST.NO46', ['Hordaland.NO12', 'Sogn og Fjordane.NO14', 'Vestland.NO46']],
-    ['Bergen.NO46.4601TEST', ['Bergen.NO12.1201', 'Bergen.NO46.4601']],
+    ['VestlandTEST.NO46', ['Hordaland.NO12', 'Sogn og Fjordane.NO14', 'Vestland.NO46']], // TODO: Fjern og fiks testdata
+    ['Bergen.NO46.4601TEST', ['Bergen.NO12.1201', 'Bergen.NO46.4601']], // TODO: Fjern og fiks testdata
     ['Kinn.NO46.4602', ['Flora.NO14.1401', 'Vågsøy.NO14.1439']],
     ['Etne.NO46.4611', ['Etne.NO12.1211']],
     ['Sveio.NO46.4612', ['Sveio.NO12.1216']],
