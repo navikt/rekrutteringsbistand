@@ -97,6 +97,8 @@ const hentØnsketStedFraStilling = (
             const { code, capitalizedName } = fylke;
 
             console.log(
+                'inputcounty',
+                county,
                 'nåværende county',
                 finnNåværendeNavnUppercase(county),
                 'element',
