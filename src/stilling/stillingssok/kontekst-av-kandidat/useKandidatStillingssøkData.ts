@@ -30,7 +30,6 @@ export const useKandidatStillingssøkData = ({
     const [manglerØnsketYrke, setManglerØnsketYrke] = useState<boolean>(false);
 
     const swrHook = useKandidatStillingssøk({ kandidatnr });
-    console.log('swrHook', swrHook);
 
     const kandidatStillingssøk = swrHook.data;
     useEffect(() => {

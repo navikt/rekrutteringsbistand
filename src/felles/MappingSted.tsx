@@ -450,14 +450,6 @@ const stedMapping2024FinnNåværendeKode = new Map(
 );
 
 export const finnNåværendeKode = (sted: string): string => {
-    console.log(
-        `mapping sted ${sted}`,
-        stedMapping2024FinnNåværendeKode,
-        'mapped',
-        stedMapping2024FinnNåværendeKode.get(sted),
-        'retur',
-        stedMapping2024FinnNåværendeKode.get(sted) ?? sted
-    );
     return stedMapping2024FinnNåværendeKode.get(sted) ?? sted;
 };
 
