@@ -7,11 +7,13 @@ export const finnAlleVersjonerAvStedkoder = (sted2024: Set<string>): Set<string>
 };
 
 export const finn2024KoderForGamleKoder = (gamleKoder: string[]): string[] => {
-    const totalListeMedTreff = gamleKoder.flatMap((gammelKode) =>
-        [...stedMapping2024.entries()]
-            .filter(([nøkkel2024, tidligereKoder]) => tidligereKoder.includes(gammelKode))
-            .map(([nøkkel2024]) => nøkkel2024)
-    );
+    const totalListeMedTreff = gamleKoder.flatMap((gammelKode) => {
+        const funnedeKoder = [...stedMapping2024.entries()]
+            .filter(([_, tidligereKoder]) => tidligereKoder.includes(gammelKode))
+            .map(([nøkkel2024]) => nøkkel2024);
+
+        return funnedeKoder.length > 0 ? funnedeKoder : [gammelKode];
+    });
 
     return [...new Set(totalListeMedTreff)];
 };
