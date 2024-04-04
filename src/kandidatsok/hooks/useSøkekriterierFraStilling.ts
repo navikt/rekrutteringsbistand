@@ -62,26 +62,9 @@ const hentØnsketStedFraStilling = (
 ): string | null => {
     const { location } = stilling.stilling;
     const { municipal, municipalCode, county } = location;
-    console.log('municipal', municipal, 'municipalCode', municipalCode, 'county', county);
 
     if (municipal && municipalCode) {
         const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
-        console.log(
-            'kommunekode',
-            kommunekode,
-            'encode',
-            encodeGeografiforslag({
-                geografiKode: kommunekode,
-                geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
-            }),
-            'retur',
-            finnNåværendeKode(
-                encodeGeografiforslag({
-                    geografiKode: kommunekode,
-                    geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
-                })
-            )
-        );
         return finnNåværendeKode(
             encodeGeografiforslag({
                 geografiKode: kommunekode,

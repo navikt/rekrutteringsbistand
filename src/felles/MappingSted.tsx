@@ -6,13 +6,14 @@ export const finnAlleVersjonerAvStedkoder = (sted2024: Set<string>): Set<string>
     return new Set(resultatArray);
 };
 
-export const finn2024KodeForGammelKode = (gammelKode: string): string => {
-    for (let [nøkkel2024, tidligereKoder] of stedMapping2024.entries()) {
-        if (tidligereKoder.includes(gammelKode)) {
-            return nøkkel2024;
-        }
-    }
-    return gammelKode;
+export const finn2024KoderForGamleKoder = (gamleKoder: string[]): string[] => {
+    const totalListeMedTreff = gamleKoder.flatMap((gammelKode) =>
+        [...stedMapping2024.entries()]
+            .filter(([nøkkel2024, tidligereKoder]) => tidligereKoder.includes(gammelKode))
+            .map(([nøkkel2024]) => nøkkel2024)
+    );
+
+    return [...new Set(totalListeMedTreff)];
 };
 
 const stedMapping2024 = new Map<string, string[]>([
@@ -449,14 +450,6 @@ const stedMapping2024FinnNåværendeKode = new Map(
 );
 
 export const finnNåværendeKode = (sted: string): string => {
-    console.log(
-        `mapping sted ${sted}`,
-        stedMapping2024FinnNåværendeKode,
-        'mapped',
-        stedMapping2024FinnNåværendeKode.get(sted),
-        'retur',
-        stedMapping2024FinnNåværendeKode.get(sted) ?? sted
-    );
     return stedMapping2024FinnNåværendeKode.get(sted) ?? sted;
 };
 
