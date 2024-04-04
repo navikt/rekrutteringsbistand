@@ -25,16 +25,20 @@ export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
     ],
     geografiJobbonsker: [
         {
+            geografiKodeTekst: 'Viken',
+            geografiKode: 'NO30',
+        },
+        {
+            geografiKodeTekst: 'Vestfold og Telemark',
+            geografiKode: 'NO38',
+        },
+        {
+            geografiKodeTekst: 'Tønsberg',
+            geografiKode: 'NO38.3803',
+        },
+        {
             geografiKodeTekst: 'Norge',
             geografiKode: 'NO',
-        },
-        {
-            geografiKodeTekst: 'Geiranger',
-            geografiKode: '1000',
-        },
-        {
-            geografiKodeTekst: 'Larvik',
-            geografiKode: 'NO07.0712',
         },
     ],
     kommunenummerstring: '0301',
