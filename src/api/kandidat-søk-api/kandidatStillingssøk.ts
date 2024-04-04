@@ -6,7 +6,6 @@ import useSWR from 'swr';
 import { z } from 'zod';
 import { postApi } from '../fetcher';
 import { mockKandidatStillingssøk } from './mockKandidatsøk';
-import { finn2024KoderForGamleKoder } from 'felles/MappingSted';
 export const kandidatStillingssøkEndepunkt = '/kandidatsok-api/api/kandidat-stillingssok';
 
 export type KandidatStillingssøkES = {
@@ -48,30 +47,11 @@ export const useKandidatStillingssøk = (props: KandidatStillingssøkProps) => {
     );
 
     if (swrData.data) {
-        const kandidatStillingssøkData: KandidatStillingssøkDTO =
-            swrData?.data?.hits?.hits[0]?._source;
-
-        const nyeGeografiJobbonskerPåKandidatformat: string[] = finn2024KoderForGamleKoder(
-            kandidatStillingssøkData.geografiJobbonsker.map((geografiJobbonske) => {
-                return `${geografiJobbonske.geografiKodeTekst}.${geografiJobbonske.geografiKode}`;
-            })
-        );
-        const nyeGeografiJobbønsker: GeografiØnske[] = nyeGeografiJobbonskerPåKandidatformat.map(
-            (kode) => {
-                const deler = kode.split('.');
-                return {
-                    geografiKodeTekst: deler[0],
-                    geografiKode: deler.slice(1).join('.'),
-                };
-            }
-        );
+        const kandidatStillingssøkData = swrData?.data?.hits?.hits[0]?._source;
 
         return {
             ...swrData,
-            data: kandidatStillingssøkDTOSchema.parse({
-                ...kandidatStillingssøkData,
-                geografiJobbonsker: nyeGeografiJobbønsker,
-            }),
+            data: kandidatStillingssøkDTOSchema.parse(kandidatStillingssøkData),
         };
     }
     return swrData;

@@ -41,8 +41,8 @@ export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
             geografiKode: 'NO',
         },
     ],
-    kommunenummerstring: '0301',
-    kommuneNavn: 'Vestvågøy',
+    kommunenummerstring: '3029',
+    kommuneNavn: 'Lørenskog',
 };
 
 export const mockKandidatsammendrag: Kandidatsammendrag = {
