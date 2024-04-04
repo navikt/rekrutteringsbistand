@@ -12,6 +12,7 @@ import { PrioritertMålgruppe } from '../../kandidatsok/filter/prioriterte-målg
 import { Mål } from '../../kandidatsok/filter/Hovedmål';
 import { mockKandidatsøkKandidater } from './mockKandidatsøk';
 import { Førerkortklasse } from '../../kandidatsok/hooks/useSøkekriterier';
+import { finnAlleVersjonerAvStedkoder } from 'felles/MappingSted';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
 
@@ -89,8 +90,13 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
         sortering: props.sortering,
     });
 
+    const utvidedeSøkekriterier = {
+        ...søkekriterier,
+        ønsketSted: finnAlleVersjonerAvStedkoder(søkekriterier.ønsketSted),
+    };
+
     const swr = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
-        postApi(path, { ...søkekriterier }, queryParams)
+        postApi(path, utvidedeSøkekriterier, queryParams)
     );
 
     const kandidatsøkKandidater: KandidatsøkKandidat[] = swr?.data?.hits?.hits.map((k: any) =>

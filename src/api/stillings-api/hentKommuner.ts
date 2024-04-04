@@ -5,6 +5,7 @@ import { HttpResponse, http } from 'msw';
 import useSWRImmutable from 'swr';
 import { z } from 'zod';
 import { getAPI } from '../fetcher';
+import { kommuneMock } from './mock';
 
 export const hentKommunerEndepunkt =
     '/stilling-api/rekrutteringsbistand/api/v1/geography/municipals';
@@ -32,33 +33,6 @@ export const useHentKommuner = () => {
     }
     return swrData;
 };
-
-const kommuneMock: KommuneDTO[] = [
-    {
-        code: '0101',
-        name: 'Kommune1',
-        countyCode: '01',
-        capitalizedName: 'Kommune1',
-    },
-    {
-        code: '0102',
-        name: 'Kommune1-2',
-        countyCode: '01',
-        capitalizedName: 'Kommune1',
-    },
-    {
-        code: '0103',
-        name: 'Kommune1-3',
-        countyCode: '01',
-        capitalizedName: 'Kommune1',
-    },
-    {
-        code: '0201',
-        name: 'Kommune2',
-        countyCode: '02',
-        capitalizedName: 'Kommune2',
-    },
-];
 
 export const hentKommunerMockMsw = http.get(hentKommunerEndepunkt, (_) =>
     HttpResponse.json(kommuneMock)

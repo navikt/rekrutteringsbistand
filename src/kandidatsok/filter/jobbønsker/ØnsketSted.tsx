@@ -1,15 +1,82 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import { Typeahead } from '../typeahead/Typeahead';
-import { SuggestionsSted, useSuggestSted } from '../../../api/kandidat-søk-api/suggestSted';
+import { SuggestionsSted } from '../../../api/kandidat-søk-api/suggestSted';
+import { KommuneDTO, useHentKommuner } from '../../../api/stillings-api/hentKommuner';
+import { FylkeDTO, useHentFylker } from '../../../api/stillings-api/hentFylker';
+import { LandDTO, useHentLandliste } from '../../../api/stillings-api/hentLand';
 
 export const GEOGRAFI_SEPARATOR = '.';
 
 const ØnsketSted = () => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const [input, setInput] = useState<string>('');
-    const { suggestions } = useSuggestSted({ query: input });
+
+    const { data: fylker, isLoading: fylkerIsLoading } = useHentFylker();
+    const { data: kommuner, isLoading: kommunerIsLoading } = useHentKommuner();
+    const { data: landliste, isLoading: landlisteIsLoading } = useHentLandliste();
+
+    const filteredSuggestions = useMemo(() => {
+        if (fylkerIsLoading || kommunerIsLoading || landlisteIsLoading) {
+            return null;
+        }
+
+        const fylkeSteder: SuggestionsSted[] = fylker.map((fylke: FylkeDTO) => {
+            return {
+                geografiKode: `NO${fylke.code}`,
+                geografiKodeTekst: fylke.capitalizedName,
+            };
+        });
+
+        const kommuneSteder: SuggestionsSted[] = kommuner.map((kommune: KommuneDTO) => {
+            return {
+                geografiKode: `NO${kommune.countyCode}.${kommune.code}`,
+                geografiKodeTekst: kommune.capitalizedName,
+            };
+        });
+
+        const landSteder: SuggestionsSted[] = landliste.map((land: LandDTO) => {
+            return {
+                geografiKode: `${land.code}`,
+                geografiKodeTekst: land.capitalizedName,
+            };
+        });
+
+        const unikeKommuneSteder = kommuneSteder.filter(
+            (kommune) =>
+                !new Set(fylkeSteder.map((fylke) => fylke.geografiKodeTekst.toLowerCase())).has(
+                    kommune.geografiKodeTekst.toLowerCase()
+                )
+        );
+
+        const suggestions = [...fylkeSteder, ...unikeKommuneSteder, ...landSteder];
+
+        const inputNormalized = input.toLowerCase();
+
+        return inputNormalized && inputNormalized.length > 1
+            ? suggestions
+                  .filter((suggestion) =>
+                      suggestion.geografiKodeTekst.toLowerCase().includes(inputNormalized)
+                  )
+                  .sort((a, b) => {
+                      return (
+                          a.geografiKodeTekst.toLowerCase().indexOf(inputNormalized) -
+                              b.geografiKodeTekst.toLowerCase().indexOf(inputNormalized) ||
+                          a.geografiKodeTekst.length - b.geografiKodeTekst.length
+                      );
+                  })
+                  .slice(0, 10)
+            : [];
+    }, [
+        input,
+        fylker,
+        kommuner,
+        landliste,
+        fylkerIsLoading,
+        kommunerIsLoading,
+        landlisteIsLoading,
+    ]);
 
     const valgteSteder = Array.from(søkekriterier.ønsketSted).map((encoded) =>
         decodeGeografiforslag(encoded)
@@ -18,8 +85,8 @@ const ØnsketSted = () => {
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => setInput(event.target.value);
 
     const onSelect = (selection: string) => {
-        if (suggestions) {
-            const korresponderendeForslag = suggestions.find(
+        if (filteredSuggestions) {
+            const korresponderendeForslag = filteredSuggestions.find(
                 (forslag) => forslag.geografiKodeTekst === selection
             );
 
@@ -54,7 +121,11 @@ const ØnsketSted = () => {
             description="Hvor ønsker kandidaten å jobbe?"
             allowUnmatchedInputs={false}
             value={input}
-            suggestions={suggestions.map((forslag) => forslag.geografiKodeTekst)}
+            suggestions={
+                filteredSuggestions
+                    ? filteredSuggestions.map((forslag) => forslag.geografiKodeTekst)
+                    : []
+            }
             selectedSuggestions={valgteSteder.map((valgt) => valgt.geografiKodeTekst)}
             onRemoveSuggestion={onFjernValgtSted}
             onSelect={onSelect}

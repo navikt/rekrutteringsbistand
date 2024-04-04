@@ -5,6 +5,7 @@ import { HttpResponse, http } from 'msw';
 import useSWRImmutable from 'swr';
 import { z } from 'zod';
 import { getAPI } from '../fetcher';
+import { fylkeMock } from './mock';
 
 export const hentFylkerEndepunkt = '/stilling-api/rekrutteringsbistand/api/v1/geography/counties';
 
@@ -34,16 +35,4 @@ export const useHentFylker = () => {
     return swrData;
 };
 
-const fylkeMock: FylkeDTO[] = [
-    {
-        code: '01',
-        name: 'Fylke 1',
-        capitalizedName: 'Fylke1',
-    },
-    {
-        code: '02',
-        name: 'Fylke 2',
-        capitalizedName: 'Fylke2',
-    },
-];
 export const hentFylkerMockMsw = http.get(hentFylkerEndepunkt, (_) => HttpResponse.json(fylkeMock));
