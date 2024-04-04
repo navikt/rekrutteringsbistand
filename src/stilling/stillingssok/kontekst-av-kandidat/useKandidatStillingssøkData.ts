@@ -116,30 +116,37 @@ const konverterStederTil2024koder = (
     kommuneNavn: string,
     henterGeografiFraBosted: boolean
 ): GeografiØnske[] => {
-    const geografiJobbønskerFraKandidat: string[] = geografiJobbonsker.map(
-        (geografiJobbonske: GeografiØnske) => {
-            return `${geografiJobbonske.geografiKodeTekst}.${geografiJobbonske.geografiKode}`;
-        }
+    let geografiJobbønskerFraKandidat = geografiJobbonsker.map(
+        ({ geografiKodeTekst, geografiKode }) => `${geografiKodeTekst}.${geografiKode}`
     );
 
     if (henterGeografiFraBosted) {
         const fylkesKode =
-            kommunenummerstring && kommunenummerstring.length > 2
-                ? kommunenummerstring.substring(0, 2)
-                : '';
-        const sted = `${kommuneNavn}.NO${fylkesKode}.${kommunenummerstring}`;
-        geografiJobbønskerFraKandidat.push(sted);
+            kommunenummerstring.length >= 2 ? kommunenummerstring.substring(0, 2) : '';
+        geografiJobbønskerFraKandidat.push(`${kommuneNavn}.NO${fylkesKode}.${kommunenummerstring}`);
     }
 
-    const nyeGeografiJobbonskerPåKandidatformat: string[] = finn2024KoderForGamleKoder(
+    // Konverterer til nye koder først
+    const konverterteGeografiJobbonsker = finn2024KoderForGamleKoder(
         geografiJobbønskerFraKandidat
-    );
-
-    return nyeGeografiJobbonskerPåKandidatformat.map((kode) => {
+    ).map((kode) => {
         const deler = kode.split('.');
         return {
             geografiKodeTekst: deler[0],
             geografiKode: deler.slice(1).join('.'),
         };
     });
+
+    const fylkesKoder = konverterteGeografiJobbonsker
+        .filter(({ geografiKode }) => geografiKode.length === 4 && !geografiKode.includes('.'))
+        .map(({ geografiKode }) => geografiKode);
+
+    const konverterteGeografiJobbonskerFiltrert = konverterteGeografiJobbonsker.filter(
+        ({ geografiKode }) =>
+            !fylkesKoder.some(
+                (fylkesKode) => geografiKode.startsWith(fylkesKode) && geografiKode !== fylkesKode
+            )
+    );
+
+    return konverterteGeografiJobbonskerFiltrert;
 };
