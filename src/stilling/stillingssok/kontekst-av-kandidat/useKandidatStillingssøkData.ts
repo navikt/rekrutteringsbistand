@@ -141,12 +141,10 @@ const konverterStederTil2024koder = (
         .filter(({ geografiKode }) => geografiKode.length === 4 && !geografiKode.includes('.'))
         .map(({ geografiKode }) => geografiKode);
 
-    const konverterteGeografiJobbonskerFiltrert = konverterteGeografiJobbonsker.filter(
+    return konverterteGeografiJobbonsker.filter(
         ({ geografiKode }) =>
             !fylkesKoder.some(
                 (fylkesKode) => geografiKode.startsWith(fylkesKode) && geografiKode !== fylkesKode
-            )
+            ) && geografiKode.length <= 9
     );
-
-    return konverterteGeografiJobbonskerFiltrert;
 };

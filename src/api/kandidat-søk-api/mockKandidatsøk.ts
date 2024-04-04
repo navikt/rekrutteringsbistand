@@ -40,6 +40,14 @@ export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
             geografiKodeTekst: 'Norge',
             geografiKode: 'NO',
         },
+        {
+            geografiKodeTekst: 'Oslo',
+            geografiKode: 'NO03.0301',
+        },
+        {
+            geografiKodeTekst: 'Oslo/Bydel St.Hanshaugen',
+            geografiKode: 'NO03.03016',
+        },
     ],
     kommunenummerstring: '3803',
     kommuneNavn: 'Tønsberg',
