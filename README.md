@@ -73,7 +73,6 @@ For at serveren skal kjøre må du definere noen miljøvariabler. Dette kan gjø
 
 LOKALT=true
 
-  
 
 # Legg til andre miljøvariabler
 
