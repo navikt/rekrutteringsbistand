@@ -95,17 +95,6 @@ const hentØnsketStedFraStilling = (
 
         if (fylke) {
             const { code, capitalizedName } = fylke;
-
-            console.log(
-                'inputcounty',
-                county,
-                'nåværende county',
-                finnNåværendeNavnUppercase(county),
-                'element',
-                fylker &&
-                    fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
-            );
-
             return encodeGeografiforslag({
                 geografiKode: `NO${code}`,
                 geografiKodeTekst: capitalizedName,
