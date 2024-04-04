@@ -22,26 +22,32 @@ const ØnsketSted = () => {
             return null;
         }
 
-        const fylkeSteder: SuggestionsSted[] = fylker.map((fylke: FylkeDTO) => {
-            return {
-                geografiKode: `NO${fylke.code}`,
-                geografiKodeTekst: fylke.capitalizedName,
-            };
-        });
+        const fylkeSteder: SuggestionsSted[] = fylker
+            ? fylker.map((fylke: FylkeDTO) => {
+                  return {
+                      geografiKode: `NO${fylke.code}`,
+                      geografiKodeTekst: fylke.capitalizedName,
+                  };
+              })
+            : [];
 
-        const kommuneSteder: SuggestionsSted[] = kommuner.map((kommune: KommuneDTO) => {
-            return {
-                geografiKode: `NO${kommune.countyCode}.${kommune.code}`,
-                geografiKodeTekst: kommune.capitalizedName,
-            };
-        });
+        const kommuneSteder: SuggestionsSted[] = kommuner
+            ? kommuner.map((kommune: KommuneDTO) => {
+                  return {
+                      geografiKode: `NO${kommune.countyCode}.${kommune.code}`,
+                      geografiKodeTekst: kommune.capitalizedName,
+                  };
+              })
+            : [];
 
-        const landSteder: SuggestionsSted[] = landliste.map((land: LandDTO) => {
-            return {
-                geografiKode: `${land.code}`,
-                geografiKodeTekst: land.capitalizedName,
-            };
-        });
+        const landSteder: SuggestionsSted[] = landliste
+            ? landliste.map((land: LandDTO) => {
+                  return {
+                      geografiKode: `${land.code}`,
+                      geografiKodeTekst: land.capitalizedName,
+                  };
+              })
+            : [];
 
         const unikeKommuneSteder = kommuneSteder.filter(
             (kommune) =>
