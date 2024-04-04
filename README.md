@@ -81,7 +81,6 @@ EKSEMPEL_API_URL=http://eksempel.nav.no
 ```
 
   
-
 # Henvendelser
 
 ## For Nav-ansatte
