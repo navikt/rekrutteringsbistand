@@ -1,23 +1,3 @@
-export const finnAlleVersjonerAvStedkoder = (sted2024: Set<string>): Set<string> => {
-    const resultatArray = Array.from(sted2024).flatMap((s) =>
-        stedMapping2024.has(s) ? [s, ...(stedMapping2024.get(s) || [])] : [s]
-    );
-
-    return new Set(resultatArray);
-};
-
-export const finn2024KoderForGamleKoder = (gamleKoder: string[]): string[] => {
-    const totalListeMedTreff = gamleKoder.flatMap((gammelKode) => {
-        const funnedeKoder = [...stedMapping2024.entries()]
-            .filter(([_, tidligereKoder]) => tidligereKoder.includes(gammelKode))
-            .map(([nøkkel2024]) => nøkkel2024);
-
-        return funnedeKoder.length > 0 ? funnedeKoder : [gammelKode];
-    });
-
-    return [...new Set(totalListeMedTreff)];
-};
-
 const stedMapping2024 = new Map<string, string[]>([
     // Oslo
 
@@ -445,6 +425,26 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Kvænangen.NO55.5546', ['Kvænangen.NO54.5429', 'Kvænangen.NO19.1943']],
 ]);
 
+export const finnAlleVersjonerAvStedkoder = (sted2024: Set<string>): Set<string> => {
+    const resultatArray = Array.from(sted2024).flatMap((s) =>
+        stedMapping2024.has(s) ? [s, ...(stedMapping2024.get(s) || [])] : [s]
+    );
+
+    return new Set(resultatArray);
+};
+
+export const finn2024KoderForGamleKoder = (gamleKoder: string[]): string[] => {
+    const totalListeMedTreff = gamleKoder.flatMap((gammelKode) => {
+        const funnedeKoder = [...stedMapping2024.entries()]
+            .filter(([_, tidligereKoder]) => tidligereKoder.includes(gammelKode))
+            .map(([nøkkel2024]) => nøkkel2024);
+
+        return funnedeKoder.length > 0 ? funnedeKoder : [gammelKode];
+    });
+
+    return [...new Set(totalListeMedTreff)];
+};
+
 const stedMapping2024FinnNåværendeKode = new Map(
     Array.from(stedMapping2024).flatMap(([key, values]): [string, string][] =>
         values.map((value) => [value, key])
@@ -463,4 +463,44 @@ const stedMapping2024FinnNåværendeNavnUppercase = new Map(
 
 export const finnNåværendeNavnUppercase = (sted: string): string => {
     return stedMapping2024FinnNåværendeNavnUppercase.get(sted.toUpperCase()) ?? sted.toUpperCase();
+};
+
+const hentEnkelKode = (fullKode: string): string => {
+    const sisteDel = fullKode.split('.').pop() || '';
+    return sisteDel.length > 2 ? sisteDel : sisteDel.replace('NO', '');
+};
+
+const stedKart2024EnkeltFormat = new Map<string, string[]>(
+    Array.from(stedMapping2024).map(([key, values]) => [
+        hentEnkelKode(key),
+        values.map(hentEnkelKode),
+    ])
+);
+
+export const finnAlleVersjonerAvkoderEnkeltFormat = (inndataKoder: Set<string>): Set<string> => {
+    return new Set(
+        Array.from(inndataKoder).flatMap((inndataKode) => {
+            const resultater = stedKart2024EnkeltFormat.get(inndataKode);
+            return resultater && resultater.length > 0
+                ? [inndataKode, ...resultater]
+                : [inndataKode];
+        })
+    );
+};
+
+const stedMapping2024KunNavn = new Map<string, string[]>(
+    Array.from(stedMapping2024).map(([key, values]) => {
+        const upperKey = key.split('.')[0].toUpperCase();
+        const upperValues = values.map((value) => value.split('.')[0].toUpperCase());
+        return [upperKey, upperValues]; // Beholder strukturen som [key, values]
+    })
+);
+
+export const finnAlleNavn = (stedNavn: Set<string>): Set<String> => {
+    return new Set(
+        Array.from(stedNavn).flatMap((sted) => {
+            const resultater = stedMapping2024KunNavn.get(sted);
+            return resultater && resultater.length > 0 ? [sted, ...resultater] : [sted];
+        })
+    );
 };
