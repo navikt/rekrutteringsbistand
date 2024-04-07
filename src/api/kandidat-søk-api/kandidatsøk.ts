@@ -13,6 +13,11 @@ import { Mål } from '../../kandidatsok/filter/Hovedmål';
 import { mockKandidatsøkKandidater } from './mockKandidatsøk';
 import { Førerkortklasse } from '../../kandidatsok/hooks/useSøkekriterier';
 import { finnAlleVersjonerAvStedkoder } from 'felles/MappingSted';
+import {
+    getNummerFraSted,
+    lagKandidatsøkstreng,
+    stedmappingFraNyttNummer,
+} from 'felles/MappingStedV2';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
 
@@ -92,7 +97,10 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
 
     const utvidedeSøkekriterier = {
         ...søkekriterier,
-        ønsketSted: finnAlleVersjonerAvStedkoder(søkekriterier.ønsketSted),
+        ønsketSted: Array.from(søkekriterier.ønsketSted).flatMap((sted) => {
+            const gamleSteder = stedmappingFraNyttNummer.get(getNummerFraSted(sted));
+            return gamleSteder ? gamleSteder.map((s) => lagKandidatsøkstreng(s)) : [sted];
+        }),
     };
 
     const swr = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
