@@ -90,3 +90,5 @@ spec:
           value: http://presenterte-kandidater-api
         - name: MODIA_CONTEXT_HOLDER_API
           value: {{ modiaContextHolderApi }}
+        - name: KANDIDATVARSEL_API_URL
+          value: http://rekrutteringsbistand-kandidatvarsel-api
