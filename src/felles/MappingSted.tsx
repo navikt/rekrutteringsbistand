@@ -1,3 +1,4 @@
+// Deprecated og på vei bort på grunn av uoptimal kompleksitet, bruk ny fil som skal ta over for denne.
 const stedMapping2024 = new Map<string, string[]>([
     // Oslo
 
