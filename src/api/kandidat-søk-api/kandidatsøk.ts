@@ -16,7 +16,7 @@ import {
     getNummerFraSted,
     lagKandidatsøkstreng,
     stedmappingFraNyttNummer,
-} from 'felles/MappingStedV2';
+} from 'felles/mappingSted2';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
 
