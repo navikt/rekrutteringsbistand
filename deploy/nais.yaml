@@ -44,6 +44,7 @@ spec:
           - application: rekrutteringsbistand-stilling-api
           - application: rekrutteringsbistand-stillingssok-proxy
           - application: rekrutteringsbistand-kandidatsok-api
+          - application: rekrutteringsbistand-kandidatvarsel-api
           - application: toi-synlighetsmotor
           - application: toi-arbeidsgiver-notifikasjon
           - application: presenterte-kandidater-api
