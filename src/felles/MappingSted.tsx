@@ -201,7 +201,7 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Vinje.NO40.4036', ['Vinje.NO08.0834', 'Vinje.NO38.3825']],
 
     // Rogaland
-    ['Stavanger.NO11.1103', ['Stavanger.NO11.1103', 'Finnøy.NO11.1141', 'Rennesøy.NO11.1142']],
+    ['Stavanger.NO11.1103', ['Finnøy.NO11.1141', 'Rennesøy.NO11.1142']],
     ['Sandnes.NO11.1108', ['Sandnes.NO11.1102', 'Forsand.NO11.1129']],
 
     // Nordland
@@ -212,7 +212,7 @@ const stedMapping2024 = new Map<string, string[]>([
 
     // Trøndelag
     ['Trøndelag.NO50', ['Sør-Trøndelag.NO16', 'Nord-Trøndelag.NO17']],
-    ['Trondheim.NO50.5001', ['Trondheim.NO16.1601', 'Klæbu.NO16.1662']],
+    ['Trondheim.NO50.5001', ['Trondheim.NO16.1601', 'Klæbu.NO16.1662', 'Klæbu.NO50.5030']],
     [
         'Steinkjer.NO50.5006',
         ['Steinkjer.NO17.1702', 'Verran.NO17.1724', 'Steinkjer.NO50.5004', 'Verran.NO50.5039'],
@@ -237,7 +237,6 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Midtre Gauldal.NO50.5027', ['Midtre Gauldal.NO16.1648']],
     ['Melhus.NO50.5028', ['Melhus.NO16.1653']],
     ['Skaun.NO50.5029', ['Skaun.NO16.1657']],
-    ['Klæbu.NO50.5030', ['Klæbu.NO16.1662']],
     ['Malvik.NO50.5031', ['Malvik.NO16.1663']],
     ['Selbu.NO50.5032', ['Selbu.NO16.1664']],
     ['Tydal.NO50.5033', ['Tydal.NO16.1665']],
@@ -255,7 +254,7 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Overhalla.NO50.5047', ['Overhalla.NO17.1744']],
     ['Flatanger.NO50.5049', ['Flatanger.NO17.1749']],
     ['Leka.NO50.5052', ['Leka.NO17.1755']],
-    ['Inderøy.NO50.5053', ['Inderøy.NO17.1756']],
+    ['Inderøy.NO50.5053', ['Inderøy.NO17.1756', 'Mosvik.NO17.1723', 'Sandvollan.NO17.1729']],
     ['Indre Fosen.NO50.5054', ['Rissa.NO16.1624', 'Leksvik.NO17.1718']],
     [
         'Heim.NO50.5055',
@@ -303,7 +302,13 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Alta.NO56.5601', ['Alta.NO20.2012', 'Alta.NO54.5403']],
     [
         'Hammerfest.NO56.5603',
-        ['Hammerfest.NO20.2004', 'Kvalsund.NO20.2017', 'Hammerfest.NO54.5406'],
+        [
+            'Hammerfest.NO20.2004',
+            'Kvalsund.NO20.2017',
+            'Hammerfest.NO54.5406',
+            'Hammerfest.NO20.2001',
+            'Hammerfest.NO20.2016',
+        ],
     ],
     ['Sør-Varanger.NO56.5605', ['Sør-Varanger.NO20.2030', 'Sør-Varanger.NO54.5444']],
     ['Vadsø.NO56.5607', ['Vadsø.NO20.2003', 'Vadsø.NO54.5405']],
@@ -385,17 +390,41 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Horten.NO39.3901', ['Horten.NO07.0701', 'Horten.NO38.3801']],
     [
         'Holmestrand.NO39.3903',
-        ['Holmestrand.NO07.0715', 'Holmestrand.NO38.3802', 'Sande (Vestf.) NO07.0713'],
+        [
+            'Holmestrand.NO07.0715',
+            'Holmestrand.NO38.3802',
+            'Sande (Vestf.) NO07.0713',
+            'Holmestrand.NO07.0702',
+            'Hof.NO07.0714',
+        ],
     ],
     ['Tønsberg.NO39.3905', ['Tønsberg.NO07.0704', 'Tønsberg.NO38.3803', 'Re NO07.0716']],
-    ['Sandefjord.NO39.3907', ['Sandefjord.NO07.0710', 'Sandefjord.NO38.3804']],
-    ['Larvik.NO39.3909', ['Larvik.NO07.0712', 'Larvik.NO38.3805']],
-    ['Færder.NO39.3911', ['Færder.NO07.0729', 'Færder.NO38.3811']],
+    [
+        'Sandefjord.NO39.3907',
+        [
+            'Sandefjord.NO07.0710',
+            'Sandefjord.NO38.3804',
+            'Sandefjord.NO07.0706',
+            'Andebu.NO07.0719',
+            'Stokke.NO07.0720',
+        ],
+    ],
+    [
+        'Larvik.NO39.3909',
+        ['Larvik.NO07.0712', 'Larvik.NO38.3805', 'Larvik.NO07.0709', 'Lardal.NO07.0728'],
+    ],
+    [
+        'Færder.NO39.3911',
+        ['Færder.NO07.0729', 'Færder.NO38.3811', 'Nøtterøy.NO07.0722', 'Tjøme.NO07.0723'],
+    ],
 
     // Troms
     ['Troms.NO55', ['Troms.NO19', 'Troms og Finnmark.NO54']],
     ['Tromsø.NO55.5501', ['Tromsø.NO19.1902', 'Tromsø.NO54.5401']],
-    ['Harstad.NO55.5503', ['Harstad.NO19.1903', 'Harstad.NO54.5402']],
+    [
+        'Harstad.NO55.5503',
+        ['Harstad.NO19.1903', 'Harstad.NO54.5402', 'Harstad.NO19.1901', 'Bjarkøy.NO19.1915'],
+    ],
     ['Kvæfjord.NO55.5510', ['Kvæfjord.NO19.1911', 'Kvæfjord.NO54.5411']],
     ['Tjeldsund.NO55.5512', ['Skånland.NO19.1913', 'Tjeldsund.NO18.1852', 'Tjeldsund.NO54.5412']],
     ['Ibestad.NO55.5514', ['Ibestad.NO19.1917', 'Ibestad.NO54.5413']],
@@ -425,14 +454,6 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Nordreisa.NO55.5544', ['Nordreisa.NO19.1942', 'Nordreisa.NO54.5428']],
     ['Kvænangen.NO55.5546', ['Kvænangen.NO54.5429', 'Kvænangen.NO19.1943']],
 ]);
-
-export const finnAlleVersjonerAvStedkoder = (sted2024: Set<string>): Set<string> => {
-    const resultatArray = Array.from(sted2024).flatMap((s) =>
-        stedMapping2024.has(s) ? [s, ...(stedMapping2024.get(s) || [])] : [s]
-    );
-
-    return new Set(resultatArray);
-};
 
 export const finn2024KoderForGamleKoder = (gamleKoder: string[]): string[] => {
     const totalListeMedTreff = gamleKoder.flatMap((gammelKode) => {
