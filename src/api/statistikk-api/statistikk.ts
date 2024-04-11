@@ -5,7 +5,7 @@ import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { z } from 'zod';
 import { formaterDatoTilApi } from '../../forside/statistikk/datoUtils';
-import { getAPI } from '../fetcher';
+import { getAPIwithSchema } from '../fetcher';
 
 export const statistikkEndepunkt = (param?: URLSearchParams) =>
     `/statistikk-api/statistikk${param ? `?${param}` : ''}`;
@@ -30,7 +30,7 @@ interface IuseUtfallsstatistikk {
 }
 
 export const useStatistikk = ({ navKontor, fraOgMed, tilOgMed }: IuseUtfallsstatistikk) => {
-    const swrData = useSWR(
+    return useSWR(
         statistikkEndepunkt(
             new URLSearchParams({
                 fraOgMed: formaterDatoTilApi(fraOgMed),
@@ -38,16 +38,8 @@ export const useStatistikk = ({ navKontor, fraOgMed, tilOgMed }: IuseUtfallsstat
                 navKontor,
             })
         ),
-        getAPI
+        getAPIwithSchema(statistikkDTOSchema)
     );
-
-    if (swrData.data) {
-        return {
-            ...swrData,
-            data: statistikkDTOSchema.parse(swrData.data),
-        };
-    }
-    return swrData;
 };
 
 const statistikkMock = (navKontor: string | null): StatistikkDTO | null => {
