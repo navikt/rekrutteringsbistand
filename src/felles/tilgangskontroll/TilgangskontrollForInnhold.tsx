@@ -14,7 +14,7 @@ export enum Rolle {
 }
 
 export interface ITilgangskontrollForInnhold {
-    kreverRoller: Rolle[];
+    kreverEnAvRollene: Rolle[];
     children: React.ReactNode;
     skjulVarsel?: boolean;
 }
@@ -36,7 +36,7 @@ const rolleTilNavn = (rolle: Rolle): string | null => {
 };
 
 const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
-    kreverRoller,
+    kreverEnAvRollene,
     children,
     skjulVarsel,
 }) => {
@@ -45,7 +45,7 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
     // TODO Feature-toggle!
     const aktivTilgangskontroll = erIkkeProd;
 
-    const harTilgang = kreverRoller.some((r) => {
+    const harTilgang = kreverEnAvRollene.some((r) => {
         return (
             roller?.includes(r) || roller?.includes(Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)
         );
@@ -70,7 +70,7 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
                         <strong>Du har ikke tistrekkelig tilgang til å se denne siden.</strong>
                         <p>Du må ha en av følgende roller:</p>
                         <ul>
-                            {kreverRoller
+                            {kreverEnAvRollene
                                 .filter((r) => r !== Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)
                                 .map((rolle) => (
                                     <li>{rolleTilNavn(rolle)}</li>

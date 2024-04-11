@@ -41,7 +41,7 @@ const ContactInfo = () => {
     const markerSomMinKnappOgModal = () => (
         <TilgangskontrollForInnhold
             skjulVarsel
-            kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+            kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
         >
             <Button
                 variant="secondary"

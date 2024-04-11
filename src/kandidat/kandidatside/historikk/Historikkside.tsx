@@ -75,7 +75,7 @@ const Historikkside: FunctionComponent = () => {
 
     return (
         <TilgangskontrollForInnhold
-            kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+            kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
         >
             <div className={css.historikk}>
                 <Ingress className={css.ingress}>

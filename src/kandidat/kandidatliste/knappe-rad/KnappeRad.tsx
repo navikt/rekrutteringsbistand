@@ -74,7 +74,9 @@ const KnappeRad: FunctionComponent<Props> = ({
                 <div className={css.høyre}>
                     <TilgangskontrollForInnhold
                         skjulVarsel
-                        kreverRoller={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                        kreverEnAvRollene={[
+                            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        ]}
                     >
                         {skalViseEkstraKnapper &&
                         smsApiFeil ? /* TODO: burde ideelt sett vise en feilmelding om at vi ikke kan hente SMS-status. */ null : minstEnKandidatErMarkert &&
