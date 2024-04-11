@@ -36,9 +36,6 @@ export const useKandidatStillingssøkData = ({
     const kandidatStillingssøk = swrHook.data;
     useEffect(() => {
         if (kandidatStillingssøk) {
-            const brukKandidatkriterier =
-                searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true';
-
             const { geografiJobbonsker, yrkeJobbonskerObj, kommunenummerstring } =
                 kandidatStillingssøk;
 
@@ -49,20 +46,19 @@ export const useKandidatStillingssøkData = ({
             );
             setHentetGeografiFraBosted(geografiJobbonsker.length === 0);
 
-            let fylker: (string | undefined)[] = hentFylkerFraJobbønsker(konverterteGeografikoder);
-            let kommuner = hentKommunerFraJobbønsker(konverterteGeografikoder);
+            const fylker: (string | undefined)[] =
+                hentFylkerFraJobbønsker(konverterteGeografikoder);
+            const kommuner = hentKommunerFraJobbønsker(konverterteGeografikoder);
             const yrkesønsker = hentYrkerFraJobbønsker(yrkeJobbonskerObj);
 
-            if (yrkesønsker.length === 0) {
-                setManglerØnsketYrke(true);
-            }
+            setManglerØnsketYrke(yrkesønsker.length === 0);
 
-            if (brukKandidatkriterier) {
+            if (searchParams.get(QueryParam.BrukKriterierFraKandidat) === 'true') {
                 const søk = new URLSearchParams();
 
-                if (fylker.length > 0) søk.set(QueryParam.Fylker, String(fylker));
-                if (kommuner.length > 0) søk.set(QueryParam.Kommuner, String(kommuner));
-                if (yrkesønsker.length > 0) søk.set(QueryParam.Tekst, String(yrkesønsker));
+                if (fylker.length > 0) søk.set(QueryParam.Fylker, fylker.join(','));
+                if (kommuner.length > 0) søk.set(QueryParam.Kommuner, kommuner.join(','));
+                if (yrkesønsker.length > 0) søk.set(QueryParam.Tekst, yrkesønsker.join(','));
 
                 søk.set(QueryParam.Statuser, Status.Publisert);
                 søk.set(QueryParam.Publisert, Publisert.Intern);
@@ -104,25 +100,22 @@ const konverterStederTil2024koder = (
     kommunenummerstring: string,
     henterGeografiFraBosted: boolean
 ): string[] => {
-    const geografiJobbonskerFraKandidat: string[] = geografiJobbonsker.map((g) =>
-        getNummerFraSted(g.geografiKode)
-    );
+    const geografikoder = henterGeografiFraBosted
+        ? [kommunenummerstring]
+        : geografiJobbonsker.map((g) => getNummerFraSted(g.geografiKode));
 
-    const konverterteGeografiJobbonsker: string[] = (
-        henterGeografiFraBosted
-            ? [...geografiJobbonskerFraKandidat, kommunenummerstring]
-            : geografiJobbonskerFraKandidat
-    ).map((g) => {
-        const mappedValue = stedmappingFraGammeltNummer.get(g)?.nummer || g;
-        return mappedValue.length > 4 ? mappedValue.substring(0, 4) : mappedValue;
+    const konverterteKoder = geografikoder.map((kode) => {
+        const nyekoder = stedmappingFraGammeltNummer.get(kode)?.nummer || kode;
+        return nyekoder.length > 4 ? nyekoder.substring(0, 4) : nyekoder;
     });
 
-    const fylkesKoder = konverterteGeografiJobbonsker.filter((nummer) => nummer.length === 2);
+    const fylkesKoder = new Set(konverterteKoder.filter((kode) => kode.length === 2));
 
-    return konverterteGeografiJobbonsker.filter(
-        (nummer) =>
-            !fylkesKoder.some(
-                (fylkesKode) => nummer.startsWith(fylkesKode) && nummer !== fylkesKode
-            ) && nummer.length > 0
-    );
+    return konverterteKoder.filter((kode) => {
+        return (
+            !Array.from(fylkesKoder).some(
+                (fylkesKode) => kode.startsWith(fylkesKode) && kode !== fylkesKode
+            ) && kode.length > 0
+        );
+    });
 };
