@@ -11,6 +11,9 @@ import { ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs'
 import { useHentKandidatHistorikk } from '../../../api/kandidat-api/hentKandidatHistorikk';
 import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { fetchSmserForKandidat } from '../../api/api';
 import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
 import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
@@ -29,9 +32,8 @@ const Historikkside: FunctionComponent = () => {
     const kandidatlisteId = queryParams.get(KandidatQueryParam.KandidatlisteId);
 
     const { cv } = useLookupCv(kandidatnr);
-    const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] = useState<
-        Nettressurs<ForespørselOmDelingAvCv[]>
-    >(ikkeLastet());
+    const [forespørslerOmDelingAvCv, setForespørslerOmDelingAvCv] =
+        useState<Nettressurs<ForespørselOmDelingAvCv[]>>(ikkeLastet());
     const [smser, setSmser] = useState<Nettressurs<[Sms]>>(ikkeLastet());
 
     useEffect(() => {
@@ -72,17 +74,21 @@ const Historikkside: FunctionComponent = () => {
     const navn = hentKandidatensNavnFraCvEllerKandidatlister(cv, kandidatlister);
 
     return (
-        <div className={css.historikk}>
-            <Ingress className={css.ingress}>
-                <b>{navn}</b> er lagt til i <b>{kandidatlister.length}</b> kandidatlister
-            </Ingress>
-            <Historikktabell
-                kandidatlister={kandidatlister}
-                aktivKandidatlisteId={kandidatlisteId}
-                forespørslerOmDelingAvCvForKandidat={forespørslerOmDelingAvCv}
-                smser={smser}
-            />
-        </div>
+        <TilgangskontrollForInnhold
+            kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+        >
+            <div className={css.historikk}>
+                <Ingress className={css.ingress}>
+                    <b>{navn}</b> er lagt til i <b>{kandidatlister.length}</b> kandidatlister
+                </Ingress>
+                <Historikktabell
+                    kandidatlister={kandidatlister}
+                    aktivKandidatlisteId={kandidatlisteId}
+                    forespørslerOmDelingAvCvForKandidat={forespørslerOmDelingAvCv}
+                    smser={smser}
+                />
+            </div>
+        </TilgangskontrollForInnhold>
     );
 };
 

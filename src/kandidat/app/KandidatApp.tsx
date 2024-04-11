@@ -2,6 +2,9 @@ import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import { TilToppenKnapp } from '../../felles/komponenter/tilToppenKnapp/TilToppenKnapp';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Kandidatside from '../kandidatside/Kandidatside';
 import CvSide from '../kandidatside/cv/CvSide';
 import Historikkside from '../kandidatside/historikk/Historikkside';
@@ -33,9 +36,16 @@ const App = () => {
 };
 
 const KandidatApp = () => (
-    <Provider store={store}>
-        <App />
-    </Provider>
+    <TilgangskontrollForInnhold
+        kreverEnAvRollene={[
+            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+        ]}
+    >
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </TilgangskontrollForInnhold>
 );
 
 export default KandidatApp;

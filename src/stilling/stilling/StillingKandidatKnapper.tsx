@@ -2,6 +2,9 @@ import { MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { lenkeTilFinnKandidater } from '../../kandidat/app/paths';
 import LeggTilKandidatModal from './legg-til-kandidat/LeggTilKandidatModal';
 
@@ -49,13 +52,20 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     </Link>
                 )}
 
-                <Button
-                    onClick={() => setVisLeggTilKandidatModal(true)}
-                    icon={<PersonPlusIcon aria-hidden />}
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[
+                        Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+                    ]}
                 >
-                    Legg til kandidat
-                </Button>
-
+                    <Button
+                        onClick={() => setVisLeggTilKandidatModal(true)}
+                        icon={<PersonPlusIcon aria-hidden />}
+                    >
+                        Legg til kandidat
+                    </Button>
+                </TilgangskontrollForInnhold>
                 <LeggTilKandidatModal
                     erEier={erEier}
                     vis={visLeggTilKandidatModal}

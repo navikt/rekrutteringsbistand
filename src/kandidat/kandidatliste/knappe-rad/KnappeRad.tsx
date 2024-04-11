@@ -4,6 +4,9 @@ import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, ReactNode } from 'react';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import {
     erKobletTilArbeidsgiver,
@@ -69,26 +72,37 @@ const KnappeRad: FunctionComponent<Props> = ({
             <div className={css.venstre}>{children}</div>
             {kandidatliste.status === Kandidatlistestatus.Åpen && (
                 <div className={css.høyre}>
-                    {skalViseEkstraKnapper &&
-                    smsApiFeil ? /* TODO: burde ideelt sett vise en feilmelding om at vi ikke kan hente SMS-status. */ null : minstEnKandidatErMarkert &&
-                      minstEnKandidatHarIkkeFåttSms ? (
-                        <Button variant="tertiary" onClick={onSendSmsClick} icon={<MobileIcon />}>
-                            Send SMS
-                        </Button>
-                    ) : (
-                        <MedPopover
-                            tittel="Send SMS til de markerte kandidatene"
-                            hjelpetekst={
-                                minstEnKandidatErMarkert
-                                    ? 'Du har allerede sendt SMS til alle markerte kandidater.'
-                                    : 'Du må huke av for kandidatene du ønsker å sende SMS til.'
-                            }
-                        >
-                            <Button variant="tertiary" icon={<MobileIcon />}>
+                    <TilgangskontrollForInnhold
+                        skjulVarsel
+                        kreverEnAvRollene={[
+                            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        ]}
+                    >
+                        {skalViseEkstraKnapper &&
+                        smsApiFeil ? /* TODO: burde ideelt sett vise en feilmelding om at vi ikke kan hente SMS-status. */ null : minstEnKandidatErMarkert &&
+                          minstEnKandidatHarIkkeFåttSms ? (
+                            <Button
+                                variant="tertiary"
+                                onClick={onSendSmsClick}
+                                icon={<MobileIcon />}
+                            >
                                 Send SMS
                             </Button>
-                        </MedPopover>
-                    )}
+                        ) : (
+                            <MedPopover
+                                tittel="Send SMS til de markerte kandidatene"
+                                hjelpetekst={
+                                    minstEnKandidatErMarkert
+                                        ? 'Du har allerede sendt SMS til alle markerte kandidater.'
+                                        : 'Du må huke av for kandidatene du ønsker å sende SMS til.'
+                                }
+                            >
+                                <Button variant="tertiary" icon={<MobileIcon />}>
+                                    Send SMS
+                                </Button>
+                            </MedPopover>
+                        )}
+                    </TilgangskontrollForInnhold>
                     {skalViseDelMedKandidatKnapp && (
                         <ForespørselOmDelingAvCv
                             stillingsId={kandidatliste.stillingId!}

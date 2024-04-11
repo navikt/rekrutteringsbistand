@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { State } from '../../../../redux/store';
 import {
     MARKER_EKSTERN_STILLING_SOM_MIN,
@@ -36,7 +39,10 @@ const ContactInfo = () => {
     const { reportee, navIdent } = stilling.administration;
 
     const markerSomMinKnappOgModal = () => (
-        <>
+        <TilgangskontrollForInnhold
+            skjulVarsel
+            kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+        >
             <Button
                 variant="secondary"
                 size="small"
@@ -51,7 +57,7 @@ const ContactInfo = () => {
                     isDir ? onMarkerSomMinKlikkInternStilling : onMarkerSomMinKlikkEksternStilling
                 }
             />
-        </>
+        </TilgangskontrollForInnhold>
     );
 
     const visMarkerSomMinKnapp =

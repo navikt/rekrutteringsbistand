@@ -1,6 +1,8 @@
 import { Label, Radio, RadioGroup } from '@navikt/ds-react';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import React, { FunctionComponent, ReactNode } from 'react';
+import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
+import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { kategoriTilVisningsnavn } from '../stilling/forhåndsvisning/administration/kategori/Kategori';
 import css from './OpprettNyStilling.module.css';
 
@@ -25,6 +27,27 @@ const VelgStillingskategori: FunctionComponent<Props> = ({
         onChange(event.target.value as Stillingskategori);
     };
 
+    const { harRolle } = React.useContext(ApplikasjonContext);
+
+    const harTilgang = (kategori: Stillingskategori): boolean => {
+        switch (kategori) {
+            case Stillingskategori.Stilling:
+                return harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]);
+
+            case Stillingskategori.Jobbmesse:
+                return harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]);
+
+            case Stillingskategori.Formidling:
+                return harRolle([
+                    Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                    Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+                ]);
+
+            default:
+                return false;
+        }
+    };
+
     return (
         <RadioGroup
             className={css.velgKategori}
@@ -33,6 +56,7 @@ const VelgStillingskategori: FunctionComponent<Props> = ({
         >
             {kategorier.map((kategori) => (
                 <Radio
+                    disabled={!harTilgang(kategori)}
                     key={kategori}
                     name="stillingskategori"
                     onChange={onStillingskategoriChange}
