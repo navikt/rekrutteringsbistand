@@ -86,14 +86,6 @@ export const useKandidatStillingssøkData = ({
     return { ...swrHook, hentetGeografiFraBosted, manglerØnsketYrke, kandidatStillingssøk };
 };
 
-const hentFylkeskode = (geografiKode: string) => {
-    const fylkesnummerFraKandidat = geografiKode.split('.')[0].substring(2);
-
-    if (fylkesnummerFraKandidat.match(/^\d+$/)) {
-        return fylkesnummerFraKandidat;
-    }
-};
-
 const hentFylkerFraJobbønsker = (geografijobbønsker: Sted[]): string[] => {
     return geografijobbønsker
         .filter((jobbønske) => jobbønske.nummer.length === 2)
@@ -155,7 +147,7 @@ const konverterStederTil2024koder = (
         ({ nummer }) =>
             !fylkesKoder.some(
                 (fylkesKode) => nummer.startsWith(fylkesKode) && nummer !== fylkesKode
-            ) && nummer.length == 2
+            ) && nummer.length < 5
     );
     console.log('ret', ret);
     return ret;
