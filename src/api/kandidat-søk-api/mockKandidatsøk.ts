@@ -37,12 +37,12 @@ export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
             geografiKode: 'NO38.3803',
         },
         {
-            geografiKodeTekst: 'Norge',
-            geografiKode: 'NO',
+            geografiKodeTekst: 'Løten',
+            geografiKode: 'NO38.3412',
         },
         {
-            geografiKodeTekst: 'Oslo',
-            geografiKode: 'NO03.0301',
+            geografiKodeTekst: 'Norge',
+            geografiKode: 'NO',
         },
         {
             geografiKodeTekst: 'Oslo/Bydel St.Hanshaugen',
