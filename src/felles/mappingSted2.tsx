@@ -17,7 +17,7 @@ const stedmappingRaw = new Map<string, string[]>([
     ['Kvinnherad.4617', ['Kvinnherad.1224']],
     ['Ullensvang.4618', ['Jondal.1227', 'Odda.1228', 'Ullensvang.1231']],
     ['Ulvik.4620', ['Ulvik.1233']],
-    ['Voss.4621', ['Voss.1235']],
+    ['Voss.4621', ['Voss.1235', 'Granvin.1234']],
     ['Eidfjord.4619', ['Eidfjord.1232']],
     ['Kvam.4622', ['Kvam.1238']],
     ['Samnanger.4623', ['Samnanger.1242']],
@@ -176,7 +176,7 @@ const stedmappingRaw = new Map<string, string[]>([
     ['Vinje.4036', ['Vinje.0834', 'Vinje.3825']],
 
     // Rogaland
-    ['Stavanger.1103', ['Stavanger.1103', 'Finnøy.1141', 'Rennesøy.1142']],
+    ['Stavanger.1103', ['Finnøy.1141', 'Rennesøy.1142']],
     ['Sandnes.1108', ['Sandnes.1102', 'Forsand.1129']],
 
     // Nordland
@@ -185,7 +185,7 @@ const stedmappingRaw = new Map<string, string[]>([
 
     // Trøndelag
     ['Trøndelag.50', ['Sør-Trøndelag.16', 'Nord-Trøndelag.17']],
-    ['Trondheim.5001', ['Trondheim.1601', 'Klæbu.1662']],
+    ['Trondheim.5001', ['Trondheim.1601', 'Klæbu.1662', 'Klæbu.5030']],
     ['Steinkjer.5006', ['Steinkjer.1702', 'Verran.1724', 'Steinkjer.5004', 'Verran.5039']],
     [
         'Namsos.5007',
@@ -207,7 +207,7 @@ const stedmappingRaw = new Map<string, string[]>([
     ['Midtre Gauldal.5027', ['Midtre Gauldal.1648']],
     ['Melhus.5028', ['Melhus.1653']],
     ['Skaun.5029', ['Skaun.1657']],
-    ['Klæbu.5030', ['Klæbu.1662']],
+
     ['Malvik.5031', ['Malvik.1663']],
     ['Selbu.5032', ['Selbu.1664']],
     ['Tydal.5033', ['Tydal.1665']],
@@ -225,7 +225,7 @@ const stedmappingRaw = new Map<string, string[]>([
     ['Overhalla.5047', ['Overhalla.1744']],
     ['Flatanger.5049', ['Flatanger.1749']],
     ['Leka.5052', ['Leka.1755']],
-    ['Inderøy.5053', ['Inderøy.1756']],
+    ['Inderøy.5053', ['Inderøy.1756', 'Mosvik.1723', 'Sandvollan.1729']],
     ['Indre Fosen.5054', ['Rissa.1624', 'Leksvik.1718']],
     ['Heim.5055', ['Hemne.1612', 'Halsa.1571', 'Snillfjord.1613', 'Hemne.5011', 'Snillfjord.5012']],
     ['Hitra.5056', ['Hitra.1617', 'Snillfjord.1613', 'Hitra.5013', 'Snillfjord.5012']],
@@ -250,7 +250,16 @@ const stedmappingRaw = new Map<string, string[]>([
     // Finnmark
     ['Finnmark.56', ['Finnmark.20', 'Troms og Finnmark.54']],
     ['Alta.5601', ['Alta.2012', 'Alta.5403']],
-    ['Hammerfest.5603', ['Hammerfest.2004', 'Kvalsund.2017', 'Hammerfest.5406']],
+    [
+        'Hammerfest.5603',
+        [
+            'Hammerfest.2004',
+            'Kvalsund.2017',
+            'Hammerfest.5406',
+            'Hammerfest.2001',
+            'Hammerfest.2016',
+        ],
+    ],
     ['Sør-Varanger.5605', ['Sør-Varanger.2030', 'Sør-Varanger.5444']],
     ['Vadsø.5607', ['Vadsø.2003', 'Vadsø.5405']],
     ['Karasjok.5610', ['Karasjok.2021', 'Karasjok.5437']],
@@ -324,16 +333,28 @@ const stedmappingRaw = new Map<string, string[]>([
     // Vestfold
     ['Vestfold.39', ['Vestfold.07', 'Vestfold og Telemark.38']],
     ['Horten.3901', ['Horten.0701', 'Horten.3801']],
-    ['Holmestrand.3903', ['Holmestrand.0715', 'Holmestrand.3802', 'Sande (Vestf.).0713']],
+    [
+        'Holmestrand.3903',
+        [
+            'Holmestrand.0715',
+            'Holmestrand.3802',
+            'Sande (Vestf.).0713',
+            'Holmestrand.0702',
+            'Hof.0714',
+        ],
+    ],
     ['Tønsberg.3905', ['Tønsberg.0704', 'Tønsberg.3803', 'Re.0716']],
-    ['Sandefjord.3907', ['Sandefjord.0710', 'Sandefjord.3804']],
-    ['Larvik.3909', ['Larvik.0712', 'Larvik.3805']],
-    ['Færder.3911', ['Færder.0729', 'Færder.3811']],
+    [
+        'Sandefjord.3907',
+        ['Sandefjord.0710', 'Sandefjord.3804', 'Sandefjord.0706', 'Andebu.0719', 'Stokke.0720'],
+    ],
+    ['Larvik.3909', ['Larvik.0712', 'Larvik.3805', 'Larvik.0709', 'Lardal.0728']],
+    ['Færder.3911', ['Færder.0729', 'Færder.3811', 'Nøtterøy.0722', 'Tjøme.0723']],
 
     // Troms
     ['Troms.55', ['Troms.19', 'Troms og Finnmark.54']],
     ['Tromsø.5501', ['Tromsø.1902', 'Tromsø.5401']],
-    ['Harstad.5503', ['Harstad.1903', 'Harstad.5402']],
+    ['Harstad.5503', ['Harstad.1903', 'Harstad.5402', 'Harstad.1901', 'Bjarkøy.1915']],
     ['Kvæfjord.5510', ['Kvæfjord.1911', 'Kvæfjord.5411']],
     ['Tjeldsund.5512', ['Skånland.1913', 'Tjeldsund.1852', 'Tjeldsund.5412']],
     ['Ibestad.5514', ['Ibestad.1917', 'Ibestad.5413']],
