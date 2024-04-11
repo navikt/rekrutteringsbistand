@@ -5,6 +5,40 @@ const tilDato = (dag: number, måned: number, år: number, timer: number = 0, mi
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(11, 4, 2024),
+        tittel: 'Standardsøk for stilling er endret',
+        innhold: (
+            <>
+                <p>
+                    Vi har forbedret søk etter kommuner og fylker i rekrutteringsbistand. Du vil nå
+                    kunne få flere treff når du søker etter kommuner og fylker som siste årene har
+                    blitt slått sammen eller splittet, eller har endret kommune/fylkesnummer.
+                </p>
+                <p>
+                    I forbindelse med disse endringene kan det være feil i standardsøket for
+                    stillingssøk for din bruker. Om dette gjelder deg, vil det stå "Ukjent
+                    Kommunenummer" foran kommunenavnet i søkeetikettene for stillingssøket. For å
+                    løse problemet, kan du følge denne oppskriften:
+                </p>
+                <ul>
+                    <li>
+                        Velg den blå etiketten "Tøm alle filtre", som ligger over listen av
+                        stillinger i stillingssøket
+                    </li>
+                    <li>Legg inn søkekriteriene du ønsker på nytt</li>
+                    <li>
+                        Velg knappen på høyre side av skjermen "Lagre nytt standardsøk" (ikke trykk
+                        "Bruk standardsøk" før du har valgt "Lagre nytt standardsøk")
+                    </li>
+                    <li>
+                        Deretter kan du trykke "Bruk standardsøk", for å se at standardsøket nå
+                        fungerer som forventet.
+                    </li>
+                </ul>
+            </>
+        ),
+    },
+    {
         dato: tilDato(28, 11, 2023),
         tittel: 'Endringslogg på Navet',
         innhold: (
