@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.alert {
+    max-width: var(--innhold-maksbredde);
+    width: 100%;
+    padding: 1;
+    margin-top: 1rem;
+}
