@@ -6,7 +6,8 @@ import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
 import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 import { KandidatsokQueryParam } from 'felles/lenker';
-import { SuggestionsSteder, useSuggestSted } from '../../api/kandidat-søk-api/suggestSted';
+import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
+import { finnNåværendeKode, finnNåværendeNavnUppercase } from 'felles/MappingSted';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
@@ -16,10 +17,7 @@ const useSøkekriterierFraStilling = (
     const [searchParams] = useSearchParams();
     const [harLagtTilKriterier, setHarLagtTilKriterier] = useState(false);
 
-    const county =
-        (stilling.kind === Nettstatus.Suksess && stilling.data?.stilling.location.county) || null;
-
-    const { suggestions: fylker, isLoading: fylkeIsLoading } = useSuggestSted({ query: county });
+    const { data: fylker, isLoading: fylkerIsLoading } = useHentFylker();
 
     useEffect(() => {
         const anvendSøkekriterier = async (stilling: Stilling) => {
@@ -27,7 +25,7 @@ const useSøkekriterierFraStilling = (
 
             setSearchParam(FilterParam.ØnsketYrke, yrkerFraStilling);
 
-            const stedFraStilling = await hentØnsketStedFraStilling(stilling, fylker);
+            const stedFraStilling = hentØnsketStedFraStilling(stilling, fylker);
             if (stedFraStilling) {
                 setSearchParam(FilterParam.ØnsketSted, stedFraStilling);
             }
@@ -38,13 +36,13 @@ const useSøkekriterierFraStilling = (
             stilling.kind === Nettstatus.Suksess &&
             brukKriterierFraStillingen &&
             søkeKriterierIkkeLagtTil(searchParams) &&
-            !fylkeIsLoading &&
+            !fylkerIsLoading &&
             !harLagtTilKriterier
         ) {
             anvendSøkekriterier(stilling.data);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stilling, brukKriterierFraStillingen, fylker]);
+    }, [stilling, brukKriterierFraStillingen, JSON.stringify(fylker)]);
 };
 
 const hentØnsketYrkeFraStilling = (stilling: Stilling) => {
@@ -58,29 +56,31 @@ const hentØnsketYrkeFraStilling = (stilling: Stilling) => {
         .join(LISTEPARAMETER_SEPARATOR);
 };
 
-const hentØnsketStedFraStilling = async (
+const hentØnsketStedFraStilling = (
     stilling: Stilling,
-    fylker: SuggestionsSteder | undefined
-): Promise<string | null> => {
+    fylker: HentFylkerDTO | undefined
+): string | null => {
     const { location } = stilling.stilling;
     const { municipal, municipalCode, county } = location;
 
     if (municipal && municipalCode) {
         const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
-
-        return encodeGeografiforslag({
-            geografiKode: kommunekode,
-            geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
-        });
+        return finnNåværendeKode(
+            encodeGeografiforslag({
+                geografiKode: kommunekode,
+                geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
+            })
+        );
     } else if (county) {
-        const fylke = fylker && fylker.length > 0 ? fylker[0] : undefined;
+        const fylke = fylker
+            ? fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
+            : undefined;
 
         if (fylke) {
-            const { geografiKode, geografiKodeTekst } = fylke;
-
+            const { code, capitalizedName } = fylke;
             return encodeGeografiforslag({
-                geografiKode,
-                geografiKodeTekst,
+                geografiKode: `NO${code}`,
+                geografiKodeTekst: capitalizedName,
             });
         } else {
             return null;

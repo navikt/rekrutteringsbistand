@@ -25,20 +25,32 @@ export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
     ],
     geografiJobbonsker: [
         {
+            geografiKodeTekst: 'Viken',
+            geografiKode: 'NO30',
+        },
+        {
+            geografiKodeTekst: 'Vestfold og Telemark',
+            geografiKode: 'NO38',
+        },
+        {
+            geografiKodeTekst: 'Tønsberg',
+            geografiKode: 'NO38.3803',
+        },
+        {
             geografiKodeTekst: 'Norge',
             geografiKode: 'NO',
         },
         {
-            geografiKodeTekst: 'Geiranger',
-            geografiKode: '1000',
+            geografiKodeTekst: 'Oslo',
+            geografiKode: 'NO03.0301',
         },
         {
-            geografiKodeTekst: 'Larvik',
-            geografiKode: 'NO07.0712',
+            geografiKodeTekst: 'Oslo/Bydel St.Hanshaugen',
+            geografiKode: 'NO03.03016',
         },
     ],
-    kommunenummerstring: '0301',
-    kommuneNavn: 'Vestvågøy',
+    kommunenummerstring: '3803',
+    kommuneNavn: 'Tønsberg',
 };
 
 export const mockKandidatsammendrag: Kandidatsammendrag = {

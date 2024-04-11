@@ -1,27 +1,34 @@
+import { finnAlleNavn, finnAlleVersjonerAvkoderEnkeltFormat } from 'felles/MappingSted';
+
 const geografi = (alleFylker: Set<string>, kommuner: Set<string>) => {
     const fylker = beholdFylkerUtenValgteKommuner(alleFylker, kommuner);
     if (fylker.size === 0 && kommuner.size === 0) return [];
 
+    const kommunerInkludertGamleKoder = finnAlleVersjonerAvkoderEnkeltFormat(kommuner);
+    const fylkerInkludertGamleNavn = finnAlleNavn(fylker);
+
     const shouldFylker =
-        fylker.size === 0
+        fylkerInkludertGamleNavn.size === 0
             ? []
             : [
                   {
                       terms: {
-                          'stilling.locations.county.keyword': Array.from(fylker).map((fylke) =>
-                              fylke.toUpperCase()
-                          ),
+                          'stilling.locations.county.keyword': Array.from(
+                              fylkerInkludertGamleNavn
+                          ).map((fylke) => fylke.toUpperCase()),
                       },
                   },
               ];
 
     const shouldKommuner =
-        kommuner.size === 0
+        kommunerInkludertGamleKoder.size === 0
             ? []
             : [
                   {
                       terms: {
-                          'stilling.locations.municipalCode': Array.from(kommuner),
+                          'stilling.locations.municipalCode': Array.from(
+                              kommunerInkludertGamleKoder
+                          ),
                       },
                   },
               ];

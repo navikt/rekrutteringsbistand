@@ -35,8 +35,8 @@ export const kandidatStillingssøkDTOSchema = z.object({
     kommuneNavn: z.string(),
 });
 
+export type GeografiØnske = z.infer<typeof geografiJobbonskeSchema>;
 export type KandidatStillingssøkDTO = z.infer<typeof kandidatStillingssøkDTOSchema>;
-
 export interface KandidatStillingssøkProps {
     kandidatnr: string;
 }
@@ -47,8 +47,7 @@ export const useKandidatStillingssøk = (props: KandidatStillingssøkProps) => {
     );
 
     if (swrData.data) {
-        const kandidatStillingssøkData: KandidatStillingssøkDTO =
-            swrData?.data?.hits?.hits[0]?._source;
+        const kandidatStillingssøkData = swrData?.data?.hits?.hits[0]?._source;
 
         return {
             ...swrData,

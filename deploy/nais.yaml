@@ -44,6 +44,7 @@ spec:
           - application: rekrutteringsbistand-stilling-api
           - application: rekrutteringsbistand-stillingssok-proxy
           - application: rekrutteringsbistand-kandidatsok-api
+          - application: rekrutteringsbistand-kandidatvarsel-api
           - application: toi-synlighetsmotor
           - application: toi-arbeidsgiver-notifikasjon
           - application: presenterte-kandidater-api
@@ -90,3 +91,5 @@ spec:
           value: http://presenterte-kandidater-api
         - name: MODIA_CONTEXT_HOLDER_API
           value: {{ modiaContextHolderApi }}
+        - name: KANDIDATVARSEL_API_URL
+          value: http://rekrutteringsbistand-kandidatvarsel-api
