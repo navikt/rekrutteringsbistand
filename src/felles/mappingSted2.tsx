@@ -1,7 +1,7 @@
 // Bruk dennne i steden for gammel fil, som skal bort på grunn av uoptimal kompleksitet.
 const stedmappingRaw = new Map<string, string[]>([
     // Oslo
-
+    ['Oslo.0301', ['Oslo.03']],
     // Kontinentalsokkelen
 
     // Vestland
@@ -392,7 +392,7 @@ export function getNummerFraSted(sted: string): string {
     const parts = sted.split('.');
     const lastPart = parts[parts.length - 1];
     const match = lastPart.match(/\d+$/);
-    return match ? match[0] : lastPart;
+    return match ? match[0] : '';
 }
 
 export function lagKandidatsøkstreng(sted: Sted): string {
