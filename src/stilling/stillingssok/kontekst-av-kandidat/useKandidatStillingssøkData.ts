@@ -48,7 +48,7 @@ export const useKandidatStillingssøkData = ({
                           getNummerFraSted(g.geografiKode)
                       );
 
-            const konverterteGeografikoder = konverterStederTil2024koder(geografikoder);
+            const konverterteGeografikoder = konverterStederTilNåværendeKoder(geografikoder);
 
             const fylker: (string | undefined)[] =
                 hentFylkerFraJobbønsker(konverterteGeografikoder);
@@ -99,7 +99,7 @@ const hentYrkerFraJobbønsker = (yrkesønsker: Jobbønske[]): string[] => {
     return [...new Set(yrkesønsker.flatMap((yrkesønske) => yrkesønske.sokeTitler))];
 };
 
-const konverterStederTil2024koder = (geografikoder: string[]): string[] => {
+const konverterStederTilNåværendeKoder = (geografikoder: string[]): string[] => {
     const konverterteKoder = geografikoder.map((kode) => {
         const nyekoder = stedmappingFraGammeltNummer.get(kode)?.nummer || kode;
         return nyekoder.length > 4 ? nyekoder.substring(0, 4) : nyekoder;
