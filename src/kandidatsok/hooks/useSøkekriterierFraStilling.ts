@@ -8,6 +8,12 @@ import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier
 import { KandidatsokQueryParam } from 'felles/lenker';
 import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
 import { finnNåværendeKode, finnNåværendeNavnUppercase } from 'felles/MappingSted';
+import {
+    Sted,
+    lagKandidatsøkstreng,
+    stedmappingFraGammeltNavn,
+    stedmappingFraGammeltNummer,
+} from 'felles/mappingSted2';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
@@ -65,6 +71,19 @@ const hentØnsketStedFraStilling = (
     const { municipal, municipalCode, county } = location;
 
     if (municipal && municipalCode) {
+        const nyttSted: Sted | undefined = stedmappingFraGammeltNummer.get(municipalCode);
+        const stedstreng = lagKandidatsøkstreng(
+            nyttSted ? nyttSted : { nummer: municipalCode, navn: municipal }
+        );
+        console.log('municipal stedstreng ny', stedstreng);
+        /*const s = encodeGeografiforslag({
+            geografiKode: nyttSted ? nyttSted.nummer : municipalCode,
+            geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(
+                nyttSted ? nyttSted.navn : municipal
+            ),
+        });*/
+        console.log('ny muncicipal', s);
+
         const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
         const ret = finnNåværendeKode(
             encodeGeografiforslag({
@@ -75,6 +94,9 @@ const hentØnsketStedFraStilling = (
         console.log('municipalret', ret);
         return ret;
     } else if (county) {
+        const søkeCounty = (stedmappingFraGammeltNavn.get(county)?.navn || county).toUpperCase();
+        console.log('søkeCounty', søkeCounty, 'gammelt', finnNåværendeNavnUppercase(county));
+
         const fylke = fylker
             ? fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
             : undefined;
