@@ -61,16 +61,19 @@ const hentØnsketStedFraStilling = (
     fylker: HentFylkerDTO | undefined
 ): string | null => {
     const { location } = stilling.stilling;
+    console.log('location', location);
     const { municipal, municipalCode, county } = location;
 
     if (municipal && municipalCode) {
         const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
-        return finnNåværendeKode(
+        const ret = finnNåværendeKode(
             encodeGeografiforslag({
                 geografiKode: kommunekode,
                 geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
             })
         );
+        console.log('municipalret', ret);
+        return ret;
     } else if (county) {
         const fylke = fylker
             ? fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
@@ -78,10 +81,12 @@ const hentØnsketStedFraStilling = (
 
         if (fylke) {
             const { code, capitalizedName } = fylke;
-            return encodeGeografiforslag({
+            const ret = encodeGeografiforslag({
                 geografiKode: `NO${code}`,
                 geografiKodeTekst: capitalizedName,
             });
+            console.log('fylkeret', ret);
+            return ret;
         } else {
             return null;
         }
