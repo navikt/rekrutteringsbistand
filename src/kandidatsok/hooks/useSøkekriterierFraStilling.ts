@@ -81,12 +81,6 @@ const hentØnsketStedFraStilling = (
                   }
         );
         console.log('municipal stedstreng ny', stedstreng);
-        /*const s = encodeGeografiforslag({
-            geografiKode: nyttSted ? nyttSted.nummer : municipalCode,
-            geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(
-                nyttSted ? nyttSted.navn : municipal
-            ),
-        });*/
 
         const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
         const ret = finnNåværendeKode(
@@ -96,19 +90,14 @@ const hentØnsketStedFraStilling = (
             })
         );
         console.log('municipalret', ret);
-        return ret;
+        return stedstreng;
     } else if (county) {
-        const søkeCounty = (stedmappingFraGammeltNavn.get(county)?.navn || county).toUpperCase();
-        console.log(
-            'søkeCounty',
-            søkeCounty,
-            'gammelt',
-            stedmappingFraGammeltNavn.get(formaterStedsnavnSlikDetErRegistrertPåKandidat(county))
-        );
+        const countyFormatert = formaterStedsnavnSlikDetErRegistrertPåKandidat(county);
+        const søkeCounty = (
+            stedmappingFraGammeltNavn.get(countyFormatert)?.navn || countyFormatert
+        ).toUpperCase();
 
-        const fylke = fylker
-            ? fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
-            : undefined;
+        const fylke = fylker ? fylker.find((f) => f.name.toUpperCase() === søkeCounty) : undefined;
 
         if (fylke) {
             const { code, capitalizedName } = fylke;
