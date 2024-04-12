@@ -455,26 +455,6 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Kvænangen.NO55.5546', ['Kvænangen.NO54.5429', 'Kvænangen.NO19.1943']],
 ]);
 
-const stedMapping2024FinnNåværendeKode = new Map(
-    Array.from(stedMapping2024).flatMap(([key, values]): [string, string][] =>
-        values.map((value) => [value, key])
-    )
-);
-
-export const finnNåværendeKode = (sted: string): string => {
-    return stedMapping2024FinnNåværendeKode.get(sted) ?? sted;
-};
-
-const stedMapping2024FinnNåværendeNavnUppercase = new Map(
-    Array.from(stedMapping2024).flatMap(([key, values]): [string, string][] =>
-        values.map((value) => [value.split('.')[0].toUpperCase(), key.split('.')[0].toUpperCase()])
-    )
-);
-
-export const finnNåværendeNavnUppercase = (sted: string): string => {
-    return stedMapping2024FinnNåværendeNavnUppercase.get(sted.toUpperCase()) ?? sted.toUpperCase();
-};
-
 const hentEnkelKode = (fullKode: string): string => {
     const sisteDel = fullKode.split('.').pop() || '';
     return sisteDel.length > 2 ? sisteDel : sisteDel.replace('NO', '');

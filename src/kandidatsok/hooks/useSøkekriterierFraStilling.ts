@@ -1,13 +1,16 @@
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { encodeGeografiforslag } from '../filter/jobbønsker/ØnsketSted';
 import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
 import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 import { KandidatsokQueryParam } from 'felles/lenker';
 import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
-import { finnNåværendeKode, finnNåværendeNavnUppercase } from 'felles/MappingSted';
+import {
+    lagKandidatsøkstreng,
+    stedmappingFraGammeltNavn,
+    stedmappingFraGammeltNummer,
+} from 'felles/mappingSted2';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
@@ -64,27 +67,26 @@ const hentØnsketStedFraStilling = (
     const { municipal, municipalCode, county } = location;
 
     if (municipal && municipalCode) {
-        const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
-        return finnNåværendeKode(
-            encodeGeografiforslag({
-                geografiKode: kommunekode,
-                geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
-            })
+        const nyttSted = stedmappingFraGammeltNummer.get(municipalCode);
+        return lagKandidatsøkstreng(
+            nyttSted
+                ? nyttSted
+                : {
+                      nummer: municipalCode,
+                      navn: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
+                  }
         );
     } else if (county) {
-        const fylke = fylker
-            ? fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
-            : undefined;
+        const nåværendeCounty =
+            stedmappingFraGammeltNavn
+                .get(formaterStedsnavnSlikDetErRegistrertPåKandidat(county))
+                ?.navn?.toUpperCase() || county;
 
-        if (fylke) {
-            const { code, capitalizedName } = fylke;
-            return encodeGeografiforslag({
-                geografiKode: `NO${code}`,
-                geografiKodeTekst: capitalizedName,
-            });
-        } else {
-            return null;
-        }
+        const fylke = fylker?.find((f) => f.name.toUpperCase() === nåværendeCounty);
+
+        return fylke
+            ? lagKandidatsøkstreng({ nummer: fylke.code, navn: fylke.capitalizedName })
+            : null;
     } else {
         return null;
     }
