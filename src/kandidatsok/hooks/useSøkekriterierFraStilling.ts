@@ -1,15 +1,12 @@
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { encodeGeografiforslag } from '../filter/jobbønsker/ØnsketSted';
 import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
 import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 import { KandidatsokQueryParam } from 'felles/lenker';
 import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
-import { finnNåværendeKode, finnNåværendeNavnUppercase } from 'felles/MappingSted';
 import {
-    Sted,
     lagKandidatsøkstreng,
     stedmappingFraGammeltNavn,
     stedmappingFraGammeltNummer,
@@ -67,12 +64,11 @@ const hentØnsketStedFraStilling = (
     fylker: HentFylkerDTO | undefined
 ): string | null => {
     const { location } = stilling.stilling;
-    console.log('location', location);
     const { municipal, municipalCode, county } = location;
 
     if (municipal && municipalCode) {
-        const nyttSted: Sted | undefined = stedmappingFraGammeltNummer.get(municipalCode);
-        const stedstreng = lagKandidatsøkstreng(
+        const nyttSted = stedmappingFraGammeltNummer.get(municipalCode);
+        return lagKandidatsøkstreng(
             nyttSted
                 ? nyttSted
                 : {
@@ -80,36 +76,17 @@ const hentØnsketStedFraStilling = (
                       navn: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
                   }
         );
-        console.log('municipal stedstreng ny', stedstreng);
-
-        const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
-        const ret = finnNåværendeKode(
-            encodeGeografiforslag({
-                geografiKode: kommunekode,
-                geografiKodeTekst: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
-            })
-        );
-        console.log('municipalret', ret);
-        return stedstreng;
     } else if (county) {
-        const countyFormatert = formaterStedsnavnSlikDetErRegistrertPåKandidat(county);
         const søkeCounty = (
-            stedmappingFraGammeltNavn.get(countyFormatert)?.navn || countyFormatert
+            stedmappingFraGammeltNavn.get(formaterStedsnavnSlikDetErRegistrertPåKandidat(county))
+                ?.navn || county
         ).toUpperCase();
 
-        const fylke = fylker ? fylker.find((f) => f.name.toUpperCase() === søkeCounty) : undefined;
+        const fylke = fylker?.find((f) => f.name.toUpperCase() === søkeCounty);
 
-        if (fylke) {
-            const { code, capitalizedName } = fylke;
-            const ret = encodeGeografiforslag({
-                geografiKode: `NO${code}`,
-                geografiKodeTekst: capitalizedName,
-            });
-            console.log('fylkeret', ret);
-            return ret;
-        } else {
-            return null;
-        }
+        return fylke
+            ? lagKandidatsøkstreng({ nummer: fylke.code, navn: fylke.capitalizedName })
+            : null;
     } else {
         return null;
     }
