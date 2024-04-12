@@ -11,7 +11,7 @@ import {
     lagKandidatsøkstreng,
     stedmappingFraGammeltNavn,
     stedmappingFraGammeltNummer,
-} from 'felles/mappingSted';
+} from 'felles/MappingSted';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,

@@ -383,17 +383,15 @@ export type Sted = {
 
 // Hjelpefunksjoner for geografistrenger
 
-function lagStedFraStingIMap(input: string): Sted {
+function lagStedFraSting(input: string): Sted {
     const parts = input.split('.');
     return { navn: parts[0], nummer: parts[1] };
 }
 
-export function getNummerFraSted(sted: string): string {
-    const parts = sted.split('.');
-    const lastPart = parts[parts.length - 1];
-    const match = lastPart.match(/\d+$/);
+export const getNummerFraSted = (sted: string): string => {
+    const match = sted.split('.').pop()?.match(/\d+$/);
     return match ? match[0] : '';
-}
+};
 
 export function lagKandidatsøkstreng(sted: Sted): string {
     return sted.nummer.length === 2
@@ -407,13 +405,11 @@ export const formaterStedsnavn = (stedsnavn: string) =>
         .map((s) => (s !== 'i' ? s.charAt(0).toUpperCase() + s.substring(1).toLowerCase() : s))
         .join(' ');
 
-// Mappinger som har Sted som key og values
+// Oppretter map med Sted objekter fra rådata
 
 const stedmappingNyTilGammel: Map<Sted, Sted[]> = new Map(
-    Array.from(stedmappingRaw.entries()).map(([key, values]) => {
-        const stedKey: Sted = lagStedFraStingIMap(key);
-        const stedValues: Sted[] = values.map(lagStedFraStingIMap);
-        return [stedKey, stedValues];
+    Array.from(stedmappingRaw).map(([key, values]) => {
+        return [lagStedFraSting(key), values.map(lagStedFraSting)];
     })
 );
 
@@ -423,7 +419,7 @@ const stedmappingGammelTilNy: Map<Sted, Sted> = new Map(
     )
 );
 
-// Mappingfiler med enkel key, som slipper å evalueres på nytt for hvert kall
+// Eksporterer maps for enkel tilgang til stedsinformasjon
 
 export const stedmappingFraNyttNavn: Map<string, Sted[]> = new Map(
     Array.from(stedmappingNyTilGammel.entries()).map(([key, values]) => {

@@ -2,7 +2,7 @@ import {
     formaterStedsnavn,
     stedmappingFraNyttNavn,
     stedmappingFraNyttNummer,
-} from 'felles/mappingSted';
+} from 'felles/MappingSted';
 
 const beholdFylkerUtenValgteKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
     const kommuneArray = Array.from(kommuner);
