@@ -87,7 +87,9 @@ export type KandidatsøkProps = {
 };
 
 export const useKandidatsøk = (props: KandidatsøkProps) => {
+    console.log('useKandidatsøk', props);
     const søkekriterier: SøkekriterierDto = props.søkekriterier;
+    const søkekriterierString = JSON.stringify(søkekriterier);
 
     const queryParams = new URLSearchParams({
         side: String(props.side),
@@ -104,7 +106,7 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
         }),
     };
 
-    const swr = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
+    const swr = useSWR({ path: kandidatsøkEndepunkt, søkekriterierString }, ({ path }) =>
         postApi(path, utvidedeSøkekriterier, queryParams)
     );
 

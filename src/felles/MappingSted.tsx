@@ -455,18 +455,6 @@ const stedMapping2024 = new Map<string, string[]>([
     ['Kvænangen.NO55.5546', ['Kvænangen.NO54.5429', 'Kvænangen.NO19.1943']],
 ]);
 
-export const finn2024KoderForGamleKoder = (gamleKoder: string[]): string[] => {
-    const totalListeMedTreff = gamleKoder.flatMap((gammelKode) => {
-        const funnedeKoder = [...stedMapping2024.entries()]
-            .filter(([_, tidligereKoder]) => tidligereKoder.includes(gammelKode))
-            .map(([nøkkel2024]) => nøkkel2024);
-
-        return funnedeKoder.length > 0 ? funnedeKoder : [gammelKode];
-    });
-
-    return [...new Set(totalListeMedTreff)];
-};
-
 const stedMapping2024FinnNåværendeKode = new Map(
     Array.from(stedMapping2024).flatMap(([key, values]): [string, string][] =>
         values.map((value) => [value, key])
