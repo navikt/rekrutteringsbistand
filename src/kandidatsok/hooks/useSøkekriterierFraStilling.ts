@@ -7,10 +7,11 @@ import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier
 import { KandidatsokQueryParam } from 'felles/lenker';
 import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
 import {
+    formaterStedsnavn,
     lagKandidatsøkstreng,
     stedmappingFraGammeltNavn,
     stedmappingFraGammeltNummer,
-} from 'felles/mappingSted2';
+} from 'felles/mappingSted';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
@@ -73,14 +74,12 @@ const hentØnsketStedFraStilling = (
                 ? nyttSted
                 : {
                       nummer: municipalCode,
-                      navn: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
+                      navn: formaterStedsnavn(municipal),
                   }
         );
     } else if (county) {
         const nåværendeCounty =
-            stedmappingFraGammeltNavn
-                .get(formaterStedsnavnSlikDetErRegistrertPåKandidat(county))
-                ?.navn?.toUpperCase() || county;
+            stedmappingFraGammeltNavn.get(formaterStedsnavn(county))?.navn?.toUpperCase() || county;
 
         const fylke = fylker?.find((f) => f.name.toUpperCase() === nåværendeCounty);
 
@@ -96,11 +95,5 @@ const søkeKriterierIkkeLagtTil = (searchParams: URLSearchParams) =>
     Array.from(searchParams.keys()).every(
         (param) => param === KandidatsokQueryParam.Kandidatliste
     ) || Array.from(searchParams.keys()).every((param) => param === KandidatsokQueryParam.Stilling);
-
-const formaterStedsnavnSlikDetErRegistrertPåKandidat = (stedsnavn: string) =>
-    stedsnavn
-        .split(' ')
-        .map((s) => (s !== 'i' ? s.charAt(0).toUpperCase() + s.substring(1).toLowerCase() : s))
-        .join(' ');
 
 export default useSøkekriterierFraStilling;

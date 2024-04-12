@@ -1,11 +1,37 @@
-import { finnAlleNavn, finnAlleVersjonerAvkoderEnkeltFormat } from 'felles/MappingSted';
+import {
+    formaterStedsnavn,
+    stedmappingFraNyttNavn,
+    stedmappingFraNyttNummer,
+} from 'felles/mappingSted';
+
+const beholdFylkerUtenValgteKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
+    const kommuneArray = Array.from(kommuner);
+    const fylkerForKommuner = kommuneArray.map((kommune) => kommune.split('.')[0]);
+
+    return new Set(Array.from(fylker).filter((fylke) => !fylkerForKommuner.includes(fylke)));
+};
 
 const geografi = (alleFylker: Set<string>, kommuner: Set<string>) => {
     const fylker = beholdFylkerUtenValgteKommuner(alleFylker, kommuner);
     if (fylker.size === 0 && kommuner.size === 0) return [];
 
-    const kommunerInkludertGamleKoder = finnAlleVersjonerAvkoderEnkeltFormat(kommuner);
-    const fylkerInkludertGamleNavn = finnAlleNavn(fylker);
+    const kommunerInkludertGamleKoder = new Set(
+        [...kommuner].flatMap((kode) => {
+            const ekstraKoder =
+                stedmappingFraNyttNummer.get(kode)?.map((sted) => sted.nummer) || [];
+            return [kode, ...ekstraKoder];
+        })
+    );
+
+    const fylkerInkludertGamleNavn = new Set(
+        [...fylker].flatMap((fylke) => {
+            const ekstraNavn =
+                stedmappingFraNyttNavn
+                    .get(formaterStedsnavn(fylke))
+                    ?.map((sted) => sted.navn.toUpperCase()) || [];
+            return [fylke, ...ekstraNavn];
+        })
+    );
 
     const shouldFylker =
         fylkerInkludertGamleNavn.size === 0
@@ -45,13 +71,6 @@ const geografi = (alleFylker: Set<string>, kommuner: Set<string>) => {
             },
         },
     ];
-};
-
-const beholdFylkerUtenValgteKommuner = (fylker: Set<string>, kommuner: Set<string>) => {
-    const kommuneArray = Array.from(kommuner);
-    const fylkerForKommuner = kommuneArray.map((kommune) => kommune.split('.')[0]);
-
-    return new Set(Array.from(fylker).filter((fylke) => !fylkerForKommuner.includes(fylke)));
 };
 
 export default geografi;

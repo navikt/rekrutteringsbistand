@@ -10,7 +10,7 @@ import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
-import { getNummerFraSted, stedmappingFraGammeltNummer } from 'felles/mappingSted2';
+import { getNummerFraSted, stedmappingFraGammeltNummer } from 'felles/mappingSted';
 
 interface IuseKandidatStillingssøk {
     kandidatnr: string;
