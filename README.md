@@ -65,7 +65,6 @@ cd server && npm run start
 
 For at serveren skal kjøre må du definere noen miljøvariabler. Dette kan gjøres ved å lage en fil i `server/.env.local`. Se [dotenv](https://github.com/motdotla/dotenv) for dokumentasjon.
 
-  
 
 ```sh
 
