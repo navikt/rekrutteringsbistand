@@ -104,9 +104,25 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
         }),
     };
 
-    const propsKey = JSON.stringify(props);
+    const swrPropKey = {
+        ...props,
+        søkekriterier: {
+            ...søkekriterier,
+            valgtKontor: Array.from(søkekriterier.valgtKontor),
+            innsatsgruppe: Array.from(søkekriterier.innsatsgruppe),
+            ønsketYrke: Array.from(søkekriterier.ønsketYrke),
+            ønsketSted: Array.from(søkekriterier.ønsketSted),
+            kompetanse: Array.from(søkekriterier.kompetanse),
+            førerkort: Array.from(søkekriterier.førerkort),
+            prioritertMålgruppe: Array.from(søkekriterier.prioritertMålgruppe),
+            hovedmål: Array.from(søkekriterier.hovedmål),
+            utdanningsnivå: Array.from(søkekriterier.utdanningsnivå),
+            arbeidserfaring: Array.from(søkekriterier.arbeidserfaring),
+            språk: Array.from(søkekriterier.språk),
+        },
+    };
 
-    const swr = useSWR({ path: kandidatsøkEndepunkt, propsKey }, ({ path }) =>
+    const swr = useSWR({ path: kandidatsøkEndepunkt, swrPropKey }, ({ path }) =>
         postApi(path, utvidedeSøkekriterier, queryParams)
     );
 
