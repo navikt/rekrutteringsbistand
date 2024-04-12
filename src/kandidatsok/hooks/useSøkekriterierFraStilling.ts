@@ -82,7 +82,6 @@ const hentØnsketStedFraStilling = (
                 nyttSted ? nyttSted.navn : municipal
             ),
         });*/
-        console.log('ny muncicipal', s);
 
         const kommunekode = `NO${municipalCode?.slice(0, 2)}.${municipalCode}`;
         const ret = finnNåværendeKode(
