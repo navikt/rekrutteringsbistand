@@ -104,7 +104,7 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
         }),
     };
 
-    const swrPropKey = {
+    const swrPropKey = JSON.stringify({
         ...props,
         søkekriterier: {
             ...søkekriterier,
@@ -120,7 +120,7 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
             arbeidserfaring: Array.from(søkekriterier.arbeidserfaring),
             språk: Array.from(søkekriterier.språk),
         },
-    };
+    });
 
     const swr = useSWR({ path: kandidatsøkEndepunkt, swrPropKey }, ({ path }) =>
         postApi(path, utvidedeSøkekriterier, queryParams)
