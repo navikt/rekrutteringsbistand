@@ -104,7 +104,9 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
         }),
     };
 
-    const swr = useSWR({ path: kandidatsøkEndepunkt, props }, ({ path }) =>
+    const propsKey = JSON.stringify(props);
+
+    const swr = useSWR({ path: kandidatsøkEndepunkt, propsKey }, ({ path }) =>
         postApi(path, utvidedeSøkekriterier, queryParams)
     );
 
