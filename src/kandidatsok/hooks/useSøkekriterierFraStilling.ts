@@ -73,7 +73,12 @@ const hentØnsketStedFraStilling = (
     if (municipal && municipalCode) {
         const nyttSted: Sted | undefined = stedmappingFraGammeltNummer.get(municipalCode);
         const stedstreng = lagKandidatsøkstreng(
-            nyttSted ? nyttSted : { nummer: municipalCode, navn: municipal }
+            nyttSted
+                ? nyttSted
+                : {
+                      nummer: municipalCode,
+                      navn: formaterStedsnavnSlikDetErRegistrertPåKandidat(municipal),
+                  }
         );
         console.log('municipal stedstreng ny', stedstreng);
         /*const s = encodeGeografiforslag({
@@ -94,7 +99,12 @@ const hentØnsketStedFraStilling = (
         return ret;
     } else if (county) {
         const søkeCounty = (stedmappingFraGammeltNavn.get(county)?.navn || county).toUpperCase();
-        console.log('søkeCounty', søkeCounty, 'gammelt', finnNåværendeNavnUppercase(county));
+        console.log(
+            'søkeCounty',
+            søkeCounty,
+            'gammelt',
+            stedmappingFraGammeltNavn.get(formaterStedsnavnSlikDetErRegistrertPåKandidat(county))
+        );
 
         const fylke = fylker
             ? fylker.find((f) => f.name.toUpperCase() === finnNåværendeNavnUppercase(county))
