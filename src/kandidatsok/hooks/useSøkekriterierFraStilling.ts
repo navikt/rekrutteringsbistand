@@ -77,12 +77,12 @@ const hentØnsketStedFraStilling = (
                   }
         );
     } else if (county) {
-        const søkeCounty = (
-            stedmappingFraGammeltNavn.get(formaterStedsnavnSlikDetErRegistrertPåKandidat(county))
-                ?.navn || county
-        ).toUpperCase();
+        const nåværendeCounty =
+            stedmappingFraGammeltNavn
+                .get(formaterStedsnavnSlikDetErRegistrertPåKandidat(county))
+                ?.navn?.toUpperCase() || county;
 
-        const fylke = fylker?.find((f) => f.name.toUpperCase() === søkeCounty);
+        const fylke = fylker?.find((f) => f.name.toUpperCase() === nåværendeCounty);
 
         return fylke
             ? lagKandidatsøkstreng({ nummer: fylke.code, navn: fylke.capitalizedName })
