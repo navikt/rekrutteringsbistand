@@ -7,9 +7,9 @@ import useSWR, { SWRResponse, useSWRConfig } from 'swr';
 
 const varselStillingEndepunkt = (stillingId: string) => {
     if (stillingId === undefined) throw new Error('stillingId === undefined');
-    return `/kandidatvarsel-api/varsel/stilling/${stillingId}`;
+    return `/kandidatvarsel-api/api/varsler/stilling/${stillingId}`;
 };
-const varselQueryEndepunkt = '/kandidatvarsel-api/varsel/query';
+const varselQueryEndepunkt = '/kandidatvarsel-api/api/varsler/query';
 
 export enum Meldingsmal {
     VurdertSomAktuell = 'VURDERT_SOM_AKTUELL',
