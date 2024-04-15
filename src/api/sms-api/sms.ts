@@ -19,25 +19,59 @@ export enum Meldingsmal {
     // Webinar = 'webinar',
 }
 
-export enum SmsStatus {
-    UnderUtsending = 'UNDER_UTSENDING',
-    Sendt = 'SENDT',
-    Feil = 'FEIL',
+export enum MinsideStatus {
+    /** Det kommer ingen beskjed på min side, fordi varselet ble
+     * opprettet før vi hadde minside-integrasjon. */
+    IKKE_BESTILT = 'IKKE_BESTILT',
+
+    /** Vi jobber med å få opprettet beskjeden  på minside. */
+    UNDER_UTSENDING = 'UNDER_UTSENDING',
+
+    /** Minside har bekreftet av de har opprettet beskjeden. */
+    OPPRETTET = 'OPPRETTET',
+
+    /** Beskjeden er slettet og ikke lenger synlig for bruker eller saksbehandler. */
+    SLETTET = 'SLETTET',
 }
 
-const SmsStatusSchema = z
-    .literal(SmsStatus.UnderUtsending)
-    .or(z.literal(SmsStatus.Sendt))
-    .or(z.literal(SmsStatus.Feil));
+const MinsideStatusSchema = z
+    .literal(MinsideStatus.IKKE_BESTILT)
+    .or(z.literal(MinsideStatus.UNDER_UTSENDING))
+    .or(z.literal(MinsideStatus.OPPRETTET))
+    .or(z.literal(MinsideStatus.SLETTET));
 
-const SmsSchema = z.object({
-    id: z.string(),
-    opprettet: z.string(),
-    fnr: z.string(),
-    stillingId: z.string(),
-    navIdent: z.string(),
-    status: SmsStatusSchema,
-});
+export enum EksternStatus {
+    /** Vi jobber med å sende ut eksternt varsel. Status er ikke avklart enda. */
+    UNDER_UTSENDING = 'UNDER_UTSENDING',
+
+    /** Vi har fått bekreftet at en SMS er sendt. */
+    VELLYKKET_SMS = 'VELLYKKET_SMS',
+
+    /** Vi har fått bekreftet at en e-post er sendt. */
+    VELLYKKET_EPOST = 'VELLYKKET_EPOST',
+
+    /** Det skjedde en feil, og vi vil ikke prøve å sende varselet igjen. */
+    FEIL = 'FEIL',
+}
+
+const EksternStatusSchema = z
+    .literal(EksternStatus.UNDER_UTSENDING)
+    .or(z.literal(EksternStatus.VELLYKKET_SMS))
+    .or(z.literal(EksternStatus.VELLYKKET_EPOST))
+    .or(z.literal(EksternStatus.FEIL));
+
+const SmsSchema = z
+    .object({
+        id: z.string(),
+        opprettet: z.string(),
+        mottakerFnr: z.string(),
+        stillingId: z.string(),
+        avsenderNavident: z.string(),
+        minsideStatus: MinsideStatusSchema,
+        eksternStatus: EksternStatusSchema,
+        eksternFeilmelding: z.string().nullable(),
+    })
+    .partial({ eksternFeilmelding: true });
 
 export type Sms = z.infer<typeof SmsSchema>;
 
@@ -51,7 +85,7 @@ export const useSmserForStilling = (
         const parsedResponse = SmsArraySchema.parse(rawResponse);
         const smser: Record<string, Sms> = {};
         parsedResponse.forEach((sms) => {
-            smser[sms.fnr] = sms;
+            smser[sms.mottakerFnr] = sms;
         });
         return smser;
     });
@@ -121,7 +155,7 @@ export const smsApiMock = [
 
     http.post<{}, smserForKandidatRequest>(varselQueryEndepunkt, async ({ request }) => {
         const { fnr } = await request.json();
-        const sms = mockSms.filter((sms) => sms.fnr === fnr);
+        const sms = mockSms.filter((sms) => sms.mottakerFnr === fnr);
 
         if (!sms) {
             return new HttpResponse(null, { status: 404 });
@@ -135,9 +169,10 @@ const mockSms: Sms[] = [
     {
         id: '1',
         stillingId: mockKandidatlisteMedStilling.stillingId!,
-        fnr: '14114536327', //mockKandidatlisteMedStilling.kandidater[0].fodselsnr,
+        mottakerFnr: '14114536327', //mockKandidatlisteMedStilling.kandidater[0].fodselsnr,
+        avsenderNavident: mockVeileder.navIdent,
         opprettet: new Date().toISOString(),
-        status: SmsStatus.Sendt,
-        navIdent: mockVeileder.navIdent,
+        minsideStatus: MinsideStatus.OPPRETTET,
+        eksternStatus: EksternStatus.VELLYKKET_SMS,
     },
 ];

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { SmsStatus, Sms, useSmserForStilling } from '../../../api/sms-api/sms';
+import { EksternStatus, Sms, useSmserForStilling } from '../../../api/sms-api/sms';
 import css from './smsFeilAlertStripe.module.css';
 import { z } from 'zod';
 
@@ -37,7 +37,7 @@ const SmsFeilAlertStripe: FunctionComponent<Props> = ({ kandidater, stillingId }
         return null;
     }
 
-    const smsMedFeil = (sms: Sms | undefined) => sms && sms.status === SmsStatus.Feil;
+    const smsMedFeil = (sms: Sms | undefined) => sms && sms.eksternStatus === EksternStatus.FEIL;
     const ulestSms = (sms: Sms | undefined) => sms && !lesteSmsIder.includes(sms.id);
 
     const kandidaterMedUlesteSmsFeil = kandidater.filter((kandidat) => {

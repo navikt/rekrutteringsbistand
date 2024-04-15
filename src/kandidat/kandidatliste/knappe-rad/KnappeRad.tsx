@@ -6,7 +6,6 @@ import { FunctionComponent, ReactNode } from 'react';
 import TilgangskontrollForInnhold, {
     Rolle,
 } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
-import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import {
     erKobletTilArbeidsgiver,
     erKobletTilStilling,

@@ -25,10 +25,10 @@ if (import.meta.env.PROD || import.meta.env.VITE_LOKAL_FARO) {
 
 async function enableMocking() {
     if (import.meta.env.DEV) {
-        // const { mswWorker } = await import('../mock/setup');
-        // await mswWorker.start({
-        //     onUnhandledRequest: 'warn',
-        // });
+        const { mswWorker } = await import('../mock/setup');
+        await mswWorker.start({
+            onUnhandledRequest: 'warn',
+        });
     } else {
         return Promise.resolve();
     }
