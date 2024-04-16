@@ -6,6 +6,14 @@ const antallMåneder = 6;
 export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[] | undefined) => {
     let antallFiltrertBort = 0;
     const filtrertListe = hits?.filter((stilling) => {
+        // overstyr filter for annonse nr:
+        if (
+            stilling._source?.stilling?.annonsenr &&
+            ['2411402'].includes(stilling._source?.stilling?.annonsenr)
+        ) {
+            return stilling;
+        }
+
         // 6 mnd fra publishByAdmin
         if (!stilling._source?.stilling?.publishedByAdmin) {
             return stilling;
