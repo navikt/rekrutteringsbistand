@@ -30,7 +30,10 @@ const App = () => {
 export const KandidatSøkIndex = () => {
     return (
         <Tilgangskontroll
-            kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+            kreverEnAvRollene={[
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+            ]}
         >
             <ØktContextProvider>
                 <App />
