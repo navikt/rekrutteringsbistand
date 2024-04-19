@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 test.use({ storageState: 'playwright/.auth/jobbsokerrettet.json' });
 
@@ -12,5 +12,11 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await page.getByRole('link', { name: 'Stillinger', exact: true });
         await page.getByRole('link', { name: 'Kandidatsøk' });
         await page.getByRole('link', { name: 'Formidlinger' });
+    });
+
+    test('Skal kunne legge til kandidat i kandidatliste', async ({ page }) => {
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+        await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
+        await expect(page.getByRole('button', { name: 'Legg til kandidat' })).toBeVisible();
     });
 });
