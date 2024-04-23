@@ -52,16 +52,17 @@ const Annonsestatus: FunctionComponent = () => {
 
     return (
         <CheckboxGroup legend="Status" value={Array.from(valgteStatuser)}>
-            {Object.values(Status).map((statusValue) => (
-                <Checkbox
-                    key={statusValue}
-                    value={statusValue}
-                    onChange={onAnnonsestatusChange}
-                    disabled={!harTilgang(statusValue)}
-                >
-                    {statusTilVisningsnavn(statusValue)}
-                </Checkbox>
-            ))}
+            {Object.values(Status).map((statusValue) =>
+                harTilgang(statusValue) ? (
+                    <Checkbox
+                        key={statusValue}
+                        value={statusValue}
+                        onChange={onAnnonsestatusChange}
+                    >
+                        {statusTilVisningsnavn(statusValue)}
+                    </Checkbox>
+                ) : null
+            )}
         </CheckboxGroup>
     );
 };

@@ -7,33 +7,46 @@ import SeMineStillingerIkon from 'felles/komponenter/piktogrammer/se-mine-stilli
 import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { sendEvent } from '../../felles/amplitude';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import css from './Hurtiglenker.module.css';
 
 const Hurtiglenker: FunctionComponent = () => {
     return (
-        <nav className={css.hurtiglenker}>
-            <LenkepanelMedIkon
-                href="/kandidatsok"
-                tittel="Finn kandidater"
-                ikon={<FinnKandidaterIkon />}
-            />
-            <LenkepanelMedIkon
-                href="/stillinger/stillingssok?brukStandardsok=true"
-                tittel="Finn stillinger"
-                ikon={<FinnStillinger />}
-            />
-            <LenkepanelMedIkon
-                href={'/stillinger/stillingssok?portefolje=visMine'}
-                tittel="Se mine stillinger"
-                ikon={<SeMineStillingerIkon />}
-                onClick={() => sendEvent('oversikt', 'vis_mine_stillinger_knapp')}
-            />
-            <LenkepanelMedIkon
-                href="/stillinger/stillingssok?modal=opprettStillingModal"
-                tittel="Opprett ny stilling"
-                ikon={<OpprettNyStillingIkon />}
-            />
-        </nav>
+        <TilgangskontrollForInnhold
+            skjulVarsel
+            kreverEnAvRollene={[
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+            ]}
+        >
+            <nav className={css.hurtiglenker}>
+                <LenkepanelMedIkon
+                    href="/kandidatsok"
+                    tittel="Finn kandidater"
+                    ikon={<FinnKandidaterIkon />}
+                />
+                <LenkepanelMedIkon
+                    href="/stillinger/stillingssok?brukStandardsok=true"
+                    tittel="Finn stillinger"
+                    ikon={<FinnStillinger />}
+                />
+
+                <LenkepanelMedIkon
+                    href={'/stillinger/stillingssok?portefolje=visMine'}
+                    tittel="Se mine stillinger"
+                    ikon={<SeMineStillingerIkon />}
+                    onClick={() => sendEvent('oversikt', 'vis_mine_stillinger_knapp')}
+                />
+
+                <LenkepanelMedIkon
+                    href="/stillinger/stillingssok?modal=opprettStillingModal"
+                    tittel="Opprett ny stilling"
+                    ikon={<OpprettNyStillingIkon />}
+                />
+            </nav>{' '}
+        </TilgangskontrollForInnhold>
     );
 };
 

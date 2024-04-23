@@ -338,7 +338,7 @@ const stedmappingRaw = new Map<string, string[]>([
         [
             'Holmestrand.0715',
             'Holmestrand.3802',
-            'Sande (Vestf.).0713',
+            'Sande (Vestfold).0713',
             'Holmestrand.0702',
             'Hof.0714',
         ],

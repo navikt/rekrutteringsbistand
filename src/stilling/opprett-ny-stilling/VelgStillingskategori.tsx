@@ -54,18 +54,19 @@ const VelgStillingskategori: FunctionComponent<Props> = ({
             legend={<Label as="span">Hva skal du bruke stillingen til?</Label>}
             error={feilmelding}
         >
-            {kategorier.map((kategori) => (
-                <Radio
-                    disabled={!harTilgang(kategori)}
-                    key={kategori}
-                    name="stillingskategori"
-                    onChange={onStillingskategoriChange}
-                    checked={stillingskategori === kategori}
-                    value={kategori}
-                >
-                    {kategoriTilVisningsnavn(kategori)}
-                </Radio>
-            ))}
+            {kategorier.map((kategori) =>
+                harTilgang(kategori) ? (
+                    <Radio
+                        key={kategori}
+                        name="stillingskategori"
+                        onChange={onStillingskategoriChange}
+                        checked={stillingskategori === kategori}
+                        value={kategori}
+                    >
+                        {kategoriTilVisningsnavn(kategori)}
+                    </Radio>
+                ) : null
+            )}
         </RadioGroup>
     );
 };
