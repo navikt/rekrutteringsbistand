@@ -42,6 +42,20 @@ jobs:
                   identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
                   project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
+    playwright:
+        if: github.ref == 'refs/heads/playwright'
+        needs: [bygg-og-push-docker-image]
+        runs-on: ubuntu-latest
+        container:
+            image: mcr.microsoft.com/playwright:v1.43.0-jammy
+        services:
+            app:
+                image: ${{ needs.bygg-og-push-docker-image.outputs.image }}
+                ports: ['3000:3000']
+        steps:
+            - name: 'Kjør test'
+              run: npx playwright test
+
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
