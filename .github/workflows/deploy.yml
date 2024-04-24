@@ -42,23 +42,6 @@ jobs:
                   identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
                   project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
-    playwright:
-        if: github.ref == 'refs/heads/playwright'
-        runs-on: ubuntu-latest
-        container:
-            image: mcr.microsoft.com/playwright:v1.43.0-jammy
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-            - name: Install
-              run: npm ci
-            - name: Lokal run
-              run: npm run start &
-            - name: Vent litt
-              run: sleep 10
-            - name: run playwright
-              run: npx playwright test
-
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
