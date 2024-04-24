@@ -13,22 +13,29 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         await expect(page.getByRole('link', { name: 'Se mine stillinger' })).not.toBeVisible();
         await expect(page.getByRole('link', { name: 'Opprett ny stilling' })).not.toBeVisible();
     });
-    test('Skal få advarsel: "Du har ikke tistrekkelig tilgang til å se denne siden."', async ({
-        page,
-    }) => {
-        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
-        await expect(page.getByText('Du har ikke tistrekkelig')).toBeVisible();
-        await page.getByRole('link', { name: 'Spasertur, Patent' }).click();
-        await page.getByRole('tab', { name: 'Historikk' }).click();
+    // test('Skal få advarsel: "Du har ikke tistrekkelig tilgang til å se denne siden."', async ({
+    //     page,
+    // }) => {
+    //     await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+    //     await expect(page.getByText('Du har ikke tistrekkelig')).toBeVisible();
+    //     await page.getByRole('link', { name: 'Spasertur, Patent' }).click();
+    //     await page.getByRole('tab', { name: 'Historikk' }).click();
 
-        await expect(
-            page.getByText('Du har ikke tistrekkelig tilgang til å se denne siden.')
-        ).toHaveCount(2);
-    });
+    //     await expect(
+    //         page.getByText('Du har ikke tistrekkelig tilgang til å se denne siden.')
+    //     ).toHaveCount(2);
+    // });
 
     test('Skal IKKE kunne legge til kandidat i kandidatliste', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
         await expect(page.getByRole('button', { name: 'Legg til kandidat' })).not.toBeVisible();
+    });
+
+    test('Skal IKKE kunne se kandidatsøk og formidlingsfane', async ({ page }) => {
+        await expect(page.getByRole('link', { name: 'Oversikt' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Stillinger', exact: true })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Kandidatsøk' })).not.toBeVisible();
+        await expect(page.getByRole('link', { name: 'Formidlinger' })).not.toBeVisible();
     });
 });

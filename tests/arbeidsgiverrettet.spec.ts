@@ -48,4 +48,11 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
         await expect(page.getByRole('button', { name: 'Legg til kandidat' })).toBeVisible();
     });
+
+    test('Skal kunne se kandidatsøk og formidlingsfane', async ({ page }) => {
+        await expect(page.getByRole('link', { name: 'Kandidatsøk' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Formidlinger' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Oversikt' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Stillinger', exact: true })).toBeVisible();
+    });
 });

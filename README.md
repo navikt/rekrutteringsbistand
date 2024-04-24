@@ -44,6 +44,13 @@ STILLING_ES_URI=<url>
 
 ```
 
+## Testing 
+
+### Playwright 
+Kodegenerator: npx playwright codegen localhost:3000
+Kjør tester: npx playwright test 
+
+
 ### Test brukere:
 
 | Rolle | Email |

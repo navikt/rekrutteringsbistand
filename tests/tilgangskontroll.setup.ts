@@ -5,11 +5,8 @@ const velgRolle = async ({ page, rolle, json }) => {
     await page.getByRole('button', { name: 'Mocks' }).click();
     await page.getByRole('button', { name: rolle }).click();
     await page.getByRole('button', { name: 'Lukk', exact: true }).click();
-
     await page.waitForLoadState('load');
-
     expect(page.getByRole('heading', { name: 'Rekrutteringsbistand' })).toBeTruthy();
-
     await page.context().storageState({ path: json });
 };
 
