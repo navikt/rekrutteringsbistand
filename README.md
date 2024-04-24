@@ -47,8 +47,11 @@ STILLING_ES_URI=<url>
 ## Testing 
 
 ### Playwright 
-Kodegenerator: npx playwright codegen localhost:3000
+install: npx playwright install (dermed npm i)
 Kjør tester: npx playwright test 
+
+Kodegenerator: npx playwright codegen localhost:3000
+
 
 
 ### Test brukere:
