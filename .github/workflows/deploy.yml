@@ -57,7 +57,7 @@ jobs:
             - name: Vent litt
               run: sleep 10
             - name: run playwright
-              run: npx run playwright
+              run: npx playwright test
 
     deploy-til-dev:
         name: Deploy til dev-gcp
