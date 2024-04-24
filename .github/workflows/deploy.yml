@@ -5,7 +5,6 @@ on: [push, workflow_dispatch]
 permissions:
     contents: read
     id-token: write
-    packages: write
 
 jobs:
     bygg-og-push-docker-image:
@@ -49,13 +48,15 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: mcr.microsoft.com/playwright:v1.43.0-jammy
-        services:
-            app:
-                image: ${{ needs.bygg-og-push-docker-image.outputs.image }}
-                ports: ['3000:3000']
         steps:
-            - name: 'Kjør test'
-              run: npx playwright test
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Install
+              run: npm ci
+            - name: Lokal run
+              run: npm run start
+            - name: run playwright
+              run: npx run playwright
 
     deploy-til-dev:
         name: Deploy til dev-gcp
