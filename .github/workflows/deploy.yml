@@ -53,7 +53,7 @@ jobs:
             - name: Install
               run: npm ci
             - name: Lokal run
-              run: npm run start
+              run: npm run start &
             - name: run playwright
               run: npx run playwright
 
