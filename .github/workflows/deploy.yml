@@ -5,6 +5,7 @@ on: [push, workflow_dispatch]
 permissions:
     contents: read
     id-token: write
+    packages: write
 
 jobs:
     bygg-og-push-docker-image:
