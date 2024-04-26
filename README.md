@@ -44,7 +44,7 @@ STILLING_ES_URI=<url>
 
 ```
 
-## Testing 
+## Manuell Testing 
 
 ### Playwright 
 install: npx playwright install (dermed npm i)
