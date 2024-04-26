@@ -1,9 +1,7 @@
 import { FunctionComponent } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import TilgangskontrollForInnhold from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Nyheter from '../nyheter/Nyheter';
 import css from './Navigeringsmeny.module.css';
 import Tab, { TabConfig } from './Tab';
@@ -21,18 +19,20 @@ const tabs: TabConfig[] = [
     {
         tittel: 'Kandidatsøk',
         path: '/kandidatsok',
-        kreverRoller: [
-            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
-        ],
+        //TODO Rollerstyr tab
+        // kreverRoller: [
+        //     Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+        //     Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+        // ],
     },
     {
         tittel: 'Formidlinger',
         path: '/formidlinger',
-        kreverRoller: [
-            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
-        ],
+        //TODO Rollerstyr tab
+        // kreverRoller: [
+        //     Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+        //     Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+        // ],
     },
 ];
 
