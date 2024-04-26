@@ -59,6 +59,7 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
         return <>{children}</>;
     }
 
+    //TODO Disabled skjul av varsel
     if (!harTilgang && skjulVarsel) {
         return null;
     }
@@ -67,15 +68,23 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
             <div className={css.container}>
                 <Alert variant="error" className={css.alert}>
                     <div>
-                        <strong>Du har ikke tistrekkelig tilgang til å se denne siden.</strong>
-                        <p>Du må ha en av følgende roller:</p>
-                        <ul>
+                        <span>
+                            Hei, du trenger rollen
                             {kreverEnAvRollene
-                                .filter((r) => r !== Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)
-                                .map((rolle) => (
-                                    <li>{rolleTilNavn(rolle)}</li>
-                                ))}
-                        </ul>
+                                .filter(
+                                    (r, i) => r !== Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER
+                                )
+                                .map((rolle, i) => (
+                                    <span>
+                                        {' '}
+                                        {rolleTilNavn(rolle)}{' '}
+                                        {i < kreverEnAvRollene.length - 1 ? 'eller' : ''}{' '}
+                                    </span>
+                                ))}{' '}
+                            for å få tilgang til innhold på denne siden. Husk at du må ha et
+                            tjenstlig behov for det den spesifikke rollen gir deg tilgang til. Snakk
+                            med din nærmeste leder.
+                        </span>
                     </div>
                 </Alert>
             </div>
