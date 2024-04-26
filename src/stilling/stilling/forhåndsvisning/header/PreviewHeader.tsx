@@ -4,6 +4,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { State } from '../../../redux/store';
 import { StillingsinfoState } from '../../../stillingsinfo/stillingsinfoReducer';
 import { COPY_AD_FROM_MY_ADS, EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
@@ -84,9 +87,16 @@ class PreviewMenu extends React.Component<Props> {
                         </Button>
                     )}
                     {kanOverfoereStilling && (
-                        <Button onClick={this.onLeggTilIMineStillingerClick} size="small">
-                            Opprett kandidatliste
-                        </Button>
+                        <TilgangskontrollForInnhold
+                            skjulVarsel
+                            kreverEnAvRollene={[
+                                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                            ]}
+                        >
+                            <Button onClick={this.onLeggTilIMineStillingerClick} size="small">
+                                Opprett kandidatliste
+                            </Button>
+                        </TilgangskontrollForInnhold>
                     )}
 
                     <Button
