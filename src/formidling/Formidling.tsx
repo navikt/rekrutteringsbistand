@@ -5,6 +5,9 @@ import { useLocation } from 'react-router-dom';
 import { useMeg } from '../api/frackend/meg';
 import { sendEvent } from '../felles/amplitude';
 import Layout from '../felles/komponenter/layout/Layout';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import useNavigering from '../stilling/stillingssok/useNavigering';
 import { QueryParam, oppdaterUrlMedParam } from '../stilling/stillingssok/utils/urlUtils';
 import Formidlingssøk from './Formidlingssøk';
@@ -37,20 +40,31 @@ const Formidling: React.FC = () => {
     };
 
     return (
-        <Layout tittel="Formidlinger" sidepanel={<FormidlingssøkSidebar />} ikon={<Piktogram />}>
-            <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
-                <Tabs.List>
-                    <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle" />
-                    <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine formidlinger" />
-                </Tabs.List>
-                <Tabs.Panel value={TabVisning.VIS_ALLE}>
-                    <Formidlingssøk />
-                </Tabs.Panel>
-                <Tabs.Panel value={TabVisning.VIS_MINE}>
-                    <Formidlingssøk navIdent={navIdent} />
-                </Tabs.Panel>
-            </Tabs>
-        </Layout>
+        <TilgangskontrollForInnhold
+            kreverEnAvRollene={[
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+            ]}
+        >
+            <Layout
+                tittel="Formidlinger"
+                sidepanel={<FormidlingssøkSidebar />}
+                ikon={<Piktogram />}
+            >
+                <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
+                    <Tabs.List>
+                        <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle" />
+                        <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine formidlinger" />
+                    </Tabs.List>
+                    <Tabs.Panel value={TabVisning.VIS_ALLE}>
+                        <Formidlingssøk />
+                    </Tabs.Panel>
+                    <Tabs.Panel value={TabVisning.VIS_MINE}>
+                        <Formidlingssøk navIdent={navIdent} />
+                    </Tabs.Panel>
+                </Tabs>
+            </Layout>
+        </TilgangskontrollForInnhold>
     );
 };
 

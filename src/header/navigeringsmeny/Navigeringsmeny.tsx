@@ -19,7 +19,7 @@ const tabs: TabConfig[] = [
     {
         tittel: 'Kandidatsøk',
         path: '/kandidatsok',
-        //TODO Rollerstyr tab
+        //TODO Tilgangskontroll: Rollerstyr tab
         // kreverRoller: [
         //     Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
         //     Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
@@ -28,7 +28,7 @@ const tabs: TabConfig[] = [
     {
         tittel: 'Formidlinger',
         path: '/formidlinger',
-        //TODO Rollerstyr tab
+        //TODO Tilgangskontroll: Rollerstyr tab
         // kreverRoller: [
         //     Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
         //     Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
