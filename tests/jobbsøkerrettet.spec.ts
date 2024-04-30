@@ -49,7 +49,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
 
     test('7. Gå inn i en Intern stilling - Stilingen skal åpnes og vises', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
-        await page.getByRole('link', { name: 'Intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
         await expect(page.getByText('DIR', { exact: true })).toBeVisible();
     });
 
@@ -230,12 +230,22 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
     test('24. For fomidling du eier: Forsøk å velge "Legg til kandidat" og sett kandidat som "presentert"', async ({
         page,
     }) => {
-
-        
+        //TODO Ikke mock data tilgjengelig
     });
 
-
-    test('25. ', async ({ page }) => {});
-    test('26. ', async ({ page }) => {});
-    test('27. ', async ({ page }) => {});
+    test('25. For fomidling du eier: Forsøk å velge "Legg til kandidat" og sett kandidat som "Fått jobben"', async ({
+        page,
+    }) => {
+        //TODO Ikke mock data tilgjengelig
+    });
+    test('26. For fomidling du eier: Forsøk å velge "Finn kandidater" og sett kandidat som "presentert"', async ({
+        page,
+    }) => {
+        //TODO Ikke mock data tilgjengelig
+    });
+    test('27. For fomidling du eier: Forsøk å velge "Finn kandidater" og sett kandidat som "Fått jobben"', async ({
+        page,
+    }) => {
+        //TODO Ikke mock data tilgjengelig
+    });
 });

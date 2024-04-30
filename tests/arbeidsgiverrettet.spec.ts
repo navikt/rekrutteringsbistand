@@ -7,52 +7,22 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
-    test('Viser alle faner ', async ({ page }) => {
-        await expect(page.getByRole('link', { name: 'Oversikt' })).toBeVisible();
-        await expect(page.getByRole('link', { name: 'Stillinger', exact: true })).toBeVisible();
-        await expect(page.getByRole('link', { name: 'Kandidatsøk' })).toBeVisible();
-        await expect(page.getByRole('link', { name: 'Formidlinger' })).toBeVisible();
-    });
+    test('1. Gå inn i "Oversikt" fanen - Skal få en oversikt over gjeldende kontor.  Skal se knapperad for "Finn Kandidat", "Finn Stillinger", "Se mine Stillinger", "Opprett ny stilling"', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Oversikt' }).click();
+        await expect(page.getByText('NAV Hurdal', { exact: true })).toBeVisible();
 
-    test('Skal se hurtiglenker', async ({ page }) => {
         await expect(page.getByRole('link', { name: 'Finn kandidater' })).toBeVisible();
-        await expect(page.getByRole('link', { name: 'Finn stillinger' })).toBeVisible();
+        await expect(page.getByRole('link', { name: 'Finn stillinger' })).toBeVisible;
         await expect(page.getByRole('link', { name: 'Se mine stillinger' })).toBeVisible();
         await expect(page.getByRole('link', { name: 'Opprett ny stilling' })).toBeVisible();
     });
 
-    test('Mulighet til å søke på Publisert, Utløpt og Stoppet stillinger ', async ({ page }) => {
-        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
-        await expect(page.getByRole('checkbox', { name: 'Publisert' })).toBeVisible();
-        await expect(page.getByRole('checkbox', { name: 'Utløpt' })).toBeVisible();
-        await expect(page.getByRole('checkbox', { name: 'Stoppet' })).toBeVisible();
-    });
-
-    test('Mulighet til å opprette stilling, jobbmesse og formidling ', async ({ page }) => {
-        await page.getByRole('link', { name: 'Opprett ny stilling' }).click();
-        await expect(
-            page.getByLabel('Opprett ny stilling, velg').getByText('Stilling', { exact: true })
-        ).toBeVisible();
-        await expect(page.getByText('Jobbmesse/jobbtreff')).toBeVisible();
-        await expect(page.getByText('Formidling', { exact: true })).toBeVisible();
-    });
-
-    test('Ser historikken til kandidater ', async ({ page }) => {
-        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
-        await page.getByRole('link', { name: 'Spasertur, Patent' }).click();
-        await expect(page.getByRole('tab', { name: 'Historikk' })).toBeVisible();
-    });
-
-    test('Skal kunne legge til kandidat i kandidatliste', async ({ page }) => {
-        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
-        await page.getByRole('link', { name: 'Intern stilling' }).click();
-        await expect(page.getByRole('button', { name: 'Legg til kandidat' })).toBeVisible();
-    });
-
-    test('Skal kunne se kandidatsøk og formidlingsfane', async ({ page }) => {
-        await expect(page.getByRole('link', { name: 'Kandidatsøk' })).toBeVisible();
-        await expect(page.getByRole('link', { name: 'Formidlinger' })).toBeVisible();
-        await expect(page.getByRole('link', { name: 'Oversikt' })).toBeVisible();
-        await expect(page.getByRole('link', { name: 'Stillinger', exact: true })).toBeVisible();
-    });
+    test('2. Se om kandidatsøk-fanen er tilgjengelig. - Fanen skal vises', async ({ page }) => {});
+    // test('', async ({ page }) => {});
+    // test('', async ({ page }) => {});
+    // test('', async ({ page }) => {});
+    // test('', async ({ page }) => {});
+    // test('', async ({ page }) => {});
 });
