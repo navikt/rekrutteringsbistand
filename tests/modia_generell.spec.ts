@@ -46,6 +46,68 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         await expect(page.getByRole('checkbox', { name: 'Stoppet' })).not.toBeVisible();
     });
 
+    test('6. Gå inn i stilingssøket, se om du ser fanen "Mine stillinger" - Skal ikke se fanen mine stillinger', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+
+        await expect(page.getByRole('tab', { name: 'Mine stillinger' })).not.toBeVisible();
+    });
+
+    test('7. Gå inn i en intern stilling - Stilingen skal åpnes og vises', async ({ page }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
+
+        await expect(page.getByText('DIR', { exact: true })).toBeVisible();
+    });
+
+    test('8. Gå inn i en ekstern stilling - Stilingen skal åpnes og vises', async ({ page }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'ekstern styrk tittel' }).click();
+
+        //TODO Lag ekstern stilling mock
+    });
+
+    test('9. Forsøk å overta eierskap for intern stilling - Skal ikke kunne overta eierskap for intern stilling', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
+        await expect(page.getByRole('button', { name: 'Marker som min' })).not.toBeVisible();
+    });
+
+    test('10. Forsøk å overta eierskap for ekstern stilling - Skal ikke kunne overta eierskap for ekstern stilling, hverken med "marker som min", eller opprett kandidatliste.', async ({
+        page,
+    }) => {
+        //TODO Kopier inn til Arbeidsgiverrettet
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
+        await expect(
+            page.getByRole('button', { name: 'Opprett kandidatliste', exact: true })
+        ).not.toBeVisible();
+        await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
+    });
+
+    test('11 og 12. Forsøk å redigere stilling du eier og ikke eier - N/A', async ({ page }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
+        await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
+    });
+
+    test('12. Forsøk å redigere stilling som du ikke eier', async ({ page }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
+        await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
+    });
+
+    test('13. Gå inn i en direktemeldt stilling, se hvilke knapper for kandidathåndtering som finnes.', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'styrk eller tittel kommer her' }).click();
+        await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
+    });
+
     // test('', async ({page}) => {})
     // test('', async ({page}) => {})
     // test('', async ({page}) => {})

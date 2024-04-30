@@ -76,29 +76,37 @@ class PreviewMenu extends React.Component<Props> {
         return (
             <>
                 <Stillingsheader>
-                    {!limitedAccess && this.props.erEier && (
-                        <Button onClick={this.onEditAdClick} size="small" icon={<DocPencilIcon />}>
-                            Rediger
-                        </Button>
-                    )}
-                    {!limitedAccess && (
-                        <Button onClick={this.onCopyAdClick} size="small" icon={<DocPencilIcon />}>
-                            Kopier
-                        </Button>
-                    )}
-                    {kanOverfoereStilling && (
-                        <TilgangskontrollForInnhold
-                            skjulVarsel
-                            kreverEnAvRollene={[
-                                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-                            ]}
-                        >
+                    <TilgangskontrollForInnhold
+                        kreverEnAvRollene={[
+                            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        ]}
+                        skjulVarsel
+                    >
+                        {!limitedAccess && this.props.erEier && (
+                            <Button
+                                onClick={this.onEditAdClick}
+                                size="small"
+                                icon={<DocPencilIcon />}
+                            >
+                                Rediger
+                            </Button>
+                        )}
+                        {!limitedAccess && (
+                            <Button
+                                onClick={this.onCopyAdClick}
+                                size="small"
+                                icon={<DocPencilIcon />}
+                            >
+                                Kopier
+                            </Button>
+                        )}
+
+                        {kanOverfoereStilling && (
                             <Button onClick={this.onLeggTilIMineStillingerClick} size="small">
                                 Opprett kandidatliste
                             </Button>
-                        </TilgangskontrollForInnhold>
-                    )}
-
+                        )}
+                    </TilgangskontrollForInnhold>
                     <Button
                         variant="secondary"
                         onClick={this.onPrintClick}
@@ -109,6 +117,7 @@ class PreviewMenu extends React.Component<Props> {
                     </Button>
                 </Stillingsheader>
                 {limitedAccess && <EksternStillingAdvarsel />}
+
                 <OpprettKandidatlisteModal
                     åpen={this.state.opprettKandidatlisteModalÅpen}
                     onClose={this.lukkOpprettKandidatlisteModal}
