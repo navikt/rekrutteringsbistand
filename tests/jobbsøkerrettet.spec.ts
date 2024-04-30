@@ -43,15 +43,13 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
     test('6. Gå inn i stilingssøket, se om du ser fanen "Mine stillinger" - Skal ikke se fanen mine stillinger', async ({
         page,
     }) => {
-        await page.getByRole('link', { name: 'Stillinger' }).click();
-
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await expect(page.getByRole('tab', { name: 'Mine stillinger' })).not.toBeVisible();
     });
 
     test('7. Gå inn i en Intern stilling - Stilingen skal åpnes og vises', async ({ page }) => {
-        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling' }).click();
-
         await expect(page.getByText('DIR', { exact: true })).toBeVisible();
     });
 
@@ -65,7 +63,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
     test('9. Forsøk å overta eierskap for Intern stilling - Skal ikke kunne overta eierskap for Intern stilling', async ({
         page,
     }) => {
-        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(page.getByRole('button', { name: 'Marker som min' })).not.toBeVisible();
     });
@@ -74,7 +72,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         page,
     }) => {
         //TODO Kopier inn til Arbeidsgiverrettet
-        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(
             page.getByRole('button', { name: 'Opprett kandidatliste', exact: true })
@@ -83,13 +81,13 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
     });
 
     test('11. Forsøk å redigere stilling du eier', async ({ page }) => {
-        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
     test('12. Forsøk å redigere stilling som du ikke eier', async ({ page }) => {
-        await page.getByRole('link', { name: 'Stillinger' }).click();
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
