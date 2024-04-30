@@ -8,6 +8,9 @@ import { mockPutStandardsøk, mockStandardsøk } from './mockStandardsøk';
 import {
     mockNyRekrutteringsbistandstilling,
     mockRekrutteringsbistandstilling,
+    mockRekrutteringsbistandstillingEkstern,
+    mockRekrutteringsbistandstillingMin,
+    mockRekrutteringsbistandstillingMinEkstern,
     mockStillingsinfo,
 } from './mockStilling';
 
@@ -15,9 +18,13 @@ export const stillingApiMock = [
     http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, ({ params }) => {
         const { stillingsId } = params;
 
-        if (stillingsId === 'ekstern') {
-            // TODO Create mock
-            return HttpResponse.json(mockRekrutteringsbistandstilling);
+        if (stillingsId === 'minInterne') {
+            console.log('🎺 "Er jo her da"', 'Er jo her da');
+            return HttpResponse.json(mockRekrutteringsbistandstillingMin);
+        } else if (stillingsId === 'ekstern') {
+            return HttpResponse.json(mockRekrutteringsbistandstillingEkstern);
+        } else if (stillingsId === 'minEkstern') {
+            return HttpResponse.json(mockRekrutteringsbistandstillingMinEkstern);
         }
 
         return HttpResponse.json(mockRekrutteringsbistandstilling);

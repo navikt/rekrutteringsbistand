@@ -13,7 +13,7 @@ import { stillingssøkMock } from './stillingssok-proxy/mock';
 import { synlighetApiMock } from './synlighet-api/mock';
 
 const mswHandlers = [
-    megMockMsw('Z994161', [
+    megMockMsw('Z123456', [
         Rolle.AD_GRUPPE_MODIA_GENERELL_TILGANG,
         Rolle.AD_GRUPPE_MODIA_OPPFOLGING,
         Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,

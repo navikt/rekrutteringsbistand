@@ -45,7 +45,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
 
     test('Skal kunne legge til kandidat i kandidatliste', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
-        await page.getByRole('link', { name: 'intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(page.getByRole('button', { name: 'Legg til kandidat' })).toBeVisible();
     });
 

@@ -4,6 +4,8 @@ import { GlobalAggregering } from '../../src/stilling/stillingssok/domene/elasti
 import {
     mockEsRekrutteringsbistandstilling,
     mockEsRekrutteringsbistandstillingEkstern,
+    mockEsRekrutteringsbistandstillingEksternMin,
+    mockEsRekrutteringsbistandstillingMin,
 } from './mockEsStilling';
 
 export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>, 'aggregations'> & {
@@ -22,19 +24,37 @@ export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>,
         max_score: 1.0,
         hits: [
             {
-                _index: 'stilling_7',
+                _index: 'stilling_1',
                 _type: '_doc',
                 _score: 1.0,
                 _id: mockEsRekrutteringsbistandstilling.stilling.uuid,
                 _source: mockEsRekrutteringsbistandstilling,
             },
             {
-                _index: 'stilling_8',
+                _index: 'stilling_2',
                 _type: '_doc',
                 _score: 1.0,
                 _id: mockEsRekrutteringsbistandstillingEkstern.stilling.uuid,
                 _source: {
                     ...mockEsRekrutteringsbistandstillingEkstern,
+                },
+            },
+            {
+                _index: 'stilling_3',
+                _type: '_doc',
+                _score: 1.0,
+                _id: mockEsRekrutteringsbistandstillingMin.stilling.uuid,
+                _source: {
+                    ...mockEsRekrutteringsbistandstillingMin,
+                },
+            },
+            {
+                _index: 'stilling_4',
+                _type: '_doc',
+                _score: 1.0,
+                _id: mockEsRekrutteringsbistandstillingEksternMin.stilling.uuid,
+                _source: {
+                    ...mockEsRekrutteringsbistandstillingEksternMin,
                 },
             },
         ],

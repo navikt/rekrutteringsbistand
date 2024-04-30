@@ -60,6 +60,7 @@ const ContactInfo = () => {
         </TilgangskontrollForInnhold>
     );
 
+    console.log('🎺 innlogget', innlogget);
     const visMarkerSomMinKnapp =
         innlogget &&
         //@ts-ignore: TODO: written before strict-mode enabled

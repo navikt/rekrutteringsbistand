@@ -54,9 +54,9 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         await expect(page.getByRole('tab', { name: 'Mine stillinger' })).not.toBeVisible();
     });
 
-    test('7. Gå inn i en intern stilling - Stilingen skal åpnes og vises', async ({ page }) => {
+    test('7. Gå inn i en Intern stilling - Stilingen skal åpnes og vises', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await page.getByRole('link', { name: 'intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling' }).click();
 
         await expect(page.getByText('DIR', { exact: true })).toBeVisible();
     });
@@ -68,11 +68,11 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         //TODO Lag ekstern stilling mock
     });
 
-    test('9. Forsøk å overta eierskap for intern stilling - Skal ikke kunne overta eierskap for intern stilling', async ({
+    test('9. Forsøk å overta eierskap for Intern stilling - Skal ikke kunne overta eierskap for Intern stilling', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await page.getByRole('link', { name: 'intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(page.getByRole('button', { name: 'Marker som min' })).not.toBeVisible();
     });
 
@@ -81,22 +81,22 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
     }) => {
         //TODO Kopier inn til Arbeidsgiverrettet
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await page.getByRole('link', { name: 'intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(
             page.getByRole('button', { name: 'Opprett kandidatliste', exact: true })
         ).not.toBeVisible();
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
-    test('11 og 12. Forsøk å redigere stilling du eier og ikke eier - N/A', async ({ page }) => {
+    test('11. Forsøk å redigere stilling du eier', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await page.getByRole('link', { name: 'intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
     test('12. Forsøk å redigere stilling som du ikke eier', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await page.getByRole('link', { name: 'intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
@@ -105,7 +105,7 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
     }) => {
         // Todo : husk motsatt test "Is visible på rolle "
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await page.getByRole('link', { name: 'intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling' }).click();
         await expect(page.getByRole('button', { name: 'Finn kandidater' })).not.toBeVisible();
         await expect(page.getByRole('button', { name: 'Legg til kandidat' })).not.toBeVisible();
     });
@@ -121,7 +121,7 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await page.getByRole('link', { name: 'intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling' }).click();
 
         await expect(page.getByRole('tab', { name: 'Kandidater' })).not.toBeVisible();
     });

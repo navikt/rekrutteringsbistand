@@ -6,7 +6,8 @@ export const mockEsRekrutteringsbistandstilling: EsRekrutteringsbistandstilling 
     ...mockRekrutteringsbistandstilling,
     stilling: {
         ...mockStilling,
-        styrkEllerTittel: 'intern stilling',
+        uuid: 'intern',
+        styrkEllerTittel: 'Intern stilling',
         annonsenr: String(mockStilling.id),
         categories: [
             {
@@ -29,8 +30,24 @@ export const mockEsRekrutteringsbistandstilling: EsRekrutteringsbistandstilling 
             tags: JSON.parse(mockStilling.properties.tags),
             workday: JSON.parse(mockStilling.properties.workday),
             workhours: JSON.parse(mockStilling.properties.workhours),
-            adtext: 'Ekstern Stilling',
         },
+    },
+};
+
+export const mockEsRekrutteringsbistandstillingMin: EsRekrutteringsbistandstilling = {
+    ...mockEsRekrutteringsbistandstilling,
+    stilling: {
+        ...mockEsRekrutteringsbistandstilling.stilling,
+        uuid: 'minInterne',
+        styrkEllerTittel: 'Intern stilling MIN',
+        administration: {
+            ...mockEsRekrutteringsbistandstilling.stilling.administration!,
+            navIdent: 'Z123456',
+        },
+    },
+    stillingsinfo: {
+        ...mockEsRekrutteringsbistandstilling.stillingsinfo!,
+        eierNavident: 'Z123456',
     },
 };
 
@@ -41,7 +58,7 @@ export const mockEsRekrutteringsbistandstillingEkstern: EsRekrutteringsbistandst
         uuid: 'ekstern',
         source: Kilde.Finn,
         medium: Medium.Ass,
-        styrkEllerTittel: 'ekstern stilling',
+        styrkEllerTittel: 'Ekstern stilling',
         annonsenr: String(mockStilling.id),
         categories: [
             {
@@ -65,5 +82,23 @@ export const mockEsRekrutteringsbistandstillingEkstern: EsRekrutteringsbistandst
             workday: JSON.parse(mockStilling.properties.workday),
             workhours: JSON.parse(mockStilling.properties.workhours),
         },
+    },
+};
+
+export const mockEsRekrutteringsbistandstillingEksternMin: EsRekrutteringsbistandstilling = {
+    ...mockEsRekrutteringsbistandstillingEkstern,
+
+    stilling: {
+        ...mockEsRekrutteringsbistandstillingEkstern.stilling,
+        uuid: 'minEksterne',
+        styrkEllerTittel: 'Ekstern stilling MIN',
+        administration: {
+            ...mockEsRekrutteringsbistandstillingEkstern.stilling.administration!,
+            navIdent: 'Z123456',
+        },
+    },
+    stillingsinfo: {
+        ...mockEsRekrutteringsbistandstillingEkstern.stillingsinfo!,
+        eierNavident: 'Z123456',
     },
 };

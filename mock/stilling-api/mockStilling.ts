@@ -66,7 +66,7 @@ export const mockStilling /* : Stilling */ = {
         comments: null,
         reportee: `${mockVeileder.fornavn} ${mockVeileder.etternavn}`,
         remarks: [],
-        navIdent: mockVeileder.navIdent,
+        navIdent: 'Z000000',
     },
     categoryList: [
         {
@@ -130,9 +130,35 @@ export const mockRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
     stilling: mockStilling,
     stillingsinfo: mockStillingsinfo,
 };
+export const mockRekrutteringsbistandstillingMin: Rekrutteringsbistandstilling = {
+    stilling: {
+        ...mockStilling,
+        administration: {
+            ...mockStilling.administration,
+            navIdent: 'Z123456',
+        },
+    },
+    stillingsinfo: {
+        ...mockStillingsinfo,
+        eierNavident: 'Z123456',
+    },
+};
 export const mockRekrutteringsbistandstillingEkstern: Rekrutteringsbistandstilling = {
     stilling: mockStilling,
     stillingsinfo: mockStillingsinfo,
+};
+export const mockRekrutteringsbistandstillingMinEkstern: Rekrutteringsbistandstilling = {
+    stilling: {
+        ...mockStilling,
+        administration: {
+            ...mockStilling.administration,
+            navIdent: 'Z123456',
+        },
+    },
+    stillingsinfo: {
+        ...mockStillingsinfo,
+        eierNavident: 'Z123456',
+    },
 };
 
 export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {

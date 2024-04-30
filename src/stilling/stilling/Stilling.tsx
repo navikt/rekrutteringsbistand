@@ -12,6 +12,9 @@ import {
 import { useMeg } from '../../api/frackend/meg';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
 import store from '../../kandidat/state/reduxStore';
 import DelayedSpinner from '../common/DelayedSpinner';
@@ -260,9 +263,16 @@ const Stilling = () => {
                 <div className={css.faner}>
                     <Tabs.List>
                         <Tabs.Tab value="om_stillingen" label="Om stillingen" />
-                        {harKandidatlisteSomKanÅpnes && (
-                            <Tabs.Tab value="kandidater" label="Kandidater" />
-                        )}
+                        <TilgangskontrollForInnhold
+                            skjulVarsel
+                            kreverEnAvRollene={[
+                                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                            ]}
+                        >
+                            {harKandidatlisteSomKanÅpnes && (
+                                <Tabs.Tab value="kandidater" label="Kandidater" />
+                            )}
+                        </TilgangskontrollForInnhold>
                     </Tabs.List>
                     <StillingKandidatKnapper
                         /*@ts-ignore: TODO: written before strict-mode enabled */
@@ -274,13 +284,18 @@ const Stilling = () => {
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
                     {stillingsSide()}
                 </Tabs.Panel>
-                {harKandidatlisteSomKanÅpnes && (
-                    <Tabs.Panel value="kandidater">
-                        <Provider store={store}>
-                            <Kandidatlisteside skjulBanner={true} stilling={stilling} />
-                        </Provider>
-                    </Tabs.Panel>
-                )}
+
+                <TilgangskontrollForInnhold
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                >
+                    {harKandidatlisteSomKanÅpnes && (
+                        <Tabs.Panel value="kandidater">
+                            <Provider store={store}>
+                                <Kandidatlisteside skjulBanner={true} stilling={stilling} />
+                            </Provider>
+                        </Tabs.Panel>
+                    )}
+                </TilgangskontrollForInnhold>
             </Tabs>
         </>
     );
