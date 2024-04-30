@@ -1,4 +1,4 @@
-import { Alert } from '@navikt/ds-react';
+import { Alert, Link } from '@navikt/ds-react';
 import * as React from 'react';
 import { ApplikasjonContext } from '../ApplikasjonContext';
 import { erIkkeProd } from '../miljø';
@@ -84,6 +84,10 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
                             for å få tilgang til innhold på denne siden. Husk at du må ha et
                             tjenstlig behov for det den spesifikke rollen gir deg tilgang til. Snakk
                             med din nærmeste leder.
+                            <br />
+                            <Link href="https://navno.sharepoint.com/:u:/r/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Tilgangskontroll.aspx?csf=1&web=1&e=yp2Ibk">
+                                Trykk her for å lese mer
+                            </Link>
                         </span>
                     </div>
                 </Alert>
