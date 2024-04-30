@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button } from '@navikt/ds-react';
 import { System } from 'felles/domene/stilling/Stilling';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { EDIT_AD } from '../../adReducer';
 import { erDirektemeldtStilling } from '../../adUtils';
 import AdStatus from '../../administration/adStatus/AdStatus';
@@ -27,15 +30,21 @@ const AdministrationPreview = () => {
                 <Kategori />
                 <ContactInfo />
                 {!erDirektemeldtStilling(source) && <Inkludering />}
-                {limitedAccess && (
-                    <Button
-                        variant="primary"
-                        onClick={() => dispatch({ type: EDIT_AD })}
-                        className={css.previewPanelButton}
-                    >
-                        Rediger
-                    </Button>
-                )}
+
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                >
+                    {limitedAccess && (
+                        <Button
+                            variant="primary"
+                            onClick={() => dispatch({ type: EDIT_AD })}
+                            className={css.previewPanelButton}
+                        >
+                            Rediger
+                        </Button>
+                    )}
+                </TilgangskontrollForInnhold>
             </div>
         </div>
     );

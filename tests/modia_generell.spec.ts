@@ -112,16 +112,13 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
 
     test('14. Gå inn i en direktemeldt stilling du eier. Sjekk om fanen kandidater vises. - Fanen skal ikke vises.', async ({
         page,
-    }) => {
-        //TODO Avklares
-        // TODO Lag mock for "MIN stilling"
-    });
+    }) => {});
 
     test('15. Gå inn i en direktemeldt stilling der du ikke er eier. Sjekk om fanen kandidater vises.', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await page.getByRole('link', { name: 'Intern stilling' }).click();
+        await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
 
         await expect(page.getByRole('tab', { name: 'Kandidater' })).not.toBeVisible();
     });

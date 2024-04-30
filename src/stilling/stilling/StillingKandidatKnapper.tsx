@@ -39,19 +39,23 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     justifyContent: 'flex-end',
                 }}
             >
-                {erEier && (
-                    <Link
-                        to={
-                            //@ts-ignore: TODO: written before strict-mode enabled
-                            lenkeTilFinnKandidater(stillingId)
-                        }
-                    >
-                        <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
-                            Finn kandidater
-                        </Button>
-                    </Link>
-                )}
-
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                >
+                    {erEier && (
+                        <Link
+                            to={
+                                //@ts-ignore: TODO: written before strict-mode enabled
+                                lenkeTilFinnKandidater(stillingId)
+                            }
+                        >
+                            <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
+                                Finn kandidater
+                            </Button>
+                        </Link>
+                    )}
+                </TilgangskontrollForInnhold>
                 <TilgangskontrollForInnhold
                     skjulVarsel
                     kreverEnAvRollene={[

@@ -27,6 +27,10 @@ export const gammelKandidatApiMock = [
             (liste) => liste.stillingId === stillingsId
         );
 
+        if (stillingsId === 'intern') {
+            return HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' });
+        }
+
         return kandidatlisteMedStilling
             ? HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' })
             : new HttpResponse(null, { status: 404 });

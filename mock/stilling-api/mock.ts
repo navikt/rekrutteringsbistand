@@ -19,7 +19,6 @@ export const stillingApiMock = [
         const { stillingsId } = params;
 
         if (stillingsId === 'minInterne') {
-            console.log('🎺 "Er jo her da"', 'Er jo her da');
             return HttpResponse.json(mockRekrutteringsbistandstillingMin);
         } else if (stillingsId === 'ekstern') {
             return HttpResponse.json(mockRekrutteringsbistandstillingEkstern);
