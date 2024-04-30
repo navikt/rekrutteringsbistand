@@ -144,12 +144,14 @@ export const mockRekrutteringsbistandstillingMin: Rekrutteringsbistandstilling =
     },
 };
 export const mockRekrutteringsbistandstillingEkstern: Rekrutteringsbistandstilling = {
-    stilling: mockStilling,
+    stilling: { ...mockStilling, updatedBy: System.NssAdmin, createdBy: System.NssAdmin },
     stillingsinfo: mockStillingsinfo,
 };
 export const mockRekrutteringsbistandstillingMinEkstern: Rekrutteringsbistandstilling = {
     stilling: {
         ...mockStilling,
+        updatedBy: System.NssAdmin,
+        createdBy: System.NssAdmin,
         administration: {
             ...mockStilling.administration,
             navIdent: 'Z123456',

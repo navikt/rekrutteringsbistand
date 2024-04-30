@@ -285,17 +285,19 @@ const Stilling = () => {
                     {stillingsSide()}
                 </Tabs.Panel>
 
-                <TilgangskontrollForInnhold
-                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
-                >
-                    {harKandidatlisteSomKanÅpnes && (
-                        <Tabs.Panel value="kandidater">
+                {harKandidatlisteSomKanÅpnes && (
+                    <Tabs.Panel value="kandidater">
+                        <TilgangskontrollForInnhold
+                            kreverEnAvRollene={[
+                                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                            ]}
+                        >
                             <Provider store={store}>
                                 <Kandidatlisteside skjulBanner={true} stilling={stilling} />
                             </Provider>
-                        </Tabs.Panel>
-                    )}
-                </TilgangskontrollForInnhold>
+                        </TilgangskontrollForInnhold>
+                    </Tabs.Panel>
+                )}
             </Tabs>
         </>
     );

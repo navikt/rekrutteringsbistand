@@ -157,6 +157,7 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         await expect(page.getByRole('link', { name: 'Opprett ny stilling' })).not.toBeVisible();
         await page.getByRole('link', { name: 'Stillinger' }).click();
         // Knapp inne i stillingssiden:
+        await expect(page.getByRole('heading', { name: 'Stillinger' })).toBeVisible();
         await expect(page.getByRole('button', { name: 'Opprett ny' })).not.toBeVisible();
     });
 

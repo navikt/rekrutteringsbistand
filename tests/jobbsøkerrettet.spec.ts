@@ -77,7 +77,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
-    test('11. Forsøk å redigere stilling du eier - Skal ikke kunne redigere stilling', async ({
+    test('11. Forsøk å redigere intern stilling du eier - Skal ikke kunne redigere stilling', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
@@ -85,7 +85,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
-  test('11b. Forsøk å redigere stilling du eier - Skal ikke kunne redigere stilling', async ({
+    test('11b. Forsøk å redigere ekstern stilling du eier - Skal ikke kunne redigere stilling', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
@@ -139,49 +139,103 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
             'http://localhost:3000/kandidater/kandidat/PAM0yp25c81t/cv?fraKandidatsok=true'
         );
 
-        //todo Tilgangskontroll steg2: Skriv om til at innhold ikke skal vises
+        await expect(page.getByText('Hei, du trenger rollen')).not.toBeVisible();
 
-        await expect(page.getByText('Hei, du trenger rollen')).toBeVisible();
-
-        //TODO Denne skal bli not visible i steg2:
         await expect(page.getByRole('tab', { name: 'Oversikt' })).toBeVisible();
     });
 
-    test('17. Inne i en kandidat, sjekk om historikkfanen vises - Historikkfanen skal ikke vises', async ({
+    test('17. Inne i en kandidat, sjekk om historikkfanen vises - Historikkfanen skal vises', async ({
         page,
     }) => {
         await page.goto(
             'http://localhost:3000/kandidater/kandidat/PAM0yp25c81t/cv?fraKandidatsok=true'
         );
 
-        //todo Tilgangskontroll steg2: Skriv om til at innhold ikke skal vises
-        await expect(page.getByText('Hei, du trenger rollen')).toBeVisible();
-
-        await expect(page.getByRole('tab', { name: 'Historikk' })).not.toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Historikk' })).toBeVisible();
+        await page.getByRole('tab', { name: 'Historikk' }).click();
+        await expect(page.getByRole('cell', { name: 'Lagt i listen' })).toBeVisible();
+        await expect(page.getByText('Hei, du trenger rollen')).not.toBeVisible();
     });
 
     test('18. Forsøk å opprette stilling - Skal ikke kunne opprette stilling', async ({ page }) => {
         await expect(page.getByRole('heading', { name: 'Ditt NAV-kontor' })).toBeVisible();
+
         // Forside knapp:
         await expect(page.getByRole('link', { name: 'Opprett ny stilling' })).not.toBeVisible();
         await page.getByRole('link', { name: 'Stillinger' }).click();
+
         // Knapp inne i stillingssiden:
-        await expect(page.getByRole('button', { name: 'Opprett ny' })).not.toBeVisible();
+        await page.getByRole('button', { name: 'Opprett ny' }).click();
+        await expect(page.getByText('Hva skal du bruke stillingen')).toBeVisible();
+
+        await expect(page.getByRole('radio', { name: 'Stilling' })).not.toBeVisible();
     });
 
     test('19. Forsøk å opprette jobbmessse - Skal ikke kunne opprette jobbmesse', async ({
         page,
     }) => {
         await expect(page.getByRole('heading', { name: 'Ditt NAV-kontor' })).toBeVisible();
+
         // Forside knapp:
         await expect(page.getByRole('link', { name: 'Opprett ny stilling' })).not.toBeVisible();
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+
+        // Knapp inne i stillingssiden:
+        await page.getByRole('button', { name: 'Opprett ny' }).click();
+        await expect(page.getByText('Hva skal du bruke stillingen')).toBeVisible();
+
+        await expect(page.getByRole('radio', { name: 'Jobbmesse/jobbtreff' })).not.toBeVisible();
     });
 
-    test('20. Forsøk å opprette formidling - Skal ikke kunne opprette formidling', async ({
-        page,
-    }) => {
+    test('20. Forsøk å opprette formidling - Skal kunne opprette formidling', async ({ page }) => {
         await expect(page.getByRole('heading', { name: 'Ditt NAV-kontor' })).toBeVisible();
+
         // Forside knapp:
         await expect(page.getByRole('link', { name: 'Opprett ny stilling' })).not.toBeVisible();
+        await page.getByRole('link', { name: 'Stillinger' }).click();
+
+        // Knapp inne i stillingssiden:
+        await page.getByRole('button', { name: 'Opprett ny' }).click();
+        await expect(page.getByText('Hva skal du bruke stillingen')).toBeVisible();
+
+        await expect(page.getByRole('radio', { name: 'Formidling' })).toBeVisible();
     });
+
+    test('21. Søk etter kandidater ved å velge flere kontor - Skal få opp kandidater', async ({
+        page,
+    }) => {
+        // TODO: Endre ved område implementering
+
+        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+        await page.getByRole('button', { name: 'Søk' }).click();
+        await expect(page.getByText('Spasertur, Patent')).toBeVisible();
+    });
+
+    test('22.Søk etter kandidater for mine brukere - Skal få opp kandidater', async ({ page }) => {
+        // TODO: Endre ved område implementering
+
+        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+        await page.getByRole('tab', { name: 'Mine brukere' }).click();
+        await expect(page.getByText('Spasertur, Patent')).toBeVisible();
+    });
+
+    test('23.Søk etter kandidater for mitt kontor - Skal få opp kandidater', async ({ page }) => {
+        // TODO: Endre ved område implementering
+
+        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+        await page.getByRole('tab', { name: 'Mitt kontor' }).click();
+        await expect(page.getByText('Spasertur, Patent')).toBeVisible();
+    });
+
+    test('24. For fomidling du eier: Forsøk å velge "Legg til kandidat" og sett kandidat som "presentert"', async ({
+        page,
+    }) => {
+
+        
+    });
+
+
+    test('25. ', async ({ page }) => {});
+    test('26. ', async ({ page }) => {});
+    test('27. ', async ({ page }) => {});
 });
