@@ -12,9 +12,16 @@ import {
 } from './mockStilling';
 
 export const stillingApiMock = [
-    http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, () =>
-        HttpResponse.json(mockRekrutteringsbistandstilling)
-    ),
+    http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, ({ params }) => {
+        const { stillingsId } = params;
+
+        if (stillingsId === 'ekstern') {
+            // TODO Create mock
+            return HttpResponse.json(mockRekrutteringsbistandstilling);
+        }
+
+        return HttpResponse.json(mockRekrutteringsbistandstilling);
+    }),
 
     http.delete(
         `${api.stilling}/rekrutteringsbistandstilling/:stillingsId`,

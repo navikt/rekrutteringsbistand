@@ -2,6 +2,9 @@ import { Tabs } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Sidefeil from '../komponenter/sidefeil/Sidefeil';
 import FraKandidatliste from './fraKandidatliste/FraKandidatliste';
 import FraSøkMedKandidatliste from './fraSøkMedKandidatliste/FraSøkMedKandidatliste';
@@ -67,7 +70,15 @@ const Kandidatside: FunctionComponent = () => {
 const Faner = () => (
     <Tabs.List>
         <Tabs.Tab value="cv" label="Oversikt" />
-        <Tabs.Tab value="historikk" label="Historikk" />
+        <TilgangskontrollForInnhold
+            skjulVarsel
+            kreverEnAvRollene={[
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+            ]}
+        >
+            <Tabs.Tab value="historikk" label="Historikk" />
+        </TilgangskontrollForInnhold>
     </Tabs.List>
 );
 

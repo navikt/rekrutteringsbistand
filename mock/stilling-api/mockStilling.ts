@@ -16,6 +16,7 @@ import moment from 'moment';
 import { mockVeileder } from '../mockVeileder';
 
 const stillingsId = '1ea746af-66be-4cf8-a051-9e815f77b1d1';
+
 const iDag = new Date().toISOString();
 
 export const mockArbeidsgiver: Arbeidsgiver = {
@@ -126,6 +127,10 @@ export const mockStillingsinfo: Stillingsinfo = {
 };
 
 export const mockRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
+    stilling: mockStilling,
+    stillingsinfo: mockStillingsinfo,
+};
+export const mockRekrutteringsbistandstillingEkstern: Rekrutteringsbistandstilling = {
     stilling: mockStilling,
     stillingsinfo: mockStillingsinfo,
 };

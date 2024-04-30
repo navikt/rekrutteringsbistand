@@ -1,8 +1,10 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { Kilde } from '../../src/felles/domene/stilling/Stilling';
 import { GlobalAggregering } from '../../src/stilling/stillingssok/domene/elasticSearchTyper';
-import { mockEsRekrutteringsbistandstilling } from './mockEsStilling';
+import {
+    mockEsRekrutteringsbistandstilling,
+    mockEsRekrutteringsbistandstillingEkstern,
+} from './mockEsStilling';
 
 export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>, 'aggregations'> & {
     aggregations: {
@@ -30,15 +32,9 @@ export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>,
                 _index: 'stilling_8',
                 _type: '_doc',
                 _score: 1.0,
-                _id: mockEsRekrutteringsbistandstilling.stilling.uuid + 1,
+                _id: mockEsRekrutteringsbistandstillingEkstern.stilling.uuid,
                 _source: {
-                    ...mockEsRekrutteringsbistandstilling,
-                    stilling: {
-                        ...mockEsRekrutteringsbistandstilling.stilling,
-                        styrkEllerTittel: 'ekstern styrk tittel',
-                        source: Kilde.Finn,
-                        medium: Kilde.Finn,
-                    },
+                    ...mockEsRekrutteringsbistandstillingEkstern,
                 },
             },
         ],
