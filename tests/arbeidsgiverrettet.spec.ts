@@ -210,5 +210,21 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await page.getByRole('tab', { name: 'Mitt kontor' }).click();
         await expect(page.getByText('Spasertur, Patent')).toBeVisible();
     });
+
+    test('24a .For fomidling du eier: Forsøk å velge "Legg til kandidat" ', async ({ page }) => {
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await page.getByRole('button', { name: 'Legg til kandidat' }).click();
+        await page.getByPlaceholder('siffer').click();
+        await page.getByPlaceholder('siffer').fill('03037948038');
+        await page.getByRole('button', { name: 'Registrer formidling' }).click();
+        await page.getByLabel('Registrer at personen er blitt presentert').check();
+        await page.getByRole('button', { name: 'Legg til', exact: true }).click();
+        await expect(
+            page.getByLabel('Legg til kandidat').getByLabel('Suksess').locator('path')
+        ).toBeVisible();
+    });
+
+    test('24b .sett kandidat som "presentert" ', async ({ page }) => {});
     // test('', async ({ page }) => {});
 });
