@@ -407,5 +407,6 @@ export const mockFormidlingMin = {
     },
     stillingsinfo: {
         ...mockFormidling.stillingsinfo,
+        eierNavident: 'Z123456',
     },
 };

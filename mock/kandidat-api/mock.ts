@@ -58,6 +58,9 @@ export const gammelKandidatApiMock = [
         if (stillingsId === 'minEkstern') {
             return HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' });
         }
+        if (stillingsId === 'minFormidling') {
+            return HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' });
+        }
 
         return kandidatlisteMedStilling
             ? HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' })
