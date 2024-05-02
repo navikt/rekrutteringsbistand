@@ -18,10 +18,11 @@ export const stillingApiMock = [
     http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, ({ params }) => {
         const { stillingsId } = params;
 
-        if (stillingsId === 'minInterne') {
+        if (stillingsId === 'minIntern') {
             return HttpResponse.json(mockRekrutteringsbistandstillingMin);
         } else if (stillingsId === 'ekstern') {
-            return HttpResponse.json(mockRekrutteringsbistandstillingEkstern);
+            //Todo ekstern types feil
+            return HttpResponse.json(mockRekrutteringsbistandstillingEkstern as any);
         } else if (stillingsId === 'minEkstern') {
             return HttpResponse.json(mockRekrutteringsbistandstillingMinEkstern);
         }

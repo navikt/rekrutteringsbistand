@@ -38,7 +38,7 @@ export const mockEsRekrutteringsbistandstillingMin: EsRekrutteringsbistandstilli
     ...mockEsRekrutteringsbistandstilling,
     stilling: {
         ...mockEsRekrutteringsbistandstilling.stilling,
-        uuid: 'minInterne',
+        uuid: 'minIntern',
         styrkEllerTittel: 'Intern stilling MIN',
         administration: {
             ...mockEsRekrutteringsbistandstilling.stilling.administration!,
@@ -90,7 +90,7 @@ export const mockEsRekrutteringsbistandstillingEksternMin: EsRekrutteringsbistan
 
     stilling: {
         ...mockEsRekrutteringsbistandstillingEkstern.stilling,
-        uuid: 'minEksterne',
+        uuid: 'minEkstern',
         styrkEllerTittel: 'Ekstern stilling MIN',
         administration: {
             ...mockEsRekrutteringsbistandstillingEkstern.stilling.administration!,

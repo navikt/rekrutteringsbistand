@@ -162,5 +162,31 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await page.getByRole('button', { name: 'Opprett ny' }).click();
         await expect(page.getByRole('radio', { name: 'Formidling' })).toBeVisible();
     });
+
+    test('21. Søk etter kandidater ved å velge flere kontor - Skal få opp kandidater', async ({
+        page,
+    }) => {
+        // TODO: Endre ved område implementering
+
+        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+        await page.getByRole('button', { name: 'Søk' }).click();
+        await expect(page.getByText('Spasertur, Patent')).toBeVisible();
+    });
+
+    test('22.Søk etter kandidater for mine brukere - Skal få opp kandidater', async ({ page }) => {
+        // TODO: Endre ved område implementering
+
+        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+        await page.getByRole('tab', { name: 'Mine brukere' }).click();
+        await expect(page.getByText('Spasertur, Patent')).toBeVisible();
+    });
+
+    test('23.Søk etter kandidater for mitt kontor - Skal få opp kandidater', async ({ page }) => {
+        // TODO: Endre ved område implementering
+
+        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+        await page.getByRole('tab', { name: 'Mitt kontor' }).click();
+        await expect(page.getByText('Spasertur, Patent')).toBeVisible();
+    });
     // test('', async ({ page }) => {});
 });

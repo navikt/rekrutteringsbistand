@@ -1,6 +1,6 @@
 import { HttpResponse, http } from 'msw';
 import { api } from '../../src/felles/api';
-import { mockAlleKandidatlister } from './mockKandidatliste';
+import { mockAlleKandidatlister, mockKandidatlisteMedStilling } from './mockKandidatliste';
 import { mockMineKandidatlister } from './mockMineKandidatlister';
 
 const todo = (info: unknown) => new HttpResponse('Mock er ikke implementert', { status: 500 });
@@ -15,6 +15,21 @@ export const gammelKandidatApiMock = [
         const kandidatlisteMedStilling = mockAlleKandidatlister.find(
             (liste) => liste.stillingId === stillingsId
         );
+
+        if (stillingsId === 'minEkstern') {
+            return HttpResponse.json({
+                ...mockKandidatlisteMedStilling,
+                kandidatlisteId: 'minEkstern',
+                stillingId: 'minEkstern',
+            });
+        }
+        if (stillingsId === 'minIntern') {
+            return HttpResponse.json({
+                ...mockKandidatlisteMedStilling,
+                kandidatlisteId: 'minIntern',
+                stillingId: 'minIntern',
+            });
+        }
 
         return kandidatlisteMedStilling
             ? HttpResponse.json(kandidatlisteMedStilling)
@@ -31,7 +46,11 @@ export const gammelKandidatApiMock = [
             return HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' });
         }
 
-        if (stillingsId === 'minInterne') {
+        if (stillingsId === 'minIntern') {
+            return HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' });
+        }
+
+        if (stillingsId === 'minEkstern') {
             return HttpResponse.json({ kandidatlisteId: 'abc-test-med-stilling' });
         }
 
