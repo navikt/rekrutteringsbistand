@@ -106,7 +106,6 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
     test('13. Gå inn i en direktemeldt stilling, se hvilke knapper for kandidathåndtering som finnes - Skal ikke se "Finn kandidat". Skal ikke se "Legg til kandidat"', async ({
         page,
     }) => {
-        // Todo : husk motsatt test "Is visible på rolle "
         await page.getByRole('link', { name: 'Stillinger' }).click();
         await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
         await expect(page.getByRole('tab', { name: 'Om stillingen' })).toBeVisible();

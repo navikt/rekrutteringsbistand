@@ -69,7 +69,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
-        await page.getByRole('link', { name: 'Ekstern stilling', exact: true }).click();
+        await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
         await page.getByRole('button', { name: 'Marker som min' }).click();
         await expect(
             page
@@ -120,22 +120,30 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
         await expect(page.getByRole('tab', { name: 'Kandidater' })).not.toBeVisible();
     });
-    test('17a. Forsøk å åpne en cv, først via kandidatliste, så via kandidatsøk, og deretter via lenke. Eksempel i test: https://rekrutteringsbistand.intern.dev.nav.no/kandidater/kandidat/PAM0xtfrwli5/cv?fraKandidatsok=true', async ({
-        page,
-    }) => {
-        // TODO mangler mock på kandidat i kandidatliste
+
+    test('17a. Forsøk å åpne en cv via kandidatliste i intern stilling.', async ({ page }) => {
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await expect(page.locator('div').filter({ hasText: /^Jobbsøker, Jarle$/ })).toBeVisible();
     });
-    test('17b. Forsøk å åpne en cv, først via kandidatliste, så via kandidatsøk, og deretter via lenke. Eksempel i test: https://rekrutteringsbistand.intern.dev.nav.no/kandidater/kandidat/PAM0xtfrwli5/cv?fraKandidatsok=true', async ({
-        page,
-    }) => {
+
+    test('17b. Forsøk å åpne en cv via kandidatliste i ekstern stilling.', async ({ page }) => {
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+        await page.getByRole('link', { name: 'Ekstern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await expect(page.locator('div').filter({ hasText: /^Jobbsøker, Jarle$/ })).toBeVisible();
+    });
+
+    test('17c. Forsøk å åpne en cv via kandidatsøk.', async ({ page }) => {
         await page.getByRole('link', { name: 'Kandidatsøk' }).click();
-        await page.getByRole('link', { name: 'Spasertur, Patent' }).click(); // TODO kanskje ha samsvar på navn mellom kandidatsøk og kandidatmock
+        await page.getByRole('link', { name: 'Spasertur, Patent' }).click();
         await expect(page.getByRole('tab', { name: 'Historikk' })).toBeVisible();
         await page.getByRole('tab', { name: 'Historikk' }).click();
         await expect(page.getByRole('cell', { name: 'Lagt i listen' })).toBeVisible();
         await expect(page.getByText('Hei, du trenger rollen')).not.toBeVisible();
     });
-    test('17c. Forsøk å åpne en cv, først via kandidatliste, så via kandidatsøk, og deretter via lenke. Eksempel i test: https://rekrutteringsbistand.intern.dev.nav.no/kandidater/kandidat/PAM0xtfrwli5/cv?fraKandidatsok=true', async ({
+    test('17d. Forsøk å åpne en cv via lenke: https://rekrutteringsbistand.intern.dev.nav.no/kandidater/kandidat/PAM0xtfrwli5/cv?fraKandidatsok=true', async ({
         page,
     }) => {
         await page.goto(
