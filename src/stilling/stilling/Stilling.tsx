@@ -224,7 +224,7 @@ const Stilling = () => {
                             )}
                         </>
                     ) : (
-                        <AdministrationPreview />
+                        <AdministrationPreview erEier={erEier} />
                     )}
                 </aside>
             </div>
