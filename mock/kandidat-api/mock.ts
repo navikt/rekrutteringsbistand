@@ -22,12 +22,17 @@ export const gammelKandidatApiMock = [
                 kandidatlisteId: 'minEkstern',
                 stillingId: 'minEkstern',
             });
-        }
-        if (stillingsId === 'minIntern') {
+        } else if (stillingsId === 'minIntern') {
             return HttpResponse.json({
                 ...mockKandidatlisteMedStilling,
                 kandidatlisteId: 'minIntern',
                 stillingId: 'minIntern',
+            });
+        } else if (stillingsId === 'minFormidling') {
+            return HttpResponse.json({
+                ...mockKandidatlisteMedStilling,
+                kandidatlisteId: 'minFormidling',
+                stillingId: 'minFormidling',
             });
         }
 

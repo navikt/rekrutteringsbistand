@@ -6,6 +6,8 @@ import { mockEnhetsregistersøk } from './mockEnhetsregister';
 import { mockCategoriesWithAltnames, mockPostdata } from './mockGeografi';
 import { mockPutStandardsøk, mockStandardsøk } from './mockStandardsøk';
 import {
+    mockFormidling,
+    mockFormidlingMin,
     mockNyRekrutteringsbistandstilling,
     mockRekrutteringsbistandstilling,
     mockRekrutteringsbistandstillingEkstern,
@@ -25,6 +27,10 @@ export const stillingApiMock = [
             return HttpResponse.json(mockRekrutteringsbistandstillingEkstern as any);
         } else if (stillingsId === 'minEkstern') {
             return HttpResponse.json(mockRekrutteringsbistandstillingMinEkstern);
+        } else if (stillingsId === 'minFormidling') {
+            return HttpResponse.json(mockFormidlingMin);
+        } else if (stillingsId === 'formidling') {
+            return HttpResponse.json(mockFormidling);
         }
 
         return HttpResponse.json(mockRekrutteringsbistandstilling);

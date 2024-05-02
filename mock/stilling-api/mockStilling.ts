@@ -299,3 +299,113 @@ export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = 
         stillingskategori: Stillingskategori.Stilling,
     },
 };
+
+export const mockFormidling = {
+    stilling: {
+        title: 'Formidling',
+        uuid: 'formidling',
+        annonsenr: '920023',
+        status: 'ACTIVE',
+        privacy: 'INTERNAL_NOT_SHOWN',
+        published: '2024-05-02T15:10:23.086610286',
+        publishedByAdmin: '2024-05-02T15:10:23.086610286',
+        expires: '2025-05-09T01:00:00',
+        created: '2024-05-02T15:09:05.545835',
+        updated: '2024-05-02T15:10:23.799186',
+        employer: {
+            name: 'STRENG KRITISK TIGER AS',
+            publicName: 'STRENG KRITISK TIGER AS',
+            orgnr: '315090334',
+            parentOrgnr: '312468395',
+            orgform: 'BEDR',
+        },
+        categories: [
+            {
+                styrkCode: '0310.03',
+                name: 'Korporal',
+            },
+        ],
+        source: 'DIR',
+        medium: 'DIR',
+        businessName: 'STRENG KRITISK TIGER AS',
+        locations: [
+            {
+                address: null,
+                postalCode: null,
+                city: null,
+                county: 'AGDER',
+                countyCode: null,
+                municipal: 'KRISTIANSAND',
+                municipalCode: '4204',
+                latitue: null,
+                longitude: null,
+                country: 'NORGE',
+            },
+        ],
+        reference: '69094243-c430-43ea-bbce-a4ad440563cc',
+        administration: {
+            status: 'DONE',
+            remarks: [],
+            comments: '',
+            reportee: 'MOCK FORMIDLING',
+            navIdent: 'Z993141',
+        },
+        properties: {
+            extent: 'Heltid',
+            workhours: ['Dagtid'],
+            workday: ['Ukedager'],
+            applicationdue: 'Snarest',
+            jobtitle: 'Korporal',
+            positioncount: 1,
+            engagementtype: 'Fast',
+            classification_styrk08_score: 1,
+            adtext: 'Formidling',
+            classification_styrk08_code: '0310',
+            searchtags: [
+                {
+                    label: 'Korporal',
+                    score: 1,
+                },
+            ],
+            classification_esco_code:
+                'http://data.europa.eu/esco/occupation/4a3f40a8-0587-494c-b8d3-7098b8c5992f',
+            classification_input_source: 'jobtitle',
+            sector: 'Offentlig',
+        },
+        contacts: [
+            {
+                name: 'Menig',
+                role: '',
+                title: 'Forsvar',
+                email: 'test@nav.no',
+                phone: '',
+            },
+        ],
+        styrkEllerTittel: 'Formidling',
+    },
+    stillingsinfo: {
+        eierNavident: null,
+        eierNavn: null,
+        notat: null,
+        stillingsid: 'formidling',
+        stillingsinfoid: '84a1707f-8002-4d10-a9a6-311ce66dd319',
+        stillingskategori: 'FORMIDLING',
+    },
+};
+
+export const mockFormidlingMin = {
+    ...mockFormidling,
+    stilling: {
+        ...mockFormidling.stilling,
+        styrkEllerTittel: 'Formidling MIN',
+        uuid: 'minFormidling',
+        administration: {
+            ...mockFormidling.stilling.administration,
+            reportee: 'MOCK FORMIDLING MIN',
+            navIdent: 'Z123456',
+        },
+    },
+    stillingsinfo: {
+        ...mockFormidling.stillingsinfo,
+    },
+};
