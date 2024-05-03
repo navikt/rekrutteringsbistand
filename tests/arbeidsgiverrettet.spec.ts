@@ -211,7 +211,9 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await expect(page.getByText('Spasertur, Patent')).toBeVisible();
     });
 
-    test('24a .For fomidling du eier: Forsøk å velge "Legg til kandidat" ', async ({ page }) => {
+    test('24 .For fomidling du eier: Forsøk å velge "Legg til kandidat"  og sett kandidat som "presentert" ', async ({
+        page,
+    }) => {
         await page.getByRole('link', { name: 'Formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
         await page.getByRole('button', { name: 'Legg til kandidat' }).click();
@@ -223,21 +225,6 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await expect(
             page.getByLabel('Legg til kandidat').getByLabel('Suksess').locator('path')
         ).toBeVisible();
-    });
-
-    test('24b .sett kandidat som "presentert" ', async ({ page }) => {
-        await page.getByRole('link', { name: 'Formidlinger' }).click();
-        await page.getByRole('link', { name: 'Formidling MIN' }).click();
-        await page.getByRole('tab', { name: 'Kandidater' }).click();
-        await page
-            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
-            .getByLabel('', { exact: true })
-            .check();
-        await expect(
-            page.getByTitle('Del de markerte kandidatene').getByRole('button')
-        ).toBeVisible();
-
-        // TODO test prosessen presenter?
     });
 
     test('25 For fomidling du eier: Forsøk å velge "Legg til kandidat" ', async ({ page }) => {
@@ -261,7 +248,10 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
         await page.getByRole('tab', { name: 'Kandidater' }).click();
-        await page.getByLabel('Endre status eller hendelser').click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('Endre status eller hendelser')
+            .click();
         await page.getByRole('button', { name: 'Registrer at kandidaten har f' }).click();
         await expect(page.getByRole('button', { name: 'Registrere fått jobben' })).toBeVisible();
     });
@@ -271,7 +261,10 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
         await page.getByRole('tab', { name: 'Kandidater' }).click();
-        await page.getByLabel('Endre status eller hendelser').click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('Endre status eller hendelser')
+            .click();
         await page.getByRole('button', { name: 'Registrer manuelt' }).click();
         await expect(page.getByRole('button', { name: 'CV-en er blitt delt' })).toBeVisible();
     });
@@ -279,7 +272,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
     test('28 Inne i kandidatliste for direktemeldt stiling du eier: Forsøk å sende sms"', async ({
         page,
     }) => {
-        await page.getByRole('link', { name: 'Stillinger' }).first().click();
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).first().click();
         await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
         await page.getByRole('tab', { name: 'Kandidater' }).click();
         await page
@@ -287,15 +280,13 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
             .getByLabel('', { exact: true })
             .check();
         await page.getByRole('button', { name: 'Send SMS' }).click();
-        await expect(
-            page.getByLabel('Send SMS til 1 kandidater').getByRole('button', { name: 'Send SMS' })
-        ).toBeVisible();
+        await expect(page.getByText('Velg beskjed som skal vises i')).toBeVisible();
     });
 
     test('29 Inne i kandidatliste for ekstern stiling du eier: Forsøk å sende sms', async ({
         page,
     }) => {
-        await page.getByRole('link', { name: 'Stillinger' }).first().click();
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).first().click();
         await page.getByRole('link', { name: 'Ekstern stilling MIN' }).click();
         await page.getByRole('tab', { name: 'Kandidater' }).click();
         await page
@@ -303,9 +294,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
             .getByLabel('', { exact: true })
             .check();
         await page.getByRole('button', { name: 'Send SMS' }).click();
-        await expect(
-            page.getByLabel('Send SMS til 1 kandidater').getByRole('button', { name: 'Send SMS' })
-        ).toBeVisible();
+        await expect(page.getByText('Velg beskjed som skal vises i')).toBeVisible();
     });
 
     test('30 Inne i kandidatliste for stiling du eier: Forsøk å dele stilling med kandidat', async ({

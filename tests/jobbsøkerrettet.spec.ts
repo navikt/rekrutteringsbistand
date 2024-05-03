@@ -227,25 +227,61 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await expect(page.getByText('Spasertur, Patent')).toBeVisible();
     });
 
-    test('24. For fomidling du eier: Forsøk å velge "Legg til kandidat" og sett kandidat som "presentert"', async ({
+    test('24 .For fomidling du eier: Forsøk å velge "Legg til kandidat"  og sett kandidat som "presentert" ', async ({
         page,
     }) => {
-        //TODO Ikke mock data tilgjengelig
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await page.getByRole('button', { name: 'Legg til kandidat' }).click();
+        await page.getByPlaceholder('siffer').click();
+        await page.getByPlaceholder('siffer').fill('03037948038');
+        await page.getByRole('button', { name: 'Registrer formidling' }).click();
+        await page.getByLabel('Registrer at personen er blitt presentert').check();
+        await page.getByRole('button', { name: 'Legg til', exact: true }).click();
+        await expect(
+            page.getByLabel('Legg til kandidat').getByLabel('Suksess').locator('path')
+        ).toBeVisible();
     });
 
-    test('25. For fomidling du eier: Forsøk å velge "Legg til kandidat" og sett kandidat som "Fått jobben"', async ({
-        page,
-    }) => {
-        //TODO Ikke mock data tilgjengelig
+    test('25 For fomidling du eier: Forsøk å velge "Legg til kandidat" ', async ({ page }) => {
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await page.getByRole('button', { name: 'Legg til kandidat' }).click();
+        await expect(page.getByText('Fødselsnummer på kandidaten')).toBeVisible();
     });
-    test('26. For fomidling du eier: Forsøk å velge "Finn kandidater" og sett kandidat som "presentert"', async ({
-        page,
-    }) => {
-        //TODO Ikke mock data tilgjengelig
-    });
-    test('27. For fomidling du eier: Forsøk å velge "Finn kandidater" og sett kandidat som "Fått jobben"', async ({
-        page,
-    }) => {
-        //TODO Ikke mock data tilgjengelig
-    });
+
+    // test('26 For fomidling du eier: Forsøk å velge "Finn kandidater"', async ({ page }) => {
+    //     await page.getByRole('link', { name: 'Formidlinger' }).click();
+    //     await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+    //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
+    //     await page.getByRole('button', { name: 'Finn kandidater' }).click();
+    //     await expect(page.getByText('Marker alle på siden')).toBeVisible();
+    // });
+
+    // test('27a For fomidling du eier: sett kandidat som "Fått jobben" ', async ({ page }) => {
+    //     await page.getByRole('link', { name: 'Formidlinger' }).click();
+    //     await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+    //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
+    //     await page.getByRole('tab', { name: 'Kandidater' }).click();
+    //     await page
+    //         .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+    //         .getByLabel('Endre status eller hendelser')
+    //         .click();
+    //     await page.getByRole('button', { name: 'Registrer at kandidaten har f' }).click();
+    //     await expect(page.getByRole('button', { name: 'Registrere fått jobben' })).toBeVisible();
+    // });
+
+    // test('27b For fomidling du eier: sett kandidat som "presentert"', async ({ page }) => {
+    //     await page.getByRole('link', { name: 'Formidlinger' }).click();
+    //     await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+    //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
+    //     await page.getByRole('tab', { name: 'Kandidater' }).click();
+    //     await page
+    //         .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+    //         .getByLabel('Endre status eller hendelser')
+    //         .click();
+    //     await page.getByRole('button', { name: 'Registrer manuelt' }).click();
+    //     await expect(page.getByRole('button', { name: 'CV-en er blitt delt' })).toBeVisible();
+    // });
 });
