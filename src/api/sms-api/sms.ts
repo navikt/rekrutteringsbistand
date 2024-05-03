@@ -80,15 +80,21 @@ const SmsArraySchema = z.array(SmsSchema);
 export const useSmserForStilling = (
     stillingId: string | null | undefined
 ): SWRResponse<Record<string, Sms>> =>
-    useSWR(stillingId ? varselStillingEndepunkt(stillingId) : null, async (url: string) => {
-        const rawResponse = await fetchJson(url);
-        const parsedResponse = SmsArraySchema.parse(rawResponse);
-        const smser: Record<string, Sms> = {};
-        parsedResponse.forEach((sms) => {
-            smser[sms.mottakerFnr] = sms;
-        });
-        return smser;
-    });
+    useSWR(
+        stillingId ? varselStillingEndepunkt(stillingId) : null,
+        async (url: string) => {
+            const rawResponse = await fetchJson(url);
+            const parsedResponse = SmsArraySchema.parse(rawResponse);
+            const smser: Record<string, Sms> = {};
+            parsedResponse.forEach((sms) => {
+                smser[sms.mottakerFnr] = sms;
+            });
+            return smser;
+        },
+        {
+            refreshInterval: 3_000,
+        }
+    );
 
 type smserForKandidatRequest = { fnr: string | undefined | null };
 
