@@ -10,17 +10,29 @@ import {
     IdentType,
     TilstandPåForespørsel,
 } from '../../src/kandidat/kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
-import { mockAlleKandidatlister } from '../kandidat-api/mockKandidatliste';
 import { mockAlleKandidater } from '../kandidat-api/mockKandidat';
+import {
+    mockAlleKandidatlister,
+    mockMinKandidatlisteMedStilling,
+} from '../kandidat-api/mockKandidatliste';
 import { mockVeileder } from '../mockVeileder';
 import { mockStilling } from '../stilling-api/mockStilling';
 
 export const forespørselOmDelingAvCvMock = [
     http.get(`${api.forespørselOmDelingAvCv}/foresporsler/:stillingsId`, ({ params }) => {
         const { stillingsId } = params;
+
         const kandidatliste = mockAlleKandidatlister.find(
             (liste) => liste.stillingId === stillingsId
         );
+
+        if (stillingsId === 'minIntern') {
+            const mocken = opprettMockForespørslerOmDelingAvCv(
+                mockMinKandidatlisteMedStilling,
+                mockVeileder
+            );
+            return HttpResponse.json(mocken);
+        }
 
         if (!kandidatliste) {
             return new HttpResponse(null, { status: 200 });
@@ -30,6 +42,7 @@ export const forespørselOmDelingAvCvMock = [
             kandidatliste,
             mockVeileder
         );
+
         return HttpResponse.json(forespørslerForKandidatliste);
     }),
 

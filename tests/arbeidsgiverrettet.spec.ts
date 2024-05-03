@@ -225,6 +225,180 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         ).toBeVisible();
     });
 
-    test('24b .sett kandidat som "presentert" ', async ({ page }) => {});
-    // test('', async ({ page }) => {});
+    test('24b .sett kandidat som "presentert" ', async ({ page }) => {
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('', { exact: true })
+            .check();
+        await expect(
+            page.getByTitle('Del de markerte kandidatene').getByRole('button')
+        ).toBeVisible();
+
+        // TODO test prosessen presenter?
+    });
+
+    test('25 For fomidling du eier: Forsøk å velge "Legg til kandidat" ', async ({ page }) => {
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await page.getByRole('button', { name: 'Legg til kandidat' }).click();
+        await expect(page.getByText('Fødselsnummer på kandidaten')).toBeVisible();
+    });
+
+    test('26 For fomidling du eier: Forsøk å velge "Finn kandidater"', async ({ page }) => {
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await page.getByRole('button', { name: 'Finn kandidater' }).click();
+        await expect(page.getByText('Marker alle på siden')).toBeVisible();
+    });
+
+    test('27a For fomidling du eier: sett kandidat som "Fått jobben" ', async ({ page }) => {
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page.getByLabel('Endre status eller hendelser').click();
+        await page.getByRole('button', { name: 'Registrer at kandidaten har f' }).click();
+        await expect(page.getByRole('button', { name: 'Registrere fått jobben' })).toBeVisible();
+    });
+
+    test('27b For fomidling du eier: sett kandidat som "presentert"', async ({ page }) => {
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page.getByLabel('Endre status eller hendelser').click();
+        await page.getByRole('button', { name: 'Registrer manuelt' }).click();
+        await expect(page.getByRole('button', { name: 'CV-en er blitt delt' })).toBeVisible();
+    });
+
+    test('28 Inne i kandidatliste for direktemeldt stiling du eier: Forsøk å sende sms"', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).first().click();
+        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('', { exact: true })
+            .check();
+        await page.getByRole('button', { name: 'Send SMS' }).click();
+        await expect(
+            page.getByLabel('Send SMS til 1 kandidater').getByRole('button', { name: 'Send SMS' })
+        ).toBeVisible();
+    });
+
+    test('29 Inne i kandidatliste for ekstern stiling du eier: Forsøk å sende sms', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).first().click();
+        await page.getByRole('link', { name: 'Ekstern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('', { exact: true })
+            .check();
+        await page.getByRole('button', { name: 'Send SMS' }).click();
+        await expect(
+            page.getByLabel('Send SMS til 1 kandidater').getByRole('button', { name: 'Send SMS' })
+        ).toBeVisible();
+    });
+
+    test('30 Inne i kandidatliste for stiling du eier: Forsøk å dele stilling med kandidat', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page.getByRole('button', { name: 'Del stillingen med de' }).click();
+        await page
+            .getByRole('row', { name: '​ Knapp, Gul 06889198689' })
+            .getByLabel('', { exact: true })
+            .check();
+        await page.getByRole('button', { name: 'Del stillingen med de' }).click();
+        await expect(page.getByRole('button', { name: 'Del stilling', exact: true })).toBeVisible();
+    });
+
+    test('31 Inne i kandidatliste for stiling du eier:  Forsøk å dele cv med arbeidsgiver', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger' }).first().click();
+        await page.getByRole('tab', { name: 'Mine stillinger' }).click();
+        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('', { exact: true })
+            .check();
+        await page.getByRole('button', { name: 'Del de markerte kandidatene' }).click();
+        await page.getByLabel('E-posten til arbeidsgiveren').click();
+        await page.getByLabel('E-posten til arbeidsgiveren').fill('test@nav.no');
+        await page.getByText('“test@nav.no”').click();
+        await expect(page.getByRole('button', { name: 'Del kandidatene' })).toBeVisible();
+    });
+
+    test('32 Inne i kandidatliste for stiling du eier:  Forsøk å legge til kandidat ved å velge fra kandidatsøk', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+        await page.getByRole('tab', { name: 'Mine stillinger' }).click();
+        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page.getByRole('button', { name: 'Finn kandidater' }).click();
+        await page.getByLabel('Marker alle på siden').check();
+        await page.getByRole('button', { name: 'Lagre i kandidatliste' }).click();
+        await expect(page.getByRole('heading', { name: 'Lagre 3 kandidat er i' })).toBeVisible();
+    });
+
+    test('33 Inne i kandidatliste for stiling du eier:  Forsøk å endre hendelse ved å velge "Registrer manuelt"', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+        await page.getByRole('tab', { name: 'Mine stillinger' }).click();
+        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('Endre status eller hendelser')
+            .click();
+        await page.getByRole('button', { name: 'Registrer manuelt' }).click();
+        await expect(page.getByRole('button', { name: 'CV-en er blitt delt' })).toBeVisible();
+    });
+
+    test('34 Inne i kandidatliste for stiling du eier:  Forsøk å endre hendelse ved å velge "Registrer at kandidaten har fått jobb"', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+        await page.getByRole('tab', { name: 'Mine stillinger' }).click();
+        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('Endre status eller hendelser')
+            .click();
+        await page.getByRole('button', { name: 'Registrer at kandidaten har f' }).click();
+        await expect(page.getByRole('button', { name: 'Registrere fått jobben' })).toBeVisible();
+    });
+
+    test('35 Inne i kandidatliste for stiling du eier:  Forsøk å endre status, for eksempel til "Aktuell"', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+        await page.getByRole('tab', { name: 'Mine stillinger' }).click();
+        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+        await page.getByRole('tab', { name: 'Kandidater' }).click();
+        await page
+            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+            .getByLabel('Endre status eller hendelser')
+            .click();
+        await page
+            .getByRole('group', { name: 'Velg status' })
+            .getByLabel('Aktuell', { exact: true })
+            .check();
+        await expect(page.getByRole('button', { name: 'Lagre status' })).toBeVisible();
+    });
 });
