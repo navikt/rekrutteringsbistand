@@ -83,19 +83,19 @@ const KnappeRad: FunctionComponent<Props> = ({
                                 onClick={onSendSmsClick}
                                 icon={<MobileIcon />}
                             >
-                                Send SMS
+                                Send beskjed
                             </Button>
                         ) : (
                             <MedPopover
-                                tittel="Send SMS til de markerte kandidatene"
+                                tittel="Send beskjed til de markerte kandidatene"
                                 hjelpetekst={
                                     minstEnKandidatErMarkert
-                                        ? 'Du har allerede sendt SMS til alle markerte kandidater.'
-                                        : 'Du må huke av for kandidatene du ønsker å sende SMS til.'
+                                        ? 'Du har allerede sendt beskjed til alle markerte kandidater.'
+                                        : 'Du må huke av for kandidatene du ønsker å sende beskjed til.'
                                 }
                             >
                                 <Button variant="tertiary" icon={<MobileIcon />}>
-                                    Send SMS
+                                    Send beskjed
                                 </Button>
                             </MedPopover>
                         )}

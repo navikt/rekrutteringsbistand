@@ -63,7 +63,7 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
         setSendSmsLoading(false);
         if (result === 'ok') {
             visVarsling({
-                innhold: 'SMS-en er sendt',
+                innhold: 'Beskjed er sendt',
             });
             fjernAllMarkering();
         } else if (result === 'error') {
@@ -80,9 +80,9 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             open={vis}
             className={css.sendSmsModal}
             onClose={onClose}
-            aria-label={`Send SMS til ${kandidater.length} kandidater`}
+            aria-label={`Send beskjed til ${kandidater.length} kandidater`}
             header={{
-                heading: 'Send SMS',
+                heading: 'Send beskjed',
             }}
         >
             <Modal.Body>
@@ -111,11 +111,12 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
                 )}
                 <div className="send-sms-modal__innhold">
                     <BodyShort>
-                        Det vil bli sendt SMS til <b>{kandidaterSomIkkeHarFåttSms.length}</b>{' '}
+                        Det vil bli sendt beskjed til <b>{kandidaterSomIkkeHarFåttSms.length}</b>{' '}
                         {kandidaterSomIkkeHarFåttSms.length === 1 ? 'kandidat' : 'kandidater'}
                     </BodyShort>
                     <BodyShort size="small">
-                        Telefonnummerene blir hentet fra Kontakt- og reservasjonsregisteret.
+                        Telefonnummerene/e-postene blir hentet fra Kontakt- og
+                        reservasjonsregisteret.
                     </BodyShort>
                     <Alert variant="info" className={css.kontortidAdvarsel}>
                         <Label size="small">
@@ -156,7 +157,7 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
 
             <Modal.Footer>
                 <Button variant="primary" loading={sendSmsLoading} onClick={onSendSms}>
-                    Send SMS
+                    Send beskjed
                 </Button>
                 <Button variant="secondary" onClick={onClose}>
                     Avbryt
