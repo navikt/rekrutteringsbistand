@@ -88,15 +88,15 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             <Modal.Body>
                 {(kandidaterSomHarFåttSms.length > 0 || harInaktiveKandidater) && (
                     <Alert variant="warning" size="small" className={css.alleredeSendtAdvarsel}>
-                        Ikke alle kandidatene vil motta SMS-en
+                        Ikke alle kandidatene vil motta beskjeden
                         <ul className={css.alleredeSendtAdvarselListe}>
                             {kandidaterSomHarFåttSms.length > 0 && (
                                 <li>
                                     {kandidaterSomHarFåttSms.length === 1 ? (
-                                        <>Du har allerede sendt SMS til én av kandidatene.</>
+                                        <>Du har allerede sendt beskjed til én av kandidatene.</>
                                     ) : (
                                         <>
-                                            Du har allerede sendt SMS til{' '}
+                                            Du har allerede sendt beskjed til{' '}
                                             {kandidaterSomHarFåttSms.length} av de{' '}
                                             {markerteKandidater.length} valgte kandidatene.
                                         </>
@@ -128,7 +128,7 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
                     {stillingskategori !== Stillingskategori.Jobbmesse && (
                         <Select
                             className={css.velgMal}
-                            label="Velg beskjed som skal vises i SMS-en*"
+                            label="Velg hva som skal vises i beskjeden"
                             onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                 setValgtMal(e.target.value as Meldingsmal);
                             }}
