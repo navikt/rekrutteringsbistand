@@ -19,6 +19,8 @@ import { statistikkApiMock } from '../api/statistikk-api/mock.msw';
 import { stillingsapiMock } from '../api/stillings-api/mock.msw';
 import DevMockApi from './DevMockApi';
 import DevRoller from './DevMockMeg';
+import style from './DevTools.module.css';
+
 export interface IDevMockModal {
     children?: React.ReactNode | undefined;
 }
@@ -131,6 +133,7 @@ const DevMockModal: React.FC<IDevMockModal> = ({ children }) => {
     return (
         <div className="py-16">
             <Button
+                className={style.devtoolsButton}
                 type="button"
                 variant={'secondary-neutral'}
                 onClick={() => ref.current?.showModal()}

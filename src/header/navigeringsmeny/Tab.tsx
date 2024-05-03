@@ -1,12 +1,14 @@
-import { FunctionComponent } from 'react';
 import { BodyShort } from '@navikt/ds-react';
+import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
+import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import navigerignsmenyCss from './Navigeringsmeny.module.css';
 
 export type TabConfig = {
     tittel: string;
     path: string;
     queryParam?: string;
+    kreverRoller?: Rolle[];
 };
 
 type Props = {
