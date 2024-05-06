@@ -1,5 +1,7 @@
 import { Alert, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
+import { useHentArenaKandidatnr } from '../../../api/kandidat-søk-api/hentArenaKandidatnr';
+import { KandidatKilde, useHentKandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
 import FødselsnummerPåKandidat from '../../../felles/komponenter/fnr-på-kandidat/FødselsnummerTekstfelt';
 import KandidatNavn from '../../../felles/komponenter/kandidatNavn/KandidatNavnSøk';
 import BekreftLeggTilKandidat from '../../../felles/komponenter/legg-til-kandidat/BekreftLeggTilKandidat';
@@ -9,8 +11,6 @@ import kandidatStore from '../../../kandidat/state/reduxStore';
 import LeggTilFormidling from '../legg-til-formidling/LeggTilFormidling';
 import css from './LeggTilKandidat.module.css';
 import SynlighetsEvaluering from './SynlighetsEvaluering';
-import { KandidatKilde, useHentKandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
-import { useHentArenaKandidatnr } from '../../../api/kandidat-søk-api/hentArenaKandidatnr';
 
 type ILeggTilKandidat = {
     onClose: () => void;
@@ -84,20 +84,36 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
 
                     {fnr && !registrerFormidling && <KandidatNavn fnr={fnr} />}
 
-                    {kandidatnavn && kandidatnavn.kilde === KandidatKilde.REKRUTTERINGSBISTAND && (
-                        <BekreftLeggTilKandidat
-                            // @ts-ignore TODO: written before strict-mode enabled
-                            kandidatnr={arenaKandidatnr}
-                            kandidatlisteId={kandidatlisteId}
-                            onAvbryt={onClose}
-                            onBekreft={handleBekreft}
-                        />
-                    )}
+                    {kandidatnavn &&
+                        kandidatnavn.kilde === KandidatKilde.REKRUTTERINGSBISTAND &&
+                        (registrerFormidling ? (
+                            <LeggTilFormidling
+                                kilde={KandidatKilde.REKRUTTERINGSBISTAND}
+                                handleBekreft={handleBekreft}
+                                kandidatSøkResultat={kandidatnavn}
+                                fnr={fnr}
+                                stillingsId={stillingsId}
+                                onClose={onClose}
+                                kandidatlisteId={kandidatlisteId}
+                            />
+                        ) : (
+                            <BekreftLeggTilKandidat
+                                // @ts-ignore TODO: written before strict-mode enabled
+                                kandidatnr={arenaKandidatnr}
+                                kandidatlisteId={kandidatlisteId}
+                                onAvbryt={onClose}
+                                onBekreft={handleBekreft}
+                                setRegistrerFormidling={
+                                    erEier ? () => setRegistrerFormidling(true) : undefined
+                                }
+                            />
+                        ))}
 
                     {kandidatnavn && kandidatnavn.kilde === KandidatKilde.PDL && (
                         <>
                             {registrerFormidling ? (
                                 <LeggTilFormidling
+                                    kilde={KandidatKilde.PDL}
                                     handleBekreft={handleBekreft}
                                     kandidatSøkResultat={kandidatnavn}
                                     fnr={fnr}
@@ -151,18 +167,13 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                     )}
                                     <br />
 
-                                    {erEier ? (
+                                    {erEier && (
                                         <Button
                                             onClick={() => setRegistrerFormidling(true)}
                                             style={{ width: '100%', marginBottom: '1rem' }}
                                         >
                                             Registrer formidling
                                         </Button>
-                                    ) : (
-                                        <span>
-                                            Du må være eier av stillingen for å registrere
-                                            formidling
-                                        </span>
                                     )}
                                     <Knapper leggTilDisabled onAvbrytClick={onClose} />
                                 </div>

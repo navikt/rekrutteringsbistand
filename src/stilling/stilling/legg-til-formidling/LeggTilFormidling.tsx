@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { KandidatKilde, Kandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
 import useNavKontor from '../../../felles/store/navKontor';
-import FormidleUsynligKandidat from '../../../kandidat/kandidatliste/modaler/legg-til-kandidat-modal/FormidleUsynligKandidat';
-import { Kandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
+import FormidleKandidat from '../../../kandidat/kandidatliste/modaler/legg-til-kandidat-modal/FormidleKandidat';
 
 export interface ILeggTilFormidling {
+    kilde: KandidatKilde;
     fnr: string | null;
     kandidatlisteId: string;
     stillingsId: string;
@@ -19,11 +20,13 @@ const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
     kandidatlisteId,
     kandidatSøkResultat,
     handleBekreft,
+    kilde,
 }) => {
     const valgtNavKontor = useNavKontor((state) => state.navKontor);
     return (
         <div style={{ paddingTop: '1rem' }}>
-            <FormidleUsynligKandidat
+            <FormidleKandidat
+                kilde={kilde}
                 handleBekreft={handleBekreft}
                 fnr={fnr}
                 usynligKandidat={{

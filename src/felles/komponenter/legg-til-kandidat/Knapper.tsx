@@ -8,6 +8,7 @@ type Props = {
     leggTilDisabled?: boolean;
     leggTilTekst?: string;
     avbrytDisabled?: boolean;
+    setRegistrerFormidling?: () => void;
 };
 
 const Knapper: FunctionComponent<Props> = ({
@@ -17,6 +18,7 @@ const Knapper: FunctionComponent<Props> = ({
     leggTilTekst = 'Legg til',
     leggTilDisabled,
     avbrytDisabled,
+    setRegistrerFormidling,
 }) => (
     <Modal.Footer>
         <Button onClick={onLeggTilClick} loading={leggTilSpinner} disabled={leggTilDisabled}>
@@ -25,6 +27,9 @@ const Knapper: FunctionComponent<Props> = ({
         <Button variant="secondary" onClick={onAvbrytClick} disabled={avbrytDisabled}>
             Avbryt
         </Button>
+        {setRegistrerFormidling && (
+            <Button onClick={() => setRegistrerFormidling()}>Registrer formidling</Button>
+        )}
     </Modal.Footer>
 );
 

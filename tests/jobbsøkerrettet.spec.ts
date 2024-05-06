@@ -234,7 +234,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
         await page.getByRole('button', { name: 'Legg til kandidat' }).click();
         await page.getByPlaceholder('siffer').click();
-        await page.getByPlaceholder('siffer').fill('03037948038');
+        await page.getByPlaceholder('siffer').fill('28125314475');
         await page.getByRole('button', { name: 'Registrer formidling' }).click();
         await page.getByLabel('Registrer at personen er blitt presentert').check();
         await page.getByRole('button', { name: 'Legg til', exact: true }).click();
