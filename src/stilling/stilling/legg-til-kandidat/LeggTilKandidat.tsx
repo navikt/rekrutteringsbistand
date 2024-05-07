@@ -103,9 +103,9 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                 kandidatlisteId={kandidatlisteId}
                                 onAvbryt={onClose}
                                 onBekreft={handleBekreft}
-                                setRegistrerFormidling={
-                                    erEier ? () => setRegistrerFormidling(true) : undefined
-                                }
+                                // setRegistrerFormidling={
+                                //     erEier ? () => setRegistrerFormidling(true) : undefined
+                                // }
                             />
                         ))}
 

@@ -52,12 +52,13 @@ test.describe('Legg til kandidat knapp - Arbeidsgiverrettet', () => {
         await leggTilUsynligKandidat(page);
     });
 
-    test('Skal kunne formidle SYNLIG kandidat på STILLING man er eier', async ({ page }) => {
-        await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
-        await page.getByRole('tab', { name: 'Mine stillinger' }).click();
-        await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
-        await formidleSynligKandidat(page);
-    });
+    // Todo kommer:
+    // test('Skal kunne formidle SYNLIG kandidat på STILLING man er eier', async ({ page }) => {
+    //     await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
+    //     await page.getByRole('tab', { name: 'Mine stillinger' }).click();
+    //     await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
+    //     await formidleSynligKandidat(page);
+    // });
 
     test('Skal kunne formidle USYNLIG kandidat på STILLING man er eier', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
@@ -128,11 +129,12 @@ test.describe('Legg til kandidat knapp - Arbeidsgiverrettet', () => {
         await leggTilUsynligKandidat(page);
     });
 
-    test('Skal kunne formidle SYNLIG kandidat på FORMIDLING man er eier', async ({ page }) => {
-        await page.getByRole('link', { name: 'Formidlinger' }).click();
-        await page.getByRole('link', { name: 'Formidling MIN' }).click();
-        await formidleSynligKandidat(page);
-    });
+    // Todo kommer:
+    // test('Skal kunne formidle SYNLIG kandidat på FORMIDLING man er eier', async ({ page }) => {
+    //     await page.getByRole('link', { name: 'Formidlinger' }).click();
+    //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
+    //     await formidleSynligKandidat(page);
+    // });
 
     test('Skal kunne formidle USYNLIG kandidat på FORMIDLING man er eier', async ({ page }) => {
         await page.getByRole('link', { name: 'Formidlinger' }).click();

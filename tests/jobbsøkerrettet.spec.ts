@@ -227,14 +227,14 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await expect(page.getByText('Spasertur, Patent')).toBeVisible();
     });
 
-    test('24 .For fomidling du eier: Forsøk å velge "Legg til kandidat"  og sett kandidat som "presentert" ', async ({
+    test('24 .For fomidling du eier: Forsøk å velge "Legg til kandidat" for USYNLIG kandidat og sett kandidat som "presentert" ', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
         await page.getByRole('button', { name: 'Legg til kandidat' }).click();
         await page.getByPlaceholder('siffer').click();
-        await page.getByPlaceholder('siffer').fill('28125314475');
+        await page.getByPlaceholder('siffer').fill('22078738700');
         await page.getByRole('button', { name: 'Registrer formidling' }).click();
         await page.getByLabel('Registrer at personen er blitt presentert').check();
         await page.getByRole('button', { name: 'Legg til', exact: true }).click();
