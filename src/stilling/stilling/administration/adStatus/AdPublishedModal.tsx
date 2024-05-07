@@ -1,5 +1,4 @@
-import { BriefcaseIcon, MagnifyingGlassIcon } from '@navikt/aksel-icons';
-import { BodyLong, Modal } from '@navikt/ds-react';
+import { Modal } from '@navikt/ds-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -34,27 +33,9 @@ const AdPublishedModal = ({ stillingId }: { stillingId: string }) => {
                 closeButton: true,
             }}
         >
-            <Modal.Body>
-                <BodyLong spacing>
-                    Ønsker du å finne kandidater til stillingen du publiserte?
-                </BodyLong>
-            </Modal.Body>
             <Modal.Footer>
-                <Link
-                    to={`/kandidatsok?stilling=${stillingId}&brukKriterierFraStillingen=true`}
-                    className="navds-link"
-                    onClick={onClose}
-                >
-                    <MagnifyingGlassIcon />
-                    Finn kandidater
-                </Link>
-                <Link
-                    to="/stillinger/stillingssok?portefolje=visMine"
-                    className="navds-link"
-                    onClick={onClose}
-                >
-                    <BriefcaseIcon />
-                    Til mine stillinger
+                <Link to="/" className="navds-link" onClick={onClose}>
+                    Til oversikt
                 </Link>
             </Modal.Footer>
         </Modal>
