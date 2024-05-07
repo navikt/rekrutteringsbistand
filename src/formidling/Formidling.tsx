@@ -1,4 +1,5 @@
-import { Tabs } from '@navikt/ds-react';
+import { PlusCircleIcon } from '@navikt/aksel-icons';
+import { Button, Tabs } from '@navikt/ds-react';
 import Piktogram from 'felles/komponenter/piktogrammer/formidlinger.svg';
 import * as React from 'react';
 import { useLocation } from 'react-router-dom';
@@ -39,6 +40,8 @@ const Formidling: React.FC = () => {
         });
     };
 
+    const onOpprettNyClick = () => navigate('/stillinger/stillingssok?modal=opprettStillingModal');
+
     return (
         <TilgangskontrollForInnhold
             kreverEnAvRollene={[
@@ -50,6 +53,23 @@ const Formidling: React.FC = () => {
                 tittel="Formidlinger"
                 sidepanel={<FormidlingssøkSidebar />}
                 ikon={<Piktogram />}
+                knappIBanner={
+                    <TilgangskontrollForInnhold
+                        skjulVarsel
+                        kreverEnAvRollene={[
+                            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+                            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        ]}
+                    >
+                        <Button
+                            variant="secondary"
+                            onClick={onOpprettNyClick}
+                            icon={<PlusCircleIcon aria-hidden />}
+                        >
+                            Opprett ny
+                        </Button>
+                    </TilgangskontrollForInnhold>
+                }
             >
                 <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
                     <Tabs.List>
