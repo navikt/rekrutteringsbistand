@@ -65,23 +65,23 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                         Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
                     ]}
                 >
-                    <Button
-                        onClick={() => setVisLeggTilKandidatModal(true)}
-                        icon={<PersonPlusIcon aria-hidden />}
-                    >
-                        Legg til kandidat
-                    </Button>
+                    {(!erFormidling || erEier) && (
+                        <Button
+                            onClick={() => setVisLeggTilKandidatModal(true)}
+                            icon={<PersonPlusIcon aria-hidden />}
+                        >
+                            Legg til kandidat ss
+                        </Button>
+                    )}
                 </TilgangskontrollForInnhold>
 
-                {(!erFormidling || erEier) ?? (
-                    <LeggTilKandidatModal
-                        erEier={erEier}
-                        vis={visLeggTilKandidatModal}
-                        onClose={() => setVisLeggTilKandidatModal(false)}
-                        //@ts-ignore TODO: written before strict-mode enabled
-                        stillingsId={stillingId}
-                    />
-                )}
+                <LeggTilKandidatModal
+                    erEier={erEier}
+                    vis={visLeggTilKandidatModal}
+                    onClose={() => setVisLeggTilKandidatModal(false)}
+                    //@ts-ignore TODO: written before strict-mode enabled
+                    stillingsId={stillingId}
+                />
             </div>
         </div>
     );
