@@ -2,23 +2,23 @@ import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 
+import useNavKontor from 'felles/store/navKontor';
+import {
+    KandidatsøkKandidat,
+    KandidatsøkProps,
+    useKandidatsøk,
+} from '../../api/kandidat-søk-api/kandidatsøk';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
+import useSøkekriterier from '../hooks/useSøkekriterier';
+import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
+import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import { Økt } from '../Økt';
 import AntallKandidater from './AntallKandidater';
 import css from './Kandidater.module.css';
 import MarkerAlle from './MarkerAlle';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
-import useSøkekriterier from '../hooks/useSøkekriterier';
-import {
-    KandidatsøkKandidat,
-    KandidatsøkProps,
-    useKandidatsøk,
-} from '../../api/kandidat-søk-api/kandidatsøk';
-import useNavKontor from 'felles/store/navKontor';
-import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
-import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 
 type Props = {
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
@@ -115,7 +115,7 @@ const Kandidater: FunctionComponent<Props> = ({
                 </BodyShort>
             )}
 
-            {kandidatsøkKandidater && kandidatsøkKandidater.length > 0 && (
+            {kandidatsøkKandidater && kandidatsøkKandidater.length > 0 ? (
                 <>
                     <div className={css.overKandidater}>
                         <MarkerAlle
@@ -146,6 +146,8 @@ const Kandidater: FunctionComponent<Props> = ({
                     </ul>
                     <Paginering antallTreff={totalHits || 0} />
                 </>
+            ) : (
+                <BodyShort> Fant ingen kandidater </BodyShort>
             )}
             {kontekstAvKandidatlisteEllerStilling === null ? (
                 <LagreKandidaterIMineKandidatlisterModal
