@@ -12,12 +12,14 @@ export interface IStillingKandidatKnapper {
     kandidatlisteId: string;
     stillingId: string | null;
     erEier?: boolean;
+    erFormidling?: boolean;
 }
 
 const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
     kandidatlisteId,
     stillingId,
     erEier,
+    erFormidling,
 }) => {
     const [visLeggTilKandidatModal, setVisLeggTilKandidatModal] = React.useState<boolean>(false);
     if (!kandidatlisteId) {
@@ -70,13 +72,16 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                         Legg til kandidat
                     </Button>
                 </TilgangskontrollForInnhold>
-                <LeggTilKandidatModal
-                    erEier={erEier}
-                    vis={visLeggTilKandidatModal}
-                    onClose={() => setVisLeggTilKandidatModal(false)}
-                    //@ts-ignore TODO: written before strict-mode enabled
-                    stillingsId={stillingId}
-                />
+
+                {(!erFormidling || erEier) ?? (
+                    <LeggTilKandidatModal
+                        erEier={erEier}
+                        vis={visLeggTilKandidatModal}
+                        onClose={() => setVisLeggTilKandidatModal(false)}
+                        //@ts-ignore TODO: written before strict-mode enabled
+                        stillingsId={stillingId}
+                    />
+                )}
             </div>
         </div>
     );
