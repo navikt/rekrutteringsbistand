@@ -239,8 +239,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await page.getByRole('link', { name: 'Formidlinger' }).click();
         await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
-        await page.getByRole('button', { name: 'Finn kandidater' }).click();
-        await expect(page.getByText('Marker alle på siden')).toBeVisible();
+        await expect(page.getByRole('button', { name: 'Finn kandidater' })).not.toBeVisible();
     });
 
     test('27a For fomidling du eier: sett kandidat som "Fått jobben" ', async ({ page }) => {

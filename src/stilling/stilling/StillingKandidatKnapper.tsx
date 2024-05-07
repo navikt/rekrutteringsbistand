@@ -45,7 +45,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     skjulVarsel
                     kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
                 >
-                    {erEier && (
+                    {!erFormidling && erEier && (
                         <Link
                             to={
                                 //@ts-ignore: TODO: written before strict-mode enabled
@@ -70,7 +70,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                             onClick={() => setVisLeggTilKandidatModal(true)}
                             icon={<PersonPlusIcon aria-hidden />}
                         >
-                            Legg til kandidat ss
+                            Legg til kandidat
                         </Button>
                     )}
                 </TilgangskontrollForInnhold>
