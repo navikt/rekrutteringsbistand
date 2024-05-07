@@ -35,7 +35,8 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
-        await expect(page.getByRole('checkbox', { name: 'Publisert' })).toBeVisible();
+        await expect(page.getByRole('group', { name: 'Område' })).toBeVisible();
+        await expect(page.getByRole('checkbox', { name: 'Publisert' })).not.toBeVisible();
         await expect(page.getByRole('checkbox', { name: 'Utløpt' })).not.toBeVisible();
         await expect(page.getByRole('checkbox', { name: 'Stoppet' })).not.toBeVisible();
     });

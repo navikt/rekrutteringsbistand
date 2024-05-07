@@ -4,8 +4,10 @@ import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStillin
 import { useCallback, useEffect, useState } from 'react';
 import { FylkeDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
 import { Stillingskategori } from '../../felles/domene/stilling/Stilling';
+import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { søk } from './api/api';
 import { lagQuery } from './api/queries/queries';
+import { Status } from './filter/om-annonsen/Annonsestatus';
 import useStandardsøk from './standardsøk/StandardsøkContext';
 import useNavigering from './useNavigering';
 import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from './utils/urlUtils';
@@ -17,6 +19,7 @@ type Returverdi = {
     ikkePubliserte?: boolean;
     overstyrValgteStillingskategorier?: Set<Stillingskategori>;
     fallbackIngenValgteStillingskategorier: Set<Stillingskategori>;
+    harRolle?: Rolle[];
 };
 
 const useSøkMedQuery = ({
@@ -24,6 +27,7 @@ const useSøkMedQuery = ({
     ikkePubliserte,
     overstyrValgteStillingskategorier,
     fallbackIngenValgteStillingskategorier,
+    harRolle,
 }: Returverdi) => {
     const { navigate, searchParams, state } = useNavigering();
     const { standardsøk } = useStandardsøk();
@@ -67,6 +71,18 @@ const useSøkMedQuery = ({
             };
         }
 
+        //check if harRolles does not include Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET
+
+        if (
+            harRolle &&
+            !harRolle.includes(Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET)
+        ) {
+            søkekriterier = {
+                ...søkekriterier,
+                statuser: new Set([Status.Publisert]),
+            };
+        }
+
         const søkMedQuery = async () => {
             let respons = await søk(
                 lagQuery({
@@ -90,6 +106,7 @@ const useSøkMedQuery = ({
             søkMedQuery();
         }
     }, [
+        harRolle,
         searchParams,
         navigate,
         state,
