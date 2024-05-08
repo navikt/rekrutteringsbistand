@@ -2,24 +2,27 @@ import { Table } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms, useSmserForKandidat } from '../../../../api/sms-api/sms';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { ForespørselOmDelingAvCv } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Historikkrad } from './Historikkrad/Historikkrad';
+import { useLookupCv } from '../../../../api/kandidat-søk-api/lookupCv';
+import { useParams } from 'react-router-dom';
 
 interface Props {
     kandidatlister: KandidatlisteForKandidat[];
     aktivKandidatlisteId: string | null;
     forespørslerOmDelingAvCvForKandidat: Nettressurs<ForespørselOmDelingAvCv[]>;
-    smser: Nettressurs<Sms[]>;
 }
 
 export const Historikktabell: FunctionComponent<Props> = ({
     kandidatlister,
     aktivKandidatlisteId,
     forespørslerOmDelingAvCvForKandidat,
-    smser,
 }) => {
+    const { kandidatnr } = useParams<{ kandidatnr: string }>();
+    const { cv } = useLookupCv(kandidatnr);
+    const { data: smser } = useSmserForKandidat({ fnr: cv?.fodselsnummer });
     return (
         <Table zebraStripes>
             <Table.Header>
@@ -33,7 +36,7 @@ export const Historikktabell: FunctionComponent<Props> = ({
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-                {kandidatlister.map((liste, i) => (
+                {kandidatlister.map((liste) => (
                     <Historikkrad
                         key={liste.uuid}
                         kandidatliste={liste}
@@ -42,7 +45,7 @@ export const Historikktabell: FunctionComponent<Props> = ({
                             forespørslerOmDelingAvCvForKandidat,
                             liste
                         )}
-                        sms={finnSms(smser, liste.uuid)}
+                        sms={finnSms(smser, liste.stillingId)}
                     />
                 ))}
             </Table.Body>
@@ -63,9 +66,9 @@ export const finnForespørselOmDelingAvCv = (
     );
 };
 
-const finnSms = (sms: Nettressurs<Sms[]>, kandidatlisteId: string) => {
-    if (sms.kind !== Nettstatus.Suksess) {
+const finnSms = (smser: Sms[] | undefined, stillingId: string | undefined) => {
+    if (smser === undefined || stillingId === undefined) {
         return undefined;
     }
-    return sms.data.find((sms) => sms.kandidatlisteId === kandidatlisteId);
+    return smser.find((sms) => sms.stillingId === stillingId);
 };

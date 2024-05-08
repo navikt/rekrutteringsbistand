@@ -42,8 +42,10 @@ const employerNameCompletionQueryTemplate = (match: unknown) => ({
     size: 50,
 });
 
-export const fetchKandidatlisteMedStillingsId = (stillingsId: string) =>
-    fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`, true);
+export const fetchKandidatlisteMedStillingsId = (stillingsId: string) => {
+    if (stillingsId === undefined) throw new Error('stillingId is undefined');
+    return fetchJson(`${api.kandidat}/veileder/stilling/${stillingsId}/kandidatliste`, true);
+};
 
 export const fetchKandidatlisteMedKandidatlisteId = (kandidatlisteId: string) =>
     fetchJson(`${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`, true);
@@ -179,21 +181,6 @@ export const fetchArbeidsgivereEnhetsregisterOrgnr = (orgnr: string) => {
     const query = orgnr.replace(/\s/g, '');
     return fetchJson(`${ENHETSREGISTER_API}/underenhet/_search?q=organisasjonsnummer:${query}*`);
 };
-
-export const fetchSendteMeldinger = (kandidatlisteId: string) =>
-    fetchJson(`${api.sms}/${kandidatlisteId}`, true);
-
-export const fetchSmserForKandidat = (fnr: string) => fetchJson(`${api.sms}/fnr/${fnr}`, true);
-
-export const postSmsTilKandidater = (melding: string, fnr: string[], kandidatlisteId: string) =>
-    postJson(
-        `${api.sms}`,
-        JSON.stringify({
-            melding,
-            fnr,
-            kandidatlisteId,
-        })
-    );
 
 export const putKandidatlistestatus = (
     kandidatlisteId: string,

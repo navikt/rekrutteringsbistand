@@ -8,12 +8,12 @@ import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import { Nettressurs, Nettstatus, ikkeLastet, senderInn } from 'felles/nettressurs';
 import { postFormidlingerAvUsynligKandidat } from '../../../api/api';
 import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
-import { VarslingAction, VarslingActionType } from '../../../varsling/varslingReducer';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 
 import { KandidatKilde } from '../../../../api/kandidat-søk-api/hentKandidatnavn';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
+import { useVisVarsling } from 'felles/varsling/Varsling';
 
 type Props = {
     fnr: string | null;
@@ -40,6 +40,7 @@ const FormidleKandidat: FunctionComponent<Props> = ({
     const [formidling, setFormidling] = useState<Nettressurs<Kandidatliste>>(ikkeLastet());
     const [presentert, setPresentert] = useState<boolean>(false);
     const [fåttJobb, setFåttJobb] = useState<boolean>(false);
+    const visVarsling = useVisVarsling();
 
     const formidleUsynligKandidat = async () => {
         setFormidling(senderInn());
@@ -68,8 +69,7 @@ const FormidleKandidat: FunctionComponent<Props> = ({
         kandidatliste: Kandidatliste,
         formidlingAvUsynligKandidat: FormidlingAvUsynligKandidatOutboundDto
     ) => {
-        dispatch<VarslingAction>({
-            type: VarslingActionType.VisVarsling,
+        visVarsling({
             innhold: `Kandidaten (${formidlingAvUsynligKandidat.fnr}) er blitt formidlet`,
         });
 

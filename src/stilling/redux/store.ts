@@ -1,7 +1,7 @@
 import { Stillingsinfo } from 'felles/domene/stilling/Stilling';
 import { applyMiddleware, combineReducers, compose, legacy_createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import varslingReducer, { VarslingState, varslingSaga } from '../common/varsling/varslingReducer';
+import varslingReducer, { VarslingState } from '../common/varsling/varslingReducer';
 import reporteeReducer, { ReporteeState, reporteeSaga } from '../reportee/reporteeReducer';
 import adDataReducer, { AdDataState, adDataSaga } from '../stilling/adDataReducer';
 import adReducer, { AdState, adSaga } from '../stilling/adReducer';
@@ -28,7 +28,7 @@ export type State = {
     adValidation: AdValidationState;
     stillingsinfoData: Stillingsinfo;
     stillingsinfo: StillingsinfoState;
-    varsling: VarslingState;
+    varsling?: VarslingState;
     reportee: ReporteeState;
     locationCode: any;
     locationArea: any;
@@ -51,7 +51,7 @@ const createReduxStore = () => {
             styrk: styrkReducer,
             stillingsinfo: stillingsinfoReducer,
             stillingsinfoData: stillingsinfoDataReducer,
-            varsling: varslingReducer,
+            visVarsling: varslingReducer,
         }),
         composeEnhancers(applyMiddleware(sagaMiddleware))
     );
@@ -64,7 +64,6 @@ const createReduxStore = () => {
     sagaMiddleware.run(adDataSaga);
     sagaMiddleware.run(locationAreaSaga);
     sagaMiddleware.run(stillingsinfoSaga);
-    sagaMiddleware.run(varslingSaga);
 
     return reduxStore;
 };

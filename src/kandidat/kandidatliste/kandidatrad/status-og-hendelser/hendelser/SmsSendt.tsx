@@ -1,4 +1,4 @@
-import { Sms, SmsStatus } from 'felles/domene/sms/Sms';
+import { Sms, EksternStatus } from '../../../../../api/sms-api/sms';
 import { FunctionComponent } from 'react';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
@@ -8,28 +8,36 @@ type Props = {
 };
 
 const SmsSendt: FunctionComponent<Props> = ({ sms }) => {
-    function smstekst(smsMelding: any) {
-        return `${formaterDatoNaturlig(smsMelding.opprettet)} av ${smsMelding.navIdent}`;
+    function smstekst(smsMelding: Sms) {
+        return `${formaterDatoNaturlig(smsMelding.opprettet)} av ${smsMelding.avsenderNavident}`;
     }
 
     if (!sms) {
         return null;
     }
 
-    switch (sms.status) {
-        case SmsStatus.Feil:
+    switch (sms.eksternStatus) {
+        case EksternStatus.FEIL:
             return (
                 <Hendelse
                     status={Hendelsesstatus.Rød}
-                    tittel="SMS-en ble ikke sendt"
+                    tittel="Sending av epost/SMS feilet"
                     beskrivelse={smstekst(sms)}
                 />
             );
-        case SmsStatus.Sendt:
+        case EksternStatus.VELLYKKET_SMS:
             return (
                 <Hendelse
                     status={Hendelsesstatus.Grønn}
                     tittel="SMS er sendt til kandidaten"
+                    beskrivelse={smstekst(sms)}
+                />
+            );
+        case EksternStatus.VELLYKKET_EPOST:
+            return (
+                <Hendelse
+                    status={Hendelsesstatus.Grønn}
+                    tittel="Epost er sendt til kandidaten"
                     beskrivelse={smstekst(sms)}
                 />
             );

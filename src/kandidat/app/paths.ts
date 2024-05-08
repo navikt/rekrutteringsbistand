@@ -2,7 +2,6 @@ import { KandidatQueryParam } from '../kandidatside/Kandidatside';
 
 import { KandidatsokQueryParam } from 'felles/lenker';
 
-export const lenkeTilTilgangsside = `/kandidater/mangler-tilgang`;
 export const lenkeTilKandidatliste = (stillingId: string, filterQuery?: URLSearchParams) => {
     let lenke = `/stillinger/stilling/${stillingId}/kandidater`;
 
