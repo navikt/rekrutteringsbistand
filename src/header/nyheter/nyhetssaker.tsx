@@ -5,6 +5,32 @@ const tilDato = (dag: number, måned: number, år: number, timer: number = 0, mi
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(8, 5, 2024),
+        tittel: 'Hva er nytt',
+        innhold: (
+            <>
+                <p>
+                    Knappen "Send SMS" har byttet navn til "Send beskjed". Det er fordi den fungerer
+                    litt annerledes fra kandidatens ståsted:
+                </p>
+                <ul>
+                    <li>
+                        Kandidaten kan få e-post i stede for SMS, avhenging av hva de har registrert
+                        i Kontakt- og reservasjonsregisteret (KRR).
+                    </li>
+                    <li>
+                        Kandidaten vil få en beskjed på Min side inne på nav.no, hvor de kan klikke
+                        seg videre til stillingsannonsen.
+                    </li>
+                    <li>
+                        SMS/e-post kommer nå uten lenke til stillingen, men med en instruksjon om å
+                        logge inn på NAV for å se stillingen.
+                    </li>
+                </ul>
+            </>
+        ),
+    },
+    {
         dato: tilDato(11, 4, 2024),
         tittel: 'Standardsøk for stilling er endret',
         innhold: (
