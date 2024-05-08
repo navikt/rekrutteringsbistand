@@ -11,8 +11,6 @@ import Stillingsliste from './stillingsliste/Stillingsliste';
 import Søkefelter from './søkefelter/Søkefelter';
 import useAntallTreff from './useAntallTreff';
 import useSøkMedQuery from './useSøkMedQuery';
-import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
-import { useContext } from 'react';
 
 export type Props = {
     kandidatnr?: string;
@@ -25,10 +23,7 @@ export const fallbackIngenValgteStillingskategorierSet = new Set([
 ]);
 
 const AlleStillinger = ({ kandidatnr, finnerStillingForKandidat }: Props) => {
-    const { roller } = useContext(ApplikasjonContext);
-
     const respons = useSøkMedQuery({
-        harRolle: roller,
         fallbackIngenValgteStillingskategorier: fallbackIngenValgteStillingskategorierSet,
     });
 

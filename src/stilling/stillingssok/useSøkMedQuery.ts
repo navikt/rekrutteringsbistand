@@ -1,8 +1,9 @@
 import { sendEvent } from 'felles/amplitude';
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { FylkeDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
+import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
 import { Stillingskategori } from '../../felles/domene/stilling/Stilling';
 import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { søk } from './api/api';
@@ -19,7 +20,6 @@ type Returverdi = {
     ikkePubliserte?: boolean;
     overstyrValgteStillingskategorier?: Set<Stillingskategori>;
     fallbackIngenValgteStillingskategorier: Set<Stillingskategori>;
-    harRolle?: Rolle[];
 };
 
 const useSøkMedQuery = ({
@@ -27,11 +27,11 @@ const useSøkMedQuery = ({
     ikkePubliserte,
     overstyrValgteStillingskategorier,
     fallbackIngenValgteStillingskategorier,
-    harRolle,
 }: Returverdi) => {
     const { navigate, searchParams, state } = useNavigering();
     const { standardsøk } = useStandardsøk();
     const [respons, setRespons] = useState<EsResponse<EsRekrutteringsbistandstilling> | null>(null);
+    const { harRolle } = useContext(ApplikasjonContext);
 
     const { data: fylkeData } = useHentFylker();
 
@@ -71,12 +71,7 @@ const useSøkMedQuery = ({
             };
         }
 
-        //check if harRolles does not include Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET
-
-        if (
-            harRolle &&
-            !harRolle.includes(Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET)
-        ) {
+        if (!harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])) {
             søkekriterier = {
                 ...søkekriterier,
                 statuser: new Set([Status.Publisert]),
