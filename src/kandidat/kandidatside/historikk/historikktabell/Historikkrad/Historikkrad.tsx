@@ -6,7 +6,7 @@ import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from 'felles/domene/sms/Sms';
+import { Sms } from '../../../../../api/sms-api/sms';
 import useHentStilling from '../../../../../felles/hooks/useStilling';
 import { lenkeTilStilling } from '../../../../../felles/lenker';
 import { lenkeTilKandidatliste } from '../../../../app/paths';
@@ -42,8 +42,8 @@ export const Historikkrad: FunctionComponent<Props> = ({
     const listeTittel = kandidatliste.erMaskert
         ? kandidatliste.tittel
         : kandidatliste.stillingId
-        ? stillingsTittel
-        : kandidatliste.tittel;
+          ? stillingsTittel
+          : kandidatliste.tittel;
 
     if (kandidatliste.slettet) {
         tittel = (

@@ -8,12 +8,12 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Stilling from '../../../../felles/domene/stilling/Stilling';
 import { postDelteKandidater } from '../../../api/api';
-import { VarslingActionType } from '../../../varsling/varslingReducer';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../domene/kandidatlisteUtils';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import ForhåndsvisningAvEpost from './ForhåndsvisningAvEpost';
 import LeggTilEpostadresse from './LeggTilEpostadresse';
 import css from './PresenterKandidaterModal.module.css';
+import { useVisVarsling } from 'felles/varsling/Varsling';
 
 const rutinerForDeling =
     'https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Del-stillinger-med-kandidater-i-Aktivitetsplanen.aspx#har-du-ringt-kandidaten-istedenfor-%C3%A5-dele-i-aktivitetsplanen';
@@ -39,6 +39,7 @@ const PresenterKandidaterModal = ({
 }: Props) => {
     const dispatch = useDispatch();
     const valgtNavKontor = useNavKontor((state) => state.navKontor);
+    const visVarsling = useVisVarsling();
 
     const [delestatus, setDelestatus] = useState<Nettstatus>(Nettstatus.IkkeLastet);
     const [melding, setMelding] = useState<string>(''); // TODO Fjern funksjonalitet
@@ -73,8 +74,7 @@ const PresenterKandidaterModal = ({
                 kandidatliste: response.data,
             });
 
-            dispatch({
-                type: VarslingActionType.VisVarsling,
+            visVarsling({
                 innhold: melding,
             });
 

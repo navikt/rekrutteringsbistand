@@ -10,9 +10,9 @@ import CvSide from '../kandidatside/cv/CvSide';
 import Historikkside from '../kandidatside/historikk/Historikkside';
 import NotFound from '../komponenter/errorside/NotFound';
 import store from '../state/reduxStore';
-import Varsling from '../varsling/Varsling';
 import css from './KandidatApp.module.css';
 import ManglerTilgang from './ManglerTilgang';
+import { Varsling } from 'felles/varsling/Varsling';
 
 const App = () => {
     return (

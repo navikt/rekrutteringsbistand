@@ -2,12 +2,10 @@ import { MobileIcon, TrashIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, ReactNode } from 'react';
 import TilgangskontrollForInnhold, {
     Rolle,
 } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
-import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import {
     erKobletTilArbeidsgiver,
     erKobletTilStilling,
@@ -18,15 +16,14 @@ import MedPopover from '../med-popover/MedPopover';
 import DelMedArbeidsgiverKnapp from './DelMedArbeidsgiverKnapp';
 import css from './KnappeRad.module.css';
 import ForespørselOmDelingAvCv from './forespørsel-om-deling-av-cv/ForespørselOmDelingAvCv';
+import { useSmserForStilling } from '../../../api/sms-api/sms';
 
 type Props = {
     kandidatliste: Kandidatliste;
     onKandidatShare: () => void;
-    onLeggTilKandidat: () => void;
     onSendSmsClick: () => void;
     onKandidaterAngreArkivering: () => void;
     visArkiverte: boolean;
-    sendteMeldinger: Nettressurs<Kandidatmeldinger>;
     children: ReactNode;
 };
 
@@ -35,18 +32,18 @@ const KnappeRad: FunctionComponent<Props> = ({
     onKandidatShare,
     onSendSmsClick,
     onKandidaterAngreArkivering,
-    sendteMeldinger,
     children,
     visArkiverte,
 }) => {
+    const { data: sendteMeldinger, error } = useSmserForStilling(kandidatliste.stillingId ?? null);
     const markerteKandidater = useMarkerteKandidater(kandidatliste.kandidater);
     const minstEnKandidatErMarkert = markerteKandidater.length > 0;
     const markerteAktiveKandidater = markerteKandidater.filter((kandidat) => kandidat.fodselsnr);
-    const smsApiFeil = sendteMeldinger.kind === Nettstatus.Feil;
+    const smsApiFeil = error !== undefined;
     const minstEnKandidatHarIkkeFåttSms =
-        sendteMeldinger.kind === Nettstatus.Suksess &&
+        sendteMeldinger !== undefined &&
         markerteAktiveKandidater.some(
-            (markertKandidat) => !sendteMeldinger.data[markertKandidat.fodselsnr!]
+            (markertKandidat) => !sendteMeldinger[markertKandidat.fodselsnr!]
         );
 
     const skalViseEkstraKnapper =
@@ -86,19 +83,19 @@ const KnappeRad: FunctionComponent<Props> = ({
                                 onClick={onSendSmsClick}
                                 icon={<MobileIcon />}
                             >
-                                Send SMS
+                                Send beskjed
                             </Button>
                         ) : (
                             <MedPopover
-                                tittel="Send SMS til de markerte kandidatene"
+                                tittel="Send beskjed til de markerte kandidatene"
                                 hjelpetekst={
                                     minstEnKandidatErMarkert
-                                        ? 'Du har allerede sendt SMS til alle markerte kandidater.'
-                                        : 'Du må huke av for kandidatene du ønsker å sende SMS til.'
+                                        ? 'Du har allerede sendt beskjed til alle markerte kandidater.'
+                                        : 'Du må huke av for kandidatene du ønsker å sende beskjed til.'
                                 }
                             >
                                 <Button variant="tertiary" icon={<MobileIcon />}>
-                                    Send SMS
+                                    Send beskjed
                                 </Button>
                             </MedPopover>
                         )}

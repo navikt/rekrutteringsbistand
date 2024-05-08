@@ -4,8 +4,6 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import {
     fetchKandidatlisteMedKandidatlisteId,
     fetchKandidatlisteMedStillingsId,
-    fetchSendteMeldinger,
-    postSmsTilKandidater,
     putArkivert,
     putArkivertForFlereKandidater,
     putFormidlingsutfallForUsynligKandidat,
@@ -35,9 +33,7 @@ import KandidatlisteAction, {
     HentForespørslerOmDelingAvCvAction,
     HentKandidatlisteMedKandidatlisteIdAction,
     HentKandidatlisteMedStillingsIdAction,
-    HentSendteMeldingerAction,
     SendForespørselOmDelingAvCv,
-    SendSmsAction,
     SlettCvFraArbeidsgiversKandidatliste,
     ToggleArkivertAction,
     ToggleArkivertSuccessAction,
@@ -267,28 +263,6 @@ function* sjekkError(action: any) {
     yield put({ type: ErrorActionType.VisError, error: action.error });
 }
 
-function* hentSendteMeldinger(action: HentSendteMeldingerAction): Generator<unknown, any, any> {
-    try {
-        const sendteMeldinger = yield call(fetchSendteMeldinger, action.kandidatlisteId);
-        yield put({
-            type: KandidatlisteActionType.HentSendteMeldingerSuccess,
-            sendteMeldinger,
-        });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: KandidatlisteActionType.HentSendteMeldingerFailure, error: e });
-        } else {
-            yield put({
-                type: KandidatlisteActionType.HentSendteMeldingerFailure,
-                error: {
-                    message: 'Det skjedde noe galt',
-                    status: 0,
-                },
-            });
-        }
-    }
-}
-
 function* hentForespørslerOmDelingAvCv(
     action: HentForespørslerOmDelingAvCvAction
 ): Generator<unknown, any, any> {
@@ -307,28 +281,6 @@ function* hentForespørslerOmDelingAvCv(
             type: KandidatlisteActionType.HentForespørslerOmDelingAvCvFailure,
             error: e,
         });
-    }
-}
-
-function* sendSmsTilKandidater(action: SendSmsAction): Generator<unknown, any, any> {
-    try {
-        yield call(postSmsTilKandidater, action.melding, action.fnr, action.kandidatlisteId);
-        yield put({
-            type: KandidatlisteActionType.SendSmsSuccess,
-            kandidatlisteId: action.kandidatlisteId,
-        });
-    } catch (e) {
-        if (e instanceof SearchApiError) {
-            yield put({ type: KandidatlisteActionType.SendSmsFailure, error: e });
-        } else {
-            yield put({
-                type: KandidatlisteActionType.HentSendteMeldingerFailure,
-                error: {
-                    message: 'Det skjedde noe galt',
-                    status: 0,
-                },
-            });
-        }
     }
 }
 
@@ -394,11 +346,6 @@ function* kandidatlisteSaga() {
             KandidatlisteActionType.LagreKandidatIKandidatlisteFailure,
         ],
         sjekkError
-    );
-    yield takeLatest(KandidatlisteActionType.SendSms, sendSmsTilKandidater);
-    yield takeLatest(
-        [KandidatlisteActionType.HentSendteMeldinger, KandidatlisteActionType.SendSmsSuccess],
-        hentSendteMeldinger
     );
     yield takeLatest(KandidatlisteActionType.SendForespørselOmDelingAvCv, sendForespørselOmDeling);
     yield takeLatest(

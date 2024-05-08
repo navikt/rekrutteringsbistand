@@ -1,66 +1,40 @@
-import { Button, Modal } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Label, Link, Modal, Select } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
-
-import { Alert, BodyShort, Label, Link, Select } from '@navikt/ds-react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { SmsStatus } from 'felles/domene/sms/Sms';
+import {
+    Meldingsmal,
+    usePostSmsTilKandidater,
+    useSmserForStilling,
+} from '../../../api/sms-api/sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import AppState from '../../state/AppState';
-import { Kandidatmeldinger } from '../domene/Kandidatressurser';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
-import KandidatlisteAction from '../reducer/KandidatlisteAction';
-import KandidatlisteActionType from '../reducer/KandidatlisteActionType';
 import css from './SendSmsModal.module.css';
-
-enum Meldingsmal {
-    VurdertSomAktuell = 'vurdert-som-aktuell',
-    FunnetPassendeStilling = 'funnet-passende-stilling',
-    Jobbarrangement = 'jobbarrangement',
-    // EtterspurtPgaKorona = 'etterspurt_pga_korona',
-    // Webinar = 'webinar',
-}
+import { useVisVarsling } from 'felles/varsling/Varsling';
 
 type Props = {
     vis: boolean;
     onClose: () => void;
+    fjernAllMarkering: () => void;
     kandidater: KandidatIKandidatliste[];
-    kandidatlisteId: string;
     stillingId: string;
-    sendteMeldinger: Kandidatmeldinger;
     stillingskategori: Stillingskategori | null;
 };
 
 const SendSmsModal: FunctionComponent<Props> = (props) => {
-    const {
-        vis,
-        onClose,
-        kandidater,
-        kandidatlisteId,
-        stillingId,
-        sendteMeldinger,
-        stillingskategori,
-    } = props;
+    const { vis, onClose, kandidater, stillingId, stillingskategori, fjernAllMarkering } = props;
+    const visVarsling = useVisVarsling();
 
-    const dispatch: Dispatch<KandidatlisteAction> = useDispatch();
-    const { sendStatus } = useSelector((state: AppState) => state.kandidatliste.sms);
+    const { data: smser = {} } = useSmserForStilling(stillingId);
+
     const markerteKandidater = useMarkerteKandidater(kandidater);
-
-    const sendSmsTilKandidater = (melding: string, fnr: string[], kandidatlisteId: string) => {
-        dispatch({
-            type: KandidatlisteActionType.SendSms,
-            melding,
-            fnr,
-            kandidatlisteId,
-        });
-    };
+    const postSmsTilKandidater = usePostSmsTilKandidater();
+    const [sendSmsLoading, setSendSmsLoading] = useState(false);
 
     const kandidaterSomHarFåttSms = markerteKandidater.filter(
-        (kandidat) => kandidat.fodselsnr && sendteMeldinger[kandidat.fodselsnr]
+        (kandidat) => kandidat.fodselsnr && smser[kandidat.fodselsnr]
     );
     const kandidaterSomIkkeHarFåttSms = markerteKandidater.filter(
-        (kandidat) => !(kandidat.fodselsnr && sendteMeldinger[kandidat.fodselsnr])
+        (kandidat) => !(kandidat.fodselsnr && smser[kandidat.fodselsnr])
     );
     const harInaktiveKandidater = markerteKandidater.some(
         (kandidat) => kandidat.fodselsnr === null
@@ -75,17 +49,30 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             : Meldingsmal.VurdertSomAktuell
     );
 
-    const onSendSms = () => {
-        const melding = genererMelding(valgtMal, stillingId);
+    const onSendSms = async () => {
         const korrektLengdeFødselsnummer = 11;
-
-        sendSmsTilKandidater(
-            melding,
-            kandidaterSomIkkeHarFåttSms
+        setSendSmsLoading(true);
+        const result = await postSmsTilKandidater({
+            mal: valgtMal,
+            fnr: kandidaterSomIkkeHarFåttSms
                 .map((kandidat) => kandidat.fodselsnr || '')
                 .filter((fnr) => fnr && fnr.length === korrektLengdeFødselsnummer),
-            kandidatlisteId
-        );
+            stillingId,
+        });
+
+        setSendSmsLoading(false);
+        if (result === 'ok') {
+            visVarsling({
+                innhold: 'Beskjed er sendt',
+            });
+            fjernAllMarkering();
+        } else if (result === 'error') {
+            visVarsling({
+                innhold: 'Det skjedde en feil',
+                alertType: 'error',
+            });
+        }
+        onClose();
     };
 
     return (
@@ -93,23 +80,23 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             open={vis}
             className={css.sendSmsModal}
             onClose={onClose}
-            aria-label={`Send SMS til ${kandidater.length} kandidater`}
+            aria-label={`Send beskjed til ${kandidater.length} kandidater`}
             header={{
-                heading: 'Send SMS',
+                heading: 'Send beskjed',
             }}
         >
             <Modal.Body>
                 {(kandidaterSomHarFåttSms.length > 0 || harInaktiveKandidater) && (
                     <Alert variant="warning" size="small" className={css.alleredeSendtAdvarsel}>
-                        Ikke alle kandidatene vil motta SMS-en
+                        Ikke alle kandidatene vil motta beskjeden
                         <ul className={css.alleredeSendtAdvarselListe}>
                             {kandidaterSomHarFåttSms.length > 0 && (
                                 <li>
                                     {kandidaterSomHarFåttSms.length === 1 ? (
-                                        <>Du har allerede sendt SMS til én av kandidatene.</>
+                                        <>Du har allerede sendt beskjed til én av kandidatene.</>
                                     ) : (
                                         <>
-                                            Du har allerede sendt SMS til{' '}
+                                            Du har allerede sendt beskjed til{' '}
                                             {kandidaterSomHarFåttSms.length} av de{' '}
                                             {markerteKandidater.length} valgte kandidatene.
                                         </>
@@ -124,11 +111,12 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
                 )}
                 <div className="send-sms-modal__innhold">
                     <BodyShort>
-                        Det vil bli sendt SMS til <b>{kandidaterSomIkkeHarFåttSms.length}</b>{' '}
+                        Det vil bli sendt beskjed til <b>{kandidaterSomIkkeHarFåttSms.length}</b>{' '}
                         {kandidaterSomIkkeHarFåttSms.length === 1 ? 'kandidat' : 'kandidater'}
                     </BodyShort>
                     <BodyShort size="small">
-                        Telefonnummerene blir hentet fra Kontakt- og reservasjonsregisteret.
+                        Telefonnummerene/e-postene blir hentet fra Kontakt- og
+                        reservasjonsregisteret.
                     </BodyShort>
                     <Alert variant="info" className={css.kontortidAdvarsel}>
                         <Label size="small">
@@ -140,7 +128,7 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
                     {stillingskategori !== Stillingskategori.Jobbmesse && (
                         <Select
                             className={css.velgMal}
-                            label="Velg beskjed som skal vises i SMS-en*"
+                            label="Velg hva som skal vises i beskjeden"
                             onChange={(e: ChangeEvent<HTMLSelectElement>) => {
                                 setValgtMal(e.target.value as Meldingsmal);
                             }}
@@ -168,12 +156,8 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button
-                    variant="primary"
-                    loading={sendStatus === SmsStatus.UnderUtsending}
-                    onClick={onSendSms}
-                >
-                    Send SMS
+                <Button variant="primary" loading={sendSmsLoading} onClick={onSendSms}>
+                    Send beskjed
                 </Button>
                 <Button variant="secondary" onClick={onClose}>
                     Avbryt
@@ -187,6 +171,9 @@ const genererLenkeTilStilling = (stillingId: string) => {
     return `nav.no/arbeid/stilling/${stillingId}`;
 };
 
+/* nb: Det er ikke lenger frontend som styrer teksten. Så disse
+ * tekstene kan være ute av sync med backend.
+ */
 const genererMeldingUtenLenke = (valgtMal: Meldingsmal) => {
     if (valgtMal === Meldingsmal.VurdertSomAktuell) {
         return `Hei, vi har vurdert at kompetansen din kan passe til denne stillingen, hilsen NAV`;
@@ -195,10 +182,6 @@ const genererMeldingUtenLenke = (valgtMal: Meldingsmal) => {
     } else if (valgtMal === Meldingsmal.Jobbarrangement) {
         return `Hei, vi har et jobbarrangement som kan passe for deg, hilsen NAV. Se mer info:`;
     }
-};
-
-const genererMelding = (valgtMal: Meldingsmal, stillingId: string) => {
-    return `${genererMeldingUtenLenke(valgtMal)} ${genererLenkeTilStilling(stillingId)}`;
 };
 
 export default SendSmsModal;
