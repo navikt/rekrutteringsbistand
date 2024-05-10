@@ -1,7 +1,5 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import { ChangeEvent, FunctionComponent, useContext, useEffect, useState } from 'react';
-import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
-import { Rolle } from '../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import useNavigering from '../../useNavigering';
 import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from '../../utils/urlUtils';
 
@@ -15,7 +13,6 @@ export enum Status {
 
 const Annonsestatus: FunctionComponent = () => {
     const { searchParams, navigate } = useNavigering();
-    const { harRolle } = useContext(ApplikasjonContext);
 
     const [valgteStatuser, setValgteStatuser] = useState<Set<Status>>(
         hentSøkekriterier(searchParams).statuser
@@ -43,26 +40,13 @@ const Annonsestatus: FunctionComponent = () => {
         });
     };
 
-    const harTilgang = (status: Status): boolean => {
-        if (status === Status.Publisert) {
-            return true;
-        }
-        return harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]);
-    };
-
     return (
         <CheckboxGroup legend="Status" value={Array.from(valgteStatuser)}>
-            {Object.values(Status).map((statusValue) =>
-                harTilgang(statusValue) ? (
-                    <Checkbox
-                        key={statusValue}
-                        value={statusValue}
-                        onChange={onAnnonsestatusChange}
-                    >
-                        {statusTilVisningsnavn(statusValue)}
-                    </Checkbox>
-                ) : null
-            )}
+            {Object.values(Status).map((statusValue) => (
+                <Checkbox key={statusValue} value={statusValue} onChange={onAnnonsestatusChange}>
+                    {statusTilVisningsnavn(statusValue)}
+                </Checkbox>
+            ))}
         </CheckboxGroup>
     );
 };

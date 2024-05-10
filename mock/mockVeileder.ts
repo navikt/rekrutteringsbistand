@@ -1,6 +1,6 @@
 export const mockVeileder = {
-    fornavn: 'Varg',
+    fornavn: 'Test',
     etternavn: 'Veileder',
     navKontor: '1209',
-    navIdent: 'Z994161',
+    navIdent: 'Z123456',
 };

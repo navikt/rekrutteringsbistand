@@ -1,3 +1,6 @@
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import css from './Filter.module.css';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import Inkludering from './inkludering/Inkludering';
@@ -18,7 +21,16 @@ const Filter = ({ finnerStillingForKandidat }: Props) => {
             {!finnerStillingForKandidat && <BrukStandardsøk />}
 
             <div className={css.filtercheckbokser}>
-                {!finnerStillingForKandidat && <Annonsestatus />}
+                {!finnerStillingForKandidat && (
+                    <TilgangskontrollForInnhold
+                        skjulVarsel
+                        kreverEnAvRollene={[
+                            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        ]}
+                    >
+                        <Annonsestatus />
+                    </TilgangskontrollForInnhold>
+                )}
                 <FylkerOgKommuner />
                 <Inkludering />
                 {!finnerStillingForKandidat && <VelgStillingskategori />}

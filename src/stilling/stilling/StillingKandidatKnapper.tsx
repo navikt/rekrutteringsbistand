@@ -12,12 +12,14 @@ export interface IStillingKandidatKnapper {
     kandidatlisteId: string;
     stillingId: string | null;
     erEier?: boolean;
+    erFormidling?: boolean;
 }
 
 const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
     kandidatlisteId,
     stillingId,
     erEier,
+    erFormidling,
 }) => {
     const [visLeggTilKandidatModal, setVisLeggTilKandidatModal] = React.useState<boolean>(false);
     if (!kandidatlisteId) {
@@ -39,19 +41,23 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     justifyContent: 'flex-end',
                 }}
             >
-                {erEier && (
-                    <Link
-                        to={
-                            //@ts-ignore: TODO: written before strict-mode enabled
-                            lenkeTilFinnKandidater(stillingId)
-                        }
-                    >
-                        <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
-                            Finn kandidater
-                        </Button>
-                    </Link>
-                )}
-
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                >
+                    {!erFormidling && erEier && (
+                        <Link
+                            to={
+                                //@ts-ignore: TODO: written before strict-mode enabled
+                                lenkeTilFinnKandidater(stillingId)
+                            }
+                        >
+                            <Button as="div" icon={<MagnifyingGlassIcon aria-hidden />}>
+                                Finn kandidater
+                            </Button>
+                        </Link>
+                    )}
+                </TilgangskontrollForInnhold>
                 <TilgangskontrollForInnhold
                     skjulVarsel
                     kreverEnAvRollene={[
@@ -59,13 +65,16 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                         Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
                     ]}
                 >
-                    <Button
-                        onClick={() => setVisLeggTilKandidatModal(true)}
-                        icon={<PersonPlusIcon aria-hidden />}
-                    >
-                        Legg til kandidat
-                    </Button>
+                    {(!erFormidling || erEier) && (
+                        <Button
+                            onClick={() => setVisLeggTilKandidatModal(true)}
+                            icon={<PersonPlusIcon aria-hidden />}
+                        >
+                            Legg til kandidat
+                        </Button>
+                    )}
                 </TilgangskontrollForInnhold>
+
                 <LeggTilKandidatModal
                     erEier={erEier}
                     vis={visLeggTilKandidatModal}

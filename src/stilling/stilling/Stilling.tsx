@@ -12,6 +12,9 @@ import {
 import { useMeg } from '../../api/frackend/meg';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
 import store from '../../kandidat/state/reduxStore';
 import DelayedSpinner from '../common/DelayedSpinner';
@@ -216,7 +219,7 @@ const Stilling = () => {
                             )}
                         </>
                     ) : (
-                        <AdministrationPreview />
+                        <AdministrationPreview erEier={erEier} />
                     )}
                 </aside>
             </div>
@@ -255,25 +258,40 @@ const Stilling = () => {
                 <div className={css.faner}>
                     <Tabs.List>
                         <Tabs.Tab value="om_stillingen" label="Om stillingen" />
-                        {harKandidatlisteSomKanÅpnes && (
-                            <Tabs.Tab value="kandidater" label="Kandidater" />
-                        )}
+                        <TilgangskontrollForInnhold
+                            skjulVarsel
+                            kreverEnAvRollene={[
+                                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                            ]}
+                        >
+                            {harKandidatlisteSomKanÅpnes && (
+                                <Tabs.Tab value="kandidater" label="Kandidater" />
+                            )}
+                        </TilgangskontrollForInnhold>
                     </Tabs.List>
                     <StillingKandidatKnapper
                         /*@ts-ignore: TODO: written before strict-mode enabled */
                         kandidatlisteId={kandidatlisteId}
                         stillingId={stilling.uuid}
                         erEier={erEier}
+                        erFormidling={erFormidling}
                     />
                 </div>
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
                     {stillingsSide()}
                 </Tabs.Panel>
+
                 {harKandidatlisteSomKanÅpnes && (
                     <Tabs.Panel value="kandidater">
-                        <Provider store={store}>
-                            <Kandidatlisteside skjulBanner={true} stilling={stilling} />
-                        </Provider>
+                        <TilgangskontrollForInnhold
+                            kreverEnAvRollene={[
+                                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                            ]}
+                        >
+                            <Provider store={store}>
+                                <Kandidatlisteside skjulBanner={true} stilling={stilling} />
+                            </Provider>
+                        </TilgangskontrollForInnhold>
                     </Tabs.Panel>
                 )}
             </Tabs>

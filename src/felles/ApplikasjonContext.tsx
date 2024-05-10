@@ -22,10 +22,10 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
     const { navIdent, roller, isLoading } = useMeg();
 
     // TODO Feature-toggle!
-    const aktivTilgangskontroll = erIkkeProd;
+    const tilgangskontrollErPå = erIkkeProd;
 
     const harRolle = (rolle: Rolle[]) =>
-        aktivTilgangskontroll
+        tilgangskontrollErPå
             ? rolle.some(
                   (r) =>
                       roller?.includes(r) ||

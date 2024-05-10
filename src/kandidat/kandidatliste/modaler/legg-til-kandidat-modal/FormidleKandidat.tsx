@@ -11,6 +11,7 @@ import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 
+import { KandidatKilde } from '../../../../api/kandidat-søk-api/hentKandidatnavn';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
 import { useVisVarsling } from 'felles/varsling/Varsling';
 
@@ -22,9 +23,10 @@ type Props = {
     valgtNavKontor: string | null;
     onClose: () => void;
     handleBekreft: () => void;
+    kilde: KandidatKilde;
 };
 
-const FormidleUsynligKandidat: FunctionComponent<Props> = ({
+const FormidleKandidat: FunctionComponent<Props> = ({
     fnr,
     usynligKandidat,
     kandidatlisteId,
@@ -32,6 +34,7 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
     valgtNavKontor,
     onClose,
     handleBekreft,
+    kilde,
 }) => {
     const dispatch = useDispatch();
     const [formidling, setFormidling] = useState<Nettressurs<Kandidatliste>>(ikkeLastet());
@@ -84,11 +87,13 @@ const FormidleUsynligKandidat: FunctionComponent<Props> = ({
             <BodyShort spacing>
                 {hentNavnPåUsynligKandidat([usynligKandidat])} ({fnr})
             </BodyShort>
-            <Alert variant="info">
-                Navnet er hentet fra folkeregisteret. Selv om personen ikke er synlig i
-                Rekrutteringsbistand, kan du allikevel registrere formidlingen her for statistikkens
-                del. Personen vil vises øverst i kandidatlisten.
-            </Alert>
+            {kilde === KandidatKilde.PDL && (
+                <Alert variant="info">
+                    Navnet er hentet fra folkeregisteret. Selv om personen ikke er synlig i
+                    Rekrutteringsbistand, kan du allikevel registrere formidlingen her for
+                    statistikkens del. Personen vil vises øverst i kandidatlisten.
+                </Alert>
+            )}
             <br />
             <CheckboxGroup legend={`Registrer formidling for ${usynligKandidat.fornavn}:`}>
                 <Checkbox
@@ -124,4 +129,4 @@ const hentNavnPåUsynligKandidat = (navn: UsynligKandidat[]) =>
         })
         .join(', ');
 
-export default FormidleUsynligKandidat;
+export default FormidleKandidat;

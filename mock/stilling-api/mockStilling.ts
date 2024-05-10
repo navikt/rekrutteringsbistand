@@ -16,6 +16,7 @@ import moment from 'moment';
 import { mockVeileder } from '../mockVeileder';
 
 const stillingsId = '1ea746af-66be-4cf8-a051-9e815f77b1d1';
+
 const iDag = new Date().toISOString();
 
 export const mockArbeidsgiver: Arbeidsgiver = {
@@ -65,7 +66,7 @@ export const mockStilling /* : Stilling */ = {
         comments: null,
         reportee: `${mockVeileder.fornavn} ${mockVeileder.etternavn}`,
         remarks: [],
-        navIdent: mockVeileder.navIdent,
+        navIdent: 'Z000000',
     },
     categoryList: [
         {
@@ -117,6 +118,110 @@ export const mockStilling /* : Stilling */ = {
     },
 };
 
+export const mockEksternStilling = {
+    stillingsinfo: null,
+    stilling: {
+        id: 301,
+        uuid: 'eksternStilling',
+        created: '2024-04-30T08:01:18.201333',
+        createdBy: 'import-api',
+        updated: '2024-04-30T08:01:29.379318',
+        updatedBy: 'import-api',
+        title: 'Chef',
+        status: 'ACTIVE',
+        administration: {
+            id: 301,
+            status: 'DONE',
+            comments: 'Test',
+            reportee: 'AUTO',
+            remarks: [],
+            navIdent: null,
+        },
+        mediaList: [],
+        contactList: [],
+        privacy: 'SHOW_ALL',
+        source: 'IMPORTAPI',
+        medium: 'Staffers AS',
+        reference: 'JWNwGsfbnMfwJW2pUmR3',
+        published: '2024-04-25T09:41:00',
+        expires: '2024-06-20T09:41:00',
+        employer: null,
+        location: {
+            address: 'Vulkan',
+            postalCode: '0178',
+            county: 'OSLO',
+            municipal: 'OSLO',
+            municipalCode: '0301',
+            city: 'OSLO',
+            country: 'NORGE',
+            latitude: '59.92257120482907',
+            longitude: '10.752370920709733',
+        },
+        locationList: [
+            {
+                address: 'Vulkan',
+                postalCode: '0178',
+                county: 'OSLO',
+                municipal: 'OSLO',
+                municipalCode: '0301',
+                city: 'OSLO',
+                country: 'NORGE',
+                latitude: '59.92257120482907',
+                longitude: '10.752370920709733',
+            },
+        ],
+        categoryList: [
+            {
+                id: 2285204,
+                code: '21838',
+                categoryType: 'JANZZ',
+                name: 'Sushikokk',
+                description: null,
+                parentId: null,
+            },
+            {
+                id: 2285206,
+                code: '5120',
+                categoryType: 'STYRK08',
+                name: 'Kokker',
+                description: null,
+                parentId: null,
+            },
+        ],
+        properties: {
+            extent: 'Heltid',
+            occupation: 'Chef',
+            education: '["Ingen krav"]',
+            keywords: 'Kokker;Chef',
+            positioncount: '1',
+            engagementtype: 'Annet',
+            classification_styrk08_score: '0.7002687424958279',
+            _approvedby: 'AUTO',
+            employerdescription:
+                'På den solrike takterrassen til BAR får du fantastisk utsikt over store deler av Oslo. \n\nTakterrassen er åpen i sommermånedene der vår restaurant har plass til 150 gjester ved sittende bespisning eller 200 ved minglemeny.',
+            _score: '[{"name":"category","value":-50},{"name":"employer","value":-50},{"name":"sector","value":-10},{"name":"engagementtype","value":-10},{"name":"extent","value":-10},{"name":"jobarrangement","value":-10}]',
+            adtext: '<p>We’re looking for a chef with a la carte experience to work at our rooftop terrace this summer.</p>',
+            classification_styrk08_code: '5120',
+            sourceurl: null,
+            workLanguage: 'Engelsk',
+            _providerid: '15012',
+            jobpercentage: '100%',
+            _versionid: '580530',
+            applicationurl: null,
+            classification_esco_code:
+                'http://data.europa.eu/esco/occupation/90f75f67-495d-49fa-ab57-2f320e251d7e',
+            classification_input_source: 'occupation',
+            _scoretotal: '-140',
+            applicationlabel: 'Please, apply through Staffers',
+        },
+        publishedByAdmin: '2024-04-30T08:01:18.183823',
+        businessName: 'BAR Vulkan',
+        firstPublished: true,
+        deactivatedByExpiry: false,
+        activationOnPublishingDate: false,
+    },
+};
+
 export const mockStillingsinfo: Stillingsinfo = {
     stillingsid: stillingsId,
     stillingsinfoid: '8e74803e-6973-4115-befe-6ee1e0f28533',
@@ -128,6 +233,41 @@ export const mockStillingsinfo: Stillingsinfo = {
 export const mockRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
     stilling: mockStilling,
     stillingsinfo: mockStillingsinfo,
+};
+export const mockRekrutteringsbistandstillingMin: Rekrutteringsbistandstilling = {
+    stilling: {
+        ...mockStilling,
+        uuid: 'minIntern',
+
+        administration: {
+            ...mockStilling.administration,
+            navIdent: 'Z123456',
+        },
+    },
+    stillingsinfo: {
+        ...mockStillingsinfo,
+        eierNavident: 'Z123456',
+    },
+};
+export const mockRekrutteringsbistandstillingEkstern = {
+    ...mockEksternStilling,
+};
+export const mockRekrutteringsbistandstillingMinEkstern: any = {
+    stilling: {
+        ...mockEksternStilling.stilling,
+        uuid: 'minEkstern',
+        administration: {
+            ...mockEksternStilling.stilling.administration,
+            navIdent: 'Z123456',
+        },
+    },
+    stillingsinfo: {
+        stillingsid: 'eksternStilling',
+        stillingsinfoid: 'eksternStilling',
+        eierNavident: 'Z123456',
+        eierNavn: 'F_123456 E_123456',
+        stillingskategori: 'STILLING',
+    },
 };
 
 export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
@@ -157,5 +297,116 @@ export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = 
         eierNavn: null,
         eierNavident: null,
         stillingskategori: Stillingskategori.Stilling,
+    },
+};
+
+export const mockFormidling = {
+    stilling: {
+        title: 'Formidling',
+        uuid: 'formidling',
+        annonsenr: '920023',
+        status: 'ACTIVE',
+        privacy: 'INTERNAL_NOT_SHOWN',
+        published: '2024-05-02T15:10:23.086610286',
+        publishedByAdmin: '2024-05-02T15:10:23.086610286',
+        expires: '2025-05-09T01:00:00',
+        created: '2024-05-02T15:09:05.545835',
+        updated: '2024-05-02T15:10:23.799186',
+        employer: {
+            name: 'STRENG KRITISK TIGER AS',
+            publicName: 'STRENG KRITISK TIGER AS',
+            orgnr: '315090334',
+            parentOrgnr: '312468395',
+            orgform: 'BEDR',
+        },
+        categories: [
+            {
+                styrkCode: '0310.03',
+                name: 'Korporal',
+            },
+        ],
+        source: 'DIR',
+        medium: 'DIR',
+        businessName: 'STRENG KRITISK TIGER AS',
+        locations: [
+            {
+                address: null,
+                postalCode: null,
+                city: null,
+                county: 'AGDER',
+                countyCode: null,
+                municipal: 'KRISTIANSAND',
+                municipalCode: '4204',
+                latitue: null,
+                longitude: null,
+                country: 'NORGE',
+            },
+        ],
+        reference: '69094243-c430-43ea-bbce-a4ad440563cc',
+        administration: {
+            status: 'DONE',
+            remarks: [],
+            comments: '',
+            reportee: 'MOCK FORMIDLING',
+            navIdent: 'Z993141',
+        },
+        properties: {
+            extent: 'Heltid',
+            workhours: ['Dagtid'],
+            workday: ['Ukedager'],
+            applicationdue: 'Snarest',
+            jobtitle: 'Korporal',
+            positioncount: 1,
+            engagementtype: 'Fast',
+            classification_styrk08_score: 1,
+            adtext: 'Formidling',
+            classification_styrk08_code: '0310',
+            searchtags: [
+                {
+                    label: 'Korporal',
+                    score: 1,
+                },
+            ],
+            classification_esco_code:
+                'http://data.europa.eu/esco/occupation/4a3f40a8-0587-494c-b8d3-7098b8c5992f',
+            classification_input_source: 'jobtitle',
+            sector: 'Offentlig',
+        },
+        contacts: [
+            {
+                name: 'Menig',
+                role: '',
+                title: 'Forsvar',
+                email: 'test@nav.no',
+                phone: '',
+            },
+        ],
+        styrkEllerTittel: 'Formidling',
+    },
+    stillingsinfo: {
+        eierNavident: null,
+        eierNavn: null,
+        notat: null,
+        stillingsid: 'formidling',
+        stillingsinfoid: '84a1707f-8002-4d10-a9a6-311ce66dd319',
+        stillingskategori: 'FORMIDLING',
+    },
+};
+
+export const mockFormidlingMin = {
+    ...mockFormidling,
+    stilling: {
+        ...mockFormidling.stilling,
+        styrkEllerTittel: 'Formidling MIN',
+        uuid: 'minFormidling',
+        administration: {
+            ...mockFormidling.stilling.administration,
+            reportee: 'MOCK FORMIDLING MIN',
+            navIdent: 'Z123456',
+        },
+    },
+    stillingsinfo: {
+        ...mockFormidling.stillingsinfo,
+        eierNavident: 'Z123456',
     },
 };

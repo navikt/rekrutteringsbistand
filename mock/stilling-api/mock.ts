@@ -6,15 +6,35 @@ import { mockEnhetsregistersøk } from './mockEnhetsregister';
 import { mockCategoriesWithAltnames, mockPostdata } from './mockGeografi';
 import { mockPutStandardsøk, mockStandardsøk } from './mockStandardsøk';
 import {
+    mockFormidling,
+    mockFormidlingMin,
     mockNyRekrutteringsbistandstilling,
     mockRekrutteringsbistandstilling,
+    mockRekrutteringsbistandstillingEkstern,
+    mockRekrutteringsbistandstillingMin,
+    mockRekrutteringsbistandstillingMinEkstern,
     mockStillingsinfo,
 } from './mockStilling';
 
 export const stillingApiMock = [
-    http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, () =>
-        HttpResponse.json(mockRekrutteringsbistandstilling)
-    ),
+    http.get(`${api.stilling}/rekrutteringsbistandstilling/:stillingsId`, ({ params }) => {
+        const { stillingsId } = params;
+
+        if (stillingsId === 'minIntern') {
+            return HttpResponse.json(mockRekrutteringsbistandstillingMin);
+        } else if (stillingsId === 'ekstern') {
+            //Todo ekstern types feil
+            return HttpResponse.json(mockRekrutteringsbistandstillingEkstern as any);
+        } else if (stillingsId === 'minEkstern') {
+            return HttpResponse.json(mockRekrutteringsbistandstillingMinEkstern);
+        } else if (stillingsId === 'minFormidling') {
+            return HttpResponse.json(mockFormidlingMin);
+        } else if (stillingsId === 'formidling') {
+            return HttpResponse.json(mockFormidling);
+        }
+
+        return HttpResponse.json(mockRekrutteringsbistandstilling);
+    }),
 
     http.delete(
         `${api.stilling}/rekrutteringsbistandstilling/:stillingsId`,

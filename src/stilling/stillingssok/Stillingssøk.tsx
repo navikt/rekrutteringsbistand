@@ -115,7 +115,14 @@ const Stillingssøk = () => {
             <Tabs defaultValue={portefolje} onChange={(e) => oppdaterTab(e as TabVisning)}>
                 <Tabs.List>
                     <Tabs.Tab value={TabVisning.VIS_ALLE} label="Alle" />
-                    <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine stillinger" />
+                    <TilgangskontrollForInnhold
+                        skjulVarsel
+                        kreverEnAvRollene={[
+                            Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        ]}
+                    >
+                        <Tabs.Tab value={TabVisning.VIS_MINE} label="Mine stillinger" />
+                    </TilgangskontrollForInnhold>
                 </Tabs.List>
                 <Tabs.Panel value={TabVisning.VIS_ALLE}>
                     <AlleStillinger

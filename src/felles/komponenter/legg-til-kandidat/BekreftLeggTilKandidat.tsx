@@ -11,6 +11,7 @@ type IBekreftLeggTilKandidat = {
     onBekreft: (melding: string) => void;
     erAnbefaling?: boolean;
     kandidatlisteId: string;
+    setRegistrerFormidling?: () => void;
 };
 
 const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
@@ -19,6 +20,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
     onBekreft,
     erAnbefaling = false,
     kandidatlisteId,
+    setRegistrerFormidling,
 }) => {
     const [laster, setLaster] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
@@ -59,6 +61,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
                 leggTilTekst={leggTilTekst}
                 leggTilDisabled={laster}
                 avbrytDisabled={laster}
+                setRegistrerFormidling={setRegistrerFormidling}
             />
             {error && (
                 <Alert fullWidth variant="error" size="small">

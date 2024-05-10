@@ -4,6 +4,7 @@
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { z } from 'zod';
+import { devFnr } from '../../dev/DevUtil';
 import { postApi } from '../fetcher';
 
 export enum KandidatKilde {
@@ -45,6 +46,25 @@ export const useHentKandidatnavn = (props: hentKandidatnavnProps) => {
     };
 };
 
-export const hentKandidatnavnMockMsw = http.post(hentNavnEndepunkt, async (_) => {
-    return HttpResponse.json({ fornavn: 'Ola', etternavn: 'Nordmann', kilde: 'PDL' });
+interface requestBodyNavn {
+    fodselsnummer?: string;
+}
+
+export const hentKandidatnavnMockMsw = http.post(hentNavnEndepunkt, async ({ request }) => {
+    const body = (await request.json()) as requestBodyNavn;
+
+    if (body.fodselsnummer === devFnr.ok) {
+        return HttpResponse.json({
+            fornavn: 'Ola',
+            etternavn: 'Nordmann',
+            kilde: KandidatKilde.REKRUTTERINGSBISTAND,
+        });
+    } else if (body.fodselsnummer === devFnr.iPDL) {
+        return HttpResponse.json({
+            fornavn: 'Kari',
+            etternavn: 'Nordmann',
+            kilde: KandidatKilde.PDL,
+        });
+    }
+    return HttpResponse.json(null, { status: 404 });
 });

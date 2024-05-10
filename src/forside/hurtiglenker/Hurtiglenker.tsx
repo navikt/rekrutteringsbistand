@@ -16,10 +16,7 @@ const Hurtiglenker: FunctionComponent = () => {
     return (
         <TilgangskontrollForInnhold
             skjulVarsel
-            kreverEnAvRollene={[
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-            ]}
+            kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
         >
             <nav className={css.hurtiglenker}>
                 <LenkepanelMedIkon

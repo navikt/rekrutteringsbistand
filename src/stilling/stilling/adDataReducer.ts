@@ -86,7 +86,7 @@ const adDataReducer = (state = initialState, action: any) => {
         case SAVE_AD_SUCCESS:
             return {
                 ...action.response,
-                locationList: action.response.locationList.filter(
+                locationList: action.response.locationList?.filter(
                     (loc: any) =>
                         loc.postalCode || loc.municipal || loc.county || loc.country !== 'NORGE'
                 ), // filtrer vekk object med kun Norge
