@@ -43,7 +43,7 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
     const { roller } = React.useContext(ApplikasjonContext);
 
     // TODO Feature-toggle!
-    const aktivTilgangskontroll = erIkkeProd;
+    const tilgangskontrollErPå = erIkkeProd;
 
     const harTilgang = kreverEnAvRollene.some((r) => {
         return (
@@ -51,7 +51,8 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
         );
     });
 
-    if (!aktivTilgangskontroll) {
+    // TODO: Feature-toggle!
+    if (!tilgangskontrollErPå) {
         return <>{children}</>;
     }
 
