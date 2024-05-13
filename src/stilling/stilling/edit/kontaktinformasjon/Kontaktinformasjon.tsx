@@ -1,5 +1,5 @@
-import { Button, Fieldset, TextField } from '@navikt/ds-react';
-import { ChangeEvent, FunctionComponent, useEffect } from 'react';
+import { Alert, Button, Fieldset, TextField } from '@navikt/ds-react';
+import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { Kontaktinfo } from 'felles/domene/stilling/Stilling';
@@ -32,34 +32,41 @@ const Kontaktinformasjon: FunctionComponent<Props> = ({
     validateName,
     validation,
 }) => {
+    const [lagretInfo, setLagretInfo] = useState(false);
+
     const onNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         setContactPerson({
             name: e.target.value,
         });
+        setLagretInfo(false);
     };
 
     const onTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setContactPerson({
             title: e.target.value,
         });
+        setLagretInfo(false);
     };
 
     const onPhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
         setContactPerson({
             phone: e.target.value,
         });
+        setLagretInfo(false);
     };
 
     const onEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
         setContactPerson({
             email: e.target.value,
         });
+        setLagretInfo(false);
     };
 
     const kontaktperson = contactList && contactList[0];
 
     const lagreKonktaktperson = () => {
         localStorage.setItem(innloggetBruker, JSON.stringify(kontaktperson ?? {}));
+        setLagretInfo(true);
     };
 
     useEffect(() => {
@@ -113,6 +120,7 @@ const Kontaktinformasjon: FunctionComponent<Props> = ({
                     onChange={onPhoneChange}
                 />
             </Fieldset>
+            {lagretInfo && <Alert variant="success">Kontaktinfo lagret.</Alert>}
             <Button variant="tertiary" onClick={lagreKonktaktperson}>
                 Lagre som standard
             </Button>
