@@ -5,6 +5,19 @@ const tilDato = (dag: number, måned: number, år: number, timer: number = 0, mi
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(14, 5, 2024),
+        tittel: 'Antall kandidater vises i stillingen',
+        innhold: (
+            <>
+                <p>
+                    Du kan nå se antall kandidater som er lagt til i en stilling, uten å ha tilgang
+                    til listen over kandidater. Tallet finner du i en informasjonsboks over
+                    stillingsbeskrivelsen, inne i forhåndsvisningen av stillingen.
+                </p>
+            </>
+        ),
+    },
+    {
         dato: tilDato(8, 5, 2024),
         tittel: 'Hva er nytt',
         innhold: (
