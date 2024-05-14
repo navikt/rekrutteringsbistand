@@ -1,5 +1,5 @@
 /**
- * Endepunkt /kandidatsok-api/api/suggest/arena-kandidatnr
+ * Endepunkt /kandidatsok-api/veileder/kandidatlister/:kandidatlisteId/antallKandidater
  */
 import { HttpResponse, http } from 'msw';
 import useSWRImmutable from 'swr';
