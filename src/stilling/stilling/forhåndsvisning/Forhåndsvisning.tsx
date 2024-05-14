@@ -10,6 +10,8 @@ import OmAnnonsen from './om-annonsen/OmAnnonsen';
 import OmBedriften from './om-bedriften/OmBedriften';
 import OmStillingen from './om-stillingen/OmStillingen';
 import Søknad from './søknad/Søknad';
+import useKandidatlisteId from 'felles/hooks/useKandidatlisteId';
+import { AntallKandidaterIStilling } from './antall-kandidater/AntallKandidater';
 
 type Props = {
     stilling: Stilling;
@@ -17,9 +19,16 @@ type Props = {
 };
 
 const Forhåndsvisning = ({ stilling, erFormidling }: Props) => {
+    const { kandidatlisteId } = useKandidatlisteId(stilling.uuid);
+
     return (
         <div className={css.forhåndsvisning}>
             <div className={css.venstre}>
+                {kandidatlisteId && (
+                    <AntallKandidaterIStilling
+                        kandidatelisteId={kandidatlisteId}
+                    ></AntallKandidaterIStilling>
+                )}
                 <Panel as="article" className={css.annonsetekst}>
                     {erFormidling ? (
                         <span>Formidling</span>
