@@ -13,7 +13,7 @@ export const AntallKandidaterIStilling = ({ kandidatelisteId }: Props) => {
         <Loader />
     ) : (
         <Alert variant="info">
-            Antall kandidater allerede registrert for stillingen: {data?.antallKandidater}
+            Antall kandidater registrert for stillingen: {data?.antallKandidater}
         </Alert>
     );
 };
