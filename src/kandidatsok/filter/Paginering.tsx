@@ -22,13 +22,17 @@ const Paginering: FunctionComponent<Props> = ({ antallTreff }) => {
     if (antallSider < 2) {
         return null;
     } else {
+        // Elasticsearch takler ikke mer enn 10000 element i pagineringen uten å endre max result i es, som kan ha konsekvenser for minne og ytelse.
+        // I tillegg så må vi trekke fra 10 elementer på grunn av next og previous blading i kandidater.
+        const siderTilPaginering = antallSider > 390 ? 390 : antallSider;
+
         return (
             <Pagination
                 size="medium"
                 className={css.wrapper}
                 page={søkekriterier.side}
                 onPageChange={setSidetall}
-                count={antallSider}
+                count={siderTilPaginering}
             />
         );
     }
