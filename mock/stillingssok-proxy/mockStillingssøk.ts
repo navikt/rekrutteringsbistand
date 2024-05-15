@@ -1,7 +1,11 @@
 import { EsResponse } from 'felles/domene/elastic/ElasticSearch';
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
 import { GlobalAggregering } from '../../src/stilling/stillingssok/domene/elasticSearchTyper';
-import { mockFormidling, mockFormidlingMin } from '../stilling-api/mockStilling';
+import {
+    mockFormidling,
+    mockFormidlingMin,
+    mockStoppetStilling,
+} from '../stilling-api/mockStilling';
 import {
     mockEsRekrutteringsbistandstilling,
     mockEsRekrutteringsbistandstillingEkstern,
@@ -74,6 +78,15 @@ export const mockStillingssøk: Omit<EsResponse<EsRekrutteringsbistandstilling>,
                 _id: mockFormidlingMin.stilling.uuid,
                 _source: {
                     ...mockFormidlingMin,
+                },
+            },
+            {
+                _index: 'stilling_7',
+                _type: '_doc',
+                _score: 1.0,
+                _id: mockStoppetStilling.stilling.uuid,
+                _source: {
+                    ...mockStoppetStilling,
                 },
             },
         ],
