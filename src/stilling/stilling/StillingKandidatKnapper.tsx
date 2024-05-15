@@ -65,14 +65,12 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                         Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
                     ]}
                 >
-                    {(!erFormidling || erEier) && (
-                        <Button
-                            onClick={() => setVisLeggTilKandidatModal(true)}
-                            icon={<PersonPlusIcon aria-hidden />}
-                        >
-                            Legg til kandidat
-                        </Button>
-                    )}
+                    <Button
+                        onClick={() => setVisLeggTilKandidatModal(true)}
+                        icon={<PersonPlusIcon aria-hidden />}
+                    >
+                        Legg til kandidat
+                    </Button>
                 </TilgangskontrollForInnhold>
 
                 <LeggTilKandidatModal

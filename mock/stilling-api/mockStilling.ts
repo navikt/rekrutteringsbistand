@@ -410,3 +410,16 @@ export const mockFormidlingMin = {
         eierNavident: 'Z123456',
     },
 };
+
+export const mockStoppetStilling = {
+    ...mockStilling,
+    stilling: {
+        ...mockFormidling.stilling,
+        styrkEllerTittel: 'Stoppet stilling',
+        uuid: 'stoppet',
+        status: Status.Stoppet,
+        // administration: {
+        //     status: Status.Stoppet,
+        // },
+    },
+};
