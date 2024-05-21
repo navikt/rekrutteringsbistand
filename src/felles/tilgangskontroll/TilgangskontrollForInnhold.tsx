@@ -1,7 +1,6 @@
 import { Alert, Link } from '@navikt/ds-react';
 import * as React from 'react';
 import { ApplikasjonContext } from '../ApplikasjonContext';
-import { erIkkeProd } from '../miljø';
 
 import css from './TilgangskontrollForInnhold.module.css';
 
@@ -40,16 +39,14 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
     children,
     skjulVarsel,
 }) => {
-    const { roller } = React.useContext(ApplikasjonContext);
-
-    // TODO Feature-toggle!
-    const tilgangskontrollErPå = erIkkeProd;
+    const { roller, tilgangskontrollErPå } = React.useContext(ApplikasjonContext);
 
     const harTilgang = kreverEnAvRollene.some((r) => {
         return (
             roller?.includes(r) || roller?.includes(Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)
         );
     });
+    console.log('🎺 harTilgang', harTilgang);
 
     // TODO: Feature-toggle!
     if (!tilgangskontrollErPå) {
@@ -60,7 +57,6 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
         return <>{children}</>;
     }
 
-    //TODO Disabled skjul av varsel
     if (!harTilgang && skjulVarsel) {
         return null;
     }
@@ -93,7 +89,6 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
                     </div>
                 </Alert>
             </div>
-            {children}
         </>
     );
 };

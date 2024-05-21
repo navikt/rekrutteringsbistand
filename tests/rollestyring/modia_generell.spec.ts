@@ -16,20 +16,11 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
     });
 
     test('2. Se om kandidatsøk-fanen er tilgjengelig - Fanen skal ikke vises', async ({ page }) => {
-        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
-        await expect(page.getByText('Hei, du trenger rollen')).toBeVisible();
-
-        //todo Tilgangskontroll steg2: Skriv om til at fanen ikke vises
-        //   await expect(page.getByRole('link', { name: 'Kandidatsøk' })).not.toBeVisible();
+        await expect(page.getByRole('link', { name: 'Kandidatsøk' })).not.toBeVisible();
     });
 
     test('3. Se om formidlings-fanen er tilgjengelig - Fanen skal ikke vises', async ({ page }) => {
-        await page.getByRole('link', { name: 'Formidlinger' }).click();
-
-        await expect(page.getByText('Hei, du trenger rollen')).toBeVisible();
-
-        //todo Tilgangskontroll steg2: Skriv om til at fanen ikke vises
-        //   await expect(page.getByRole('link', { name: 'Formidlinger' })).not.toBeVisible();
+        await expect(page.getByRole('link', { name: 'Formidlinger' })).not.toBeVisible();
     });
 
     test('4. Gå inn i stillingssøket - Stillingssøket kan åpnes.', async ({ page }) => {
@@ -140,12 +131,11 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
             'http://localhost:3000/kandidater/kandidat/PAM0yp25c81t/cv?fraKandidatsok=true'
         );
 
-        //todo Tilgangskontroll steg2: Skriv om til at innhold ikke skal vises
-
-        await expect(page.getByText('Hei, du trenger rollen')).toBeVisible();
-
-        //TODO Denne skal bli not visible i steg2:
-        await expect(page.getByRole('tab', { name: 'Oversikt' })).toBeVisible();
+        await expect(
+            page.getByText(
+                'Hei, du trenger rollen Arbeidsgiverrettet eller Jobbsøkerrettet for å få tilgang til innhold på denne siden. Husk at du må ha et tjenstlig behov for det den spesifikke rollen gir deg tilgang til. Snakk med din nærmeste leder.'
+            )
+        ).toBeVisible;
     });
 
     test('17. Inne i en kandidat, sjekk om historikkfanen vises - Historikkfanen skal ikke vises', async ({
@@ -155,10 +145,11 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
             'http://localhost:3000/kandidater/kandidat/PAM0yp25c81t/cv?fraKandidatsok=true'
         );
 
-        //todo Tilgangskontroll steg2: Skriv om til at innhold ikke skal vises
-        await expect(page.getByText('Hei, du trenger rollen')).toBeVisible();
-
-        await expect(page.getByRole('tab', { name: 'Historikk' })).not.toBeVisible();
+        await expect(
+            page.getByText(
+                'Hei, du trenger rollen Arbeidsgiverrettet eller Jobbsøkerrettet for å få tilgang til innhold på denne siden. Husk at du må ha et tjenstlig behov for det den spesifikke rollen gir deg tilgang til. Snakk med din nærmeste leder.'
+            )
+        ).toBeVisible;
     });
 
     test('18. Forsøk å opprette stilling - Skal ikke kunne opprette stilling', async ({ page }) => {
