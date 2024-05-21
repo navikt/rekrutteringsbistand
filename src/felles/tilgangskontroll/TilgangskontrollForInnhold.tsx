@@ -46,7 +46,6 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
             roller?.includes(r) || roller?.includes(Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)
         );
     });
-    console.log('🎺 harTilgang', harTilgang);
 
     // TODO: Feature-toggle!
     if (!tilgangskontrollErPå) {
