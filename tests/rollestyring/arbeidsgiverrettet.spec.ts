@@ -32,7 +32,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await expect(page.getByRole('heading', { name: 'Stillinger' })).toBeVisible();
     });
 
-    test('5. Se hvilke stillingsstatuser du kan søke på - Skal se "publisert", "stoppet" og "utgått"', async ({
+    test('5. Se hvilke stillingsstatuser du kan søke på - Skal se "publisert", "stoppet" og "utløpt"', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();

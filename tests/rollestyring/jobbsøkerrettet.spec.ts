@@ -31,7 +31,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await expect(page.getByRole('heading', { name: 'Stillinger' })).toBeVisible();
     });
 
-    test('5. Se hvilke stillingsstatuser du kan søke på - Skal kun se "publisert", ikke "stoppet" og "utgått"', async ({
+    test('5. Se hvilke stillingsstatuser du kan søke på - Skal kun se "publisert", ikke "stoppet" og "utløpt"', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
