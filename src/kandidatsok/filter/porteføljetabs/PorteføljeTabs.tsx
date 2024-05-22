@@ -1,5 +1,8 @@
 import { Tabs } from '@navikt/ds-react';
 import { ReactNode } from 'react';
+import TilgangskontrollForInnhold, {
+    Rolle,
+} from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import css from './PorteføljeTabs.module.css';
@@ -7,6 +10,7 @@ import VelgKontorTab from './VelgKontorTab';
 
 export enum Portefølje {
     Alle = 'alle',
+    MineKontorer = 'mineKontorer',
     MineBrukere = 'mine',
     MittKontor = 'kontor',
     VelgKontor = 'valgte',
@@ -22,10 +26,26 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
     return (
         <Tabs value={søkekriterier.portefølje} onChange={velgPortefølje}>
             <Tabs.List>
-                <Tabs.Tab value={Portefølje.Alle} label="Alle" />
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                >
+                    <Tabs.Tab value={Portefølje.Alle} label="Alle" />
+                </TilgangskontrollForInnhold>
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]}
+                >
+                    <Tabs.Tab value={Portefølje.MineKontorer} label="Mine kontorer" />
+                </TilgangskontrollForInnhold>
                 <Tabs.Tab value={Portefølje.MineBrukere} label="Mine brukere" />
                 <Tabs.Tab value={Portefølje.MittKontor} label="Mitt kontor" />
-                <VelgKontorTab søkekriterier={søkekriterier} />
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                >
+                    <VelgKontorTab søkekriterier={søkekriterier} />
+                </TilgangskontrollForInnhold>
             </Tabs.List>
             <Tabs.Panel className={css.tabpanel} value={søkekriterier.portefølje}>
                 {children}

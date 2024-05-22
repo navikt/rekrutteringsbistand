@@ -29,7 +29,6 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
     // TODO Feature-toggle!
     const tilgangskontrollErPå = erIkkeProd;
 
-    console.log('🎺 dekoratør', dekoratør);
     const harRolle = (rolle: Rolle[]) =>
         tilgangskontrollErPå
             ? rolle.some(
