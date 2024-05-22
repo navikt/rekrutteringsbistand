@@ -114,6 +114,7 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
         ? props.enheter.map((e) => e.navn)
         : Array.from(søkekriterier.valgtKontor);
 
+    // Brukes bare som key for å unngå duplikat kall, men brukes ikke som payload data. ifht autditlogging.
     const swrPropKey = JSON.stringify({
         ...props,
         søkekriterier: {
@@ -133,8 +134,16 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
         },
     });
 
+    const brukSøkekriterier = overstyrValgteKontorer
+        ? {
+              ...utvidedeSøkekriterier,
+              portefølje: Portefølje.MineKontorer,
+              valgtKontor: overstyrValgteKontorer,
+          }
+        : utvidedeSøkekriterier;
+
     const swr = useSWR({ path: kandidatsøkEndepunkt, swrPropKey }, ({ path }) =>
-        postApi(path, utvidedeSøkekriterier, queryParams)
+        postApi(path, brukSøkekriterier, queryParams)
     );
 
     const kandidatsøkKandidater: KandidatsøkKandidat[] = swr?.data?.hits?.hits.map((k: any) =>

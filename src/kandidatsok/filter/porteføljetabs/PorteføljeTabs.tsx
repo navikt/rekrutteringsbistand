@@ -39,7 +39,12 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
                     <Tabs.Tab value={Portefølje.MineKontorer} label="Mine kontorer" />
                 </TilgangskontrollForInnhold>
                 <Tabs.Tab value={Portefølje.MineBrukere} label="Mine brukere" />
-                <Tabs.Tab value={Portefølje.MittKontor} label="Mitt kontor" />
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                >
+                    <Tabs.Tab value={Portefølje.MittKontor} label="Mitt kontor" />
+                </TilgangskontrollForInnhold>
                 <TilgangskontrollForInnhold
                     skjulVarsel
                     kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
