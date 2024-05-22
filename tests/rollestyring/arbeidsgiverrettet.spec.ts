@@ -135,21 +135,21 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await expect(page.getByRole('tab', { name: 'Kandidater' })).not.toBeVisible();
     });
 
-    test('17a. Forsøk å åpne en cv via kandidatliste i intern stilling.', async ({ page }) => {
+    test('16a. Forsøk å åpne en cv via kandidatliste i intern stilling.', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
         await page.getByRole('tab', { name: 'Kandidater' }).click();
         await expect(page.locator('div').filter({ hasText: /^Jobbsøker, Jarle$/ })).toBeVisible();
     });
 
-    test('17b. Forsøk å åpne en cv via kandidatliste i ekstern stilling.', async ({ page }) => {
+    test('16b. Forsøk å åpne en cv via kandidatliste i ekstern stilling.', async ({ page }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Ekstern stilling MIN' }).click();
         await page.getByRole('tab', { name: 'Kandidater' }).click();
         await expect(page.locator('div').filter({ hasText: /^Jobbsøker, Jarle$/ })).toBeVisible();
     });
 
-    test('17c. Forsøk å åpne en cv via kandidatsøk.', async ({ page }) => {
+    test('16c. Forsøk å åpne en cv via kandidatsøk.', async ({ page }) => {
         await page.getByRole('link', { name: 'Kandidatsøk' }).click();
         await page.getByRole('link', { name: 'Spasertur, Patent' }).click();
         await expect(page.getByRole('tab', { name: 'Historikk' })).toBeVisible();
@@ -157,7 +157,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await expect(page.getByRole('cell', { name: 'Lagt i listen' })).toBeVisible();
         await expect(page.getByText('Hei, du trenger rollen')).not.toBeVisible();
     });
-    test('17d. Forsøk å åpne en cv via lenke: https://rekrutteringsbistand.intern.dev.nav.no/kandidater/kandidat/PAM0xtfrwli5/cv?fraKandidatsok=true', async ({
+    test('16d. Forsøk å åpne en cv via lenke: https://rekrutteringsbistand.intern.dev.nav.no/kandidater/kandidat/PAM0xtfrwli5/cv?fraKandidatsok=true', async ({
         page,
     }) => {
         await page.goto(

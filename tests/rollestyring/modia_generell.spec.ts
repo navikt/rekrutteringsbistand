@@ -70,7 +70,7 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         await expect(page.getByRole('button', { name: 'Marker som min' })).not.toBeVisible();
     });
 
-    test('10. Forsøk å overta eierskap for ekstern stilling - Skal ikke kunne overta eierskap for ekstern stilling, hverken med "marker som min", eller opprett kandidatliste.', async ({
+    test('10. Forsøk å overta eierskap for ekstern stilling - Skal ikke kunne overta eierskap for ekstern stilling, hverken med "marker som min", eller opprett kandidatliste. Rediger knappen skal heller ikke finnes', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
@@ -82,7 +82,9 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
-    test('11. Forsøk å redigere stilling du eier', async ({ page }) => {
+    test('11. Forsøk å redigere stilling du eier - Redigerknappen skal ikke vises, så du kan ikke redigere stillingen', async ({
+        page,
+    }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();
         await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
         await expect(page.getByRole('tab', { name: 'Om stillingen' })).toBeVisible();
@@ -115,7 +117,7 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
         await expect(page.getByRole('tab', { name: 'Kandidater' })).not.toBeVisible();
     });
 
-    test('15. Gå inn i en direktemeldt stilling der du ikke er eier. Sjekk om fanen kandidater vises.', async ({
+    test('15. Gå inn i en direktemeldt stilling der du ikke er eier. Sjekk om fanen Kandidater vises - Fanen skal ikke vises', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger' }).click();

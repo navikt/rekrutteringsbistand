@@ -94,13 +94,17 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
-    test('12. Forsøk å redigere intern stilling som du ikke eier', async ({ page }) => {
+    test('12. Forsøk å redigere intern stilling som du ikke eier - Skal ikke kunne redigere stilling', async ({
+        page,
+    }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
     });
 
-    test('12b. Forsøk å redigere ekstern stilling som du ikke eier', async ({ page }) => {
+    test('12b. Forsøk å redigere ekstern stilling som du ikke eier - Skal ikke kunne redigere stilling', async ({
+        page,
+    }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Ekstern stilling', exact: true }).click();
         await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible();
@@ -133,7 +137,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await expect(page.getByRole('tab', { name: 'Kandidater' })).not.toBeVisible();
     });
 
-    test('16. Forsøk å åpne en cv via lenke. Eksempel i test: http://localhost:3000/kandidater/kandidat/PAM0yp25c81t/cv?fraKandidatsok=true', async ({
+    test('16. Forsøk å åpne en cv via lenke. Eksempel i test: http://localhost:3000/kandidater/kandidat/PAM0yp25c81t/cv?fraKandidatsok=true - Kan åpne cv fra kandidatsøk, og ved hjelp av lenke', async ({
         page,
     }) => {
         await page.goto(
