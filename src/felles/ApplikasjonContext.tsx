@@ -8,10 +8,12 @@ interface ApplikasjonContextType {
     roller?: Rolle[];
     navIdent?: string;
     harRolle: (rolle: Rolle[]) => boolean;
+    tilgangskontrollErPå: boolean;
 }
 
 export const ApplikasjonContext = React.createContext<ApplikasjonContextType>({
     harRolle: () => false,
+    tilgangskontrollErPå: false,
 });
 
 interface IApplikasjonContextProvider {
@@ -34,7 +36,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
             : true;
 
     return (
-        <ApplikasjonContext.Provider value={{ roller, navIdent, harRolle }}>
+        <ApplikasjonContext.Provider value={{ roller, navIdent, harRolle, tilgangskontrollErPå }}>
             {isLoading ? (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Loader />

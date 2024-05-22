@@ -9,6 +9,7 @@ import {
     Stillingskategori,
     System,
 } from 'felles/domene/stilling/Stilling';
+import { useVisVarsling } from 'felles/varsling/Varsling';
 import { useMeg } from '../../api/frackend/meg';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
@@ -33,7 +34,6 @@ import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import css from './Stilling.module.css';
 import StillingKandidatKnapper from './StillingKandidatKnapper';
 import VisStillingBanner from './VisStillingBanner';
-import { useVisVarsling } from 'felles/varsling/Varsling';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 
@@ -262,6 +262,7 @@ const Stilling = () => {
                             skjulVarsel
                             kreverEnAvRollene={[
                                 Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
                             ]}
                         >
                             {harKandidatlisteSomKanÅpnes && (

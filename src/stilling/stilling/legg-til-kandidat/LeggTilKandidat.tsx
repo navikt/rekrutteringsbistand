@@ -51,7 +51,6 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
             });
         }
     };
-
     if (visOppsummering) {
         return (
             <div style={{ margin: '1rem' }}>
@@ -81,7 +80,6 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                             }
                         }}
                     />
-
                     {fnr && !registrerFormidling && <KandidatNavn fnr={fnr} />}
 
                     {kandidatnavn &&
@@ -103,12 +101,11 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                 kandidatlisteId={kandidatlisteId}
                                 onAvbryt={onClose}
                                 onBekreft={handleBekreft}
-                                // setRegistrerFormidling={
-                                //     erEier ? () => setRegistrerFormidling(true) : undefined
-                                // }
+                                setRegistrerFormidling={
+                                    erEier ? () => setRegistrerFormidling(true) : undefined
+                                }
                             />
                         ))}
-
                     {kandidatnavn && kandidatnavn.kilde === KandidatKilde.PDL && (
                         <>
                             {registrerFormidling ? (
@@ -180,7 +177,6 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                             )}
                         </>
                     )}
-
                     {!kandidatnavn && <Knapper leggTilDisabled onAvbrytClick={onClose} />}
                 </div>
             </Modal.Body>

@@ -121,7 +121,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling MIN' }).click();
 
-        await expect(page.getByRole('tab', { name: 'Kandidater' })).not.toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Kandidater' })).toBeVisible();
     });
 
     test('15. Gå inn i en direktemeldt stilling der du ikke er eier. Sjekk om fanen kandidater vises. - Skal ikke vises', async ({
