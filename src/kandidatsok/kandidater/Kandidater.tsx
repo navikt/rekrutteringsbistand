@@ -81,9 +81,8 @@ const Kandidater: FunctionComponent<Props> = ({
     };
 
     const begrensTilKontorer =
-        søkekriterier.portefølje === 'mineKontorer' ||
-        (harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]) &&
-            !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]));
+        harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]) &&
+        !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]);
 
     const begrensTilEnheter = begrensTilKontorer ? enheter : null;
 

@@ -119,7 +119,7 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
         ...props,
         søkekriterier: {
             ...søkekriterier,
-            portefølje: overstyrValgteKontorer ? Portefølje.MineKontorer : søkekriterier.portefølje,
+            portefølje: overstyrValgteKontorer ? Portefølje.VelgKontor : søkekriterier.portefølje,
             valgtKontor: overstyrValgteKontorer,
             innsatsgruppe: Array.from(søkekriterier.innsatsgruppe),
             ønsketYrke: Array.from(søkekriterier.ønsketYrke),
@@ -137,7 +137,7 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
     const brukSøkekriterier = overstyrValgteKontorer
         ? {
               ...utvidedeSøkekriterier,
-              portefølje: Portefølje.MineKontorer,
+              portefølje: Portefølje.VelgKontor,
               valgtKontor: overstyrValgteKontorer,
           }
         : utvidedeSøkekriterier;

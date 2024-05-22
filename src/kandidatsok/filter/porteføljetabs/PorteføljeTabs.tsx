@@ -10,7 +10,6 @@ import VelgKontorTab from './VelgKontorTab';
 
 export enum Portefølje {
     Alle = 'alle',
-    MineKontorer = 'mineKontorer',
     MineBrukere = 'mine',
     MittKontor = 'kontor',
     VelgKontor = 'valgte',
@@ -36,7 +35,7 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
                     skjulVarsel
                     kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]}
                 >
-                    <Tabs.Tab value={Portefølje.MineKontorer} label="Mine kontorer" />
+                    <Tabs.Tab value={Portefølje.VelgKontor} label="Mine kontorer" />
                 </TilgangskontrollForInnhold>
                 <Tabs.Tab value={Portefølje.MineBrukere} label="Mine brukere" />
                 <TilgangskontrollForInnhold
