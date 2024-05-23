@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
 import useNavKontor from 'felles/store/navKontor';
+import { useVisVarsling } from 'felles/varsling/Varsling';
 import AppState from '../../../state/AppState';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
@@ -13,7 +14,6 @@ import { ForespørselOutboundDto } from './Forespørsel';
 import css from './ForespørselOmDelingAvCv.module.css';
 import VelgSvarfrist, { Svarfrist, lagSvarfristPåSekundet } from './VelgSvarfrist';
 import useIkkeForespurteKandidater from './useIkkeForespurteKandidater';
-import {useVisVarsling } from "felles/varsling/Varsling";
 
 type Props = {
     stillingsId: string;
@@ -31,7 +31,7 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
     const [egenvalgtFristFeilmelding, setEgenvalgtFristFeilmelding] = useState<
         string | undefined
     >();
-    const visVarsling = useVisVarsling()
+    const visVarsling = useVisVarsling();
 
     const markerteKandidaterSomIkkeErForespurt = useIkkeForespurteKandidater(markerteKandidater);
     const antallSpurtFraFør =
@@ -63,7 +63,6 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
                 kandidatnumre: [],
             });
         };
-
 
         if (sendForespørselOmDelingAvCv.kind === Nettstatus.Suksess) {
             lukkModal();
@@ -130,9 +129,11 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
         }
 
         const outboundDto: ForespørselOutboundDto = {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             aktorIder: markerteKandidaterSomIkkeErForespurt.map((kandidat) => kandidat.aktørid!),
             stillingsId,
             svarfrist: lagSvarfristPåSekundet(svarfrist, egenvalgtFrist),
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             navKontor: valgtNavKontor!,
         };
 

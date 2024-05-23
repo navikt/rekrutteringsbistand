@@ -1,5 +1,10 @@
 import { EsRekrutteringsbistandstilling } from 'felles/domene/stilling/EsStilling';
-import { Kilde, Medium } from '../../src/felles/domene/stilling/Stilling';
+import {
+    Administration,
+    Kilde,
+    Medium,
+    Stillingsinfo,
+} from '../../src/felles/domene/stilling/Stilling';
 import { mockRekrutteringsbistandstilling, mockStilling } from '../stilling-api/mockStilling';
 
 export const mockEsRekrutteringsbistandstilling: EsRekrutteringsbistandstilling = {
@@ -41,12 +46,12 @@ export const mockEsRekrutteringsbistandstillingMin: EsRekrutteringsbistandstilli
         uuid: 'minIntern',
         styrkEllerTittel: 'Intern stilling MIN',
         administration: {
-            ...mockEsRekrutteringsbistandstilling.stilling.administration!,
+            ...(mockEsRekrutteringsbistandstilling.stilling.administration as Administration),
             navIdent: 'Z123456',
         },
     },
     stillingsinfo: {
-        ...mockEsRekrutteringsbistandstilling.stillingsinfo!,
+        ...(mockEsRekrutteringsbistandstilling.stillingsinfo as Stillingsinfo),
         eierNavident: 'Z123456',
     },
 };
@@ -93,12 +98,13 @@ export const mockEsRekrutteringsbistandstillingEksternMin: EsRekrutteringsbistan
         uuid: 'minEkstern',
         styrkEllerTittel: 'Ekstern stilling MIN',
         administration: {
-            ...mockEsRekrutteringsbistandstillingEkstern.stilling.administration!,
+            ...(mockEsRekrutteringsbistandstillingEkstern.stilling
+                .administration as Administration),
             navIdent: 'Z123456',
         },
     },
     stillingsinfo: {
-        ...mockEsRekrutteringsbistandstillingEkstern.stillingsinfo!,
+        ...(mockEsRekrutteringsbistandstillingEkstern.stillingsinfo as Stillingsinfo),
         eierNavident: 'Z123456',
     },
 };

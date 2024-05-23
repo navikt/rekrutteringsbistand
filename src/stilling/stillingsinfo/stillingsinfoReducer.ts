@@ -2,9 +2,9 @@ import { put, select, takeLatest } from 'redux-saga/effects';
 import { opprettKandidatlisteForEksternStilling } from '../api/api';
 import { ApiError } from '../api/apiUtils';
 
-import { SET_STILLINGSINFO_DATA } from './stillingsinfoDataReducer';
-import { FETCH_AD } from '../stilling/adReducer';
 import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
+import { FETCH_AD } from '../stilling/adReducer';
+import { SET_STILLINGSINFO_DATA } from './stillingsinfoDataReducer';
 
 export const FETCH_STILLINGSINFO = 'FETCH_STILLINGSINFO';
 export const FETCH_STILLINGSINFO_BEGIN = 'FETCH_STILLINGSINFO_BEGIN';
@@ -115,7 +115,7 @@ function* opprettStillingsinfo(): Generator<unknown, any, any> {
     yield put({ type: OPPRETT_STILLINGSINFO_BEGIN });
 
     try {
-        let state = yield select();
+        const state = yield select();
 
         const { stillingsid, eierNavident, eierNavn } = state.stillingsinfoData;
         const response = yield opprettKandidatlisteForEksternStilling({
@@ -145,7 +145,7 @@ function* updateStillingsinfo(): Generator<unknown, any, any> {
     yield put({ type: UPDATE_STILLINGSINFO_BEGIN });
 
     try {
-        let state = yield select();
+        const state = yield select();
 
         const { stillingsid, eierNavident, eierNavn } = state.stillingsinfoData;
         const response = yield opprettKandidatlisteForEksternStilling({

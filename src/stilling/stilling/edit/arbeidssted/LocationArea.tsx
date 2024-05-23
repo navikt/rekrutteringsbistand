@@ -146,7 +146,11 @@ class LocationArea extends React.Component<Props> {
                                 return (
                                     <Chips.Removable
                                         key={location.municipal}
-                                        onClick={() => this.onRemoveMunicipal(location.municipal!)}
+                                        onClick={() =>
+                                            location.municipal
+                                                ? this.onRemoveMunicipal(location.municipal)
+                                                : null
+                                        }
                                     >
                                         {capitalizeLocation(location.municipal)}
                                     </Chips.Removable>
@@ -155,7 +159,11 @@ class LocationArea extends React.Component<Props> {
                                 return (
                                     <Chips.Removable
                                         key={location.county}
-                                        onClick={() => this.onRemoveCounty(location.county!)}
+                                        onClick={() =>
+                                            location.county
+                                                ? this.onRemoveCounty(location.county)
+                                                : null
+                                        }
                                     >
                                         {capitalizeLocation(location.county)}
                                     </Chips.Removable>
@@ -164,7 +172,11 @@ class LocationArea extends React.Component<Props> {
                                 return (
                                     <Chips.Removable
                                         key={location.country}
-                                        onClick={() => this.onRemoveCountry(location.country!)}
+                                        onClick={() =>
+                                            location.country
+                                                ? this.onRemoveCountry(location.country)
+                                                : null
+                                        }
                                     >
                                         {capitalizeLocation(location.country)}
                                     </Chips.Removable>

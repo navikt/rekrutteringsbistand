@@ -14,7 +14,7 @@ const NudgeAvsluttOppdragModal: FunctionComponent<Props> = ({
     onBekreft,
     onAvbryt,
 }) => {
-    const [klar, setKlar] = useState<Boolean>(false);
+    const [klar, setKlar] = useState<boolean>(false);
 
     useEffect(() => {
         const klarTimeout = setTimeout(() => {

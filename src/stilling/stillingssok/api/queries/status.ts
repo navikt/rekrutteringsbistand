@@ -11,7 +11,7 @@ export const status = (statuser: Set<Status>, ikkePubliserte: boolean) => {
         return alleStillinger;
     }
 
-    let statusSpørringer: any[] = [];
+    const statusSpørringer: any[] = [];
     if (statuser.has(Status.Publisert)) statusSpørringer.push(publisert);
     if (statuser.has(Status.Stoppet)) statusSpørringer.push(stoppet);
     if (statuser.has(Status.Utløpt)) statusSpørringer.push(utløpt);

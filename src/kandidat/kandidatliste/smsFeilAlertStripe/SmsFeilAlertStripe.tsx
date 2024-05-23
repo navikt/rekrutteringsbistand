@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import { FunctionComponent, useState } from 'react';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { z } from 'zod';
 import { EksternStatus, Sms, useSmserForStilling } from '../../../api/sms-api/sms';
 import css from './smsFeilAlertStripe.module.css';
-import { z } from 'zod';
 
 const LESTE_SMS_IDER_KEY = 'lesteSmsIder';
 
@@ -56,8 +56,8 @@ const SmsFeilAlertStripe: FunctionComponent<Props> = ({ kandidater, stillingId }
 
         kandidaterMedUlesteSmsFeil
             .filter((kandidat) => kandidat.fodselsnr)
-            .map((kandidat) => sendteMeldinger[kandidat.fodselsnr!].id)
-            .forEach((id) => oppdatertLesteSmsIder.add(id));
+            .map((kandidat) => kandidat.fodselsnr && sendteMeldinger[kandidat.fodselsnr].id)
+            .forEach((id) => id && oppdatertLesteSmsIder.add(id));
 
         const oppdatertLesteSmsIderArray = Array.from(oppdatertLesteSmsIder);
         window.localStorage.setItem(LESTE_SMS_IDER_KEY, JSON.stringify(oppdatertLesteSmsIderArray));

@@ -1,14 +1,14 @@
+import { MinusCircleIcon, PlusCircleIcon } from '@navikt/aksel-icons';
+import { BodyLong, Button, ErrorMessage } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { PlusCircleIcon, MinusCircleIcon } from '@navikt/aksel-icons';
-import { BodyLong, Button, ErrorMessage } from '@navikt/ds-react';
 
-import { cvErSendtTilArbeidsgiverOgSlettet } from './CvErSlettet';
+import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { Nettstatus } from 'felles/nettressurs';
+import AppState from '../../../../state/AppState';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import { hentSisteKandidatutfall } from '../../../domene/kandidatUtils';
-import { Nettstatus } from 'felles/nettressurs';
-import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import AppState from '../../../../state/AppState';
+import { cvErSendtTilArbeidsgiverOgSlettet } from './CvErSlettet';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
 import css from './Hendelse.module.css';
 
@@ -54,7 +54,7 @@ const hentInitiellVisning = (
 
 const bleSendtTilArbeidsgiversKandidatlisteFørAvregistreringAvFåttJobben = (
     utfallsendringer: Utfallsendring[]
-): Boolean => {
+): boolean => {
     if (utfallsendringer.length < 3) return false;
 
     const [sisteUtfall, nestSisteutfall, tredjeSisteUtfall] = utfallsendringer;
@@ -262,7 +262,7 @@ const DelingAvCv: FunctionComponent<Props> = ({
                                 loading={slettCvStatus === Nettstatus.SenderInn}
                                 onClick={
                                     slettCvStatus === Nettstatus.SenderInn
-                                        ? () => {}
+                                        ? () => null
                                         : onBekreftSlettSendtCv
                                 }
                             >

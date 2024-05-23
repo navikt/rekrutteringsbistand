@@ -19,7 +19,7 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor, navKontorNavn }) => {
     };
 
     const antallMånederForHistorikk = 12;
-    const tidsperioder = Array<Number>(antallMånederForHistorikk)
+    const tidsperioder = Array<number>(antallMånederForHistorikk)
         .fill(0, 0, antallMånederForHistorikk)
         .map((_, i) => {
             const statistikkTidspunkt = new Date();

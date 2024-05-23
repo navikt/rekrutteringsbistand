@@ -4,7 +4,7 @@ import Grunnbanner from '../grunnbanner/Grunnbanner';
 import css from './Banner.module.css';
 
 type Props = {
-    tittel: String;
+    tittel: string;
     ikon: ReactNode;
     children?: ReactNode;
 };

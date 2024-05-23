@@ -1,17 +1,17 @@
-import { Kandidatlistefilter } from '../reducer/kandidatlisteReducer';
-import {
-    Hendelse,
-    hentKandidatensSisteHendelse,
-} from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import {
-    ForespørslerGruppertPåAktørId,
-    hentForespørslerForKandidatForStilling,
-} from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import {
     KandidatIKandidatliste,
     Kandidatstatus,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import {
+    Hendelse,
+    hentKandidatensSisteHendelse,
+} from '../kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
+import {
+    ForespørslerGruppertPåAktørId,
+    hentForespørslerForKandidatForStilling,
+} from '../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
+import { Kandidatlistefilter } from '../reducer/kandidatlisteReducer';
 
 const QUERY_PARAM_SEPARATOR = '-';
 
@@ -116,7 +116,7 @@ const getTrueKeys = (obj: Record<string, boolean>) =>
         .map(([key, value]) => key);
 
 export const filterTilQueryParams = (filter?: Kandidatlistefilter): URLSearchParams => {
-    let queryParams = new URLSearchParams();
+    const queryParams = new URLSearchParams();
     if (!filter) {
         return queryParams;
     }

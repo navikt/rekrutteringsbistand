@@ -21,8 +21,6 @@ const hentLandlisteSchema = z.array(landSchema);
 export type HentLandlisteDTO = z.infer<typeof hentLandlisteSchema>;
 export type LandDTO = z.infer<typeof landSchema>;
 
-export interface HentFylkerProps {}
-
 export const useHentLandliste = () => {
     const swrData = useSWRImmutable(hentLandlisteEndepunkt, getAPI);
 

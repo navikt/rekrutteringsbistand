@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import { Kandidatstatus } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatlistetype from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { AlertType, VisVarslingAction, useVisVarsling } from 'felles/varsling/Varsling';
 import Stilling from '../../felles/domene/stilling/Stilling';
 import AppState from '../state/AppState';
 import Kandidatliste from './Kandidatliste';
@@ -18,7 +19,6 @@ import SendSmsModal from './modaler/SendSmsModal';
 import PresenterKandidaterModal from './modaler/presenter-kandidater/PresenterKandidaterModal';
 import KandidatlisteAction from './reducer/KandidatlisteAction';
 import KandidatlisteActionType from './reducer/KandidatlisteActionType';
-import { AlertType, useVisVarsling, VisVarslingAction } from 'felles/varsling/Varsling';
 
 type OwnProps = {
     kandidatliste: Kandidatlistetype;
@@ -120,7 +120,7 @@ class LegacyKandidatlisteOgModaler extends React.Component<Props> {
         }
     };
 
-    onToggleSendSmsModal = (vis: boolean = !this.state.sendSmsModalOpen) => {
+    onToggleSendSmsModal = (vis = !this.state.sendSmsModalOpen) => {
         this.setState({
             sendSmsModalOpen: vis,
         });

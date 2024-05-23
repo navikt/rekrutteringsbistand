@@ -23,7 +23,9 @@ const useIkkeForespurteKandidater = (
             if (forespørslerOmDelingAvCv.kind === Nettstatus.Suksess) {
                 const ikkeForespurteKandidater = Object.keys(forespørslerOmDelingAvCv.data);
                 const markerte = markerteKandidater.filter(
-                    (kandidat) => !ikkeForespurteKandidater.includes(kandidat.aktørid!)
+                    (kandidat) =>
+                        kandidat.aktørid !== null &&
+                        !ikkeForespurteKandidater.includes(kandidat.aktørid)
                 );
 
                 setIkkeForespurteKandidater(markerte);

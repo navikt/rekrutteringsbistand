@@ -55,7 +55,7 @@ const FormidlingAvUsynligKandidatrad: FunctionComponent<Props> = ({
         formidling.lagtTilAvIdent
     }) ${formaterDatoNaturlig(formidling.lagtTilTidspunkt)}`;
 
-    let fulltNavn = `${formidling.etternavn}, ${formidling.fornavn}`;
+    const fulltNavn = `${formidling.etternavn}, ${formidling.fornavn}`;
 
     return (
         <div
@@ -99,7 +99,7 @@ const FormidlingAvUsynligKandidatrad: FunctionComponent<Props> = ({
                                     utfall={formidling.utfall}
                                     utfallsendringer={[]}
                                     onEndreUtfall={endreFormidlingsutfallForUsynligKandidat}
-                                    onSlettCv={() => {}}
+                                    onSlettCv={() => null}
                                 />
                                 <FåttJobben
                                     kanEndre={kanEditere}

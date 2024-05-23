@@ -25,14 +25,14 @@ const Kandidatside: FunctionComponent = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const routeParams = useParams<RouteParams>();
-    const kandidatnr = routeParams.kandidatnr!;
+    const kandidatnr = routeParams.kandidatnr || null;
 
     const kandidatlisteIdFraUrl = searchParams.get(KandidatQueryParam.KandidatlisteId);
     const stillingIdFraUrl = searchParams.get(KandidatQueryParam.StillingId);
     const kommerFraKandidatliste = searchParams.get(KandidatQueryParam.FraKandidatliste) === 'true';
     const kommerFraKandidatsøket = searchParams.get(KandidatQueryParam.FraKandidatsøk) === 'true';
 
-    if (kommerFraKandidatliste) {
+    if (kommerFraKandidatliste && kandidatnr) {
         return (
             <FraKandidatliste
                 tabs={<Faner />}
@@ -43,7 +43,7 @@ const Kandidatside: FunctionComponent = () => {
                 <Outlet />
             </FraKandidatliste>
         );
-    } else if (kommerFraKandidatsøket) {
+    } else if (kommerFraKandidatsøket && kandidatnr) {
         if (stillingIdFraUrl || kandidatlisteIdFraUrl) {
             return (
                 <FraSøkMedKandidatliste

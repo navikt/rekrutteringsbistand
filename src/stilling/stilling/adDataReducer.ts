@@ -295,6 +295,7 @@ const manipulateAdReducer = (state: Stilling, action: any) => {
                 },
             };
         case CHECK_EMPLOYMENT_WORKDAY:
+            // eslint-disable-next-line no-case-declarations
             const { workday } = state.properties;
 
             return {
@@ -322,6 +323,7 @@ const manipulateAdReducer = (state: Stilling, action: any) => {
                 },
             };
         case CHECK_EMPLOYMENT_WORKHOURS:
+            // eslint-disable-next-line no-case-declarations
             const { workhours } = state.properties;
 
             return {
@@ -373,6 +375,7 @@ const manipulateAdReducer = (state: Stilling, action: any) => {
                 },
                 expires:
                     isValidISOString(action.applicationdue) &&
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     state.expires! < action.applicationdue
                         ? action.applicationdue
                         : state.expires,
@@ -559,6 +562,7 @@ const manipulateAdReducer = (state: Stilling, action: any) => {
             };
         }
         case UNCHECK_TAG:
+            // eslint-disable-next-line no-case-declarations
             const tags = fjernTagUnderRegistrering(
                 JSON.parse(state.properties.tags || ''),
                 action.value

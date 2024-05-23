@@ -7,8 +7,8 @@ const useOnClickOutside = (onClickOutside: () => void, elementIds: string[]) => 
             .filter((element) => element !== null);
 
         const listener = (event: MouseEvent) => {
-            const clickHappenedInsideSomeElement = elements.some((element) =>
-                element!.contains(event.target as Node)
+            const clickHappenedInsideSomeElement = elements.some(
+                (element) => element && element.contains(event.target as Node)
             );
 
             if (clickHappenedInsideSomeElement === false) {

@@ -57,6 +57,7 @@ export function toDate(isoString?: string | null): Date {
         throw Error(`${isoString} is not a valid ISO 8601 date`);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return new Date(isoString!);
 }
 

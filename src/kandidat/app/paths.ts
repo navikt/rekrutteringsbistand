@@ -57,7 +57,7 @@ export const lenkeTilCv = (
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
-    let lenke = `/kandidater/kandidat/${kandidatnr}/cv`;
+    const lenke = `/kandidater/kandidat/${kandidatnr}/cv`;
     return (
         lenke + queryParamsForKandidatside(kandidatlistekontekst, fraKandidatliste, fraKandidatsøk)
     );
@@ -69,7 +69,7 @@ export const lenkeTilHistorikk = (
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
-    let lenke = `/kandidater/kandidat/${kandidatnr}/historikk`;
+    const lenke = `/kandidater/kandidat/${kandidatnr}/historikk`;
     return (
         lenke + queryParamsForKandidatside(kandidatlistekontekst, fraKandidatliste, fraKandidatsøk)
     );
@@ -80,7 +80,7 @@ const queryParamsForKandidatside = (
     fraKandidatliste?: boolean,
     fraKandidatsøk?: boolean
 ) => {
-    let queryParams = new URLSearchParams();
+    const queryParams = new URLSearchParams();
 
     if (fraKandidatliste) {
         queryParams.set(KandidatQueryParam.FraKandidatliste, 'true');

@@ -1,9 +1,9 @@
-import { FunctionComponent, useEffect, useState } from 'react';
-import { PlusCircleIcon, MinusCircleIcon } from '@navikt/aksel-icons';
+import { MinusCircleIcon, PlusCircleIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
-import { hentSisteKandidatutfall } from '../../../domene/kandidatUtils';
-import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
+import { hentSisteKandidatutfall } from '../../../domene/kandidatUtils';
 import Hendelse, { Hendelsesstatus } from './Hendelse';
 import css from './Hendelse.module.css';
 
@@ -78,10 +78,12 @@ const FåttJobben: FunctionComponent<Props> = ({
             );
 
         case Visning.FjernRegistrering:
+            // eslint-disable-next-line no-case-declarations
             const utfallsendring = hentSisteKandidatutfall(
                 Kandidatutfall.Presentert,
                 utfallsendringer
             );
+            // eslint-disable-next-line no-case-declarations
             const utfallsbeskrivelse = utfallsendring
                 ? `${formaterDatoNaturlig(utfallsendring.tidspunkt)} av ${
                       utfallsendring.registrertAvIdent

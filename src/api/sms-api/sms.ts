@@ -1,9 +1,9 @@
-import { z } from 'zod';
 import { http, HttpResponse } from 'msw';
+import useSWR, { SWRResponse, useSWRConfig } from 'swr';
+import { z } from 'zod';
 import { mockKandidatlisteMedStilling } from '../../../mock/kandidat-api/mockKandidatliste';
 import { mockVeileder } from '../../../mock/mockVeileder';
 import { fetchJson, postJson } from '../../kandidat/api/fetchUtils';
-import useSWR, { SWRResponse, useSWRConfig } from 'swr';
 
 const varselStillingEndepunkt = (stillingId: string) => {
     if (stillingId === undefined) throw new Error('stillingId === undefined');
@@ -159,7 +159,7 @@ export const smsApiMock = [
         }
     }),
 
-    http.post<{}, smserForKandidatRequest>(varselQueryEndepunkt, async ({ request }) => {
+    http.post<object, smserForKandidatRequest>(varselQueryEndepunkt, async ({ request }) => {
         const { fnr } = await request.json();
         const sms = mockSms.filter((sms) => sms.mottakerFnr === fnr);
 
@@ -174,7 +174,7 @@ export const smsApiMock = [
 const mockSms: Sms[] = [
     {
         id: '1',
-        stillingId: mockKandidatlisteMedStilling.stillingId!,
+        stillingId: mockKandidatlisteMedStilling.stillingId as string,
         mottakerFnr: '14114536327', //mockKandidatlisteMedStilling.kandidater[0].fodselsnr,
         avsenderNavident: mockVeileder.navIdent,
         opprettet: new Date().toISOString(),

@@ -5,7 +5,7 @@ import { Nettstatus } from 'felles/nettressurs';
 import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
 import css from './LagreKandidatIMineKandidatlisterModal.module.css';
 import VelgKandidatlister from './VelgKandidatlister';
-import {useVisVarsling} from "felles/varsling/Varsling";
+import { useVisVarsling } from 'felles/varsling/Varsling';
 
 type Props = {
     vis: boolean;
@@ -18,7 +18,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     onClose,
     kandidatnr,
 }) => {
-    const visVarsling = useVisVarsling()
+    const visVarsling = useVisVarsling();
     const [markerteLister, setMarkerteLister] = useState<Set<string>>(new Set());
     const [lagredeLister, setLagredeLister] = useState<Set<string>>(new Set());
     const [lagreIKandidatlister, setLagreIKandidatlister] = useState<Nettstatus>(
