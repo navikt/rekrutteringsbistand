@@ -31,8 +31,8 @@ const geografiJobbonskeSchema = z.object({
 export const kandidatStillingssøkDTOSchema = z.object({
     yrkeJobbonskerObj: z.array(yrkeJobbonskeSchema),
     geografiJobbonsker: z.array(geografiJobbonskeSchema),
-    kommunenummerstring: z.string(),
-    kommuneNavn: z.string(),
+    kommunenummerstring: z.string().nullable(),
+    kommuneNavn: z.string().nullable(),
 });
 
 export type GeografiØnske = z.infer<typeof geografiJobbonskeSchema>;
