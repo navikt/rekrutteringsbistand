@@ -1,6 +1,6 @@
 import { Nyhet } from './Nyheter';
 
-const tilDato = (dag: number, måned: number, år: number, timer: number = 0, minutter: number = 0) =>
+const tilDato = (dag: number, måned: number, år: number, timer = 0, minutter = 0) =>
     new Date(år, måned - 1, dag, timer, minutter);
 
 const nyhetssaker: Nyhet[] = [
@@ -287,7 +287,7 @@ const nyhetssaker: Nyhet[] = [
                         rel="noopener noreferrer"
                         href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Del-stillinger-med-kandidater-i-Aktivitetsplanen.aspx"
                     >
-                        Les om hvordan du deler en stilling med kandidater
+                        Les om hvordan du deler en stilling med kandidater
                     </a>
                     .
                 </p>

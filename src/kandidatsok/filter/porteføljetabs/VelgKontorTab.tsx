@@ -1,3 +1,5 @@
+import { ChevronDownIcon, ChevronUpIcon, XMarkIcon } from '@navikt/aksel-icons';
+import { Button, Popover, Tabs } from '@navikt/ds-react';
 import {
     FunctionComponent,
     KeyboardEventHandler,
@@ -5,12 +7,10 @@ import {
     useRef,
     useState,
 } from 'react';
-import { Button, Popover, Tabs } from '@navikt/ds-react';
-import { ChevronDownIcon, ChevronUpIcon, XMarkIcon } from '@navikt/aksel-icons';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import { Søkekriterier } from '../../hooks/useSøkekriterier';
-import { Portefølje } from './PorteføljeTabs';
 import VelgKontor from '../VelgKontor';
+import { Portefølje } from './PorteføljeTabs';
 import css from './VelgKontorTab.module.css';
 
 const POPOVER_ID = 'velg-kontor-popover';
@@ -100,7 +100,7 @@ const VelgKontorTab: FunctionComponent<Props> = ({ søkekriterier }) => {
                 id={POPOVER_ID}
                 open={visKontorvelger}
                 anchorEl={velgKontorRef.current}
-                onClose={() => {}}
+                onClose={() => null}
             >
                 <Popover.Content className={css.popover}>
                     <Button

@@ -15,7 +15,7 @@ export class SearchApiError {
     }
 }
 
-export async function fetchJson(url: string, includeCredentials: boolean = false) {
+export async function fetchJson(url: string, includeCredentials = false) {
     try {
         let response;
         if (includeCredentials) {
@@ -90,7 +90,7 @@ export const postHeaders = () => ({
 export async function postJson(
     url: string,
     bodyString: string,
-    parseAsJsonIgnoringContentType: boolean = false
+    parseAsJsonIgnoringContentType = false
 ) {
     try {
         const response = await fetch(url, {

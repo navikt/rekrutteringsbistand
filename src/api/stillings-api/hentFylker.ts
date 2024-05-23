@@ -20,8 +20,6 @@ const hentFylkerSchema = z.array(fylkeSchema);
 export type HentFylkerDTO = z.infer<typeof hentFylkerSchema>;
 export type FylkeDTO = z.infer<typeof fylkeSchema>;
 
-export interface HentFylkerProps {}
-
 export const useHentFylker = () => {
     return useSWRImmutable(hentFylkerEndepunkt, getAPIwithSchema(hentFylkerSchema));
 };

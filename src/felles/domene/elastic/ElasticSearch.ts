@@ -49,7 +49,7 @@ type Sort =
 
 export type AggregationsQuery = {
     [aggregering: string]: {
-        global?: {};
+        global?: object;
         terms?: {
             field: string;
             size?: number;
@@ -97,7 +97,7 @@ export type EsResponse<IndexedItem> = {
         max_score: number | null;
         hits: Array<Hit<IndexedItem>>;
     };
-    suggest?: {};
+    suggest?: object;
     aggregations?: AggregationsResponse;
 };
 

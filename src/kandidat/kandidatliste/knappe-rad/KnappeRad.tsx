@@ -3,6 +3,7 @@ import { Button } from '@navikt/ds-react';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { FunctionComponent, ReactNode } from 'react';
+import { useSmserForStilling } from '../../../api/sms-api/sms';
 import TilgangskontrollForInnhold, {
     Rolle,
 } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
@@ -16,7 +17,6 @@ import MedPopover from '../med-popover/MedPopover';
 import DelMedArbeidsgiverKnapp from './DelMedArbeidsgiverKnapp';
 import css from './KnappeRad.module.css';
 import ForespørselOmDelingAvCv from './forespørsel-om-deling-av-cv/ForespørselOmDelingAvCv';
-import { useSmserForStilling } from '../../../api/sms-api/sms';
 
 type Props = {
     kandidatliste: Kandidatliste;
@@ -43,7 +43,7 @@ const KnappeRad: FunctionComponent<Props> = ({
     const minstEnKandidatHarIkkeFåttSms =
         sendteMeldinger !== undefined &&
         markerteAktiveKandidater.some(
-            (markertKandidat) => !sendteMeldinger[markertKandidat.fodselsnr!]
+            (markertKandidat) => !sendteMeldinger[markertKandidat.fodselsnr as string]
         );
 
     const skalViseEkstraKnapper =
@@ -100,9 +100,9 @@ const KnappeRad: FunctionComponent<Props> = ({
                             </MedPopover>
                         )}
                     </TilgangskontrollForInnhold>
-                    {skalViseDelMedKandidatKnapp && (
+                    {skalViseDelMedKandidatKnapp && kandidatliste.stillingId && (
                         <ForespørselOmDelingAvCv
-                            stillingsId={kandidatliste.stillingId!}
+                            stillingsId={kandidatliste.stillingId}
                             markerteKandidater={markerteKandidater}
                         />
                     )}

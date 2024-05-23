@@ -79,7 +79,7 @@ const useSøkMedQuery = ({
         }
 
         const søkMedQuery = async () => {
-            let respons = await søk(
+            const respons = await søk(
                 lagQuery({
                     søkekriterier,
                     navIdent,

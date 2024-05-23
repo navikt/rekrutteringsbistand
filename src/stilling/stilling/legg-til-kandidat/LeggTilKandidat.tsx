@@ -129,7 +129,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                     ) : (
                                         <Alert variant="info">
                                             <strong>
-                                                Årsaken kan være en eller flere av disse: ​​​​​​​
+                                                Årsaken kan være en eller flere av disse:
                                             </strong>
                                             <ol>
                                                 <li>Kandidaten mangler CV eller jobbprofil.</li>
@@ -142,7 +142,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                     kandidatsøk» i Arena.
                                                 </li>
                                                 <li>
-                                                    ​​​​​​​Kandidaten har formidlingskode «Ikke
+                                                    Kandidaten har formidlingskode «Ikke
                                                     servicebehov (ISERV)» i Arena.
                                                 </li>
                                                 <li>Kandidaten har status "Egen ansatt".</li>

@@ -61,6 +61,6 @@ export const tagsInneholderInkluderingsmuligheter = (tags?: string) => {
         return false;
     }
 
-    const parsedeTags: Tag[] = JSON.parse(tags!);
+    const parsedeTags: Tag[] = JSON.parse(tags);
     return alleInkluderingstags.some((tag) => parsedeTags.includes(tag));
 };

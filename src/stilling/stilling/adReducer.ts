@@ -11,9 +11,9 @@ import { OPPRETT_STILLINGSINFO, UPDATE_STILLINGSINFO } from '../stillingsinfo/st
 import {
     CHECK_TAG,
     REMOVE_AD_DATA,
+    SET_ADMIN_STATUS,
     SET_AD_DATA,
     SET_AD_STATUS,
-    SET_ADMIN_STATUS,
     SET_FIRST_PUBLISHED,
     SET_NAV_IDENT,
     SET_REPORTEE,
@@ -40,9 +40,9 @@ import Stilling, {
 } from 'felles/domene/stilling/Stilling';
 import { Nettstatus } from 'felles/nettressurs';
 import { ApiError, fetchDelete, fetchPut } from '../api/apiUtils';
+import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
 import { State } from '../redux/store';
 import { formatISOString } from '../utils/datoUtils';
-import { VarslingAction, VarslingActionType } from '../common/varsling/varslingReducer';
 
 export const FETCH_AD = 'FETCH_AD';
 export const FETCH_AD_BEGIN = 'FETCH_AD_BEGIN';
@@ -566,7 +566,7 @@ function* showDeleteModal(action: any): Generator<unknown, any, any> {
 }
 
 function* leggTilIMineStillinger(action: any): Generator<unknown, any, any> {
-    let state = yield select();
+    const state = yield select();
 
     const { navIdent, displayName } = state.reportee.data;
     yield put({ type: SET_NAV_IDENT_STILLINGSINFO, navIdent, displayName });
@@ -574,7 +574,7 @@ function* leggTilIMineStillinger(action: any): Generator<unknown, any, any> {
 }
 
 function* markerEksternStillingSomMin(action: any): Generator<unknown, any, any> {
-    let state = yield select();
+    const state = yield select();
 
     const { navIdent, displayName } = state.reportee.data;
     yield put({ type: SET_NAV_IDENT_STILLINGSINFO, navIdent, displayName });
@@ -582,7 +582,7 @@ function* markerEksternStillingSomMin(action: any): Generator<unknown, any, any>
 }
 
 function* markerInternStillingSomMin(): Generator<unknown, any, any> {
-    let state = yield select();
+    const state = yield select();
 
     const { navIdent, displayName } = state.reportee.data;
     yield put({ type: SET_NAV_IDENT, navIdent });

@@ -42,7 +42,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         };
 
         if (!loadjs.isDefined(appName)) {
-            let url = hentHostname();
+            const url = hentHostname();
 
             loadAssets([
                 `${url}/internarbeidsflatedecorator/v2.1/static/js/head.v2.min.js`,

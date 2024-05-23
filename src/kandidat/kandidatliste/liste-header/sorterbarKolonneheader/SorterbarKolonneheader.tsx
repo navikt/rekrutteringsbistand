@@ -1,8 +1,8 @@
+import { ArrowDownIcon, ArrowUpIcon, ArrowsUpDownIcon } from '@navikt/aksel-icons';
+import { Label } from '@navikt/ds-react';
 import { FunctionComponent, ReactNode } from 'react';
-import { ArrowsUpDownIcon, ArrowUpIcon, ArrowDownIcon } from '@navikt/aksel-icons';
 import { Link, useLocation } from 'react-router-dom';
 import { Retning } from './Retning';
-import { Label } from '@navikt/ds-react';
 import css from './SorterbarKolonneheader.module.css';
 
 interface Props {
@@ -22,7 +22,7 @@ const SorterbarKolonneheader: FunctionComponent<Props> = ({
     onClick,
     children,
 }) => {
-    let { pathname, search } = useLocation();
+    const { pathname, search } = useLocation();
 
     let ariaSort: 'none' | 'ascending' | 'descending' = 'none';
 

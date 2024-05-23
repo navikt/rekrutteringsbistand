@@ -54,7 +54,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
         hentHovedtags().includes(tag)
     );
 
-    let urlTilStilling = lagUrlTilStilling(stilling, kandidatnr);
+    const urlTilStilling = lagUrlTilStilling(stilling, kandidatnr);
 
     const erEier = hentEierId(rekrutteringsbistandstilling) === navIdent;
 

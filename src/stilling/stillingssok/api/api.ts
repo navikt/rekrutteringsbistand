@@ -5,7 +5,7 @@ import StandardsøkDto from '../filter/standardsøk/Standardsøk';
 
 export const søk = async (
     query: EsQuery<EsRekrutteringsbistandstilling>,
-    forklarScore: boolean = false
+    forklarScore = false
 ): Promise<EsResponse<EsRekrutteringsbistandstilling>> => {
     const url = `${api.stillingssøk}/stilling/_search`;
     const urlMedParams = forklarScore ? `${url}?explain=true` : url;
@@ -59,7 +59,7 @@ const logErrorResponse = (respons: Response) => {
 export const post = (url: string, body: object) => jsonRequest(url, body, 'POST');
 const put = (url: string, body: object) => jsonRequest(url, body, 'PUT');
 
-const jsonRequest = (url: string, body?: object, method: string = 'GET') =>
+const jsonRequest = (url: string, body?: object, method = 'GET') =>
     fetch(url, {
         body: JSON.stringify(body),
         method,

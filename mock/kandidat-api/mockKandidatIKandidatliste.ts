@@ -15,7 +15,7 @@ export const mockKandidatIKandidatliste: KandidatIKandidatliste[] = [
         epost: mockKandidat.epostadresse,
         erSynlig: true,
         etternavn: mockKandidat.etternavn,
-        fodselsdato: mockKandidat.fodselsdato!!,
+        fodselsdato: mockKandidat.fodselsdato as string,
         fodselsnr: mockKandidat.fodselsnummer,
         fornavn: mockKandidat.fornavn,
         innsatsgruppe: 'Situasjonsbestemt innsats',

@@ -1,5 +1,5 @@
-import { useLayoutEffect } from 'react';
 import { fnr } from '@navikt/fnrvalidator';
+import { useLayoutEffect } from 'react';
 
 const erstatningstegn = '*';
 
@@ -24,8 +24,8 @@ const maskerAlleFødselsnumre = (fraElement: HTMLElement | null) => {
 };
 
 const hentAlleTekstnoder = (el: HTMLElement) => {
-    let alleTekstnoder: Node[] = [];
-    let treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+    const alleTekstnoder: Node[] = [];
+    const treeWalker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
 
     let nesteNode: Node | null = treeWalker.nextNode();
     while (nesteNode !== null) {

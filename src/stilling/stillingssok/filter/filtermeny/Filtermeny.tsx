@@ -35,7 +35,7 @@ const Filtermeny = ({ finnerStillingForKandidat, skjulLagreStandardsøk }: Props
 };
 
 export const hentIgnorerteFiltre = (finnerStillingForKandidat: boolean | undefined) => {
-    let ignorerteFiltre = [QueryParam.Sortering, QueryParam.Modal, QueryParam.Portofølje];
+    const ignorerteFiltre = [QueryParam.Sortering, QueryParam.Modal, QueryParam.Portofølje];
 
     if (finnerStillingForKandidat) {
         ignorerteFiltre.push(QueryParam.Statuser);

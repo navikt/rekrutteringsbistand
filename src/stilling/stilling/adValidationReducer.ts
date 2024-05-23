@@ -347,6 +347,7 @@ function* validateContactPersonPhone(): Generator<unknown, any, any> {
 
 function* validateApplicationdueDate(): Generator<unknown, any, any> {
     const state = yield select();
+    // eslint-disable-next-line no-unsafe-optional-chaining
     const { applicationdue } = state.adData?.properties;
 
     if (valueIsNotSet(applicationdue)) {
@@ -366,6 +367,7 @@ function* validateApplicationdueDate(): Generator<unknown, any, any> {
 
 function* validateEmploymentStartTime(): Generator<unknown, any, any> {
     const state = yield select();
+    // eslint-disable-next-line no-unsafe-optional-chaining
     const { starttime } = state.adData?.properties;
 
     const erGyldig =
@@ -383,6 +385,7 @@ function* validateEmploymentStartTime(): Generator<unknown, any, any> {
 
 function* validateEngagementType(): Generator<unknown, any, any> {
     const state = yield select();
+    // eslint-disable-next-line no-unsafe-optional-chaining
     const { engagementtype } = state.adData?.properties;
 
     if (valueIsNotSet(engagementtype)) {
@@ -413,6 +416,7 @@ function* validatePositionCount() {
 
 function* validateExtent(): Generator<unknown, any, any> {
     const state = yield select();
+    // eslint-disable-next-line no-unsafe-optional-chaining
     const { extent } = state.adData?.properties;
 
     if (valueIsNotSet(extent)) {
@@ -424,6 +428,7 @@ function* validateExtent(): Generator<unknown, any, any> {
 
 function* validateSector(): Generator<unknown, any, any> {
     const state = yield select();
+    // eslint-disable-next-line no-unsafe-optional-chaining
     const { sector } = state.adData?.properties;
 
     if (valueIsNotSet(sector)) {
@@ -435,6 +440,7 @@ function* validateSector(): Generator<unknown, any, any> {
 
 function* validateWorkday(): Generator<unknown, any, any> {
     const state = yield select();
+    // eslint-disable-next-line no-unsafe-optional-chaining
     const { workday } = state.adData?.properties;
 
     if (valueIsNotSet(workday) || !isJson(workday) || valueIsNotSet(JSON.parse(workday))) {
@@ -451,6 +457,7 @@ function* validateWorkhours(): Generator<unknown, any, any> {
     const state: State = yield select();
     const workhours = state.adData?.properties.workhours;
 
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     if (valueIsNotSet(workhours) || !isJson(workhours) || valueIsNotSet(JSON.parse(workhours!))) {
         yield addValidationError({
             field: 'workhours',

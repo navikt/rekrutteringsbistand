@@ -19,7 +19,7 @@ export const ØktContext = createContext<{
 }>({
     forrigeØkt: {},
     økt: {},
-    setØkt: () => {},
+    setØkt: () => null,
 });
 
 type Props = {

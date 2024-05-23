@@ -49,7 +49,7 @@ const SendForespørselPåNytt: FunctionComponent<Props> = ({
             const outboundDto: ResendForespørselOutboundDto = {
                 stillingsId,
                 svarfrist: lagSvarfristPåSekundet(svarfrist, egenvalgtFrist),
-                navKontor: valgtNavKontor!,
+                navKontor: valgtNavKontor,
             };
 
             setSenderForespørselPåNytt(true);

@@ -48,7 +48,7 @@ const LastInnPåNytt = () => (
 
 Error.defaultProps = {
     error: undefined,
-    closeModal: () => {},
+    closeModal: () => null,
 };
 
 Error.propTypes = {

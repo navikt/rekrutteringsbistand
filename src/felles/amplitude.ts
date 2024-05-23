@@ -20,7 +20,7 @@ export const setNavKontorForAmplitude = (navKontor: string) => {
     }
 };
 
-export const sendEvent = (område: string, hendelse: string, data?: Object) => {
+export const sendEvent = (område: string, hendelse: string, data?: object) => {
     if (import.meta.env.PROD) {
         client.logEvent(['#rekrutteringsbistand', område, hendelse].join('-'), data);
     }

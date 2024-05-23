@@ -96,6 +96,6 @@ export const oppdaterUrlMedParam = ({
     verdi: QueryParamValue;
     state?: Navigeringsstate;
 }) => {
-    let oppdaterteParams = oppdaterQueryParametere(searchParams, parameter, verdi);
+    const oppdaterteParams = oppdaterQueryParametere(searchParams, parameter, verdi);
     navigate({ search: oppdaterteParams }, { replace: true, state });
 };

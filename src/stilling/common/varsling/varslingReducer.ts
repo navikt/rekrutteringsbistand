@@ -37,10 +37,12 @@ const varslingReducer = (
 ): VarslingState => {
     switch (action.type) {
         case VarslingActionType.SetVisVarsling:
+            // eslint-disable-next-line no-case-declarations
             const { visVarsling } = action;
             return { visVarsling };
 
         case VarslingActionType.VisVarsling:
+            // eslint-disable-next-line no-case-declarations
             const { innhold, alertType, varighetMs } = action;
             state.visVarsling?.({ innhold, alertType, varighetMs });
             return state;

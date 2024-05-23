@@ -6,10 +6,10 @@ export function isValidISOString(isoString?: string | null) {
     return ISO_8601_DATE.test(isoString);
 }
 
-export function formatISOString(isoString?: string | null, format: string = 'DD.MM.YYYY') {
+export function formatISOString(isoString?: string | null, format = 'DD.MM.YYYY') {
     try {
-        if (isValidISOString(isoString)) {
-            const dt = isoString!.split('-');
+        if (isoString && isValidISOString(isoString)) {
+            const dt = isoString.split('-');
             if (format === 'DD.MM.YYYY') {
                 const day = dt[2].split('T')[0];
                 return `${day}.${dt[1]}.${dt[0]}`;
@@ -30,7 +30,7 @@ export const leggTilTimerPåISOString = (
     datoString: string,
     antallTimerFraMidnatt: number
 ): string => {
-    let dato = new Date(datoString);
+    const dato = new Date(datoString);
     dato.setHours(antallTimerFraMidnatt);
     return dato.toISOString();
 };

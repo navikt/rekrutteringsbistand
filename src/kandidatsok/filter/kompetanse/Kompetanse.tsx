@@ -12,7 +12,7 @@ const Kompetanse = () => {
     };
 
     const onVelgForslag = (forslag: string) => () => {
-        let valgteKompetanser = Array.from(søkekriterier.kompetanse);
+        const valgteKompetanser = Array.from(søkekriterier.kompetanse);
         valgteKompetanser.push(forslag);
 
         setValue(kombinerStringsTilSearchParam(valgteKompetanser));
