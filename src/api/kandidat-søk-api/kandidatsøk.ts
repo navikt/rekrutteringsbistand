@@ -1,22 +1,23 @@
 /**
  * Endepunkt /kandidatsok-api/api/kandidatsøk
  */
-import { HttpResponse, http } from 'msw';
-import useSWR from 'swr';
-import { z } from 'zod';
-import { postApi } from '../fetcher';
-import { Portefølje } from '../../kandidatsok/filter/porteføljetabs/PorteføljeTabs';
-import { FiltrerbarInnsatsgruppe } from '../../kandidatsok/filter/Jobbmuligheter';
-import { Nivå } from '../../kandidatsok/filter/Utdanningsnivå';
-import { PrioritertMålgruppe } from '../../kandidatsok/filter/prioriterte-målgrupper/PrioriterteMålgrupper';
-import { Mål } from '../../kandidatsok/filter/Hovedmål';
-import { mockKandidatsøkKandidater } from './mockKandidatsøk';
-import { Førerkortklasse } from '../../kandidatsok/hooks/useSøkekriterier';
 import {
     getNummerFraSted,
     lagKandidatsøkstreng,
     stedmappingFraNyttNummer,
 } from 'felles/MappingSted';
+import { HttpResponse, http } from 'msw';
+import useSWR from 'swr';
+import { z } from 'zod';
+import { Mål } from '../../kandidatsok/filter/Hovedmål';
+import { FiltrerbarInnsatsgruppe } from '../../kandidatsok/filter/Jobbmuligheter';
+import { Nivå } from '../../kandidatsok/filter/Utdanningsnivå';
+import { Portefølje } from '../../kandidatsok/filter/porteføljetabs/PorteføljeTabs';
+import { PrioritertMålgruppe } from '../../kandidatsok/filter/prioriterte-målgrupper/PrioriterteMålgrupper';
+import { Førerkortklasse } from '../../kandidatsok/hooks/useSøkekriterier';
+import { postApi } from '../fetcher';
+import { Enheter } from '../modiacontextholder/decorator';
+import { mockKandidatsøkKandidater } from './mockKandidatsøk';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
 
@@ -86,12 +87,17 @@ export type KandidatsøkProps = {
     sortering: string;
 };
 
-export const useKandidatsøk = (props: KandidatsøkProps) => {
-    const søkekriterier: SøkekriterierDto = props.søkekriterier;
+export interface KandidatSøkKriterier {
+    søkeprops: KandidatsøkProps;
+    enheter?: Enheter[] | null;
+}
+
+export const useKandidatsøk = (props: KandidatSøkKriterier) => {
+    const søkekriterier: SøkekriterierDto = props.søkeprops.søkekriterier;
 
     const queryParams = new URLSearchParams({
-        side: String(props.side),
-        sortering: props.sortering,
+        side: String(props.søkeprops.side),
+        sortering: props.søkeprops.sortering,
     });
 
     const utvidedeSøkekriterier = {
@@ -104,11 +110,17 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
         }),
     };
 
+    const overstyrValgteKontorer = props.enheter
+        ? props.enheter.map((e) => e.navn)
+        : Array.from(søkekriterier.valgtKontor);
+
+    // Brukes bare som key for å unngå duplikat kall, men brukes ikke som payload data. ifht autditlogging.
     const swrPropKey = JSON.stringify({
         ...props,
         søkekriterier: {
             ...søkekriterier,
-            valgtKontor: Array.from(søkekriterier.valgtKontor),
+            portefølje: overstyrValgteKontorer ? Portefølje.VelgKontor : søkekriterier.portefølje,
+            valgtKontor: overstyrValgteKontorer,
             innsatsgruppe: Array.from(søkekriterier.innsatsgruppe),
             ønsketYrke: Array.from(søkekriterier.ønsketYrke),
             ønsketSted: Array.from(søkekriterier.ønsketSted),
@@ -122,8 +134,16 @@ export const useKandidatsøk = (props: KandidatsøkProps) => {
         },
     });
 
+    const brukSøkekriterier = overstyrValgteKontorer
+        ? {
+              ...utvidedeSøkekriterier,
+              portefølje: Portefølje.VelgKontor,
+              valgtKontor: overstyrValgteKontorer,
+          }
+        : utvidedeSøkekriterier;
+
     const swr = useSWR({ path: kandidatsøkEndepunkt, swrPropKey }, ({ path }) =>
-        postApi(path, utvidedeSøkekriterier, queryParams)
+        postApi(path, brukSøkekriterier, queryParams)
     );
 
     const kandidatsøkKandidater: KandidatsøkKandidat[] = swr?.data?.hits?.hits.map((k: any) =>

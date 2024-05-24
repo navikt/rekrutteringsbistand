@@ -1,11 +1,11 @@
 import useNavKontor from 'felles/store/navKontor';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useLocalStorageToggle } from '../dev/DevUtil';
 import Dekoratør from './modiadekoratør/Modiadekoratør';
 import Placeholder from './modiadekoratør/Placeholder';
 import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
 import useAmplitude from './useAmplitude';
-import React, { useEffect } from 'react';
 
 const Header = () => {
     const { navKontor, setNavKontor } = useNavKontor();
