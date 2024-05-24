@@ -84,7 +84,7 @@ const Kandidater: FunctionComponent<Props> = ({
         harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]) &&
         !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]);
 
-    const begrensTilEnheter = begrensTilKontorer ? enheter : undefined;
+    const begrensTilEnheter = begrensTilKontorer ? enheter : null;
 
     const søkeprops = {
         søkeprops: kandidatsøkProps,

@@ -10,12 +10,13 @@ interface ApplikasjonContextType {
     navIdent?: string;
     harRolle: (rolle: Rolle[]) => boolean;
     tilgangskontrollErPå: boolean;
-    enheter?: Enheter[];
+    enheter: Enheter[];
 }
 
 export const ApplikasjonContext = React.createContext<ApplikasjonContextType>({
     harRolle: () => false,
     tilgangskontrollErPå: false,
+    enheter: [],
 });
 
 interface IApplikasjonContextProvider {

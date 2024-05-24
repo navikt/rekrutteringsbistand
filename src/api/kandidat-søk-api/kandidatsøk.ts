@@ -89,7 +89,7 @@ export type KandidatsøkProps = {
 
 export interface KandidatSøkKriterier {
     søkeprops: KandidatsøkProps;
-    enheter?: Enheter[];
+    enheter: Enheter[] | null;
 }
 
 export const useKandidatsøk = (props: KandidatSøkKriterier) => {
