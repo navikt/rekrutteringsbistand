@@ -2,7 +2,6 @@ import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useMeg } from '../api/frackend/meg';
 import { Enheter, useDecorator } from '../api/modiacontextholder/decorator';
-import { erIkkeProd } from './miljø';
 import { Rolle } from './tilgangskontroll/TilgangskontrollForInnhold';
 
 interface ApplikasjonContextType {
@@ -35,8 +34,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
         }
     }, [dekoratørData]);
 
-    // TODO Feature-toggle!
-    const tilgangskontrollErPå = erIkkeProd;
+    const tilgangskontrollErPå = true;
 
     const harRolle = (rolle: Rolle[]) =>
         tilgangskontrollErPå
