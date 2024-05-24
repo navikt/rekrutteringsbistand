@@ -1,7 +1,7 @@
 import { InformationSquareIcon, TrashIcon } from '@navikt/aksel-icons';
-import { BodyShort, Button, Checkbox } from '@navikt/ds-react';
+import { BodyLong, BodyShort, Button, Checkbox, Modal } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { FunctionComponent, useEffect, useRef } from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -50,6 +50,8 @@ const Kandidatrad: FunctionComponent<Props> = ({
     const dispatch = useDispatch();
     const kandidatRadRef = useRef<HTMLDivElement>(null);
 
+    const [visBekreftModal, setVisBekreftModal] = useState(false);
+
     const tilstand = useKandidattilstand(kandidat.kandidatnr);
     const melding = useSendtKandidatmelding(kandidat.fodselsnr, kandidatliste.stillingId);
     const forespørselOmDelingAvCv = useForespørselOmDelingAvCv(kandidat.aktørid);
@@ -82,6 +84,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
     };
 
     const onToggleArkivert = () => {
+        setVisBekreftModal(false);
         toggleArkivert(kandidatliste.kandidatlisteId, kandidat.kandidatnr, true);
     };
 
@@ -183,9 +186,38 @@ const Kandidatrad: FunctionComponent<Props> = ({
                             size="small"
                             variant="tertiary"
                             aria-label="Slett kandidat"
-                            onClick={onToggleArkivert}
+                            onClick={() => setVisBekreftModal(true)}
                             icon={<TrashIcon aria-label="Slett kandidat" />}
-                        ></Button>
+                        />
+
+                        <Modal
+                            open={visBekreftModal}
+                            onClose={() => setVisBekreftModal(false)}
+                            header={{
+                                heading: 'Er du sikker?',
+                                size: 'small',
+                                closeButton: false,
+                            }}
+                            width="small"
+                        >
+                            <Modal.Body>
+                                <BodyLong>
+                                    Er du sikker på at du vil slette kandidaten fra listen?
+                                </BodyLong>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button type="button" variant="danger" onClick={onToggleArkivert}>
+                                    Ja, jeg er sikker
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant="secondary"
+                                    onClick={() => setVisBekreftModal(false)}
+                                >
+                                    Avbryt
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                 )}
             </div>
