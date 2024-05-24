@@ -24,7 +24,15 @@ interface IApplikasjonContextProvider {
 
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
     const { navIdent, roller, isLoading } = useMeg();
-    const dekoratør = useDecorator();
+    const { data: dekoratørData, isLoading: isLoadingDecorator } = useDecorator();
+
+    const [enheter, setEnheter] = React.useState<Enheter[]>([]);
+
+    React.useEffect(() => {
+        if (dekoratørData?.enheter) {
+            setEnheter(dekoratørData.enheter);
+        }
+    }, [dekoratørData]);
 
     // TODO Feature-toggle!
     const tilgangskontrollErPå = erIkkeProd;
@@ -45,10 +53,10 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
                 navIdent,
                 harRolle,
                 tilgangskontrollErPå,
-                enheter: dekoratør.data?.enheter ?? [],
+                enheter,
             }}
         >
-            {isLoading || dekoratør.isLoading ? (
+            {isLoading || isLoadingDecorator ? (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Loader />
                 </div>

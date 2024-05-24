@@ -45,9 +45,10 @@ const Navigeringsmeny: FunctionComponent = () => {
         <div className={css.navigeringsmeny}>
             <div className={css.inner}>
                 <nav className={css.tabs}>
-                    {tabs.map((tab) =>
+                    {tabs.map((tab, index) =>
                         tab.kreverRoller && tilgangskontrollErPå ? (
                             <TilgangskontrollForInnhold
+                                key={index}
                                 skjulVarsel
                                 kreverEnAvRollene={tab.kreverRoller}
                             >

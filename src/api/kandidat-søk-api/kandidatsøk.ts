@@ -89,7 +89,7 @@ export type KandidatsøkProps = {
 
 export interface KandidatSøkKriterier {
     søkeprops: KandidatsøkProps;
-    enheter?: Enheter[] | null;
+    enheter?: Enheter[];
 }
 
 export const useKandidatsøk = (props: KandidatSøkKriterier) => {
@@ -110,9 +110,11 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
         }),
     };
 
-    const overstyrValgteKontorer = props.enheter
+    const overstyrValgteKontorer = props?.enheter
         ? props.enheter.map((e) => e.navn)
-        : Array.from(søkekriterier.valgtKontor);
+        : søkekriterier?.valgtKontor
+          ? Array.from(søkekriterier.valgtKontor)
+          : [];
 
     // Brukes bare som key for å unngå duplikat kall, men brukes ikke som payload data. ifht autditlogging.
     const swrPropKey = JSON.stringify({
