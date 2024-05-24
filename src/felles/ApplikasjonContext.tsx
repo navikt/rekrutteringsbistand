@@ -45,7 +45,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
                 navIdent,
                 harRolle,
                 tilgangskontrollErPå,
-                enheter: dekoratør.data?.enheter,
+                enheter: dekoratør.data?.enheter ?? [],
             }}
         >
             {isLoading || dekoratør.isLoading ? (
