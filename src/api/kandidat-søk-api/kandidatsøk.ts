@@ -110,19 +110,22 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
         }),
     };
 
-    const overstyrValgteKontorer = props?.enheter
-        ? props.enheter.map((e) => e.navn)
-        : søkekriterier?.valgtKontor
-          ? Array.from(søkekriterier.valgtKontor)
-          : [];
+    // Begrenser søk for jobbsøkerrettet
+    const begrensSøkForJobbsøkerrettet =
+        props.enheter !== null ? props.enheter.map((e) => e.navn) : null;
 
+    const harValgtKontor = Array.from(søkekriterier.valgtKontor);
+
+    // TODO finskriv / endre swrPropKey for å unngå duplikat kode
     // Brukes bare som key for å unngå duplikat kall, men brukes ikke som payload data. ifht autditlogging.
     const swrPropKey = JSON.stringify({
         ...props,
         søkekriterier: {
             ...søkekriterier,
-            portefølje: overstyrValgteKontorer ? Portefølje.VelgKontor : søkekriterier.portefølje,
-            valgtKontor: overstyrValgteKontorer,
+            portefølje: begrensSøkForJobbsøkerrettet
+                ? Portefølje.VelgKontor
+                : søkekriterier.portefølje,
+            valgtKontor: begrensSøkForJobbsøkerrettet ?? harValgtKontor,
             innsatsgruppe: Array.from(søkekriterier.innsatsgruppe),
             ønsketYrke: Array.from(søkekriterier.ønsketYrke),
             ønsketSted: Array.from(søkekriterier.ønsketSted),
@@ -136,11 +139,13 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
         },
     });
 
-    const brukSøkekriterier = overstyrValgteKontorer
+    const brukSøkekriterier = begrensSøkForJobbsøkerrettet
         ? {
               ...utvidedeSøkekriterier,
-              portefølje: Portefølje.VelgKontor,
-              valgtKontor: overstyrValgteKontorer,
+              portefølje: begrensSøkForJobbsøkerrettet
+                  ? Portefølje.VelgKontor
+                  : søkekriterier.portefølje,
+              valgtKontor: begrensSøkForJobbsøkerrettet ?? harValgtKontor,
           }
         : utvidedeSøkekriterier;
 
