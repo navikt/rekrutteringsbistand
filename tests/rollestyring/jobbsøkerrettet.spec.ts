@@ -209,26 +209,20 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
     test('21. Søk etter kandidater ved å velge flere kontor - Skal få opp kandidater', async ({
         page,
     }) => {
-        // TODO: Endre ved område implementering
-
         await page.getByRole('link', { name: 'Kandidatsøk' }).click();
         await page.getByRole('button', { name: 'Søk' }).click();
         await expect(page.getByText('Spasertur, Patent')).toBeVisible();
     });
 
     test('22.Søk etter kandidater for mine brukere - Skal få opp kandidater', async ({ page }) => {
-        // TODO: Endre ved område implementering
-
         await page.getByRole('link', { name: 'Kandidatsøk' }).click();
         await page.getByRole('tab', { name: 'Mine brukere' }).click();
         await expect(page.getByText('Spasertur, Patent')).toBeVisible();
     });
 
     test('23.Søk etter kandidater for mitt kontor - Skal få opp kandidater', async ({ page }) => {
-        // TODO: Endre ved område implementering
-
         await page.getByRole('link', { name: 'Kandidatsøk' }).click();
-        await page.getByRole('tab', { name: 'Mitt kontor' }).click();
+        await page.getByRole('tab', { name: 'Mine kontorer' }).click();
         await expect(page.getByText('Spasertur, Patent')).toBeVisible();
     });
 
@@ -256,37 +250,21 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
         await expect(page.getByText('Fødselsnummer på kandidaten')).toBeVisible();
     });
 
-    // test('26 For fomidling du eier: Forsøk å velge "Finn kandidater"', async ({ page }) => {
-    //     await page.getByRole('link', { name: 'Formidlinger' }).click();
-    //     await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
-    //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
-    //     await page.getByRole('button', { name: 'Finn kandidater' }).click();
-    //     await expect(page.getByText('Marker alle på siden')).toBeVisible();
-    // });
+    test('26 For fomidling du eier: Forsøk å velge "Finn kandidater"', async ({ page }) => {
+        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+        await page.getByRole('link', { name: 'Formidling MIN' }).click();
+        await expect(page.getByRole('button', { name: 'Finn kandidater' })).not.toBeVisible();
+    });
 
-    // test('27a For fomidling du eier: sett kandidat som "Fått jobben" ', async ({ page }) => {
-    //     await page.getByRole('link', { name: 'Formidlinger' }).click();
-    //     await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
-    //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
-    //     await page.getByRole('tab', { name: 'Kandidater' }).click();
-    //     await page
-    //         .getByRole('row', { name: '​ Jobbsøker, Jarle' })
-    //         .getByLabel('Endre status eller hendelser')
-    //         .click();
-    //     await page.getByRole('button', { name: 'Registrer at kandidaten har f' }).click();
-    //     await expect(page.getByRole('button', { name: 'Registrere fått jobben' })).toBeVisible();
-    // });
-
-    // test('27b For fomidling du eier: sett kandidat som "presentert"', async ({ page }) => {
-    //     await page.getByRole('link', { name: 'Formidlinger' }).click();
-    //     await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
-    //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
-    //     await page.getByRole('tab', { name: 'Kandidater' }).click();
-    //     await page
-    //         .getByRole('row', { name: '​ Jobbsøker, Jarle' })
-    //         .getByLabel('Endre status eller hendelser')
-    //         .click();
-    //     await page.getByRole('button', { name: 'Registrer manuelt' }).click();
-    //     await expect(page.getByRole('button', { name: 'CV-en er blitt delt' })).toBeVisible();
-    // });
+    test('27. I kandidatsøket, sjekk at kun følgende søkefaner finnes: "Mine kontorer"  "Mine Brukere"  ', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+        await expect(page.getByRole('tab', { name: 'Mine kontorer' })).toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Alle' })).not.toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Mine brukere' })).toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Mitt kontor' })).not.toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Velg andre kontor Valgte' })).not.toBeVisible();
+    });
 });

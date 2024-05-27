@@ -393,4 +393,14 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
             .check();
         await expect(page.getByRole('button', { name: 'Lagre status' })).toBeVisible();
     });
+
+    test('36. I kandidatsøket, sjekk at kun følgende søkefaner finnes: "Alle"  "Mine Brukere"   "Mitt Kontor" "Velg Kontorer"', async ({
+        page,
+    }) => {
+        await page.getByRole('link', { name: 'Kandidatsøk' }).click();
+        await expect(page.getByRole('tab', { name: 'Alle' })).toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Mine brukere' })).toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Mitt kontor' })).toBeVisible();
+        await expect(page.getByRole('tab', { name: 'Velg andre kontor Valgte' })).toBeVisible();
+    });
 });
