@@ -25,15 +25,17 @@ interface IApplikasjonContextProvider {
 
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
     const { navIdent, roller, isLoading } = useMeg();
-    const { data: dekoratørData, isLoading: isLoadingDecorator } = useDecorator();
+    const { data: dekoratørData, isLoading: isLoadingDecorator, error } = useDecorator();
 
     const [enheter, setEnheter] = React.useState<Enheter[]>([]);
 
     React.useEffect(() => {
-        if (dekoratørData?.enheter) {
-            setEnheter(dekoratørData.enheter);
+        if (dekoratørData !== undefined) {
+            setEnheter(dekoratørData?.enheter);
+        } else if (error) {
+            setEnheter([]);
         }
-    }, [dekoratørData]);
+    }, [dekoratørData, error]);
 
     // TODO Feature-toggle!
     const tilgangskontrollErPå = erIkkeProd;
