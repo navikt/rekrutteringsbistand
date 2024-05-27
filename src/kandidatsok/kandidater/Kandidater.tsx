@@ -47,7 +47,7 @@ const Kandidater: FunctionComponent<Props> = ({
     const navKontor = useNavKontor((state) => state.navKontor);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
 
-    const { harRolle, enheter } = useContext(ApplikasjonContext);
+    const { harRolle, enheter, tilgangskontrollErPå } = useContext(ApplikasjonContext);
 
     const onLagreIKandidatlisteClick = () => {
         setAktivModal(
@@ -88,7 +88,7 @@ const Kandidater: FunctionComponent<Props> = ({
 
     const søkeprops = {
         søkeprops: kandidatsøkProps,
-        enheter: begrensTilEnheter,
+        enheter: tilgangskontrollErPå ? begrensTilEnheter : null,
     };
 
     const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(søkeprops);
