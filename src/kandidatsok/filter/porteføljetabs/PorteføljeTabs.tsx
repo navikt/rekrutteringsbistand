@@ -1,5 +1,6 @@
 import { Tabs } from '@navikt/ds-react';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
+import { ApplikasjonContext } from '../../../felles/ApplikasjonContext';
 import TilgangskontrollForInnhold, {
     Rolle,
 } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
@@ -17,6 +18,7 @@ export enum Portefølje {
 
 const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { tilgangskontrollErPå } = useContext(ApplikasjonContext);
 
     const velgPortefølje = (portefølje: string) => {
         setSearchParam(FilterParam.Portefølje, portefølje === Portefølje.Alle ? null : portefølje);
@@ -35,7 +37,9 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
                     skjulVarsel
                     kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]}
                 >
-                    <Tabs.Tab value={Portefølje.VelgKontor} label="Mine kontorer" />
+                    {tilgangskontrollErPå && (
+                        <Tabs.Tab value={Portefølje.VelgKontor} label="Mine kontorer" />
+                    )}
                 </TilgangskontrollForInnhold>
                 <Tabs.Tab value={Portefølje.MineBrukere} label="Mine brukere" />
                 <TilgangskontrollForInnhold
