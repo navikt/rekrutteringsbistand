@@ -2,6 +2,7 @@ import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useMeg } from '../api/frackend/meg';
 import { Enheter, useDecorator } from '../api/modiacontextholder/decorator';
+import ErrorBoundary from './feilhåndtering/ErrorBoundary';
 import { erIkkeProd } from './miljø';
 import { Rolle } from './tilgangskontroll/TilgangskontrollForInnhold';
 
@@ -64,7 +65,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
                     <Loader />
                 </div>
             ) : (
-                children
+                <ErrorBoundary> {children} </ErrorBoundary>
             )}
         </ApplikasjonContext.Provider>
     );
