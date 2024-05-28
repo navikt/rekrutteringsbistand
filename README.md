@@ -44,6 +44,16 @@ STILLING_ES_URI=<url>
 
 ```
 
+```
+
+# Kandidatsøk
+
+KANDIDAT_ES_USERNAME=<brukernavn>
+KANDIDAT_ES_PASSWORD=<passord>
+KANDIDAT_ES_URI=<url>
+
+```
+
 ## Manuell Testing 
 
 ### Playwright 
