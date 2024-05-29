@@ -22,7 +22,7 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
     const { tilgangskontrollErPå } = useContext(ApplikasjonContext);
 
     const velgPortefølje = (portefølje: string) => {
-        setSearchParam(FilterParam.Portefølje, portefølje === Portefølje.Alle ? null : portefølje);
+        setSearchParam(FilterParam.Portefølje, portefølje);
     };
 
     return (
