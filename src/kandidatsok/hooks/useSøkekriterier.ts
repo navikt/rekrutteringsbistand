@@ -1,5 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
+import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { Mål as Hovedmål } from '../filter/Hovedmål';
 import { FiltrerbarInnsatsgruppe } from '../filter/Jobbmuligheter';
 import { Nivå as Utdanningsnivå } from '../filter/Utdanningsnivå';
@@ -57,6 +59,7 @@ type Returverdi = {
 };
 
 const useSøkekriterier = (): Returverdi => {
+    const { harRolle } = useContext(ApplikasjonContext);
     const [searchParams, setSearchParams] = useSearchParams();
     const { økt } = useContext(ØktContext);
     const [søkekriterier, setSøkekriterier] = useState<Søkekriterier>(
@@ -69,24 +72,38 @@ const useSøkekriterier = (): Returverdi => {
         /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [searchParams, økt]);
 
-    const setSearchParam = (parameter: FilterParam, value: string | null) => {
-        if (value !== null && value.length > 0) {
-            searchParams.set(parameter, value);
-        } else {
-            searchParams.delete(parameter);
-        }
+    const setSearchParam = useCallback(
+        (parameter: FilterParam, value: string | null) => {
+            if (value !== null && value.length > 0) {
+                searchParams.set(parameter, value);
+            } else {
+                searchParams.delete(parameter);
+            }
 
-        if (parameter !== FilterParam.Side && søkekriterier.side > 1) {
-            searchParams.delete(FilterParam.Side);
-        }
-        if (parameter !== FilterParam.Fritekst) {
-            searchParams.delete(FilterParam.Fritekst);
-        }
+            if (parameter !== FilterParam.Side && søkekriterier.side > 1) {
+                searchParams.delete(FilterParam.Side);
+            }
+            if (parameter !== FilterParam.Fritekst) {
+                searchParams.delete(FilterParam.Fritekst);
+            }
 
-        setSearchParams(searchParams, {
-            replace: true,
-        });
-    };
+            setSearchParams(searchParams, {
+                replace: true,
+            });
+        },
+        [searchParams, setSearchParams, søkekriterier.side]
+    );
+
+    useEffect(() => {
+        if (!søkekriterier.portefølje) {
+            setSearchParam(
+                FilterParam.Portefølje,
+                harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET])
+                    ? Portefølje.MineKontorer
+                    : Portefølje.Alle
+            );
+        }
+    }, [søkekriterier.portefølje, setSearchParam, harRolle]);
 
     const fjernSøkekriterier = () => {
         Object.values(FilterParam).forEach((key) => searchParams.delete(key));
@@ -107,7 +124,7 @@ export const searchParamsTilSøkekriterier = (
     økt: Økt
 ): Søkekriterier => ({
     fritekst: økt.fritekst ? økt.fritekst : null,
-    portefølje: (searchParams.get(FilterParam.Portefølje) as Portefølje) || Portefølje.Alle,
+    portefølje: searchParams.get(FilterParam.Portefølje) as Portefølje,
     valgtKontor: searchParamTilSet(searchParams.get(FilterParam.ValgtKontor)),
     innsatsgruppe: searchParamTilSet(searchParams.get(FilterParam.Innsatsgruppe)),
     side: Number(searchParams.get(FilterParam.Side)) || 1,
