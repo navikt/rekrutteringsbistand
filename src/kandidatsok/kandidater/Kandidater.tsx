@@ -1,6 +1,6 @@
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Loader } from '@navikt/ds-react';
-import { FunctionComponent, useContext, useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 
 import useNavKontor from 'felles/store/navKontor';
 import {
@@ -8,8 +8,6 @@ import {
     KandidatsøkProps,
     useKandidatsøk,
 } from '../../api/kandidat-søk-api/kandidatsøk';
-import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
-import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useSøkekriterier from '../hooks/useSøkekriterier';
@@ -47,8 +45,6 @@ const Kandidater: FunctionComponent<Props> = ({
     const navKontor = useNavKontor((state) => state.navKontor);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
 
-    const { harRolle, enheter, tilgangskontrollErPå } = useContext(ApplikasjonContext);
-
     const onLagreIKandidatlisteClick = () => {
         setAktivModal(
             kontekstAvKandidatlisteEllerStilling
@@ -80,18 +76,7 @@ const Kandidater: FunctionComponent<Props> = ({
         sortering: søkekriterier.sortering,
     };
 
-    const begrensTilKontorer =
-        harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]) &&
-        !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]);
-
-    const begrensTilEnheter = begrensTilKontorer ? enheter : null;
-
-    const søkeprops = {
-        søkeprops: kandidatsøkProps,
-        enheter: tilgangskontrollErPå ? begrensTilEnheter : null,
-    };
-
-    const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(søkeprops);
+    const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(kandidatsøkProps);
 
     return (
         <div className={css.kandidater}>
