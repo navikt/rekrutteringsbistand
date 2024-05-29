@@ -68,8 +68,6 @@ const useSøkekriterier = (): Returverdi => {
 
     useEffect(() => {
         setSøkekriterier(searchParamsTilSøkekriterier(searchParams, økt));
-
-        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [searchParams, økt]);
 
     const setSearchParam = useCallback(
