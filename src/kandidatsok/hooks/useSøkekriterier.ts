@@ -50,6 +50,7 @@ export type Søkekriterier = {
     ferskhet: number | null;
     språk: Set<string>;
     sortering: Sortering;
+    orgenhet: string | null;
 };
 
 type Returverdi = {
@@ -131,6 +132,7 @@ export const searchParamsTilSøkekriterier = (
     searchParams: URLSearchParams,
     økt: Økt
 ): Søkekriterier => ({
+    orgenhet: null,
     fritekst: økt.fritekst ? økt.fritekst : null,
     portefølje: searchParams.get(FilterParam.Portefølje) as Portefølje,
     valgtKontor: searchParamTilSet(searchParams.get(FilterParam.ValgtKontor)),

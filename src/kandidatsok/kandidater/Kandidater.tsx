@@ -3,11 +3,7 @@ import { BodyShort, Button, Loader } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 
 import useNavKontor from 'felles/store/navKontor';
-import {
-    KandidatsøkKandidat,
-    KandidatsøkProps,
-    useKandidatsøk,
-} from '../../api/kandidat-søk-api/kandidatsøk';
+import { KandidatsøkKandidat, useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useSøkekriterier from '../hooks/useSøkekriterier';
@@ -53,30 +49,10 @@ const Kandidater: FunctionComponent<Props> = ({
         );
     };
 
-    const kandidatsøkProps: KandidatsøkProps = {
-        søkekriterier: {
-            fritekst: søkekriterier.fritekst,
-            portefølje: søkekriterier.portefølje,
-            valgtKontor: søkekriterier.valgtKontor,
-            orgenhet: navKontor,
-            innsatsgruppe: søkekriterier.innsatsgruppe,
-            ønsketYrke: søkekriterier.ønsketYrke,
-            ønsketSted: søkekriterier.ønsketSted,
-            borPåØnsketSted: søkekriterier.borPåØnsketSted,
-            kompetanse: søkekriterier.kompetanse,
-            førerkort: søkekriterier.førerkort,
-            prioritertMålgruppe: søkekriterier.prioritertMålgruppe,
-            hovedmål: søkekriterier.hovedmål,
-            utdanningsnivå: søkekriterier.utdanningsnivå,
-            arbeidserfaring: søkekriterier.arbeidserfaring,
-            ferskhet: søkekriterier.ferskhet,
-            språk: søkekriterier.språk,
-        },
-        side: søkekriterier.side,
-        sortering: søkekriterier.sortering,
-    };
+    const { data, isLoading, error } = useKandidatsøk({ søkekriterier, navKontor });
 
-    const { kandidatsøkKandidater, totalHits, isLoading, error } = useKandidatsøk(kandidatsøkProps);
+    const kandidatsøkKandidater = data?.kandidater;
+    const totalHits = data?.antallTotalt;
 
     return (
         <div className={css.kandidater}>

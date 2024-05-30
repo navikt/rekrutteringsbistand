@@ -9,13 +9,8 @@ import {
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { z } from 'zod';
-import { Mål } from '../../kandidatsok/filter/Hovedmål';
-import { FiltrerbarInnsatsgruppe } from '../../kandidatsok/filter/Jobbmuligheter';
-import { Nivå } from '../../kandidatsok/filter/Utdanningsnivå';
-import { Portefølje } from '../../kandidatsok/filter/porteføljetabs/PorteføljeTabs';
-import { PrioritertMålgruppe } from '../../kandidatsok/filter/prioriterte-målgrupper/PrioriterteMålgrupper';
-import { Førerkortklasse } from '../../kandidatsok/hooks/useSøkekriterier';
-import { postApi } from '../fetcher';
+import { Søkekriterier } from '../../kandidatsok/hooks/useSøkekriterier';
+import { postApiWithSchema } from '../fetcher';
 import { mockKandidatsøkKandidater } from './mockKandidatsøk';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
@@ -33,11 +28,10 @@ export enum Kvalifiseringsgruppekode {
     Vurdu = 'VURDU',
 }
 
-export const yrkeJobbonskerObjSchema = z.object({
-    styrkBeskrivelse: z.string(),
-    sokeTitler: z.array(z.string()),
-    primaertJobbonske: z.boolean(),
-    styrkKode: z.null(),
+export const kvalifiseringsgruppekodeSchema = z.nativeEnum(Kvalifiseringsgruppekode);
+
+export const totalSchema = z.object({
+    value: z.number(),
 });
 
 export const geografiJobbonskerSchema = z.object({
@@ -45,9 +39,14 @@ export const geografiJobbonskerSchema = z.object({
     geografiKode: z.string(),
 });
 
-export const kvalifiseringsgruppekodeSchema = z.nativeEnum(Kvalifiseringsgruppekode);
+export const yrkeJobbonskerObjSchema = z.object({
+    styrkBeskrivelse: z.string(),
+    sokeTitler: z.array(z.string()),
+    primaertJobbonske: z.boolean(),
+    styrkKode: z.null(),
+});
 
-export const kandidatsøkKandidatSchema = z.object({
+export const kandidaterSchema = z.object({
     yrkeJobbonskerObj: z.array(yrkeJobbonskerObjSchema),
     etternavn: z.string(),
     postnummer: z.string().nullable(),
@@ -58,36 +57,55 @@ export const kandidatsøkKandidatSchema = z.object({
     fodselsnummer: z.string(),
     kvalifiseringsgruppekode: kvalifiseringsgruppekodeSchema,
 });
+export const navigeringSchema = z.object({
+    kandidatnumre: z.array(z.string()),
+});
 
-export type KandidatsøkKandidat = z.infer<typeof kandidatsøkKandidatSchema>;
+export const kandidatSøkSchema = z.object({
+    kandidater: z.array(kandidaterSchema),
+    navigering: navigeringSchema,
+    antallTotalt: z.number(),
+});
 
-export type SøkekriterierDto = {
-    fritekst: string | null;
-    portefølje: Portefølje;
-    valgtKontor: Set<string>;
-    innsatsgruppe: Set<FiltrerbarInnsatsgruppe>;
-    ønsketYrke: Set<string>;
-    ønsketSted: Set<string>;
-    borPåØnsketSted: boolean | null;
-    kompetanse: Set<string>;
-    førerkort: Set<Førerkortklasse>;
-    prioritertMålgruppe: Set<PrioritertMålgruppe>;
-    hovedmål: Set<Mål>;
-    utdanningsnivå: Set<Nivå>;
-    arbeidserfaring: Set<string>;
-    ferskhet: number | null;
-    språk: Set<string>;
-    orgenhet: string | null;
-};
+export type KandidatsøkKandidat = z.infer<typeof kandidaterSchema>;
 
 export type KandidatsøkProps = {
-    søkekriterier: SøkekriterierDto;
+    søkekriterier: Søkekriterier;
     side: number;
     sortering: string;
 };
 
-export const useKandidatsøk = (søkeprops: KandidatsøkProps) => {
-    const søkekriterier: SøkekriterierDto = søkeprops.søkekriterier;
+interface IkandidatsøkProps {
+    søkekriterier: Søkekriterier;
+    navKontor: string | null;
+}
+const mapKandidatSøkProps = ({ søkekriterier, navKontor }: IkandidatsøkProps) => ({
+    søkekriterier: {
+        fritekst: søkekriterier.fritekst,
+        portefølje: søkekriterier.portefølje,
+        valgtKontor: søkekriterier.valgtKontor,
+        orgenhet: navKontor,
+        innsatsgruppe: søkekriterier.innsatsgruppe,
+        ønsketYrke: søkekriterier.ønsketYrke,
+        ønsketSted: søkekriterier.ønsketSted,
+        borPåØnsketSted: søkekriterier.borPåØnsketSted,
+        kompetanse: søkekriterier.kompetanse,
+        førerkort: søkekriterier.førerkort,
+        prioritertMålgruppe: søkekriterier.prioritertMålgruppe,
+        hovedmål: søkekriterier.hovedmål,
+        utdanningsnivå: søkekriterier.utdanningsnivå,
+        arbeidserfaring: søkekriterier.arbeidserfaring,
+        ferskhet: søkekriterier.ferskhet,
+        språk: søkekriterier.språk,
+    },
+    side: søkekriterier.side,
+    sortering: søkekriterier.sortering,
+});
+
+export const useKandidatsøk = (props: IkandidatsøkProps) => {
+    const søkeprops = mapKandidatSøkProps(props);
+
+    const søkekriterier = søkeprops.søkekriterier;
 
     const queryParams = new URLSearchParams({
         side: String(søkeprops.side),
@@ -104,50 +122,22 @@ export const useKandidatsøk = (søkeprops: KandidatsøkProps) => {
         }),
     };
 
-    // TODO finskriv / endre swrPropKey for å unngå duplikat kode
-    // Brukes bare som key for å unngå duplikat kall, men brukes ikke som payload data. ifht autditlogging.
-    const swrPropKey = JSON.stringify({
-        ...søkeprops,
-        søkekriterier: {
-            ...søkekriterier,
-            portefølje: søkekriterier.portefølje,
-            valgtKontor: Array.from(søkekriterier.valgtKontor),
-            innsatsgruppe: Array.from(søkekriterier.innsatsgruppe),
-            ønsketYrke: Array.from(søkekriterier.ønsketYrke),
-            ønsketSted: Array.from(søkekriterier.ønsketSted),
-            kompetanse: Array.from(søkekriterier.kompetanse),
-            førerkort: Array.from(søkekriterier.førerkort),
-            prioritertMålgruppe: Array.from(søkekriterier.prioritertMålgruppe),
-            hovedmål: Array.from(søkekriterier.hovedmål),
-            utdanningsnivå: Array.from(søkekriterier.utdanningsnivå),
-            arbeidserfaring: Array.from(søkekriterier.arbeidserfaring),
-            språk: Array.from(søkekriterier.språk),
+    return useSWR(
+        {
+            url: kandidatsøkEndepunkt,
+            body: utvidedeSøkekriterier,
+            queryParams: queryParams.toString(),
         },
-    });
-
-    const swr = useSWR({ path: kandidatsøkEndepunkt, swrPropKey }, ({ path }) =>
-        postApi(path, utvidedeSøkekriterier, queryParams)
+        (data) => {
+            return postApiWithSchema(kandidatSøkSchema)(data);
+        }
     );
-
-    const kandidatsøkKandidater: KandidatsøkKandidat[] = swr?.data?.hits?.hits.map((k: any) =>
-        kandidatsøkKandidatSchema.parse(k._source)
-    );
-
-    const totalHits = swr?.data?.hits?.total?.value;
-
-    return {
-        ...swr,
-        kandidatsøkKandidater,
-        totalHits,
-    };
 };
 
 export const kandidatsøkMockMsw = http.post(kandidatsøkEndepunkt, (_) =>
     HttpResponse.json({
-        hits: {
-            hits: mockKandidatsøkKandidater.map((kandidat: KandidatsøkKandidat) => ({
-                _source: kandidat,
-            })),
-        },
+        kandidater: mockKandidatsøkKandidater,
+        antallTotalt: mockKandidatsøkKandidater.length,
+        navigering: { kandidatnumre: mockKandidatsøkKandidater.map((k) => k.arenaKandidatnr) },
     })
 );

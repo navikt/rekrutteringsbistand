@@ -1,14 +1,13 @@
+import { hentArenaKandidatnrMockMsw } from './hentArenaKandidatnr';
+import { hentKandidatnavnMockMsw } from './hentKandidatnavn';
 import { kandidatStillingssøkMockMsw } from './kandidatStillingssøk';
 import { kandidatsammendragMockMsw } from './kandidatsammendrag';
+import { kandidatsøkMockMsw } from './kandidatsøk';
 import { kompetanseforslagMockMsw } from './kompetanseforslag';
 import { lookupCvMockMsw } from './lookupCv';
-import { kandidatsøkMockMsw } from './kandidatsøk';
-import { kandidatsøkNavigeringMockMsw } from './kandidatsøk-navigering';
 import { suggestMockMsw } from './suggest';
-import { suggestStedMockMsw } from './suggestSted';
 import { suggestKontorMockMsw } from './suggestKontor';
-import { hentKandidatnavnMockMsw } from './hentKandidatnavn';
-import { hentArenaKandidatnrMockMsw } from './hentArenaKandidatnr';
+import { suggestStedMockMsw } from './suggestSted';
 
 export const kandidatSokApiMock = [
     lookupCvMockMsw,
@@ -16,7 +15,6 @@ export const kandidatSokApiMock = [
     kandidatsammendragMockMsw,
     kompetanseforslagMockMsw,
     kandidatsøkMockMsw,
-    kandidatsøkNavigeringMockMsw,
     suggestMockMsw,
     suggestStedMockMsw,
     suggestKontorMockMsw,
