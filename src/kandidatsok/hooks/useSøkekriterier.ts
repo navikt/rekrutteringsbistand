@@ -32,7 +32,7 @@ export enum Førerkortklasse {
     Snøscooter = 'S - Snøscooter',
 }
 
-export type Søkekriterier = {
+export type IKandidatSøkekriterier = {
     fritekst: string | null;
     portefølje: Portefølje;
     valgtKontor: Set<string>;
@@ -55,7 +55,7 @@ export type Søkekriterier = {
 
 type Returverdi = {
     setSearchParam: (parameter: FilterParam, value: string | null) => void;
-    søkekriterier: Søkekriterier;
+    søkekriterier: IKandidatSøkekriterier;
     fjernSøkekriterier: () => void;
 };
 
@@ -63,7 +63,7 @@ const useSøkekriterier = (): Returverdi => {
     const { harRolle, tilgangskontrollErPå } = useContext(ApplikasjonContext);
     const [searchParams, setSearchParams] = useSearchParams();
     const { økt } = useContext(ØktContext);
-    const [søkekriterier, setSøkekriterier] = useState<Søkekriterier>(
+    const [søkekriterier, setSøkekriterier] = useState<IKandidatSøkekriterier>(
         searchParamsTilSøkekriterier(searchParams, økt)
     );
 
@@ -131,7 +131,7 @@ const useSøkekriterier = (): Returverdi => {
 export const searchParamsTilSøkekriterier = (
     searchParams: URLSearchParams,
     økt: Økt
-): Søkekriterier => ({
+): IKandidatSøkekriterier => ({
     orgenhet: null,
     fritekst: økt.fritekst ? økt.fritekst : null,
     portefølje: searchParams.get(FilterParam.Portefølje) as Portefølje,

@@ -9,7 +9,7 @@ import {
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
 import { z } from 'zod';
-import { Søkekriterier } from '../../kandidatsok/hooks/useSøkekriterier';
+import { IKandidatSøkekriterier } from '../../kandidatsok/hooks/useSøkekriterier';
 import { postApiWithSchema } from '../fetcher';
 import { mockKandidatsøkKandidater } from './mockKandidatsøk';
 
@@ -69,34 +69,14 @@ export const kandidatSøkSchema = z.object({
 
 export type KandidatsøkKandidat = z.infer<typeof kandidaterSchema>;
 
-export type KandidatsøkProps = {
-    søkekriterier: Søkekriterier;
-    side: number;
-    sortering: string;
-};
-
 interface IkandidatsøkProps {
-    søkekriterier: Søkekriterier;
+    søkekriterier: IKandidatSøkekriterier;
     navKontor: string | null;
 }
 const mapKandidatSøkProps = ({ søkekriterier, navKontor }: IkandidatsøkProps) => ({
     søkekriterier: {
-        fritekst: søkekriterier.fritekst,
-        portefølje: søkekriterier.portefølje,
-        valgtKontor: søkekriterier.valgtKontor,
+        ...søkekriterier,
         orgenhet: navKontor,
-        innsatsgruppe: søkekriterier.innsatsgruppe,
-        ønsketYrke: søkekriterier.ønsketYrke,
-        ønsketSted: søkekriterier.ønsketSted,
-        borPåØnsketSted: søkekriterier.borPåØnsketSted,
-        kompetanse: søkekriterier.kompetanse,
-        førerkort: søkekriterier.førerkort,
-        prioritertMålgruppe: søkekriterier.prioritertMålgruppe,
-        hovedmål: søkekriterier.hovedmål,
-        utdanningsnivå: søkekriterier.utdanningsnivå,
-        arbeidserfaring: søkekriterier.arbeidserfaring,
-        ferskhet: søkekriterier.ferskhet,
-        språk: søkekriterier.språk,
     },
     side: søkekriterier.side,
     sortering: søkekriterier.sortering,

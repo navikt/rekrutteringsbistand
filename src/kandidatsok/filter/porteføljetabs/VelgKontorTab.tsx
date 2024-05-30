@@ -8,7 +8,7 @@ import {
     useState,
 } from 'react';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
-import { Søkekriterier } from '../../hooks/useSøkekriterier';
+import { IKandidatSøkekriterier } from '../../hooks/useSøkekriterier';
 import VelgKontor from '../VelgKontor';
 import { Portefølje } from './PorteføljeTabs';
 import css from './VelgKontorTab.module.css';
@@ -17,7 +17,7 @@ const POPOVER_ID = 'velg-kontor-popover';
 const FORSLAG_ID = 'velg-kontor-tab';
 
 type Props = {
-    søkekriterier: Søkekriterier;
+    søkekriterier: IKandidatSøkekriterier;
 };
 
 const VelgKontorTab: FunctionComponent<Props> = ({ søkekriterier }) => {
