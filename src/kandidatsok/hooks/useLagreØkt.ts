@@ -3,10 +3,8 @@ import { useContext, useEffect } from 'react';
 import { useMeg } from '../../api/frackend/meg';
 import { ØktContext } from '../Økt';
 import useSøkekriterier from './useSøkekriterier';
-import {
-    KandidatsøkNavigeringProps,
-    useKandidatsøkNavigering,
-} from '../../api/kandidat-søk-api/kandidatsøk-navigering';
+
+import { useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
 import { PAGE_SIZE } from '../filter/Paginering';
 
 const useLagreØkt = () => {
@@ -16,32 +14,10 @@ const useLagreØkt = () => {
     const { setØkt } = useContext(ØktContext);
     const { søkekriterier } = useSøkekriterier();
 
-    const kandidatsøkNavigeringProps: KandidatsøkNavigeringProps = {
-        søkekriterier: {
-            fritekst: søkekriterier.fritekst,
-            portefølje: søkekriterier.portefølje,
-            valgtKontor: søkekriterier.valgtKontor,
-            orgenhet: navKontor,
-            innsatsgruppe: søkekriterier.innsatsgruppe,
-            ønsketYrke: søkekriterier.ønsketYrke,
-            ønsketSted: søkekriterier.ønsketSted,
-            borPåØnsketSted: søkekriterier.borPåØnsketSted,
-            kompetanse: søkekriterier.kompetanse,
-            førerkort: søkekriterier.førerkort,
-            prioritertMålgruppe: søkekriterier.prioritertMålgruppe,
-            hovedmål: søkekriterier.hovedmål,
-            utdanningsnivå: søkekriterier.utdanningsnivå,
-            arbeidserfaring: søkekriterier.arbeidserfaring,
-            ferskhet: søkekriterier.ferskhet,
-            språk: søkekriterier.språk,
-        },
-        side: søkekriterier.side,
-        sortering: søkekriterier.sortering,
-    };
+    const { data } = useKandidatsøk({ søkekriterier, navKontor });
 
-    const { kandidatsøkKandidatNavigering, totalHits } = useKandidatsøkNavigering(
-        kandidatsøkNavigeringProps
-    );
+    const kandidatsøkKandidatNavigering = data?.navigering.kandidatnumre;
+    const totalHits = data?.antallTotalt;
 
     const deps = [
         søkekriterier.toString(),

@@ -60,7 +60,8 @@ export const postApiResponse = (url: string, body: any) =>
 
 export type postApiProps = {
     url: string;
-    body: any;
+    body?: any;
+    queryParams?: string;
 };
 
 const esResponseDto = z.object({
@@ -86,7 +87,10 @@ export const postApiWithSchema = <T>(
     schema: ZodSchema<T>
 ): ((props: postApiProps) => Promise<T>) => {
     return async (props) => {
-        const data = await postApi(props.url, props.body);
+        const data = await postApi(
+            props.queryParams ? props.url + `?${props.queryParams}` : props.url,
+            props.body
+        );
         return schema.parse(data);
     };
 };

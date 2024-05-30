@@ -1,18 +1,18 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, Heading } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
-import { Søkekriterier } from '../../hooks/useSøkekriterier';
-import Merkelapp from '../merkelapp/Merkelapp';
-import Merkelapper from '../merkelapp/Merkelapper';
-import css from './Kompetanse.module.css';
 import {
     Kompetanseforslag,
     KompetanseforslagProps,
     useKompetanseforslag,
 } from '../../../api/kandidat-søk-api/kompetanseforslag';
+import { IKandidatSøkekriterier } from '../../hooks/useSøkekriterier';
+import Merkelapp from '../merkelapp/Merkelapp';
+import Merkelapper from '../merkelapp/Merkelapper';
+import css from './Kompetanse.module.css';
 
 type Props = {
-    søkekriterier: Søkekriterier;
+    søkekriterier: IKandidatSøkekriterier;
     onVelgForslag: (forslag: string) => () => void;
 };
 
@@ -52,7 +52,6 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
                     <Merkelapp
                         variant="oransje"
                         ariaLabel={`Legg til ${kompetanse}`}
-                        // @ts-ignore TODO: written before strict-mode enabled
                         onClick={onVelgForslag(kompetanse)}
                         key={kompetanse}
                     >
@@ -78,7 +77,7 @@ const ForslagBasertPåYrke: FunctionComponent<Props> = ({ søkekriterier, onVelg
 const finnForslag = (
     kompetanseforslag: Kompetanseforslag,
     visAlleForslag: boolean,
-    søkekriterier: Søkekriterier
+    søkekriterier: IKandidatSøkekriterier
 ) => {
     const alleForslag: string[] = kompetanseforslag?.kompetanser?.map((k) => k.key) || [];
     const interessanteForslag: string[] = alleForslag.filter(
