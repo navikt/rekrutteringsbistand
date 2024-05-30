@@ -59,7 +59,7 @@ type Returverdi = {
 };
 
 const useSøkekriterier = (): Returverdi => {
-    const { harRolle } = useContext(ApplikasjonContext);
+    const { harRolle, tilgangskontrollErPå } = useContext(ApplikasjonContext);
     const [searchParams, setSearchParams] = useSearchParams();
     const { økt } = useContext(ØktContext);
     const [søkekriterier, setSøkekriterier] = useState<Søkekriterier>(
@@ -93,21 +93,25 @@ const useSøkekriterier = (): Returverdi => {
     );
 
     useEffect(() => {
-        if (!søkekriterier.portefølje) {
-            setSearchParam(
-                FilterParam.Portefølje,
-                harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-                    ? Portefølje.Alle
-                    : Portefølje.MineKontorer
-            );
-        } else if (
-            // fjern portefølje fra søkekriterier hvis bruker ikke har tilgang til å se alle brukere
-            søkekriterier.portefølje === Portefølje.Alle &&
-            !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-        ) {
-            setSearchParam(FilterParam.Portefølje, Portefølje.MineKontorer);
+        if (tilgangskontrollErPå) {
+            if (!søkekriterier.portefølje) {
+                setSearchParam(
+                    FilterParam.Portefølje,
+                    harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
+                        ? Portefølje.Alle
+                        : Portefølje.MineKontorer
+                );
+            } else if (
+                // fjern portefølje fra søkekriterier hvis bruker ikke har tilgang til å se alle brukere
+                søkekriterier.portefølje === Portefølje.Alle &&
+                !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
+            ) {
+                setSearchParam(FilterParam.Portefølje, Portefølje.MineKontorer);
+            }
+        } else if (!søkekriterier.portefølje) {
+            setSearchParam(FilterParam.Portefølje, Portefølje.Alle);
         }
-    }, [søkekriterier.portefølje, setSearchParam, harRolle]);
+    }, [søkekriterier.portefølje, setSearchParam, harRolle, tilgangskontrollErPå]);
 
     const fjernSøkekriterier = () => {
         Object.values(FilterParam).forEach((key) => searchParams.delete(key));
