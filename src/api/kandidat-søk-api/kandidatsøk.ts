@@ -16,7 +16,6 @@ import { Portefølje } from '../../kandidatsok/filter/porteføljetabs/Portefølj
 import { PrioritertMålgruppe } from '../../kandidatsok/filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Førerkortklasse } from '../../kandidatsok/hooks/useSøkekriterier';
 import { postApi } from '../fetcher';
-import { Enheter } from '../modiacontextholder/decorator';
 import { mockKandidatsøkKandidater } from './mockKandidatsøk';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
@@ -87,17 +86,12 @@ export type KandidatsøkProps = {
     sortering: string;
 };
 
-export interface KandidatSøkKriterier {
-    søkeprops: KandidatsøkProps;
-    enheter: Enheter[] | null;
-}
-
-export const useKandidatsøk = (props: KandidatSøkKriterier) => {
-    const søkekriterier: SøkekriterierDto = props.søkeprops.søkekriterier;
+export const useKandidatsøk = (søkeprops: KandidatsøkProps) => {
+    const søkekriterier: SøkekriterierDto = søkeprops.søkekriterier;
 
     const queryParams = new URLSearchParams({
-        side: String(props.søkeprops.side),
-        sortering: props.søkeprops.sortering,
+        side: String(søkeprops.side),
+        sortering: søkeprops.sortering,
     });
 
     const utvidedeSøkekriterier = {
@@ -110,22 +104,14 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
         }),
     };
 
-    // Begrenser søk for jobbsøkerrettet
-    const begrensSøkForJobbsøkerrettet =
-        props.enheter !== null ? props.enheter.map((e) => e.navn) : null;
-
-    const harValgtKontor = Array.from(søkekriterier.valgtKontor);
-
     // TODO finskriv / endre swrPropKey for å unngå duplikat kode
     // Brukes bare som key for å unngå duplikat kall, men brukes ikke som payload data. ifht autditlogging.
     const swrPropKey = JSON.stringify({
-        ...props,
+        ...søkeprops,
         søkekriterier: {
             ...søkekriterier,
-            portefølje: begrensSøkForJobbsøkerrettet
-                ? Portefølje.VelgKontor
-                : søkekriterier.portefølje,
-            valgtKontor: begrensSøkForJobbsøkerrettet ?? harValgtKontor,
+            portefølje: søkekriterier.portefølje,
+            valgtKontor: Array.from(søkekriterier.valgtKontor),
             innsatsgruppe: Array.from(søkekriterier.innsatsgruppe),
             ønsketYrke: Array.from(søkekriterier.ønsketYrke),
             ønsketSted: Array.from(søkekriterier.ønsketSted),
@@ -139,18 +125,8 @@ export const useKandidatsøk = (props: KandidatSøkKriterier) => {
         },
     });
 
-    const brukSøkekriterier = begrensSøkForJobbsøkerrettet
-        ? {
-              ...utvidedeSøkekriterier,
-              portefølje: begrensSøkForJobbsøkerrettet
-                  ? Portefølje.VelgKontor
-                  : søkekriterier.portefølje,
-              valgtKontor: begrensSøkForJobbsøkerrettet ?? harValgtKontor,
-          }
-        : utvidedeSøkekriterier;
-
     const swr = useSWR({ path: kandidatsøkEndepunkt, swrPropKey }, ({ path }) =>
-        postApi(path, brukSøkekriterier, queryParams)
+        postApi(path, utvidedeSøkekriterier, queryParams)
     );
 
     const kandidatsøkKandidater: KandidatsøkKandidat[] = swr?.data?.hits?.hits.map((k: any) =>

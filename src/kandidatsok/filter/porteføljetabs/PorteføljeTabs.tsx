@@ -12,6 +12,7 @@ import VelgKontorTab from './VelgKontorTab';
 export enum Portefølje {
     Alle = 'alle',
     MineBrukere = 'mine',
+    MineKontorer = 'mineKontorer',
     MittKontor = 'kontor',
     VelgKontor = 'valgte',
 }
@@ -21,7 +22,7 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
     const { tilgangskontrollErPå } = useContext(ApplikasjonContext);
 
     const velgPortefølje = (portefølje: string) => {
-        setSearchParam(FilterParam.Portefølje, portefølje === Portefølje.Alle ? null : portefølje);
+        setSearchParam(FilterParam.Portefølje, portefølje);
     };
 
     return (
@@ -38,7 +39,7 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
                     kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]}
                 >
                     {tilgangskontrollErPå && (
-                        <Tabs.Tab value={Portefølje.VelgKontor} label="Mine kontorer" />
+                        <Tabs.Tab value={Portefølje.MineKontorer} label="Mine kontorer" />
                     )}
                 </TilgangskontrollForInnhold>
                 <Tabs.Tab value={Portefølje.MineBrukere} label="Mine brukere" />

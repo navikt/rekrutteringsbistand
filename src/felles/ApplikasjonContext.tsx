@@ -1,7 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useMeg } from '../api/frackend/meg';
-import { Enheter, useDecorator } from '../api/modiacontextholder/decorator';
 import ErrorBoundary from './feilhåndtering/ErrorBoundary';
 import { erIkkeProd } from './miljø';
 import { Rolle } from './tilgangskontroll/TilgangskontrollForInnhold';
@@ -11,13 +10,11 @@ interface ApplikasjonContextType {
     navIdent?: string;
     harRolle: (rolle: Rolle[]) => boolean;
     tilgangskontrollErPå: boolean;
-    enheter: Enheter[];
 }
 
 export const ApplikasjonContext = React.createContext<ApplikasjonContextType>({
     harRolle: () => false,
     tilgangskontrollErPå: false,
-    enheter: [],
 });
 
 interface IApplikasjonContextProvider {
@@ -26,17 +23,6 @@ interface IApplikasjonContextProvider {
 
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
     const { navIdent, roller, isLoading } = useMeg();
-    const { data: dekoratørData, isLoading: isLoadingDecorator, error } = useDecorator();
-
-    const [enheter, setEnheter] = React.useState<Enheter[]>([]);
-
-    React.useEffect(() => {
-        if (dekoratørData !== undefined) {
-            setEnheter(dekoratørData?.enheter);
-        } else if (error) {
-            setEnheter([]);
-        }
-    }, [dekoratørData, error]);
 
     // TODO Feature-toggle!
     const tilgangskontrollErPå = erIkkeProd;
@@ -57,10 +43,9 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
                 navIdent,
                 harRolle,
                 tilgangskontrollErPå,
-                enheter,
             }}
         >
-            {isLoading || isLoadingDecorator ? (
+            {isLoading ? (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Loader />
                 </div>
