@@ -1,7 +1,8 @@
 import useNavKontor from 'felles/store/navKontor';
-import { useEffect } from 'react';
+import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useLocalStorageToggle } from '../dev/DevUtil';
+import { ApplikasjonContext } from '../felles/ApplikasjonContext';
 import Dekoratør from './modiadekoratør/Modiadekoratør';
 import Placeholder from './modiadekoratør/Placeholder';
 import Navigeringsmeny from './navigeringsmeny/Navigeringsmeny';
@@ -12,19 +13,20 @@ const Header = () => {
     const [mockAktiv] = useLocalStorageToggle('Mock modia');
     useAmplitude(navKontor);
 
-    useEffect(() => {
-        // Vi hadde en alert i en periode som brukte keyen under for å huske
-        // om brukeren hadde lukket alerten. Dette er bare litt cleanup hos
-        // i brukerens nettleser. Er ikke farlig å slette. Slett gjerne koden
-        // etter 2024-03-15, f.eks.
-        window.localStorage.removeItem('nedetid pg11-oppgradering');
-    }, []);
+    const { setValgtNavKontor } = useContext(ApplikasjonContext);
 
     const Modiadekoratør = import.meta.env.DEV && mockAktiv ? Placeholder : Dekoratør;
 
+    console.log('🎺 navKontor', navKontor);
     return (
         <>
-            <Modiadekoratør navKontor={navKontor} onNavKontorChange={setNavKontor} />
+            <Modiadekoratør
+                navKontor={navKontor}
+                onNavKontorChange={(navKontor) => {
+                    setNavKontor(navKontor);
+                    setValgtNavKontor(navKontor?.navKontor);
+                }}
+            />
             <Navigeringsmeny />
             <Outlet />
         </>

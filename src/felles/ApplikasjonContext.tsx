@@ -10,11 +10,14 @@ interface ApplikasjonContextType {
     navIdent?: string;
     harRolle: (rolle: Rolle[]) => boolean;
     tilgangskontrollErPå: boolean;
+    valgtNavKontor?: string | null;
+    setValgtNavKontor: (navKontor: string | null) => void;
 }
 
 export const ApplikasjonContext = React.createContext<ApplikasjonContextType>({
     harRolle: () => false,
     tilgangskontrollErPå: false,
+    setValgtNavKontor: () => null,
 });
 
 interface IApplikasjonContextProvider {
@@ -23,6 +26,10 @@ interface IApplikasjonContextProvider {
 
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
     const { navIdent, roller, isLoading } = useMeg();
+
+    const [valgtNavKontor, setValgtNavKontor] = React.useState<string | null | undefined>(
+        undefined
+    );
 
     // TODO Feature-toggle!
     const tilgangskontrollErPå = erIkkeProd;
@@ -39,13 +46,15 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
     return (
         <ApplikasjonContext.Provider
             value={{
+                setValgtNavKontor,
+                valgtNavKontor,
                 roller,
                 navIdent,
                 harRolle,
                 tilgangskontrollErPå,
             }}
         >
-            {isLoading ? (
+            {isLoading || valgtNavKontor === undefined ? (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Loader />
                 </div>

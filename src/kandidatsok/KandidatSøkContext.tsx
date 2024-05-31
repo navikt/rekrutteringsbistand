@@ -1,7 +1,7 @@
 import { BodyShort, Loader } from '@navikt/ds-react';
 import * as React from 'react';
 import { IKandidatSøk, useKandidatsøk } from '../api/kandidat-søk-api/kandidatsøk';
-import useNavKontor from '../felles/store/navKontor';
+import { ApplikasjonContext } from '../felles/ApplikasjonContext';
 import useSøkekriterier, { IKandidatSøkekriterier } from './hooks/useSøkekriterier';
 
 interface IKandidatSøkContext {
@@ -19,11 +19,15 @@ interface IKandidatSøkContextProvider {
 
 export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider> = ({ children }) => {
     const { søkekriterier: søkeKriterierInput } = useSøkekriterier();
-    const navKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = React.useContext(ApplikasjonContext);
 
     const søkekriterier = React.useMemo(() => søkeKriterierInput, [søkeKriterierInput]);
 
-    const { data: kandidatSøk, isLoading, error } = useKandidatsøk({ søkekriterier, navKontor });
+    const {
+        data: kandidatSøk,
+        isLoading,
+        error,
+    } = useKandidatsøk({ søkekriterier, navKontor: valgtNavKontor ?? null });
 
     const value = React.useMemo(() => ({ kandidatSøk }), [kandidatSøk]);
 
