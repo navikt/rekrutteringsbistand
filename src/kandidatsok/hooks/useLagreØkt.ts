@@ -4,8 +4,8 @@ import { useMeg } from '../../api/frackend/meg';
 import { ØktContext } from '../Økt';
 import useSøkekriterier from './useSøkekriterier';
 
-import { useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
 import { PAGE_SIZE } from '../filter/Paginering';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 
 const useLagreØkt = () => {
     const navKontor = useNavKontor((state) => state.navKontor);
@@ -14,10 +14,10 @@ const useLagreØkt = () => {
     const { setØkt } = useContext(ØktContext);
     const { søkekriterier } = useSøkekriterier();
 
-    const { data } = useKandidatsøk({ søkekriterier, navKontor });
+    const { kandidatSøk } = useContext(KandidatSøkContext);
 
-    const kandidatsøkKandidatNavigering = data?.navigering.kandidatnumre;
-    const totalHits = data?.antallTotalt;
+    const kandidatsøkKandidatNavigering = kandidatSøk?.navigering.kandidatnumre;
+    const totalHits = kandidatSøk?.antallTotalt;
 
     const deps = [
         søkekriterier.toString(),

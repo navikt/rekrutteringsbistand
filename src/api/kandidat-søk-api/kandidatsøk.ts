@@ -67,6 +67,8 @@ export const kandidatSøkSchema = z.object({
     antallTotalt: z.number(),
 });
 
+export type IKandidatSøk = z.infer<typeof kandidatSøkSchema>;
+
 export type KandidatsøkKandidat = z.infer<typeof kandidaterSchema>;
 
 interface IkandidatsøkProps {

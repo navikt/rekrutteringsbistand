@@ -94,23 +94,13 @@ const useSøkekriterier = (): Returverdi => {
     );
 
     useEffect(() => {
-        if (tilgangskontrollErPå) {
-            if (!søkekriterier.portefølje) {
-                setSearchParam(
-                    FilterParam.Portefølje,
-                    harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-                        ? Portefølje.Alle
-                        : Portefølje.MineKontorer
-                );
-            } else if (
-                // fjern portefølje fra søkekriterier hvis bruker ikke har tilgang til å se alle brukere
-                søkekriterier.portefølje === Portefølje.Alle &&
-                !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-            ) {
-                setSearchParam(FilterParam.Portefølje, Portefølje.MineKontorer);
-            }
-        } else if (!søkekriterier.portefølje) {
-            setSearchParam(FilterParam.Portefølje, Portefølje.Alle);
+        if (
+            tilgangskontrollErPå &&
+            // fjern portefølje fra søkekriterier hvis bruker ikke har tilgang til å se alle brukere
+            søkekriterier.portefølje === Portefølje.Alle &&
+            !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
+        ) {
+            setSearchParam(FilterParam.Portefølje, Portefølje.MineKontorer);
         }
     }, [søkekriterier.portefølje, setSearchParam, harRolle, tilgangskontrollErPå]);
 

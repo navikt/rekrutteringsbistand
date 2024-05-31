@@ -1,6 +1,7 @@
 import '@reach/combobox/styles.css';
 import { useContext } from 'react';
 import Tilgangskontroll, { Rolle } from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { KandidatSøkContextProvider } from './KandidatSøkContext';
 import Kandidatsøk from './Kandidatsøk';
 import useKontekstAvKandidatlisteEllerStilling from './hooks/useKontekstAvKandidatlisteEllerStilling';
 import useNavigeringsstate from './hooks/useNavigeringsstate';
@@ -35,9 +36,11 @@ export const KandidatSøkIndex = () => {
                 Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
             ]}
         >
-            <ØktContextProvider>
-                <App />
-            </ØktContextProvider>
+            <KandidatSøkContextProvider>
+                <ØktContextProvider>
+                    <App />
+                </ØktContextProvider>
+            </KandidatSøkContextProvider>
         </Tilgangskontroll>
     );
 };
