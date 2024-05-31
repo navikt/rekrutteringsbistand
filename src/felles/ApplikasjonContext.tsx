@@ -54,7 +54,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
                 tilgangskontrollErPå,
             }}
         >
-            {isLoading || valgtNavKontor === undefined ? (
+            {isLoading ? (
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <Loader />
                 </div>
