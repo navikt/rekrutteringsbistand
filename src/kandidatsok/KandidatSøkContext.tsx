@@ -23,7 +23,7 @@ interface IØkt {
 interface IKandidatSøkContext {
     kandidatSøk?: IKandidatSøk;
     søkekriterier?: IKandidatSøkekriterier;
-    økt?: IØkt;
+    kandidatSøkØkt?: IØkt;
 }
 
 export const KandidatSøkContext = React.createContext<IKandidatSøkContext>({

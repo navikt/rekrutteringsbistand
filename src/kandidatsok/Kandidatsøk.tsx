@@ -17,7 +17,7 @@ import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
 const Kandidatsøk = () => {
     const navigeringsstate = useNavigeringsstate();
 
-    const { økt: kandidatsøkØkt } = useContext(KandidatSøkContext);
+    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
 
     const kontekstAvKandidatlisteEllerStilling =
         useKontekstAvKandidatlisteEllerStilling(navigeringsstate);
@@ -25,7 +25,7 @@ const Kandidatsøk = () => {
     const forrigeØkt =
         navigeringsstate.brukKriterierFraStillingen || navigeringsstate.fraMeny
             ? null
-            : kandidatsøkØkt?.forrigeØkt;
+            : kandidatSøkØkt?.forrigeØkt;
 
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
         forrigeØkt?.markerteKandidater
@@ -33,12 +33,11 @@ const Kandidatsøk = () => {
 
     useLagreØkt();
     useEffect(() => {
-        kandidatsøkØkt?.setØkt &&
-            kandidatsøkØkt.setØkt({
+        kandidatSøkØkt?.setØkt &&
+            kandidatSøkØkt.setØkt({
                 markerteKandidater: Array.from(markerteKandidater),
             });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [markerteKandidater]);
+    }, [markerteKandidater, kandidatSøkØkt]);
 
     return (
         <Layout
@@ -59,7 +58,6 @@ const Kandidatsøk = () => {
                         markerteKandidater={markerteKandidater}
                         onMarkerKandidat={onMarkerKandidat}
                         fjernMarkering={fjernMarkering}
-                        forrigeØkt={forrigeØkt}
                     />
                 </div>
             </PorteføljeTabs>

@@ -8,7 +8,6 @@ import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
-import { Økt } from '../Økt';
 import AntallKandidater from './AntallKandidater';
 import css from './Kandidater.module.css';
 import MarkerAlle from './MarkerAlle';
@@ -20,7 +19,6 @@ type Props = {
     markerteKandidater: Set<string>;
     onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
-    forrigeØkt: Økt | null;
 };
 
 enum Modal {
@@ -34,7 +32,6 @@ const Kandidater: FunctionComponent<Props> = ({
     markerteKandidater,
     onMarkerKandidat,
     fjernMarkering,
-    forrigeØkt,
 }) => {
     const { kandidatSøk } = useContext(KandidatSøkContext);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
@@ -101,7 +98,6 @@ const Kandidater: FunctionComponent<Props> = ({
                                 kontekstAvKandidatlisteEllerStilling={
                                     kontekstAvKandidatlisteEllerStilling
                                 }
-                                forrigeØkt={forrigeØkt}
                                 onMarker={() => {
                                     onMarkerKandidat(kandidat.arenaKandidatnr);
                                 }}

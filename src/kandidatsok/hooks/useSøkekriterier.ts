@@ -8,7 +8,8 @@ import { Nivå as Utdanningsnivå } from '../filter/Utdanningsnivå';
 import { Portefølje } from '../filter/porteføljetabs/PorteføljeTabs';
 import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Sortering } from '../kandidater/sortering/Sortering';
-import { Økt, ØktContext } from '../Økt';
+
+import { KandidatSøkContext, Økt } from '../KandidatSøkContext';
 import { FilterParam } from './useQuery';
 
 export const LISTEPARAMETER_SEPARATOR = ';';
@@ -62,13 +63,14 @@ type Returverdi = {
 const useSøkekriterier = (): Returverdi => {
     const { harRolle, tilgangskontrollErPå } = useContext(ApplikasjonContext);
     const [searchParams, setSearchParams] = useSearchParams();
-    const { økt } = useContext(ØktContext);
+    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
+    const økt = kandidatSøkØkt?.økt;
     const [søkekriterier, setSøkekriterier] = useState<IKandidatSøkekriterier>(
-        searchParamsTilSøkekriterier(searchParams, økt)
+        searchParamsTilSøkekriterier(searchParams, økt ?? {})
     );
 
     useEffect(() => {
-        setSøkekriterier(searchParamsTilSøkekriterier(searchParams, økt));
+        setSøkekriterier(searchParamsTilSøkekriterier(searchParams, økt ?? {}));
     }, [searchParams, økt]);
 
     const setSearchParam = useCallback(

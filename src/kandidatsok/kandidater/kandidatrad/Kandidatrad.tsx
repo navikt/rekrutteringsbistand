@@ -3,23 +3,22 @@ import { Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { KandidatsøkKandidat } from '../../../api/kandidat-søk-api/kandidatsøk';
+import { KandidatSøkContext } from '../../KandidatSøkContext';
 import { alleInnsatsgrupper } from '../../filter/Jobbmuligheter';
 import { KontekstAvKandidatlisteEllerStilling } from '../../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useScrollTilKandidat from '../../hooks/useScrollTilKandidat';
 import { lenkeTilKandidat, storForbokstav } from '../../utils';
-import { Økt } from '../../Økt';
 import css from './Kandidatrad.module.css';
 import RekBisKortKandidat from './kandidatkort/RekBisKortKandidat';
-import { KandidatsøkKandidat } from '../../../api/kandidat-søk-api/kandidatsøk';
 
 type Props = {
     kandidat: KandidatsøkKandidat;
     markerteKandidater: Set<string>;
     onMarker: () => void;
     kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
-    forrigeØkt: Økt | null;
 };
 
 const Kandidatrad: FunctionComponent<Props> = ({
@@ -27,12 +26,12 @@ const Kandidatrad: FunctionComponent<Props> = ({
     markerteKandidater,
     onMarker,
     kontekstAvKandidatlisteEllerStilling,
-    forrigeØkt,
 }) => {
-    const fremhevet = kandidat.arenaKandidatnr === forrigeØkt?.sistBesøkteKandidat;
+    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
+    const fremhevet = kandidat.arenaKandidatnr === kandidatSøkØkt?.forrigeØkt?.sistBesøkteKandidat;
     const markert = markerteKandidater.has(kandidat.arenaKandidatnr);
 
-    useScrollTilKandidat(kandidat.arenaKandidatnr, forrigeØkt?.sistBesøkteKandidat);
+    useScrollTilKandidat(kandidat.arenaKandidatnr, kandidatSøkØkt?.forrigeØkt?.sistBesøkteKandidat);
 
     const alleØnskedeYrker = hentKandidatensØnskedeYrker(kandidat);
     const alleØnskedeSteder = hentKandidatensØnskedeSteder(kandidat);
