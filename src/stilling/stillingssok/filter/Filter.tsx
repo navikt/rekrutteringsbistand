@@ -1,6 +1,5 @@
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import css from './Filter.module.css';
 import FylkerOgKommuner from './geografi/FylkerOgKommuner';
 import Inkludering from './inkludering/Inkludering';

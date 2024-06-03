@@ -19,7 +19,7 @@
                         "target": "felles",
                         "message": "Fellesmappen kan kun importere filer fra egen mappe",
                         "from": ".",
-                        "except": ["felles", "api"]
+                        "except": ["felles", "api", "dev"]
                     },
                     {
                         "target": "header",

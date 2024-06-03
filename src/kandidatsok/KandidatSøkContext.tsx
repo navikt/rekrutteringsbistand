@@ -69,7 +69,7 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
         data: kandidatSøk,
         isLoading,
         error,
-    } = useKandidatsøk({ søkekriterier, navKontor: valgtNavKontor ?? null });
+    } = useKandidatsøk({ søkekriterier, navKontor: valgtNavKontor?.navKontor ?? null });
 
     const value = React.useMemo(
         () => ({ kandidatSøk, økt: øktContext }),

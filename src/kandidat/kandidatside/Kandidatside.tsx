@@ -2,13 +2,12 @@ import { Tabs } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Sidefeil from '../komponenter/sidefeil/Sidefeil';
 import FraKandidatliste from './fraKandidatliste/FraKandidatliste';
 import FraSøkMedKandidatliste from './fraSøkMedKandidatliste/FraSøkMedKandidatliste';
 import FraSøkUtenKontekst from './fraSøkUtenKontekst/FraSøkUtenKontekst';
+import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
 
 export enum KandidatQueryParam {
     KandidatlisteId = 'kandidatlisteId',

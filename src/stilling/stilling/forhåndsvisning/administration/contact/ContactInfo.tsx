@@ -3,9 +3,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { State } from '../../../../redux/store';
 import {
     MARKER_EKSTERN_STILLING_SOM_MIN,
@@ -14,6 +11,8 @@ import {
 import { erDirektemeldtStilling } from '../../../adUtils';
 import previewcss from '../AdministrationPreview.module.css';
 import MarkerSomMinModal from '../markerSomMinModal/MarkerSomMinModal';
+import { TilgangskontrollForInnhold } from '../../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../../../../felles/tilgangskontroll/Roller';
 
 const ContactInfo = () => {
     const dispatch = useDispatch();

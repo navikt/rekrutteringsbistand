@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
-import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { Mål as Hovedmål } from '../filter/Hovedmål';
 import { FiltrerbarInnsatsgruppe } from '../filter/Jobbmuligheter';
 import { Nivå as Utdanningsnivå } from '../filter/Utdanningsnivå';
@@ -9,6 +8,7 @@ import { Portefølje } from '../filter/porteføljetabs/PorteføljeTabs';
 import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Sortering } from '../kandidater/sortering/Sortering';
 
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
 import { KandidatSøkContext, Økt } from '../KandidatSøkContext';
 import { FilterParam } from './useQuery';
 

@@ -1,16 +1,16 @@
-import useNavKontor from 'felles/store/navKontor';
 import { useContext, useEffect } from 'react';
 import { useMeg } from '../../api/frackend/meg';
 import useSøkekriterier from './useSøkekriterier';
 
-import { PAGE_SIZE } from '../filter/Paginering';
+import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
 import { KandidatSøkContext } from '../KandidatSøkContext';
+import { PAGE_SIZE } from '../filter/Paginering';
 
 const useLagreØkt = () => {
-    const navKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
+    const navKontor = valgtNavKontor?.navKontor;
     const { navIdent } = useMeg();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
-    // get setØkt from økt:
     const { kandidatSøkØkt } = useContext(KandidatSøkContext);
     const setØkt = kandidatSøkØkt?.setØkt;
     const { søkekriterier } = useSøkekriterier();

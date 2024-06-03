@@ -3,9 +3,10 @@ import { sendEvent } from 'felles/amplitude';
 import KandidatIKandidatliste from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import useNavKontor from 'felles/store/navKontor';
-import { useState } from 'react';
+import { useVisVarsling } from 'felles/varsling/Varsling';
+import { useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
 import Stilling from '../../../../felles/domene/stilling/Stilling';
 import { postDelteKandidater } from '../../../api/api';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../domene/kandidatlisteUtils';
@@ -13,7 +14,6 @@ import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 import ForhåndsvisningAvEpost from './ForhåndsvisningAvEpost';
 import LeggTilEpostadresse from './LeggTilEpostadresse';
 import css from './PresenterKandidaterModal.module.css';
-import { useVisVarsling } from 'felles/varsling/Varsling';
 
 const rutinerForDeling =
     'https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Del-stillinger-med-kandidater-i-Aktivitetsplanen.aspx#har-du-ringt-kandidaten-istedenfor-%C3%A5-dele-i-aktivitetsplanen';
@@ -38,7 +38,8 @@ const PresenterKandidaterModal = ({
     stilling,
 }: Props) => {
     const dispatch = useDispatch();
-    const valgtNavKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
+
     const visVarsling = useVisVarsling();
 
     const [delestatus, setDelestatus] = useState<Nettstatus>(Nettstatus.IkkeLastet);
@@ -61,8 +62,8 @@ const PresenterKandidaterModal = ({
             epostadresser,
             kandidatliste.kandidatlisteId,
             kandidatnumre,
-            // @ts-ignore TODO: written before strict-mode enabled
-            valgtNavKontor
+            //@ts-ignore TODO
+            valgtNavKontor.navKontor
         );
 
         if (response.kind === Nettstatus.Suksess) {
@@ -92,7 +93,7 @@ const PresenterKandidaterModal = ({
     };
 
     const handleDelClick = () => {
-        if (valgtNavKontor !== null) {
+        if (valgtNavKontor?.navKontor) {
             if (epostadresser.length > 0) {
                 const kandidaterSomSkalDeles = kandidaterMåGodkjenneDelingAvCv(kandidatliste)
                     ? kandidaterSomHarSvartJa.map((k) => k.kandidatnr)

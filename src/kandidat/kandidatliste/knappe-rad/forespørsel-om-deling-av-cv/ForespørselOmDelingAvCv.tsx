@@ -1,12 +1,12 @@
 import { BeaconSignalsIcon } from '@navikt/aksel-icons';
 import { Alert, BodyShort, Button, Label, Modal, Popover } from '@navikt/ds-react';
-import { ChangeEvent, FunctionComponent, MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FunctionComponent, MouseEvent, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
-import useNavKontor from 'felles/store/navKontor';
 import { useVisVarsling } from 'felles/varsling/Varsling';
+import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
 import AppState from '../../../state/AppState';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
@@ -22,7 +22,7 @@ type Props = {
 
 const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, markerteKandidater }) => {
     const dispatch = useDispatch();
-    const valgtNavKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
 
     const { sendForespørselOmDelingAvCv } = useSelector((state: AppState) => state.kandidatliste);
     const [modalErÅpen, setModalErÅpen] = useState<boolean>(false);
@@ -134,7 +134,7 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
             stillingsId,
             svarfrist: lagSvarfristPåSekundet(svarfrist, egenvalgtFrist),
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            navKontor: valgtNavKontor!,
+            navKontor: valgtNavKontor!.navKontor,
         };
 
         dispatch<KandidatlisteAction>({

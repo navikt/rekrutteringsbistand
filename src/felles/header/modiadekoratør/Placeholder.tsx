@@ -1,7 +1,7 @@
 import { Heading, Select } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { NavKontorMedNavn } from 'felles/store/navKontor';
 import { ChangeEvent, useEffect } from 'react';
+import { NavKontorMedNavn } from '../../ApplikasjonContext';
 import css from './Modiadekoratør.module.css';
 
 const enheter = [

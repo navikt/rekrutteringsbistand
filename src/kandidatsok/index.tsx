@@ -1,11 +1,12 @@
 import '@reach/combobox/styles.css';
-import Tilgangskontroll, { Rolle } from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { KandidatSøkContextProvider } from './KandidatSøkContext';
 import Kandidatsøk from './Kandidatsøk';
 
 export const KandidatSøkIndex = () => {
     return (
-        <Tilgangskontroll
+        <TilgangskontrollForInnhold
             kreverEnAvRollene={[
                 Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
                 Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
@@ -14,6 +15,6 @@ export const KandidatSøkIndex = () => {
             <KandidatSøkContextProvider>
                 <Kandidatsøk />
             </KandidatSøkContextProvider>
-        </Tilgangskontroll>
+        </TilgangskontrollForInnhold>
     );
 };

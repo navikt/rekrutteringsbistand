@@ -7,9 +7,8 @@ import SeMineStillingerIkon from 'felles/komponenter/piktogrammer/se-mine-stilli
 import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { sendEvent } from '../../felles/amplitude';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import css from './Hurtiglenker.module.css';
 
 const Hurtiglenker: FunctionComponent = () => {

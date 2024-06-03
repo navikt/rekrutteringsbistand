@@ -2,15 +2,8 @@ import { Alert, Link } from '@navikt/ds-react';
 import * as React from 'react';
 import { ApplikasjonContext } from '../ApplikasjonContext';
 
+import { Rolle } from './Roller';
 import css from './TilgangskontrollForInnhold.module.css';
-
-export enum Rolle {
-    AD_GRUPPE_MODIA_GENERELL_TILGANG = 'AD_GRUPPE_MODIA_GENERELL_TILGANG',
-    AD_GRUPPE_MODIA_OPPFOLGING = 'AD_GRUPPE_MODIA_OPPFOLGING',
-    AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET = 'AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET',
-    AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET = 'AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET',
-    AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER = 'AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER',
-}
 
 export interface ITilgangskontrollForInnhold {
     kreverEnAvRollene: Rolle[];
@@ -34,7 +27,7 @@ const rolleTilNavn = (rolle: Rolle): string | null => {
     }
 };
 
-const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
+export const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
     kreverEnAvRollene,
     children,
     skjulVarsel,
@@ -91,5 +84,3 @@ const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> = ({
         </>
     );
 };
-
-export default TilgangskontrollForInnhold;

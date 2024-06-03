@@ -3,7 +3,7 @@
  */
 import { HttpResponse, http } from 'msw';
 import useSWR from 'swr';
-import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
 import { getAPI } from '../fetcher';
 
 const megEndepunkt = '/meg';

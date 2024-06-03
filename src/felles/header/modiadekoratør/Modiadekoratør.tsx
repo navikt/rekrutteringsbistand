@@ -1,7 +1,7 @@
 import Navspa from '@navikt/navspa';
-import { NavKontorMedNavn } from 'felles/store/navKontor';
 import loadjs from 'loadjs';
 import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
+import { NavKontorMedNavn } from '../../ApplikasjonContext';
 import DekoratørProps, { EnhetDisplay } from './DekoratørProps';
 import css from './Modiadekoratør.module.css';
 
