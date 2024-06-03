@@ -3,10 +3,27 @@ import * as React from 'react';
 import { IKandidatSøk, useKandidatsøk } from '../api/kandidat-søk-api/kandidatsøk';
 import { ApplikasjonContext } from '../felles/ApplikasjonContext';
 import useSøkekriterier, { IKandidatSøkekriterier } from './hooks/useSøkekriterier';
+import { lesSessionStorage, skrivSessionStorage } from './sessionStorage';
 
+export type Økt = Partial<{
+    searchParams: string;
+    sistBesøkteKandidat: string;
+    markerteKandidater: string[];
+    navigerbareKandidater: string[];
+    totaltAntallKandidater: number;
+    pageSize: number;
+    fritekst: string;
+}>;
+
+interface IØkt {
+    forrigeØkt: Økt;
+    økt: Økt;
+    setØkt: (økt: Økt) => void;
+}
 interface IKandidatSøkContext {
     kandidatSøk?: IKandidatSøk;
     søkekriterier?: IKandidatSøkekriterier;
+    økt?: IØkt;
 }
 
 export const KandidatSøkContext = React.createContext<IKandidatSøkContext>({
@@ -17,9 +34,34 @@ interface IKandidatSøkContextProvider {
     children?: React.ReactNode | undefined;
 }
 
+const sessionStorageKey = 'kandidatsøk';
+
 export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider> = ({ children }) => {
     const { søkekriterier: søkeKriterierInput } = useSøkekriterier();
     const { valgtNavKontor } = React.useContext(ApplikasjonContext);
+
+    const forrigeØkt = React.useRef(lesSessionStorage(sessionStorageKey));
+
+    const [økt, setØkt] = React.useState<Økt>(forrigeØkt.current);
+
+    const øktContext = React.useMemo(() => {
+        const onSetØkt = (oppdaterteFelter: Økt) => {
+            const oppdatertØkt = {
+                ...økt,
+                ...oppdaterteFelter,
+            };
+
+            skrivSessionStorage(sessionStorageKey, oppdatertØkt);
+            setØkt(oppdatertØkt);
+        };
+
+        return {
+            forrigeØkt: forrigeØkt.current,
+            økt,
+            setØkt: onSetØkt,
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [JSON.stringify(økt)]);
 
     const søkekriterier = React.useMemo(() => søkeKriterierInput, [søkeKriterierInput]);
 
@@ -29,7 +71,10 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
         error,
     } = useKandidatsøk({ søkekriterier, navKontor: valgtNavKontor ?? null });
 
-    const value = React.useMemo(() => ({ kandidatSøk }), [kandidatSøk]);
+    const value = React.useMemo(
+        () => ({ kandidatSøk, økt: øktContext }),
+        [kandidatSøk, øktContext]
+    );
 
     if (error) {
         return (
