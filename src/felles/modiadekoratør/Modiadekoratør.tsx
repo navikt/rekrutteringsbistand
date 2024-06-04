@@ -17,11 +17,12 @@ const decoratorConfig: DecoratorProps = {
     environment: erIkkeProd ? 'q1' : 'prod',
     urlFormat: erIkkeProd ? 'LOCAL' : 'ANSATT',
     useProxy: true,
-    onEnhetChanged: (enhet) => {
+
+    onEnhetChanged(enhet) {
         console.log('Enhet endret til enhet:', enhet);
     },
     onFnrChanged(_) {
-        console.log();
+        console.log('🎺 "fnr change"');
     },
 };
 
@@ -44,8 +45,6 @@ enum Status {
 const dekoratørNavn = 'internarbeidsflatefs';
 
 const Modiadekoratør: React.FC<IModiadekoratør> = ({ children }) => {
-    const dekoratør = React.useRef<React.ComponentType<DecoratorProps>>();
-    const assets = erIkkeProd ? devAssets : prodAssets;
     const [status, setStatus] = React.useState<Status>(
         loadjs.isDefined(dekoratørNavn) ? Status.Klar : Status.Laster
     );
@@ -57,34 +56,33 @@ const Modiadekoratør: React.FC<IModiadekoratør> = ({ children }) => {
                     returnPromise: true,
                 });
 
-                const component = NAVSPA.importer<DecoratorProps>(dekoratørNavn);
-                dekoratør.current = component;
-
                 setStatus(Status.Klar);
-            } catch (error) {
-                console.error('Feil ved lasting av assets:', error);
+            } catch (e) {
                 setStatus(Status.Feil);
             }
         };
 
         if (!loadjs.isDefined(dekoratørNavn)) {
+            const assets = erIkkeProd ? devAssets : prodAssets;
+
             loadAssets(assets);
         }
-    }, [assets]);
+    }, []);
+    const InternflateDecorator = NAVSPA.importer<DecoratorProps>(dekoratørNavn);
+
+    if (status === Status.Feil) {
+        return <div>Feil ved lasting av Modia-dekoratør</div>;
+    }
 
     if (status === Status.Laster) {
         return <Loader />;
     }
 
-    if (dekoratør.current) {
-        const DekoratørComponent = dekoratør.current;
-        return (
-            <React.Fragment>
-                <DekoratørComponent {...decoratorConfig} /> {children}
-            </React.Fragment>
-        );
-    }
-
-    return <div>Feil ved lasting av Modia-dekoratør</div>;
+    return (
+        <React.Fragment>
+            <InternflateDecorator {...decoratorConfig} /> {children}
+        </React.Fragment>
+    );
 };
+
 export default Modiadekoratør;
