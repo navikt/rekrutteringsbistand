@@ -45,33 +45,32 @@ const dekoratørNavn = 'internarbeidsflatefs';
 
 const Modiadekoratør: React.FC<IModiadekoratør> = ({ children }) => {
     const dekoratør = React.useRef<React.ComponentType<DecoratorProps>>();
-
+    const assets = erIkkeProd ? devAssets : prodAssets;
     const [status, setStatus] = React.useState<Status>(
         loadjs.isDefined(dekoratørNavn) ? Status.Klar : Status.Laster
     );
 
     React.useEffect(() => {
-        const loadAssets = async (staticPaths: string[]) => {
+        const loadAssets = async () => {
             try {
-                await loadjs(staticPaths, dekoratørNavn, {
-                    returnPromise: true,
+                await loadjs(assets, {
+                    success: () => {
+                        const component = NAVSPA.importer<DecoratorProps>('internarbeidsflatefs');
+                        dekoratør.current = component;
+                        setStatus(Status.Klar);
+                    },
+                    error: () => {
+                        setStatus(Status.Feil);
+                    },
                 });
-
-                const component = NAVSPA.importer<DecoratorProps>(dekoratørNavn);
-                dekoratør.current = component;
-
-                setStatus(Status.Klar);
-            } catch (e) {
+            } catch (error) {
+                console.error('Error loading decorator assets:', error);
                 setStatus(Status.Feil);
             }
         };
 
-        if (!loadjs.isDefined(dekoratørNavn)) {
-            const assets = erIkkeProd ? devAssets : prodAssets;
-
-            loadAssets(assets);
-        }
-    }, []);
+        loadAssets();
+    }, [assets]);
 
     if (status === Status.Laster) {
         return <Loader />;
