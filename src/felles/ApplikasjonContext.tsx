@@ -36,7 +36,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
     const [valgtNavKontor, setValgtNavKontor] = React.useState<NavKontorMedNavn | null>(null);
 
     // TODO Feature-toggle!
-    const tilgangskontrollErPå = false;
+    const tilgangskontrollErPå = erIkkeProd;
 
     const harRolle = (rolle: Rolle[]) =>
         tilgangskontrollErPå
