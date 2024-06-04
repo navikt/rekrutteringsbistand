@@ -1,23 +1,24 @@
-import useNavKontor from 'felles/store/navKontor';
 import { useContext, useEffect } from 'react';
 import { useMeg } from '../../api/frackend/meg';
-import { ØktContext } from '../Økt';
 import useSøkekriterier from './useSøkekriterier';
 
-import { useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
+import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import { PAGE_SIZE } from '../filter/Paginering';
 
 const useLagreØkt = () => {
-    const navKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
+    const navKontor = valgtNavKontor?.navKontor;
     const { navIdent } = useMeg();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
-    const { setØkt } = useContext(ØktContext);
+    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
+    const setØkt = kandidatSøkØkt?.setØkt;
     const { søkekriterier } = useSøkekriterier();
 
-    const { data } = useKandidatsøk({ søkekriterier, navKontor });
+    const { kandidatSøk } = useContext(KandidatSøkContext);
 
-    const kandidatsøkKandidatNavigering = data?.navigering.kandidatnumre;
-    const totalHits = data?.antallTotalt;
+    const kandidatsøkKandidatNavigering = kandidatSøk?.navigering.kandidatnumre;
+    const totalHits = kandidatSøk?.antallTotalt;
 
     const deps = [
         søkekriterier.toString(),
@@ -29,12 +30,13 @@ const useLagreØkt = () => {
         const hentKandidatnumreForNavigering = async () => {
             try {
                 if (kandidatsøkKandidatNavigering) {
-                    setØkt({
-                        searchParams: søkekriterier.toString(),
-                        navigerbareKandidater: kandidatsøkKandidatNavigering,
-                        totaltAntallKandidater: totalHits,
-                        pageSize: PAGE_SIZE,
-                    });
+                    setØkt &&
+                        setØkt({
+                            searchParams: søkekriterier.toString(),
+                            navigerbareKandidater: kandidatsøkKandidatNavigering,
+                            totaltAntallKandidater: totalHits,
+                            pageSize: PAGE_SIZE,
+                        });
                 }
             } catch (e) {
                 console.error('Klarte ikke å hente navigerbare kandidater:', e);

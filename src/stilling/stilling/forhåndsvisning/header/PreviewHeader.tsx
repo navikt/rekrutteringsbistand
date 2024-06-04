@@ -4,15 +4,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Stilling, { Stillingsinfo, System } from 'felles/domene/stilling/Stilling';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { State } from '../../../redux/store';
 import { StillingsinfoState } from '../../../stillingsinfo/stillingsinfoReducer';
 import { COPY_AD_FROM_MY_ADS, EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../adReducer';
 import Stillingsheader from '../../header/Stillingsheader';
 import EksternStillingAdvarsel from './EksternStillingAdvarsel';
 import OpprettKandidatlisteModal from './OpprettKandidatlisteModal';
+import { TilgangskontrollForInnhold } from '../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../../../felles/tilgangskontroll/Roller';
 
 type Props = {
     stilling: Stilling;

@@ -1,19 +1,20 @@
 import { Search } from '@navikt/ds-react';
 import { FormEventHandler, FunctionComponent, useContext, useState } from 'react';
-import { ØktContext } from '../Økt';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import css from './Fritekstsøk.module.css';
 
 const Fritekstsøk: FunctionComponent = () => {
-    const { forrigeØkt, setØkt } = useContext(ØktContext);
-    const [fritekstSøk, setFritekstSøk] = useState(forrigeØkt.fritekst ?? '');
+    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
+
+    const [fritekstSøk, setFritekstSøk] = useState(kandidatSøkØkt?.forrigeØkt.fritekst ?? '');
 
     const onClear = () => {
-        setØkt({ fritekst: '' });
+        kandidatSøkØkt?.setØkt && kandidatSøkØkt.setØkt({ fritekst: '' });
     };
 
     const onFormSubmit: FormEventHandler = (event) => {
         event.preventDefault();
-        setØkt({ fritekst: fritekstSøk });
+        kandidatSøkØkt?.setØkt && kandidatSøkØkt.setØkt({ fritekst: fritekstSøk });
     };
 
     return (

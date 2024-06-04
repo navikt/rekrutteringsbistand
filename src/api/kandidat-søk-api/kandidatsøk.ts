@@ -7,6 +7,7 @@ import {
     stedmappingFraNyttNummer,
 } from 'felles/MappingSted';
 import { HttpResponse, http } from 'msw';
+import { useMemo } from 'react';
 import useSWR from 'swr';
 import { z } from 'zod';
 import { IKandidatSøkekriterier } from '../../kandidatsok/hooks/useSøkekriterier';
@@ -67,6 +68,8 @@ export const kandidatSøkSchema = z.object({
     antallTotalt: z.number(),
 });
 
+export type IKandidatSøk = z.infer<typeof kandidatSøkSchema>;
+
 export type KandidatsøkKandidat = z.infer<typeof kandidaterSchema>;
 
 interface IkandidatsøkProps {
@@ -83,7 +86,7 @@ const mapKandidatSøkProps = ({ søkekriterier, navKontor }: IkandidatsøkProps)
 });
 
 export const useKandidatsøk = (props: IkandidatsøkProps) => {
-    const søkeprops = mapKandidatSøkProps(props);
+    const søkeprops = useMemo(() => mapKandidatSøkProps(props), [props]);
 
     const søkekriterier = søkeprops.søkekriterier;
 
@@ -92,15 +95,18 @@ export const useKandidatsøk = (props: IkandidatsøkProps) => {
         sortering: søkeprops.sortering,
     });
 
-    const utvidedeSøkekriterier = {
-        ...søkekriterier,
-        ønsketSted: Array.from(søkekriterier.ønsketSted).flatMap((sted) => {
-            const gamleSteder = stedmappingFraNyttNummer.get(getNummerFraSted(sted));
-            return gamleSteder
-                ? [sted, ...gamleSteder.map((s) => lagKandidatsøkstreng(s))]
-                : [sted];
+    const utvidedeSøkekriterier = useMemo(
+        () => ({
+            ...søkekriterier,
+            ønsketSted: Array.from(søkekriterier.ønsketSted).flatMap((sted) => {
+                const gamleSteder = stedmappingFraNyttNummer.get(getNummerFraSted(sted));
+                return gamleSteder
+                    ? [sted, ...gamleSteder.map((s) => lagKandidatsøkstreng(s))]
+                    : [sted];
+            }),
         }),
-    };
+        [søkekriterier]
+    );
 
     return useSWR(
         {

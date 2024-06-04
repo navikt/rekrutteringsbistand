@@ -3,9 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@navikt/ds-react';
 import { System } from 'felles/domene/stilling/Stilling';
 import React from 'react';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { EDIT_AD } from '../../adReducer';
 import { erDirektemeldtStilling } from '../../adUtils';
 import AdStatus from '../../administration/adStatus/AdStatus';
@@ -14,6 +11,8 @@ import ContactInfo from './contact/ContactInfo';
 import Kategori from './kategori/Kategori';
 import Publishing from './publishing/Publishing';
 import Inkludering from './vis-inkluderingsmuligheter-ekstern-stilling/VisInkuderingsmuligheterForEksternStilling';
+import { TilgangskontrollForInnhold } from '../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../../../felles/tilgangskontroll/Roller';
 
 interface IAdministrationPreview {
     erEier: boolean;

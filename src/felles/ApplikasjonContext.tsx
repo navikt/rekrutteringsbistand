@@ -3,18 +3,26 @@ import React from 'react';
 import { useMeg } from '../api/frackend/meg';
 import ErrorBoundary from './feilhåndtering/ErrorBoundary';
 import { erIkkeProd } from './miljø';
-import { Rolle } from './tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from './tilgangskontroll/Roller';
+
+export type NavKontorMedNavn = {
+    navKontor: string;
+    navKontorNavn: string | null;
+};
 
 interface ApplikasjonContextType {
     roller?: Rolle[];
     navIdent?: string;
     harRolle: (rolle: Rolle[]) => boolean;
     tilgangskontrollErPå: boolean;
+    valgtNavKontor?: NavKontorMedNavn | null;
+    setValgtNavKontor: (navKontor: NavKontorMedNavn | null | undefined) => void;
 }
 
 export const ApplikasjonContext = React.createContext<ApplikasjonContextType>({
     harRolle: () => false,
     tilgangskontrollErPå: false,
+    setValgtNavKontor: () => null,
 });
 
 interface IApplikasjonContextProvider {
@@ -23,6 +31,10 @@ interface IApplikasjonContextProvider {
 
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
     const { navIdent, roller, isLoading } = useMeg();
+
+    const [valgtNavKontor, setValgtNavKontor] = React.useState<NavKontorMedNavn | null | undefined>(
+        undefined
+    );
 
     // TODO Feature-toggle!
     const tilgangskontrollErPå = erIkkeProd;
@@ -39,19 +51,23 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
     return (
         <ApplikasjonContext.Provider
             value={{
+                setValgtNavKontor,
+                valgtNavKontor,
                 roller,
                 navIdent,
                 harRolle,
                 tilgangskontrollErPå,
             }}
         >
-            {isLoading ? (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <Loader />
-                </div>
-            ) : (
-                <ErrorBoundary> {children} </ErrorBoundary>
-            )}
+            <>
+                {isLoading ? (
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Loader />
+                    </div>
+                ) : (
+                    <ErrorBoundary> {children} </ErrorBoundary>
+                )}
+            </>
         </ApplikasjonContext.Provider>
     );
 };

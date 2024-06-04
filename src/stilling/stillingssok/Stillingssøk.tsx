@@ -7,9 +7,6 @@ import { useLocation, useParams } from 'react-router-dom';
 import { useMeg } from '../../api/frackend/meg';
 import { sendEvent } from '../../felles/amplitude';
 import Layout from '../../felles/komponenter/layout/Layout';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import OpprettNyStilling from '../opprett-ny-stilling/OpprettNyStilling';
 import AlleStillinger from './AlleStillinger';
 import MineStillinger from './MineStillinger';
@@ -21,6 +18,8 @@ import { Sortering } from './sorter/Sorter';
 import { Søkefelt } from './søkefelter/Søkefelter';
 import useNavigering from './useNavigering';
 import { QueryParam, oppdaterUrlMedParam } from './utils/urlUtils';
+import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
 
 export type Søkekriterier = {
     side: number;

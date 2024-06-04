@@ -6,8 +6,8 @@ import {
     createRoutesFromElements,
 } from 'react-router-dom';
 import RouterFeil from './felles/feilhåndtering/RouterFeil';
-import Header from './header/Header';
 
+import Header from './felles/Header';
 import FormidlingsSide from './formidling/Formidling';
 import Forside from './forside/Forside';
 import KandidatApp from './kandidat/app/KandidatApp';
