@@ -1,3 +1,4 @@
+import { Loader } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
 import * as React from 'react';
 import { erIkkeProd } from '../miljø';
@@ -6,15 +7,14 @@ import { DecoratorProps } from './ModiadekoratørTyper';
 export interface IModiadekoratør {
     children?: React.ReactNode | undefined;
 }
-const InternflateDecorator = NAVSPA.importer<DecoratorProps>('internarbeidsflatefs');
 
 const decoratorConfig: DecoratorProps = {
     appName: 'Rekrutteringsbistand',
     showEnheter: true,
     showSearchArea: true,
     showHotkeys: true,
-    environment: 'local',
-    urlFormat: 'LOCAL',
+    environment: erIkkeProd ? 'q1' : 'prod',
+    urlFormat: erIkkeProd ? 'LOCAL' : 'ANSATT',
     useProxy: true,
 
     onEnhetChanged(enhet) {
@@ -40,6 +40,7 @@ const loadStylesheet = (href: string) => {
     link.rel = 'stylesheet';
     link.href = href;
     document.head.append(link);
+    return Promise.resolve(true);
 };
 
 const devUrl = {
@@ -53,12 +54,22 @@ const prodUrl = {
 };
 
 const Modiadekoratør: React.FC<IModiadekoratør> = ({ children }) => {
+    const [assetsLoaded, setAssetsLoaded] = React.useState(false);
+
     React.useEffect(() => {
         Promise.all([
             loadScript(erIkkeProd ? devUrl.script : prodUrl.script),
             loadStylesheet(erIkkeProd ? devUrl.css : prodUrl.css),
-        ]).catch((error) => console.log(error));
+        ])
+            .then(() => setAssetsLoaded(true))
+            .catch((error) => console.log(error));
     }, []);
+
+    if (!assetsLoaded) {
+        return <Loader />; // or return a loading spinner
+    }
+
+    const InternflateDecorator = NAVSPA.importer<DecoratorProps>('internarbeidsflatefs');
 
     return (
         <React.Fragment>
