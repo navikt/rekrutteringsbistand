@@ -51,25 +51,25 @@ const Modiadekoratør: React.FC<IModiadekoratør> = ({ children }) => {
     );
 
     React.useEffect(() => {
-        const loadAssets = async () => {
+        const loadAssets = async (staticPaths: string[]) => {
             try {
-                await loadjs(assets, {
-                    success: () => {
-                        const component = NAVSPA.importer<DecoratorProps>('internarbeidsflatefs');
-                        dekoratør.current = component;
-                        setStatus(Status.Klar);
-                    },
-                    error: () => {
-                        setStatus(Status.Feil);
-                    },
+                await loadjs(staticPaths, dekoratørNavn, {
+                    returnPromise: true,
                 });
+
+                const component = NAVSPA.importer<DecoratorProps>(dekoratørNavn);
+                dekoratør.current = component;
+
+                setStatus(Status.Klar);
             } catch (error) {
-                console.error('Error loading decorator assets:', error);
+                console.error('Feil ved lasting av assets:', error);
                 setStatus(Status.Feil);
             }
         };
 
-        loadAssets();
+        if (!loadjs.isDefined(dekoratørNavn)) {
+            loadAssets(assets);
+        }
     }, [assets]);
 
     if (status === Status.Laster) {
