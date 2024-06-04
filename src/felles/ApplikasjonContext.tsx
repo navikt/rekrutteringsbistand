@@ -15,14 +15,15 @@ interface ApplikasjonContextType {
     navIdent?: string;
     harRolle: (rolle: Rolle[]) => boolean;
     tilgangskontrollErPå: boolean;
-    valgtNavKontor?: NavKontorMedNavn | null;
-    setValgtNavKontor: (navKontor: NavKontorMedNavn | null | undefined) => void;
+    valgtNavKontor: NavKontorMedNavn | null;
+    setValgtNavKontor: (navKontor: NavKontorMedNavn | null) => void;
 }
 
 export const ApplikasjonContext = React.createContext<ApplikasjonContextType>({
     harRolle: () => false,
     tilgangskontrollErPå: false,
     setValgtNavKontor: () => null,
+    valgtNavKontor: null,
 });
 
 interface IApplikasjonContextProvider {
@@ -32,9 +33,7 @@ interface IApplikasjonContextProvider {
 export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> = ({ children }) => {
     const { navIdent, roller, isLoading } = useMeg();
 
-    const [valgtNavKontor, setValgtNavKontor] = React.useState<NavKontorMedNavn | null | undefined>(
-        undefined
-    );
+    const [valgtNavKontor, setValgtNavKontor] = React.useState<NavKontorMedNavn | null>(null);
 
     // TODO Feature-toggle!
     const tilgangskontrollErPå = erIkkeProd;
