@@ -1,15 +1,13 @@
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
-import { BodyShort, Button, Loader } from '@navikt/ds-react';
-import { FunctionComponent, useState } from 'react';
+import { BodyShort, Button } from '@navikt/ds-react';
+import { FunctionComponent, useContext, useState } from 'react';
 
-import useNavKontor from 'felles/store/navKontor';
-import { KandidatsøkKandidat, useKandidatsøk } from '../../api/kandidat-søk-api/kandidatsøk';
+import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import Paginering from '../filter/Paginering';
 import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
-import useSøkekriterier from '../hooks/useSøkekriterier';
 import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
-import { Økt } from '../Økt';
 import AntallKandidater from './AntallKandidater';
 import css from './Kandidater.module.css';
 import MarkerAlle from './MarkerAlle';
@@ -21,7 +19,6 @@ type Props = {
     markerteKandidater: Set<string>;
     onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
-    forrigeØkt: Økt | null;
 };
 
 enum Modal {
@@ -35,10 +32,8 @@ const Kandidater: FunctionComponent<Props> = ({
     markerteKandidater,
     onMarkerKandidat,
     fjernMarkering,
-    forrigeØkt,
 }) => {
-    const { søkekriterier } = useSøkekriterier();
-    const navKontor = useNavKontor((state) => state.navKontor);
+    const { kandidatSøk } = useContext(KandidatSøkContext);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
 
     const onLagreIKandidatlisteClick = () => {
@@ -49,10 +44,8 @@ const Kandidater: FunctionComponent<Props> = ({
         );
     };
 
-    const { data, isLoading, error } = useKandidatsøk({ søkekriterier, navKontor });
-
-    const kandidatsøkKandidater = data?.kandidater;
-    const totalHits = data?.antallTotalt;
+    const kandidatsøkKandidater = kandidatSøk?.kandidater;
+    const totalHits = kandidatSøk?.antallTotalt;
 
     return (
         <div className={css.kandidater}>
@@ -83,15 +76,6 @@ const Kandidater: FunctionComponent<Props> = ({
                 </div>
             </div>
 
-            {isLoading && <Loader variant="interaction" size="2xlarge" className={css.lasterInn} />}
-            {error && (
-                <BodyShort className={css.feilmelding} aria-live="assertive">
-                    {error.message === '403'
-                        ? 'Du har ikke tilgang til kandidatsøket'
-                        : error.message}
-                </BodyShort>
-            )}
-
             {kandidatsøkKandidater && kandidatsøkKandidater.length > 0 ? (
                 <>
                     <div className={css.overKandidater}>
@@ -114,7 +98,6 @@ const Kandidater: FunctionComponent<Props> = ({
                                 kontekstAvKandidatlisteEllerStilling={
                                     kontekstAvKandidatlisteEllerStilling
                                 }
-                                forrigeØkt={forrigeØkt}
                                 onMarker={() => {
                                     onMarkerKandidat(kandidat.arenaKandidatnr);
                                 }}

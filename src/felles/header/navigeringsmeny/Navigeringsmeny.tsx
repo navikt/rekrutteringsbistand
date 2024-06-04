@@ -1,13 +1,12 @@
 import { FunctionComponent, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { ApplikasjonContext } from '../../ApplikasjonContext';
+import { Rolle } from '../../tilgangskontroll/Roller';
 import Nyheter from '../nyheter/Nyheter';
 import css from './Navigeringsmeny.module.css';
 import Tab, { TabConfig } from './Tab';
+import { TilgangskontrollForInnhold } from '../../tilgangskontroll/TilgangskontrollForInnhold';
 
 const tabs: TabConfig[] = [
     {

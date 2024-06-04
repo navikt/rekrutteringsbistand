@@ -1,14 +1,15 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
-import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { Mål as Hovedmål } from '../filter/Hovedmål';
 import { FiltrerbarInnsatsgruppe } from '../filter/Jobbmuligheter';
 import { Nivå as Utdanningsnivå } from '../filter/Utdanningsnivå';
 import { Portefølje } from '../filter/porteføljetabs/PorteføljeTabs';
 import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Sortering } from '../kandidater/sortering/Sortering';
-import { Økt, ØktContext } from '../Økt';
+
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
+import { KandidatSøkContext, Økt } from '../KandidatSøkContext';
 import { FilterParam } from './useQuery';
 
 export const LISTEPARAMETER_SEPARATOR = ';';
@@ -62,13 +63,14 @@ type Returverdi = {
 const useSøkekriterier = (): Returverdi => {
     const { harRolle, tilgangskontrollErPå } = useContext(ApplikasjonContext);
     const [searchParams, setSearchParams] = useSearchParams();
-    const { økt } = useContext(ØktContext);
+    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
+    const økt = kandidatSøkØkt?.økt;
     const [søkekriterier, setSøkekriterier] = useState<IKandidatSøkekriterier>(
-        searchParamsTilSøkekriterier(searchParams, økt)
+        searchParamsTilSøkekriterier(searchParams, økt ?? {})
     );
 
     useEffect(() => {
-        setSøkekriterier(searchParamsTilSøkekriterier(searchParams, økt));
+        setSøkekriterier(searchParamsTilSøkekriterier(searchParams, økt ?? {}));
     }, [searchParams, økt]);
 
     const setSearchParam = useCallback(
@@ -94,23 +96,13 @@ const useSøkekriterier = (): Returverdi => {
     );
 
     useEffect(() => {
-        if (tilgangskontrollErPå) {
-            if (!søkekriterier.portefølje) {
-                setSearchParam(
-                    FilterParam.Portefølje,
-                    harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-                        ? Portefølje.Alle
-                        : Portefølje.MineKontorer
-                );
-            } else if (
-                // fjern portefølje fra søkekriterier hvis bruker ikke har tilgang til å se alle brukere
-                søkekriterier.portefølje === Portefølje.Alle &&
-                !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-            ) {
-                setSearchParam(FilterParam.Portefølje, Portefølje.MineKontorer);
-            }
-        } else if (!søkekriterier.portefølje) {
-            setSearchParam(FilterParam.Portefølje, Portefølje.Alle);
+        if (
+            tilgangskontrollErPå &&
+            // fjern portefølje fra søkekriterier hvis bruker ikke har tilgang til å se alle brukere
+            søkekriterier.portefølje === Portefølje.Alle &&
+            !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
+        ) {
+            setSearchParam(FilterParam.Portefølje, Portefølje.MineKontorer);
         }
     }, [søkekriterier.portefølje, setSearchParam, harRolle, tilgangskontrollErPå]);
 

@@ -13,9 +13,6 @@ import { useVisVarsling } from 'felles/varsling/Varsling';
 import { useMeg } from '../../api/frackend/meg';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Kandidatlisteside from '../../kandidat/kandidatliste/Kandidatlisteside';
 import store from '../../kandidat/state/reduxStore';
 import DelayedSpinner from '../common/DelayedSpinner';
@@ -34,6 +31,8 @@ import KontekstAvKandidat from './kontekst-av-kandidat/KontekstAvKandidat';
 import css from './Stilling.module.css';
 import StillingKandidatKnapper from './StillingKandidatKnapper';
 import VisStillingBanner from './VisStillingBanner';
+import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
 
 export const REDIGERINGSMODUS_QUERY_PARAM = 'redigeringsmodus';
 

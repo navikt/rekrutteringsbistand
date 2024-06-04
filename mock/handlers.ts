@@ -1,13 +1,13 @@
 import { apiMockHandlers } from '../src/api/api.msw';
 import { megMockMsw } from '../src/api/frackend/meg';
+import { smsApiMock } from '../src/api/sms-api/sms';
 import { stillingsapiMock } from '../src/api/stillings-api/mock.msw';
-import { Rolle } from '../src/felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../src/felles/tilgangskontroll/Roller';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
 import { gammelKandidatApiMock } from './kandidat-api/mock';
 import { modiaMock } from './modia/modia';
 import { modiaContextHolderMock } from './modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from './presenterte-kandidater-api/mock';
-import { smsApiMock } from '../src/api/sms-api/sms';
 import { stillingApiMock } from './stilling-api/mock';
 import { stillingssøkMock } from './stillingssok-proxy/mock';
 import { synlighetApiMock } from './synlighet-api/mock';

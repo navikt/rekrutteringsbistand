@@ -2,9 +2,9 @@ import { Label, Radio, RadioGroup } from '@navikt/ds-react';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import React, { FunctionComponent, ReactNode } from 'react';
 import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
-import { Rolle } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { kategoriTilVisningsnavn } from '../stilling/forhåndsvisning/administration/kategori/Kategori';
 import css from './OpprettNyStilling.module.css';
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
 
 const kategorier = [
     Stillingskategori.Stilling,

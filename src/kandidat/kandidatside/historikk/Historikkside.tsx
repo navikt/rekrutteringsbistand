@@ -9,10 +9,9 @@ import { ikkeLastet, lasterInn, Nettressurs, suksess } from 'felles/nettressurs'
 import { useHentKandidatHistorikk } from '../../../api/kandidat-api/hentKandidatHistorikk';
 import { useLookupCv } from '../../../api/kandidat-søk-api/lookupCv';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
+import { Rolle } from '../../../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { fetchForespørslerOmDelingAvCvForKandidat } from '../../api/forespørselOmDelingAvCvApi';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { ForespørselOmDelingAvCv } from '../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { capitalizeFirstLetter } from '../../utils/formateringUtils';
 import { KandidatQueryParam } from '../Kandidatside';

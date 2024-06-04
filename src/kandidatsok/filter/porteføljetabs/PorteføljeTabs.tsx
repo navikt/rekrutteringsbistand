@@ -1,13 +1,12 @@
 import { Tabs } from '@navikt/ds-react';
 import { ReactNode, useContext } from 'react';
 import { ApplikasjonContext } from '../../../felles/ApplikasjonContext';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import css from './PorteføljeTabs.module.css';
 import VelgKontorTab from './VelgKontorTab';
+import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../../felles/tilgangskontroll/Roller';
 
 export enum Portefølje {
     Alle = 'alle',

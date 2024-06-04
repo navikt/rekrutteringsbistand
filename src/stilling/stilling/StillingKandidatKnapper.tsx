@@ -2,9 +2,8 @@ import { MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { lenkeTilFinnKandidater } from '../../kandidat/app/paths';
 import LeggTilKandidatModal from './legg-til-kandidat/LeggTilKandidatModal';
 

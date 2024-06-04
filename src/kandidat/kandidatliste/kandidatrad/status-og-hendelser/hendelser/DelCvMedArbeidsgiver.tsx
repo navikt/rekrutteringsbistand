@@ -2,9 +2,10 @@ import {
     KandidatIKandidatliste,
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import useNavKontor from 'felles/store/navKontor';
-import { FunctionComponent } from 'react';
+
+import { FunctionComponent, useContext } from 'react';
 import { useDispatch } from 'react-redux';
+import { ApplikasjonContext } from '../../../../../felles/ApplikasjonContext';
 import KandidatlisteAction from '../../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../../reducer/KandidatlisteActionType';
 import DelingAvCv from './DelingAvCv';
@@ -21,7 +22,7 @@ const DelCvMedArbeidsgiver: FunctionComponent<Props> = ({
     kandidat,
 }) => {
     const dispatch = useDispatch();
-    const valgtNavKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
 
     const endreUtfallForKandidat = (nyttUtfall: Kandidatutfall) => {
         dispatch({
@@ -38,7 +39,7 @@ const DelCvMedArbeidsgiver: FunctionComponent<Props> = ({
             type: KandidatlisteActionType.SlettCvFraArbeidsgiversKandidatliste,
             kandidatlisteId,
             kandidatnr: kandidat.kandidatnr,
-            navKontor: valgtNavKontor,
+            navKontor: valgtNavKontor?.navKontor ?? null,
         });
     };
 

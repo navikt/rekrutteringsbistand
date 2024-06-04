@@ -1,6 +1,6 @@
 import { XMarkIcon } from '@navikt/aksel-icons';
 import { Button, Heading, Popover } from '@navikt/ds-react';
-import { FunctionComponent, useRef, useState } from 'react';
+import { FunctionComponent, useContext, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { formaterDatoNaturlig } from '../../utils/dateUtils';
@@ -18,7 +18,7 @@ import {
     FormidlingAvUsynligKandidat,
     Kandidatutfall,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import useNavKontor from 'felles/store/navKontor';
+import { ApplikasjonContext } from '../../../felles/ApplikasjonContext';
 import css from './FormidlingAvUsynligKandidatrad.module.css';
 
 type Props = {
@@ -35,7 +35,7 @@ const FormidlingAvUsynligKandidatrad: FunctionComponent<Props> = ({
     kandidatlisteId,
 }) => {
     const dispatch = useDispatch();
-    const valgtNavKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
     const popoverRef = useRef<HTMLButtonElement | null>(null);
     const [visPopover, setVisPopover] = useState<boolean>(false);
 

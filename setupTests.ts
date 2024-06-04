@@ -1,9 +1,7 @@
 import '@testing-library/jest-dom';
 import { setupServer } from 'msw/node';
-import { afterAll, afterEach, beforeAll, vi } from 'vitest';
+import { afterAll, afterEach, beforeAll } from 'vitest';
 import mswHandlers from './mock/handlers';
-
-vi.mock('zustand');
 
 const testServer = setupServer(...mswHandlers);
 

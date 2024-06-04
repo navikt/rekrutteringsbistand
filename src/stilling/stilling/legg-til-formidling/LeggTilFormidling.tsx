@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { KandidatKilde, Kandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
-import useNavKontor from '../../../felles/store/navKontor';
+import { ApplikasjonContext } from '../../../felles/ApplikasjonContext';
 import FormidleKandidat from '../../../kandidat/kandidatliste/modaler/legg-til-kandidat-modal/FormidleKandidat';
 
 export interface ILeggTilFormidling {
@@ -22,7 +22,7 @@ const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
     handleBekreft,
     kilde,
 }) => {
-    const valgtNavKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = React.useContext(ApplikasjonContext);
     return (
         <div style={{ paddingTop: '1rem' }}>
             <FormidleKandidat
@@ -35,7 +35,7 @@ const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
                 }}
                 kandidatlisteId={kandidatlisteId}
                 stillingsId={stillingsId}
-                valgtNavKontor={valgtNavKontor}
+                valgtNavKontor={valgtNavKontor?.navKontor ?? null}
                 onClose={onClose}
             />
         </div>

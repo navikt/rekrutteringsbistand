@@ -1,9 +1,9 @@
 import { Button, ErrorMessage } from '@navikt/ds-react';
-import { ChangeEvent, FunctionComponent, useState } from 'react';
+import { ChangeEvent, FunctionComponent, useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { sendEvent } from 'felles/amplitude';
-import useNavKontor from 'felles/store/navKontor';
+import { ApplikasjonContext } from '../../../../../../felles/ApplikasjonContext';
 import { SearchApiError } from '../../../../../api/fetchUtils';
 import { resendForespørselOmDelingAvCv } from '../../../../../api/forespørselOmDelingAvCvApi';
 import {
@@ -30,7 +30,7 @@ const SendForespørselPåNytt: FunctionComponent<Props> = ({
     onLukk,
 }) => {
     const dispatch = useDispatch();
-    const valgtNavKontor = useNavKontor((state) => state.navKontor);
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
     const [svarfrist, setSvarfrist] = useState<Svarfrist>(Svarfrist.ToDager);
     const [egenvalgtFrist, setEgenvalgtFrist] = useState<Date | undefined>();
     const [egenvalgtFristFeilmelding, setEgenvalgtFristFeilmelding] = useState<
@@ -44,12 +44,12 @@ const SendForespørselPåNytt: FunctionComponent<Props> = ({
             return;
         }
 
-        if (valgtNavKontor !== null) {
+        if (valgtNavKontor?.navKontor) {
             const { stillingsId, aktørId } = gjeldendeForespørsel;
             const outboundDto: ResendForespørselOutboundDto = {
                 stillingsId,
                 svarfrist: lagSvarfristPåSekundet(svarfrist, egenvalgtFrist),
-                navKontor: valgtNavKontor,
+                navKontor: valgtNavKontor?.navKontor,
             };
 
             setSenderForespørselPåNytt(true);

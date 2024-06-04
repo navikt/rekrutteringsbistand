@@ -1,10 +1,10 @@
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
+import { Varsling } from 'felles/varsling/Varsling';
 import { TilToppenKnapp } from '../../felles/komponenter/tilToppenKnapp/TilToppenKnapp';
-import TilgangskontrollForInnhold, {
-    Rolle,
-} from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import Kandidatside from '../kandidatside/Kandidatside';
 import CvSide from '../kandidatside/cv/CvSide';
 import Historikkside from '../kandidatside/historikk/Historikkside';
@@ -12,7 +12,6 @@ import NotFound from '../komponenter/errorside/NotFound';
 import store from '../state/reduxStore';
 import css from './KandidatApp.module.css';
 import ManglerTilgang from './ManglerTilgang';
-import { Varsling } from 'felles/varsling/Varsling';
 
 const App = () => {
     return (

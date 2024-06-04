@@ -1,6 +1,6 @@
 import { Chips, TextField } from '@navikt/ds-react';
 import * as React from 'react';
-import { Rolle } from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { Rolle } from '../felles/tilgangskontroll/Roller';
 
 export interface IDevMockMeg {
     children?: React.ReactNode | undefined;
