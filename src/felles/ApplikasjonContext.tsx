@@ -3,6 +3,7 @@ import React from 'react';
 import { useMeg } from '../api/frackend/meg';
 import ErrorBoundary from './feilhåndtering/ErrorBoundary';
 import { erIkkeProd } from './miljø';
+import Modiadekoratør from './modiadekoratør/Modiadekoratør';
 import { Rolle } from './tilgangskontroll/Roller';
 
 export type NavKontorMedNavn = {
@@ -59,6 +60,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
             }}
         >
             <>
+                <Modiadekoratør />
                 {isLoading ? (
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Loader />
