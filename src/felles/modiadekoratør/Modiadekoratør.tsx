@@ -1,5 +1,6 @@
 import { Loader } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
+import loadjs from 'loadjs';
 import * as React from 'react';
 import { erIkkeProd } from '../miljø';
 import { DecoratorProps } from './ModiadekoratørTyper';
@@ -16,66 +17,75 @@ const decoratorConfig: DecoratorProps = {
     environment: erIkkeProd ? 'q1' : 'prod',
     urlFormat: erIkkeProd ? 'LOCAL' : 'ANSATT',
     useProxy: true,
-
-    onEnhetChanged(enhet) {
+    onEnhetChanged: (enhet) => {
         console.log('Enhet endret til enhet:', enhet);
     },
     onFnrChanged(_) {
-        console.log('🎺 "fnr change"');
+        console.log();
     },
 };
 
-const loadScript = (src: string) => {
-    return new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = src;
-        script.onload = () => resolve(true);
-        script.onerror = () => reject(new Error(`Script load error for ${src}`));
-        document.head.append(script);
-    });
-};
+const devAssets = [
+    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js',
+    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css',
+];
 
-const loadStylesheet = (href: string) => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.append(link);
-    return Promise.resolve(true);
-};
+const prodAssets = [
+    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/prod/latest/dist/bundle.js',
+    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/prod/latest/dist/index.css',
+];
 
-const devUrl = {
-    script: 'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js',
-    css: 'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css',
-};
+enum Status {
+    Laster,
+    Klar,
+    Feil,
+}
 
-const prodUrl = {
-    script: 'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/prod/latest/dist/bundle.js',
-    css: 'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/prod/latest/dist/index.css',
-};
+const dekoratørNavn = 'internarbeidsflatefs';
 
 const Modiadekoratør: React.FC<IModiadekoratør> = ({ children }) => {
-    const [assetsLoaded, setAssetsLoaded] = React.useState(false);
+    const dekoratør = React.useRef<React.ComponentType<DecoratorProps>>();
+
+    const [status, setStatus] = React.useState<Status>(
+        loadjs.isDefined(dekoratørNavn) ? Status.Klar : Status.Laster
+    );
 
     React.useEffect(() => {
-        Promise.all([
-            loadScript(erIkkeProd ? devUrl.script : prodUrl.script),
-            loadStylesheet(erIkkeProd ? devUrl.css : prodUrl.css),
-        ])
-            .then(() => setAssetsLoaded(true))
-            .catch((error) => console.log(error));
+        const loadAssets = async (staticPaths: string[]) => {
+            try {
+                await loadjs(staticPaths, dekoratørNavn, {
+                    returnPromise: true,
+                });
+
+                const component = NAVSPA.importer<DecoratorProps>(dekoratørNavn);
+                dekoratør.current = component;
+
+                setStatus(Status.Klar);
+            } catch (e) {
+                setStatus(Status.Feil);
+            }
+        };
+
+        if (!loadjs.isDefined(dekoratørNavn)) {
+            const assets = erIkkeProd ? devAssets : prodAssets;
+
+            loadAssets(assets);
+        }
     }, []);
 
-    if (!assetsLoaded) {
-        return <Loader />; // or return a loading spinner
+    if (status === Status.Laster) {
+        return <Loader />;
     }
 
-    const InternflateDecorator = NAVSPA.importer<DecoratorProps>('internarbeidsflatefs');
+    if (dekoratør.current) {
+        const DekoratørComponent = dekoratør.current;
+        return (
+            <React.Fragment>
+                <DekoratørComponent {...decoratorConfig} /> {children}
+            </React.Fragment>
+        );
+    }
 
-    return (
-        <React.Fragment>
-            <InternflateDecorator {...decoratorConfig} /> {children}
-        </React.Fragment>
-    );
+    return <div>Feil ved lasting av Modia-dekoratør</div>;
 };
-
 export default Modiadekoratør;
