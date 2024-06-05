@@ -69,7 +69,11 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
         data: kandidatSøk,
         isLoading,
         error,
-    } = useKandidatsøk({ søkekriterier, navKontor: valgtNavKontor?.navKontor ?? null });
+    } = useKandidatsøk({
+        //TODO: Hack for å midlertidig fikse fritekst.
+        søkekriterier: { ...søkekriterier, fritekst: økt.fritekst ?? null },
+        navKontor: valgtNavKontor?.navKontor ?? null,
+    });
 
     const value = React.useMemo(
         () => ({ kandidatSøk, kandidatSøkØkt, søkekriterier }),

@@ -6,7 +6,7 @@ import css from './Fritekstsøk.module.css';
 const Fritekstsøk: FunctionComponent = () => {
     const { kandidatSøkØkt } = useContext(KandidatSøkContext);
 
-    const [fritekstSøk, setFritekstSøk] = useState(kandidatSøkØkt?.forrigeØkt.fritekst ?? '');
+    const [fritekstSøk, setFritekstSøk] = useState(kandidatSøkØkt?.økt.fritekst ?? '');
 
     const onClear = () => {
         kandidatSøkØkt?.setØkt && kandidatSøkØkt.setØkt({ fritekst: '' });
