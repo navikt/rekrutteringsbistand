@@ -1,6 +1,5 @@
 import { Loader } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
-import loadjs from 'loadjs';
 import * as React from 'react';
 import { erIkkeProd } from '../miljø';
 import { DecoratorProps } from './ModiadekoratørTyper';
@@ -26,57 +25,51 @@ const decoratorConfig: DecoratorProps = {
     },
 };
 
-const devAssets = [
-    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js',
-    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css',
-];
+const loadResource = (
+    tag: 'script' | 'link',
+    attributes: Record<string, string>
+): Promise<boolean> => {
+    return new Promise((resolve, reject) => {
+        const element = document.createElement(tag);
+        Object.entries(attributes).forEach(([key, value]) => {
+            element.setAttribute(key, value);
+        });
+        element.onload = () => resolve(true);
+        element.onerror = () =>
+            reject(new Error(`Failed to load the resource: ${attributes.href || attributes.src}`));
+        document.head.appendChild(element);
+    });
+};
 
-const prodAssets = [
-    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/prod/latest/dist/bundle.js',
-    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/prod/latest/dist/index.css',
-];
+const devUrl = {
+    script: 'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js',
+    css: 'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css',
+};
 
-enum Status {
-    Laster,
-    Klar,
-    Feil,
-}
-
-const dekoratørNavn = 'internarbeidsflatefs';
+const prodUrl = {
+    script: 'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/prod/latest/dist/bundle.js',
+    css: 'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/prod/latest/dist/index.css',
+};
 
 const Modiadekoratør: React.FC<IModiadekoratør> = ({ children }) => {
-    const [status, setStatus] = React.useState<Status>(
-        loadjs.isDefined(dekoratørNavn) ? Status.Klar : Status.Laster
-    );
+    const [assetsLoaded, setAssetsLoaded] = React.useState(false);
+
+    const assetUrls = erIkkeProd ? devUrl : prodUrl;
 
     React.useEffect(() => {
-        const loadAssets = async (staticPaths: string[]) => {
-            try {
-                await loadjs(staticPaths, dekoratørNavn, {
-                    returnPromise: true,
-                });
+        Promise.all([
+            loadResource('script', { src: assetUrls.script }),
+            loadResource('link', { rel: 'stylesheet', href: assetUrls.css }),
+        ])
+            .then(() => setAssetsLoaded(true))
+            .catch((error) => console.error('Error loading resources:', error));
+    }, [assetUrls]);
 
-                setStatus(Status.Klar);
-            } catch (e) {
-                setStatus(Status.Feil);
-            }
-        };
-
-        if (!loadjs.isDefined(dekoratørNavn)) {
-            const assets = erIkkeProd ? devAssets : prodAssets;
-
-            loadAssets(assets);
-        }
-    }, []);
-    const InternflateDecorator = NAVSPA.importer<DecoratorProps>(dekoratørNavn);
-
-    if (status === Status.Feil) {
-        return <div>Feil ved lasting av Modia-dekoratør</div>;
+    if (!assetsLoaded) {
+        return <Loader />; // or return a loading spinner
     }
 
-    if (status === Status.Laster) {
-        return <Loader />;
-    }
+    const InternflateDecorator = NAVSPA.importer<DecoratorProps>('internarbeidsflatefs');
 
     return (
         <React.Fragment>
