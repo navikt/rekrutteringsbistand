@@ -44,7 +44,7 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
 
     const [økt, setØkt] = React.useState<Økt>(forrigeØkt.current);
 
-    const øktContext = React.useMemo(() => {
+    const kandidatSøkØkt = React.useMemo(() => {
         const onSetØkt = (oppdaterteFelter: Økt) => {
             const oppdatertØkt = {
                 ...økt,
@@ -72,8 +72,8 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
     } = useKandidatsøk({ søkekriterier, navKontor: valgtNavKontor?.navKontor ?? null });
 
     const value = React.useMemo(
-        () => ({ kandidatSøk, økt: øktContext }),
-        [kandidatSøk, øktContext]
+        () => ({ kandidatSøk, kandidatSøkØkt, søkekriterier }),
+        [kandidatSøk, kandidatSøkØkt, søkekriterier]
     );
 
     if (error) {
