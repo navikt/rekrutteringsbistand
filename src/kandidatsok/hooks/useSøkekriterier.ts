@@ -9,7 +9,7 @@ import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/Priorite
 import { Sortering } from '../kandidater/sortering/Sortering';
 
 import { Rolle } from '../../felles/tilgangskontroll/Roller';
-import { KandidatSøkContext, Økt } from '../KandidatSøkContext';
+import { Økt } from '../KandidatSøkContext';
 import { FilterParam } from './useQuery';
 
 export const LISTEPARAMETER_SEPARATOR = ';';
@@ -60,13 +60,11 @@ type Returverdi = {
     fjernSøkekriterier: () => void;
 };
 
-const useSøkekriterier = (): Returverdi => {
+export const useKandidatSøkekriterier = (økt: Økt): Returverdi => {
     const { harRolle, tilgangskontrollErPå } = useContext(ApplikasjonContext);
     const [searchParams, setSearchParams] = useSearchParams();
-    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
-    const økt = kandidatSøkØkt?.økt;
     const [søkekriterier, setSøkekriterier] = useState<IKandidatSøkekriterier>(
-        searchParamsTilSøkekriterier(searchParams, økt ?? {})
+        searchParamsTilSøkekriterier(searchParams, økt)
     );
 
     useEffect(() => {
@@ -125,7 +123,7 @@ export const searchParamsTilSøkekriterier = (
     økt: Økt
 ): IKandidatSøkekriterier => ({
     orgenhet: null,
-    fritekst: økt.fritekst ? økt.fritekst : null,
+    fritekst: økt.fritekst ? økt.fritekst : '',
     portefølje: searchParams.get(FilterParam.Portefølje) as Portefølje,
     valgtKontor: searchParamTilSet(searchParams.get(FilterParam.ValgtKontor)),
     innsatsgruppe: searchParamTilSet(searchParams.get(FilterParam.Innsatsgruppe)),
@@ -177,5 +175,3 @@ export function kombinerStringsTilSearchParam(verdier: string[]) {
 function searchParamTilBoolean(searchParam: string | null) {
     return searchParam ? Boolean(searchParam) : null;
 }
-
-export default useSøkekriterier;

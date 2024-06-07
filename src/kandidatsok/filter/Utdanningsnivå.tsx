@@ -1,6 +1,8 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import { useContext } from 'react';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
+import { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 
 export enum Nivå {
     Videregående = 'videregaende',
@@ -11,10 +13,12 @@ export enum Nivå {
 }
 
 const Utdanningsnivå = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const {
+        kriterier: { søkekriterier, setSøkeparameter },
+    } = useContext(KandidatSøkContext);
 
     const onChange = (valgtNivå: Nivå[]) => {
-        setSearchParam(FilterParam.Utdanningsnivå, valgtNivå.join(LISTEPARAMETER_SEPARATOR));
+        setSøkeparameter(FilterParam.Utdanningsnivå, valgtNivå.join(LISTEPARAMETER_SEPARATOR));
     };
 
     return (

@@ -1,8 +1,9 @@
 import { Checkbox, CheckboxGroup, HelpText, useId } from '@navikt/ds-react';
 import { Innsatsgruppe } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
+import { KandidatSøkContext } from '../../KandidatSøkContext';
 import { FilterParam } from '../../hooks/useQuery';
-import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../../hooks/useSøkekriterier';
+import { LISTEPARAMETER_SEPARATOR } from '../../hooks/useSøkekriterier';
 import css from './PrioriterteMålgrupper.module.css';
 
 export enum PrioritertMålgruppe {
@@ -13,10 +14,10 @@ export enum PrioritertMålgruppe {
 
 const PrioriterteMålgrupper: FunctionComponent = () => {
     const hjelpetekstId = useId();
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     const onChange = (valgteMålgrupper: Innsatsgruppe[]) => {
-        setSearchParam(
+        kriterier.setSøkeparameter(
             FilterParam.PrioritertMålgruppe,
             valgteMålgrupper.join(LISTEPARAMETER_SEPARATOR)
         );
@@ -26,7 +27,7 @@ const PrioriterteMålgrupper: FunctionComponent = () => {
         <CheckboxGroup
             legend="Velg prioriterte målgrupper"
             onChange={onChange}
-            value={Array.from(søkekriterier.prioritertMålgruppe)}
+            value={Array.from(kriterier.søkekriterier.prioritertMålgruppe)}
         >
             <Checkbox value={PrioritertMålgruppe.UngeUnderTrettiÅr}>Unge under 30 år</Checkbox>
             <Checkbox value={PrioritertMålgruppe.SeniorFemtiPluss}>Senior 50+</Checkbox>

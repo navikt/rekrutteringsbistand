@@ -1,22 +1,22 @@
 import { Radio, RadioGroup } from '@navikt/ds-react';
-import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier from '../hooks/useSøkekriterier';
-import FilterMedTypeahead from './FilterMedTypeahead';
+import { useContext } from 'react';
 import { SuggestType } from '../../api/kandidat-søk-api/suggest';
+import { KandidatSøkContext } from '../KandidatSøkContext';
+import { FilterParam } from '../hooks/useQuery';
+import FilterMedTypeahead from './FilterMedTypeahead';
 
 const Arbeidserfaring = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     const setArbeidserfaring = (value: string | null) => {
-        setSearchParam(FilterParam.Arbeidserfaring, value);
-
+        kriterier.setSøkeparameter(FilterParam.Arbeidserfaring, value);
         if (value === '') {
-            setSearchParam(FilterParam.Ferskhet, null);
+            kriterier.setSøkeparameter(FilterParam.Ferskhet, null);
         }
     };
 
     const onFerskhetChange = (value: number | null) => {
-        setSearchParam(FilterParam.Ferskhet, value === null ? null : String(value));
+        kriterier.setSøkeparameter(FilterParam.Ferskhet, value === null ? null : String(value));
     };
 
     return (
@@ -25,12 +25,12 @@ const Arbeidserfaring = () => {
                 label="Arbeidserfaring"
                 description={`For eksempel «barnehagelærer»`}
                 suggestType={SuggestType.Arbeidserfaring}
-                value={søkekriterier.arbeidserfaring}
+                value={kriterier.søkekriterier.arbeidserfaring}
                 setValue={setArbeidserfaring}
             />
-            {søkekriterier.arbeidserfaring.size > 0 && (
+            {kriterier.søkekriterier.arbeidserfaring.size > 0 && (
                 <RadioGroup
-                    value={søkekriterier.ferskhet}
+                    value={kriterier.søkekriterier.ferskhet}
                     onChange={onFerskhetChange}
                     legend="Nylig arbeidserfaring"
                     description="Hvor fersk må arbeidserfaringen være?"

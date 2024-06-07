@@ -33,7 +33,7 @@ const Kandidater: FunctionComponent<Props> = ({
     onMarkerKandidat,
     fjernMarkering,
 }) => {
-    const { kandidatSøk } = useContext(KandidatSøkContext);
+    const { søkeResultat } = useContext(KandidatSøkContext);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
 
     const onLagreIKandidatlisteClick = () => {
@@ -44,8 +44,8 @@ const Kandidater: FunctionComponent<Props> = ({
         );
     };
 
-    const kandidatsøkKandidater = kandidatSøk?.kandidater;
-    const totalHits = kandidatSøk?.antallTotalt;
+    const kandidatsøkKandidater = søkeResultat?.kandidater;
+    const totalHits = søkeResultat?.antallTotalt;
 
     return (
         <div className={css.kandidater}>

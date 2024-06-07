@@ -1,12 +1,12 @@
 import { Tabs } from '@navikt/ds-react';
 import { ReactNode, useContext } from 'react';
 import { ApplikasjonContext } from '../../../felles/ApplikasjonContext';
+import { Rolle } from '../../../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
+import { KandidatSøkContext } from '../../KandidatSøkContext';
 import { FilterParam } from '../../hooks/useQuery';
-import useSøkekriterier from '../../hooks/useSøkekriterier';
 import css from './PorteføljeTabs.module.css';
 import VelgKontorTab from './VelgKontorTab';
-import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
-import { Rolle } from '../../../felles/tilgangskontroll/Roller';
 
 export enum Portefølje {
     Alle = 'alle',
@@ -17,15 +17,15 @@ export enum Portefølje {
 }
 
 const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
     const { tilgangskontrollErPå } = useContext(ApplikasjonContext);
 
     const velgPortefølje = (portefølje: string) => {
-        setSearchParam(FilterParam.Portefølje, portefølje);
+        kriterier.setSøkeparameter(FilterParam.Portefølje, portefølje);
     };
 
     return (
-        <Tabs value={søkekriterier.portefølje} onChange={velgPortefølje}>
+        <Tabs value={kriterier.søkekriterier.portefølje} onChange={velgPortefølje}>
             <Tabs.List>
                 <TilgangskontrollForInnhold
                     skjulVarsel
@@ -52,10 +52,10 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
                     skjulVarsel
                     kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
                 >
-                    <VelgKontorTab søkekriterier={søkekriterier} />
+                    <VelgKontorTab søkekriterier={kriterier.søkekriterier} />
                 </TilgangskontrollForInnhold>
             </Tabs.List>
-            <Tabs.Panel className={css.tabpanel} value={søkekriterier.portefølje}>
+            <Tabs.Panel className={css.tabpanel} value={kriterier.søkekriterier.portefølje}>
                 {children}
             </Tabs.Panel>
         </Tabs>

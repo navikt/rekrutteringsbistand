@@ -1,8 +1,9 @@
 import { CheckmarkIcon, ClockIcon } from '@navikt/aksel-icons';
 import { ToggleGroup, Tooltip } from '@navikt/ds-react';
 import { sendEvent } from 'felles/amplitude';
+import { useContext } from 'react';
+import { KandidatSøkContext } from '../../KandidatSøkContext';
 import { FilterParam } from '../../hooks/useQuery';
-import useSøkekriterier from '../../hooks/useSøkekriterier';
 import css from './Sortering.module.css';
 
 export enum Sortering {
@@ -11,10 +12,10 @@ export enum Sortering {
 }
 
 const Sorteringsvalg = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     const onChange = (sortering: Sortering) => {
-        setSearchParam(
+        kriterier.setSøkeparameter(
             FilterParam.Sortering,
             sortering === Sortering.SisteFørst ? null : sortering
         );
@@ -26,7 +27,7 @@ const Sorteringsvalg = () => {
 
     return (
         <ToggleGroup
-            defaultValue={søkekriterier.sortering}
+            defaultValue={kriterier.søkekriterier.sortering}
             onChange={(sortering) => onChange(sortering as Sortering)}
             size="small"
         >

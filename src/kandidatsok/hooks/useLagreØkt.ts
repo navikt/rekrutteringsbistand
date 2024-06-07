@@ -1,6 +1,5 @@
 import { useContext, useEffect } from 'react';
 import { useMeg } from '../../api/frackend/meg';
-import useSøkekriterier from './useSøkekriterier';
 
 import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
 import { KandidatSøkContext } from '../KandidatSøkContext';
@@ -11,17 +10,18 @@ const useLagreØkt = () => {
     const navKontor = valgtNavKontor?.navKontor;
     const { navIdent } = useMeg();
     const innloggetBruker = navIdent ? { navKontor, navIdent } : undefined;
-    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
-    const setØkt = kandidatSøkØkt?.setØkt;
-    const { søkekriterier } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
-    const { kandidatSøk } = useContext(KandidatSøkContext);
+    const {
+        søkeResultat,
+        økt: { setØkt },
+    } = useContext(KandidatSøkContext);
 
-    const kandidatsøkKandidatNavigering = kandidatSøk?.navigering.kandidatnumre;
-    const totalHits = kandidatSøk?.antallTotalt;
+    const kandidatsøkKandidatNavigering = søkeResultat?.navigering.kandidatnumre;
+    const totalHits = søkeResultat?.antallTotalt;
 
     const deps = [
-        søkekriterier.toString(),
+        kriterier.søkekriterier.toString(),
         JSON.stringify(kandidatsøkKandidatNavigering),
         JSON.stringify(innloggetBruker),
         setØkt,
@@ -32,7 +32,7 @@ const useLagreØkt = () => {
                 if (kandidatsøkKandidatNavigering) {
                     setØkt &&
                         setØkt({
-                            searchParams: søkekriterier.toString(),
+                            searchParams: kriterier.søkekriterier.toString(),
                             navigerbareKandidater: kandidatsøkKandidatNavigering,
                             totaltAntallKandidater: totalHits,
                             pageSize: PAGE_SIZE,

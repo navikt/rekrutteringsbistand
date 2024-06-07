@@ -1,17 +1,18 @@
-import { Button } from '@navikt/ds-react';
 import { TrashIcon } from '@navikt/aksel-icons';
-import useSøkekriterier from '../hooks/useSøkekriterier';
+import { Button } from '@navikt/ds-react';
+import { useContext } from 'react';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import filterCss from './Filter.module.css';
 
 const TømFiltre = () => {
-    const { fjernSøkekriterier } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     return (
         <div className={filterCss.tømFilter}>
             <Button
                 icon={<TrashIcon aria-hidden />}
                 variant="tertiary"
-                onClick={fjernSøkekriterier}
+                onClick={kriterier.fjernSøkekriterier}
             >
                 Tøm filtre
             </Button>

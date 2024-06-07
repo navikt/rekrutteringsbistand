@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier, {
-    LISTEPARAMETER_SEPARATOR,
-    Førerkortklasse,
-} from '../hooks/useSøkekriterier';
+import { Førerkortklasse, LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 import { Typeahead } from './typeahead/Typeahead';
 
 type FørerkortklasseWrapper = {
@@ -23,7 +21,7 @@ const alleKlasser: FørerkortklasseWrapper[] = Object.values(Førerkortklasse).m
 });
 
 const Førerkort = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
     const [forslag, setForslag] = useState<string[]>([]);
 
     const [input, setInput] = useState<string>('');
@@ -39,7 +37,7 @@ const Førerkort = () => {
     }, [input]);
 
     const setValue = (valgteKlasser: Set<Førerkortklasse>) => {
-        setSearchParam(
+        kriterier.setSøkeparameter(
             FilterParam.Førerkort,
             Array.from(valgteKlasser).join(LISTEPARAMETER_SEPARATOR)
         );
@@ -48,13 +46,13 @@ const Førerkort = () => {
     const onSelect = (klasse: string) => {
         setInput('');
 
-        const valgteKlasser = new Set(søkekriterier.førerkort);
+        const valgteKlasser = new Set(kriterier.søkekriterier.førerkort);
         valgteKlasser.add(klasse as Førerkortklasse);
         setValue(valgteKlasser);
     };
 
     const onFjernValgtKlasse = (valgtKlasse: string) => () => {
-        const valgteKlasser = new Set(søkekriterier.førerkort);
+        const valgteKlasser = new Set(kriterier.søkekriterier.førerkort);
         valgteKlasser.delete(valgtKlasse as Førerkortklasse);
 
         setValue(valgteKlasser);
@@ -66,7 +64,7 @@ const Førerkort = () => {
             description={`For eksempel «personbil»`}
             value={input}
             suggestions={forslag}
-            selectedSuggestions={Array.from(søkekriterier.førerkort)}
+            selectedSuggestions={Array.from(kriterier.søkekriterier.førerkort)}
             onRemoveSuggestion={onFjernValgtKlasse}
             onSelect={onSelect}
             onChange={(event) => setInput(event.target.value)}

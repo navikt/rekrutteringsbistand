@@ -1,13 +1,14 @@
+import { useContext } from 'react';
 import { SuggestType } from '../../api/kandidat-søk-api/suggest';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier from '../hooks/useSøkekriterier';
 import FilterMedTypeahead from './FilterMedTypeahead';
 
 const Språk = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     const setValue = (value: string | null) => {
-        setSearchParam(FilterParam.Språk, value);
+        kriterier.setSøkeparameter(FilterParam.Språk, value);
     };
 
     return (
@@ -15,7 +16,7 @@ const Språk = () => {
             label="Språk"
             description="For eksempel «norsk»"
             suggestType={SuggestType.Språk}
-            value={søkekriterier.språk}
+            value={kriterier.søkekriterier.språk}
             setValue={setValue}
         />
     );

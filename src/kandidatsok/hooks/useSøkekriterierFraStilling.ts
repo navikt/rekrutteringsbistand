@@ -1,23 +1,24 @@
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
-import { FilterParam } from './useQuery';
-import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
-import { KandidatsokQueryParam } from 'felles/lenker';
-import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
 import {
     formaterStedsnavn,
     lagKandidatsøkstreng,
     stedmappingFraGammeltNavn,
     stedmappingFraGammeltNummer,
 } from 'felles/MappingSted';
+import { KandidatsokQueryParam } from 'felles/lenker';
+import { Nettressurs, Nettstatus } from 'felles/nettressurs';
+import { useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
+import { KandidatSøkContext } from '../KandidatSøkContext';
+import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
+import { FilterParam } from './useQuery';
+import { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 
 const useSøkekriterierFraStilling = (
     stilling: Nettressurs<Stilling>,
     brukKriterierFraStillingen: boolean
 ) => {
-    const { setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
     const [searchParams] = useSearchParams();
     const [harLagtTilKriterier, setHarLagtTilKriterier] = useState(false);
 
@@ -27,11 +28,11 @@ const useSøkekriterierFraStilling = (
         const anvendSøkekriterier = async (stilling: Stilling) => {
             const yrkerFraStilling = hentØnsketYrkeFraStilling(stilling);
 
-            setSearchParam(FilterParam.ØnsketYrke, yrkerFraStilling);
+            kriterier.setSøkeparameter(FilterParam.ØnsketYrke, yrkerFraStilling);
 
             const stedFraStilling = hentØnsketStedFraStilling(stilling, fylker);
             if (stedFraStilling) {
-                setSearchParam(FilterParam.ØnsketSted, stedFraStilling);
+                kriterier.setSøkeparameter(FilterParam.ØnsketSted, stedFraStilling);
             }
             setHarLagtTilKriterier(true);
         };

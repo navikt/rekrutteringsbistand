@@ -1,7 +1,7 @@
 import { Pagination } from '@navikt/ds-react';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier from '../hooks/useSøkekriterier';
 import css from './Paginering.module.css';
 
 type Props = {
@@ -11,11 +11,11 @@ type Props = {
 export const PAGE_SIZE = 25;
 
 const Paginering: FunctionComponent<Props> = ({ antallTreff }) => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
     const antallSider = Math.ceil(antallTreff / PAGE_SIZE);
 
     const setSidetall = (nySide: number) => {
-        setSearchParam(FilterParam.Side, nySide > 1 ? String(nySide) : null);
+        kriterier.setSøkeparameter(FilterParam.Side, nySide > 1 ? String(nySide) : null);
         scrollTilToppen();
     };
 
@@ -30,7 +30,7 @@ const Paginering: FunctionComponent<Props> = ({ antallTreff }) => {
             <Pagination
                 size="medium"
                 className={css.wrapper}
-                page={søkekriterier.side}
+                page={kriterier.søkekriterier.side}
                 onPageChange={setSidetall}
                 count={siderTilPaginering}
             />

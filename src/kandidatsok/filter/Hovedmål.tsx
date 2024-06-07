@@ -1,6 +1,8 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
+import { useContext } from 'react';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
+import { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 
 export enum Mål {
     SkaffeArbeid = 'SKAFFEA',
@@ -9,16 +11,19 @@ export enum Mål {
 }
 
 const Hovedmål = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     const onChange = (valgteHovedmål: Mål[]) => {
-        setSearchParam(FilterParam.Hovedmål, valgteHovedmål.join(LISTEPARAMETER_SEPARATOR));
+        kriterier.setSøkeparameter(
+            FilterParam.Hovedmål,
+            valgteHovedmål.join(LISTEPARAMETER_SEPARATOR)
+        );
     };
 
     return (
         <CheckboxGroup
             legend="Velg kandidatens mål"
-            value={Array.from(søkekriterier.hovedmål)}
+            value={Array.from(kriterier.søkekriterier.hovedmål)}
             onChange={onChange}
         >
             <Checkbox value={Mål.SkaffeArbeid}>Skaffe arbeid</Checkbox>

@@ -4,17 +4,19 @@ import { KandidatSøkContext } from '../KandidatSøkContext';
 import css from './Fritekstsøk.module.css';
 
 const Fritekstsøk: FunctionComponent = () => {
-    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
+    const {
+        økt: { gjeldendeØkt, setØkt },
+    } = useContext(KandidatSøkContext);
 
-    const [fritekstSøk, setFritekstSøk] = useState(kandidatSøkØkt?.økt.fritekst ?? '');
+    const [fritekstSøk, setFritekstSøk] = useState(gjeldendeØkt?.fritekst ?? '');
 
     const onClear = () => {
-        kandidatSøkØkt?.setØkt && kandidatSøkØkt.setØkt({ fritekst: '' });
+        setØkt({ fritekst: '' });
     };
 
     const onFormSubmit: FormEventHandler = (event) => {
         event.preventDefault();
-        kandidatSøkØkt?.setØkt && kandidatSøkØkt.setØkt({ fritekst: fritekstSøk });
+        setØkt({ fritekst: fritekstSøk });
     };
 
     return (

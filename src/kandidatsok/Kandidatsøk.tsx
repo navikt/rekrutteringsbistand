@@ -17,7 +17,7 @@ import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
 const Kandidatsøk = () => {
     const navigeringsstate = useNavigeringsstate();
 
-    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
+    const { økt } = useContext(KandidatSøkContext);
 
     const kontekstAvKandidatlisteEllerStilling =
         useKontekstAvKandidatlisteEllerStilling(navigeringsstate);
@@ -25,7 +25,7 @@ const Kandidatsøk = () => {
     const forrigeØkt =
         navigeringsstate.brukKriterierFraStillingen || navigeringsstate.fraMeny
             ? null
-            : kandidatSøkØkt?.forrigeØkt;
+            : økt?.forrigeØkt;
 
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
         forrigeØkt?.markerteKandidater
@@ -33,11 +33,10 @@ const Kandidatsøk = () => {
 
     useLagreØkt();
     useEffect(() => {
-        kandidatSøkØkt?.setØkt &&
-            kandidatSøkØkt.setØkt({
-                markerteKandidater: Array.from(markerteKandidater),
-            });
-    }, [markerteKandidater, kandidatSøkØkt]);
+        økt.setØkt({
+            markerteKandidater: Array.from(markerteKandidater),
+        });
+    }, [markerteKandidater, økt]);
 
     return (
         <Layout

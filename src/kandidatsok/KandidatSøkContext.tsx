@@ -2,7 +2,8 @@ import { BodyShort, Loader } from '@navikt/ds-react';
 import * as React from 'react';
 import { IKandidatSøk, useKandidatsøk } from '../api/kandidat-søk-api/kandidatsøk';
 import { ApplikasjonContext } from '../felles/ApplikasjonContext';
-import useSøkekriterier, { IKandidatSøkekriterier } from './hooks/useSøkekriterier';
+import { FilterParam } from './hooks/useQuery';
+import { IKandidatSøkekriterier, useKandidatSøkekriterier } from './hooks/useSøkekriterier';
 import { lesSessionStorage, skrivSessionStorage } from './sessionStorage';
 
 export type Økt = Partial<{
@@ -16,18 +17,32 @@ export type Økt = Partial<{
 }>;
 
 interface IØkt {
-    forrigeØkt: Økt;
-    økt: Økt;
+    forrigeØkt?: Økt;
+    gjeldendeØkt: Økt;
     setØkt: (økt: Økt) => void;
 }
+
+interface ISøkekriterier {
+    søkekriterier: IKandidatSøkekriterier;
+    setSøkeparameter: (parameter: FilterParam, value: string | null) => void;
+    fjernSøkekriterier: () => void;
+}
 interface IKandidatSøkContext {
-    kandidatSøk?: IKandidatSøk;
-    søkekriterier?: IKandidatSøkekriterier;
-    kandidatSøkØkt?: IØkt;
+    søkeResultat?: IKandidatSøk;
+    kriterier: ISøkekriterier;
+    økt: IØkt;
 }
 
 export const KandidatSøkContext = React.createContext<IKandidatSøkContext>({
-    kandidatSøk: undefined,
+    søkeResultat: undefined,
+    kriterier: {
+        //@ts-ignore
+        søkekriterier: {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        fjernSøkekriterier: () => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        setSøkeparameter: () => {},
+    },
 });
 
 interface IKandidatSøkContextProvider {
@@ -37,17 +52,22 @@ interface IKandidatSøkContextProvider {
 const sessionStorageKey = 'kandidatsøk';
 
 export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider> = ({ children }) => {
-    const { søkekriterier: søkeKriterierInput } = useSøkekriterier();
     const { valgtNavKontor } = React.useContext(ApplikasjonContext);
+    const forrigeØkt = lesSessionStorage(sessionStorageKey);
+    const [gjeldendeØkt, setØkt] = React.useState<Økt>({});
+    const { søkekriterier, setSearchParam, fjernSøkekriterier } =
+        useKandidatSøkekriterier(gjeldendeØkt);
 
-    const forrigeØkt = React.useRef(lesSessionStorage(sessionStorageKey));
+    React.useEffect(() => {
+        if (!gjeldendeØkt && forrigeØkt) {
+            setØkt(forrigeØkt);
+        }
+    }, [gjeldendeØkt, forrigeØkt]);
 
-    const [økt, setØkt] = React.useState<Økt>(forrigeØkt.current);
-
-    const kandidatSøkØkt = React.useMemo(() => {
+    const økt = React.useMemo(() => {
         const onSetØkt = (oppdaterteFelter: Økt) => {
             const oppdatertØkt = {
-                ...økt,
+                ...gjeldendeØkt,
                 ...oppdaterteFelter,
             };
 
@@ -56,29 +76,26 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
         };
 
         return {
-            forrigeØkt: forrigeØkt.current,
-            økt,
+            forrigeØkt: forrigeØkt,
+            gjeldendeØkt,
             setØkt: onSetØkt,
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [JSON.stringify(økt)]);
+    }, [gjeldendeØkt, forrigeØkt]);
 
-    const søkekriterier = React.useMemo(() => søkeKriterierInput, [søkeKriterierInput]);
-
-    const {
-        data: kandidatSøk,
-        isLoading,
-        error,
-    } = useKandidatsøk({
-        //TODO: Hack for å midlertidig fikse fritekst.
-        søkekriterier: { ...søkekriterier, fritekst: økt.fritekst ?? null },
+    const { data, isLoading, error } = useKandidatsøk({
+        søkekriterier,
         navKontor: valgtNavKontor?.navKontor ?? null,
     });
 
-    const value = React.useMemo(
-        () => ({ kandidatSøk, kandidatSøkØkt, søkekriterier }),
-        [kandidatSøk, kandidatSøkØkt, søkekriterier]
-    );
+    const context: IKandidatSøkContext = {
+        økt,
+        kriterier: {
+            søkekriterier,
+            setSøkeparameter: setSearchParam,
+            fjernSøkekriterier,
+        },
+        søkeResultat: data,
+    };
 
     if (error) {
         return (
@@ -100,6 +117,5 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
             />
         );
     }
-
-    return <KandidatSøkContext.Provider value={value}>{children}</KandidatSøkContext.Provider>;
+    return <KandidatSøkContext.Provider value={context}>{children}</KandidatSøkContext.Provider>;
 };

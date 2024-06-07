@@ -1,14 +1,14 @@
-import { FunctionComponent } from 'react';
-import { FilterParam } from '../../hooks/useQuery';
-import useSøkekriterier from '../../hooks/useSøkekriterier';
-import FilterMedTypeahead from '../FilterMedTypeahead';
+import { FunctionComponent, useContext } from 'react';
 import { SuggestType } from '../../../api/kandidat-søk-api/suggest';
+import { KandidatSøkContext } from '../../KandidatSøkContext';
+import { FilterParam } from '../../hooks/useQuery';
+import FilterMedTypeahead from '../FilterMedTypeahead';
 
 const ØnsketYrke: FunctionComponent = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     const setValue = (value: string | null) => {
-        setSearchParam(FilterParam.ØnsketYrke, value);
+        kriterier.setSøkeparameter(FilterParam.ØnsketYrke, value);
     };
 
     return (
@@ -16,7 +16,7 @@ const ØnsketYrke: FunctionComponent = () => {
             label="Arbeidsønsker"
             description="Hva ønsker kandidaten å jobbe med?"
             suggestType={SuggestType.ØnsketYrke}
-            value={søkekriterier.ønsketYrke}
+            value={kriterier.søkekriterier.ønsketYrke}
             setValue={setValue}
         />
     );

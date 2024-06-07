@@ -1,30 +1,33 @@
 import { Checkbox } from '@navikt/ds-react';
-import { ChangeEventHandler, useEffect } from 'react';
+import { ChangeEventHandler, useContext, useEffect } from 'react';
+import { KandidatSøkContext } from '../../KandidatSøkContext';
 import { FilterParam } from '../../hooks/useQuery';
-import useSøkekriterier from '../../hooks/useSøkekriterier';
 import filterCss from '../Filter.module.css';
 
 const BorPåØnsketSted = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     useEffect(() => {
-        if (søkekriterier.ønsketSted.size === 0 && søkekriterier.borPåØnsketSted) {
-            setSearchParam(FilterParam.BorPåØnsketSted, null);
+        if (
+            kriterier.søkekriterier.ønsketSted.size === 0 &&
+            kriterier.søkekriterier.borPåØnsketSted
+        ) {
+            kriterier.setSøkeparameter(FilterParam.BorPåØnsketSted, null);
         }
-    }, [søkekriterier.ønsketSted, søkekriterier.borPåØnsketSted, setSearchParam]);
+    }, [kriterier]);
 
-    if (søkekriterier.ønsketSted.size === 0) {
+    if (kriterier.søkekriterier.ønsketSted.size === 0) {
         return null;
     }
 
     const onChange: ChangeEventHandler = () => {
-        setSearchParam(
+        kriterier.setSøkeparameter(
             FilterParam.BorPåØnsketSted,
-            søkekriterier.borPåØnsketSted === true ? null : String(true)
+            kriterier.søkekriterier.borPåØnsketSted === true ? null : String(true)
         );
     };
 
-    const checked = søkekriterier.borPåØnsketSted || false;
+    const checked = kriterier.søkekriterier.borPåØnsketSted || false;
 
     return (
         <Checkbox checked={checked} onChange={onChange} className={filterCss.borPåØnsketSted}>

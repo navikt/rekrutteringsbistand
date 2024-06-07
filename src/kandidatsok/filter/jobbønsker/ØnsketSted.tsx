@@ -1,16 +1,16 @@
-import React, { useMemo, useState } from 'react';
-import { FilterParam } from '../../hooks/useQuery';
-import useSøkekriterier from '../../hooks/useSøkekriterier';
-import { Typeahead } from '../typeahead/Typeahead';
+import React, { useContext, useMemo, useState } from 'react';
 import { SuggestionsSted } from '../../../api/kandidat-søk-api/suggestSted';
-import { KommuneDTO, useHentKommuner } from '../../../api/stillings-api/hentKommuner';
 import { FylkeDTO, useHentFylker } from '../../../api/stillings-api/hentFylker';
+import { KommuneDTO, useHentKommuner } from '../../../api/stillings-api/hentKommuner';
 import { LandDTO, useHentLandliste } from '../../../api/stillings-api/hentLand';
+import { KandidatSøkContext } from '../../KandidatSøkContext';
+import { FilterParam } from '../../hooks/useQuery';
+import { Typeahead } from '../typeahead/Typeahead';
 
 export const GEOGRAFI_SEPARATOR = '.';
 
 const ØnsketSted = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
     const [input, setInput] = useState<string>('');
 
     const { data: fylker, isLoading: fylkerIsLoading } = useHentFylker();
@@ -84,7 +84,7 @@ const ØnsketSted = () => {
         landlisteIsLoading,
     ]);
 
-    const valgteSteder = Array.from(søkekriterier.ønsketSted).map((encoded) =>
+    const valgteSteder = Array.from(kriterier.søkekriterier.ønsketSted).map((encoded) =>
         decodeGeografiforslag(encoded)
     );
 
@@ -108,7 +108,7 @@ const ØnsketSted = () => {
         setInput('');
 
         const oppdaterteSteder = [...valgteSteder.map(encodeGeografiforslag), encodedSted];
-        setSearchParam(FilterParam.ØnsketSted, oppdaterteSteder.join('_'));
+        kriterier.setSøkeparameter(FilterParam.ØnsketSted, oppdaterteSteder.join('_'));
     };
 
     const onFjernValgtSted = (valgtSted: string) => () => {
@@ -118,7 +118,7 @@ const ØnsketSted = () => {
             })
             .map(encodeGeografiforslag);
 
-        setSearchParam(FilterParam.ØnsketSted, alleØnskedeSteder.join('_'));
+        kriterier.setSøkeparameter(FilterParam.ØnsketSted, alleØnskedeSteder.join('_'));
     };
 
     return (

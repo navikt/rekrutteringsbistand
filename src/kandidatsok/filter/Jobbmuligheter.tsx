@@ -1,7 +1,9 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
 import { Innsatsgruppe, Servicegruppe } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
+import { useContext } from 'react';
+import { KandidatSøkContext } from '../KandidatSøkContext';
 import { FilterParam } from '../hooks/useQuery';
-import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
+import { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 
 export enum FiltrerbarInnsatsgruppe {
     Innsatsgruppe,
@@ -51,10 +53,10 @@ export const alleInnsatsgrupper = {
 };
 
 const Jobbmuligheter = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     const onChange = (valgteInnsatsgrupper: Innsatsgruppe[]) => {
-        setSearchParam(
+        kriterier.setSøkeparameter(
             FilterParam.Innsatsgruppe,
             valgteInnsatsgrupper.join(LISTEPARAMETER_SEPARATOR)
         );
@@ -64,7 +66,7 @@ const Jobbmuligheter = () => {
         <CheckboxGroup
             legend="Velg innsatsgrupper"
             onChange={onChange}
-            value={Array.from(søkekriterier.innsatsgruppe)}
+            value={Array.from(kriterier.søkekriterier.innsatsgruppe)}
         >
             {Object.entries(filtrerbareInnsatsgrupper).map(([kode, gruppe]) => (
                 <Checkbox key={kode} value={kode} description={gruppe.description}>

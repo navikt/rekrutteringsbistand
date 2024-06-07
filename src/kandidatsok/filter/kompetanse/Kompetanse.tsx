@@ -1,18 +1,20 @@
+import { useContext } from 'react';
 import { SuggestType } from '../../../api/kandidat-søk-api/suggest';
+import { KandidatSøkContext } from '../../KandidatSøkContext';
 import { FilterParam } from '../../hooks/useQuery';
-import useSøkekriterier, { kombinerStringsTilSearchParam } from '../../hooks/useSøkekriterier';
+import { kombinerStringsTilSearchParam } from '../../hooks/useSøkekriterier';
 import FilterMedTypeahead from '../FilterMedTypeahead';
 import ForslagBasertPåYrke from './ForslagBasertPåYrke';
 
 const Kompetanse = () => {
-    const { søkekriterier, setSearchParam } = useSøkekriterier();
+    const { kriterier } = useContext(KandidatSøkContext);
 
     const setValue = (value: string | null) => {
-        setSearchParam(FilterParam.Kompetanse, value);
+        kriterier.setSøkeparameter(FilterParam.Kompetanse, value);
     };
 
     const onVelgForslag = (forslag: string) => () => {
-        const valgteKompetanser = Array.from(søkekriterier.kompetanse);
+        const valgteKompetanser = Array.from(kriterier.søkekriterier.kompetanse);
         valgteKompetanser.push(forslag);
 
         setValue(kombinerStringsTilSearchParam(valgteKompetanser));
@@ -24,10 +26,13 @@ const Kompetanse = () => {
                 label="Kompetanse"
                 description="For eksempel fagbrev, sertifisering, ferdigheter eller programmer"
                 suggestType={SuggestType.Kompetanse}
-                value={søkekriterier.kompetanse}
+                value={kriterier.søkekriterier.kompetanse}
                 setValue={setValue}
             />
-            <ForslagBasertPåYrke søkekriterier={søkekriterier} onVelgForslag={onVelgForslag} />
+            <ForslagBasertPåYrke
+                søkekriterier={kriterier.søkekriterier}
+                onVelgForslag={onVelgForslag}
+            />
         </>
     );
 };

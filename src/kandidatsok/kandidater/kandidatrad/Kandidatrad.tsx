@@ -27,11 +27,13 @@ const Kandidatrad: FunctionComponent<Props> = ({
     onMarker,
     kontekstAvKandidatlisteEllerStilling,
 }) => {
-    const { kandidatSøkØkt } = useContext(KandidatSøkContext);
-    const fremhevet = kandidat.arenaKandidatnr === kandidatSøkØkt?.forrigeØkt?.sistBesøkteKandidat;
+    const {
+        økt: { forrigeØkt },
+    } = useContext(KandidatSøkContext);
+    const fremhevet = kandidat.arenaKandidatnr === forrigeØkt?.sistBesøkteKandidat;
     const markert = markerteKandidater.has(kandidat.arenaKandidatnr);
 
-    useScrollTilKandidat(kandidat.arenaKandidatnr, kandidatSøkØkt?.forrigeØkt?.sistBesøkteKandidat);
+    useScrollTilKandidat(kandidat.arenaKandidatnr, forrigeØkt?.sistBesøkteKandidat);
 
     const alleØnskedeYrker = hentKandidatensØnskedeYrker(kandidat);
     const alleØnskedeSteder = hentKandidatensØnskedeSteder(kandidat);
