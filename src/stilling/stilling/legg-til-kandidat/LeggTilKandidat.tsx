@@ -138,6 +138,15 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                     behandlingsgrunnlag for deling av CV.
                                                 </li>
                                                 <li>
+                                                    Kandidat har ikke valgt «Del CV». Kandidaten har
+                                                    tidligere registrert CV, men har siden vært ute
+                                                    av oppfølging. Kandidaten er igjen under
+                                                    oppfølging, men har ikke godkjent deling av CV
+                                                    med NAV i dette nye oppfølgingsløpet. Hen må
+                                                    logge seg inn på arbeidsplassen.no og velge “Del
+                                                    CV”. Husk å be bruker om å oppdatere C
+                                                </li>
+                                                <li>
                                                     Kandidaten har personforholdet «Fritatt for
                                                     kandidatsøk» i Arena.
                                                 </li>
