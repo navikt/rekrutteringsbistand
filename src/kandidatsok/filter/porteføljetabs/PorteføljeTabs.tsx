@@ -1,20 +1,13 @@
 import { Tabs } from '@navikt/ds-react';
 import { ReactNode, useContext } from 'react';
+import { Portefølje } from '../../../api/kandidat-søk-api/kandidatsøk';
 import { ApplikasjonContext } from '../../../felles/ApplikasjonContext';
+import { Rolle } from '../../../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import css from './PorteføljeTabs.module.css';
 import VelgKontorTab from './VelgKontorTab';
-import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
-import { Rolle } from '../../../felles/tilgangskontroll/Roller';
-
-export enum Portefølje {
-    Alle = 'alle',
-    MineBrukere = 'mine',
-    MineKontorer = 'mineKontorer',
-    MittKontor = 'kontor',
-    VelgKontor = 'valgte',
-}
 
 const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
@@ -31,22 +24,28 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
                     skjulVarsel
                     kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
                 >
-                    <Tabs.Tab value={Portefølje.Alle} label="Alle" />
+                    <Tabs.Tab value={Portefølje.ALLE} label="Alle" />
                 </TilgangskontrollForInnhold>
                 <TilgangskontrollForInnhold
                     skjulVarsel
-                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET]}
+                    kreverEnAvRollene={[
+                        Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+                    ]}
                 >
                     {tilgangskontrollErPå && (
-                        <Tabs.Tab value={Portefølje.MineKontorer} label="Mine kontorer" />
+                        <Tabs.Tab value={Portefølje.MINE_KONTORER} label="Mine kontorer" />
                     )}
                 </TilgangskontrollForInnhold>
-                <Tabs.Tab value={Portefølje.MineBrukere} label="Mine brukere" />
+                <Tabs.Tab value={Portefølje.MINE_BRUKERE} label="Mine brukere" />
                 <TilgangskontrollForInnhold
                     skjulVarsel
-                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                    kreverEnAvRollene={[
+                        Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+                    ]}
                 >
-                    <Tabs.Tab value={Portefølje.MittKontor} label="Mitt kontor" />
+                    <Tabs.Tab value={Portefølje.MITT_KONTOR} label="Mitt kontor" />
                 </TilgangskontrollForInnhold>
                 <TilgangskontrollForInnhold
                     skjulVarsel

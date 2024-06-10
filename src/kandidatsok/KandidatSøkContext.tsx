@@ -1,7 +1,8 @@
 import { BodyShort, Loader } from '@navikt/ds-react';
 import * as React from 'react';
-import { IKandidatSøk, useKandidatsøk } from '../api/kandidat-søk-api/kandidatsøk';
+import { IKandidatSøk, Portefølje, useKandidatsøk } from '../api/kandidat-søk-api/kandidatsøk';
 import { ApplikasjonContext } from '../felles/ApplikasjonContext';
+import { Rolle } from '../felles/tilgangskontroll/Roller';
 import useSøkekriterier, { IKandidatSøkekriterier } from './hooks/useSøkekriterier';
 import { lesSessionStorage, skrivSessionStorage } from './sessionStorage';
 
@@ -38,7 +39,26 @@ const sessionStorageKey = 'kandidatsøk';
 
 export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider> = ({ children }) => {
     const { søkekriterier: søkeKriterierInput } = useSøkekriterier();
-    const { valgtNavKontor } = React.useContext(ApplikasjonContext);
+    const { tilgangskontrollErPå, harRolle } = React.useContext(ApplikasjonContext);
+
+    const portefølje = () => {
+        if (tilgangskontrollErPå) {
+            if (
+                søkekriterier.portefølje === Portefølje.ALLE &&
+                !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
+            ) {
+                return Portefølje.MINE_KONTORER;
+            } else if (!søkekriterier.portefølje) {
+                return harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
+                    ? Portefølje.ALLE
+                    : Portefølje.MINE_KONTORER;
+            } else {
+                return søkekriterier.portefølje;
+            }
+        } else {
+            return søkekriterier.portefølje ?? Portefølje.ALLE;
+        }
+    };
 
     const forrigeØkt = React.useRef(lesSessionStorage(sessionStorageKey));
 
@@ -70,9 +90,8 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
         isLoading,
         error,
     } = useKandidatsøk({
-        //TODO: Hack for å midlertidig fikse fritekst.
-        søkekriterier: { ...søkekriterier, fritekst: økt.fritekst ?? null },
-        navKontor: valgtNavKontor?.navKontor ?? null,
+        søkeprops: { ...søkekriterier, fritekst: økt.fritekst ?? null },
+        portefølje: portefølje(),
     });
 
     const value = React.useMemo(

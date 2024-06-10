@@ -1,14 +1,12 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
 import { Mål as Hovedmål } from '../filter/Hovedmål';
 import { FiltrerbarInnsatsgruppe } from '../filter/Jobbmuligheter';
 import { Nivå as Utdanningsnivå } from '../filter/Utdanningsnivå';
-import { Portefølje } from '../filter/porteføljetabs/PorteføljeTabs';
 import { PrioritertMålgruppe } from '../filter/prioriterte-målgrupper/PrioriterteMålgrupper';
 import { Sortering } from '../kandidater/sortering/Sortering';
 
-import { Rolle } from '../../felles/tilgangskontroll/Roller';
+import { Portefølje } from '../../api/kandidat-søk-api/kandidatsøk';
 import { KandidatSøkContext, Økt } from '../KandidatSøkContext';
 import { FilterParam } from './useQuery';
 
@@ -61,7 +59,6 @@ type Returverdi = {
 };
 
 const useSøkekriterier = (): Returverdi => {
-    const { harRolle, tilgangskontrollErPå } = useContext(ApplikasjonContext);
     const [searchParams, setSearchParams] = useSearchParams();
     const { kandidatSøkØkt } = useContext(KandidatSøkContext);
     const økt = kandidatSøkØkt?.økt;
@@ -94,17 +91,6 @@ const useSøkekriterier = (): Returverdi => {
         },
         [searchParams, setSearchParams, søkekriterier.side]
     );
-
-    useEffect(() => {
-        if (
-            tilgangskontrollErPå &&
-            // fjern portefølje fra søkekriterier hvis bruker ikke har tilgang til å se alle brukere
-            søkekriterier.portefølje === Portefølje.Alle &&
-            !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-        ) {
-            setSearchParam(FilterParam.Portefølje, Portefølje.MineKontorer);
-        }
-    }, [søkekriterier.portefølje, setSearchParam, harRolle, tilgangskontrollErPå]);
 
     const fjernSøkekriterier = () => {
         Object.values(FilterParam).forEach((key) => searchParams.delete(key));
