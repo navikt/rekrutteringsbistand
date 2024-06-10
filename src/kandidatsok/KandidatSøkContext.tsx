@@ -39,7 +39,7 @@ const sessionStorageKey = 'kandidatsøk';
 
 export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider> = ({ children }) => {
     const { søkekriterier: søkeKriterierInput } = useSøkekriterier();
-    const { tilgangskontrollErPå, harRolle } = React.useContext(ApplikasjonContext);
+    const { tilgangskontrollErPå, harRolle, valgtNavKontor } = React.useContext(ApplikasjonContext);
 
     const portefølje = () => {
         if (tilgangskontrollErPå) {
@@ -90,7 +90,11 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
         isLoading,
         error,
     } = useKandidatsøk({
-        søkeprops: { ...søkekriterier, fritekst: økt.fritekst ?? null },
+        søkeprops: {
+            ...søkekriterier,
+            fritekst: økt.fritekst ?? null,
+            orgenhet: valgtNavKontor?.navKontor ?? null,
+        },
         portefølje: portefølje(),
     });
 

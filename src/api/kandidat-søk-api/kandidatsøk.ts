@@ -94,6 +94,7 @@ export const useKandidatsøk = ({ søkeprops, portefølje }: IuseKandidatsøk) =
     const utvidedeSøkekriterier = useMemo(
         () => ({
             ...søkeprops,
+            portefølje,
             ønsketSted: Array.from(søkeprops.ønsketSted).flatMap((sted) => {
                 const gamleSteder = stedmappingFraNyttNummer.get(getNummerFraSted(sted));
                 return gamleSteder
@@ -101,7 +102,7 @@ export const useKandidatsøk = ({ søkeprops, portefølje }: IuseKandidatsøk) =
                     : [sted];
             }),
         }),
-        [søkeprops]
+        [søkeprops, portefølje]
     );
 
     return useSWR(
