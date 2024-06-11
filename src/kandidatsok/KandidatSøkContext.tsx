@@ -45,14 +45,13 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
     const portefølje = () => {
         if (tilgangskontrollErPå) {
             if (
-                søkekriterier.portefølje === Portefølje.ALLE &&
+                (søkekriterier.portefølje === Portefølje.ALLE ||
+                    søkekriterier.portefølje === Portefølje.VALGTE_KONTORER) &&
                 !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
             ) {
-                return Portefølje.MINE_KONTORER;
+                return Portefølje.MINE_BRUKERE;
             } else if (!søkekriterier.portefølje) {
-                return harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-                    ? Portefølje.ALLE
-                    : Portefølje.MINE_KONTORER;
+                return Portefølje.MINE_BRUKERE;
             } else {
                 return søkekriterier.portefølje;
             }

@@ -92,6 +92,12 @@ const useSøkekriterier = (): Returverdi => {
         [searchParams, setSearchParams, søkekriterier.side]
     );
 
+    useEffect(() => {
+        if (!søkekriterier.portefølje) {
+            setSearchParam(FilterParam.Portefølje, Portefølje.MINE_BRUKERE);
+        }
+    }, [søkekriterier, setSearchParam]);
+
     const fjernSøkekriterier = () => {
         Object.values(FilterParam).forEach((key) => searchParams.delete(key));
         setSearchParams(searchParams, {
