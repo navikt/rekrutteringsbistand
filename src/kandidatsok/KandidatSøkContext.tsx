@@ -80,7 +80,7 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
             kandidatSøkØkt.setØkt({
                 navigerbareKandidater: kandidatSøk?.navigering.kandidatnumre,
                 totaltAntallKandidater: kandidatSøk?.antallTotalt ?? 0,
-                pageSize: 25,
+                pageSize: kandidatSøk?.kandidater.length ?? 0,
             });
         }
     }, [kandidatSøk, kandidatSøkØkt]);
