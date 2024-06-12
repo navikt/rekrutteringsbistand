@@ -6,6 +6,7 @@ import Dekoratør from './header/modiadekoratør/Modiadekoratør';
 import Placeholder from './header/modiadekoratør/Placeholder';
 import Navigeringsmeny from './header/navigeringsmeny/Navigeringsmeny';
 import useAmplitude from './header/useAmplitude';
+import InfoAlert from './header/navigeringsmeny/InfoAlert';
 
 const Header = () => {
     const [mockAktiv] = useLocalStorageToggle('Mock modia');
@@ -22,6 +23,7 @@ const Header = () => {
                 }}
             />
             <Navigeringsmeny />
+            <InfoAlert />
             <Outlet />
         </>
     );
