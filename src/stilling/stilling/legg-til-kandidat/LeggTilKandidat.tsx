@@ -144,7 +144,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                     oppfølging, men har ikke godkjent deling av CV
                                                     med NAV i dette nye oppfølgingsløpet. Hen må
                                                     logge seg inn på arbeidsplassen.no og velge “Del
-                                                    CV”. Husk å be bruker om å oppdatere C
+                                                    CV”. Husk å be bruker om å oppdatere CV.
                                                 </li>
                                                 <li>
                                                     Kandidaten har personforholdet «Fritatt for
