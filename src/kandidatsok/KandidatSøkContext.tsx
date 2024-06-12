@@ -103,11 +103,9 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
 
     if (isLoading) {
         return (
-            <Loader
-                variant="interaction"
-                size="2xlarge"
-                // className={css.lasterInn}
-            />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Loader variant="interaction" size="2xlarge" />
+            </div>
         );
     }
 
