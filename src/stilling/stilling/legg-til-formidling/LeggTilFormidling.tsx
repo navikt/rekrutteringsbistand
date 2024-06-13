@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { KandidatKilde, Kandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
-import { ApplikasjonContext } from '../../../felles/ApplikasjonContext';
 import FormidleKandidat from '../../../kandidat/kandidatliste/modaler/legg-til-kandidat-modal/FormidleKandidat';
 
 export interface ILeggTilFormidling {
@@ -11,6 +10,7 @@ export interface ILeggTilFormidling {
     onClose: () => void;
     kandidatSøkResultat: Kandidatnavn;
     handleBekreft: () => void;
+    kandidatNummer?: string | null;
 }
 
 const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
@@ -20,12 +20,13 @@ const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
     kandidatlisteId,
     kandidatSøkResultat,
     handleBekreft,
+    kandidatNummer,
     kilde,
 }) => {
-    const { valgtNavKontor } = React.useContext(ApplikasjonContext);
     return (
         <div style={{ paddingTop: '1rem' }}>
             <FormidleKandidat
+                kandidatNummer={kandidatNummer}
                 kilde={kilde}
                 handleBekreft={handleBekreft}
                 fnr={fnr}
@@ -35,7 +36,6 @@ const LeggTilFormidling: React.FC<ILeggTilFormidling> = ({
                 }}
                 kandidatlisteId={kandidatlisteId}
                 stillingsId={stillingsId}
-                valgtNavKontor={valgtNavKontor?.navKontor ?? null}
                 onClose={onClose}
             />
         </div>

@@ -157,6 +157,7 @@ function* endreKandidatUtfall(action: EndreUtfallKandidatAction) {
         });
     } catch (e) {
         if (e instanceof SearchApiError) {
+            console.log('🎺 e', e);
             yield put({ type: KandidatlisteActionType.EndreUtfallKandidatFailure, error: e });
         } else {
             throw e;

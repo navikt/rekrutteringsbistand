@@ -87,6 +87,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                         (registrerFormidling ? (
                             <LeggTilFormidling
                                 kilde={KandidatKilde.REKRUTTERINGSBISTAND}
+                                kandidatNummer={arenaKandidatnr}
                                 handleBekreft={handleBekreft}
                                 kandidatSøkResultat={kandidatnavn}
                                 fnr={fnr}
