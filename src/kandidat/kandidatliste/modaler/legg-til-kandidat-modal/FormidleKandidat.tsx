@@ -15,6 +15,7 @@ import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 
 import { useVisVarsling } from 'felles/varsling/Varsling';
+import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
 import { KandidatKilde } from '../../../../api/kandidat-søk-api/hentKandidatnavn';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
 import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
@@ -91,26 +92,37 @@ const FormidleKandidat: FunctionComponent<Props> = ({
         if (
             valgtNavKontor &&
             valgtNavKontor.navKontor !== undefined &&
+            kandidatNummer &&
             kandidatNummer !== undefined
         ) {
-            if (presentert) {
-                putUtfallKandidat(
-                    Kandidatutfall.Presentert,
-                    valgtNavKontor.navKontor,
-                    kandidatlisteId,
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    kandidatNummer!
-                );
-            }
-            if (fåttJobb) {
-                putUtfallKandidat(
-                    Kandidatutfall.FåttJobben,
-                    valgtNavKontor.navKontor,
-                    kandidatlisteId,
-                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                    kandidatNummer!
-                );
-            }
+            leggTilKandidatKandidatliste(kandidatlisteId, kandidatNummer)
+                .then(() => {
+                    if (presentert) {
+                        putUtfallKandidat(
+                            Kandidatutfall.Presentert,
+                            valgtNavKontor.navKontor,
+                            kandidatlisteId,
+                            kandidatNummer
+                        );
+                    }
+                    if (fåttJobb) {
+                        putUtfallKandidat(
+                            Kandidatutfall.FåttJobben,
+                            valgtNavKontor.navKontor,
+                            kandidatlisteId,
+                            kandidatNummer
+                        );
+                    }
+                })
+                .then(() => {
+                    visVarsling({
+                        innhold: `Kandidaten (${fnr}) er blitt ${presentert ? 'presentert' : ''}${fåttJobb ? (presentert ? ' og formidlet' : 'formidlet') : ''}`,
+                    });
+                    handleBekreft();
+                })
+                .catch((e) => {
+                    console.error(e);
+                });
         }
     };
 
