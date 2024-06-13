@@ -2,7 +2,6 @@ import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useMeg } from '../api/frackend/meg';
 import ErrorBoundary from './feilhåndtering/ErrorBoundary';
-import { erIkkeProd } from './miljø';
 import { Rolle } from './tilgangskontroll/Roller';
 
 export type NavKontorMedNavn = {
@@ -35,8 +34,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
 
     const [valgtNavKontor, setValgtNavKontor] = React.useState<NavKontorMedNavn | null>(null);
 
-    // TODO Feature-toggle!
-    const tilgangskontrollErPå = erIkkeProd;
+    const tilgangskontrollErPå = true;
 
     const harRolle = (rolle: Rolle[]) =>
         tilgangskontrollErPå
