@@ -1,0 +1,13 @@
+.alert {
+    max-width: var(--innhold-maksbredde);
+    margin: 2rem auto;
+    padding: 0rem 2.5rem;
+}
+
+.alertinner {
+    margin-bottom: -2rem;
+}
+
+.alert :global(.navds-alert__wrapper) {
+    max-width: 100%;
+}

@@ -29,7 +29,7 @@ const DelCvMedArbeidsgiver: FunctionComponent<Props> = ({
             kandidatlisteId,
             utfall: nyttUtfall,
             type: KandidatlisteActionType.EndreUtfallKandidat,
-            navKontor: valgtNavKontor,
+            navKontor: valgtNavKontor?.navKontor ?? null,
             kandidatnr: kandidat.kandidatnr,
         });
     };

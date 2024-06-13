@@ -98,6 +98,16 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
         portefølje: portefølje(),
     });
 
+    React.useEffect(() => {
+        if (kandidatSøk) {
+            kandidatSøkØkt.setØkt({
+                navigerbareKandidater: kandidatSøk?.navigering.kandidatnumre,
+                totaltAntallKandidater: kandidatSøk?.antallTotalt ?? 0,
+                pageSize: kandidatSøk?.kandidater.length ?? 0,
+            });
+        }
+    }, [kandidatSøk, kandidatSøkØkt]);
+
     const value = React.useMemo(
         () => ({ kandidatSøk, kandidatSøkØkt, søkekriterier }),
         [kandidatSøk, kandidatSøkØkt, søkekriterier]
