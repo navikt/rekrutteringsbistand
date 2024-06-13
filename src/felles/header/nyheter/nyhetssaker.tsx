@@ -5,6 +5,24 @@ const tilDato = (dag: number, måned: number, år: number, timer = 0, minutter =
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(13, 6, 2024),
+        tittel: 'Ny tilgangsstyring',
+        innhold: (
+            <>
+                <p>Det er ny tilgangsstyring for Rekrutteringsbistand fra 13. juni.</p>
+                <p>
+                    <a
+                        target="_blank"
+                        href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Tilgangskontroll.aspx"
+                        rel="noreferrer"
+                    >
+                        Se info her
+                    </a>
+                </p>
+            </>
+        ),
+    },
+    {
         dato: tilDato(14, 5, 2024),
         tittel: 'Antall kandidater vises i stillingen',
         innhold: (
