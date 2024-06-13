@@ -1,8 +1,10 @@
 import { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Alert } from '@navikt/ds-react';
 import { Nettstatus } from 'felles/nettressurs';
 import Stilling from '../../felles/domene/stilling/Stilling';
+import Layout from '../../felles/komponenter/layout/Layout';
 import Sidelaster from '../../felles/komponenter/sidelaster/Sidelaster';
 import KandidatlisteOgModaler from '../../kandidat/kandidatliste/KandidatlisteOgModaler';
 import useScrollTilToppen from '../../kandidat/kandidatliste/hooks/useScrollTilToppen';
@@ -27,7 +29,10 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ skjulBanner, stilling }) 
         });
     }, [dispatch, stillingsId]);
 
-    if (kandidatliste.kind === Nettstatus.LasterInn) {
+    if (
+        kandidatliste.kind === Nettstatus.LasterInn ||
+        kandidatliste.kind === Nettstatus.IkkeLastet
+    ) {
         return <Sidelaster />;
     } else if (kandidatliste.kind !== Nettstatus.Suksess) {
         return null;
@@ -35,9 +40,25 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ skjulBanner, stilling }) 
 
     if (
         kandidatliste.kind === Nettstatus.Suksess &&
-        stillingsId !== kandidatliste.data.stillingId
+        stillingsId !== kandidatliste?.data?.stillingId
     ) {
-        return <Sidelaster />;
+        return (
+            <Layout>
+                <Alert
+                    variant="error"
+                    title="Kandidatlisten sin stilling ID stemmer ikke overens med stillingen sin ID!"
+                >
+                    <strong>
+                        Kandidatlisten sin stilling ID stemmer ikke overens med stillingen sin ID!
+                    </strong>
+                    <p>Meld sak i porten med følgende informasjon: </p>
+                    <ul>
+                        <li>Kandidatliste sin stilling ID: {kandidatliste?.data?.stillingId}</li>
+                        <li>Stilling ID: {stillingsId}</li>
+                    </ul>
+                </Alert>
+            </Layout>
+        );
     }
 
     return (
