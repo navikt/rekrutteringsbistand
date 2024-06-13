@@ -68,7 +68,8 @@ const useSøkekriterier = (): Returverdi => {
 
     useEffect(() => {
         setSøkekriterier(searchParamsTilSøkekriterier(searchParams, økt ?? {}));
-    }, [searchParams, økt]);
+        kandidatSøkØkt?.setØkt({ searchParams: searchParams.toString() });
+    }, [searchParams, økt, kandidatSøkØkt]);
 
     const setSearchParam = useCallback(
         (parameter: FilterParam, value: string | null) => {
