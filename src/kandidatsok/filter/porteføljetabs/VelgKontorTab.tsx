@@ -7,10 +7,10 @@ import {
     useRef,
     useState,
 } from 'react';
+import { Portefølje } from '../../../api/kandidat-søk-api/kandidatsøk';
 import useOnClickOutside from '../../hooks/useOnClickOutside';
 import { IKandidatSøkekriterier } from '../../hooks/useSøkekriterier';
 import VelgKontor from '../VelgKontor';
-import { Portefølje } from './PorteføljeTabs';
 import css from './VelgKontorTab.module.css';
 
 const POPOVER_ID = 'velg-kontor-popover';
@@ -73,7 +73,7 @@ const VelgKontorTab: FunctionComponent<Props> = ({ søkekriterier }) => {
         <>
             <Tabs.Tab
                 ref={velgKontorRef}
-                value={Portefølje.VelgKontor}
+                value={Portefølje.VALGTE_KONTORER}
                 onClick={onVelgKontorTabClick}
                 onKeyDown={onVelgKontorTabKeyDown}
                 label={'Valgte kontorer' + (antallKontorerValgt ? ` (${antallKontorerValgt})` : '')}

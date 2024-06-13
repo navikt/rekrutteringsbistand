@@ -1,7 +1,9 @@
-import { BodyShort, Loader } from '@navikt/ds-react';
+import { Alert, Loader } from '@navikt/ds-react';
 import * as React from 'react';
-import { IKandidatSøk, useKandidatsøk } from '../api/kandidat-søk-api/kandidatsøk';
+import { IKandidatSøk, Portefølje, useKandidatsøk } from '../api/kandidat-søk-api/kandidatsøk';
 import { ApplikasjonContext } from '../felles/ApplikasjonContext';
+import Layout from '../felles/komponenter/layout/Layout';
+import { Rolle } from '../felles/tilgangskontroll/Roller';
 import useSøkekriterier, { IKandidatSøkekriterier } from './hooks/useSøkekriterier';
 import { lesSessionStorage, skrivSessionStorage } from './sessionStorage';
 
@@ -38,7 +40,25 @@ const sessionStorageKey = 'kandidatsøk';
 
 export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider> = ({ children }) => {
     const { søkekriterier: søkeKriterierInput } = useSøkekriterier();
-    const { valgtNavKontor } = React.useContext(ApplikasjonContext);
+    const { tilgangskontrollErPå, harRolle, valgtNavKontor } = React.useContext(ApplikasjonContext);
+
+    const portefølje = () => {
+        if (tilgangskontrollErPå) {
+            if (
+                (søkekriterier.portefølje === Portefølje.ALLE ||
+                    søkekriterier.portefølje === Portefølje.VALGTE_KONTORER) &&
+                !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
+            ) {
+                return Portefølje.MINE_BRUKERE;
+            } else if (!søkekriterier.portefølje) {
+                return Portefølje.MINE_BRUKERE;
+            } else {
+                return søkekriterier.portefølje;
+            }
+        } else {
+            return søkekriterier.portefølje ?? Portefølje.ALLE;
+        }
+    };
 
     const forrigeØkt = React.useRef(lesSessionStorage(sessionStorageKey));
 
@@ -70,9 +90,12 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
         isLoading,
         error,
     } = useKandidatsøk({
-        //TODO: Hack for å midlertidig fikse fritekst.
-        søkekriterier: { ...søkekriterier, fritekst: økt.fritekst ?? null },
-        navKontor: valgtNavKontor?.navKontor ?? null,
+        søkeprops: {
+            ...søkekriterier,
+            fritekst: økt.fritekst ?? null,
+            orgenhet: valgtNavKontor?.navKontor ?? null,
+        },
+        portefølje: portefølje(),
     });
 
     React.useEffect(() => {
@@ -92,22 +115,21 @@ export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider>
 
     if (error) {
         return (
-            <BodyShort
-                // className={css.feilmelding}
-                aria-live="assertive"
-            >
-                {error.message === '403' ? 'Du har ikke tilgang til kandidatsøket' : error.message}
-            </BodyShort>
+            <Layout>
+                <Alert variant="error">
+                    {error?.message === '403'
+                        ? 'Du har ikke tilgang til kandidatsøket'
+                        : error?.message ?? 'Feil ved lasting av kandidatsøk'}
+                </Alert>
+            </Layout>
         );
     }
 
     if (isLoading) {
         return (
-            <Loader
-                variant="interaction"
-                size="2xlarge"
-                // className={css.lasterInn}
-            />
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+                <Loader variant="interaction" size="2xlarge" />
+            </div>
         );
     }
 

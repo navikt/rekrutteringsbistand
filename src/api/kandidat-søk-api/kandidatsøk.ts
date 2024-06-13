@@ -16,6 +16,14 @@ import { mockKandidatsøkKandidater } from './mockKandidatsøk';
 
 const kandidatsøkEndepunkt = '/kandidatsok-api/api/kandidatsok';
 
+export enum Portefølje {
+    MINE_BRUKERE = 'minebrukere',
+    VALGTE_KONTORER = 'valgtekontorer',
+    MINE_KONTORER = 'minekontorer',
+    MITT_KONTOR = 'mittkontor',
+    ALLE = 'alle',
+}
+
 export enum Kvalifiseringsgruppekode {
     Batt = 'BATT',
     Ikval = 'IKVAL',
@@ -72,24 +80,12 @@ export type IKandidatSøk = z.infer<typeof kandidatSøkSchema>;
 
 export type KandidatsøkKandidat = z.infer<typeof kandidaterSchema>;
 
-interface IkandidatsøkProps {
-    søkekriterier: IKandidatSøkekriterier;
-    navKontor: string | null;
+interface IuseKandidatsøk {
+    portefølje: Portefølje;
+    søkeprops: IKandidatSøkekriterier;
 }
-const mapKandidatSøkProps = ({ søkekriterier, navKontor }: IkandidatsøkProps) => ({
-    søkekriterier: {
-        ...søkekriterier,
-        orgenhet: navKontor,
-    },
-    side: søkekriterier.side,
-    sortering: søkekriterier.sortering,
-});
 
-export const useKandidatsøk = (props: IkandidatsøkProps) => {
-    const søkeprops = useMemo(() => mapKandidatSøkProps(props), [props]);
-
-    const søkekriterier = søkeprops.søkekriterier;
-
+export const useKandidatsøk = ({ søkeprops, portefølje }: IuseKandidatsøk) => {
     const queryParams = new URLSearchParams({
         side: String(søkeprops.side),
         sortering: søkeprops.sortering,
@@ -97,20 +93,21 @@ export const useKandidatsøk = (props: IkandidatsøkProps) => {
 
     const utvidedeSøkekriterier = useMemo(
         () => ({
-            ...søkekriterier,
-            ønsketSted: Array.from(søkekriterier.ønsketSted).flatMap((sted) => {
+            ...søkeprops,
+            portefølje,
+            ønsketSted: Array.from(søkeprops.ønsketSted).flatMap((sted) => {
                 const gamleSteder = stedmappingFraNyttNummer.get(getNummerFraSted(sted));
                 return gamleSteder
                     ? [sted, ...gamleSteder.map((s) => lagKandidatsøkstreng(s))]
                     : [sted];
             }),
         }),
-        [søkekriterier]
+        [søkeprops, portefølje]
     );
 
     return useSWR(
         {
-            url: kandidatsøkEndepunkt,
+            url: `${kandidatsøkEndepunkt}/${portefølje}`,
             body: utvidedeSøkekriterier,
             queryParams: queryParams.toString(),
         },
@@ -120,7 +117,7 @@ export const useKandidatsøk = (props: IkandidatsøkProps) => {
     );
 };
 
-export const kandidatsøkMockMsw = http.post(kandidatsøkEndepunkt, (_) =>
+export const kandidatsøkMockMsw = http.post(kandidatsøkEndepunkt + '/*', (_) =>
     HttpResponse.json({
         kandidater: mockKandidatsøkKandidater,
         antallTotalt: mockKandidatsøkKandidater.length,
