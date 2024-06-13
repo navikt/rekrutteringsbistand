@@ -47,7 +47,7 @@ const FormidlingAvUsynligKandidatrad: FunctionComponent<Props> = ({
             utfall,
             kandidatlisteId,
             formidlingId: formidling.id,
-            navKontor: valgtNavKontor,
+            navKontor: valgtNavKontor?.navKontor,
         });
     };
 
