@@ -88,41 +88,40 @@ const FormidleKandidat: FunctionComponent<Props> = ({
 
     const harValgtEtAlternativ = presentert || fåttJobb;
 
-    const formidleSynligKandidat = () => {
+    const formidleSynligKandidat = async () => {
         if (
             valgtNavKontor &&
             valgtNavKontor.navKontor !== undefined &&
             kandidatNummer &&
             kandidatNummer !== undefined
         ) {
-            leggTilKandidatKandidatliste(kandidatlisteId, kandidatNummer)
-                .then(() => {
-                    if (presentert) {
-                        putUtfallKandidat(
-                            Kandidatutfall.Presentert,
-                            valgtNavKontor.navKontor,
-                            kandidatlisteId,
-                            kandidatNummer
-                        );
-                    }
-                    if (fåttJobb) {
-                        putUtfallKandidat(
-                            Kandidatutfall.FåttJobben,
-                            valgtNavKontor.navKontor,
-                            kandidatlisteId,
-                            kandidatNummer
-                        );
-                    }
-                })
-                .then(() => {
-                    visVarsling({
-                        innhold: `Kandidaten (${fnr}) er blitt ${presentert ? 'presentert' : ''}${fåttJobb ? (presentert ? ' og formidlet' : 'formidlet') : ''}`,
-                    });
-                    handleBekreft();
-                })
-                .catch((e) => {
-                    console.error(e);
+            try {
+                await leggTilKandidatKandidatliste(kandidatlisteId, kandidatNummer);
+
+                if (presentert) {
+                    await putUtfallKandidat(
+                        Kandidatutfall.Presentert,
+                        valgtNavKontor.navKontor,
+                        kandidatlisteId,
+                        kandidatNummer
+                    );
+                }
+                if (fåttJobb) {
+                    await putUtfallKandidat(
+                        Kandidatutfall.FåttJobben,
+                        valgtNavKontor.navKontor,
+                        kandidatlisteId,
+                        kandidatNummer
+                    );
+                }
+
+                visVarsling({
+                    innhold: `Kandidaten (${fnr}) er blitt ${presentert ? 'presentert' : ''}${fåttJobb ? (presentert ? ' og formidlet' : 'formidlet') : ''}`,
                 });
+                handleBekreft();
+            } catch (e) {
+                console.error(e);
+            }
         }
     };
 
