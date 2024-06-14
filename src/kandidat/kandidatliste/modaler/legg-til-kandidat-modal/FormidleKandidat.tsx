@@ -1,29 +1,34 @@
 import { Alert, BodyShort, Checkbox, CheckboxGroup, ErrorMessage } from '@navikt/ds-react';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useContext, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { UsynligKandidat } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import {
+    Kandidatutfall,
+    UsynligKandidat,
+} from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import Knapper from 'felles/komponenter/legg-til-kandidat/Knapper';
 import { Nettressurs, Nettstatus, ikkeLastet, senderInn } from 'felles/nettressurs';
-import { postFormidlingerAvUsynligKandidat } from '../../../api/api';
+import { postFormidlingerAvUsynligKandidat, putUtfallKandidat } from '../../../api/api';
 import { capitalizeFirstLetter } from '../../../utils/formateringUtils';
 import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 
+import { useVisVarsling } from 'felles/varsling/Varsling';
+import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
 import { KandidatKilde } from '../../../../api/kandidat-søk-api/hentKandidatnavn';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
-import { useVisVarsling } from 'felles/varsling/Varsling';
+import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
 
 type Props = {
     fnr: string | null;
     usynligKandidat: UsynligKandidat;
     kandidatlisteId: string;
     stillingsId: string;
-    valgtNavKontor: string | null;
     onClose: () => void;
     handleBekreft: () => void;
     kilde: KandidatKilde;
+    kandidatNummer?: string | null;
 };
 
 const FormidleKandidat: FunctionComponent<Props> = ({
@@ -31,12 +36,13 @@ const FormidleKandidat: FunctionComponent<Props> = ({
     usynligKandidat,
     kandidatlisteId,
     stillingsId,
-    valgtNavKontor,
     onClose,
     handleBekreft,
     kilde,
+    kandidatNummer,
 }) => {
     const dispatch = useDispatch();
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
     const [formidling, setFormidling] = useState<Nettressurs<Kandidatliste>>(ikkeLastet());
     const [presentert, setPresentert] = useState<boolean>(false);
     const [fåttJobb, setFåttJobb] = useState<boolean>(false);
@@ -82,6 +88,43 @@ const FormidleKandidat: FunctionComponent<Props> = ({
 
     const harValgtEtAlternativ = presentert || fåttJobb;
 
+    const formidleSynligKandidat = async () => {
+        if (
+            valgtNavKontor &&
+            valgtNavKontor.navKontor !== undefined &&
+            kandidatNummer &&
+            kandidatNummer !== undefined
+        ) {
+            try {
+                await leggTilKandidatKandidatliste(kandidatlisteId, kandidatNummer);
+
+                if (presentert) {
+                    await putUtfallKandidat(
+                        Kandidatutfall.Presentert,
+                        valgtNavKontor.navKontor,
+                        kandidatlisteId,
+                        kandidatNummer
+                    );
+                }
+                if (fåttJobb) {
+                    await putUtfallKandidat(
+                        Kandidatutfall.FåttJobben,
+                        valgtNavKontor.navKontor,
+                        kandidatlisteId,
+                        kandidatNummer
+                    );
+                }
+
+                visVarsling({
+                    innhold: `Kandidaten (${fnr}) er blitt ${presentert ? 'presentert' : ''}${fåttJobb ? (presentert ? ' og formidlet' : 'formidlet') : ''}`,
+                });
+                handleBekreft();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    };
+
     return (
         <>
             <BodyShort spacing>
@@ -107,7 +150,7 @@ const FormidleKandidat: FunctionComponent<Props> = ({
                 </Checkbox>
             </CheckboxGroup>
             <Knapper
-                onLeggTilClick={formidleUsynligKandidat}
+                onLeggTilClick={kandidatNummer ? formidleSynligKandidat : formidleUsynligKandidat}
                 onAvbrytClick={onClose}
                 leggTilSpinner={formidling.kind === Nettstatus.SenderInn}
                 leggTilDisabled={formidling.kind === Nettstatus.SenderInn || !harValgtEtAlternativ}
