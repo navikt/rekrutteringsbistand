@@ -6,7 +6,7 @@ const InfoAlert: FunctionComponent = () => {
     return (
         <div className={css.alert}>
             <Alert variant="info" fullWidth className={css.alertinner}>
-                Torsdag 13 juni innfører vi ny tilgangsstyring. Sørg for at du har rett
+                Det er innført ny tilgangsstyring - du må kontakte nærmeste leder for å få rett
                 tilgang.&nbsp;
                 <Link
                     href="https://navno.sharepoint.com/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Tilgangskontroll.aspx"
