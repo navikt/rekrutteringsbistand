@@ -124,6 +124,17 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidat[] = [
         kvalifiseringsgruppekode: Kvalifiseringsgruppekode.Batt,
     },
     {
+        yrkeJobbonskerObj: [],
+        etternavn: 'Uten tilgang',
+        postnummer: '1337',
+        arenaKandidatnr: 'utenTilgang',
+        kommuneNavn: 'Blærum',
+        geografiJobbonsker: [],
+        fornavn: 'Kandidat',
+        fodselsnummer: '17907096400',
+        kvalifiseringsgruppekode: Kvalifiseringsgruppekode.Batt,
+    },
+    {
         yrkeJobbonskerObj: [
             {
                 styrkBeskrivelse: 'Sauegjeter',
