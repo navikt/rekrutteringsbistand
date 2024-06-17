@@ -57,7 +57,7 @@ const FormidleKandidat: FunctionComponent<Props> = ({
             presentert,
             fåttJobb,
             // @ts-ignore TODO: written before strict-mode enabled
-            navKontor: valgtNavKontor,
+            navKontor: valgtNavKontor?.navKontor,
             stillingsId,
         };
 
