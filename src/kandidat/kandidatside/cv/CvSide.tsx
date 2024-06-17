@@ -25,11 +25,24 @@ const CvSide: FunctionComponent = () => {
         return <Sidelaster />;
     }
 
-    if (error) {
+    if (error?.message === '403') {
         return (
             <div className={css.side}>
                 <div className={css.wrapper}>
                     <Alert variant="warning">
+                        <Heading size="medium">Ingen tilgang</Heading>
+                        <p>Du har ikke tilgang til å se denne informasjonen om kandidaten</p>
+                    </Alert>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className={css.side}>
+                <div className={css.wrapper}>
+                    <Alert variant="error">
                         <Heading size="medium">
                             Vi klarte ikke å laste inn detaljer om kandidaten
                         </Heading>

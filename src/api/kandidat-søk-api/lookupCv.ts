@@ -18,8 +18,13 @@ export const useLookupCv = (kandidatnr?: string) => {
     return { ...swrData, cv };
 };
 
-export const lookupCvMockMsw = http.post(lookupCvEndepunkt, (_) =>
-    HttpResponse.json({
+export const lookupCvMockMsw = http.post(lookupCvEndepunkt, async ({ request }) => {
+    const body = (await request.json()) as { kandidatnr: string };
+
+    if (body?.kandidatnr === 'utenTilgang') {
+        return HttpResponse.json('forbidden' as any, { status: 403 });
+    }
+    return HttpResponse.json({
         hits: {
             hits: [
                 {
@@ -27,5 +32,5 @@ export const lookupCvMockMsw = http.post(lookupCvEndepunkt, (_) =>
                 },
             ],
         },
-    })
-);
+    });
+});
