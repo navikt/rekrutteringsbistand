@@ -1,4 +1,4 @@
-import { Alert, BodyShort, Button, Label, Link, Modal, Select } from '@navikt/ds-react';
+import { Alert, BodyShort, Button, Label, Modal, Select } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import {
@@ -166,11 +166,14 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
  */
 const genererMeldingUtenLenke = (valgtMal: Meldingsmal) => {
     if (valgtMal === Meldingsmal.VurdertSomAktuell) {
-        return `Hei! Vi har vurdert at kompetansen din kan passe til en stilling. Logg inn på NAV for å se stillingen. Vennlig hilsen NAV`;
+        return `Hei! Vi har vurdert at kompetansen din kan passe til en stilling. Logg inn på NAV 
+        for å se stillingen. Vennlig hilsen NAV`;
     } else if (valgtMal === Meldingsmal.FunnetPassendeStilling) {
-        return `Hei! Vi har funnet en stilling som kan passe deg. Logg inn på NAV for å se stillingen. Vennlig hilsen NAV`;
+        return `Hei! Vi har funnet en stilling som kan passe deg. Logg inn på NAV for å se 
+        stillingen. Vennlig hilsen NAV`;
     } else if (valgtMal === Meldingsmal.Jobbarrangement) {
-        return `Hei! Vi har funnet et jobbarrangement som kanskje passer for deg. Logg inn på NAV for å se arrangementet. Vennlig hilsen NAV`;
+        return `Hei! Vi har funnet et jobbarrangement som kanskje passer for deg. Logg inn på NAV 
+        for å se arrangementet. Vennlig hilsen NAV`;
     }
 };
 
