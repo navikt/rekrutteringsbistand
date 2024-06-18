@@ -40,9 +40,6 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
         (kandidat) => kandidat.fodselsnr === null
     );
 
-    const lenkeTilStilling = genererLenkeTilStilling(stillingId);
-    const lenkeMedPrefiks = `https://www.${lenkeTilStilling}`;
-
     const [valgtMal, setValgtMal] = useState<Meldingsmal>(
         stillingskategori === Stillingskategori.Jobbmesse
             ? Meldingsmal.Jobbarrangement
@@ -147,9 +144,6 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
                     <div id="forhåndsvisning" className={css.forhåndsvisning}>
                         <BodyShort>
                             <span>{genererMeldingUtenLenke(valgtMal)} </span>
-                            <Link href={lenkeMedPrefiks} target="_blank" rel="noopener noreferrer">
-                                {lenkeTilStilling}
-                            </Link>
                         </BodyShort>
                     </div>
                 </div>
@@ -167,20 +161,16 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
     );
 };
 
-const genererLenkeTilStilling = (stillingId: string) => {
-    return `nav.no/arbeid/stilling/${stillingId}`;
-};
-
 /* nb: Det er ikke lenger frontend som styrer teksten. Så disse
  * tekstene kan være ute av sync med backend.
  */
 const genererMeldingUtenLenke = (valgtMal: Meldingsmal) => {
     if (valgtMal === Meldingsmal.VurdertSomAktuell) {
-        return `Hei, vi har vurdert at kompetansen din kan passe til denne stillingen, hilsen NAV`;
+        return `Hei! Vi har vurdert at kompetansen din kan passe til en stilling. Logg inn på NAV for å se stillingen. Vennlig hilsen NAV`;
     } else if (valgtMal === Meldingsmal.FunnetPassendeStilling) {
-        return `Hei! Vi har funnet en stilling som kan passe deg. Interessert? Søk via lenka i annonsen. Hilsen NAV`;
+        return `Hei! Vi har funnet en stilling som kan passe deg. Logg inn på NAV for å se stillingen. Vennlig hilsen NAV`;
     } else if (valgtMal === Meldingsmal.Jobbarrangement) {
-        return `Hei, vi har et jobbarrangement som kan passe for deg, hilsen NAV. Se mer info:`;
+        return `Hei! Vi har funnet et jobbarrangement som kanskje passer for deg. Logg inn på NAV for å se arrangementet. Vennlig hilsen NAV`;
     }
 };
 
