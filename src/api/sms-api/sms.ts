@@ -150,6 +150,21 @@ export const smsApiMock = [
 
     http.get<{ stillingId: string }>(varselStillingEndepunkt(':stillingId'), async ({ params }) => {
         const { stillingId } = params;
+
+        if (stillingId === 'minIntern') {
+            return HttpResponse.json([
+                {
+                    id: 'minIntern',
+                    stillingId: 'minIntern',
+                    mottakerFnr: '14114536327',
+                    avsenderNavident: mockVeileder.navIdent,
+                    opprettet: new Date().toISOString(),
+                    minsideStatus: MinsideStatus.OPPRETTET,
+                    eksternStatus: EksternStatus.VELLYKKET_SMS,
+                },
+            ]);
+        }
+
         const sms = mockSms.filter((sms) => sms.stillingId === stillingId);
 
         if (!sms) {
@@ -171,14 +186,14 @@ export const smsApiMock = [
     }),
 ];
 
-const mockSms: Sms[] = [
-    {
-        id: '1',
-        stillingId: mockKandidatlisteMedStilling.stillingId as string,
-        mottakerFnr: '14114536327', //mockKandidatlisteMedStilling.kandidater[0].fodselsnr,
-        avsenderNavident: mockVeileder.navIdent,
-        opprettet: new Date().toISOString(),
-        minsideStatus: MinsideStatus.OPPRETTET,
-        eksternStatus: EksternStatus.VELLYKKET_SMS,
-    },
-];
+const smsExampleMock = {
+    id: '1',
+    stillingId: mockKandidatlisteMedStilling.stillingId as string,
+    mottakerFnr: '14114536327', //mockKandidatlisteMedStilling.kandidater[0].fodselsnr,
+    avsenderNavident: mockVeileder.navIdent,
+    opprettet: new Date().toISOString(),
+    minsideStatus: MinsideStatus.OPPRETTET,
+    eksternStatus: EksternStatus.VELLYKKET_SMS,
+};
+
+const mockSms: Sms[] = [smsExampleMock];

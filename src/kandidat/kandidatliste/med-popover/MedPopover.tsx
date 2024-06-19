@@ -1,6 +1,6 @@
-import { FunctionComponent, useState, MouseEvent, ReactNode } from 'react';
-import css from './MedPopover.module.css';
 import { BodyShort, Popover } from '@navikt/ds-react';
+import { FunctionComponent, MouseEvent, ReactNode, useState } from 'react';
+import css from './MedPopover.module.css';
 
 type Props = {
     id?: string;
@@ -21,6 +21,7 @@ type Props = {
         | 'right-end'
         | 'left-start'
         | 'left-end';
+    visOnHover?: boolean;
 };
 
 const MedPopover: FunctionComponent<Props> = ({
@@ -30,6 +31,7 @@ const MedPopover: FunctionComponent<Props> = ({
     className,
     placement,
     children,
+    visOnHover = false,
 }) => {
     const [anker, setAnker] = useState<Element | null>(null);
 
@@ -41,8 +43,22 @@ const MedPopover: FunctionComponent<Props> = ({
         setAnker(null);
     };
 
+    const vedHover = (event: MouseEvent<HTMLElement>) => {
+        if (visOnHover) {
+            setAnker(event.currentTarget);
+        }
+    };
+
+    const vedHoverLeave = () => {
+        if (visOnHover) {
+            setAnker(null);
+        }
+    };
+
     return (
         <div
+            onMouseEnter={vedHover}
+            onMouseLeave={vedHoverLeave}
             id={id}
             role="button"
             title={tittel}
