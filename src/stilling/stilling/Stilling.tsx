@@ -56,7 +56,7 @@ const Stilling = () => {
 
     const erFormidling = stillingsinfo.stillingskategori === Stillingskategori.Formidling;
 
-    const { kandidatlisteId } = useKandidatlisteId(uuid);
+    const { kandidatlisteId, mutate } = useKandidatlisteId(uuid);
 
     const { navIdent } = useMeg();
 
@@ -175,8 +175,7 @@ const Stilling = () => {
                                 {erEksternStilling ? (
                                     <>
                                         <PreviewHeader
-                                            /*@ts-ignore: TODO: written before strict-mode enabled */
-                                            kandidatlisteId={kandidatlisteId}
+                                            refetchKandidatlisteId={mutate}
                                             erEier={erEier}
                                         />
                                         {optionalTittel}
@@ -197,9 +196,8 @@ const Stilling = () => {
                             <>
                                 {!kandidatnrFraStillingssøk && (
                                     <PreviewHeader
+                                        refetchKandidatlisteId={mutate}
                                         erEier={erEier}
-                                        /*@ts-ignore: TODO: written before strict-mode enabled */
-                                        kandidatlisteId={kandidatlisteId}
                                     />
                                 )}
                                 {optionalTittel}

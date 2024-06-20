@@ -6,7 +6,7 @@ interface KandidatlisteId {
 }
 
 const useKandidatlisteId = (stillingsId?: string) => {
-    const { data, error, isLoading } = useSWR<KandidatlisteId>(
+    const { data, error, isLoading, mutate } = useSWR<KandidatlisteId>(
         stillingsId ? `/kandidat-api/veileder/stilling/${stillingsId}/kandidatlisteid` : undefined,
         getAPI
     );
@@ -15,6 +15,7 @@ const useKandidatlisteId = (stillingsId?: string) => {
         kandidatlisteId: data?.kandidatlisteId,
         isLoading,
         isError: error,
+        mutate,
     };
 };
 
