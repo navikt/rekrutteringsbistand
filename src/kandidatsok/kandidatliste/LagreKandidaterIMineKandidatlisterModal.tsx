@@ -1,11 +1,11 @@
 import { Button, Modal } from '@navikt/ds-react';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
+import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 import { lagreKandidaterIValgteKandidatlister } from '../api/api';
 import { storForbokstav } from '../utils';
 import css from './LagreKandidaterIMineKandidatlisterModal.module.css';
 import VelgKandidatlister from './VelgKandidatlister';
-import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 
 type Props = {
     vis: boolean;
@@ -31,6 +31,11 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     >({
         kind: Nettstatus.IkkeLastet,
     });
+
+    const lukkDialog = () => {
+        setLagredeLister(new Set());
+        onClose();
+    };
 
     useEffect(() => {
         setMarkerteLister(new Set());
@@ -63,10 +68,8 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
         try {
             const markerteKandidatlister = Array.from(markerteLister);
             await lagreKandidaterIValgteKandidatlister(lagreKandidaterDto, markerteKandidatlister);
-
             setLagreIKandidatlister({ kind: Nettstatus.Suksess, data: lagreKandidaterDto });
             setMarkerteLister(new Set());
-
             const oppdaterteLagredeLister = new Set(lagredeLister);
             markerteKandidatlister.forEach((kandidatlisteId) => {
                 oppdaterteLagredeLister.add(kandidatlisteId);
@@ -87,7 +90,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
         <Modal
             className={css.modal}
             open={vis}
-            onClose={onClose}
+            onClose={lukkDialog}
             header={{
                 label: oppsummerMarkerteKandidater(kandidaterPåSiden, markerteKandidater),
                 heading: `Lagre ${markerteKandidater.size} kandidat${
@@ -111,7 +114,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
                 >
                     Lagre
                 </Button>
-                <Button variant="secondary" onClick={onClose}>
+                <Button variant="secondary" onClick={lukkDialog}>
                     Avbryt
                 </Button>
             </Modal.Footer>
