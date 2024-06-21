@@ -43,7 +43,7 @@ export const hentStilling = async (stillingsId: string): Promise<Stilling> => {
 export const lagreKandidaterIValgteKandidatlister = async (
     lagreKandidaterDto: LagreKandidaterDto,
     kandidatlister: string[]
-): Promise<Kandidatliste[]> => {
+) => {
     return Promise.all(
         kandidatlister.map((kandidatlisteId) =>
             lagreKandidaterIKandidatliste(lagreKandidaterDto, kandidatlisteId)
@@ -54,15 +54,10 @@ export const lagreKandidaterIValgteKandidatlister = async (
 export const lagreKandidaterIKandidatliste = async (
     lagreKandidaterDto: LagreKandidaterDto,
     kandidatlisteId: string
-): Promise<Kandidatliste> => {
-    const respons = await post(
+) => {
+    await post(
         `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
         lagreKandidaterDto
-    );
-
-    return parseJsonEllerKastFeil(
-        respons,
-        `Klarte ikke å lagre kandidater i kandidatliste ${kandidatlisteId}`
     );
 };
 
