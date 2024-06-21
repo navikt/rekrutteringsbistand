@@ -51,29 +51,25 @@ async function hentNyttOnBehalfOfToken(accessToken: string, scope: string): Prom
 
     const url = process.env.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT;
 
-    try {
-        const response = await fetch(url, {
-            method: 'POST',
-            body: new URLSearchParams(formData),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-        });
+    const response = await fetch(url, {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    });
 
-        const body = await response.json();
+    const body = await response.json();
 
-        if (response.ok) {
-            return body as OboToken;
-        } else {
-            logger.error(
-                `Klarte ikke å hente on behalf of token for scope "${scope}", fikk status ${response.status} (${response.statusText}) årsak: `,
-                body
-            );
+    if (response.ok) {
+        return body as OboToken;
+    } else {
+        logger.info(
+            `Klarte ikke å hente on behalf of token for scope "${scope}", fikk status ${response.status} (${response.statusText}) årsak: `,
+            body
+        );
 
-            throw response;
-        }
-    } catch (e) {
-        throw e;
+        throw response;
     }
 }
 
