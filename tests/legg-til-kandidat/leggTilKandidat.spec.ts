@@ -118,26 +118,26 @@ test.describe('Legg til kandidat knapp - Arbeidsgiverrettet', () => {
     });
 
     test('Skal kunne legge til SYNLIG kandidat på FORMIDLING man er eier', async ({ page }) => {
-        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('link', { name: 'Etterregistrering formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
         await leggTilSynligKandidat(page);
     });
 
     test('Skal kunne legge til USYNLIG kandidat på FORMIDLING man er eier', async ({ page }) => {
-        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('link', { name: 'Etterregistrering formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
         await leggTilUsynligKandidat(page);
     });
 
     // Todo kommer:
     // test('Skal kunne formidle SYNLIG kandidat på FORMIDLING man er eier', async ({ page }) => {
-    //     await page.getByRole('link', { name: 'Formidlinger' }).click();
+    //     await page.getByRole('link', { name: 'Etterregistrering formidlinger' }).click();
     //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
     //     await formidleSynligKandidat(page);
     // });
 
     test('Skal kunne formidle USYNLIG kandidat på FORMIDLING man er eier', async ({ page }) => {
-        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('link', { name: 'Etterregistrering formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling MIN' }).click();
         await formidleUsynligKandidat(page);
     });
@@ -145,7 +145,7 @@ test.describe('Legg til kandidat knapp - Arbeidsgiverrettet', () => {
     test('Skal IKKE kunne legge til og formidle SYNLIG kandidat på FORMIDLING man IKKE er eier', async ({
         page,
     }) => {
-        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('link', { name: 'Etterregistrering formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling', exact: true }).click();
         await expect(page.getByRole('tab', { name: 'Om stillingen' })).toBeVisible();
         await expect(page.getByRole('button', { name: 'Legg til kandidat' })).not.toBeVisible();
@@ -154,7 +154,7 @@ test.describe('Legg til kandidat knapp - Arbeidsgiverrettet', () => {
     test('Skal IKKE kunne legge til og formidle USYNLIG kandidat på FORMIDLING man IKKE er eier', async ({
         page,
     }) => {
-        await page.getByRole('link', { name: 'Formidlinger' }).click();
+        await page.getByRole('link', { name: 'Etterregistrering formidlinger' }).click();
         await page.getByRole('link', { name: 'Formidling', exact: true }).click();
         await expect(page.getByRole('tab', { name: 'Om stillingen' })).toBeVisible();
         await expect(page.getByRole('button', { name: 'Legg til kandidat' })).not.toBeVisible();

@@ -6,12 +6,12 @@ import { useLocation } from 'react-router-dom';
 import { useMeg } from '../api/frackend/meg';
 import { sendEvent } from '../felles/amplitude';
 import Layout from '../felles/komponenter/layout/Layout';
+import { Rolle } from '../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import useNavigering from '../stilling/stillingssok/useNavigering';
 import { QueryParam, oppdaterUrlMedParam } from '../stilling/stillingssok/utils/urlUtils';
 import Formidlingssøk from './Formidlingssøk';
 import FormidlingssøkSidebar from './FormidlingssøkSidebar';
-import { TilgangskontrollForInnhold } from '../felles/tilgangskontroll/TilgangskontrollForInnhold';
-import { Rolle } from '../felles/tilgangskontroll/Roller';
 
 enum TabVisning {
     VIS_ALLE = 'visAlle',
@@ -49,7 +49,7 @@ const Formidling: React.FC = () => {
             ]}
         >
             <Layout
-                tittel="Formidlinger"
+                tittel="Etterregistrering formidlinger"
                 sidepanel={<FormidlingssøkSidebar />}
                 ikon={<Piktogram />}
                 knappIBanner={

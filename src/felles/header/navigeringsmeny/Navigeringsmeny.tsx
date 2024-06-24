@@ -3,10 +3,10 @@ import { useLocation } from 'react-router-dom';
 
 import { ApplikasjonContext } from '../../ApplikasjonContext';
 import { Rolle } from '../../tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../tilgangskontroll/TilgangskontrollForInnhold';
 import Nyheter from '../nyheter/Nyheter';
 import css from './Navigeringsmeny.module.css';
 import Tab, { TabConfig } from './Tab';
-import { TilgangskontrollForInnhold } from '../../tilgangskontroll/TilgangskontrollForInnhold';
 
 const tabs: TabConfig[] = [
     {
@@ -27,7 +27,7 @@ const tabs: TabConfig[] = [
         ],
     },
     {
-        tittel: 'Formidlinger',
+        tittel: 'Etterregistrering formidlinger',
         path: '/formidlinger',
         kreverRoller: [
             Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,

@@ -20,7 +20,9 @@ test.describe('Tilgangskontroll: Modia Generell', () => {
     });
 
     test('3. Se om formidlings-fanen er tilgjengelig - Fanen skal ikke vises', async ({ page }) => {
-        await expect(page.getByRole('link', { name: 'Formidlinger' })).not.toBeVisible();
+        await expect(
+            page.getByRole('link', { name: 'Etterregistrering formidlinger' })
+        ).not.toBeVisible();
     });
 
     test('4. Gå inn i stillingssøket - Stillingssøket kan åpnes.', async ({ page }) => {
