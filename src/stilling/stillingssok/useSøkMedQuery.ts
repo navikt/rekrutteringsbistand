@@ -5,10 +5,8 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { FylkeDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
 import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
 import { Stillingskategori } from '../../felles/domene/stilling/Stilling';
-import { Rolle } from '../../felles/tilgangskontroll/Roller';
 import { søk } from './api/api';
 import { lagQuery } from './api/queries/queries';
-import { Status } from './filter/om-annonsen/Annonsestatus';
 import useStandardsøk from './standardsøk/StandardsøkContext';
 import useNavigering from './useNavigering';
 import { QueryParam, hentSøkekriterier, oppdaterUrlMedParam } from './utils/urlUtils';
@@ -69,16 +67,6 @@ const useSøkMedQuery = ({
             søkekriterier = {
                 ...søkekriterier,
                 fylker: new Set(fylkeNavn),
-            };
-        }
-
-        if (
-            !overstyrValgteStillingskategorier &&
-            !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
-        ) {
-            søkekriterier = {
-                ...søkekriterier,
-                statuser: new Set([Status.Publisert]),
             };
         }
 
