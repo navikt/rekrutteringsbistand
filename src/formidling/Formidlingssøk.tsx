@@ -1,6 +1,5 @@
 import { Heading, Loader } from '@navikt/ds-react';
 import * as React from 'react';
-import css from './Formidlingssøk.module.css';
 import { Stillingskategori } from '../felles/domene/stilling/Stilling';
 import { filtrerOrdFraStilling } from '../felles/filterOrd';
 import { formaterAntallAnnonser } from '../stilling/stillingssok/Stillingssøk';
@@ -12,6 +11,7 @@ import Stillingsliste from '../stilling/stillingssok/stillingsliste/Stillingslis
 import Søkefelter from '../stilling/stillingssok/søkefelter/Søkefelter';
 import useAntallTreff from '../stilling/stillingssok/useAntallTreff';
 import useSøkMedQuery from '../stilling/stillingssok/useSøkMedQuery';
+import css from './Formidlingssøk.module.css';
 
 export interface IAlleFormidlinger {
     navIdent?: string;
@@ -25,7 +25,7 @@ export const kunFormidlingSet = new Set([Stillingskategori.Formidling]);
 const Formidlingssøk: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
     const respons = useSøkMedQuery({
         navIdent,
-        overstyrValgteStillingskategorier: kunFormidlingSet,
+        visBareStillingskategori: kunFormidlingSet,
         fallbackIngenValgteStillingskategorier: kunFormidlingSet,
     });
 
