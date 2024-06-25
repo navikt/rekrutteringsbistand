@@ -47,6 +47,7 @@ const useSøkMedQuery = ({
         if (skalBrukeStandardsøk) return;
 
         let søkekriterier = hentSøkekriterier(searchParams);
+
         if (overstyrValgteStillingskategorier) {
             søkekriterier = {
                 ...søkekriterier,
@@ -71,7 +72,10 @@ const useSøkMedQuery = ({
             };
         }
 
-        if (!harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])) {
+        if (
+            !overstyrValgteStillingskategorier &&
+            !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
+        ) {
             søkekriterier = {
                 ...søkekriterier,
                 statuser: new Set([Status.Publisert]),
