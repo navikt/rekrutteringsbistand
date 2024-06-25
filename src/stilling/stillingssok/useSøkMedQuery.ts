@@ -18,14 +18,14 @@ export const DEFAULT_VALGTE_KRITERIER = '?publisert=intern&statuser=publisert';
 type Returverdi = {
     navIdent?: string;
     ikkePubliserte?: boolean;
-    overstyrValgteStillingskategorier?: Set<Stillingskategori>;
+    visBareStillingskategori?: Set<Stillingskategori>;
     fallbackIngenValgteStillingskategorier: Set<Stillingskategori>;
 };
 
 const useSøkMedQuery = ({
     navIdent,
     ikkePubliserte,
-    overstyrValgteStillingskategorier,
+    visBareStillingskategori,
     fallbackIngenValgteStillingskategorier,
 }: Returverdi) => {
     const { navigate, searchParams, state } = useNavigering();
@@ -48,10 +48,10 @@ const useSøkMedQuery = ({
 
         let søkekriterier = hentSøkekriterier(searchParams);
 
-        if (overstyrValgteStillingskategorier) {
+        if (visBareStillingskategori) {
             søkekriterier = {
                 ...søkekriterier,
-                stillingskategorier: overstyrValgteStillingskategorier,
+                stillingskategorier: visBareStillingskategori,
             };
         }
 
@@ -74,7 +74,7 @@ const useSøkMedQuery = ({
 
         // Viser kun publiserte stillinger, men mulighet til å velge for formidlinger
         if (
-            !overstyrValgteStillingskategorier &&
+            !visBareStillingskategori &&
             !harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET])
         ) {
             søkekriterier = {
@@ -112,7 +112,7 @@ const useSøkMedQuery = ({
         state,
         navIdent,
         ikkePubliserte,
-        overstyrValgteStillingskategorier,
+        visBareStillingskategori,
         fallbackIngenValgteStillingskategorier,
         hentFylkeNavn,
     ]);
