@@ -1,4 +1,4 @@
-import { Ingress } from '@navikt/ds-react';
+import { Alert, Ingress } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -56,7 +56,14 @@ const Historikkside: FunctionComponent = () => {
     }
 
     if (error) {
-        return <span> Feil ved lasting av historikk...</span>;
+        if (error?.message.includes('http-status: 403')) {
+            return (
+                <Alert variant="error">
+                    Du har ikke tilgang til å se historikk for denne kandidaten
+                </Alert>
+            );
+        }
+        return <Alert variant="error"> Feil ved lasting av historikk...</Alert>;
     }
 
     const kandidatlister = sorterPåDato(data);

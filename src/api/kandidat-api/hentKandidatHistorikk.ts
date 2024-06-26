@@ -48,12 +48,8 @@ const hentKandidatHistorikkEndepunkt = (props: HentKandidatHistorikkProps) =>
           )}`
         : undefined;
 
-export const useHentKandidatHistorikk = (props: HentKandidatHistorikkProps) => {
-    const swrData = useSWR(hentKandidatHistorikkEndepunkt(props), getAPI);
-    return {
-        ...swrData,
-    };
-};
+export const useHentKandidatHistorikk = (props: HentKandidatHistorikkProps) =>
+    useSWR(hentKandidatHistorikkEndepunkt(props), getAPI);
 
 export const hentKandidatHistorikkMockMsw = http.get(
     `/kandidat-api/veileder/kandidater/:kandidatnr/listeoversikt`,
