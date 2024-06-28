@@ -1,14 +1,14 @@
 import { BodyShort, Button, Detail, Heading, Radio, RadioGroup } from '@navikt/ds-react';
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 import {
     KandidatIKandidatliste,
     Kandidatstatus,
 } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from '../../../../../api/sms-api/sms';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Nettressurs } from 'felles/nettressurs';
+import { Sms } from '../../../../../api/sms-api/sms';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../../domene/kandidatlisteUtils';
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { statusToDisplayName } from '../etiketter/StatusEtikett';
@@ -42,6 +42,7 @@ const EndreStatusOgHendelser: FunctionComponent<Props> = ({
     onStatusChange,
 }) => {
     const [status, setStatus] = useState(kandidat.status);
+    const [godtattDelingAvCV, setGodtattDelingAvCV] = useState<boolean | null>(null);
     const statuser = Object.entries(Kandidatstatus);
 
     const onConfirmStatus = () => {
@@ -57,6 +58,17 @@ const EndreStatusOgHendelser: FunctionComponent<Props> = ({
         kandidatliste.stillingskategori === Stillingskategori.Stilling ||
         kandidatliste.stillingskategori === Stillingskategori.Formidling ||
         kandidatliste.stillingskategori == null;
+
+    useEffect(() => {
+        if (forespørselOmDelingAvCv.kind === 'Suksess') {
+            if (forespørselOmDelingAvCv?.data?.gjeldendeForespørsel?.svar?.harSvartJa)
+                setGodtattDelingAvCV(
+                    forespørselOmDelingAvCv?.data?.gjeldendeForespørsel?.svar?.harSvartJa
+                );
+        } else if (forespørselOmDelingAvCv.kind !== 'LasterInn') {
+            setGodtattDelingAvCV(false);
+        }
+    }, [forespørselOmDelingAvCv]);
 
     return (
         <div className={css.endreStatusOgHendelser}>
@@ -110,7 +122,7 @@ const EndreStatusOgHendelser: FunctionComponent<Props> = ({
                                 <ForespørslerOgSvar forespørsler={forespørselOmDelingAvCv} />
 
                                 <DelCvMedArbeidsgiver
-                                    kanEndre
+                                    kanEndre={godtattDelingAvCV}
                                     kandidatlisteId={kandidatliste.kandidatlisteId}
                                     kandidat={kandidat}
                                 />
