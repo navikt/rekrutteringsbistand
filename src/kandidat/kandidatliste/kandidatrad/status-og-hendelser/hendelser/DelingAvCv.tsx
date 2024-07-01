@@ -1,5 +1,5 @@
 import { MinusCircleIcon, PlusCircleIcon } from '@navikt/aksel-icons';
-import { BodyLong, Button, ErrorMessage } from '@navikt/ds-react';
+import { BodyLong, Button, ErrorMessage, Loader } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -17,7 +17,7 @@ type Props = {
     utfallsendringer: Utfallsendring[];
     onEndreUtfall: (utfall: Kandidatutfall) => void;
     onSlettCv: () => void;
-    kanEndre?: boolean;
+    kanEndre: boolean | null;
 };
 
 enum Visning {
@@ -135,6 +135,7 @@ const DelingAvCv: FunctionComponent<Props> = ({
                     tittel="CV-en er delt med arbeidsgiver"
                     beskrivelse="Gjøres i kandidatlisten"
                 >
+                    {kanEndre === null && <Loader />}
                     {kanEndre && (
                         <Button
                             size="small"

@@ -1,19 +1,19 @@
+import { TenancyIcon } from '@navikt/aksel-icons';
+import { BodyLong, Button, Link } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 import { useSelector } from 'react-redux';
-import { BodyLong, Button, Link } from '@navikt/ds-react';
-import { TenancyIcon } from '@navikt/aksel-icons';
 
+import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
+import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettstatus } from 'felles/nettressurs';
 import AppState from '../../state/AppState';
-import MedPopover from '../med-popover/MedPopover';
 import { kandidaterMåGodkjenneDelingAvCv } from '../domene/kandidatlisteUtils';
+import { cvErSendtTilArbeidsgiverOgSlettet } from '../kandidatrad/status-og-hendelser/hendelser/CvErSlettet';
+import MedPopover from '../med-popover/MedPopover';
 import {
     hentForespørslerForKandidatForStilling,
     TilstandPåForespørsel,
 } from './forespørsel-om-deling-av-cv/Forespørsel';
-import { cvErSendtTilArbeidsgiverOgSlettet } from '../kandidatrad/status-og-hendelser/hendelser/CvErSlettet';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 
 type Props = {
     kandidatliste: Kandidatliste;

@@ -11,7 +11,7 @@ import KandidatlisteActionType from '../../../reducer/KandidatlisteActionType';
 import DelingAvCv from './DelingAvCv';
 
 type Props = {
-    kanEndre: boolean;
+    kanEndre: boolean | null;
     kandidatlisteId: string;
     kandidat: KandidatIKandidatliste;
 };
