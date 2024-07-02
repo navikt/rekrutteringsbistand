@@ -42,9 +42,12 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
             >
                 <TilgangskontrollForInnhold
                     skjulVarsel
-                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+                    kreverEnAvRollene={[
+                        Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
+                        Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
+                    ]}
                 >
-                    {!erFormidling && erEier && (
+                    {!erFormidling && (
                         <Link
                             to={
                                 //@ts-ignore: TODO: written before strict-mode enabled
