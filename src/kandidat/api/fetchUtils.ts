@@ -29,6 +29,8 @@ export async function fetchJson(url: string, includeCredentials = false) {
             return response.json();
         } else if (response.status === 401) {
             videresendTilInnlogging();
+        } else if (response.status === 403) {
+            throw new Error('Du har ikke tilgang til siden. (status kode: 403)');
         }
 
         let error;
