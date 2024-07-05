@@ -11,7 +11,6 @@ import Historikkside from '../kandidatside/historikk/Historikkside';
 import NotFound from '../komponenter/errorside/NotFound';
 import store from '../state/reduxStore';
 import css from './KandidatApp.module.css';
-import ManglerTilgang from './ManglerTilgang';
 
 const App = () => {
     return (
@@ -20,7 +19,6 @@ const App = () => {
             <div className={css.app}>
                 <main className={css.main}>
                     <Routes>
-                        <Route path="mangler-tilgang" element={<ManglerTilgang />} />
                         <Route path="kandidat/:kandidatnr" element={<Kandidatside />}>
                             <Route path="cv" element={<CvSide />} />
                             <Route path="historikk" element={<Historikkside />} />

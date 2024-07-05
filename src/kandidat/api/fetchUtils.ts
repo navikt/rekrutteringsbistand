@@ -1,7 +1,6 @@
 import { videresendTilInnlogging } from 'felles/api';
 import { feil, Nettressurs, suksess } from 'felles/nettressurs';
 
-const lenkeTilTilgangsside = `/kandidater/mangler-tilgang`;
 export const createCallIdHeader = () => ({
     'Nav-CallId': Math.random().toString(16).substring(2),
 });
@@ -30,8 +29,6 @@ export async function fetchJson(url: string, includeCredentials = false) {
             return response.json();
         } else if (response.status === 401) {
             videresendTilInnlogging();
-        } else if (response.status === 403) {
-            videresendTilTilgangsside();
         }
 
         let error;
@@ -54,10 +51,6 @@ export async function fetchJson(url: string, includeCredentials = false) {
         });
     }
 }
-
-const videresendTilTilgangsside = () => {
-    window.location.href = lenkeTilTilgangsside;
-};
 
 export async function deleteJsonMedType<T>(
     url: string,
