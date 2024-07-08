@@ -1,7 +1,5 @@
 import { Checkbox } from '@navikt/ds-react';
-import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
-import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import css from './Kandidater.module.css';
 import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 
@@ -9,18 +7,18 @@ type Props = {
     kandidater: KandidatsøkKandidat[];
     markerteKandidater: Set<string>;
     onMarkerKandidat: (kandidatnumre: string[]) => void;
-    kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
+    mineKandidaterIStilling: string[] | undefined;
 };
 
 const MarkerAlle: FunctionComponent<Props> = ({
     kandidater,
     markerteKandidater,
     onMarkerKandidat,
-    kontekstAvKandidatlisteEllerStilling,
+    mineKandidaterIStilling,
 }) => {
     const kandidaterSomIkkeErPåKandidatlisten = hentKandidaterSomIkkeErPåKandidatlisten(
         kandidater,
-        kontekstAvKandidatlisteEllerStilling
+        mineKandidaterIStilling
     ).map((kandidat) => kandidat.arenaKandidatnr);
 
     const alleKandidaterErMarkert = kandidaterSomIkkeErPåKandidatlisten.every((kandidatnr) =>
@@ -53,24 +51,16 @@ const MarkerAlle: FunctionComponent<Props> = ({
 
 const hentKandidaterSomIkkeErPåKandidatlisten = (
     kandidater: KandidatsøkKandidat[],
-    kontekst: KontekstAvKandidatlisteEllerStilling | null
+    mineKandidaterIStilling: string[] | undefined
 ) => {
-    if (kontekst === null) {
+    if (mineKandidaterIStilling === undefined) {
         return kandidater;
     }
 
-    if (kontekst.kandidatliste.kind === Nettstatus.Suksess) {
-        const kandidaterPåListen = kontekst.kandidatliste.data.kandidater;
-
-        return kandidater.filter(
-            (kandidat) =>
-                !kandidaterPåListen.some(
-                    (kandidatPåListen) => kandidatPåListen.kandidatnr === kandidat.arenaKandidatnr
-                )
-        );
-    } else {
-        return kandidater;
-    }
+    return kandidater.filter(
+        (kandidat) =>
+            !mineKandidaterIStilling.some((kandidatnr) => kandidatnr === kandidat.arenaKandidatnr)
+    );
 };
 
 export default MarkerAlle;
