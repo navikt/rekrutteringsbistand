@@ -27,6 +27,8 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
     const [innsendingOk, setInnsengingOk] = useState<boolean | null>(null);
 
     const onBekreftClick = (kandidatlisteId: string) => async () => {
+        console.log('onBekreftClick', kandidatlisteId, stillingId);
+
         const lagreKandidaterDto = Array.from(markerteKandidater).map((kandidat) => ({
             kandidatnr: kandidat,
         }));
