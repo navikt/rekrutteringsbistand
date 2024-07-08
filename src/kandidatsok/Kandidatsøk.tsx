@@ -54,7 +54,6 @@ const Kandidatsøk = () => {
             <PorteføljeTabs>
                 <div className={css.hovedinnhold}>
                     <Kandidater
-                        kontekstAvKandidatlisteEllerStilling={kontekstAvKandidatlisteEllerStilling}
                         markerteKandidater={markerteKandidater}
                         onMarkerKandidat={onMarkerKandidat}
                         fjernMarkering={fjernMarkering}

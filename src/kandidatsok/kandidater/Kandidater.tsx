@@ -5,7 +5,6 @@ import { FunctionComponent, useContext, useState } from 'react';
 import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 import { KandidatSøkContext } from '../KandidatSøkContext';
 import Paginering from '../filter/Paginering';
-import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import AntallKandidater from './AntallKandidater';
@@ -19,7 +18,6 @@ import { KandidatsokQueryParam } from 'felles/lenker';
 import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 
 type Props = {
-    kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
     markerteKandidater: Set<string>;
     onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
@@ -32,7 +30,6 @@ enum Modal {
 }
 
 const Kandidater: FunctionComponent<Props> = ({
-    kontekstAvKandidatlisteEllerStilling,
     markerteKandidater,
     onMarkerKandidat,
     fjernMarkering,
@@ -42,6 +39,7 @@ const Kandidater: FunctionComponent<Props> = ({
 
     const [searchParams] = useSearchParams();
     const stillingId = searchParams.get(KandidatsokQueryParam.Stilling);
+    const kandidatlisteId = searchParams.get(KandidatsokQueryParam.Kandidatliste);
     const {
         data: mineKandidaterIStilling,
         isLoading,
@@ -130,7 +128,7 @@ const Kandidater: FunctionComponent<Props> = ({
             ) : (
                 <BodyShort> Fant ingen kandidater </BodyShort>
             )}
-            {stillingId === null ? (
+            {kandidatlisteId === null || stillingId == null ? (
                 <LagreKandidaterIMineKandidatlisterModal
                     vis={aktivModal === Modal.LagreIMineKandidatlister}
                     onClose={() => setAktivModal(Modal.IngenModal)}
@@ -142,7 +140,8 @@ const Kandidater: FunctionComponent<Props> = ({
                     vis={aktivModal === Modal.BekreftLagreIKandidatliste}
                     onClose={() => setAktivModal(Modal.IngenModal)}
                     markerteKandidater={markerteKandidater}
-                    kontekstAvKandidatlisteEllerStilling={kontekstAvKandidatlisteEllerStilling}
+                    kandidatlisteId={kandidatlisteId}
+                    stillingId={stillingId}
                 />
             )}
         </div>
