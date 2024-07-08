@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { getAPIwithSchema } from '../fetcher';
 
 const hentMineKandidaterIStillingEndepunkt = (stillingsuuid: string) => {
-    return `/kandidat-api/stilling/${stillingsuuid}/minekandidatnummer`;
+    return `/kandidat-api/veileder/stilling/${stillingsuuid}/minekandidatnummer`;
 };
 
 export const hentMineKandidaterIStillingSchema = z.array(z.string());
