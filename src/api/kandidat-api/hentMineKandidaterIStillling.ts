@@ -1,5 +1,5 @@
 /**
- * Endepunkt /kandidatsok-api/veileder/kandidatlister/:kandidatlisteId/antallKandidater
+ * Endepunkt /kandidat-api/stilling/:stillingsuuid/minekandidatnummer
  */
 import { HttpResponse, http } from 'msw';
 import useSWRImmutable from 'swr';
