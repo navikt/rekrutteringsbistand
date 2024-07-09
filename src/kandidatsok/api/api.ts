@@ -1,6 +1,5 @@
 import { api, videresendTilInnlogging } from 'felles/api';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Stilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { MineKandidatlister } from '../kandidatliste/useMineKandidatlister';
 
@@ -32,12 +31,6 @@ export const hentKandidatliste = async (kandidatlisteId: string): Promise<Kandid
     const respons = await get(`${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`);
 
     return parseJsonEllerKastFeil(respons, `Fant ikke kandidatliste med id ${kandidatlisteId}`);
-};
-
-export const hentStilling = async (stillingsId: string): Promise<Stilling> => {
-    const respons = await get(`${api.stilling}/rekrutteringsbistandstilling/${stillingsId}`);
-
-    return parseJsonEllerKastFeil(respons, `Fant ikke stilling med id ${stillingsId}`);
 };
 
 export const lagreKandidaterIValgteKandidatlister = async (

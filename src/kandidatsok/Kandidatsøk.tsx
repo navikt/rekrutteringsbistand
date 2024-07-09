@@ -7,7 +7,6 @@ import css from './Kandidatsøk.module.css';
 import Filter from './filter/Filter';
 import TømFiltre from './filter/TømFiltre';
 import PorteføljeTabs from './filter/porteføljetabs/PorteføljeTabs';
-import useKontekstAvKandidatlisteEllerStilling from './hooks/useKontekstAvKandidatlisteEllerStilling';
 import useLagreØkt from './hooks/useLagreØkt';
 import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import useNavigeringsstate from './hooks/useNavigeringsstate';
@@ -22,9 +21,6 @@ const Kandidatsøk = () => {
     const stillingId = searchParams.get(KandidatsokQueryParam.Stilling);
 
     const { kandidatSøkØkt } = useContext(KandidatSøkContext);
-
-    const kontekstAvKandidatlisteEllerStilling =
-        useKontekstAvKandidatlisteEllerStilling(navigeringsstate);
 
     const forrigeØkt =
         navigeringsstate.brukKriterierFraStillingen || navigeringsstate.fraMeny
@@ -47,11 +43,7 @@ const Kandidatsøk = () => {
         <Layout
             tittel="Kandidatsøk"
             ikon={<Piktogram />}
-            banner={
-                kontekstAvKandidatlisteEllerStilling ? (
-                    <Kandidatlistebanner kontekst={kontekstAvKandidatlisteEllerStilling} />
-                ) : undefined
-            }
+            banner={stillingId ? <Kandidatlistebanner stillingId={stillingId} /> : undefined}
             knappIBanner={<TømFiltre />}
             sidepanel={<Filter />}
         >
