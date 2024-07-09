@@ -13,9 +13,13 @@ import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import useNavigeringsstate from './hooks/useNavigeringsstate';
 import Kandidater from './kandidater/Kandidater';
 import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
+import { useSearchParams } from 'react-router-dom';
+import { KandidatsokQueryParam } from 'felles/lenker';
 
 const Kandidatsøk = () => {
     const navigeringsstate = useNavigeringsstate();
+    const [searchParams] = useSearchParams();
+    const stillingId = searchParams.get(KandidatsokQueryParam.Stilling);
 
     const { kandidatSøkØkt } = useContext(KandidatSøkContext);
 
@@ -57,6 +61,7 @@ const Kandidatsøk = () => {
                         markerteKandidater={markerteKandidater}
                         onMarkerKandidat={onMarkerKandidat}
                         fjernMarkering={fjernMarkering}
+                        stillingId={stillingId}
                     />
                 </div>
             </PorteføljeTabs>

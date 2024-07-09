@@ -13,14 +13,13 @@ import MarkerAlle from './MarkerAlle';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
 import { useHentMineKandidaterIStilling } from '../../api/kandidat-api/hentMineKandidaterIStillling';
-import { useSearchParams } from 'react-router-dom';
-import { KandidatsokQueryParam } from 'felles/lenker';
 import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 
 type Props = {
     markerteKandidater: Set<string>;
     onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
+    stillingId: string | null;
 };
 
 enum Modal {
@@ -33,12 +32,11 @@ const Kandidater: FunctionComponent<Props> = ({
     markerteKandidater,
     onMarkerKandidat,
     fjernMarkering,
+    stillingId,
 }) => {
     const { kandidatSøk } = useContext(KandidatSøkContext);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
 
-    const [searchParams] = useSearchParams();
-    const stillingId = searchParams.get(KandidatsokQueryParam.Stilling);
     const {
         data: mineKandidaterIStilling,
         isLoading,
