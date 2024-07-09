@@ -10,7 +10,6 @@ type Props = {
     vis: boolean;
     onClose: () => void;
     markerteKandidater: Set<string>;
-    kandidatlisteId: string;
     stillingId: string;
 };
 
@@ -18,7 +17,6 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
     vis,
     onClose,
     markerteKandidater,
-    kandidatlisteId,
     stillingId,
 }) => {
     const [lagreKandidater, setLagreKandidater] = useState<Nettressurs<LagreKandidaterDto>>({
@@ -26,8 +24,8 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
     });
     const [innsendingOk, setInnsengingOk] = useState<boolean | null>(null);
 
-    const onBekreftClick = (kandidatlisteId: string) => async () => {
-        console.log('onBekreftClick', kandidatlisteId, stillingId);
+    const onBekreftClick = (stillingId: string) => async () => {
+        console.log('onBekreftClick', stillingId);
 
         const lagreKandidaterDto = Array.from(markerteKandidater).map((kandidat) => ({
             kandidatnr: kandidat,
@@ -36,10 +34,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         setLagreKandidater({ kind: Nettstatus.SenderInn, data: lagreKandidaterDto });
 
         try {
-            const response = await leggTilKandidaterKandidatliste(
-                kandidatlisteId,
-                lagreKandidaterDto
-            );
+            const response = await leggTilKandidaterKandidatliste(stillingId, lagreKandidaterDto);
 
             if (response.ok) {
                 setInnsengingOk(true);
@@ -108,7 +103,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                                 </BodyLong>
                             </Modal.Body>
                             <Modal.Footer>
-                                <Button variant="primary" onClick={onBekreftClick(kandidatlisteId)}>
+                                <Button variant="primary" onClick={onBekreftClick(stillingId)}>
                                     Lagre
                                 </Button>
                                 <Button

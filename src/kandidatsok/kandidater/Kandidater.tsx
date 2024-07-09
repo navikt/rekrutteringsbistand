@@ -39,7 +39,6 @@ const Kandidater: FunctionComponent<Props> = ({
 
     const [searchParams] = useSearchParams();
     const stillingId = searchParams.get(KandidatsokQueryParam.Stilling);
-    const kandidatlisteId = searchParams.get(KandidatsokQueryParam.Kandidatliste);
     const {
         data: mineKandidaterIStilling,
         isLoading,
@@ -49,6 +48,7 @@ const Kandidater: FunctionComponent<Props> = ({
     });
 
     const onLagreIKandidatlisteClick = () => {
+        console.log('onLagreIKandidatlisteClick', stillingId);
         setAktivModal(
             stillingId ? Modal.BekreftLagreIKandidatliste : Modal.LagreIMineKandidatlister
         );
@@ -68,6 +68,8 @@ const Kandidater: FunctionComponent<Props> = ({
     if (error) {
         return <ErrorMessage> Klarte ikke å laste inn informasjon om kandidater </ErrorMessage>;
     }
+
+    console.log('aktivmodal', aktivModal, stillingId);
 
     return (
         <div className={css.kandidater}>
@@ -128,7 +130,7 @@ const Kandidater: FunctionComponent<Props> = ({
             ) : (
                 <BodyShort> Fant ingen kandidater </BodyShort>
             )}
-            {kandidatlisteId === null || stillingId == null ? (
+            {stillingId == null ? (
                 <LagreKandidaterIMineKandidatlisterModal
                     vis={aktivModal === Modal.LagreIMineKandidatlister}
                     onClose={() => setAktivModal(Modal.IngenModal)}
@@ -140,7 +142,6 @@ const Kandidater: FunctionComponent<Props> = ({
                     vis={aktivModal === Modal.BekreftLagreIKandidatliste}
                     onClose={() => setAktivModal(Modal.IngenModal)}
                     markerteKandidater={markerteKandidater}
-                    kandidatlisteId={kandidatlisteId}
                     stillingId={stillingId}
                 />
             )}

@@ -6,6 +6,9 @@ import { postApiResponse } from '../fetcher';
 const leggTilKandidatEndepunkt = (kandidatlisteId: string) =>
     `/kandidat-api/veileder/kandidatlister/${kandidatlisteId}/kandidater`;
 
+const leggTilKandidatMedStillingsIdEndepunkt = (stillingsId: string) =>
+    `/kandidat-api/veileder/stilling/${stillingsId}/kandidatliste/kandidater`;
+
 export const leggTilKandidatKandidatliste = async (kandidatlisteId: string, kandidatnr: string) => {
     return await postApiResponse(leggTilKandidatEndepunkt(kandidatlisteId), [
         { kandidatnr: kandidatnr },
@@ -13,10 +16,10 @@ export const leggTilKandidatKandidatliste = async (kandidatlisteId: string, kand
 };
 
 export const leggTilKandidaterKandidatliste = async (
-    kandidatlisteId: string,
+    stillingsId: string,
     kandidatnr: {
         kandidatnr: string;
     }[]
 ) => {
-    return await postApiResponse(leggTilKandidatEndepunkt(kandidatlisteId), kandidatnr);
+    return await postApiResponse(leggTilKandidatMedStillingsIdEndepunkt(stillingsId), kandidatnr);
 };
