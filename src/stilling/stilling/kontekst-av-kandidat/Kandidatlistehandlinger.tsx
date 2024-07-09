@@ -27,13 +27,11 @@ const Kandidathandlinger = ({ stillingsId, erEier, onAnbefalClick, kandidatliste
                     Se kandidatliste
                 </Link>
             )}
-            <Button
-                disabled={!kandidatlisteId}
-                onClick={onAnbefalClick}
-                icon={<PersonCheckmarkIcon />}
-            >
-                Anbefal kandidat
-            </Button>
+            {kandidatlisteId && (
+                <Button onClick={onAnbefalClick} icon={<PersonCheckmarkIcon />}>
+                    Anbefal kandidat
+                </Button>
+            )}
         </div>
     );
 };

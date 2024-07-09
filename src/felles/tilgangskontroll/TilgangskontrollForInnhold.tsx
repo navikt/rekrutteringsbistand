@@ -2,6 +2,7 @@ import { Alert, Link } from '@navikt/ds-react';
 import * as React from 'react';
 import { ApplikasjonContext } from '../ApplikasjonContext';
 
+import ErrorBoundary from '../feilhåndtering/ErrorBoundary';
 import { Rolle } from './Roller';
 import css from './TilgangskontrollForInnhold.module.css';
 
@@ -53,7 +54,7 @@ export const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> =
         return null;
     }
     return (
-        <>
+        <ErrorBoundary>
             <div className={css.container}>
                 <Alert variant="error" className={css.alert}>
                     <div>
@@ -81,6 +82,6 @@ export const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> =
                     </div>
                 </Alert>
             </div>
-        </>
+        </ErrorBoundary>
     );
 };

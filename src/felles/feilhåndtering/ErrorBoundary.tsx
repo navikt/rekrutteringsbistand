@@ -1,4 +1,4 @@
-import { Alert, Button } from '@navikt/ds-react';
+import { Alert, BodyLong, Button } from '@navikt/ds-react';
 import { Component, ErrorInfo, ReactNode } from 'react';
 import { ZodError } from 'zod';
 interface Props {
@@ -50,35 +50,33 @@ class ErrorBoundary extends Component<Props, State> {
             return (
                 <div style={{ width: '100%' }}>
                     <Alert variant="error" style={{ margin: '1rem' }}>
-                        <div>
-                            <p>Noe gikk galt! Prøv igjen om noen minutter.</p>
-                            <p>
-                                Hvis feilen fortsetter, rapporter inn saken som en fagsystem feil.
-                            </p>
-                            {this.state.error && (
-                                <Button
-                                    variant="tertiary"
-                                    size="small"
-                                    onClick={() =>
-                                        this.setState({
-                                            ...this.state,
-                                            showError: !this.state.showError,
-                                        })
-                                    }
-                                >
-                                    {this.state.showError ? 'Skjul' : 'Vis'} teknisk feilmelding
-                                </Button>
-                            )}
-                            {this.state.showError && (
-                                <div>
-                                    <strong>
-                                        <p>{this.state.error?.name}</p>
-                                    </strong>
-                                    <p>{this.state.error?.message}</p>
-                                    <p>{this.state.error?.stack}</p>
-                                </div>
-                            )}
-                        </div>
+                        <strong>Noe gikk galt!</strong>
+                        <BodyLong>
+                            Feilmelding: {this.state.error?.message ?? 'Ukjent feil'}
+                        </BodyLong>
+                        {this.state.error && (
+                            <Button
+                                variant="tertiary"
+                                size="small"
+                                onClick={() =>
+                                    this.setState({
+                                        ...this.state,
+                                        showError: !this.state.showError,
+                                    })
+                                }
+                            >
+                                {this.state.showError ? 'Skjul' : 'Vis'} teknisk feilmelding
+                            </Button>
+                        )}
+                        {this.state.showError && (
+                            <div>
+                                <strong>
+                                    <p>{this.state.error?.name}</p>
+                                </strong>
+                                <p>{this.state.error?.message}</p>
+                                <p>{this.state.error?.stack}</p>
+                            </div>
+                        )}
                     </Alert>
                 </div>
             );

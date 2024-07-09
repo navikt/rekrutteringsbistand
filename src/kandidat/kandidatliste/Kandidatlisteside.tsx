@@ -35,6 +35,9 @@ const Kandidatlisteside: FunctionComponent<Props> = ({ skjulBanner, stilling }) 
     ) {
         return <Sidelaster />;
     } else if (kandidatliste.kind !== Nettstatus.Suksess) {
+        if (kandidatliste.kind === Nettstatus.Feil) {
+            throw new Error(kandidatliste?.error?.message);
+        }
         return null;
     }
 

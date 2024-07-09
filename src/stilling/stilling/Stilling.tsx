@@ -11,6 +11,7 @@ import {
 } from 'felles/domene/stilling/Stilling';
 import { useVisVarsling } from 'felles/varsling/Varsling';
 import { useMeg } from '../../api/frackend/meg';
+import ErrorBoundary from '../../felles/feilhåndtering/ErrorBoundary';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
 import { Rolle } from '../../felles/tilgangskontroll/Roller';
@@ -288,7 +289,9 @@ const Stilling = () => {
                             ]}
                         >
                             <Provider store={store}>
-                                <Kandidatlisteside skjulBanner={true} stilling={stilling} />
+                                <ErrorBoundary>
+                                    <Kandidatlisteside skjulBanner={true} stilling={stilling} />
+                                </ErrorBoundary>
                             </Provider>
                         </TilgangskontrollForInnhold>
                     </Tabs.Panel>
