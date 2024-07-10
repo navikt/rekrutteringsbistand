@@ -12,16 +12,17 @@ import css from './Kandidatlistebanner.module.css';
 import useNavigeringsstate from '../hooks/useNavigeringsstate';
 
 type Props = {
-    stillingId: string | null;
+    stillingId?: string;
 };
 
 const Kandidatlistebanner: FunctionComponent<Props> = ({ stillingId }) => {
     const navigeringsstate = useNavigeringsstate();
     const {
         stilling: rekrutteringsbistandstilling,
-        isLoading,
-        isError,
+        isLoading: isStillingLoading,
+        isError: isStillingError,
     } = useHentStilling(stillingId);
+
     const brukKriterierFraStillingen = navigeringsstate.brukKriterierFraStillingen;
 
     useSøkekriterierFraStilling(rekrutteringsbistandstilling, brukKriterierFraStillingen);
@@ -44,9 +45,9 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ stillingId }) => {
         <Grunnbanner ikon={<FinnKandidaterIkon />}>
             <div className={css.banner}>
                 <div className={css.hovedinnhold}>
-                    {isLoading ? (
+                    {isStillingLoading ? (
                         <Loader size="medium" />
-                    ) : isError ? (
+                    ) : isStillingError ? (
                         <>
                             <Skeleton width={220} />
                             <Heading size="large" level="2">
@@ -87,9 +88,9 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ stillingId }) => {
                     )}
                 </div>
                 <div className={css.lenker}>
-                    {isLoading ? (
+                    {isStillingLoading ? (
                         <Loader size="medium" />
-                    ) : isError ? (
+                    ) : isStillingError ? (
                         <Skeleton width={100} />
                     ) : (
                         <>

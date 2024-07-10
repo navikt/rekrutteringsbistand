@@ -47,7 +47,7 @@ const Kandidatsøk = () => {
             knappIBanner={<TømFiltre />}
             sidepanel={<Filter />}
         >
-            <PorteføljeTabs>
+            <PorteføljeTabs stillingId={stillingId}>
                 <div className={css.hovedinnhold}>
                     <Kandidater
                         markerteKandidater={markerteKandidater}

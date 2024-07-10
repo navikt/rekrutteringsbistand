@@ -46,7 +46,6 @@ const Kandidater: FunctionComponent<Props> = ({
     });
 
     const onLagreIKandidatlisteClick = () => {
-        console.log('onLagreIKandidatlisteClick', stillingId);
         setAktivModal(
             stillingId ? Modal.BekreftLagreIKandidatliste : Modal.LagreIMineKandidatlister
         );
@@ -66,8 +65,6 @@ const Kandidater: FunctionComponent<Props> = ({
     if (error) {
         return <ErrorMessage> Klarte ikke å laste inn informasjon om kandidater </ErrorMessage>;
     }
-
-    console.log('aktivmodal', aktivModal, stillingId);
 
     return (
         <div className={css.kandidater}>
