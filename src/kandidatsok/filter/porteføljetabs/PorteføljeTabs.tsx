@@ -33,9 +33,11 @@ const PorteføljeTabs = ({
         isError: isStillingError,
     } = useHentStilling(stillingId);
 
-    const erEier =
+    const erEier: boolean | undefined =
         rekrutteringsbistandstilling?.stilling?.administration?.navIdent === navIdent ||
         rekrutteringsbistandstilling?.stillingsinfo?.eierNavident === navIdent;
+
+    const erIStillingskontekstOgManglerEierskap = stillingId && !erEier ? true : undefined;
 
     if (isDecoratorLoading || isStillingLoading) {
         return <Loader />;
@@ -87,7 +89,7 @@ const PorteføljeTabs = ({
         <TilgangskontrollForInnhold
             skjulVarsel
             kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
-            kreverEierskapSomMangler={!erEier}
+            kreverEierskapSomMangler={erIStillingskontekstOgManglerEierskap}
         >
             <Tabs.Tab value={Portefølje.ALLE} label="Alle kontorer" />
         </TilgangskontrollForInnhold>
@@ -97,7 +99,7 @@ const PorteføljeTabs = ({
         <TilgangskontrollForInnhold
             skjulVarsel
             kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
-            kreverEierskapSomMangler={!erEier}
+            kreverEierskapSomMangler={erIStillingskontekstOgManglerEierskap}
         >
             <VelgKontorTab søkekriterier={søkekriterier} />
         </TilgangskontrollForInnhold>
