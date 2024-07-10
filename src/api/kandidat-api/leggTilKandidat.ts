@@ -9,6 +9,7 @@ const leggTilKandidatEndepunkt = (kandidatlisteId: string) =>
 const leggTilKandidatMedStillingsIdEndepunkt = (stillingsId: string) =>
     `/kandidat-api/veileder/stilling/${stillingsId}/kandidatliste/kandidater`;
 
+// TODO: Endepunkt med kandidatlisteid er deprecated i backend, bruk stillilngsid i steden.
 export const leggTilKandidatKandidatliste = async (kandidatlisteId: string, kandidatnr: string) => {
     return await postApiResponse(leggTilKandidatEndepunkt(kandidatlisteId), [
         { kandidatnr: kandidatnr },

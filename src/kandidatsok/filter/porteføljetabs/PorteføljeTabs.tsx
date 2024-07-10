@@ -22,10 +22,6 @@ const PorteføljeTabs = ({
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const { tilgangskontrollErPå } = useContext(ApplikasjonContext);
     const { data, isLoading: isDecoratorLoading } = useDecorator();
-    const velgPortefølje = (portefølje: string) => {
-        setSearchParam(FilterParam.Portefølje, portefølje);
-    };
-
     const { navIdent } = useMeg();
     const {
         stilling: rekrutteringsbistandstilling,
@@ -33,11 +29,14 @@ const PorteføljeTabs = ({
         isError: isStillingError,
     } = useHentStilling(stillingId);
 
-    const erEier: boolean | undefined =
+    const erEier =
         rekrutteringsbistandstilling?.stilling?.administration?.navIdent === navIdent ||
         rekrutteringsbistandstilling?.stillingsinfo?.eierNavident === navIdent;
-
     const erIStillingskontekstOgManglerEierskap = stillingId && !erEier ? true : undefined;
+
+    const velgPortefølje = (portefølje: string) => {
+        setSearchParam(FilterParam.Portefølje, portefølje);
+    };
 
     if (isDecoratorLoading || isStillingLoading) {
         return <Loader />;

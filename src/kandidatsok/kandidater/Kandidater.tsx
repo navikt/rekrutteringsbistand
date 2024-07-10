@@ -41,9 +41,7 @@ const Kandidater: FunctionComponent<Props> = ({
         data: mineKandidaterIStilling,
         isLoading,
         error,
-    } = useHentMineKandidaterIStilling({
-        stillingId: stillingId,
-    });
+    } = useHentMineKandidaterIStilling({ stillingId });
 
     const onLagreIKandidatlisteClick = () => {
         setAktivModal(

@@ -49,75 +49,60 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
 
     const stillingstittel = useHentStillingTittel(stillingId);
 
-    const visOppsummering = () => {
-        return (
-            <div>
-                <Modal.Body>
-                    {!innsendingOk ? (
-                        <Alert fullWidth variant="error" size="small">
-                            Feil under lagring
-                        </Alert>
-                    ) : (
-                        <Alert fullWidth variant="success" size="small">
-                            Fullført
-                        </Alert>
-                    )}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button
-                        variant="secondary"
-                        onClick={() => {
-                            //todo bruk onClose og oppdater listen istedenfor reload.
-
-                            window.location.reload();
-                        }}
-                    >
-                        Lukk
-                    </Button>
-                </Modal.Footer>
-            </div>
-        );
-    };
+    const visOppsummering = () => (
+        <div>
+            <Modal.Body>
+                {!innsendingOk ? (
+                    <Alert fullWidth variant="error" size="small">
+                        Feil under lagring
+                    </Alert>
+                ) : (
+                    <Alert fullWidth variant="success" size="small">
+                        Fullført
+                    </Alert>
+                )}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => window.location.reload()}>
+                    Lukk
+                </Button>
+            </Modal.Footer>
+        </div>
+    );
 
     return (
         <Modal
             open={vis}
             onClose={onClose}
             header={{
-                heading: `Lagre ${markerteKandidater.size} kandidat
-            ${markerteKandidater.size > 1 ? 'er' : ''} i kandidatlisten`,
+                heading: `Lagre ${markerteKandidater.size} kandidat${markerteKandidater.size > 1 ? 'er' : ''} i kandidatlisten`,
             }}
         >
             <div className={css.innhold}>
-                <>
-                    {innsendingOk !== null ? (
-                        visOppsummering()
-                    ) : (
-                        <>
-                            <Modal.Body>
-                                <BodyLong>
-                                    Ønsker du å lagre kandidaten i kandidatlisten til stillingen{' '}
-                                    {stillingstittel}
-                                </BodyLong>
-                            </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="primary" onClick={onBekreftClick(stillingId)}>
-                                    Lagre
-                                </Button>
-                                <Button
-                                    variant="tertiary"
-                                    loading={lagreKandidater.kind === Nettstatus.SenderInn}
-                                    onClick={() => {
-                                        onClose();
-                                    }}
-                                >
-                                    Avbryt
-                                </Button>
-                            </Modal.Footer>
-                        </>
-                    )}
-                </>
-
+                {innsendingOk !== null ? (
+                    visOppsummering()
+                ) : (
+                    <>
+                        <Modal.Body>
+                            <BodyLong>
+                                Ønsker du å lagre kandidaten i kandidatlisten til stillingen{' '}
+                                {stillingstittel}
+                            </BodyLong>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={onBekreftClick(stillingId)}>
+                                Lagre
+                            </Button>
+                            <Button
+                                variant="tertiary"
+                                loading={lagreKandidater.kind === Nettstatus.SenderInn}
+                                onClick={onClose}
+                            >
+                                Avbryt
+                            </Button>
+                        </Modal.Footer>
+                    </>
+                )}
                 {lagreKandidater.kind === Nettstatus.Feil && (
                     <Alert fullWidth variant="error" size="small">
                         {lagreKandidater.error.message}

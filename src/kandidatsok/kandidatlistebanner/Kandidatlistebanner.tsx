@@ -28,14 +28,11 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ stillingId }) => {
     useSøkekriterierFraStilling(rekrutteringsbistandstilling, brukKriterierFraStillingen);
 
     const stillingsId = rekrutteringsbistandstilling?.stilling.uuid;
-
     const stillingTittel = useHentStillingTittel(stillingsId);
-
     const opprettetAvIdent =
         rekrutteringsbistandstilling?.stillingsinfo?.eierNavident ??
         rekrutteringsbistandstilling?.stilling?.administration?.navIdent ??
         '';
-
     const opprettetAvNavn =
         rekrutteringsbistandstilling?.stillingsinfo?.eierNavn ??
         rekrutteringsbistandstilling?.stilling?.administration?.reportee ??

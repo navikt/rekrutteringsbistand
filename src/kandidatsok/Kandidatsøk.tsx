@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-
+import { useSearchParams } from 'react-router-dom';
 import Piktogram from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
 import Layout from '../felles/komponenter/layout/Layout';
 import { KandidatSøkContext } from './KandidatSøkContext';
@@ -12,14 +12,12 @@ import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import useNavigeringsstate from './hooks/useNavigeringsstate';
 import Kandidater from './kandidater/Kandidater';
 import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
-import { useSearchParams } from 'react-router-dom';
 import { KandidatsokQueryParam } from 'felles/lenker';
 
 const Kandidatsøk = () => {
     const navigeringsstate = useNavigeringsstate();
     const [searchParams] = useSearchParams();
     const stillingId = searchParams.get(KandidatsokQueryParam.Stilling);
-
     const { kandidatSøkØkt } = useContext(KandidatSøkContext);
 
     const forrigeØkt =
