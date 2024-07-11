@@ -24,6 +24,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
 }) => {
     const [laster, setLaster] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
+    const [feilmelding, setFeilmelding] = useState<string | null>(null);
 
     const onLeggTilKandidat = async () => {
         setLaster(true);
@@ -42,6 +43,11 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
         } else {
             setLaster(false);
             setError(true);
+            if (respons.status === 403) {
+                setFeilmelding('Du har ikke tilgang til å legge kandidaten til denne listen');
+            } else {
+                setFeilmelding('Klarte ikke å legge til kandidat');
+            }
         }
     };
 
@@ -65,7 +71,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
             />
             {error && (
                 <Alert fullWidth variant="error" size="small">
-                    Klarte ikke å legge til kandidat
+                    {feilmelding ?? 'Klarte ikke å legge til kandidat'}
                 </Alert>
             )}
         </>

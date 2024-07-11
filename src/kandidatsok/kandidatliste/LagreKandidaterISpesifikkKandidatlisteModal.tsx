@@ -40,7 +40,9 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
             } else {
                 setInnsengingOk(false);
                 if (response.status === 403) {
-                    setFeilmelding('Du har ikke tilgang til å utføre denne handlingen');
+                    setFeilmelding(
+                        'Du har ikke tilgang til å legge kandidaten/kandidatene til denne listen'
+                    );
                 } else {
                     setFeilmelding('En feil oppstod under lagring');
                 }
