@@ -60,7 +60,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
             <Modal.Body>
                 {!innsendingOk ? (
                     <Alert fullWidth variant="error" size="small">
-                        ${feilmelding ?? 'En feil oppstod under lagring'}
+                        {feilmelding ?? 'En feil oppstod under lagring'}
                     </Alert>
                 ) : (
                     <Alert fullWidth variant="success" size="small">

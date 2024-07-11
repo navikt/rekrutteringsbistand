@@ -29,11 +29,10 @@ const PorteføljeTabs = ({
         isError: isStillingError,
     } = useHentStilling(stillingId);
 
-    /*const erEier =
+    const erEier =
         rekrutteringsbistandstilling?.stilling?.administration?.navIdent === navIdent ||
         rekrutteringsbistandstilling?.stillingsinfo?.eierNavident === navIdent;
-    const erIStillingskontekstOgManglerEierskap = stillingId && !erEier ? true : undefined;*/
-    const erIStillingskontekstOgManglerEierskap = false; // Todo: Bare lagt midlertidig inn for å verifisere tilgangen i backen.
+    const erIStillingskontekstOgManglerEierskap = stillingId && !erEier ? true : undefined;
 
     const velgPortefølje = (portefølje: string) => {
         setSearchParam(FilterParam.Portefølje, portefølje);
@@ -88,10 +87,7 @@ const PorteføljeTabs = ({
     const AlleKontorer = () => (
         <TilgangskontrollForInnhold
             skjulVarsel
-            kreverEnAvRollene={[
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
-            ]} //TODO: ta bort jobbsøkerrettet, kun til testing av backend
+            kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
             kreverEierskapSomMangler={erIStillingskontekstOgManglerEierskap}
         >
             <Tabs.Tab value={Portefølje.ALLE} label="Alle kontorer" />
@@ -101,10 +97,7 @@ const PorteføljeTabs = ({
     const VelgKontor = () => (
         <TilgangskontrollForInnhold
             skjulVarsel
-            kreverEnAvRollene={[
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
-                Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
-            ]} //TODO: ta bort jobbsøkerrettet, kun til testing av backend
+            kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
             kreverEierskapSomMangler={erIStillingskontekstOgManglerEierskap}
         >
             <VelgKontorTab søkekriterier={søkekriterier} />
