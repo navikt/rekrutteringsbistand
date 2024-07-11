@@ -23,6 +23,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         kind: Nettstatus.IkkeLastet,
     });
     const [innsendingOk, setInnsengingOk] = useState<boolean | null>(null);
+    const [feilmelding, setFeilmelding] = useState<string | null>(null);
 
     const onBekreftClick = (stillingId: string) => async () => {
         const lagreKandidaterDto = Array.from(markerteKandidater).map((kandidat) => ({
@@ -38,6 +39,11 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
                 setInnsengingOk(true);
             } else {
                 setInnsengingOk(false);
+                if (response.status === 403) {
+                    setFeilmelding('Du har ikke tilgang til å utføre denne handlingen');
+                } else {
+                    setFeilmelding('En feil oppstod under lagring');
+                }
             }
         } catch (e) {
             setLagreKandidater({
@@ -54,7 +60,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
             <Modal.Body>
                 {!innsendingOk ? (
                     <Alert fullWidth variant="error" size="small">
-                        Feil under lagring
+                        ${feilmelding ?? 'En feil oppstod under lagring'}
                     </Alert>
                 ) : (
                     <Alert fullWidth variant="success" size="small">
