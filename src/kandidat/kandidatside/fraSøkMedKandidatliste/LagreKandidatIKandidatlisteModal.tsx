@@ -30,7 +30,7 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
         setLagreKandidatStatus(Nettstatus.IkkeLastet);
     }, [kandidatnr]);
 
-    const onBekreftClick = (kandidatlisteId: string) => async () => {
+    const onBekreftClick = (stillingId: string) => async () => {
         if (lagreKandidatStatus === Nettstatus.SenderInn) {
             return;
         }
@@ -40,7 +40,7 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
         // TODO Verifiser / legg til nettstatus etter endring av funksjon
         try {
             const oppdatertKandidatliste = await leggTilKandidatKandidatliste(
-                kandidatlisteId,
+                stillingId,
                 kandidatnr
             );
 
@@ -68,34 +68,35 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
         >
             <>
                 {kandidatliste.kind === Nettstatus.LasterInn && <Sidelaster />}
-                {kandidatliste.kind === Nettstatus.Suksess && (
-                    <>
-                        <Modal.Body>
-                            <BodyLong>
-                                Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
-                                {erKobletTilStilling(kandidatliste.data)
-                                    ? stillingstittel
-                                    : kandidatliste.data.tittel}
-                                »?
-                            </BodyLong>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button
-                                loading={lagreKandidatStatus === Nettstatus.SenderInn}
-                                onClick={onBekreftClick(kandidatliste.data.kandidatlisteId)}
-                            >
-                                Lagre
-                            </Button>
-                            <Button
-                                variant="tertiary"
-                                disabled={lagreKandidatStatus === Nettstatus.SenderInn}
-                                onClick={onClose}
-                            >
-                                Avbryt
-                            </Button>
-                        </Modal.Footer>
-                    </>
-                )}
+                {kandidatliste.kind === Nettstatus.Suksess &&
+                    kandidatliste.data.stillingId != null && (
+                        <>
+                            <Modal.Body>
+                                <BodyLong>
+                                    Ønsker du å lagre kandidaten i kandidatlisten til stillingen «
+                                    {erKobletTilStilling(kandidatliste.data)
+                                        ? stillingstittel
+                                        : kandidatliste.data.tittel}
+                                    »?
+                                </BodyLong>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button
+                                    loading={lagreKandidatStatus === Nettstatus.SenderInn}
+                                    onClick={onBekreftClick(kandidatliste.data.stillingId)}
+                                >
+                                    Lagre
+                                </Button>
+                                <Button
+                                    variant="tertiary"
+                                    disabled={lagreKandidatStatus === Nettstatus.SenderInn}
+                                    onClick={onClose}
+                                >
+                                    Avbryt
+                                </Button>
+                            </Modal.Footer>
+                        </>
+                    )}
                 {lagreKandidatStatus === Nettstatus.Feil && (
                     <Alert fullWidth variant="error" size="small">
                         Klarte ikke å lagre kandidat

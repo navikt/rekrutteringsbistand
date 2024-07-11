@@ -71,7 +71,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
                 {kandidatsammendrag && kandidatlisteId && (
                     <AnbefalKandidatModal
                         kandidat={kandidatsammendrag}
-                        kandidatlisteId={kandidatlisteId}
+                        stillingId={stilling.uuid}
                         onClose={() => setVisModal(false)}
                         vis={visModal}
                     />

@@ -3,15 +3,11 @@
  */
 import { postApiResponse } from '../fetcher';
 
-const leggTilKandidatEndepunkt = (kandidatlisteId: string) =>
-    `/kandidat-api/veileder/kandidatlister/${kandidatlisteId}/kandidater`;
+const leggTilKandidatEndepunkt = (stillingId: string) =>
+    `/kandidat-api/veileder/stilling/${stillingId}/kandidatliste/kandidater`;
 
-const leggTilKandidatMedStillingsIdEndepunkt = (stillingsId: string) =>
-    `/kandidat-api/veileder/stilling/${stillingsId}/kandidatliste/kandidater`;
-
-// TODO: Endepunkt med kandidatlisteid er deprecated i backend, bruk stillilngsid i steden.
-export const leggTilKandidatKandidatliste = async (kandidatlisteId: string, kandidatnr: string) => {
-    return await postApiResponse(leggTilKandidatEndepunkt(kandidatlisteId), [
+export const leggTilKandidatKandidatliste = async (stillingId: string, kandidatnr: string) => {
+    return await postApiResponse(leggTilKandidatEndepunkt(stillingId), [
         { kandidatnr: kandidatnr },
     ]);
 };
@@ -22,5 +18,5 @@ export const leggTilKandidaterKandidatliste = async (
         kandidatnr: string;
     }[]
 ) => {
-    return await postApiResponse(leggTilKandidatMedStillingsIdEndepunkt(stillingsId), kandidatnr);
+    return await postApiResponse(leggTilKandidatEndepunkt(stillingsId), kandidatnr);
 };

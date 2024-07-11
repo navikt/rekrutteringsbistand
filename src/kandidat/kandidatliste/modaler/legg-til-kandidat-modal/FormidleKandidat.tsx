@@ -96,7 +96,7 @@ const FormidleKandidat: FunctionComponent<Props> = ({
             kandidatNummer !== undefined
         ) {
             try {
-                await leggTilKandidatKandidatliste(kandidatlisteId, kandidatNummer);
+                await leggTilKandidatKandidatliste(stillingsId, kandidatNummer);
 
                 if (presentert) {
                     await putUtfallKandidat(

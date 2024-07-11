@@ -99,7 +99,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                             <BekreftLeggTilKandidat
                                 // @ts-ignore TODO: written before strict-mode enabled
                                 kandidatnr={arenaKandidatnr}
-                                kandidatlisteId={kandidatlisteId}
+                                stillingId={stillingsId}
                                 onAvbryt={onClose}
                                 onBekreft={handleBekreft}
                                 setRegistrerFormidling={

@@ -10,7 +10,7 @@ type IBekreftLeggTilKandidat = {
     onAvbryt: () => void;
     onBekreft: (melding: string) => void;
     erAnbefaling?: boolean;
-    kandidatlisteId: string;
+    stillingId: string;
     setRegistrerFormidling?: () => void;
 };
 
@@ -19,7 +19,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
     onAvbryt,
     onBekreft,
     erAnbefaling = false,
-    kandidatlisteId,
+    stillingId,
     setRegistrerFormidling,
 }) => {
     const [laster, setLaster] = useState<boolean>(false);
@@ -34,7 +34,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
             erAnbefaling,
         });
 
-        const respons = await leggTilKandidatKandidatliste(kandidatlisteId, kandidatnr);
+        const respons = await leggTilKandidatKandidatliste(stillingId, kandidatnr);
 
         if (respons.ok) {
             setLaster(false);
