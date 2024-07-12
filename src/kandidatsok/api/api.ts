@@ -1,6 +1,5 @@
 import { api, videresendTilInnlogging } from 'felles/api';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { LagreKandidaterDto } from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import { MineKandidatlister } from '../kandidatliste/useMineKandidatlister';
 
 export const hentMineKandidatlister = async (
@@ -31,27 +30,6 @@ export const hentKandidatliste = async (kandidatlisteId: string): Promise<Kandid
     const respons = await get(`${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}`);
 
     return parseJsonEllerKastFeil(respons, `Fant ikke kandidatliste med id ${kandidatlisteId}`);
-};
-
-export const lagreKandidaterIValgteKandidatlister = async (
-    lagreKandidaterDto: LagreKandidaterDto,
-    kandidatlister: string[]
-) => {
-    return Promise.all(
-        kandidatlister.map((kandidatlisteId) =>
-            lagreKandidaterIKandidatliste(lagreKandidaterDto, kandidatlisteId)
-        )
-    );
-};
-
-export const lagreKandidaterIKandidatliste = async (
-    lagreKandidaterDto: LagreKandidaterDto,
-    kandidatlisteId: string
-) => {
-    await post(
-        `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater`,
-        lagreKandidaterDto
-    );
 };
 
 const parseJsonEllerKastFeil = async (respons: Response, feil: string) => {

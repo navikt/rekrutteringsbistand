@@ -1,7 +1,7 @@
 import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useState } from 'react';
-import { leggTilKandidaterKandidatliste } from '../../api/kandidat-api/leggTilKandidat';
+import { leggTilKandidaterIKandidatliste } from '../../api/kandidat-api/leggTilKandidat';
 import { useHentStillingTittel } from '../../felles/hooks/useStilling';
 import { LagreKandidaterDto } from './LagreKandidaterIMineKandidatlisterModal';
 import css from './LagreKandidaterISpesifikkKandidatlisteModal.module.css';
@@ -33,7 +33,10 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         setLagreKandidater({ kind: Nettstatus.SenderInn, data: lagreKandidaterDto });
 
         try {
-            const response = await leggTilKandidaterKandidatliste(stillingId, lagreKandidaterDto);
+            const response = await leggTilKandidaterIKandidatliste({
+                stillingId,
+                kandidater: lagreKandidaterDto,
+            });
 
             if (response.ok) {
                 setInnsengingOk(true);

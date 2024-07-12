@@ -3,7 +3,7 @@ import { FunctionComponent, useEffect, useState } from 'react';
 
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
-import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/leggTilKandidat';
+import { leggTilKandidatIKandidatliste } from '../../../api/kandidat-api/leggTilKandidat';
 import { useHentStillingTittel } from '../../../felles/hooks/useStilling';
 import Sidelaster from '../../../felles/komponenter/sidelaster/Sidelaster';
 import { erKobletTilStilling } from '../../kandidatliste/domene/kandidatlisteUtils';
@@ -39,10 +39,10 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
 
         // TODO Verifiser / legg til nettstatus etter endring av funksjon
         try {
-            const oppdatertKandidatliste = await leggTilKandidatKandidatliste(
+            const oppdatertKandidatliste = await leggTilKandidatIKandidatliste({
                 stillingId,
-                kandidatnr
-            );
+                kandidatnr,
+            });
 
             if (oppdatertKandidatliste.ok) {
                 // onSuccess();

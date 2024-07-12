@@ -2,7 +2,7 @@ import { Alert } from '@navikt/ds-react';
 import { useState } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
-import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/leggTilKandidat';
+import { leggTilKandidatIKandidatliste } from '../../../api/kandidat-api/leggTilKandidat';
 import Knapper from './Knapper';
 
 type IBekreftLeggTilKandidat = {
@@ -35,7 +35,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
             erAnbefaling,
         });
 
-        const respons = await leggTilKandidatKandidatliste(stillingId, kandidatnr);
+        const respons = await leggTilKandidatIKandidatliste({ stillingId, kandidatnr });
 
         if (respons.ok) {
             setLaster(false);

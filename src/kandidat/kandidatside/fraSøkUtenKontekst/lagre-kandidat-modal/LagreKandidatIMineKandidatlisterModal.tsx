@@ -2,10 +2,10 @@ import { Button, Modal } from '@navikt/ds-react';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
 
 import { Nettstatus } from 'felles/nettressurs';
-import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
 import css from './LagreKandidatIMineKandidatlisterModal.module.css';
 import VelgKandidatlister from './VelgKandidatlister';
 import { useVisVarsling } from 'felles/varsling/Varsling';
+import { leggTilKandidatIKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
 
 type Props = {
     vis: boolean;
@@ -32,13 +32,13 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     }, [kandidatnr]);
 
     const onKandidatlisteMarkert = (event: ChangeEvent<HTMLInputElement>) => {
-        const kandidatlisteId = event.target.value;
+        const stillingId = event.target.value;
         const markerte = new Set(markerteLister);
 
         if (event.target.checked) {
-            markerte.add(kandidatlisteId);
+            markerte.add(stillingId);
         } else {
-            markerte.delete(kandidatlisteId);
+            markerte.delete(stillingId);
         }
 
         setMarkerteLister(markerte);
@@ -49,10 +49,10 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
 
         try {
             const markerteKandidatlister = Array.from(markerteLister);
-
+            console.log('LagreKandidatIMineKandidatlisterModal', markerteKandidatlister);
             const responser = await Promise.all(
-                markerteKandidatlister.map((kandidatlisteId) =>
-                    leggTilKandidatKandidatliste(kandidatlisteId, kandidatnr)
+                markerteKandidatlister.map((stillingId) =>
+                    leggTilKandidatIKandidatliste({ stillingId, kandidatnr })
                 )
             );
 
@@ -64,8 +64,8 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
             }
 
             const oppdaterteLagredeLister = new Set(lagredeLister);
-            markerteKandidatlister.forEach((kandidatlisteId) => {
-                oppdaterteLagredeLister.add(kandidatlisteId);
+            markerteKandidatlister.forEach((stillingId) => {
+                oppdaterteLagredeLister.add(stillingId);
             });
 
             setLagredeLister(oppdaterteLagredeLister);
