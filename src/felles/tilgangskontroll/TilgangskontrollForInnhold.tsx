@@ -10,7 +10,7 @@ export interface ITilgangskontrollForInnhold {
     kreverEnAvRollene: Rolle[];
     children: React.ReactNode;
     skjulVarsel?: boolean;
-    kreverEierskapSomMangler?: boolean;
+    manglerEierskap?: boolean;
 }
 
 const rolleTilNavn = (rolle: Rolle): string | null => {
@@ -33,7 +33,7 @@ export const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> =
     kreverEnAvRollene,
     children,
     skjulVarsel,
-    kreverEierskapSomMangler,
+    manglerEierskap,
 }) => {
     const { roller, tilgangskontrollErPå } = React.useContext(ApplikasjonContext);
 
@@ -41,7 +41,7 @@ export const TilgangskontrollForInnhold: React.FC<ITilgangskontrollForInnhold> =
         return (
             (roller?.includes(r) ||
                 roller?.includes(Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)) &&
-            !kreverEierskapSomMangler
+            !manglerEierskap
         );
     });
 

@@ -32,7 +32,8 @@ const PorteføljeTabs = ({
     const erEier =
         rekrutteringsbistandstilling?.stilling?.administration?.navIdent === navIdent ||
         rekrutteringsbistandstilling?.stillingsinfo?.eierNavident === navIdent;
-    const erIStillingskontekstOgManglerEierskap = stillingId && !erEier ? true : undefined;
+
+    const knyttetTilStillingOgIkkeEier = !!stillingId && !erEier;
 
     const velgPortefølje = (portefølje: string) => {
         setSearchParam(FilterParam.Portefølje, portefølje);
@@ -88,7 +89,7 @@ const PorteføljeTabs = ({
         <TilgangskontrollForInnhold
             skjulVarsel
             kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
-            kreverEierskapSomMangler={erIStillingskontekstOgManglerEierskap}
+            manglerEierskap={knyttetTilStillingOgIkkeEier}
         >
             <Tabs.Tab value={Portefølje.ALLE} label="Alle kontorer" />
         </TilgangskontrollForInnhold>
@@ -98,7 +99,7 @@ const PorteføljeTabs = ({
         <TilgangskontrollForInnhold
             skjulVarsel
             kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
-            kreverEierskapSomMangler={erIStillingskontekstOgManglerEierskap}
+            manglerEierskap={knyttetTilStillingOgIkkeEier}
         >
             <VelgKontorTab søkekriterier={søkekriterier} />
         </TilgangskontrollForInnhold>

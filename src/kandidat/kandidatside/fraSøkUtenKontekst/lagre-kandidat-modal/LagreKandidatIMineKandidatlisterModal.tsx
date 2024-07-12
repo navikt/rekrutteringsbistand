@@ -49,7 +49,6 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
 
         try {
             const markerteKandidatlister = Array.from(markerteLister);
-            console.log('LagreKandidatIMineKandidatlisterModal', markerteKandidatlister);
             const responser = await Promise.all(
                 markerteKandidatlister.map((stillingId) =>
                     leggTilKandidatIKandidatliste({ stillingId, kandidatnr })
