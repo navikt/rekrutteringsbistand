@@ -6,12 +6,12 @@ import { useVisVarsling } from 'felles/varsling/Varsling';
 
 type Props = {
     kandidat: Kandidatsammendrag;
-    kandidatlisteId: string;
+    stillingId: string;
     vis: boolean;
     onClose: () => void;
 };
 
-const AnbefalKandidatModal = ({ kandidat, kandidatlisteId, vis, onClose }: Props) => {
+const AnbefalKandidatModal = ({ kandidat, stillingId, vis, onClose }: Props) => {
     const visVarsling = useVisVarsling();
 
     const handleBekreft = () => {
@@ -26,7 +26,7 @@ const AnbefalKandidatModal = ({ kandidat, kandidatlisteId, vis, onClose }: Props
             <BekreftLeggTilKandidat
                 erAnbefaling
                 kandidatnr={kandidat.arenaKandidatnr}
-                kandidatlisteId={kandidatlisteId}
+                stillingId={stillingId}
                 onAvbryt={onClose}
                 onBekreft={handleBekreft}
             />

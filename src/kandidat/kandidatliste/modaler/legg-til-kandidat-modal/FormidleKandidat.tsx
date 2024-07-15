@@ -15,7 +15,7 @@ import KandidatlisteAction from '../../reducer/KandidatlisteAction';
 import KandidatlisteActionType from '../../reducer/KandidatlisteActionType';
 
 import { useVisVarsling } from 'felles/varsling/Varsling';
-import { leggTilKandidatKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
+import { leggTilKandidatIKandidatliste } from '../../../../api/kandidat-api/leggTilKandidat';
 import { KandidatKilde } from '../../../../api/kandidat-søk-api/hentKandidatnavn';
 import { FormidlingAvUsynligKandidatOutboundDto } from '../../../../api/server.dto';
 import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
@@ -96,7 +96,10 @@ const FormidleKandidat: FunctionComponent<Props> = ({
             kandidatNummer !== undefined
         ) {
             try {
-                await leggTilKandidatKandidatliste(kandidatlisteId, kandidatNummer);
+                await leggTilKandidatIKandidatliste({
+                    stillingId: stillingsId,
+                    kandidatnr: kandidatNummer,
+                });
 
                 if (presentert) {
                     await putUtfallKandidat(

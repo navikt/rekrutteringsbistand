@@ -3,20 +3,31 @@
  */
 import { postApiResponse } from '../fetcher';
 
-const leggTilKandidatEndepunkt = (kandidatlisteId: string) =>
-    `/kandidat-api/veileder/kandidatlister/${kandidatlisteId}/kandidater`;
+const leggTilKandidatEndepunkt = (stillingId: string) =>
+    `/kandidat-api/veileder/stilling/${stillingId}/kandidatliste/kandidater`;
 
-export const leggTilKandidatKandidatliste = async (kandidatlisteId: string, kandidatnr: string) => {
-    return await postApiResponse(leggTilKandidatEndepunkt(kandidatlisteId), [
-        { kandidatnr: kandidatnr },
-    ]);
+export interface LeggTilKandidatProps {
+    stillingId: string;
+    kandidatnr: string;
+}
+
+export interface LeggTilKandidaterProps {
+    stillingId: string;
+    kandidater: {
+        kandidatnr: string;
+    }[];
+}
+
+export const leggTilKandidatIKandidatliste = async ({
+    stillingId,
+    kandidatnr,
+}: LeggTilKandidatProps) => {
+    return await postApiResponse(leggTilKandidatEndepunkt(stillingId), [{ kandidatnr }]);
 };
 
-export const leggTilKandidaterKandidatliste = async (
-    kandidatlisteId: string,
-    kandidatnr: {
-        kandidatnr: string;
-    }[]
-) => {
-    return await postApiResponse(leggTilKandidatEndepunkt(kandidatlisteId), kandidatnr);
+export const leggTilKandidaterIKandidatliste = async ({
+    stillingId,
+    kandidater,
+}: LeggTilKandidaterProps) => {
+    return await postApiResponse(leggTilKandidatEndepunkt(stillingId), kandidater);
 };

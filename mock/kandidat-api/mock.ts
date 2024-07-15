@@ -86,6 +86,19 @@ export const gammelKandidatApiMock = [
     ),
 
     http.post(
+        `${api.kandidat}/veileder/stilling/:stillingsId/kandidatliste/kandidater`,
+        async ({ params }) => {
+            const { stillingsId } = params;
+
+            if (!stillingsId) {
+                return new HttpResponse(null, { status: 404 });
+            }
+
+            return new HttpResponse(null, { status: 201 });
+        }
+    ),
+
+    http.post(
         `${api.kandidat}/veileder/me/kandidatlister`,
         (_) => new HttpResponse(null, { status: 201 })
     ),

@@ -41,7 +41,7 @@ const VelgbarKandidatliste: FunctionComponent<Props> = ({
                 hideLabel
                 id={checkboxId}
                 disabled={lagredeLister.has(kandidatlisteId)}
-                value={kandidatlisteId}
+                value={kandidatliste.stillingId}
                 onChange={onKandidatlisteMarkert}
             >
                 {visningstittel}

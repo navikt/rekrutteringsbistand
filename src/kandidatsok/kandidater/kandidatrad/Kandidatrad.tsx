@@ -1,14 +1,11 @@
 import { CheckmarkIcon } from '@navikt/aksel-icons';
 import { Checkbox } from '@navikt/ds-react';
 import classNames from 'classnames';
-import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { KandidatsøkKandidat } from '../../../api/kandidat-søk-api/kandidatsøk';
 import { KandidatSøkContext } from '../../KandidatSøkContext';
 import { alleInnsatsgrupper } from '../../filter/Jobbmuligheter';
-import { KontekstAvKandidatlisteEllerStilling } from '../../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useScrollTilKandidat from '../../hooks/useScrollTilKandidat';
 import { lenkeTilKandidat, storForbokstav } from '../../utils';
 import css from './Kandidatrad.module.css';
@@ -18,14 +15,16 @@ type Props = {
     kandidat: KandidatsøkKandidat;
     markerteKandidater: Set<string>;
     onMarker: () => void;
-    kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
+    stillingId: string | null;
+    erIListen: boolean;
 };
 
 const Kandidatrad: FunctionComponent<Props> = ({
     kandidat,
     markerteKandidater,
     onMarker,
-    kontekstAvKandidatlisteEllerStilling,
+    stillingId,
+    erIListen,
 }) => {
     const { kandidatSøkØkt } = useContext(KandidatSøkContext);
     const fremhevet = kandidat.arenaKandidatnr === kandidatSøkØkt?.forrigeØkt?.sistBesøkteKandidat;
@@ -36,24 +35,12 @@ const Kandidatrad: FunctionComponent<Props> = ({
     const alleØnskedeYrker = hentKandidatensØnskedeYrker(kandidat);
     const alleØnskedeSteder = hentKandidatensØnskedeSteder(kandidat);
 
-    const kandidatAlleredeLagtTilPåKandidatlista =
-        kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === Nettstatus.Suksess
-            ? kandidatenErPåKandidatlista(
-                  kandidat,
-                  kontekstAvKandidatlisteEllerStilling.kandidatliste.data
-              )
-            : false;
-
-    const stillingId =
-        kontekstAvKandidatlisteEllerStilling?.kandidatliste.kind === Nettstatus.Suksess
-            ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.stillingId
-            : undefined;
     return (
         <RekBisKortKandidat
             markert={markert}
             fremhevet={fremhevet}
             kandidatPåListe={
-                kandidatAlleredeLagtTilPåKandidatlista && (
+                erIListen && (
                     <div className={css.kandidatPåListeWrapper}>
                         <div
                             title="Kandidater er allerede lagt til på kandidatlisten"
@@ -71,7 +58,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
                     value={kandidat}
                     checked={markert}
                     onChange={onMarker}
-                    disabled={kandidatAlleredeLagtTilPåKandidatlista}
+                    disabled={erIListen}
                 >
                     Valgt
                 </Checkbox>
@@ -90,15 +77,6 @@ const Kandidatrad: FunctionComponent<Props> = ({
             bosted={`${kandidat.postnummer ?? '-'} ${kandidat.kommuneNavn ?? '-'}`}
         />
     );
-};
-
-const kandidatenErPåKandidatlista = (
-    kandidat: KandidatsøkKandidat,
-    kandidatliste: Kandidatliste
-): boolean => {
-    return kandidatliste.kandidater.some((kandidatPåLista) => {
-        return kandidatPåLista.kandidatnr === kandidat.arenaKandidatnr;
-    });
 };
 
 export const hentKandidatensNavn = (kandidat: KandidatsøkKandidat) =>

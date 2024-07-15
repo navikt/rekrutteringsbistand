@@ -1,4 +1,4 @@
-import { Loader, Tabs } from '@navikt/ds-react';
+import { ErrorMessage, Loader, Tabs } from '@navikt/ds-react';
 import { ReactNode, useContext } from 'react';
 import { Portefølje } from '../../../api/kandidat-søk-api/kandidatsøk';
 import { useDecorator } from '../../../api/modiacontextholder/decorator';
@@ -9,17 +9,42 @@ import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import css from './PorteføljeTabs.module.css';
 import VelgKontorTab from './VelgKontorTab';
+import { useMeg } from '../../../api/frackend/meg';
+import useHentStilling from 'felles/hooks/useStilling';
 
-const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
+const PorteføljeTabs = ({
+    children,
+    stillingId,
+}: {
+    children: ReactNode;
+    stillingId: string | null;
+}) => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
     const { tilgangskontrollErPå } = useContext(ApplikasjonContext);
-    const { data, isLoading } = useDecorator();
+    const { data, isLoading: isDecoratorLoading } = useDecorator();
+    const { navIdent } = useMeg();
+    const {
+        stilling: rekrutteringsbistandstilling,
+        isLoading: isStillingLoading,
+        isError: isStillingError,
+    } = useHentStilling(stillingId);
+
+    const erEier =
+        rekrutteringsbistandstilling?.stilling?.administration?.navIdent === navIdent ||
+        rekrutteringsbistandstilling?.stillingsinfo?.eierNavident === navIdent;
+
+    const knyttetTilStillingOgIkkeEier = !!stillingId && !erEier;
+
     const velgPortefølje = (portefølje: string) => {
         setSearchParam(FilterParam.Portefølje, portefølje);
     };
 
-    if (isLoading) {
+    if (isDecoratorLoading || isStillingLoading) {
         return <Loader />;
+    }
+
+    if (isStillingError) {
+        return <ErrorMessage>{'Feil ved lasting av stilling'}</ErrorMessage>;
     }
 
     const MineBrukere = () => <Tabs.Tab value={Portefølje.MINE_BRUKERE} label="Mine brukere" />;
@@ -64,6 +89,7 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
         <TilgangskontrollForInnhold
             skjulVarsel
             kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+            manglerEierskap={knyttetTilStillingOgIkkeEier}
         >
             <Tabs.Tab value={Portefølje.ALLE} label="Alle kontorer" />
         </TilgangskontrollForInnhold>
@@ -73,6 +99,7 @@ const PorteføljeTabs = ({ children }: { children: ReactNode }) => {
         <TilgangskontrollForInnhold
             skjulVarsel
             kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
+            manglerEierskap={knyttetTilStillingOgIkkeEier}
         >
             <VelgKontorTab søkekriterier={søkekriterier} />
         </TilgangskontrollForInnhold>

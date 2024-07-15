@@ -1,7 +1,5 @@
-import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { Stilling } from './useKontekstAvKandidatlisteEllerStilling';
 import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 import { KandidatsokQueryParam } from 'felles/lenker';
@@ -12,9 +10,10 @@ import {
     stedmappingFraGammeltNavn,
     stedmappingFraGammeltNummer,
 } from 'felles/MappingSted';
+import { Rekrutteringsbistandstilling } from 'felles/domene/stilling/Stilling';
 
 const useSøkekriterierFraStilling = (
-    stilling: Nettressurs<Stilling>,
+    rekrutteringsbistandstilling: Rekrutteringsbistandstilling | undefined,
     brukKriterierFraStillingen: boolean
 ) => {
     const { setSearchParam } = useSøkekriterier();
@@ -24,12 +23,14 @@ const useSøkekriterierFraStilling = (
     const { data: fylker, isLoading: fylkerIsLoading } = useHentFylker();
 
     useEffect(() => {
-        const anvendSøkekriterier = async (stilling: Stilling) => {
-            const yrkerFraStilling = hentØnsketYrkeFraStilling(stilling);
+        const anvendSøkekriterier = async (
+            rekrutteringsbistandstilling: Rekrutteringsbistandstilling
+        ) => {
+            const yrkerFraStilling = hentØnsketYrkeFraStilling(rekrutteringsbistandstilling);
 
             setSearchParam(FilterParam.ØnsketYrke, yrkerFraStilling);
 
-            const stedFraStilling = hentØnsketStedFraStilling(stilling, fylker);
+            const stedFraStilling = hentØnsketStedFraStilling(rekrutteringsbistandstilling, fylker);
             if (stedFraStilling) {
                 setSearchParam(FilterParam.ØnsketSted, stedFraStilling);
             }
@@ -37,20 +38,20 @@ const useSøkekriterierFraStilling = (
         };
 
         if (
-            stilling.kind === Nettstatus.Suksess &&
+            rekrutteringsbistandstilling &&
             brukKriterierFraStillingen &&
             søkeKriterierIkkeLagtTil(searchParams) &&
             !fylkerIsLoading &&
             !harLagtTilKriterier
         ) {
-            anvendSøkekriterier(stilling.data);
+            anvendSøkekriterier(rekrutteringsbistandstilling);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [stilling, brukKriterierFraStillingen, JSON.stringify(fylker)]);
+    }, [rekrutteringsbistandstilling, brukKriterierFraStillingen, JSON.stringify(fylker)]);
 };
 
-const hentØnsketYrkeFraStilling = (stilling: Stilling) => {
-    const { categoryList } = stilling.stilling;
+const hentØnsketYrkeFraStilling = (rekrutteringsbistandstilling: Rekrutteringsbistandstilling) => {
+    const { categoryList } = rekrutteringsbistandstilling.stilling;
     return categoryList
         .filter(
             (category) =>
@@ -61,10 +62,10 @@ const hentØnsketYrkeFraStilling = (stilling: Stilling) => {
 };
 
 const hentØnsketStedFraStilling = (
-    stilling: Stilling,
+    rekrutteringsbistandstilling: Rekrutteringsbistandstilling,
     fylker: HentFylkerDTO | undefined
 ): string | null => {
-    const { location } = stilling.stilling;
+    const { location } = rekrutteringsbistandstilling.stilling;
     const { municipal, municipalCode, county } = location;
 
     if (municipal && municipalCode) {

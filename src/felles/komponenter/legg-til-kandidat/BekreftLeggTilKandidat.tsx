@@ -2,7 +2,7 @@ import { Alert } from '@navikt/ds-react';
 import { useState } from 'react';
 
 import { sendEvent } from 'felles/amplitude';
-import { leggTilKandidatKandidatliste } from '../../../api/kandidat-api/leggTilKandidat';
+import { leggTilKandidatIKandidatliste } from '../../../api/kandidat-api/leggTilKandidat';
 import Knapper from './Knapper';
 
 type IBekreftLeggTilKandidat = {
@@ -10,7 +10,7 @@ type IBekreftLeggTilKandidat = {
     onAvbryt: () => void;
     onBekreft: (melding: string) => void;
     erAnbefaling?: boolean;
-    kandidatlisteId: string;
+    stillingId: string;
     setRegistrerFormidling?: () => void;
 };
 
@@ -19,11 +19,12 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
     onAvbryt,
     onBekreft,
     erAnbefaling = false,
-    kandidatlisteId,
+    stillingId,
     setRegistrerFormidling,
 }) => {
     const [laster, setLaster] = useState<boolean>(false);
     const [error, setError] = useState<boolean>(false);
+    const [feilmelding, setFeilmelding] = useState<string | null>(null);
 
     const onLeggTilKandidat = async () => {
         setLaster(true);
@@ -34,7 +35,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
             erAnbefaling,
         });
 
-        const respons = await leggTilKandidatKandidatliste(kandidatlisteId, kandidatnr);
+        const respons = await leggTilKandidatIKandidatliste({ stillingId, kandidatnr });
 
         if (respons.ok) {
             setLaster(false);
@@ -42,6 +43,11 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
         } else {
             setLaster(false);
             setError(true);
+            if (respons.status === 403) {
+                setFeilmelding('Du har ikke tilgang til å legge kandidaten til denne listen');
+            } else {
+                setFeilmelding('Klarte ikke å legge til kandidat');
+            }
         }
     };
 
@@ -65,7 +71,7 @@ const BekreftLeggTilKandidat: React.FC<IBekreftLeggTilKandidat> = ({
             />
             {error && (
                 <Alert fullWidth variant="error" size="small">
-                    Klarte ikke å legge til kandidat
+                    {feilmelding ?? 'Klarte ikke å legge til kandidat'}
                 </Alert>
             )}
         </>

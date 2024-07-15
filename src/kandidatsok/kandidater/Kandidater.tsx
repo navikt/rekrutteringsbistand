@@ -1,11 +1,10 @@
 import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
-import { BodyShort, Button } from '@navikt/ds-react';
+import { BodyShort, Button, ErrorMessage } from '@navikt/ds-react';
 import { FunctionComponent, useContext, useState } from 'react';
 
 import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 import { KandidatSøkContext } from '../KandidatSøkContext';
 import Paginering from '../filter/Paginering';
-import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import AntallKandidater from './AntallKandidater';
@@ -13,12 +12,14 @@ import css from './Kandidater.module.css';
 import MarkerAlle from './MarkerAlle';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
+import { useHentMineKandidaterIStilling } from '../../api/kandidat-api/hentMineKandidaterIStillling';
+import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 
 type Props = {
-    kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling | null;
     markerteKandidater: Set<string>;
     onMarkerKandidat: (kandidatnr: string | string[]) => void;
     fjernMarkering: () => void;
+    stillingId: string | null;
 };
 
 enum Modal {
@@ -28,24 +29,40 @@ enum Modal {
 }
 
 const Kandidater: FunctionComponent<Props> = ({
-    kontekstAvKandidatlisteEllerStilling,
     markerteKandidater,
     onMarkerKandidat,
     fjernMarkering,
+    stillingId,
 }) => {
     const { kandidatSøk } = useContext(KandidatSøkContext);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
 
+    const {
+        data: mineKandidaterIStilling,
+        isLoading,
+        error,
+    } = useHentMineKandidaterIStilling({ stillingId });
+
     const onLagreIKandidatlisteClick = () => {
         setAktivModal(
-            kontekstAvKandidatlisteEllerStilling
-                ? Modal.BekreftLagreIKandidatliste
-                : Modal.LagreIMineKandidatlister
+            stillingId ? Modal.BekreftLagreIKandidatliste : Modal.LagreIMineKandidatlister
         );
     };
 
     const kandidatsøkKandidater = kandidatSøk?.kandidater;
     const totalHits = kandidatSøk?.antallTotalt;
+
+    const erKandidatIListen = (kandidatnr: string): boolean => {
+        return mineKandidaterIStilling?.includes(kandidatnr) || false;
+    };
+
+    if (isLoading) {
+        return <Sidelaster />;
+    }
+
+    if (error) {
+        return <ErrorMessage> Klarte ikke å laste inn informasjon om kandidater </ErrorMessage>;
+    }
 
     return (
         <div className={css.kandidater}>
@@ -83,9 +100,7 @@ const Kandidater: FunctionComponent<Props> = ({
                             kandidater={kandidatsøkKandidater || []}
                             markerteKandidater={markerteKandidater}
                             onMarkerKandidat={onMarkerKandidat}
-                            kontekstAvKandidatlisteEllerStilling={
-                                kontekstAvKandidatlisteEllerStilling
-                            }
+                            mineKandidaterIStilling={mineKandidaterIStilling}
                         />
                         <Sortering />
                     </div>
@@ -95,12 +110,11 @@ const Kandidater: FunctionComponent<Props> = ({
                                 key={kandidat.arenaKandidatnr}
                                 kandidat={kandidat}
                                 markerteKandidater={markerteKandidater}
-                                kontekstAvKandidatlisteEllerStilling={
-                                    kontekstAvKandidatlisteEllerStilling
-                                }
+                                stillingId={stillingId}
                                 onMarker={() => {
                                     onMarkerKandidat(kandidat.arenaKandidatnr);
                                 }}
+                                erIListen={erKandidatIListen(kandidat.arenaKandidatnr)}
                             />
                         ))}
                     </ul>
@@ -109,7 +123,7 @@ const Kandidater: FunctionComponent<Props> = ({
             ) : (
                 <BodyShort> Fant ingen kandidater </BodyShort>
             )}
-            {kontekstAvKandidatlisteEllerStilling === null ? (
+            {stillingId == null ? (
                 <LagreKandidaterIMineKandidatlisterModal
                     vis={aktivModal === Modal.LagreIMineKandidatlister}
                     onClose={() => setAktivModal(Modal.IngenModal)}
@@ -121,7 +135,7 @@ const Kandidater: FunctionComponent<Props> = ({
                     vis={aktivModal === Modal.BekreftLagreIKandidatliste}
                     onClose={() => setAktivModal(Modal.IngenModal)}
                     markerteKandidater={markerteKandidater}
-                    kontekstAvKandidatlisteEllerStilling={kontekstAvKandidatlisteEllerStilling}
+                    stillingId={stillingId}
                 />
             )}
         </div>

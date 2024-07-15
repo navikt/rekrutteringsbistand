@@ -1,76 +1,95 @@
 import { Buldings2Icon, PersonGroupIcon } from '@navikt/aksel-icons';
-import { BodyShort, Heading, Skeleton } from '@navikt/ds-react';
+import { BodyShort, Heading, Loader, Skeleton } from '@navikt/ds-react';
 import Grunnbanner from 'felles/komponenter/grunnbanner/Grunnbanner';
 import Brødsmulesti from 'felles/komponenter/kandidatbanner/Brødsmulesti';
 import FinnKandidaterIkon from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
-import { Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
-import { useHentStillingTittel } from '../../felles/hooks/useStilling';
+import useHentStilling, { useHentStillingTittel } from '../../felles/hooks/useStilling';
 import { lenkeTilStilling } from '../../felles/lenker';
-import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
 import css from './Kandidatlistebanner.module.css';
+import useNavigeringsstate from '../hooks/useNavigeringsstate';
 
 type Props = {
-    kontekst: KontekstAvKandidatlisteEllerStilling;
+    stillingId?: string;
 };
 
-const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
-    const { kandidatliste, stilling, brukKriterierFraStillingen } = kontekst;
+const Kandidatlistebanner: FunctionComponent<Props> = ({ stillingId }) => {
+    const navigeringsstate = useNavigeringsstate();
+    const {
+        stilling: rekrutteringsbistandstilling,
+        isLoading: isStillingLoading,
+        isError: isStillingError,
+    } = useHentStilling(stillingId);
 
-    useSøkekriterierFraStilling(stilling, brukKriterierFraStillingen);
+    const brukKriterierFraStillingen = navigeringsstate.brukKriterierFraStillingen;
 
-    const stillingsId =
-        kandidatliste.kind === Nettstatus.Suksess ? kandidatliste.data.stillingId : null;
+    useSøkekriterierFraStilling(rekrutteringsbistandstilling, brukKriterierFraStillingen);
 
+    const stillingsId = rekrutteringsbistandstilling?.stilling.uuid;
     const stillingTittel = useHentStillingTittel(stillingsId);
+    const opprettetAvIdent =
+        rekrutteringsbistandstilling?.stillingsinfo?.eierNavident ??
+        rekrutteringsbistandstilling?.stilling?.administration?.navIdent ??
+        '';
+    const opprettetAvNavn =
+        rekrutteringsbistandstilling?.stillingsinfo?.eierNavn ??
+        rekrutteringsbistandstilling?.stilling?.administration?.reportee ??
+        '';
 
     return (
         <Grunnbanner ikon={<FinnKandidaterIkon />}>
             <div className={css.banner}>
                 <div className={css.hovedinnhold}>
-                    {kandidatliste.kind === Nettstatus.Suksess ? (
-                        <Brødsmulesti
-                            brødsmulesti={[
-                                {
-                                    tekst: stillingTittel ?? kandidatliste.data.tittel,
-                                    href: stillingsId
-                                        ? lenkeTilStilling({
-                                              stillingsId: stillingsId,
-                                              redigeringsmodus: false,
-                                              fane: 'kandidater',
-                                          })
-                                        : '#',
-                                },
-                                {
-                                    tekst: 'Finn kandidater',
-                                },
-                            ]}
-                        />
+                    {isStillingLoading ? (
+                        <Loader size="medium" />
+                    ) : isStillingError ? (
+                        <>
+                            <Skeleton width={220} />
+                            <Heading size="large" level="2">
+                                <Skeleton>Placeholder</Skeleton>
+                            </Heading>
+                            <BodyShort>
+                                <Skeleton as="span" width={100} />
+                            </BodyShort>
+                        </>
                     ) : (
-                        <Skeleton width={220} />
+                        <>
+                            <Brødsmulesti
+                                brødsmulesti={[
+                                    {
+                                        tekst: stillingTittel ?? '',
+                                        href: stillingsId
+                                            ? lenkeTilStilling({
+                                                  stillingsId: stillingsId,
+                                                  redigeringsmodus: false,
+                                                  fane: 'kandidater',
+                                              })
+                                            : '#',
+                                    },
+                                    {
+                                        tekst: 'Finn kandidater',
+                                    },
+                                ]}
+                            />
+                            <Heading size="large" level="2">
+                                {stillingTittel}
+                            </Heading>
+                            <BodyShort>
+                                <span>
+                                    Opprettet av {opprettetAvNavn} ({opprettetAvIdent})
+                                </span>
+                            </BodyShort>
+                        </>
                     )}
-                    <Heading size="large" level="2">
-                        {kandidatliste.kind === Nettstatus.Suksess ? (
-                            stillingTittel ?? kandidatliste.data.tittel
-                        ) : (
-                            <Skeleton>Placeholder</Skeleton>
-                        )}
-                    </Heading>
-                    <BodyShort>
-                        {kandidatliste.kind === Nettstatus.Suksess ? (
-                            <span>
-                                Opprettet av {kandidatliste.data.opprettetAv.navn} (
-                                {kandidatliste.data.opprettetAv.ident})
-                            </span>
-                        ) : (
-                            <Skeleton as="span" width={100} />
-                        )}
-                    </BodyShort>
                 </div>
                 <div className={css.lenker}>
-                    {kandidatliste.kind === Nettstatus.Suksess ? (
+                    {isStillingLoading ? (
+                        <Loader size="medium" />
+                    ) : isStillingError ? (
+                        <Skeleton width={100} />
+                    ) : (
                         <>
                             {stillingsId && (
                                 <Link
@@ -96,8 +115,6 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ kontekst }) => {
                                 Se kandidatliste
                             </Link>
                         </>
-                    ) : (
-                        <Skeleton width={100} />
                     )}
                 </div>
             </div>

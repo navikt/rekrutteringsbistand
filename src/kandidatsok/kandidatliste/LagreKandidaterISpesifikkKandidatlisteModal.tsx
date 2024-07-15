@@ -1,9 +1,8 @@
-import { Alert, BodyLong, Button, Loader, Modal } from '@navikt/ds-react';
+import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { FunctionComponent, useState } from 'react';
-import { leggTilKandidaterKandidatliste } from '../../api/kandidat-api/leggTilKandidat';
+import { leggTilKandidaterIKandidatliste } from '../../api/kandidat-api/leggTilKandidat';
 import { useHentStillingTittel } from '../../felles/hooks/useStilling';
-import { KontekstAvKandidatlisteEllerStilling } from '../hooks/useKontekstAvKandidatlisteEllerStilling';
 import { LagreKandidaterDto } from './LagreKandidaterIMineKandidatlisterModal';
 import css from './LagreKandidaterISpesifikkKandidatlisteModal.module.css';
 
@@ -11,21 +10,22 @@ type Props = {
     vis: boolean;
     onClose: () => void;
     markerteKandidater: Set<string>;
-    kontekstAvKandidatlisteEllerStilling: KontekstAvKandidatlisteEllerStilling;
+    stillingId: string;
 };
 
 const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
     vis,
     onClose,
     markerteKandidater,
-    kontekstAvKandidatlisteEllerStilling,
+    stillingId,
 }) => {
     const [lagreKandidater, setLagreKandidater] = useState<Nettressurs<LagreKandidaterDto>>({
         kind: Nettstatus.IkkeLastet,
     });
     const [innsendingOk, setInnsengingOk] = useState<boolean | null>(null);
+    const [feilmelding, setFeilmelding] = useState<string | null>(null);
 
-    const onBekreftClick = (kandidatlisteId: string) => async () => {
+    const onBekreftClick = (stillingId: string) => async () => {
         const lagreKandidaterDto = Array.from(markerteKandidater).map((kandidat) => ({
             kandidatnr: kandidat,
         }));
@@ -33,15 +33,22 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         setLagreKandidater({ kind: Nettstatus.SenderInn, data: lagreKandidaterDto });
 
         try {
-            const response = await leggTilKandidaterKandidatliste(
-                kandidatlisteId,
-                lagreKandidaterDto
-            );
+            const response = await leggTilKandidaterIKandidatliste({
+                stillingId,
+                kandidater: lagreKandidaterDto,
+            });
 
             if (response.ok) {
                 setInnsengingOk(true);
             } else {
                 setInnsengingOk(false);
+                if (response.status === 403) {
+                    setFeilmelding(
+                        'Du har ikke tilgang til å legge kandidaten/kandidatene til denne listen'
+                    );
+                } else {
+                    setFeilmelding('En feil oppstod under lagring');
+                }
             }
         } catch (e) {
             setLagreKandidater({
@@ -51,94 +58,60 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
         }
     };
 
-    const stillingstittel = useHentStillingTittel(
-        kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === Nettstatus.Suksess
-            ? kontekstAvKandidatlisteEllerStilling.kandidatliste.data.stillingId
-            : undefined
+    const stillingstittel = useHentStillingTittel(stillingId);
+
+    const visOppsummering = () => (
+        <div>
+            <Modal.Body>
+                {!innsendingOk ? (
+                    <Alert fullWidth variant="error" size="small">
+                        {feilmelding ?? 'En feil oppstod under lagring'}
+                    </Alert>
+                ) : (
+                    <Alert fullWidth variant="success" size="small">
+                        Fullført
+                    </Alert>
+                )}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => window.location.reload()}>
+                    Lukk
+                </Button>
+            </Modal.Footer>
+        </div>
     );
-
-    const visOppsummering = () => {
-        return (
-            <div>
-                <Modal.Body>
-                    {!innsendingOk ? (
-                        <Alert fullWidth variant="error" size="small">
-                            Feil under lagring
-                        </Alert>
-                    ) : (
-                        <Alert fullWidth variant="success" size="small">
-                            Fullført
-                        </Alert>
-                    )}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button
-                        variant="secondary"
-                        onClick={() => {
-                            //todo bruk onClose og oppdater listen istedenfor reload.
-
-                            window.location.reload();
-                        }}
-                    >
-                        Lukk
-                    </Button>
-                </Modal.Footer>
-            </div>
-        );
-    };
 
     return (
         <Modal
             open={vis}
             onClose={onClose}
             header={{
-                heading: `Lagre ${markerteKandidater.size} kandidat
-            ${markerteKandidater.size > 1 ? 'er' : ''} i kandidatlisten`,
+                heading: `Lagre ${markerteKandidater.size} kandidat${markerteKandidater.size > 1 ? 'er' : ''} i kandidatlisten`,
             }}
         >
             <div className={css.innhold}>
-                {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind ===
-                    Nettstatus.LasterInn && <Loader variant="interaction" size="2xlarge" />}
-                {kontekstAvKandidatlisteEllerStilling.kandidatliste.kind === Nettstatus.Suksess && (
+                {innsendingOk !== null ? (
+                    visOppsummering()
+                ) : (
                     <>
-                        {innsendingOk !== null ? (
-                            visOppsummering()
-                        ) : (
-                            <>
-                                <Modal.Body>
-                                    <BodyLong>
-                                        Ønsker du å lagre kandidaten i kandidatlisten til stillingen
-                                        «
-                                        {kontekstAvKandidatlisteEllerStilling.kandidatliste.data
-                                            .stillingId
-                                            ? stillingstittel
-                                            : kontekstAvKandidatlisteEllerStilling.kandidatliste
-                                                  .data.tittel}
-                                        »?
-                                    </BodyLong>
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <Button
-                                        variant="primary"
-                                        onClick={onBekreftClick(
-                                            kontekstAvKandidatlisteEllerStilling.kandidatliste.data
-                                                .kandidatlisteId
-                                        )}
-                                    >
-                                        Lagre
-                                    </Button>
-                                    <Button
-                                        variant="tertiary"
-                                        loading={lagreKandidater.kind === Nettstatus.SenderInn}
-                                        onClick={() => {
-                                            onClose();
-                                        }}
-                                    >
-                                        Avbryt
-                                    </Button>
-                                </Modal.Footer>
-                            </>
-                        )}
+                        <Modal.Body>
+                            <BodyLong>
+                                Ønsker du å lagre kandidaten i kandidatlisten til stillingen{' '}
+                                {stillingstittel}
+                            </BodyLong>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={onBekreftClick(stillingId)}>
+                                Lagre
+                            </Button>
+                            <Button
+                                variant="tertiary"
+                                loading={lagreKandidater.kind === Nettstatus.SenderInn}
+                                onClick={onClose}
+                            >
+                                Avbryt
+                            </Button>
+                        </Modal.Footer>
                     </>
                 )}
                 {lagreKandidater.kind === Nettstatus.Feil && (
