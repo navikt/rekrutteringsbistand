@@ -15,7 +15,6 @@ export const enheterSchema = z.object({
 
 export const DecoratorSchema = z.object({
     ident: z.string(),
-    navn: z.string(),
     fornavn: z.string(),
     etternavn: z.string(),
     enheter: z.array(enheterSchema),
@@ -34,7 +33,6 @@ export const useDecorator = () => {
 
 const decoratorMock: DecoratorDTO = {
     ident: 'Z994320',
-    navn: 'F_Z994320 E_Z994320',
     fornavn: 'F_Z994320',
     etternavn: 'E_Z994320',
     enheter: [
