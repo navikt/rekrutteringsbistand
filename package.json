@@ -41,7 +41,6 @@
         "@tiptap/extension-underline": "^2.5.5",
         "@tiptap/pm": "^2.5.5",
         "@tiptap/react": "^2.5.5",
-        "@tiptap/starter-kit": "^2.5.5",
         "amplitude-js": "^8.21.9",
         "classnames": "2.5.1",
         "deep-equal": "2.2.3",
