@@ -1,6 +1,7 @@
 import { BodyShort, Button, Label, TextField } from '@navikt/ds-react';
 import Stilling from 'felles/domene/stilling/Stilling';
 import { useDispatch } from 'react-redux';
+import RikTekstEditor from '../../../../felles/komponenter/rikteksteditor/RikTekstEditor';
 import { adjustUrl } from '../../../common/urlUtils';
 import { formaterDataFraEnhetsregisteret } from '../../../opprett-ny-stilling/VelgArbeidsgiver';
 import {
@@ -11,7 +12,6 @@ import {
     SET_LINKEDIN_PAGE,
     SET_TWITTER_ADDRESS,
 } from '../../adDataReducer';
-import RichTextEditor from '../richTextEditor/RichTextEditor';
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
 
 type Props = {
@@ -95,10 +95,10 @@ const EndreArbeidsgiver = ({ stilling }: Props) => {
                 >
                     Kort om bedriften
                 </Skjemalabel>
-                <RichTextEditor
+                <RikTekstEditor
                     id="endre-stilling-kort-om-bedriften"
                     aria-describedby="endre-stilling-kort-om-bedriften-beskrivelse"
-                    text={stilling.properties.employerdescription || ''}
+                    tekst={stilling.properties.employerdescription || ''}
                     onChange={(desc: string) => setEmployerDescription(desc)}
                 />
             </div>
