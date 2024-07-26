@@ -101,17 +101,16 @@ const FormidleKandidat: FunctionComponent<Props> = ({
                     kandidatnr: kandidatNummer,
                 });
 
-                if (presentert) {
+                if (fåttJobb) {
                     await putUtfallKandidat(
-                        Kandidatutfall.Presentert,
+                        Kandidatutfall.FåttJobben,
                         valgtNavKontor.navKontor,
                         kandidatlisteId,
                         kandidatNummer
                     );
-                }
-                if (fåttJobb) {
+                } else if (presentert) {
                     await putUtfallKandidat(
-                        Kandidatutfall.FåttJobben,
+                        Kandidatutfall.Presentert,
                         valgtNavKontor.navKontor,
                         kandidatlisteId,
                         kandidatNummer
