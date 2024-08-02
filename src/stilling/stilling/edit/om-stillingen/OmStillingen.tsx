@@ -3,9 +3,9 @@ import { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Stilling from 'felles/domene/stilling/Stilling';
+import RikTekstEditor from '../../../../felles/komponenter/rikteksteditor/RikTekstEditor';
 import { State } from '../../../redux/store';
 import { SET_AD_TEXT, SET_EMPLOYMENT_JOBTITLE } from '../../adDataReducer';
-import RichTextEditor from '../richTextEditor/RichTextEditor';
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
 import Styrk from './styrk/Styrk';
 
@@ -51,12 +51,11 @@ const OmStillingen = ({ stilling, erFormidling }: Props) => {
                     <Skjemalabel påkrevd inputId="endre-stilling-annonsetekst">
                         Annonsetekst
                     </Skjemalabel>
-                    <RichTextEditor
+                    <RikTekstEditor
                         id="endre-stilling-annonsetekst"
-                        text={stilling.properties.adtext ?? ''}
+                        tekst={stilling.properties.adtext ?? ''}
                         onChange={onAdTextChange}
-                        errorMessage={errors.adText}
-                        ariaDescribedBy="stillingstekst"
+                        feilMelding={errors.adText}
                     />
                 </div>
             )}

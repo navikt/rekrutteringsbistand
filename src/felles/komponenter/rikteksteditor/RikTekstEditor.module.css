@@ -1,0 +1,26 @@
+.editor {
+    border: 1px solid #000; /* Change the color and width as needed */
+    padding: 10px;
+    border-radius: 5px; /* Optional: for rounded corners */
+}
+.toolbar {
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.toolbar button {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.aktivKnapp {
+    background: #ccc;
+}
+
+.inaktivKnapp {
+    background: #ffff;
+}
