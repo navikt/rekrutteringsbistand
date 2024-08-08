@@ -11,11 +11,9 @@
     "smsApiHost": "rekrutteringsbistand-sms.dev-fss-pub.nais.io",
     "kandidatApiHost": "rekrutteringsbistand-kandidat-api.dev-fss-pub.nais.io",
     "foresporselOmDelingAvCvApiHost": "foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io",
-    "modiaContextHolderHost": "modiacontextholder-q1.dev-fss-pub.nais.io",
 
     "statistikkApiUrl": "https://rekrutteringsbistand-statistikk-api.dev-fss-pub.nais.io/rekrutteringsbistand-statistikk-api",
     "kandidatApiUrl": "https://rekrutteringsbistand-kandidat-api.dev-fss-pub.nais.io/rekrutteringsbistand-kandidat-api/rest",
     "smsApi": "https://rekrutteringsbistand-sms.dev-fss-pub.nais.io/rekrutteringsbistand-sms",
-    "foresporselOmDelingAvCvApi": "https://foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io",
-    "modiaContextHolderApi": "https://modiacontextholder-q1.dev-fss-pub.nais.io/modiacontextholder"
+    "foresporselOmDelingAvCvApi": "https://foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io"
 }
