@@ -20,9 +20,7 @@ const clusterOnPrem = cluster === 'prod-gcp' ? 'prod-fss' : 'dev-fss';
 export const miljøErProd = cluster === 'prod-gcp' || cluster === 'prod-fss';
 
 const scopes = {
-    modiaContextHolder: `api://${clusterOnPrem}.personoversikt.modiacontextholder${
-        clusterOnPrem === 'dev-fss' ? '-q1' : ''
-    }/.default`,
+    modiaContextHolder: `api://${cluster}.personoversikt.modiacontextholder/.default`,
     statistikk: `api://${clusterOnPrem}.toi.rekrutteringsbistand-statistikk-api/.default`,
     stillingssøk: `api://${cluster}.toi.rekrutteringsbistand-stillingssok-proxy/.default`,
     stilling: `api://${cluster}.toi.rekrutteringsbistand-stilling-api/.default`,
