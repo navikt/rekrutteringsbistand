@@ -1,8 +1,7 @@
-import { DocPencilIcon, PrinterSmallIcon } from '@navikt/aksel-icons';
+import { DocPencilIcon, PrinterSmallIcon, TabsAddIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { System } from '../../../../felles/domene/stilling/Stilling';
 import { Rolle } from '../../../../felles/tilgangskontroll/Roller';
 import { TilgangskontrollForInnhold } from '../../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
@@ -11,7 +10,6 @@ import { COPY_AD_FROM_MY_ADS, EDIT_AD, LEGG_TIL_I_MINE_STILLINGER } from '../../
 import Stillingsheader from '../../header/Stillingsheader';
 import EksternStillingAdvarsel from './EksternStillingAdvarsel';
 import OpprettKandidatlisteModal from './OpprettKandidatlisteModal';
-
 interface IPreviewHeader {
     erEier: boolean;
     refetchKandidatlisteId: () => void;
@@ -69,8 +67,8 @@ const PreviewHeader: React.FC<IPreviewHeader> = ({ erEier, refetchKandidatlisteI
                         </Button>
                     )}
                     {!limitedAccess && (
-                        <Button onClick={onCopyAdClick} size="small" icon={<DocPencilIcon />}>
-                            Kopier
+                        <Button onClick={onCopyAdClick} size="small" icon={<TabsAddIcon />}>
+                            Dupliser
                         </Button>
                     )}
                     {kanOverfoereStilling && (
