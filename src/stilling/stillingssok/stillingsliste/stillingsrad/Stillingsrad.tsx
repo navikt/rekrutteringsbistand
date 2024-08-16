@@ -194,13 +194,6 @@ const Stillingsrad: FunctionComponent<Props> = ({
     );
 };
 
-const hentEierId = (rekrutteringsbistandstilling: EsRekrutteringsbistandstilling) => {
-    const eierId = rekrutteringsbistandstilling.stillingsinfo?.eierNavident;
-    const reporteeId = rekrutteringsbistandstilling.stilling?.administration?.navIdent;
-
-    return eierId ?? reporteeId;
-};
-
 const formaterEiernavn = (eierNavn: string | null) => {
     if (eierNavn == null) return null;
     const navnDel = eierNavn.split(',');
