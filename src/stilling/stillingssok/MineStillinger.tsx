@@ -48,11 +48,7 @@ const MineStillinger = ({ navIdent, kandidatnr, finnerStillingForKandidat }: Pro
                 <Søkefelter aggregeringer={globalAggregering?.felter?.buckets} />
                 <Sorter />
             </div>
-            <Stillingsliste
-                hits={filtrertResultat.hits}
-                kandidatnr={kandidatnr}
-                navIdent={navIdent}
-            />
+            <Stillingsliste hits={filtrertResultat.hits} kandidatnr={kandidatnr} />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Paginering totaltAntallTreff={antallTreff} />
             </div>

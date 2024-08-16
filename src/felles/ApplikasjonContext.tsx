@@ -1,6 +1,7 @@
 import { Loader } from '@navikt/ds-react';
 import React from 'react';
 import { useMeg } from '../api/frackend/meg';
+import Stilling, { Stillingbase, Stillingsinfo } from './domene/stilling/Stilling';
 import ErrorBoundary from './feilhåndtering/ErrorBoundary';
 import { Rolle } from './tilgangskontroll/Roller';
 
@@ -11,7 +12,8 @@ export type NavKontorMedNavn = {
 
 interface ApplikasjonContextType {
     roller?: Rolle[];
-    navIdent?: string;
+    navIdent: string;
+    eierSjekk: (stillingsData?: Stillingbase | Stillingsinfo | Stilling | null) => boolean;
     harRolle: (rolle: Rolle[]) => boolean;
     tilgangskontrollErPå: boolean;
     valgtNavKontor: NavKontorMedNavn | null;
@@ -23,6 +25,8 @@ export const ApplikasjonContext = React.createContext<ApplikasjonContextType>({
     tilgangskontrollErPå: false,
     setValgtNavKontor: () => null,
     valgtNavKontor: null,
+    eierSjekk: () => false,
+    navIdent: '',
 });
 
 interface IApplikasjonContextProvider {
@@ -45,6 +49,25 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
               )
             : true;
 
+    const eierSjekk = (stillingsData?: Stillingbase | Stillingsinfo | Stilling | null) => {
+        if (
+            stillingsData &&
+            'administration' in stillingsData &&
+            stillingsData?.administration?.navIdent === navIdent
+        ) {
+            return true;
+        } else if (
+            stillingsData &&
+            'eierNavident' in stillingsData &&
+            stillingsData?.eierNavident === navIdent
+        ) {
+            return true;
+        } else if (harRolle([Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER])) {
+            return true;
+        }
+        return false;
+    };
+
     return (
         <ApplikasjonContext.Provider
             value={{
@@ -54,6 +77,7 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
                 navIdent,
                 harRolle,
                 tilgangskontrollErPå,
+                eierSjekk,
             }}
         >
             <>

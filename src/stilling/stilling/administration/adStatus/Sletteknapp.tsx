@@ -1,7 +1,8 @@
-import { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
-import { State } from '../../../redux/store';
 import { Button } from '@navikt/ds-react';
+import { FunctionComponent, useContext } from 'react';
+import { useSelector } from 'react-redux';
+import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
+import { State } from '../../../redux/store';
 import css from './AdStatusEdit.module.css';
 
 type Props = {
@@ -10,11 +11,9 @@ type Props = {
 };
 
 const Sletteknapp: FunctionComponent<Props> = ({ onDeleteClick, isDeleting }) => {
-    const innloggetBrukerident = useSelector((state: State) => state.reportee.data)?.navIdent;
-    const stillingensNavIdent = useSelector(
-        (state: State) => state.adData?.administration?.navIdent
-    );
-    const erEier = innloggetBrukerident === stillingensNavIdent;
+    const { eierSjekk } = useContext(ApplikasjonContext);
+    const stilling = useSelector((state: State) => state.adData);
+    const erEier = eierSjekk(stilling);
 
     if (!erEier) return null;
 
