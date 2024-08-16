@@ -1,5 +1,5 @@
 import { BodyLong, Tabs } from '@navikt/ds-react';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useContext, useEffect } from 'react';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ import {
     System,
 } from 'felles/domene/stilling/Stilling';
 import { useVisVarsling } from 'felles/varsling/Varsling';
-import { useMeg } from '../../api/frackend/meg';
+import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
 import ErrorBoundary from '../../felles/feilhåndtering/ErrorBoundary';
 import useKandidatlisteId from '../../felles/hooks/useKandidatlisteId';
 import { lenkeTilStilling } from '../../felles/lenker';
@@ -43,7 +43,7 @@ const Stilling = () => {
     const params = useParams<{ fane: string | undefined }>();
     const fane = params.fane ?? 'om_stillingen';
     const visVarsling = useVisVarsling();
-
+    const { eierSjekk, navIdent } = useContext(ApplikasjonContext);
     const dispatch = useDispatch();
     const location = useLocation();
     const { uuid } = useParams<QueryParams>();
@@ -59,10 +59,7 @@ const Stilling = () => {
 
     const { kandidatlisteId, mutate } = useKandidatlisteId(uuid);
 
-    const { navIdent } = useMeg();
-
-    const erEier =
-        stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;
+    const erEier = eierSjekk(stilling) || eierSjekk(stillingsinfo);
 
     const harKandidatlisteSomKanÅpnes = erEier && kandidatlisteId;
 

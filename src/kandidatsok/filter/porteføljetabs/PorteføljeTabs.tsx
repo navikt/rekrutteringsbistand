@@ -1,4 +1,5 @@
 import { ErrorMessage, Loader, Tabs } from '@navikt/ds-react';
+import useHentStilling from 'felles/hooks/useStilling';
 import { ReactNode, useContext } from 'react';
 import { Portefølje } from '../../../api/kandidat-søk-api/kandidatsøk';
 import { useDecorator } from '../../../api/modiacontextholder/decorator';
@@ -9,8 +10,6 @@ import { FilterParam } from '../../hooks/useQuery';
 import useSøkekriterier from '../../hooks/useSøkekriterier';
 import css from './PorteføljeTabs.module.css';
 import VelgKontorTab from './VelgKontorTab';
-import { useMeg } from '../../../api/frackend/meg';
-import useHentStilling from 'felles/hooks/useStilling';
 
 const PorteføljeTabs = ({
     children,
@@ -20,9 +19,8 @@ const PorteføljeTabs = ({
     stillingId: string | null;
 }) => {
     const { søkekriterier, setSearchParam } = useSøkekriterier();
-    const { tilgangskontrollErPå } = useContext(ApplikasjonContext);
+    const { tilgangskontrollErPå, eierSjekk } = useContext(ApplikasjonContext);
     const { data, isLoading: isDecoratorLoading } = useDecorator();
-    const { navIdent } = useMeg();
     const {
         stilling: rekrutteringsbistandstilling,
         isLoading: isStillingLoading,
@@ -30,8 +28,8 @@ const PorteføljeTabs = ({
     } = useHentStilling(stillingId);
 
     const erEier =
-        rekrutteringsbistandstilling?.stilling?.administration?.navIdent === navIdent ||
-        rekrutteringsbistandstilling?.stillingsinfo?.eierNavident === navIdent;
+        eierSjekk(rekrutteringsbistandstilling?.stilling) ||
+        eierSjekk(rekrutteringsbistandstilling?.stillingsinfo);
 
     const knyttetTilStillingOgIkkeEier = !!stillingId && !erEier;
 

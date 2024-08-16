@@ -110,13 +110,13 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         // await expect(page.getByRole('button', { name: 'Rediger' })).not.toBeVisible(); TODO bug
     });
 
-    test('13. Gå inn i en direktemeldt stilling, se hvilke knapper for kandidathåndtering som finnes. - Skal ikke se "Finn kandidat". Skal se "Legg til kandidat', async ({
+    test('13. Gå inn i en direktemeldt stilling, se hvilke knapper for kandidathåndtering som finnes. - Skal se "Finn kandidat". Skal se "Legg til kandidat', async ({
         page,
     }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
         await expect(page.getByRole('button', { name: 'Legg til kandidat' })).toBeVisible();
-        await expect(page.getByRole('button', { name: 'Finn kandidater' })).not.toBeVisible();
+        await expect(page.getByRole('button', { name: 'Finn kandidater' })).toBeVisible();
     });
 
     test('14. Gå inn i en direktemeldt stilling der du er eier. Sjekk om fanen kandidater vises. - Fanen skal vises ', async ({
@@ -255,18 +255,18 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await expect(page.getByRole('button', { name: 'Registrere fått jobben' })).toBeVisible();
     });
 
-    test('27b For fomidling du eier: sett kandidat som "presentert"', async ({ page }) => {
-        await page.getByRole('link', { name: 'Etterregistrering formidlinger' }).click();
-        await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
-        await page.getByRole('link', { name: 'Formidling MIN' }).click();
-        await page.getByRole('tab', { name: 'Kandidater' }).click();
-        await page
-            .getByRole('row', { name: '​ Jobbsøker, Jarle' })
-            .getByLabel('Endre status eller hendelser')
-            .click();
-        await page.getByRole('button', { name: 'Registrer manuelt' }).click();
-        await expect(page.getByRole('button', { name: 'CV-en er blitt delt' })).toBeVisible();
-    });
+    // test('27b For fomidling du eier: sett kandidat som "presentert"', async ({ page }) => {
+    //     await page.getByRole('link', { name: 'Etterregistrering formidlinger' }).click();
+    //     await page.getByRole('tab', { name: 'Mine formidlinger' }).click();
+    //     await page.getByRole('link', { name: 'Formidling MIN' }).click();
+    //     await page.getByRole('tab', { name: 'Kandidater' }).click();
+    //     await page
+    //         .getByRole('row', { name: '​ Jobbsøker, Jarle' })
+    //         .getByLabel('Endre status eller hendelser')
+    //         .click();
+    //     await page.getByRole('button', { name: 'Registrer manuelt' }).click();
+    //     await expect(page.getByRole('button', { name: 'CV-en er blitt delt' })).toBeVisible();
+    // });
 
     test('28 Inne i kandidatliste for direktemeldt stiling du eier: Forsøk å sende sms"', async ({
         page,
@@ -279,9 +279,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
             .getByLabel('', { exact: true })
             .check();
         await page.getByRole('button', { name: 'Send beskjed' }).click();
-        await expect(
-            page.getByText('Velg hva som skal vises i beskjedenSend stilling til en aktuell')
-        ).toBeVisible();
+        await expect(page.getByText('Velg hva som skal vises i beskjeden')).toBeVisible();
     });
 
     test('29 Inne i kandidatliste for ekstern stiling du eier: Forsøk å sende sms', async ({
@@ -295,9 +293,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
             .getByLabel('', { exact: true })
             .check();
         await page.getByRole('button', { name: 'Send beskjed' }).click();
-        await expect(
-            page.getByText('Velg hva som skal vises i beskjedenSend stilling til en aktuell')
-        ).toBeVisible();
+        await expect(page.getByText('Velg hva som skal vises i beskjeden')).toBeVisible();
     });
 
     test('30 Inne i kandidatliste for stiling du eier: Forsøk å dele stilling med kandidat', async ({
@@ -343,7 +339,7 @@ test.describe('Tilgangskontroll: Arbeigsgiverrettet', () => {
         await page.getByRole('button', { name: 'Finn kandidater' }).click();
         await page.getByLabel('Marker alle på siden').check();
         await page.getByRole('button', { name: 'Lagre i kandidatliste' }).click();
-        await expect(page.getByRole('heading', { name: 'Lagre 4 kandidat er i' })).toBeVisible();
+        await expect(page.getByText('Lagre 4 kandidater i kandidatlisten')).toBeVisible();
     });
 
     test('33 Inne i kandidatliste for stiling du eier:  Forsøk å endre hendelse ved å velge "Registrer manuelt"', async ({

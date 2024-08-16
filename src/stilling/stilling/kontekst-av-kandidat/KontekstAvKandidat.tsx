@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { CopyButton } from '@navikt/ds-react';
 import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import Kandidatbanner, { formaterNavn } from 'felles/komponenter/kandidatbanner/Kandidatbanner';
 import { useSelector } from 'react-redux';
-import { useMeg } from '../../../api/frackend/meg';
 import {
     Kandidatsammendrag,
     useKandidatsammendrag,
 } from '../../../api/kandidat-søk-api/kandidatsammendrag';
+import { ApplikasjonContext } from '../../../felles/ApplikasjonContext';
 import { State } from '../../redux/store';
 import { hentAnnonselenke, stillingErPublisert } from '../adUtils';
 import AnbefalKandidatModal from './AnbefalKandidatModal';
@@ -24,7 +24,7 @@ type Props = {
 
 const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) => {
     const { kandidatsammendrag } = useKandidatsammendrag({ kandidatnr });
-
+    const { eierSjekk } = useContext(ApplikasjonContext);
     const { state } = useLocation();
     const [visModal, setVisModal] = useState<boolean>(false);
 
@@ -34,10 +34,7 @@ const KontekstAvKandidat = ({ kandidatnr, stilling, kandidatlisteId }: Props) =>
         ? byggBrødsmulesti(kandidatnr, stilling, kandidatsammendrag, state?.stillingssøk)
         : [];
 
-    const { navIdent } = useMeg();
-
-    const erEier =
-        stilling?.administration?.navIdent === navIdent || stillingsinfo?.eierNavident === navIdent;
+    const erEier = eierSjekk(stilling) || eierSjekk(stillingsinfo);
 
     return (
         <div className={css.wrapperTilBanner}>

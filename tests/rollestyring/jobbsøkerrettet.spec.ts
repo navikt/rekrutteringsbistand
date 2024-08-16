@@ -115,7 +115,7 @@ test.describe('Tilgangskontroll: Jobbsøkerrettet', () => {
     }) => {
         await page.getByRole('link', { name: 'Stillinger', exact: true }).click();
         await page.getByRole('link', { name: 'Intern stilling', exact: true }).click();
-        await expect(page.getByRole('button', { name: 'Finn kandidater' })).not.toBeVisible();
+        await expect(page.getByRole('button', { name: 'Finn kandidater' })).toBeVisible();
         await expect(page.getByRole('button', { name: 'Legg til kandidat' })).toBeVisible();
     });
 

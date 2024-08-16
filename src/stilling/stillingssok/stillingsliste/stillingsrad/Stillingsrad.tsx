@@ -1,7 +1,7 @@
 import { BriefcaseIcon, ClockIcon, PersonIcon, PinIcon } from '@navikt/aksel-icons';
 import { Tag } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useContext } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 
 import {
@@ -15,6 +15,7 @@ import {
     Stillingskategori,
     USE_STYRK_AS_TITLE_FEATURE_TOGGLE,
 } from 'felles/domene/stilling/Stilling';
+import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
 import TekstlinjeMedIkon from '../../../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../../../stilling/Stilling';
@@ -35,9 +36,9 @@ export const tittelfelt = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? 'styrkEllerTittel'
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,
     kandidatnr,
-    navIdent,
     score,
 }) => {
+    const { eierSjekk } = useContext(ApplikasjonContext);
     const [searchParams] = useSearchParams();
     const stillingskategori = rekrutteringsbistandstilling?.stillingsinfo?.stillingskategori;
     const stilling = rekrutteringsbistandstilling.stilling;
@@ -56,7 +57,9 @@ const Stillingsrad: FunctionComponent<Props> = ({
 
     const urlTilStilling = lagUrlTilStilling(stilling, kandidatnr);
 
-    const erEier = hentEierId(rekrutteringsbistandstilling) === navIdent;
+    const erEier =
+        eierSjekk(rekrutteringsbistandstilling.stilling) ||
+        eierSjekk(rekrutteringsbistandstilling.stillingsinfo);
 
     const erUtløptStilling = stillingErUtløpt(rekrutteringsbistandstilling.stilling);
 
@@ -189,13 +192,6 @@ const Stillingsrad: FunctionComponent<Props> = ({
             }
         />
     );
-};
-
-const hentEierId = (rekrutteringsbistandstilling: EsRekrutteringsbistandstilling) => {
-    const eierId = rekrutteringsbistandstilling.stillingsinfo?.eierNavident;
-    const reporteeId = rekrutteringsbistandstilling.stilling?.administration?.navIdent;
-
-    return eierId ?? reporteeId;
 };
 
 const formaterEiernavn = (eierNavn: string | null) => {

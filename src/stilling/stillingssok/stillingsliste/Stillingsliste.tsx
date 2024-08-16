@@ -7,15 +7,13 @@ import Stillingsrad from './stillingsrad/Stillingsrad';
 type Props = {
     hits: Hit<EsRekrutteringsbistandstilling>[];
     kandidatnr?: string;
-    navIdent?: string;
 };
 
-const Stillingsliste: FunctionComponent<Props> = ({ hits, kandidatnr, navIdent }) => {
+const Stillingsliste: FunctionComponent<Props> = ({ hits, kandidatnr }) => {
     return (
         <ul className={css.stillingliste}>
             {hits.map((hit) => (
                 <Stillingsrad
-                    navIdent={navIdent}
                     key={hit._id}
                     rekrutteringsbistandstilling={hit._source}
                     kandidatnr={kandidatnr}
