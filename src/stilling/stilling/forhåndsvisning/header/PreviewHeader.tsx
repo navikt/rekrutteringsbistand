@@ -61,7 +61,7 @@ const PreviewHeader: React.FC<IPreviewHeader> = ({ erEier, refetchKandidatlisteI
             {oppsummering && (
                 <div style={{ marginBottom: '1rem' }}>
                     <Alert variant="success">
-                        Stilling duplisert, du finner kopien under 'Stillinger' fanen.
+                        Stilling duplisert. Du finner kopien under 'Stillinger' fanen.
                     </Alert>
                 </div>
             )}
