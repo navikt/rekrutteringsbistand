@@ -12,6 +12,7 @@ import Blockquote from '@tiptap/extension-blockquote';
 import Bold from '@tiptap/extension-bold';
 import BulletList from '@tiptap/extension-bullet-list';
 import Document from '@tiptap/extension-document';
+import HardBreak from '@tiptap/extension-hard-break';
 import Heading from '@tiptap/extension-heading';
 import History from '@tiptap/extension-history';
 import Italic from '@tiptap/extension-italic';
@@ -44,6 +45,7 @@ const RikTekstEditor: React.FC<IRikTekstEditor> = ({
 
     const editor = useEditor({
         extensions: [
+            HardBreak,
             Document,
             Paragraph,
             Text,
