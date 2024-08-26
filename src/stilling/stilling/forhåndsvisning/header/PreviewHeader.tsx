@@ -1,6 +1,6 @@
 import { DocPencilIcon, PrinterSmallIcon, TabsAddIcon } from '@navikt/aksel-icons';
-import { Button } from '@navikt/ds-react';
-import { useState } from 'react';
+import { Alert, Button } from '@navikt/ds-react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { System } from '../../../../felles/domene/stilling/Stilling';
 import { Rolle } from '../../../../felles/tilgangskontroll/Roller';
@@ -17,6 +17,7 @@ interface IPreviewHeader {
 
 const PreviewHeader: React.FC<IPreviewHeader> = ({ erEier, refetchKandidatlisteId }) => {
     const dispatch = useDispatch();
+    const [oppsummering, setOppsummering] = React.useState<boolean>(false);
     const { stilling, stillingsinfoData, limitedAccess } = useSelector((state: State) => ({
         stilling: state.adData,
         stillingsinfoData: state.stillingsinfoData,
@@ -31,6 +32,7 @@ const PreviewHeader: React.FC<IPreviewHeader> = ({ erEier, refetchKandidatlisteI
 
     const onCopyAdClick = () => {
         dispatch({ type: COPY_AD_FROM_MY_ADS, uuid: stilling?.uuid });
+        setOppsummering(true);
     };
 
     const onPrintClick = () => {
@@ -56,6 +58,13 @@ const PreviewHeader: React.FC<IPreviewHeader> = ({ erEier, refetchKandidatlisteI
 
     return (
         <>
+            {oppsummering && (
+                <div style={{ marginBottom: '1rem' }}>
+                    <Alert variant="success">
+                        Stilling duplisert, du finner kopien under 'Stillinger' fanen.
+                    </Alert>
+                </div>
+            )}
             <Stillingsheader>
                 <TilgangskontrollForInnhold
                     kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET]}
@@ -67,7 +76,12 @@ const PreviewHeader: React.FC<IPreviewHeader> = ({ erEier, refetchKandidatlisteI
                         </Button>
                     )}
                     {!limitedAccess && (
-                        <Button onClick={onCopyAdClick} size="small" icon={<TabsAddIcon />}>
+                        <Button
+                            disabled={oppsummering}
+                            onClick={onCopyAdClick}
+                            size="small"
+                            icon={<TabsAddIcon />}
+                        >
                             Dupliser
                         </Button>
                     )}
