@@ -27,7 +27,7 @@ const Søkefelt: FunctionComponent = () => {
 
         if (input.length > 0) {
             const søketermer = new Set(tekst);
-            søketermer.add(input);
+            søketermer.add(input.trim());
             oppdaterUrlMedParam({
                 searchParams,
                 navigate,
