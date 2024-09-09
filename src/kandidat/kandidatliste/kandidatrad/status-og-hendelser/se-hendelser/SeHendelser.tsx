@@ -4,7 +4,7 @@ import { FunctionComponent } from 'react';
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Nettressurs } from 'felles/nettressurs';
-import { Sms } from '../../../../../api/sms-api/sms';
+import { Sms } from '../../../../../api/kandidatvarsel-api/kandidatvarsel';
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import css from '../endre-status-og-hendelser/EndreStatusOgHendelser.module.css';
 import CvErSlettet from '../hendelser/CvErSlettet';

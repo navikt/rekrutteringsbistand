@@ -1,4 +1,4 @@
-import { Sms, EksternStatus } from '../../../../../api/sms-api/sms';
+import { Sms, EksternStatus } from '../../../../../api/kandidatvarsel-api/kandidatvarsel';
 import { FunctionComponent } from 'react';
 import { formaterDatoNaturlig } from '../../../../utils/dateUtils';
 import Hendelse, { Hendelsesstatus } from './Hendelse';

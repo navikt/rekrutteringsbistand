@@ -5,7 +5,11 @@ import { FunctionComponent, useState } from 'react';
 
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import { z } from 'zod';
-import { EksternStatus, Sms, useSmserForStilling } from '../../../api/sms-api/sms';
+import {
+    EksternStatus,
+    Sms,
+    useSmserForStilling,
+} from '../../../api/kandidatvarsel-api/kandidatvarsel';
 import css from './smsFeilAlertStripe.module.css';
 
 const LESTE_SMS_IDER_KEY = 'lesteSmsIder';

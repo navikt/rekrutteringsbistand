@@ -6,7 +6,7 @@ import { FunctionComponent, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms } from '../../../../../api/sms-api/sms';
+import { Sms } from '../../../../../api/kandidatvarsel-api/kandidatvarsel';
 import useHentStilling from '../../../../../felles/hooks/useStilling';
 import { lenkeTilStilling } from '../../../../../felles/lenker';
 import { lenkeTilKandidatliste } from '../../../../app/paths';

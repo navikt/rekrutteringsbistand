@@ -3,7 +3,7 @@ import { Button } from '@navikt/ds-react';
 import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { FunctionComponent, ReactNode } from 'react';
-import { useSmserForStilling } from '../../../api/sms-api/sms';
+import { useSmserForStilling } from '../../../api/kandidatvarsel-api/kandidatvarsel';
 import {
     erKobletTilArbeidsgiver,
     erKobletTilStilling,

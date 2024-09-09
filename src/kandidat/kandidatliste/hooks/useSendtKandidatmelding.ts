@@ -1,5 +1,5 @@
 import { Fødselsnummer } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { Sms, useSmserForStilling } from '../../../api/sms-api/sms';
+import { Sms, useSmserForStilling } from '../../../api/kandidatvarsel-api/kandidatvarsel';
 
 const useSendtKandidatmelding = (
     kandidatensFnr: Fødselsnummer | null,

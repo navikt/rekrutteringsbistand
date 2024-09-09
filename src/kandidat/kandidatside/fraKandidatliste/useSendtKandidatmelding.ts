@@ -1,6 +1,6 @@
 import { KandidatIKandidatliste } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms, useSmserForStilling } from '../../../api/sms-api/sms';
+import { Sms, useSmserForStilling } from '../../../api/kandidatvarsel-api/kandidatvarsel';
 
 const useSendtKandidatmelding = (
     kandidat: KandidatIKandidatliste,
