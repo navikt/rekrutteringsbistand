@@ -38,7 +38,7 @@ const KnappeRad: FunctionComponent<Props> = ({
     const markerteKandidater = useMarkerteKandidater(kandidatliste.kandidater);
     const minstEnKandidatErMarkert = markerteKandidater.length > 0;
     const markerteAktiveKandidater = markerteKandidater.filter((kandidat) => kandidat.fodselsnr);
-    const smsApiFeil = error !== undefined;
+    const kandidatvarselFeil = error !== undefined;
     const minstEnKandidatHarIkkeFåttSms =
         sendteMeldinger !== undefined &&
         markerteAktiveKandidater.some(
@@ -75,7 +75,7 @@ const KnappeRad: FunctionComponent<Props> = ({
                         ]}
                     >
                         {skalViseEkstraKnapper &&
-                        smsApiFeil ? /* TODO: burde ideelt sett vise en feilmelding om at vi ikke kan hente SMS-status. */ null : minstEnKandidatErMarkert &&
+                        kandidatvarselFeil ? /* TODO: burde ideelt sett vise en feilmelding om at vi ikke kan hente SMS-status. */ null : minstEnKandidatErMarkert &&
                           minstEnKandidatHarIkkeFåttSms ? (
                             <Button
                                 variant="tertiary"

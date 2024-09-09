@@ -1,6 +1,6 @@
 import { apiMockHandlers } from '../src/api/api.msw';
 import { megMockMsw } from '../src/api/frackend/meg';
-import { smsApiMock } from '../src/api/sms-api/sms';
+import { kandidatvarselMock } from '../src/api/sms-api/sms';
 import { stillingsapiMock } from '../src/api/stillings-api/mock.msw';
 import { Rolle } from '../src/felles/tilgangskontroll/Roller';
 import { forespørselOmDelingAvCvMock } from './foresporsel-om-deling-av-cv-api/mock';
@@ -24,7 +24,7 @@ const mswHandlers = [
     ...forespørselOmDelingAvCvMock,
     ...stillingApiMock,
     ...presenterteKandidaterApiMock,
-    ...smsApiMock,
+    ...kandidatvarselMock,
     ...synlighetApiMock,
     ...modiaContextHolderMock,
     ...stillingssøkMock,
