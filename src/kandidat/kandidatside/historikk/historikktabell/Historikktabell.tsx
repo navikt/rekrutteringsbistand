@@ -2,7 +2,7 @@ import { Table } from '@navikt/ds-react';
 import { FunctionComponent } from 'react';
 
 import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatliste';
-import { Sms, useSmserForKandidat } from '../../../../api/sms-api/sms';
+import { Sms, useSmserForKandidat } from '../../../../api/kandidatvarsel-api/kandidatvarsel';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { ForespørselOmDelingAvCv } from '../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { Historikkrad } from './Historikkrad/Historikkrad';

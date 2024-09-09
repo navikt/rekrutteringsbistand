@@ -56,7 +56,6 @@ export default defineConfig(({ mode }) => {
                 // '/stilling-api': proxyToDev,
                 // '/kandidat-api': proxyToDev,
                 // '/kandidatsok-api': proxyToDev,
-                // '/sms-api': proxyToDev,
                 // '/kandidatvarsel-api': proxyToDev,
                 // '/foresporsel-om-deling-av-cv-api': proxyToDev,
                 // '/synlighet-api': proxyToDev,

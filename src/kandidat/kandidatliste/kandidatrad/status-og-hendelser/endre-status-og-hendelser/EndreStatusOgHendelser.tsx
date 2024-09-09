@@ -8,7 +8,7 @@ import {
 import Kandidatliste from 'felles/domene/kandidatliste/Kandidatliste';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { Nettressurs } from 'felles/nettressurs';
-import { Sms } from '../../../../../api/sms-api/sms';
+import { Sms } from '../../../../../api/kandidatvarsel-api/kandidatvarsel';
 import { kandidaterMåGodkjenneDelingAvCv } from '../../../domene/kandidatlisteUtils';
 import { ForespørslerForKandidatForStilling } from '../../../knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';
 import { statusToDisplayName } from '../etiketter/StatusEtikett';

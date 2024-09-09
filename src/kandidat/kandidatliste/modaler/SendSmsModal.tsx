@@ -5,7 +5,7 @@ import {
     Meldingsmal,
     usePostSmsTilKandidater,
     useSmserForStilling,
-} from '../../../api/sms-api/sms';
+} from '../../../api/kandidatvarsel-api/kandidatvarsel';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
 import css from './SendSmsModal.module.css';

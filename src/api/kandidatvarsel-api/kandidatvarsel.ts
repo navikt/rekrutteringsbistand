@@ -142,7 +142,7 @@ export const usePostSmsTilKandidater = (): (({
         return result;
     };
 };
-export const smsApiMock = [
+export const kandidatvarselMock = [
     http.post<{ stillingId: string }>(
         varselStillingEndepunkt(':stillingId'),
         () => new HttpResponse(null, { status: 201 })

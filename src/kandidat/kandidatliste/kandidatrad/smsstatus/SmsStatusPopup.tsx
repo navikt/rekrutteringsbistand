@@ -1,7 +1,7 @@
 import { MobileFillIcon, MobileIcon } from '@navikt/aksel-icons';
 import classNames from 'classnames';
 import { FunctionComponent } from 'react';
-import { EksternStatus, Sms } from '../../../../api/sms-api/sms';
+import { EksternStatus, Sms } from '../../../../api/kandidatvarsel-api/kandidatvarsel';
 import MedPopover from '../../med-popover/MedPopover';
 import css from './SmsStatusPopup.module.css';
 

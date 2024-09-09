@@ -8,12 +8,10 @@
     "adGruppeRekrutteringsbistandUtvikler": "a1749d9a-52e0-4116-bb9f-935c38f6c74a",
 
     "statistikkApiHost": "rekrutteringsbistand-statistikk-api.dev-fss-pub.nais.io",
-    "smsApiHost": "rekrutteringsbistand-sms.dev-fss-pub.nais.io",
     "kandidatApiHost": "rekrutteringsbistand-kandidat-api.dev-fss-pub.nais.io",
     "foresporselOmDelingAvCvApiHost": "foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io",
 
     "statistikkApiUrl": "https://rekrutteringsbistand-statistikk-api.dev-fss-pub.nais.io/rekrutteringsbistand-statistikk-api",
     "kandidatApiUrl": "https://rekrutteringsbistand-kandidat-api.dev-fss-pub.nais.io/rekrutteringsbistand-kandidat-api/rest",
-    "smsApi": "https://rekrutteringsbistand-sms.dev-fss-pub.nais.io/rekrutteringsbistand-sms",
     "foresporselOmDelingAvCvApi": "https://foresporsel-om-deling-av-cv-api.dev-fss-pub.nais.io"
 }

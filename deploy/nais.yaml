@@ -52,7 +52,6 @@ spec:
             namespace: personoversikt
         external:
           - host: {{ statistikkApiHost }}
-          - host: {{ smsApiHost }}
           - host: {{ kandidatApiHost }}
           - host: {{ foresporselOmDelingAvCvApiHost }}
     env:
@@ -80,8 +79,6 @@ spec:
           value: {{ kandidatApiUrl }}
         - name: KANDIDATSOK_API_URL
           value: http://rekrutteringsbistand-kandidatsok-api
-        - name: SMS_API
-          value: {{ smsApi }}
         - name: FORESPORSEL_OM_DELING_AV_CV_API
           value: {{ foresporselOmDelingAvCvApi }}
         - name: SYNLIGHETSMOTOR_API
