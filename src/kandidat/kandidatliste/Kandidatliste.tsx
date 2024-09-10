@@ -171,12 +171,13 @@ const Kandidatliste: FunctionComponent<Props> = ({
                 <>
                     <div className={css.grid}>
                         <div className={css.knapperad}>
-                            {kandidatliste.kanEditere && (
-                                <SmsFeilAlertStripe
-                                    kandidater={kandidatliste.kandidater}
-                                    stillingId={kandidatliste.stillingId ?? null}
-                                />
-                            )}
+                            {kandidatliste.kanEditere &&
+                                kandidatliste.stillingskategori !== 'FORMIDLING' && (
+                                    <SmsFeilAlertStripe
+                                        kandidater={kandidatliste.kandidater}
+                                        stillingId={kandidatliste.stillingId ?? null}
+                                    />
+                                )}
                             {erKobletTilStilling(kandidatliste) &&
                                 forespørslerOmDelingAvCv.kind === Nettstatus.Suksess && (
                                     <FeilVedSendingAvForespørsel

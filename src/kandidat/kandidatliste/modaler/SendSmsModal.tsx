@@ -24,7 +24,9 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
     const { vis, onClose, kandidater, stillingId, stillingskategori, fjernAllMarkering } = props;
     const visVarsling = useVisVarsling();
 
-    const { data: smser = {} } = useSmserForStilling(stillingId);
+    const { data: smser = {} } = useSmserForStilling(
+        stillingskategori === 'FORMIDLING' ? null : stillingId
+    );
 
     const markerteKandidater = useMarkerteKandidater(kandidater);
     const postSmsTilKandidater = usePostSmsTilKandidater();
