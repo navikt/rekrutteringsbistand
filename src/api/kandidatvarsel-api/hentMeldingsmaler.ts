@@ -25,13 +25,18 @@ export type PassendeJobbarrangement = {
     epostHtmlBody: string;
 };
 
+export type MeldingsmalerDTO = {
+    vurdertSomAktuell: VurdertSomAktuell;
+    passendeStilling: PassendeStilling;
+    passendeJobbarrangement: PassendeJobbarrangement;
+};
+
 export const useHentMeldingsmaler = () => {
-    const swrData = useSWR(hentMeldingsmalerEndepunkt, getAPI);
+    const { data, error, isLoading } = useSWR<MeldingsmalerDTO>(hentMeldingsmalerEndepunkt, getAPI);
     return {
-        ...swrData,
-        vurdertSomAktuell: swrData.data.vurdertSomAktuell,
-        passendeStilling: swrData.data?.passendeStilling,
-        passendeJobbarrangement: swrData.data?.passendeJobbarrangement,
+        meldingsmaler: data,
+        isLoading,
+        isError: error,
     };
 };
 

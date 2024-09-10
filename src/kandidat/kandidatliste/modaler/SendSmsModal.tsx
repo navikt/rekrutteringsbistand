@@ -11,10 +11,8 @@ import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
 import css from './SendSmsModal.module.css';
 import { useVisVarsling } from 'felles/varsling/Varsling';
 import {
-    PassendeJobbarrangement,
-    PassendeStilling,
+    MeldingsmalerDTO,
     useHentMeldingsmaler,
-    VurdertSomAktuell,
 } from '../../../api/kandidatvarsel-api/hentMeldingsmaler';
 
 type Props = {
@@ -52,7 +50,7 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             : Meldingsmal.VurdertSomAktuell
     );
 
-    const { vurdertSomAktuell, passendeStilling, passendeJobbarrangement } = useHentMeldingsmaler();
+    const { meldingsmaler } = useHentMeldingsmaler();
 
     const onSendSms = async () => {
         const korrektLengdeFødselsnummer = 11;
@@ -152,12 +150,9 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
                     <div id="forhåndsvisning" className={css.forhåndsvisning}>
                         <BodyShort>
                             <span>
-                                {genererMeldingUtenLenke(
-                                    valgtMal,
-                                    vurdertSomAktuell,
-                                    passendeStilling,
-                                    passendeJobbarrangement
-                                )}{' '}
+                                {meldingsmaler
+                                    ? genererMeldingUtenLenke(valgtMal, meldingsmaler)
+                                    : 'Klarte ikke å hente meldingsmaler'}{' '}
                             </span>
                         </BodyShort>
                     </div>
@@ -176,18 +171,13 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
     );
 };
 
-const genererMeldingUtenLenke = (
-    valgtMal: Meldingsmal,
-    vurdertSomAktuell: VurdertSomAktuell,
-    passendeStilling: PassendeStilling,
-    passendeJobbarrangement: PassendeJobbarrangement
-) => {
+const genererMeldingUtenLenke = (valgtMal: Meldingsmal, meldingsmaler: MeldingsmalerDTO) => {
     if (valgtMal === Meldingsmal.VurdertSomAktuell) {
-        return vurdertSomAktuell.smsTekst;
+        return meldingsmaler.vurdertSomAktuell.smsTekst;
     } else if (valgtMal === Meldingsmal.FunnetPassendeStilling) {
-        return passendeStilling.smsTekst;
+        return meldingsmaler.passendeStilling.smsTekst;
     } else if (valgtMal === Meldingsmal.Jobbarrangement) {
-        return passendeJobbarrangement.smsTekst;
+        return meldingsmaler.passendeJobbarrangement.smsTekst;
     }
 };
 
