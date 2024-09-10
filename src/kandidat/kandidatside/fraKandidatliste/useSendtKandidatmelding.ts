@@ -6,7 +6,11 @@ const useSendtKandidatmelding = (
     kandidat: KandidatIKandidatliste,
     kandidatliste: Kandidatliste
 ): Sms | undefined => {
-    const { data: smser } = useSmserForStilling(kandidatliste.stillingId ?? null);
+    const erFormidling = kandidatliste.stillingskategori === 'FORMIDLING';
+
+    const { data: smser } = useSmserForStilling(
+        erFormidling ? null : kandidatliste.stillingId || null
+    );
     if (smser !== undefined && typeof kandidat.fodselsnr === 'string') {
         return smser[kandidat.fodselsnr];
     } else {
