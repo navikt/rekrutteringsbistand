@@ -34,7 +34,10 @@ const KnappeRad: FunctionComponent<Props> = ({
     children,
     visArkiverte,
 }) => {
-    const { data: sendteMeldinger, error } = useSmserForStilling(kandidatliste.stillingId ?? null);
+    const erFormidling = kandidatliste.stillingskategori === 'FORMIDLING';
+    const { data: sendteMeldinger, error } = useSmserForStilling(
+        erFormidling ? null : kandidatliste.stillingId || null
+    );
     const markerteKandidater = useMarkerteKandidater(kandidatliste.kandidater);
     const minstEnKandidatErMarkert = markerteKandidater.length > 0;
     const markerteAktiveKandidater = markerteKandidater.filter((kandidat) => kandidat.fodselsnr);
