@@ -53,7 +53,11 @@ const Kandidatrad: FunctionComponent<Props> = ({
     const [visBekreftModal, setVisBekreftModal] = useState(false);
 
     const tilstand = useKandidattilstand(kandidat.kandidatnr);
-    const melding = useSendtKandidatmelding(kandidat.fodselsnr, kandidatliste.stillingId);
+    const melding = useSendtKandidatmelding(
+        kandidat.fodselsnr,
+        kandidatliste.stillingId,
+        kandidatliste.stillingskategori
+    );
     const forespørselOmDelingAvCv = useForespørselOmDelingAvCv(kandidat.aktørid);
 
     useEffect(() => {

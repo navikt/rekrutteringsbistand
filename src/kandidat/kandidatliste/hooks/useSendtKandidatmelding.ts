@@ -3,9 +3,11 @@ import { Sms, useSmserForStilling } from '../../../api/kandidatvarsel-api/kandid
 
 const useSendtKandidatmelding = (
     kandidatensFnr: Fødselsnummer | null,
-    stillingId: string | null
+    stillingId: string | null,
+    stillingskategori: string | null
 ): Sms | undefined => {
-    const { data: smser } = useSmserForStilling(stillingId);
+    const erFormidling = stillingskategori === 'FORMIDLING';
+    const { data: smser } = useSmserForStilling(erFormidling ? null : stillingId);
 
     if (typeof kandidatensFnr === 'string' && smser !== undefined) {
         return smser[kandidatensFnr];
