@@ -11,6 +11,7 @@ import { presenterteKandidaterApiMock } from './presenterte-kandidater-api/mock'
 import { stillingApiMock } from './stilling-api/mock';
 import { stillingssøkMock } from './stillingssok-proxy/mock';
 import { synlighetApiMock } from './synlighet-api/mock';
+import { hentMeldingsmalerMock } from '../src/api/kandidatvarsel-api/hentMeldingsmaler';
 
 const mswHandlers = [
     megMockMsw('Z123456', [
@@ -25,6 +26,7 @@ const mswHandlers = [
     ...stillingApiMock,
     ...presenterteKandidaterApiMock,
     ...kandidatvarselMock,
+    ...hentMeldingsmalerMock,
     ...synlighetApiMock,
     ...modiaContextHolderMock,
     ...stillingssøkMock,
