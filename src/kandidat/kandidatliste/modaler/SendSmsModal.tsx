@@ -50,7 +50,7 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             : Meldingsmal.VurdertSomAktuell
     );
 
-    const { meldingsmaler } = useHentMeldingsmaler();
+    const { data: meldingsmaler } = useHentMeldingsmaler();
 
     const onSendSms = async () => {
         const korrektLengdeFødselsnummer = 11;

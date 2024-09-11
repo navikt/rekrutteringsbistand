@@ -1,7 +1,7 @@
 /**
  * Endepunkt /api/meldingsmal
  */
-import useSWR from 'swr';
+import useSWR, { SWRResponse } from 'swr';
 import { getAPI } from '../fetcher';
 import { http, HttpResponse } from 'msw';
 
@@ -31,17 +31,12 @@ export type MeldingsmalerDTO = {
     passendeJobbarrangement: PassendeJobbarrangement;
 };
 
-export const useHentMeldingsmaler = () => {
-    const { data, error, isLoading } = useSWR<MeldingsmalerDTO>(hentMeldingsmalerEndepunkt, getAPI);
-    return {
-        meldingsmaler: data,
-        isLoading,
-        isError: error,
-    };
+export const useHentMeldingsmaler = (): SWRResponse<MeldingsmalerDTO> => {
+    return useSWR<MeldingsmalerDTO>(hentMeldingsmalerEndepunkt, getAPI);
 };
 
 export const hentMeldingsmalerMock = [
-    http.get(hentMeldingsmalerEndepunkt, async ({ params }) => {
+    http.get(hentMeldingsmalerEndepunkt, async () => {
         return HttpResponse.json([
             {
                 vurdertSomAktuell: {
