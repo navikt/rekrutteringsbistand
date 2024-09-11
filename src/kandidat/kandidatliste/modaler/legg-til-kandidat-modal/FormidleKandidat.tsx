@@ -141,12 +141,6 @@ const FormidleKandidat: FunctionComponent<Props> = ({
             )}
             <br />
             <CheckboxGroup legend={`Registrer formidling for ${usynligKandidat.fornavn}:`}>
-                <Checkbox
-                    value={presentert}
-                    onChange={(event) => setPresentert(event.target.checked)}
-                >
-                    Registrer at personen er blitt presentert
-                </Checkbox>
                 <Checkbox value={fåttJobb} onChange={(event) => setFåttJobb(event.target.checked)}>
                     Registrer at personen har fått jobb
                 </Checkbox>
