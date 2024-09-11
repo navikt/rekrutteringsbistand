@@ -44,7 +44,6 @@ const FormidleKandidat: FunctionComponent<Props> = ({
     const dispatch = useDispatch();
     const { valgtNavKontor } = useContext(ApplikasjonContext);
     const [formidling, setFormidling] = useState<Nettressurs<Kandidatliste>>(ikkeLastet());
-    const [presentert, setPresentert] = useState<boolean>(false);
     const [fåttJobb, setFåttJobb] = useState<boolean>(false);
     const visVarsling = useVisVarsling();
 
@@ -54,7 +53,6 @@ const FormidleKandidat: FunctionComponent<Props> = ({
         const dto: FormidlingAvUsynligKandidatOutboundDto = {
             // @ts-ignore TODO: written before strict-mode enabled
             fnr,
-            presentert,
             fåttJobb,
             // @ts-ignore TODO: written before strict-mode enabled
             navKontor: valgtNavKontor?.navKontor,
@@ -86,8 +84,6 @@ const FormidleKandidat: FunctionComponent<Props> = ({
         });
     };
 
-    const harValgtEtAlternativ = presentert || fåttJobb;
-
     const formidleSynligKandidat = async () => {
         if (
             valgtNavKontor &&
@@ -108,18 +104,11 @@ const FormidleKandidat: FunctionComponent<Props> = ({
                         kandidatlisteId,
                         kandidatNummer
                     );
-                } else if (presentert) {
-                    await putUtfallKandidat(
-                        Kandidatutfall.Presentert,
-                        valgtNavKontor.navKontor,
-                        kandidatlisteId,
-                        kandidatNummer
-                    );
+                    visVarsling({
+                        innhold: `Kandidaten (${fnr}) er blitt presentert og formidlet`,
+                    });
                 }
 
-                visVarsling({
-                    innhold: `Kandidaten (${fnr}) er blitt ${presentert ? 'presentert' : ''}${fåttJobb ? (presentert ? ' og formidlet' : 'formidlet') : ''}`,
-                });
                 handleBekreft();
             } catch (e) {
                 console.error(e);
@@ -149,7 +138,7 @@ const FormidleKandidat: FunctionComponent<Props> = ({
                 onLeggTilClick={kandidatNummer ? formidleSynligKandidat : formidleUsynligKandidat}
                 onAvbrytClick={onClose}
                 leggTilSpinner={formidling.kind === Nettstatus.SenderInn}
-                leggTilDisabled={formidling.kind === Nettstatus.SenderInn || !harValgtEtAlternativ}
+                leggTilDisabled={formidling.kind === Nettstatus.SenderInn || !fåttJobb}
                 avbrytDisabled={formidling.kind === Nettstatus.SenderInn}
             />
             {formidling.kind === Nettstatus.Feil && (
