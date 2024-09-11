@@ -10,6 +10,10 @@ import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import useMarkerteKandidater from '../hooks/useMarkerteKandidater';
 import css from './SendSmsModal.module.css';
 import { useVisVarsling } from 'felles/varsling/Varsling';
+import {
+    MeldingsmalerDTO,
+    useHentMeldingsmaler,
+} from '../../../api/kandidatvarsel-api/hentMeldingsmaler';
 
 type Props = {
     vis: boolean;
@@ -47,6 +51,8 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
             ? Meldingsmal.Jobbarrangement
             : Meldingsmal.VurdertSomAktuell
     );
+
+    const { data: meldingsmaler } = useHentMeldingsmaler();
 
     const onSendSms = async () => {
         const korrektLengdeFødselsnummer = 11;
@@ -145,7 +151,11 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
                     </Label>
                     <div id="forhåndsvisning" className={css.forhåndsvisning}>
                         <BodyShort>
-                            <span>{genererMeldingUtenLenke(valgtMal)} </span>
+                            <span>
+                                {meldingsmaler
+                                    ? genererMeldingUtenLenke(valgtMal, meldingsmaler)
+                                    : 'Klarte ikke å hente meldingsmaler'}{' '}
+                            </span>
                         </BodyShort>
                     </div>
                 </div>
@@ -163,19 +173,13 @@ const SendSmsModal: FunctionComponent<Props> = (props) => {
     );
 };
 
-/* nb: Det er ikke lenger frontend som styrer teksten. Så disse
- * tekstene kan være ute av sync med backend.
- */
-const genererMeldingUtenLenke = (valgtMal: Meldingsmal) => {
+const genererMeldingUtenLenke = (valgtMal: Meldingsmal, meldingsmaler: MeldingsmalerDTO) => {
     if (valgtMal === Meldingsmal.VurdertSomAktuell) {
-        return `Hei! Vi har vurdert at kompetansen din kan passe til en stilling. Logg inn på NAV 
-        for å se stillingen. Vennlig hilsen NAV`;
+        return meldingsmaler.vurdertSomAktuell.smsTekst;
     } else if (valgtMal === Meldingsmal.FunnetPassendeStilling) {
-        return `Hei! Vi har funnet en stilling som kan passe deg. Logg inn på NAV for å se 
-        stillingen. Vennlig hilsen NAV`;
+        return meldingsmaler.passendeStilling.smsTekst;
     } else if (valgtMal === Meldingsmal.Jobbarrangement) {
-        return `Hei! Vi har funnet et jobbarrangement som kanskje passer for deg. Logg inn på NAV 
-        for å se arrangementet. Vennlig hilsen NAV`;
+        return meldingsmaler.passendeJobbarrangement.smsTekst;
     }
 };
 
