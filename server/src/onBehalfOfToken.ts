@@ -66,7 +66,7 @@ async function hentNyttOnBehalfOfToken(accessToken: string, scope: string): Prom
     } else {
         logger.info(
             `Klarte ikke å hente on behalf of token for scope "${scope}", fikk status ${response.status} (${response.statusText}) årsak: ` +
-                body
+                JSON.stringify(body, null, 2)
         );
 
         throw response;
