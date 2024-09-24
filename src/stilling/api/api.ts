@@ -9,7 +9,7 @@ import Stilling, {
 import { Miljø, getMiljø } from 'felles/miljø';
 import { fetchGet, fetchPost, fetchPut } from './apiUtils';
 import devVirksomheter from './devVirksomheter';
-import { randomUUID } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 
 export const postStilling = async (
     stilling: Partial<Stilling>,
@@ -148,7 +148,7 @@ export const fetchJanzzYrker = async (typeahead: string): Promise<JanzzStilling[
             headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
-                'Nav-CallId': randomUUID(),
+                'Nav-CallId': uuidv4(),
             },
         }
     );
