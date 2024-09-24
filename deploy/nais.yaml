@@ -91,3 +91,5 @@ spec:
           value: http://modiacontextholder.personoversikt
         - name: KANDIDATVARSEL_API_URL
           value: http://rekrutteringsbistand-kandidatvarsel-api
+        - name: PAM_ONTOLOGI_URL
+          value: http://pam-ontologi.teampam
