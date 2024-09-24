@@ -9,6 +9,7 @@ import Stilling, {
 import { Miljø, getMiljø } from 'felles/miljø';
 import { fetchGet, fetchPost, fetchPut } from './apiUtils';
 import devVirksomheter from './devVirksomheter';
+import { randomUUID } from 'crypto';
 
 export const postStilling = async (
     stilling: Partial<Stilling>,
@@ -139,9 +140,19 @@ export type JanzzStilling = {
 };
 
 export const fetchJanzzYrker = async (typeahead: string): Promise<JanzzStilling[]> => {
-    const result = await fetchGet(
-        `${api.pamOntologi}/rest/typeahead/stilling?stillingstittel=${typeahead}`
+    const response = await fetch(
+        `${api.pamOntologi}/rest/typeahead/stilling?stillingstittel=${typeahead}`,
+        {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Nav-CallId': randomUUID(),
+            },
+        }
     );
+    const result = await response.json();
     return result.map((janzzStilling: any) => ({
         konseptId: janzzStilling.konseptId,
         styrk08: janzzStilling.styrk08,
