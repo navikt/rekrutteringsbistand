@@ -41,8 +41,22 @@ export const setOnBehalfOfToken =
                     const respons = e as Response;
 
                     if (respons.status === 400) {
+                        const reader = respons.body.getReader();
+                        const decoder = new TextDecoder();
+                        let result = '';
+
+                        // eslint-disable-next-line no-constant-condition
+                        while (true) {
+                            const { done, value } = await reader.read();
+                            if (done) {
+                                break;
+                            }
+                            result += decoder.decode(value, { stream: true });
+                        }
+
+                        result += decoder.decode();
                         res.status(403).send(
-                            `Bruker har ikke tilgang til scope ${scope} Body: ${respons.body}`
+                            `Bruker har ikke tilgang til scope ${scope} Body: ${result}`
                         );
                     } else {
                         res.status(respons.status).send(respons.statusText);
