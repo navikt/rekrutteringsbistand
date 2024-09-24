@@ -1,5 +1,5 @@
 import { TextField } from '@navikt/ds-react';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Stilling from 'felles/domene/stilling/Stilling';
@@ -8,6 +8,8 @@ import { State } from '../../../redux/store';
 import { SET_AD_TEXT, SET_EMPLOYMENT_JOBTITLE } from '../../adDataReducer';
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
 import Styrk from './styrk/Styrk';
+import Janzz from './janzz/Janzz';
+import { JanzzStilling } from '../../../api/api';
 
 type Props = {
     stilling: Stilling;
@@ -17,6 +19,7 @@ type Props = {
 const OmStillingen = ({ stilling, erFormidling }: Props) => {
     const dispatch = useDispatch();
     const errors = useSelector((state: State) => state.adValidation.errors);
+    const [janzzStilling, setJanzzStilling] = useState<JanzzStilling | null>(null);
 
     const handleYrkestittelChange = (event: ChangeEvent<HTMLInputElement>) => {
         dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: event.target.value });
@@ -40,7 +43,7 @@ const OmStillingen = ({ stilling, erFormidling }: Props) => {
 
     return (
         <>
-            <Styrk />
+            <Janzz janzzStilling={janzzStilling} setJanzzStilling={setJanzzStilling} />
             <TextField
                 value={stilling.properties.jobtitle}
                 label="Yrkestittel som vises på stillingen"
