@@ -41,7 +41,9 @@ export const setOnBehalfOfToken =
                     const respons = e as Response;
 
                     if (respons.status === 400) {
-                        res.status(403).send(`Bruker har ikke tilgang til scope ${scope}`);
+                        res.status(403).send(
+                            `Bruker har ikke tilgang til scope ${scope} Body: ${respons.body}`
+                        );
                     } else {
                         res.status(respons.status).send(respons.statusText);
                     }
