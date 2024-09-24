@@ -42,7 +42,7 @@ export const setOnBehalfOfToken =
 
                     if (respons.status === 400) {
                         res.status(403).send(
-                            `Bruker har ikke tilgang til scope ${scope} Body: ${respons.text}`
+                            `Bruker har ikke tilgang til scope ${scope} Body: ${respons.text()}`
                         );
                     } else {
                         res.status(respons.status).send(respons.statusText);
