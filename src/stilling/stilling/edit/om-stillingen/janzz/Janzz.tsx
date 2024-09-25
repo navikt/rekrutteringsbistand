@@ -73,6 +73,7 @@ const Janzz: FunctionComponent<Props> = ({ janzzStilling, setJanzzStilling }) =>
 
     return (
         <Typeahead
+            label="Yrkestittel som vises på stillingen"
             value={input}
             onSelect={onForslagValgt}
             onChange={onChange}

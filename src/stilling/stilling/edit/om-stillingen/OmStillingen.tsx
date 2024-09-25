@@ -1,13 +1,11 @@
-import { TextField } from '@navikt/ds-react';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Stilling from 'felles/domene/stilling/Stilling';
 import RikTekstEditor from '../../../../felles/komponenter/rikteksteditor/RikTekstEditor';
 import { State } from '../../../redux/store';
-import { SET_AD_TEXT, SET_EMPLOYMENT_JOBTITLE } from '../../adDataReducer';
+import { SET_AD_TEXT, SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../adDataReducer';
 import Skjemalabel from '../skjemaetikett/Skjemalabel';
-import Styrk from './styrk/Styrk';
 import Janzz from './janzz/Janzz';
 import { JanzzStilling } from '../../../api/api';
 
@@ -21,10 +19,18 @@ const OmStillingen = ({ stilling, erFormidling }: Props) => {
     const errors = useSelector((state: State) => state.adValidation.errors);
     const [janzzStilling, setJanzzStilling] = useState<JanzzStilling | null>(null);
 
-    const handleYrkestittelChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: event.target.value });
-    };
-
+    if (janzzStilling) {
+        dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: janzzStilling.label });
+        const kategori = {
+            id: janzzStilling.konseptId,
+            code: janzzStilling.konseptId.toString(),
+            categoryType: 'JANZZ',
+            name: janzzStilling.label,
+            description: null,
+            parentId: null,
+        };
+        dispatch({ type: SET_JANZZ, kategori });
+    }
     const onAdTextChange = (adtext: string) => {
         // This function is triggered first time adText is in focus before any letter is written.
         // In this case, just return to avoid the error message from showing before any edits are done.
@@ -44,11 +50,6 @@ const OmStillingen = ({ stilling, erFormidling }: Props) => {
     return (
         <>
             <Janzz janzzStilling={janzzStilling} setJanzzStilling={setJanzzStilling} />
-            <TextField
-                value={stilling.properties.jobtitle}
-                label="Yrkestittel som vises på stillingen"
-                onChange={handleYrkestittelChange}
-            />
             {!erFormidling && (
                 <div>
                     <Skjemalabel påkrevd inputId="endre-stilling-annonsetekst">
