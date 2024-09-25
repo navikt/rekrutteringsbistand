@@ -66,7 +66,7 @@ const startServer = () => {
     proxyMedOboToken('/stilling-api', STILLING_API_URL, scopes.stilling);
     proxyMedOboToken('/kandidat-api', KANDIDAT_API_URL, scopes.kandidat);
     proxyMedOboToken('/kandidatsok-api', KANDIDATSOK_API_URL, scopes.kandidatsøk);
-    proxyMedOboToken('/pam-ontologi', PAM_ONTOLOGI_URL, scopes.pamOntologi);
+    proxyUtenToken('/pam-ontologi', PAM_ONTOLOGI_URL);
     proxyMedOboToken('/kandidatvarsel-api', KANDIDATVARSEL_API_URL, scopes.kandidatvarsel);
     proxyMedOboToken(
         '/foresporsel-om-deling-av-cv-api',
