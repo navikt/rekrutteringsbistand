@@ -51,7 +51,7 @@ const FormidlingAvUsynligKandidatrad: FunctionComponent<Props> = ({
         });
     };
 
-    const cvDeltBeskrivelse = `Lagt til i listen av ${formidling.lagtTilAvNavn} (${
+    const lagtTilBeskrivelse = `Lagt til i listen av ${formidling.lagtTilAvNavn} (${
         formidling.lagtTilAvIdent
     }) ${formaterDatoNaturlig(formidling.lagtTilTidspunkt)}`;
 
@@ -92,14 +92,7 @@ const FormidlingAvUsynligKandidatrad: FunctionComponent<Props> = ({
                                 <Hendelse
                                     status={Hendelsesstatus.Grønn}
                                     tittel="Ny kandidat"
-                                    beskrivelse={cvDeltBeskrivelse}
-                                />
-                                <DelingAvCv
-                                    kanEndre={kanEditere}
-                                    utfall={formidling.utfall}
-                                    utfallsendringer={[]}
-                                    onEndreUtfall={endreFormidlingsutfallForUsynligKandidat}
-                                    onSlettCv={() => null}
+                                    beskrivelse={lagtTilBeskrivelse}
                                 />
                                 <FåttJobben
                                     kanEndre={kanEditere}

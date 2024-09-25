@@ -49,7 +49,13 @@ const FåttJobben: FunctionComponent<Props> = ({
     };
 
     const onBekreftFjerningAvRegistrering = () => {
-        onEndreUtfall(Kandidatutfall.Presentert);
+        onEndreUtfall(
+            utfallsendringer.some(
+                (utfallsendring) => utfallsendring.sendtTilArbeidsgiversKandidatliste
+            )
+                ? Kandidatutfall.Presentert
+                : Kandidatutfall.IkkePresentert
+        );
     };
 
     const hendelsesstatus =
