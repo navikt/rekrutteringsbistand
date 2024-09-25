@@ -103,7 +103,7 @@ const DelingAvCv: FunctionComponent<Props> = ({
     };
 
     const hendelsesstatus =
-        utfall === Kandidatutfall.FåttJobben || utfall === Kandidatutfall.Presentert || cvErSlettet
+        utfall === Kandidatutfall.Presentert || cvErSlettet
             ? Hendelsesstatus.Grønn
             : Hendelsesstatus.Hvit;
 
