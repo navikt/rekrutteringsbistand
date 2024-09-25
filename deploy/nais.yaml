@@ -50,6 +50,8 @@ spec:
           - application: presenterte-kandidater-api
           - application: modiacontextholder
             namespace: personoversikt
+          - application: pam-ontologi
+            namespace: teampam
         external:
           - host: {{ statistikkApiHost }}
           - host: {{ kandidatApiHost }}
