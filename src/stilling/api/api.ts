@@ -143,11 +143,11 @@ export const fetchJanzzYrker = async (typeahead: string): Promise<JanzzStilling[
     const response = await fetch(
         `${api.pamOntologi}/rest/typeahead/stilling?stillingstittel=${typeahead}`,
         {
-            method: 'DELETE',
+            method: 'GET',
             credentials: 'include',
             headers: {
-                'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
+                'Cache-Control': 'no-cache, no-store',
                 'Nav-CallId': uuidv4(),
             },
         }
