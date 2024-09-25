@@ -102,8 +102,12 @@ const DelingAvCv: FunctionComponent<Props> = ({
         onSlettCv();
     };
 
+    const cvErDelteMedArbeidsgiver = utfallsendringer.some(
+        (utfallsendring) => utfallsendring.sendtTilArbeidsgiversKandidatliste
+    );
+
     const hendelsesstatus =
-        utfall === Kandidatutfall.Presentert || cvErSlettet
+        utfall === Kandidatutfall.Presentert || cvErSlettet || cvErDelteMedArbeidsgiver
             ? Hendelsesstatus.Grønn
             : Hendelsesstatus.Hvit;
 
