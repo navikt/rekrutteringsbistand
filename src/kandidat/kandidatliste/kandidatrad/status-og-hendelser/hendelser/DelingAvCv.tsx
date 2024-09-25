@@ -1,4 +1,4 @@
-import { MinusCircleIcon, PlusCircleIcon } from '@navikt/aksel-icons';
+import { MinusCircleIcon } from '@navikt/aksel-icons';
 import { BodyLong, Button, ErrorMessage, Loader } from '@navikt/ds-react';
 import { FunctionComponent, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -24,7 +24,6 @@ enum Visning {
     Registrer,
     CvErDelt,
     SlettSendtCv,
-    BekreftRegistrer,
     BekreftFjernRegistrering,
     BekreftSlettSendtCv,
 }
@@ -89,17 +88,11 @@ const DelingAvCv: FunctionComponent<Props> = ({
         setVisning(hentInitiellVisning(utfall, utfallsendringer, cvErSlettet));
     }, [utfall, utfallsendringer, cvErSlettet]);
 
-    const onRegistrer = () => setVisning(Visning.BekreftRegistrer);
     const onFjernRegistrering = () => setVisning(Visning.BekreftFjernRegistrering);
     const onSlettSendtCv = () => setVisning(Visning.BekreftSlettSendtCv);
 
-    const onAvbrytRegistrering = () => setVisning(Visning.Registrer);
     const onAvbrytFjerningAvRegistrering = () => setVisning(Visning.CvErDelt);
     const onAvbrytSlettSendtCv = () => setVisning(Visning.SlettSendtCv);
-
-    const onBekreftRegistreringClick = () => {
-        onEndreUtfall(Kandidatutfall.Presentert);
-    };
 
     const onBekreftFjerningAvRegistrering = () => {
         onEndreUtfall(Kandidatutfall.IkkePresentert);
@@ -136,16 +129,6 @@ const DelingAvCv: FunctionComponent<Props> = ({
                     beskrivelse="Gjøres i kandidatlisten"
                 >
                     {kanEndre === null && <Loader />}
-                    {kanEndre && (
-                        <Button
-                            size="small"
-                            onClick={onRegistrer}
-                            variant="secondary"
-                            icon={<PlusCircleIcon aria-hidden />}
-                        >
-                            Registrer manuelt
-                        </Button>
-                    )}
                 </Hendelse>
             );
 
@@ -185,27 +168,6 @@ const DelingAvCv: FunctionComponent<Props> = ({
                         >
                             Slett CV-en hos arbeidsgiver
                         </Button>
-                    )}
-                </Hendelse>
-            );
-
-        case Visning.BekreftRegistrer:
-            return (
-                <Hendelse
-                    renderChildrenBelowContent
-                    status={hendelsesstatus}
-                    tittel="Registrer at CV-en er blitt delt"
-                    beskrivelse="Når du registrerer at CV-en er blitt delt med arbeidsgiver vil det bli telt, og tellingen vil bli brukt til statistikk"
-                >
-                    {kanEndre && (
-                        <div className={css.knapperUnderHendelse}>
-                            <Button size="small" onClick={onBekreftRegistreringClick}>
-                                CV-en er blitt delt
-                            </Button>
-                            <Button variant="secondary" size="small" onClick={onAvbrytRegistrering}>
-                                Avbryt
-                            </Button>
-                        </div>
                     )}
                 </Hendelse>
             );
