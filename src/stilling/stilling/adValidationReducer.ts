@@ -27,7 +27,6 @@ import {
     SET_EXPIRATION_DATE,
     SET_PRIVACY,
     SET_PUBLISHED,
-    SET_STYRK,
     UNCHECK_EMPLOYMENT_WORKDAY,
     UNCHECK_EMPLOYMENT_WORKHOURS,
     UNCHECK_TAG,
@@ -42,7 +41,6 @@ export type ValidertFelt =
     | 'location'
     | 'postalCode'
     | 'locationArea'
-    | 'styrk'
     | 'adText'
     | 'expires'
     | 'published'
@@ -139,17 +137,6 @@ function* validateLocationArea(): Generator<unknown, any, any> {
         });
     } else {
         yield removeValidationError({ field: 'locationArea' });
-    }
-}
-
-export function* validateStyrk(): Generator<unknown, any, any> {
-    const state = yield select();
-    const { categoryList } = state.adData;
-
-    if (valueIsNotSet(categoryList)) {
-        yield addValidationError({ field: 'styrk', message: 'STYRK mangler' });
-    } else {
-        yield removeValidationError({ field: 'styrk' });
     }
 }
 
@@ -490,7 +477,6 @@ export function* validateAll(): Generator<unknown, any, any> {
         yield validateLocation();
         yield validateExpireDate();
         yield validatePublishDate();
-        yield validateStyrk();
         yield validateAdtext();
         yield validateApplicationEmail();
         yield validatePostalCode();
@@ -511,7 +497,6 @@ export function* validateAll(): Generator<unknown, any, any> {
 
 export function hasValidationErrors(validation: Record<ValidertFelt, string | undefined>) {
     return (
-        validation.styrk !== undefined ||
         validation.location !== undefined ||
         validation.expires !== undefined ||
         validation.adText !== undefined ||
@@ -537,7 +522,6 @@ export function hasValidationErrors(validation: Record<ValidertFelt, string | un
 export function* validateBeforeSave(): Generator<unknown, any, any> {
     const state = yield select();
     if (state.adData !== null) {
-        yield validateStyrk();
         yield validateApplicationEmail();
         yield validateContactpersonEmailAndPhone();
         yield validatePostalCode();
@@ -546,7 +530,6 @@ export function* validateBeforeSave(): Generator<unknown, any, any> {
 
 export function hasValidationErrorsOnSave(validation: Record<ValidertFelt, string | undefined>) {
     return (
-        validation.styrk !== undefined ||
         validation.applicationEmail !== undefined ||
         validation.contactPersonEmail !== undefined ||
         validation.contactPersonPhone !== undefined ||
@@ -588,7 +571,6 @@ export default function adValidationReducer(state = initialState, action: any) {
 
 export const validationSaga = function* saga() {
     yield takeLatest(VALIDATE_ALL, validateAll);
-    yield takeLatest(SET_STYRK, validateStyrk);
     yield takeLatest(SET_EXPIRATION_DATE, validateExpireDate);
     yield takeLatest(SET_PUBLISHED, validatePublishDate);
     yield takeLatest(ADD_POSTAL_CODE_BEGIN, validatePostalCode);
