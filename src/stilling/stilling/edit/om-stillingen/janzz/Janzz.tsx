@@ -11,7 +11,7 @@ type Props = {
 };
 
 const Janzz: FunctionComponent<Props> = ({ janzzStilling, setJanzzStilling }) => {
-    const [input, setInput] = useState<string>('');
+    const [input, setInput] = useState<string>(janzzStilling ? janzzStilling.label : '');
     const [suggestions, setSuggestions] = useState<Nettressurs<JanzzStilling[]>>(ikkeLastet());
 
     useEffect(() => {

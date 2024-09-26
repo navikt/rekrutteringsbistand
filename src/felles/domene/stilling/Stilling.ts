@@ -55,7 +55,7 @@ export const hentTittelFraStilling = (stilling: Stilling) => {
     }
 
     const passendeStyrkkoder =
-        stilling.categoryList?.filter(({ categoryType }) => categoryType === 'STYRK08NAV') ?? [];
+        stilling.categoryList?.filter(({ categoryType }) => categoryType === 'JANZZ') ?? [];
 
     if (passendeStyrkkoder.length === 0) {
         return 'Stilling uten valgt jobbtittel';
@@ -122,6 +122,7 @@ export type EsStyrkCategory = {
 
 export type StyrkCategory = {
     categoryType: string;
+    code: string;
     name: string;
 };
 

@@ -132,11 +132,7 @@ export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Enhetsre
 
 export type JanzzStilling = {
     konseptId: number;
-    styrk08: string;
-    esco: string;
-    escoLabel: string;
     label: string;
-    undertype: string;
 };
 
 export const fetchJanzzYrker = async (typeahead: string): Promise<JanzzStilling[]> => {

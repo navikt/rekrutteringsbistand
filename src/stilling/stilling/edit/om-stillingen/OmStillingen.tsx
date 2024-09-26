@@ -17,7 +17,17 @@ type Props = {
 const OmStillingen = ({ stilling, erFormidling }: Props) => {
     const dispatch = useDispatch();
     const errors = useSelector((state: State) => state.adValidation.errors);
-    const [janzzStilling, setJanzzStilling] = useState<JanzzStilling | null>(null);
+    const kategoriJanzz = stilling?.categoryList?.find(
+        (kategori) => kategori?.categoryType === 'JANZZ'
+    );
+    const [janzzStilling, setJanzzStilling] = useState<JanzzStilling | null>(
+        kategoriJanzz
+            ? {
+                  konseptId: +kategoriJanzz.code,
+                  label: kategoriJanzz.name,
+              }
+            : null
+    );
 
     if (janzzStilling) {
         dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: janzzStilling.label });
