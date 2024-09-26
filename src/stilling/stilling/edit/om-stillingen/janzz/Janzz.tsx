@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import css from 'Janzz.module.css';
+import css from './Janzz.module.css';
 import Typeahead, { Suggestion } from '../../../../common/typeahead/Typeahead';
 import { ikkeLastet, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { fetchJanzzYrker, JanzzStilling } from '../../../../api/api';
