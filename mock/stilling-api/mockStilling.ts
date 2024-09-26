@@ -71,6 +71,7 @@ export const mockStilling /* : Stilling */ = {
     categoryList: [
         {
             name: 'Kokk',
+            code: '1234',
             categoryType: 'STYRK08NAV',
         },
     ],
