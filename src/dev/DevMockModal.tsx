@@ -20,6 +20,7 @@ import { stillingsapiMock } from '../api/stillings-api/mock.msw';
 import DevMockApi from './DevMockApi';
 import DevRoller from './DevMockMeg';
 import style from './DevTools.module.css';
+import { pamOntologiMock } from '../api/pam-ontologi/mock.msw';
 
 export interface IDevMockModal {
     children?: React.ReactNode | undefined;
@@ -84,6 +85,10 @@ const mockConfig = [
     {
         navn: 'Stilling api',
         mock: stillingsapiMock,
+    },
+    {
+        navn: 'Pam Ontologi',
+        mock: pamOntologiMock,
     },
 ];
 

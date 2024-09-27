@@ -4,7 +4,7 @@
 import { HttpResponse, http } from 'msw';
 import { z } from 'zod';
 
-export const pamOntologiEndepunkt = `/pam-ontologi/rest/typeahead/stilling`;
+export const pamOntologiEndepunkt = `/pam-ontologi/rest/typeahead/stilling*`;
 
 const janzzKategoriDTOSchema = z.object({
     konseptId: z.number(),
