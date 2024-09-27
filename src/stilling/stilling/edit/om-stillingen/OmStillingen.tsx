@@ -17,6 +17,7 @@ type Props = {
 const OmStillingen = ({ stilling, erFormidling }: Props) => {
     const dispatch = useDispatch();
     const errors = useSelector((state: State) => state.adValidation.errors);
+    console.info('stilling', stilling);
     const kategoriJanzz = stilling?.categoryList?.find(
         (kategori) => kategori?.categoryType === 'JANZZ'
     );

@@ -3,6 +3,7 @@ import { foresporselApiMock } from './foresporsel-om-deling-av-cv-api/mock.msw';
 import { kandidatApiMock } from './kandidat-api/mock.msw';
 import { kandidatSokApiMock } from './kandidat-søk-api/mock.msw';
 import { statistikkApiMock } from './statistikk-api/mock.msw';
+import { pamOntologiMock } from './pam-ontologi/mock.msw';
 
 export const apiMockHandlers = [
     ...kandidatApiMock,
@@ -10,4 +11,5 @@ export const apiMockHandlers = [
     ...statistikkApiMock,
     ...kandidatSokApiMock,
     ...stillingApiMock,
+    ...pamOntologiMock,
 ];
