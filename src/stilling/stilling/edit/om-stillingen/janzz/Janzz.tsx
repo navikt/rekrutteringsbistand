@@ -4,14 +4,19 @@ import Typeahead, { Suggestion } from '../../../../common/typeahead/Typeahead';
 import { ikkeLastet, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { fetchJanzzYrker, JanzzStilling } from '../../../../api/api';
 import capitalizeEmployerName from '../../endre-arbeidsgiver/capitalizeEmployerName';
+import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
+import { StyrkCategory } from 'felles/domene/stilling/Stilling';
+import { useDispatch } from 'react-redux';
 
 type Props = {
-    janzzStilling: JanzzStilling | null;
-    setJanzzStilling: (value: JanzzStilling | null) => void;
+    categoryList: StyrkCategory[];
+    tittel: string;
 };
 
-const Janzz: FunctionComponent<Props> = ({ janzzStilling, setJanzzStilling }) => {
-    const [input, setInput] = useState<string>(janzzStilling ? janzzStilling.label : '');
+const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
+    const dispatch = useDispatch();
+
+    const [input, setInput] = useState<string>(tittel);
     const [suggestions, setSuggestions] = useState<Nettressurs<JanzzStilling[]>>(ikkeLastet());
 
     useEffect(() => {
@@ -42,13 +47,9 @@ const Janzz: FunctionComponent<Props> = ({ janzzStilling, setJanzzStilling }) =>
         }
     }, [input]);
 
-    const onChange = (value: string) => {
-        setInput(value);
-    };
-
-    const onInputBlur = (value: string) => {
-        if (value.length === 0) {
-            setJanzzStilling(null);
+    const onChange = (value: string | undefined) => {
+        if (value) {
+            setInput(value);
         }
     };
 
@@ -58,13 +59,20 @@ const Janzz: FunctionComponent<Props> = ({ janzzStilling, setJanzzStilling }) =>
                 const found = finnJanzzStilling(suggestions.data, valgtForslag.value);
 
                 if (found) {
-                    setJanzzStilling(found);
-                } else {
-                    setJanzzStilling(null);
+                    dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
+                    const kategori = [
+                        {
+                            id: found.konseptId,
+                            code: found.konseptId.toString(),
+                            categoryType: 'JANZZ',
+                            name: found.label,
+                            description: null,
+                            parentId: null,
+                        },
+                    ];
+                    dispatch({ type: SET_JANZZ, kategori });
                 }
                 setInput(capitalizeEmployerName(found ? found.label : null) || '');
-            } else {
-                setJanzzStilling(null);
             }
         }
     };
@@ -77,8 +85,7 @@ const Janzz: FunctionComponent<Props> = ({ janzzStilling, setJanzzStilling }) =>
             value={input}
             onSelect={onForslagValgt}
             onChange={onChange}
-            //@ts-ignore: TODO
-            onBlur={onInputBlur}
+            onBlur={onChange}
             suggestions={konverterTilTypeaheadFormat(suggestions)}
             error={feilmeldingTilBruker || undefined}
             className={css.typeahead}
