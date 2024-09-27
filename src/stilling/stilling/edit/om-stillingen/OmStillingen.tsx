@@ -32,14 +32,16 @@ const OmStillingen = ({ stilling, erFormidling }: Props) => {
 
     if (janzzStilling) {
         dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: janzzStilling.label });
-        const kategori = {
-            id: janzzStilling.konseptId,
-            code: janzzStilling.konseptId.toString(),
-            categoryType: 'JANZZ',
-            name: janzzStilling.label,
-            description: null,
-            parentId: null,
-        };
+        const kategori = [
+            {
+                id: janzzStilling.konseptId,
+                code: janzzStilling.konseptId.toString(),
+                categoryType: 'JANZZ',
+                name: janzzStilling.label,
+                description: null,
+                parentId: null,
+            },
+        ];
         dispatch({ type: SET_JANZZ, kategori });
     }
     const onAdTextChange = (adtext: string) => {
