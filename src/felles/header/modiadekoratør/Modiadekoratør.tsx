@@ -5,7 +5,7 @@ import { NavKontorMedNavn } from '../../ApplikasjonContext';
 import { DecoratorProps } from './DekoratørProps';
 import css from './Modiadekoratør.module.css';
 
-const appName = 'internarbeidsflatefs';
+const appName = 'internarbeidsflate-decorator-v3';
 
 enum Status {
     LasterNed,
@@ -32,9 +32,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                     returnPromise: true,
                 });
 
-                const component = NAVSPA.importer<DecoratorProps>(
-                    `internarbeidsflate-decorator-v3`
-                );
+                const component = NAVSPA.importer<DecoratorProps>(appName);
                 microfrontend.current = component;
 
                 setStatus(Status.Klar);
@@ -58,14 +56,14 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         });
     };
 
-    // const proxyUrl = 'https://rekrutteringsbistand.intern.dev.nav.no'; // todo legg til prod-url
+    const proxyUrl = 'https://rekrutteringsbistand.intern.dev.nav.no'; // todo legg til prod-url
 
     return (
         <div className={css.wrapper}>
             {status === Status.Klar && (
                 // @ts-ignore TODO: written before strict-mode enabled
                 <microfrontend.current
-                    // proxy={proxyUrl}
+                    proxy={proxyUrl}
                     urlFormat={'NAV_NO'}
                     environment={'q0'}
                     showEnheter={true}
