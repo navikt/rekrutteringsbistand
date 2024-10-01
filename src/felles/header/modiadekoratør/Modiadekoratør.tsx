@@ -1,8 +1,8 @@
-import Navspa from '@navikt/navspa';
+import NAVSPA from '@navikt/navspa';
 import loadjs from 'loadjs';
 import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
 import { NavKontorMedNavn } from '../../ApplikasjonContext';
-import DekoratørProps, { EnhetDisplay } from './DekoratørProps';
+import { DecoratorProps } from './DekoratørProps';
 import css from './Modiadekoratør.module.css';
 
 const appName = 'internarbeidsflatefs';
@@ -19,7 +19,7 @@ type Props = {
 };
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
-    const microfrontend = useRef<ComponentType<DekoratørProps>>();
+    const microfrontend = useRef<ComponentType<DecoratorProps>>();
 
     const [status, setStatus] = useState<Status>(
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
@@ -32,7 +32,9 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                     returnPromise: true,
                 });
 
-                const component = Navspa.importer<DekoratørProps>(appName);
+                const component = NAVSPA.importer<DecoratorProps>(
+                    `internarbeidsflate-decorator-v3`
+                );
                 microfrontend.current = component;
 
                 setStatus(Status.Klar);
@@ -42,11 +44,9 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         };
 
         if (!loadjs.isDefined(appName)) {
-            const url = hentHostname();
-
             loadAssets([
-                `${url}/internarbeidsflatedecorator/v2.1/static/js/head.v2.min.js`,
-                `${url}/internarbeidsflatedecorator/v2.1/static/css/main.css`,
+                `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css`,
+                `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js`,
             ]);
         }
     }, []);
@@ -65,12 +65,8 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                 <microfrontend.current
                     appname="Rekrutteringsbistand"
                     useProxy={true}
-                    enhet={{
-                        initialValue: navKontor,
-                        display: EnhetDisplay.ENHET_VALG,
-                        onChange: handleNavKontorChange,
-                        ignoreWsEvents: true,
-                    }}
+                    onEnhetChanged={handleNavKontorChange}
+                    ignoreWsEvents={true}
                     toggles={{
                         visVeileder: true,
                     }}
@@ -80,16 +76,6 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
             {status === Status.Feil && <span>Klarte ikke å laste inn Modia-dekoratør</span>}
         </div>
     );
-};
-
-const hentHostname = () => {
-    if (window.location.hostname.includes('intern.dev.nav.no')) {
-        return 'https://internarbeidsflatedecorator-q0.intern.dev.nav.no';
-    } else if (window.location.hostname.includes('intern.nav.no')) {
-        return 'https://internarbeidsflatedecorator.intern.nav.no';
-    } else {
-        return 'https://navikt.github.io';
-    }
 };
 
 const hentNavKontoretsNavn = (navKontor: string) => {
