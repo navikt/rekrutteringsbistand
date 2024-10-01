@@ -15,7 +15,6 @@ import { megMockMsw } from '../api/frackend/meg';
 import { kandidatApiMock } from '../api/kandidat-api/mock.msw';
 import { kandidatSokApiMock } from '../api/kandidat-søk-api/mock.msw';
 import { kandidatvarselMock } from '../api/kandidatvarsel-api/kandidatvarsel';
-import { pamOntologiMock } from '../api/pam-ontologi/mock.msw';
 import { statistikkApiMock } from '../api/statistikk-api/mock.msw';
 import { stillingsapiMock } from '../api/stillings-api/mock.msw';
 import DevMockApi from './DevMockApi';
@@ -85,10 +84,6 @@ const mockConfig = [
     {
         navn: 'Stilling api',
         mock: stillingsapiMock,
-    },
-    {
-        navn: 'Pam ontologi',
-        mock: pamOntologiMock,
     },
 ];
 
