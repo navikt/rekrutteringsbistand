@@ -51,10 +51,10 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         }
     }, []);
 
-    const handleNavKontorChange = (navKontor: string) => {
+    const handleNavKontorChange = (navKontor: string, enhet: any) => {
         onNavKontorChange({
-            navKontor,
-            navKontorNavn: hentNavKontoretsNavn(navKontor),
+            navKontor: enhet.enhetId,
+            navKontorNavn: hentNavKontoretsNavn(enhet.navn),
         });
     };
 
@@ -63,13 +63,15 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
             {status === Status.Klar && (
                 // @ts-ignore TODO: written before strict-mode enabled
                 <microfrontend.current
+                    urlFormat={'NAV_NO'}
+                    environment={'q0'}
+                    showEnheter={true}
+                    showHotkeys={false}
+                    showSearchArea={false}
                     appname="Rekrutteringsbistand"
                     useProxy={true}
                     onEnhetChanged={handleNavKontorChange}
                     ignoreWsEvents={true}
-                    toggles={{
-                        visVeileder: true,
-                    }}
                 />
             )}
 
