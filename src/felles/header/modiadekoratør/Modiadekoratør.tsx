@@ -1,9 +1,9 @@
+import { Alert } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
 import loadjs from 'loadjs';
 import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
 import { NavKontorMedNavn } from '../../ApplikasjonContext';
 import { DecoratorProps } from './DekoratørProps';
-import css from './Modiadekoratør.module.css';
 
 const appName = 'internarbeidsflate-decorator-v3';
 
@@ -49,7 +49,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         }
     }, []);
 
-    const handleNavKontorChange = (navKontor: string, enhet: any) => {
+    const handleNavKontorChange = (enhetId: string | null | undefined, enhet: any) => {
         onNavKontorChange({
             navKontor: enhet.enhetId,
             navKontorNavn: hentNavKontoretsNavn(enhet.navn),
@@ -58,26 +58,30 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
 
     const proxyUrl = 'https://rekrutteringsbistand.intern.dev.nav.no'; // todo legg til prod-url
 
+    const props: DecoratorProps = {
+        proxy: proxyUrl,
+        urlFormat: 'NAV_NO',
+        environment: 'q0',
+        showEnheter: true,
+        showHotkeys: false,
+        showSearchArea: false,
+        appName: 'Rekrutteringsbistand',
+        useProxy: true,
+        onEnhetChanged: handleNavKontorChange,
+    };
     return (
-        <div className={css.wrapper}>
-            {status === Status.Klar && (
-                // @ts-ignore TODO: written before strict-mode enabled
-                <microfrontend.current
-                    proxy={proxyUrl}
-                    urlFormat={'NAV_NO'}
-                    environment={'q0'}
-                    showEnheter={true}
-                    showHotkeys={false}
-                    showSearchArea={false}
-                    appname="Rekrutteringsbistand"
-                    useProxy={true}
-                    onEnhetChanged={handleNavKontorChange}
-                    ignoreWsEvents={true}
-                />
-            )}
+        <>
+            {status === Status.Klar &&
+                (() => {
+                    const MicrofrontendComponent =
+                        microfrontend.current as React.ComponentType<any>;
+                    return <MicrofrontendComponent {...props} />;
+                })()}
 
-            {status === Status.Feil && <span>Klarte ikke å laste inn Modia-dekoratør</span>}
-        </div>
+            {status === Status.Feil && (
+                <Alert variant="error">Klarte ikke å laste inn Modia-dekoratør</Alert>
+            )}
+        </>
     );
 };
 
