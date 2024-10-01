@@ -1,7 +1,7 @@
 import { Alert } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
 import loadjs from 'loadjs';
-import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
+import { ComponentType, FunctionComponent, useCallback, useEffect, useRef, useState } from 'react';
 import { NavKontorMedNavn } from '../../ApplikasjonContext';
 import { DecoratorProps } from './DekoratørProps';
 
@@ -25,9 +25,25 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
     );
 
+    const loadCss = useCallback((href: string) => {
+        if (!document.getElementById('modia-dekorator-css')) {
+            const link = document.createElement('link');
+            link.id = 'modia-dekorator-css';
+            link.rel = 'stylesheet';
+            link.href = href;
+            document.head.appendChild(link);
+        }
+    }, []);
+
     useEffect(() => {
         const loadAssets = async (staticPaths: string[]) => {
             try {
+                // Load CSS separately
+                loadCss(
+                    `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css`
+                );
+
+                // Load JS bundle
                 await loadjs(staticPaths, appName, {
                     returnPromise: true,
                 });
@@ -43,11 +59,10 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
 
         if (!loadjs.isDefined(appName)) {
             loadAssets([
-                `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css`,
                 `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js`,
             ]);
         }
-    }, []);
+    }, [loadCss]);
 
     const handleNavKontorChange = (enhetId: string | null | undefined, enhet: any) => {
         onNavKontorChange({
