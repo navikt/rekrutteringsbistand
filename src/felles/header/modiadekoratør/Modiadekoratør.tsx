@@ -3,6 +3,7 @@ import NAVSPA from '@navikt/navspa';
 import loadjs from 'loadjs';
 import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
 import { NavKontorMedNavn } from '../../ApplikasjonContext';
+import { getMiljø, Miljø } from '../../miljø';
 import { DecoratorProps } from './DekoratørProps';
 
 const appName = 'internarbeidsflate-decorator-v3';
@@ -56,7 +57,10 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         });
     };
 
-    const proxyUrl = 'https://rekrutteringsbistand.intern.dev.nav.no'; // todo legg til prod-url
+    const proxyUrl =
+        getMiljø() === Miljø.ProdGcp
+            ? 'https://rekrutteringsbistand.intern.nav.no'
+            : 'https://rekrutteringsbistand.intern.dev.nav.no';
 
     const props: DecoratorProps = {
         proxy: proxyUrl,
