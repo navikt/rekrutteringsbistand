@@ -62,7 +62,6 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
             ? 'https://rekrutteringsbistand.intern.nav.no/modiacontextholder'
             : 'https://rekrutteringsbistand.intern.dev.nav.no/modiacontextholder';
 
-    console.log(proxyUrl);
     const props: DecoratorProps = {
         proxy: proxyUrl,
         urlFormat: 'NAV_NO',
