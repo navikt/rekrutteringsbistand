@@ -59,8 +59,8 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
 
     const proxyUrl =
         getMiljø() === Miljø.ProdGcp
-            ? 'https://rekrutteringsbistand.intern.nav.no'
-            : 'https://rekrutteringsbistand.intern.dev.nav.no';
+            ? 'https://rekrutteringsbistand.intern.nav.no/modiacontextholder'
+            : 'https://rekrutteringsbistand.intern.dev.nav.no/modiacontextholder';
 
     const props: DecoratorProps = {
         proxy: proxyUrl,
