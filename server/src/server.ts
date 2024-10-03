@@ -39,7 +39,6 @@ const {
     STILLINGSSOK_PROXY_URL,
     KANDIDAT_API_URL,
     KANDIDATSOK_API_URL,
-    SMS_API,
     FORESPORSEL_OM_DELING_AV_CV_API,
     SYNLIGHETSMOTOR_API,
     ARBEIDSGIVER_NOTIFIKASJON_API,
@@ -59,6 +58,16 @@ const startServer = () => {
     proxyUtenToken('/arbeidsgiver-notifikasjon-api', ARBEIDSGIVER_NOTIFIKASJON_API);
 
     proxyMedOboToken('/modiacontextholder', MODIA_CONTEXT_HOLDER_API, scopes.modiaContextHolder);
+    proxyMedOboToken(
+        '/api/decorator',
+        MODIA_CONTEXT_HOLDER_API + '/api/decorator',
+        scopes.modiaContextHolder
+    );
+    proxyMedOboToken(
+        '/api/context',
+        MODIA_CONTEXT_HOLDER_API + '/api/context',
+        scopes.modiaContextHolder
+    );
     proxyMedOboToken('/statistikk-api', STATISTIKK_API_URL, scopes.statistikk);
     proxyMedOboToken('/stillingssok-proxy', STILLINGSSOK_PROXY_URL, scopes.stillingssøk);
     proxyMedOboToken('/stilling-api', STILLING_API_URL, scopes.stilling);

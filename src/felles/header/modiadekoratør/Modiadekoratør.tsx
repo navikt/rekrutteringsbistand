@@ -1,11 +1,12 @@
-import Navspa from '@navikt/navspa';
+import { Alert } from '@navikt/ds-react';
+import NAVSPA from '@navikt/navspa';
 import loadjs from 'loadjs';
 import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
 import { NavKontorMedNavn } from '../../ApplikasjonContext';
-import DekoratørProps, { EnhetDisplay } from './DekoratørProps';
-import css from './Modiadekoratør.module.css';
+import { getMiljø, Miljø } from '../../miljø';
+import { DecoratorProps } from './DekoratørProps';
 
-const appName = 'internarbeidsflatefs';
+const appName = 'internarbeidsflate-decorator-v3';
 
 enum Status {
     LasterNed,
@@ -19,7 +20,7 @@ type Props = {
 };
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
-    const microfrontend = useRef<ComponentType<DekoratørProps>>();
+    const microfrontend = useRef<ComponentType<DecoratorProps>>();
 
     const [status, setStatus] = useState<Status>(
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
@@ -28,11 +29,12 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
     useEffect(() => {
         const loadAssets = async (staticPaths: string[]) => {
             try {
+                // Load JS bundle
                 await loadjs(staticPaths, appName, {
                     returnPromise: true,
                 });
 
-                const component = Navspa.importer<DekoratørProps>(appName);
+                const component = NAVSPA.importer<DecoratorProps>(appName);
                 microfrontend.current = component;
 
                 setStatus(Status.Klar);
@@ -42,54 +44,49 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         };
 
         if (!loadjs.isDefined(appName)) {
-            const url = hentHostname();
-
             loadAssets([
-                `${url}/internarbeidsflatedecorator/v2.1/static/js/head.v2.min.js`,
-                `${url}/internarbeidsflatedecorator/v2.1/static/css/main.css`,
+                `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js`,
             ]);
         }
     }, []);
 
-    const handleNavKontorChange = (navKontor: string) => {
+    const handleNavKontorChange = (enhetId: string | null | undefined, enhet: any) => {
         onNavKontorChange({
-            navKontor,
-            navKontorNavn: hentNavKontoretsNavn(navKontor),
+            navKontor: enhet.enhetId,
+            navKontorNavn: hentNavKontoretsNavn(enhet.navn),
         });
     };
 
+    const proxyUrl =
+        getMiljø() === Miljø.ProdGcp
+            ? 'https://rekrutteringsbistand.intern.nav.no'
+            : 'https://rekrutteringsbistand.intern.dev.nav.no';
+
+    const props: DecoratorProps = {
+        proxy: proxyUrl,
+        urlFormat: 'NAV_NO',
+        environment: 'q0',
+        showEnheter: true,
+        showHotkeys: false,
+        showSearchArea: false,
+        appName: 'Rekrutteringsbistand',
+        useProxy: true,
+        onEnhetChanged: handleNavKontorChange,
+    };
     return (
-        <div className={css.wrapper}>
-            {status === Status.Klar && (
-                // @ts-ignore TODO: written before strict-mode enabled
-                <microfrontend.current
-                    appname="Rekrutteringsbistand"
-                    useProxy={true}
-                    enhet={{
-                        initialValue: navKontor,
-                        display: EnhetDisplay.ENHET_VALG,
-                        onChange: handleNavKontorChange,
-                        ignoreWsEvents: true,
-                    }}
-                    toggles={{
-                        visVeileder: true,
-                    }}
-                />
+        <>
+            {status === Status.Klar &&
+                (() => {
+                    const MicrofrontendComponent =
+                        microfrontend.current as React.ComponentType<any>;
+                    return <MicrofrontendComponent {...props} />;
+                })()}
+
+            {status === Status.Feil && (
+                <Alert variant="error">Klarte ikke å laste inn Modia-dekoratør</Alert>
             )}
-
-            {status === Status.Feil && <span>Klarte ikke å laste inn Modia-dekoratør</span>}
-        </div>
+        </>
     );
-};
-
-const hentHostname = () => {
-    if (window.location.hostname.includes('intern.dev.nav.no')) {
-        return 'https://internarbeidsflatedecorator-q0.intern.dev.nav.no';
-    } else if (window.location.hostname.includes('intern.nav.no')) {
-        return 'https://internarbeidsflatedecorator.intern.nav.no';
-    } else {
-        return 'https://navikt.github.io';
-    }
 };
 
 const hentNavKontoretsNavn = (navKontor: string) => {

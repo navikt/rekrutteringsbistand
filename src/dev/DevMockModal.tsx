@@ -7,7 +7,6 @@ import { gammelKandidatApiMock } from '../../mock/kandidat-api/mock';
 import { modiaContextHolderMock } from '../../mock/modiacontextholder/mock';
 import { presenterteKandidaterApiMock } from '../../mock/presenterte-kandidater-api/mock';
 import { mswWorker } from '../../mock/setup';
-import { kandidatvarselMock } from '../api/kandidatvarsel-api/kandidatvarsel';
 import { stillingApiMock } from '../../mock/stilling-api/mock';
 import { stillingssøkMock } from '../../mock/stillingssok-proxy/mock';
 import { synlighetApiMock } from '../../mock/synlighet-api/mock';
@@ -15,6 +14,7 @@ import { foresporselApiMock } from '../api/foresporsel-om-deling-av-cv-api/mock.
 import { megMockMsw } from '../api/frackend/meg';
 import { kandidatApiMock } from '../api/kandidat-api/mock.msw';
 import { kandidatSokApiMock } from '../api/kandidat-søk-api/mock.msw';
+import { kandidatvarselMock } from '../api/kandidatvarsel-api/kandidatvarsel';
 import { statistikkApiMock } from '../api/statistikk-api/mock.msw';
 import { stillingsapiMock } from '../api/stillings-api/mock.msw';
 import DevMockApi from './DevMockApi';
