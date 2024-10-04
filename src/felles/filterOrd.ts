@@ -9,7 +9,9 @@ export const filtrerOrdFraStilling = (hits: Hit<EsRekrutteringsbistandstilling>[
         // overstyr filter for annonse nr:
         if (
             stilling._source?.stilling?.annonsenr &&
-            ['2411402', '2490709', '2590256'].includes(stilling._source?.stilling?.annonsenr)
+            ['2411402', '2490709', '2590256', '2609645'].includes(
+                stilling._source?.stilling?.annonsenr
+            )
         ) {
             return stilling;
         }
