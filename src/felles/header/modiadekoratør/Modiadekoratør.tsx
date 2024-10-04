@@ -21,10 +21,10 @@ type Props = {
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
     const microfrontend = useRef<ComponentType<DecoratorProps>>();
+
     const [status, setStatus] = useState<Status>(
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
     );
-    const styleRef = useRef<HTMLStyleElement | null>(null);
 
     useEffect(() => {
         const loadAssets = async (staticPaths: string[]) => {
@@ -45,37 +45,10 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
 
         if (!loadjs.isDefined(appName)) {
             loadAssets([
+                `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css`,
                 `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js`,
             ]);
         }
-
-        // Add the isolated styles
-        if (!styleRef.current) {
-            const style = document.createElement('style');
-            style.setAttribute('data-modiadekorator', '');
-            document.head.appendChild(style);
-            styleRef.current = style;
-
-            fetch(
-                'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css'
-            )
-                .then((response) => response.text())
-                .then((css) => {
-                    if (styleRef.current) {
-                        styleRef.current.textContent = `
-                            .modiadekorator-wrapper ${css.replace(/\}/g, '}')}
-                        `;
-                    }
-                });
-        }
-
-        return () => {
-            // Clean up the styles when the component unmounts
-            if (styleRef.current) {
-                document.head.removeChild(styleRef.current);
-                styleRef.current = null;
-            }
-        };
     }, []);
 
     const handleNavKontorChange = (enhetId: string | null | undefined, enhet: any) => {
@@ -102,7 +75,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         onEnhetChanged: handleNavKontorChange,
     };
     return (
-        <div className="modiadekorator-wrapper">
+        <>
             {status === Status.Klar &&
                 (() => {
                     const MicrofrontendComponent =
@@ -113,7 +86,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
             {status === Status.Feil && (
                 <Alert variant="error">Klarte ikke å laste inn Modia-dekoratør</Alert>
             )}
-        </div>
+        </>
     );
 };
 
