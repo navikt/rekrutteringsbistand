@@ -2,7 +2,6 @@ import { Alert } from '@navikt/ds-react';
 import NAVSPA from '@navikt/navspa';
 import loadjs from 'loadjs';
 import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { NavKontorMedNavn } from '../../ApplikasjonContext';
 import { getMiljø, Miljø } from '../../miljø';
 import { DecoratorProps } from './DekoratørProps';
@@ -20,9 +19,6 @@ type Props = {
     onNavKontorChange: (navKontor: NavKontorMedNavn) => void;
 };
 
-const StyledHeader = styled.div`
-    @import url('https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css');
-`;
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
     const microfrontend = useRef<ComponentType<DecoratorProps>>();
 
@@ -83,11 +79,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                 (() => {
                     const MicrofrontendComponent =
                         microfrontend.current as React.ComponentType<any>;
-                    return (
-                        <StyledHeader>
-                            <MicrofrontendComponent {...props} />
-                        </StyledHeader>
-                    );
+                    return <MicrofrontendComponent {...props} />;
                 })()}
 
             {status === Status.Feil && (
