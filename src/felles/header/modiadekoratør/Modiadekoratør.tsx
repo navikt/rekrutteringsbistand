@@ -5,7 +5,7 @@ import { ComponentType, FunctionComponent, useEffect, useRef, useState } from 'r
 import { NavKontorMedNavn } from '../../ApplikasjonContext';
 import { getMiljø, Miljø } from '../../miljø';
 import { DecoratorProps } from './DekoratørProps';
-
+import styles from './Modiadekoratør.module.css';
 const appName = 'internarbeidsflate-decorator-v3';
 
 enum Status {
@@ -21,33 +21,10 @@ type Props = {
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
     const microfrontend = useRef<ComponentType<DecoratorProps>>();
-    const hostRef = useRef<any>(null);
+
     const [status, setStatus] = useState<Status>(
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
     );
-
-    useEffect(() => {
-        if (hostRef.current) {
-            const root = hostRef.current.attachShadow({ mode: 'open' });
-
-            const style = document.createElement('style');
-            style.textContent = `
-            @import url('https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css')
-            layer(modiadekorator);
-          `;
-
-            const content = document.createElement('div');
-            content.id = 'modia-decorator-content';
-
-            root.appendChild(style);
-            root.appendChild(content);
-
-            // Move children into shadow DOM
-            while (hostRef.current.firstChild) {
-                content.appendChild(hostRef.current.firstChild);
-            }
-        }
-    }, []);
 
     useEffect(() => {
         const loadAssets = async (staticPaths: string[]) => {
@@ -103,7 +80,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                     const MicrofrontendComponent =
                         microfrontend.current as React.ComponentType<any>;
                     return (
-                        <div ref={hostRef}>
+                        <div className={styles.modiaDecorator}>
                             <MicrofrontendComponent {...props} />
                         </div>
                     );

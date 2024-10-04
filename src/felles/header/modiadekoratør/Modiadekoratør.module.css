@@ -4,6 +4,10 @@
     background-color: #3e3832;
 }
 
+:global {
+    @import url('https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css');
+}
+
 .placeholder {
     display: flex;
     gap: 2rem;
