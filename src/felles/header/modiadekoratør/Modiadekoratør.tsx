@@ -21,22 +21,32 @@ type Props = {
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
     const microfrontend = useRef<ComponentType<DecoratorProps>>();
-
+    const hostRef = useRef<any>(null);
     const [status, setStatus] = useState<Status>(
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
     );
 
     useEffect(() => {
-        const style = document.createElement('style');
-        style.textContent = `
-          @import url('https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css')
-          layer(modiadekorator);
-        `;
-        document.head.appendChild(style);
+        if (hostRef.current) {
+            const root = hostRef.current.attachShadow({ mode: 'open' });
 
-        return () => {
-            document.head.removeChild(style);
-        };
+            const style = document.createElement('style');
+            style.textContent = `
+            @import url('https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css')
+            layer(modiadekorator);
+          `;
+
+            const content = document.createElement('div');
+            content.id = 'modia-decorator-content';
+
+            root.appendChild(style);
+            root.appendChild(content);
+
+            // Move children into shadow DOM
+            while (hostRef.current.firstChild) {
+                content.appendChild(hostRef.current.firstChild);
+            }
+        }
     }, []);
 
     useEffect(() => {
@@ -92,7 +102,11 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                 (() => {
                     const MicrofrontendComponent =
                         microfrontend.current as React.ComponentType<any>;
-                    return <MicrofrontendComponent {...props} />;
+                    return (
+                        <div ref={hostRef}>
+                            <MicrofrontendComponent {...props} />
+                        </div>
+                    );
                 })()}
 
             {status === Status.Feil && (
