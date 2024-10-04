@@ -21,10 +21,29 @@ type Props = {
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
     const microfrontend = useRef<ComponentType<DecoratorProps>>();
-
+    const containerRef = useRef<HTMLDivElement>(null);
     const [status, setStatus] = useState<Status>(
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
     );
+
+    useEffect(() => {
+        const link = document.createElement('link');
+        link.href =
+            'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css';
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+
+        const container = containerRef.current;
+        if (container) {
+            container.appendChild(link);
+        }
+
+        return () => {
+            if (container && container.contains(link)) {
+                container.removeChild(link);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         const loadAssets = async (staticPaths: string[]) => {
@@ -79,7 +98,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                 (() => {
                     const MicrofrontendComponent =
                         microfrontend.current as React.ComponentType<any>;
-                    return <MicrofrontendComponent {...props} />;
+                    return <MicrofrontendComponent ref={containerRef} {...props} />;
                 })()}
 
             {status === Status.Feil && (

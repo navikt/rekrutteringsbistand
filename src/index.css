@@ -1,4 +1,3 @@
-@import url('https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css');
 @import '@navikt/ds-css' layer(designsystem);
 
 :root {
