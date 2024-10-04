@@ -21,28 +21,26 @@ type Props = {
 
 const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChange }) => {
     const microfrontend = useRef<ComponentType<DecoratorProps>>();
-    const containerRef = useRef<HTMLDivElement>(null);
     const [status, setStatus] = useState<Status>(
         loadjs.isDefined(appName) ? Status.Klar : Status.LasterNed
     );
 
+    const [styles, setStyles] = useState<string | null>(null);
+
     useEffect(() => {
-        const link = document.createElement('link');
-        link.href =
-            'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css';
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-
-        const container = containerRef.current;
-        if (container) {
-            container.appendChild(link);
-        }
-
-        return () => {
-            if (container && container.contains(link)) {
-                container.removeChild(link);
+        const fetchStyles = async () => {
+            try {
+                const response = await fetch(
+                    'https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css'
+                );
+                const cssText = await response.text();
+                setStyles(cssText);
+            } catch (error) {
+                console.error('Failed to load styles:', error);
             }
         };
+
+        fetchStyles();
     }, []);
 
     useEffect(() => {
@@ -99,8 +97,12 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                     const MicrofrontendComponent =
                         microfrontend.current as React.ComponentType<any>;
                     return (
-                        <div ref={containerRef}>
-                            <MicrofrontendComponent {...props} />
+                        <div>
+                            {styles && (
+                                <style scoped>
+                                    <MicrofrontendComponent {...props} />
+                                </style>
+                            )}
                         </div>
                     );
                 })()}
