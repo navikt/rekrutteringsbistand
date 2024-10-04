@@ -98,7 +98,11 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                 (() => {
                     const MicrofrontendComponent =
                         microfrontend.current as React.ComponentType<any>;
-                    return <MicrofrontendComponent ref={containerRef} {...props} />;
+                    return (
+                        <div ref={containerRef}>
+                            <MicrofrontendComponent {...props} />
+                        </div>
+                    );
                 })()}
 
             {status === Status.Feil && (
