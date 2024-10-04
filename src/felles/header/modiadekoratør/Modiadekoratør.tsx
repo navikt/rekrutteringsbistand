@@ -27,6 +27,19 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
     );
 
     useEffect(() => {
+        const style = document.createElement('style');
+        style.textContent = `
+          @import url('https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css')
+          layer(modiadekorator);
+        `;
+        document.head.appendChild(style);
+
+        return () => {
+            document.head.removeChild(style);
+        };
+    }, []);
+
+    useEffect(() => {
         const loadAssets = async (staticPaths: string[]) => {
             try {
                 // Load JS bundle
@@ -45,7 +58,6 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
 
         if (!loadjs.isDefined(appName)) {
             loadAssets([
-                `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/index.css`,
                 `https://cdn.nav.no/personoversikt/internarbeidsflate-decorator-v3/dev/latest/dist/bundle.js`,
             ]);
         }
