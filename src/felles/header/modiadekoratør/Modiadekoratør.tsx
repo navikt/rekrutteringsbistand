@@ -80,7 +80,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
                     const MicrofrontendComponent =
                         microfrontend.current as React.ComponentType<any>;
                     return (
-                        <div className={styles.modiaDecorator}>
+                        <div className={styles.wrapper}>
                             <MicrofrontendComponent {...props} />
                         </div>
                     );
