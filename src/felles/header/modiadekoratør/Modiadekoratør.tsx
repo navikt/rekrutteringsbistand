@@ -62,10 +62,12 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
             ? 'https://rekrutteringsbistand.intern.nav.no/modiacontextholder'
             : 'https://rekrutteringsbistand.intern.dev.nav.no/modiacontextholder';
 
+    const miljo = getMiljø() === Miljø.ProdGcp ? 'prod' : 'q0';
+
     const props: DecoratorProps = {
         proxy: proxyUrl,
         urlFormat: 'NAV_NO',
-        environment: 'q0',
+        environment: miljo,
         showEnheter: true,
         showHotkeys: false,
         showSearchArea: false,
