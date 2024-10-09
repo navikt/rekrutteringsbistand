@@ -72,6 +72,7 @@ const Modiadekoratør: FunctionComponent<Props> = ({ navKontor, onNavKontorChang
         appName: 'Rekrutteringsbistand',
         useProxy: true,
         onEnhetChanged: handleNavKontorChange,
+        fetchActiveEnhetOnMount: true,
     };
     return (
         <>
