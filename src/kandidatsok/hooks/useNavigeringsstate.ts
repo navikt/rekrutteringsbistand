@@ -22,7 +22,7 @@ const useNavigeringsstate = () => {
         if (skalBrukeKriterierFraStillingen(search)) {
             setBrukKriterierFraStillingen(true);
 
-            search.delete(KandidatsokQueryParam.BrukKriterierFraStillingen);
+            // search.delete(KandidatsokQueryParam.BrukKriterierFraStillingen);
             setSearch(search, {
                 replace: true,
             });
