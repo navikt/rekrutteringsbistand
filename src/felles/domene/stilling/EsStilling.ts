@@ -24,6 +24,7 @@ export type EsStilling = Stillingbase & {
     employer: EsArbeidsgiver | null;
     properties: EsProperties;
     styrkEllerTittel: string;
+    tittel: string;
 };
 
 export type EsProperties = Partial<{

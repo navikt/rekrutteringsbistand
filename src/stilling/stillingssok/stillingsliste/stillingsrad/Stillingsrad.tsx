@@ -31,7 +31,7 @@ type Props = {
     kandidatnr?: string;
     navIdent?: string;
 };
-export const tittelfelt = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? 'styrkEllerTittel' : 'title';
+export const tittelfelt = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? 'tittel' : 'title';
 
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,
