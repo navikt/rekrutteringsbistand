@@ -100,7 +100,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                 />
                 <AnalyserStillingModal
                     vis={visAnalyserStillingModal}
-                    onClose={() => setVisLeggTilKandidatModal(false)}
+                    onClose={() => setVisAnalyserStillingModal(false)}
                     //@ts-ignore
                     stillingsId={stillingId}
                 />
