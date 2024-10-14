@@ -44,5 +44,7 @@ export const useStillingsanalyse = (props: StillingsanalyseRequestDTO, vis: bool
 };
 
 export const stillingsanalyseMockMsw = http.post(stillingsanalyseEndepunkt, async (_) => {
-    HttpResponse.json({ sensitiv: false, begrunnelse: '' });
+    HttpResponse.json(mock);
 });
+
+const mock: StillingsanalyseDTO = { sensitiv: false, begrunnelse: '' };
