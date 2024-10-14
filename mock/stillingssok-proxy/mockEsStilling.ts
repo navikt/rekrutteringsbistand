@@ -45,6 +45,7 @@ export const mockEsRekrutteringsbistandstillingMin: EsRekrutteringsbistandstilli
         ...mockEsRekrutteringsbistandstilling.stilling,
         uuid: 'minIntern',
         styrkEllerTittel: 'Intern stilling MIN',
+        tittel: 'Intern stilling MIN tittel',
         administration: {
             ...(mockEsRekrutteringsbistandstilling.stilling.administration as Administration),
             navIdent: 'Z123456',

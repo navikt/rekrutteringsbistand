@@ -31,7 +31,7 @@ type Props = {
     kandidatnr?: string;
     navIdent?: string;
 };
-export const tittelfelt = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? 'tittel' : 'title';
+export const tittelfelt = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? 'styrkEllerTittel' : 'title';
 
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,
@@ -93,7 +93,11 @@ const Stillingsrad: FunctionComponent<Props> = ({
             score={score}
             lenkeTilStilling={
                 erSlettet ? (
-                    stilling[tittelfelt]
+                    stilling['tittel'] ? (
+                        stilling['tittel']
+                    ) : (
+                        stilling[tittelfelt]
+                    )
                 ) : (
                     <Link
                         className={classNames(css.stillingslenke, 'navds-link')}
@@ -102,7 +106,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
                             stillingssøk: searchParams.toString(),
                         }}
                     >
-                        {stilling[tittelfelt]}
+                        {stilling['tittel'] ? stilling['tittel'] : stilling[tittelfelt]}
                     </Link>
                 )
             }
