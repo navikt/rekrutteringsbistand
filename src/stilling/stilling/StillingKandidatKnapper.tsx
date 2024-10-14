@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon, PersonPlusIcon } from '@navikt/aksel-icons';
+import { MagnifyingGlassIcon, PersonPlusIcon, RobotIcon } from '@navikt/aksel-icons';
 import { Button } from '@navikt/ds-react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { Rolle } from '../../felles/tilgangskontroll/Roller';
 import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { lenkeTilFinnKandidater } from '../../kandidat/app/paths';
 import LeggTilKandidatModal from './legg-til-kandidat/LeggTilKandidatModal';
+import AnalyserStillingModal from './analyse/AnalyserStillingModal';
 
 export interface IStillingKandidatKnapper {
     kandidatlisteId: string;
@@ -21,6 +22,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
     erFormidling,
 }) => {
     const [visLeggTilKandidatModal, setVisLeggTilKandidatModal] = React.useState<boolean>(false);
+    const [visAnalyserStillingModal, setVisAnalyserStillingModal] = React.useState<boolean>(false);
     if (!kandidatlisteId) {
         return null;
     }
@@ -40,6 +42,17 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     justifyContent: 'flex-end',
                 }}
             >
+                <TilgangskontrollForInnhold
+                    skjulVarsel
+                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER]}
+                >
+                    <Button
+                        onClick={() => setVisAnalyserStillingModal(true)}
+                        icon={<RobotIcon aria-hidden />}
+                    >
+                        Analyser stilling
+                    </Button>
+                </TilgangskontrollForInnhold>
                 <TilgangskontrollForInnhold
                     skjulVarsel
                     kreverEnAvRollene={[
@@ -80,6 +93,12 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     vis={visLeggTilKandidatModal}
                     onClose={() => setVisLeggTilKandidatModal(false)}
                     //@ts-ignore TODO: written before strict-mode enabled
+                    stillingsId={stillingId}
+                />
+                <AnalyserStillingModal
+                    vis={visAnalyserStillingModal}
+                    onClose={() => setVisLeggTilKandidatModal(false)}
+                    //@ts-ignore
                     stillingsId={stillingId}
                 />
             </div>
