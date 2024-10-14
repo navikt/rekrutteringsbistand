@@ -1,8 +1,4 @@
-/**
- * Endepunkt /rekrutteringsbistand/stillingsanalyse
- */
-import { HttpResponse, http } from 'msw';
-import useSWRImmutable from 'swr/immutable';
+import useSWR from 'swr';
 import { z } from 'zod';
 import { postApiWithSchema } from '../fetcher';
 
@@ -24,27 +20,30 @@ export type StillingsanalyseDTO = z.infer<typeof stillingsanalyseSchema>;
 export type StillingsanalyseRequestDTO = z.infer<typeof stillingsanalyseRequestSchema>;
 
 export const useStillingsanalyse = (props: StillingsanalyseRequestDTO, vis: boolean) => {
-    const key =
-        !vis || !props.stillingstekst || props.stillingstekst.trim() === ''
-            ? null
-            : [stillingsanalyseEndepunkt, props];
+    const { stillingsId, stillingstype, stillingstittel, stillingstekst } = props;
 
-    const { data, error, isValidating } = useSWRImmutable(key, () =>
+    const key =
+        !vis || !stillingstekst || stillingstekst.trim() === ''
+            ? null
+            : [
+                  stillingsanalyseEndepunkt,
+                  stillingsId,
+                  stillingstype,
+                  stillingstittel,
+                  stillingstekst,
+              ];
+
+    const fetcher = () =>
         postApiWithSchema(stillingsanalyseSchema)({
             url: stillingsanalyseEndepunkt,
             body: props,
-        })
-    );
+        });
+
+    const { data, error, isLoading } = useSWR(key, fetcher);
 
     return {
         stillingsanalyse: data ?? null,
-        isLoading: isValidating,
+        isLoading: isLoading,
         error: error,
     };
 };
-
-export const stillingsanalyseMockMsw = http.post(stillingsanalyseEndepunkt, async (_) => {
-    return HttpResponse.json(mock);
-});
-
-const mock: StillingsanalyseDTO = { sensitiv: false, begrunnelse: '' };
