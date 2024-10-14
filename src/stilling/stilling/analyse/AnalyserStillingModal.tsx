@@ -1,4 +1,4 @@
-import { Loader, Modal } from '@navikt/ds-react';
+import { BodyShort, Label, Loader, Modal } from '@navikt/ds-react';
 import css from './AnalyserStillingModal.module.css';
 import { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import { useStillingsanalyse } from '../../../api/stillings-api/stillingsanalyse';
@@ -16,12 +16,14 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
     const stilling = useSelector((state: State) => state.adData);
     const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
 
+    /*@ts-ignore: TODO: stilling og AdDataState brukes om hverandre, må ryddes opp, for eksempel ved at hentTittel tar inn parameterene som er */
+    const stillingstittel = hentTittelFraStilling(stilling);
+
     const { stillingsanalyse, isLoading: isLoadingAnalyse } = useStillingsanalyse(
         {
             stillingsId: stillingsId || '',
             stillingstype: stillingsinfo?.stillingskategori || 'Stilling',
-            /*@ts-ignore: TODO: stilling og AdDataState brukes om hverandre, må ryddes opp, for eksempel ved at hentTittel tar inn parameterene som er */
-            stillingstittel: hentTittelFraStilling(stilling) || '',
+            stillingstittel: stillingstittel || '',
             stillingstekst: stilling?.properties?.adtext || '',
         },
         vis
@@ -52,18 +54,25 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
                 <div className={css.analyserstilling}>
                     <Modal.Body>
                         <div className={css.innhold}>
-                            <p>Stillingstittel: {hentTittelFraStilling(stilling)}</p>
-                            <p>Sensitiv: {stillingsanalyse.sensitiv ? 'Ja' : 'Nei'}</p>
-                            <p>Analyse: {stillingsanalyse.sensitivBegrunnelse}</p>
-                            <p>
-                                Samsvar med tittel:{' '}
-                                {stillingsanalyse.samsvarMedTittel ? 'Ja' : 'Nei'}
-                            </p>
-                            <p>Tittel begrunnelse: {stillingsanalyse.tittelBegrunnelse}</p>
-                            <p>
-                                Samsvar med type: {stillingsanalyse.samsvarMedType ? 'Ja' : 'Nei'}
-                            </p>
-                            <p>Type begrunnelse: {stillingsanalyse.typeBegrunnelse}</p>
+                            <div>
+                                <Label>Sensitiv</Label>
+                                <BodyShort>{stillingsanalyse.sensitiv ? 'Ja' : 'Nei'}</BodyShort>
+                                <BodyShort>{stillingsanalyse.sensitivBegrunnelse}</BodyShort>
+                            </div>
+                            <div>
+                                <Label>Samsvar med type</Label>
+                                <BodyShort>
+                                    {stillingsanalyse.samsvarMedType ? 'Ja' : 'Nei'}
+                                </BodyShort>
+                                <BodyShort>{stillingsanalyse.typeBegrunnelse}</BodyShort>
+                            </div>
+                            <div>
+                                <Label>Samsvar med tittel</Label>
+                                <BodyShort>
+                                    {stillingsanalyse.samsvarMedTittel ? 'Ja' : 'Nei'}
+                                </BodyShort>
+                                <BodyShort>{stillingsanalyse.tittelBegrunnelse}</BodyShort>
+                            </div>
                         </div>
                     </Modal.Body>
                 </div>

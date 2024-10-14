@@ -61,10 +61,10 @@ export const stillingsanalyseMockMsw = http.post(stillingsanalyseEndepunkt, asyn
 });
 
 const mock: StillingsanalyseDTO = {
-    sensitiv: false,
-    sensitivBegrunnelse: '',
-    samsvarMedTittel: true,
-    tittelBegrunnelse: '',
-    samsvarMedType: true,
-    typeBegrunnelse: '',
+    sensitiv: true,
+    sensitivBegrunnelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    samsvarMedTittel: false,
+    tittelBegrunnelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    samsvarMedType: false,
+    typeBegrunnelse: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
 };

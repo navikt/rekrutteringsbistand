@@ -1,5 +1,25 @@
 .innhold {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* To like brede kolonner */
+    gap: 2rem; /* Mellomrom mellom kolonnene */
+    width: 100%; /* Bruker hele bredden tilgjengelig */
+    max-width: 60rem; /* Gir en maksimal bredde på innholdet */
+    margin: 0 auto; /* Sentraliserer innholdet horisontalt */
+    padding: 1rem; /* Luft rundt innholdet */
+    align-items: start; /* Sørger for at innholdet starter på samme linje */
+}
+
+.innhold > div {
     display: flex;
     flex-direction: column;
-    min-width: 30rem;
+}
+
+.innhold label {
+    font-weight: bold;
+    margin-bottom: 0.5rem; /* Gir luft mellom label og innhold */
+}
+
+.innhold p {
+    margin-bottom: 1rem; /* Mer plass under hver tekst for luft */
+    line-height: 1.5; /* Bedre linjeavstand for lesbarhet */
 }
