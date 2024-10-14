@@ -20,7 +20,7 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
         {
             stillingsId: stillingsId || '',
             stillingstype: stillingsinfo?.stillingskategori || 'Stilling',
-            /*@ts-ignore: TODO: stilling og AdDataState brukes om hverandre, må ryddes opp */
+            /*@ts-ignore: TODO: stilling og AdDataState brukes om hverandre, må ryddes opp, for eksempel ved at hentTittel tar inn parameterene som er */
             stillingstittel: hentTittelFraStilling(stilling) || '',
             stillingstekst: stilling?.properties?.adtext || '',
         },
@@ -53,8 +53,17 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
                     <Modal.Body>
                         <div className={css.innhold}>
                             <p>Stillingstittel: {hentTittelFraStilling(stilling)}</p>
-                            <p>Analyse: {stillingsanalyse.begrunnelse}</p>
                             <p>Sensitiv: {stillingsanalyse.sensitiv ? 'Ja' : 'Nei'}</p>
+                            <p>Analyse: {stillingsanalyse.sensitivBegrunnelse}</p>
+                            <p>
+                                Samsvar med tittel:{' '}
+                                {stillingsanalyse.samsvarMedTittel ? 'Ja' : 'Nei'}
+                            </p>
+                            <p>Tittel begrunnelse: {stillingsanalyse.tittelBegrunnelse}</p>
+                            <p>
+                                Samsvar med type: {stillingsanalyse.samsvarMedType ? 'Ja' : 'Nei'}
+                            </p>
+                            <p>Type begrunnelse: {stillingsanalyse.typeBegrunnelse}</p>
                         </div>
                     </Modal.Body>
                 </div>

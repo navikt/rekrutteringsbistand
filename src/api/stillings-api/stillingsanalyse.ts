@@ -10,7 +10,11 @@ const stillingsanalyseEndepunkt = '/stilling-api/rekrutteringsbistand/stillingsa
 
 export const stillingsanalyseSchema = z.object({
     sensitiv: z.boolean(),
-    begrunnelse: z.string(),
+    sensitivBegrunnelse: z.string(),
+    samsvarMedTittel: z.boolean(),
+    tittelBegrunnelse: z.string(),
+    samsvarMedType: z.boolean(),
+    typeBegrunnelse: z.string(),
 });
 
 export const stillingsanalyseRequestSchema = z.object({
@@ -56,4 +60,11 @@ export const stillingsanalyseMockMsw = http.post(stillingsanalyseEndepunkt, asyn
     return HttpResponse.json(mock);
 });
 
-const mock: StillingsanalyseDTO = { sensitiv: false, begrunnelse: '' };
+const mock: StillingsanalyseDTO = {
+    sensitiv: false,
+    sensitivBegrunnelse: '',
+    samsvarMedTittel: true,
+    tittelBegrunnelse: '',
+    samsvarMedType: true,
+    typeBegrunnelse: '',
+};
