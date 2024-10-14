@@ -1,8 +1,9 @@
 import { Loader, Modal } from '@navikt/ds-react';
 import css from './AnalyserStillingModal.module.css';
-import useHentStilling from 'felles/hooks/useStilling';
 import { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import { useStillingsanalyse } from '../../../api/stillings-api/stillingsanalyse';
+import { useSelector } from 'react-redux';
+import { State } from '../../redux/store';
 
 type IAnalyserStillingModal = {
     vis: boolean;
@@ -12,19 +13,21 @@ type IAnalyserStillingModal = {
 
 const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose, stillingsId }) => {
     // Henter stillingen basert på stillingsId
-    const { stilling, isLoading: isLoadingStilling } = useHentStilling(stillingsId);
+    const stilling = useSelector((state: State) => state.adData);
+    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
 
     const { stillingsanalyse, isLoading: isLoadingAnalyse } = useStillingsanalyse(
         {
             stillingsId: stillingsId || '',
-            stillingstype: stilling?.stillingsinfo?.stillingskategori || 'Stilling',
-            stillingstittel: stilling?.stilling ? hentTittelFraStilling(stilling?.stilling) : '',
-            stillingstekst: stilling?.stilling.properties?.adtext || '',
+            stillingstype: stillingsinfo?.stillingskategori || 'Stilling',
+            /*@ts-ignore: TODO: stilling og AdDataState brukes om hverandre, må ryddes opp */
+            stillingstittel: hentTittelFraStilling(stilling) || '',
+            stillingstekst: stilling?.properties?.adtext || '',
         },
         vis
     );
 
-    if (isLoadingStilling || isLoadingAnalyse) {
+    if (isLoadingAnalyse) {
         return <Loader size="medium" className={css.spinner} />;
     }
 
@@ -49,7 +52,7 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
                 <div className={css.analyserstilling}>
                     <Modal.Body>
                         <div className={css.innhold}>
-                            <p>Stillingstittel: {hentTittelFraStilling(stilling.stilling)}</p>
+                            <p>Stillingstittel: {hentTittelFraStilling(stilling)}</p>
                             <p>Analyse: {stillingsanalyse.begrunnelse}</p>
                             <p>Sensitiv: {stillingsanalyse.sensitiv ? 'Ja' : 'Nei'}</p>
                         </div>
