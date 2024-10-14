@@ -1,6 +1,10 @@
-import useSWR from 'swr';
+/**
+ * Endepunkt /rekrutteringsbistand/stillingsanalyse
+ */
+import { HttpResponse, http } from 'msw';
 import { z } from 'zod';
 import { postApiWithSchema } from '../fetcher';
+import useSWR from 'swr';
 
 const stillingsanalyseEndepunkt = '/stilling-api/rekrutteringsbistand/stillingsanalyse';
 
@@ -47,3 +51,9 @@ export const useStillingsanalyse = (props: StillingsanalyseRequestDTO, vis: bool
         error: error,
     };
 };
+
+export const stillingsanalyseMockMsw = http.post(stillingsanalyseEndepunkt, async (_) => {
+    return HttpResponse.json(mock);
+});
+
+const mock: StillingsanalyseDTO = { sensitiv: false, begrunnelse: '' };
