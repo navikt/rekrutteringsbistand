@@ -7,6 +7,7 @@ import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/Tilgan
 import { lenkeTilFinnKandidater } from '../../kandidat/app/paths';
 import LeggTilKandidatModal from './legg-til-kandidat/LeggTilKandidatModal';
 import AnalyserStillingModal from './analyse/AnalyserStillingModal';
+import { getMiljø, Miljø } from 'felles/miljø';
 
 export interface IStillingKandidatKnapper {
     kandidatlisteId: string;
@@ -42,17 +43,19 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     justifyContent: 'flex-end',
                 }}
             >
-                <TilgangskontrollForInnhold
-                    skjulVarsel
-                    kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER]}
-                >
-                    <Button
-                        onClick={() => setVisAnalyserStillingModal(true)}
-                        icon={<RobotIcon aria-hidden />}
+                {getMiljø() !== Miljø.ProdGcp && (
+                    <TilgangskontrollForInnhold
+                        skjulVarsel
+                        kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER]}
                     >
-                        Analyser stilling
-                    </Button>
-                </TilgangskontrollForInnhold>
+                        <Button
+                            onClick={() => setVisAnalyserStillingModal(true)}
+                            icon={<RobotIcon aria-hidden />}
+                        >
+                            Analyser stilling
+                        </Button>
+                    </TilgangskontrollForInnhold>
+                )}
                 <TilgangskontrollForInnhold
                     skjulVarsel
                     kreverEnAvRollene={[
