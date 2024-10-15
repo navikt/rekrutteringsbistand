@@ -1,4 +1,4 @@
-import { BodyShort, Label, Loader, Modal } from '@navikt/ds-react';
+import { BodyShort, Label, Loader, Modal, Alert } from '@navikt/ds-react';
 import css from './AnalyserStillingModal.module.css';
 import { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import { useStillingsanalyse } from '../../../api/stillings-api/stillingsanalyse';
@@ -19,7 +19,11 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
     /*@ts-ignore: TODO: stilling og AdDataState brukes om hverandre, må ryddes opp, for eksempel ved at hentTittel tar inn parameterene som er */
     const stillingstittel = hentTittelFraStilling(stilling);
 
-    const { stillingsanalyse, isLoading: isLoadingAnalyse } = useStillingsanalyse(
+    const {
+        stillingsanalyse,
+        isLoading: isLoadingAnalyse,
+        error,
+    } = useStillingsanalyse(
         {
             stillingsId: stillingsId || '',
             stillingstype: stillingsinfo?.stillingskategori || 'Stilling',
@@ -28,18 +32,6 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
         },
         vis
     );
-
-    if (isLoadingAnalyse) {
-        return <Loader size="medium" className={css.spinner} />;
-    }
-
-    /*if (isErrorStilling || isErrorAnalyse) {
-        return (
-            <Alert fullWidth variant="error" size="small">
-                Klarte ikke å laste inn stillingen eller analysere stillingen.
-            </Alert>
-        );
-    }*/
 
     return (
         <Modal
@@ -50,9 +42,21 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
                 heading: 'Analyser stilling',
             }}
         >
-            {stilling && stillingsanalyse && vis && (
+            <Modal.Body>
                 <div className={css.analyserstilling}>
-                    <Modal.Body>
+                    {isLoadingAnalyse && (
+                        <div className={css.spinnerContainer}>
+                            <Loader size="medium" className={css.spinner} />
+                        </div>
+                    )}
+
+                    {error && (
+                        <Alert variant="error" size="small" fullWidth>
+                            Klarte ikke å analysere stillingen.
+                        </Alert>
+                    )}
+
+                    {!isLoadingAnalyse && !error && stilling && stillingsanalyse && (
                         <div className={css.innhold}>
                             <div>
                                 <Label>Sensitiv</Label>
@@ -74,9 +78,9 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
                                 <BodyShort>{stillingsanalyse.tittelBegrunnelse}</BodyShort>
                             </div>
                         </div>
-                    </Modal.Body>
+                    )}
                 </div>
-            )}
+            </Modal.Body>
         </Modal>
     );
 };
