@@ -41,7 +41,7 @@ const AnalyseInnhold: React.FC<IAnalyseInnhold> = ({
     if (isLoading) {
         return (
             <div className={css.spinnerContainer}>
-                <Sidelaster size="medium" className={css.spinner} />
+                <Sidelaster size="large" className={css.spinner} />
             </div>
         );
     }
