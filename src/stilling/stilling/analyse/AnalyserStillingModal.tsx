@@ -1,9 +1,10 @@
-import { BodyShort, Label, Loader, Modal, Alert } from '@navikt/ds-react';
+import { BodyShort, Label, Modal, Alert } from '@navikt/ds-react';
 import css from './AnalyserStillingModal.module.css';
 import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import { useStillingsanalyse } from '../../../api/stillings-api/stillingsanalyse';
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/store';
+import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 
 type IAnalyserStillingModal = {
     vis: boolean;
@@ -40,7 +41,7 @@ const AnalyseInnhold: React.FC<IAnalyseInnhold> = ({
     if (isLoading) {
         return (
             <div className={css.spinnerContainer}>
-                <Loader size="medium" className={css.spinner} />
+                <Sidelaster size="medium" className={css.spinner} />
             </div>
         );
     }
