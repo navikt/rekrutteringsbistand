@@ -1,6 +1,6 @@
 import { BodyShort, Label, Loader, Modal, Alert } from '@navikt/ds-react';
 import css from './AnalyserStillingModal.module.css';
-import { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
+import Stilling, { hentTittelFraStilling } from 'felles/domene/stilling/Stilling';
 import { useStillingsanalyse } from '../../../api/stillings-api/stillingsanalyse';
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/store';
@@ -11,19 +11,22 @@ type IAnalyserStillingModal = {
     stillingsId: string;
 };
 
-const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose, stillingsId }) => {
-    // Henter stillingen basert på stillingsId
-    const stilling = useSelector((state: State) => state.adData);
-    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
+type IAnalyseInnhold = {
+    stillingsId: string;
+    stillingsinfo: any;
+    stillingstittel: string;
+    stilling: Stilling;
+    vis: boolean;
+};
 
-    /*@ts-ignore: TODO: stilling og AdDataState brukes om hverandre, må ryddes opp, for eksempel ved at hentTittel tar inn parameterene som er */
-    const stillingstittel = hentTittelFraStilling(stilling);
-
-    const {
-        stillingsanalyse,
-        isLoading: isLoadingAnalyse,
-        error,
-    } = useStillingsanalyse(
+const AnalyseInnhold: React.FC<IAnalyseInnhold> = ({
+    stillingsId,
+    stillingsinfo,
+    stillingstittel,
+    stilling,
+    vis,
+}) => {
+    const { isLoading, data, error } = useStillingsanalyse(
         {
             stillingsId: stillingsId || '',
             stillingstype: stillingsinfo?.stillingskategori || 'Stilling',
@@ -32,6 +35,51 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
         },
         vis
     );
+    const stillingsanalyse = data;
+
+    if (isLoading) {
+        return (
+            <div className={css.spinnerContainer}>
+                <Loader size="medium" className={css.spinner} />
+            </div>
+        );
+    }
+
+    if (error || stillingsanalyse === undefined) {
+        return (
+            <Alert variant="error" size="small" fullWidth>
+                Klarte ikke å analysere stillingen.
+            </Alert>
+        );
+    }
+
+    return (
+        <div className={css.innhold}>
+            <div>
+                <Label>Sensitiv</Label>
+                <BodyShort>{stillingsanalyse.sensitiv ? 'Ja' : 'Nei'}</BodyShort>
+                <BodyShort>{stillingsanalyse.sensitivBegrunnelse}</BodyShort>
+            </div>
+            <div>
+                <Label>Samsvar med type</Label>
+                <BodyShort>{stillingsanalyse.samsvarMedType ? 'Ja' : 'Nei'}</BodyShort>
+                <BodyShort>{stillingsanalyse.typeBegrunnelse}</BodyShort>
+            </div>
+            <div>
+                <Label>Samsvar med tittel</Label>
+                <BodyShort>{stillingsanalyse.samsvarMedTittel ? 'Ja' : 'Nei'}</BodyShort>
+                <BodyShort>{stillingsanalyse.tittelBegrunnelse}</BodyShort>
+            </div>
+        </div>
+    );
+};
+
+const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose, stillingsId }) => {
+    // Henter stillingen basert på stillingsId
+    const stilling = useSelector((state: State) => state.adData) as Stilling;
+    const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
+
+    const stillingstittel = hentTittelFraStilling(stilling);
 
     return (
         <Modal
@@ -44,41 +92,13 @@ const AnalyserStillingModal: React.FC<IAnalyserStillingModal> = ({ vis, onClose,
         >
             <Modal.Body>
                 <div className={css.analyserstilling}>
-                    {isLoadingAnalyse && (
-                        <div className={css.spinnerContainer}>
-                            <Loader size="medium" className={css.spinner} />
-                        </div>
-                    )}
-
-                    {error && (
-                        <Alert variant="error" size="small" fullWidth>
-                            Klarte ikke å analysere stillingen.
-                        </Alert>
-                    )}
-
-                    {!isLoadingAnalyse && !error && stilling && stillingsanalyse && (
-                        <div className={css.innhold}>
-                            <div>
-                                <Label>Sensitiv</Label>
-                                <BodyShort>{stillingsanalyse.sensitiv ? 'Ja' : 'Nei'}</BodyShort>
-                                <BodyShort>{stillingsanalyse.sensitivBegrunnelse}</BodyShort>
-                            </div>
-                            <div>
-                                <Label>Samsvar med type</Label>
-                                <BodyShort>
-                                    {stillingsanalyse.samsvarMedType ? 'Ja' : 'Nei'}
-                                </BodyShort>
-                                <BodyShort>{stillingsanalyse.typeBegrunnelse}</BodyShort>
-                            </div>
-                            <div>
-                                <Label>Samsvar med tittel</Label>
-                                <BodyShort>
-                                    {stillingsanalyse.samsvarMedTittel ? 'Ja' : 'Nei'}
-                                </BodyShort>
-                                <BodyShort>{stillingsanalyse.tittelBegrunnelse}</BodyShort>
-                            </div>
-                        </div>
-                    )}
+                    <AnalyseInnhold
+                        stillingsId={stillingsId}
+                        stillingsinfo={stillingsinfo}
+                        stillingstittel={stillingstittel}
+                        stilling={stilling}
+                        vis={vis}
+                    />
                 </div>
             </Modal.Body>
         </Modal>

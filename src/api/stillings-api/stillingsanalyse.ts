@@ -47,13 +47,7 @@ export const useStillingsanalyse = (props: StillingsanalyseRequestDTO, vis: bool
             body: props,
         });
 
-    const { data, error, isLoading } = useSWR(key, fetcher);
-
-    return {
-        stillingsanalyse: data ?? null,
-        isLoading: isLoading,
-        error: error,
-    };
+    return useSWR(key, fetcher);
 };
 
 export const stillingsanalyseMockMsw = http.post(stillingsanalyseEndepunkt, async (_) => {
