@@ -14,6 +14,7 @@ export interface IStillingKandidatKnapper {
     stillingId: string | null;
     erEier?: boolean;
     erFormidling?: boolean;
+    source?: string;
 }
 
 const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
@@ -21,6 +22,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
     stillingId,
     erEier,
     erFormidling,
+    source,
 }) => {
     const [visLeggTilKandidatModal, setVisLeggTilKandidatModal] = React.useState<boolean>(false);
     const [visAnalyserStillingModal, setVisAnalyserStillingModal] = React.useState<boolean>(false);
@@ -43,7 +45,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     justifyContent: 'flex-end',
                 }}
             >
-                {getMiljø() !== Miljø.ProdGcp && (
+                {getMiljø() !== Miljø.ProdGcp && source === 'DIR' && (
                     <TilgangskontrollForInnhold
                         skjulVarsel
                         kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER]}
