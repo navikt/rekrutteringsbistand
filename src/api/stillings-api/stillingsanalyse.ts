@@ -22,13 +22,14 @@ export const stillingsanalyseRequestSchema = z.object({
     stillingstype: z.string().nullable(),
     stillingstittel: z.string().nullable(),
     stillingstekst: z.string(),
+    source: z.string(),
 });
 
 export type StillingsanalyseDTO = z.infer<typeof stillingsanalyseSchema>;
 export type StillingsanalyseRequestDTO = z.infer<typeof stillingsanalyseRequestSchema>;
 
 export const useStillingsanalyse = (props: StillingsanalyseRequestDTO, vis: boolean) => {
-    const { stillingsId, stillingstype, stillingstittel, stillingstekst } = props;
+    const { stillingsId, stillingstype, stillingstittel, stillingstekst, source } = props;
 
     const key =
         !vis || !stillingstekst || stillingstekst.trim() === ''
@@ -39,6 +40,7 @@ export const useStillingsanalyse = (props: StillingsanalyseRequestDTO, vis: bool
                   stillingstype,
                   stillingstittel,
                   stillingstekst,
+                  source,
               ];
 
     const fetcher = () =>

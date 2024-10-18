@@ -33,6 +33,7 @@ const AnalyseInnhold: React.FC<IAnalyseInnhold> = ({
             stillingstype: stillingsinfo?.stillingskategori || 'Stilling',
             stillingstittel: stillingstittel || '',
             stillingstekst: stilling?.properties?.adtext || '',
+            source: stilling?.source || '',
         },
         vis
     );
