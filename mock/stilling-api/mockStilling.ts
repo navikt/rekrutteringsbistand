@@ -48,6 +48,7 @@ export const mockStilling /* : Stilling */ = {
     mediaList: [],
     contactList: [],
     title: 'TITTEL FRA ARBEIDSPLASSEN',
+    tittel: 'Tittel på stilling',
     status: Status.Aktiv,
     privacy: Privacy.Intern,
     source: Kilde.Intern,
