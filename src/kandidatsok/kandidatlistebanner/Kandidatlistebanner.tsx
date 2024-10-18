@@ -25,9 +25,7 @@ const Kandidatlistebanner: FunctionComponent<Props> = ({ stillingId }) => {
 
 const KandidatlistebannerVisningStilling = ({ stillingId }: { stillingId: string }) => {
     const { stilling, isLoading } = useHentStilling(stillingId);
-    const navigeringsstate = useNavigeringsstate();
-    const brukKriterierFraStillingen = navigeringsstate.brukKriterierFraStillingen;
-    useSøkekriterierFraStilling(stilling, brukKriterierFraStillingen);
+    useSøkekriterierFraStilling(stilling, true);
     if (isLoading) {
         return <Loader size="medium" />;
     }
