@@ -7,8 +7,6 @@ import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import useHentStilling, { useHentStillingTittel } from '../../felles/hooks/useStilling';
 import { lenkeTilStilling } from '../../felles/lenker';
-import useNavigeringsstate from '../hooks/useNavigeringsstate';
-import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
 import css from './Kandidatlistebanner.module.css';
 
 type Props = {
@@ -16,34 +14,11 @@ type Props = {
 };
 
 const Kandidatlistebanner: FunctionComponent<Props> = ({ stillingId }) => {
-    if (stillingId) {
-        return <KandidatlistebannerVisningStilling stillingId={stillingId} />;
-    }
-
-    return <KandidatlistebannerVisning />;
-};
-
-const KandidatlistebannerVisningStilling = ({ stillingId }: { stillingId: string }) => {
-    const { stilling, isLoading } = useHentStilling(stillingId);
-    useSøkekriterierFraStilling(stilling, true);
-    if (isLoading) {
-        return <Loader size="medium" />;
-    }
-
-    return <KandidatlistebannerVisning stillingId={stillingId} />;
-};
-
-const KandidatlistebannerVisning: FunctionComponent<Props> = ({ stillingId }) => {
-    const navigeringsstate = useNavigeringsstate();
     const {
         stilling: rekrutteringsbistandstilling,
         isLoading: isStillingLoading,
         isError: isStillingError,
     } = useHentStilling(stillingId);
-
-    const brukKriterierFraStillingen = navigeringsstate.brukKriterierFraStillingen;
-
-    useSøkekriterierFraStilling(rekrutteringsbistandstilling, brukKriterierFraStillingen);
 
     const stillingsId = rekrutteringsbistandstilling?.stilling.uuid;
     const stillingTittel = useHentStillingTittel(stillingsId);
