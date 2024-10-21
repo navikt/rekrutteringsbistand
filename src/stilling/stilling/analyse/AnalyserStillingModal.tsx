@@ -27,16 +27,26 @@ const AnalyseInnhold: React.FC<IAnalyseInnhold> = ({
     stilling,
     vis,
 }) => {
+    function rensStillingstekst(stillingstekst: string): string {
+        const parser = new DOMParser();
+        const tekstMedMellomrom = stillingstekst.replace(/<\/p><p>/g, ' '); // Legg til mellomrom mellom <p>-tagger
+        const doc = parser.parseFromString(tekstMedMellomrom, 'text/html');
+        return (doc.body.textContent || '').replace(/\t/g, ''); // Fjerner HTML og \t
+    }
+
+    const rensetStillingstekst = rensStillingstekst(stilling?.properties?.adtext || '');
+
     const { isLoading, data, error } = useStillingsanalyse(
         {
             stillingsId: stillingsId || '',
             stillingstype: stillingsinfo?.stillingskategori || 'Stilling',
             stillingstittel: stillingstittel || '',
-            stillingstekst: stilling?.properties?.adtext || '',
+            stillingstekst: rensetStillingstekst, // Bruk renset tekst her
             source: stilling?.source || '',
         },
         vis
     );
+
     const stillingsanalyse = data;
 
     if (isLoading) {

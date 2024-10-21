@@ -7,7 +7,6 @@ import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/Tilgan
 import { lenkeTilFinnKandidater } from '../../kandidat/app/paths';
 import LeggTilKandidatModal from './legg-til-kandidat/LeggTilKandidatModal';
 import AnalyserStillingModal from './analyse/AnalyserStillingModal';
-import { getMiljø, Miljø } from 'felles/miljø';
 
 export interface IStillingKandidatKnapper {
     kandidatlisteId: string;
