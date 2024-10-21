@@ -39,7 +39,7 @@ const AnalyseInnhold: React.FC<IAnalyseInnhold> = ({
     const { isLoading, data, error } = useStillingsanalyse(
         {
             stillingsId: stillingsId || '',
-            stillingstype: stillingsinfo?.stillingskategori || 'Stilling',
+            stillingstype: (stillingsinfo?.stillingskategori || 'STILLING').toUpperCase(),
             stillingstittel: stillingstittel || '',
             stillingstekst: rensetStillingstekst,
             source: stilling?.source || '',
