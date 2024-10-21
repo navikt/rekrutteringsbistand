@@ -45,7 +45,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     justifyContent: 'flex-end',
                 }}
             >
-                {getMiljø() !== Miljø.ProdGcp && source === 'DIR' && (
+                {source === 'DIR' && (
                     <TilgangskontrollForInnhold
                         skjulVarsel
                         kreverEnAvRollene={[Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER]}
