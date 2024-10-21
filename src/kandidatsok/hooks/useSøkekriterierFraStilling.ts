@@ -7,16 +7,18 @@ import {
 import { Rekrutteringsbistandstilling } from 'felles/domene/stilling/Stilling';
 import { useEffect, useState } from 'react';
 import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
+import useHentStilling from '../../felles/hooks/useStilling';
 import { FilterParam } from './useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from './useSøkekriterier';
 
 const useSøkekriterierFraStilling = (
-    rekrutteringsbistandstilling: Rekrutteringsbistandstilling | undefined,
+    stillingId: string | null,
     brukKriterierFraStillingen: boolean
 ) => {
     const { setSearchParam } = useSøkekriterier();
     const [harLagtTilKriterier, setHarLagtTilKriterier] = useState(false);
-
+    const { stilling: rekrutteringsbistandstilling, isLoading: isStillingLoading } =
+        useHentStilling(stillingId);
     const { data: fylker, isLoading: fylkerIsLoading } = useHentFylker();
 
     useEffect(() => {
@@ -38,6 +40,7 @@ const useSøkekriterierFraStilling = (
             rekrutteringsbistandstilling &&
             brukKriterierFraStillingen &&
             !fylkerIsLoading &&
+            !isStillingLoading &&
             !harLagtTilKriterier
         ) {
             anvendSøkekriterier(rekrutteringsbistandstilling);
