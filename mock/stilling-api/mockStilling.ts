@@ -393,7 +393,7 @@ export const mockFormidling = {
                 phone: '',
             },
         ],
-        styrkEllerTittel: 'Formidling',
+        tittel: 'Formidling',
     },
     stillingsinfo: {
         eierNavident: null,
@@ -409,7 +409,7 @@ export const mockFormidlingMin = {
     ...mockFormidling,
     stilling: {
         ...mockFormidling.stilling,
-        styrkEllerTittel: 'Formidling MIN',
+        tittel: 'Formidling MIN',
         uuid: 'minFormidling',
         administration: {
             ...mockFormidling.stilling.administration,
@@ -427,7 +427,7 @@ export const mockStoppetStilling = {
     ...mockStilling,
     stilling: {
         ...mockFormidling.stilling,
-        styrkEllerTittel: 'Stoppet stilling',
+        tittel: 'Stoppet stilling',
         uuid: 'stoppet',
         status: Status.Stoppet,
         // administration: {
