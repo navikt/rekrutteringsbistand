@@ -44,12 +44,7 @@ export type Stilling = Stillingbase & {
 };
 
 // TODO: Fjern nå vi har byttet om
-export const USE_STYRK_AS_TITLE_FEATURE_TOGGLE = true;
 export const hentTittelFraStilling = (stilling: Stilling) => {
-    if (!USE_STYRK_AS_TITLE_FEATURE_TOGGLE) {
-        return stilling.title;
-    }
-
     if (stilling.source !== 'DIR') {
         return stilling.title;
     }
