@@ -7,25 +7,18 @@ import { FunctionComponent } from 'react';
 import { Link } from 'react-router-dom';
 import useHentStilling, { useHentStillingTittel } from '../../felles/hooks/useStilling';
 import { lenkeTilStilling } from '../../felles/lenker';
-import useSøkekriterierFraStilling from '../hooks/useSøkekriterierFraStilling';
 import css from './Kandidatlistebanner.module.css';
-import useNavigeringsstate from '../hooks/useNavigeringsstate';
 
 type Props = {
     stillingId?: string;
 };
 
 const Kandidatlistebanner: FunctionComponent<Props> = ({ stillingId }) => {
-    const navigeringsstate = useNavigeringsstate();
     const {
         stilling: rekrutteringsbistandstilling,
         isLoading: isStillingLoading,
         isError: isStillingError,
     } = useHentStilling(stillingId);
-
-    const brukKriterierFraStillingen = navigeringsstate.brukKriterierFraStillingen;
-
-    useSøkekriterierFraStilling(rekrutteringsbistandstilling, brukKriterierFraStillingen);
 
     const stillingsId = rekrutteringsbistandstilling?.stilling.uuid;
     const stillingTittel = useHentStillingTittel(stillingsId);

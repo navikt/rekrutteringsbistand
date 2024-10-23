@@ -1,7 +1,6 @@
 import { Heading, Loader } from '@navikt/ds-react';
 import * as React from 'react';
 import { Stillingskategori } from '../felles/domene/stilling/Stilling';
-import { filtrerOrdFraStilling } from '../felles/filterOrd';
 import { formaterAntallAnnonser } from '../stilling/stillingssok/Stillingssøk';
 import { GlobalAggregering } from '../stilling/stillingssok/domene/elasticSearchTyper';
 import Filtermeny from '../stilling/stillingssok/filter/filtermeny/Filtermeny';
@@ -32,9 +31,7 @@ const Formidlingssøk: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
     const globalAggregering = respons?.aggregations
         ?.globalAggregering as unknown as GlobalAggregering;
 
-    const filtrertResultat = filtrerOrdFraStilling(respons?.hits?.hits);
-
-    const antallTreff = useAntallTreff(respons) - filtrertResultat.antallFiltrertBort;
+    const antallTreff = useAntallTreff(respons);
 
     if (!respons) {
         return (
@@ -53,7 +50,7 @@ const Formidlingssøk: React.FC<IAlleFormidlinger> = ({ navIdent }) => {
                 <Søkefelter aggregeringer={globalAggregering?.felter?.buckets} />
                 <Sorter />
             </div>
-            <Stillingsliste hits={filtrertResultat.hits} />
+            <Stillingsliste hits={respons?.hits?.hits} />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Paginering totaltAntallTreff={antallTreff} />
             </div>

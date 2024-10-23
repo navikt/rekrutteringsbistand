@@ -1,0 +1,29 @@
+.analyserstilling {
+    width: 30rem;
+    min-height: 25rem;
+}
+
+.innhold {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    align-items: start;
+}
+
+.innhold > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.innhold label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.innhold p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}

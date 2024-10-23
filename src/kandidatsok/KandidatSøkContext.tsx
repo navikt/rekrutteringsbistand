@@ -1,10 +1,14 @@
 import { Alert, Loader } from '@navikt/ds-react';
 import * as React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { IKandidatSøk, Portefølje, useKandidatsøk } from '../api/kandidat-søk-api/kandidatsøk';
 import { ApplikasjonContext } from '../felles/ApplikasjonContext';
 import Layout from '../felles/komponenter/layout/Layout';
+import { KandidatsokQueryParam } from '../felles/lenker';
 import { Rolle } from '../felles/tilgangskontroll/Roller';
+import useNavigeringsstate from './hooks/useNavigeringsstate';
 import useSøkekriterier, { IKandidatSøkekriterier } from './hooks/useSøkekriterier';
+import useSøkekriterierFraStilling from './hooks/useSøkekriterierFraStilling';
 import { lesSessionStorage, skrivSessionStorage } from './sessionStorage';
 
 export type Økt = Partial<{
@@ -39,9 +43,16 @@ interface IKandidatSøkContextProvider {
 const sessionStorageKey = 'kandidatsøk';
 
 export const KandidatSøkContextProvider: React.FC<IKandidatSøkContextProvider> = ({ children }) => {
+    const [searchParams] = useSearchParams();
+
     const { søkekriterier: søkeKriterierInput } = useSøkekriterier();
     const { tilgangskontrollErPå, harRolle, valgtNavKontor } = React.useContext(ApplikasjonContext);
+    const navigeringsstate = useNavigeringsstate();
+    const stillingId = searchParams.get(KandidatsokQueryParam.Stilling);
 
+    const brukKriterierFraStillingen = navigeringsstate.brukKriterierFraStillingen;
+
+    useSøkekriterierFraStilling(stillingId, brukKriterierFraStillingen);
     const portefølje = () => {
         if (tilgangskontrollErPå) {
             if (

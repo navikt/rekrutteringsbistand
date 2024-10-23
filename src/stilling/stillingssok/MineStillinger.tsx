@@ -1,5 +1,4 @@
 import { Heading, Loader } from '@navikt/ds-react';
-import { filtrerOrdFraStilling } from '../../felles/filterOrd';
 import { fallbackIngenValgteStillingskategorierSet } from './AlleStillinger';
 import { formaterAntallAnnonser } from './Stillingssøk';
 import css from './Stillingssøk.module.css';
@@ -27,9 +26,7 @@ const MineStillinger = ({ navIdent, kandidatnr, finnerStillingForKandidat }: Pro
     const globalAggregering = respons?.aggregations
         ?.globalAggregering as unknown as GlobalAggregering;
 
-    const filtrertResultat = filtrerOrdFraStilling(respons?.hits?.hits);
-
-    const antallTreff = useAntallTreff(respons) - filtrertResultat.antallFiltrertBort;
+    const antallTreff = useAntallTreff(respons);
 
     if (!respons) {
         return (
@@ -48,7 +45,7 @@ const MineStillinger = ({ navIdent, kandidatnr, finnerStillingForKandidat }: Pro
                 <Søkefelter aggregeringer={globalAggregering?.felter?.buckets} />
                 <Sorter />
             </div>
-            <Stillingsliste hits={filtrertResultat.hits} kandidatnr={kandidatnr} />
+            <Stillingsliste hits={respons?.hits?.hits} kandidatnr={kandidatnr} />
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Paginering totaltAntallTreff={antallTreff} />
             </div>

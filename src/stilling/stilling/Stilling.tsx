@@ -271,6 +271,7 @@ const Stilling = () => {
                         stillingId={stilling.uuid}
                         erEier={erEier}
                         erFormidling={erFormidling}
+                        source={stilling.source}
                     />
                 </div>
                 <Tabs.Panel value="om_stillingen" style={{ position: 'relative' }}>
