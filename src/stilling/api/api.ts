@@ -9,6 +9,7 @@ import Stilling, {
 import { Miljø, getMiljø } from 'felles/miljø';
 import { fetchGet, fetchPost, fetchPut } from './apiUtils';
 import devVirksomheter from './devVirksomheter';
+import { v4 as uuidv4 } from 'uuid';
 
 export const postStilling = async (
     stilling: Partial<Stilling>,
@@ -127,6 +128,35 @@ export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Enhetsre
             }))
             .sort(),
     ];
+};
+
+export type JanzzStilling = {
+    konseptId: number;
+    label: string;
+};
+
+export const fetchJanzzYrker = async (typeahead: string): Promise<JanzzStilling[]> => {
+    const response = await fetch(
+        `${api.pamOntologi}/rest/typeahead/stilling?stillingstittel=${typeahead}`,
+        {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Cache-Control': 'no-cache, no-store',
+                'Nav-CallId': uuidv4(),
+            },
+        }
+    );
+    const result = await response.json();
+    return result.map((janzzStilling: any) => ({
+        konseptId: janzzStilling.konseptId,
+        styrk08: janzzStilling.styrk08,
+        esco: janzzStilling.esco,
+        escoLabel: janzzStilling.escoLabel,
+        label: janzzStilling.label,
+        undertype: janzzStilling.undertype,
+    }));
 };
 
 /**

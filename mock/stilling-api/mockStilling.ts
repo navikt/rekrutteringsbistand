@@ -48,6 +48,7 @@ export const mockStilling /* : Stilling */ = {
     mediaList: [],
     contactList: [],
     title: 'TITTEL FRA ARBEIDSPLASSEN',
+    tittel: 'Tittel på stilling',
     status: Status.Aktiv,
     privacy: Privacy.Intern,
     source: Kilde.Intern,
@@ -71,6 +72,7 @@ export const mockStilling /* : Stilling */ = {
     categoryList: [
         {
             name: 'Kokk',
+            code: '1234',
             categoryType: 'STYRK08NAV',
         },
     ],
@@ -391,7 +393,7 @@ export const mockFormidling = {
                 phone: '',
             },
         ],
-        styrkEllerTittel: 'Formidling',
+        tittel: 'Formidling',
     },
     stillingsinfo: {
         eierNavident: null,
@@ -407,7 +409,7 @@ export const mockFormidlingMin = {
     ...mockFormidling,
     stilling: {
         ...mockFormidling.stilling,
-        styrkEllerTittel: 'Formidling MIN',
+        tittel: 'Formidling MIN',
         uuid: 'minFormidling',
         administration: {
             ...mockFormidling.stilling.administration,
@@ -425,7 +427,7 @@ export const mockStoppetStilling = {
     ...mockStilling,
     stilling: {
         ...mockFormidling.stilling,
-        styrkEllerTittel: 'Stoppet stilling',
+        tittel: 'Stoppet stilling',
         uuid: 'stoppet',
         status: Status.Stoppet,
         // administration: {

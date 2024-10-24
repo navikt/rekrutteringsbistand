@@ -44,18 +44,13 @@ export type Stilling = Stillingbase & {
 };
 
 // TODO: Fjern nå vi har byttet om
-export const USE_STYRK_AS_TITLE_FEATURE_TOGGLE = true;
 export const hentTittelFraStilling = (stilling: Stilling) => {
-    if (!USE_STYRK_AS_TITLE_FEATURE_TOGGLE) {
-        return stilling.title;
-    }
-
     if (stilling.source !== 'DIR') {
         return stilling.title;
     }
 
     const passendeStyrkkoder =
-        stilling.categoryList?.filter(({ categoryType }) => categoryType === 'STYRK08NAV') ?? [];
+        stilling.categoryList?.filter(({ categoryType }) => categoryType === 'JANZZ') ?? [];
 
     if (passendeStyrkkoder.length === 0) {
         return 'Stilling uten valgt jobbtittel';
@@ -122,6 +117,7 @@ export type EsStyrkCategory = {
 
 export type StyrkCategory = {
     categoryType: string;
+    code: string;
     name: string;
 };
 

@@ -9,13 +9,12 @@ import {
     SAVE_AD_SUCCESS,
 } from './adReducer';
 import { FETCH_LOCATIONS, FETCH_LOCATIONS_SUCCESS } from './edit/arbeidssted/locationCodeReducer';
-import { lookUpStyrk } from './edit/om-stillingen/styrk/styrkReducer';
 import isJson from './edit/praktiske-opplysninger/IsJson';
 import { fjernTagUnderRegistrering, leggTilTagUnderRegistrering } from './tags/utils';
 
 export const SET_AD_DATA = 'SET_AD_DATA';
 export const REMOVE_AD_DATA = 'REMOVE_AD_DATA';
-export const SET_STYRK = 'SET_STYRK';
+export const SET_JANZZ = 'SET_JANZZ';
 export const ADD_LOCATION_AREA = 'ADD_LOCATION_AREA';
 export const ADD_POSTAL_CODE_BEGIN = 'ADD_POSTAL_CODE_BEGIN';
 export const ADD_POSTAL_CODE_ADDRESS_BEGIN = 'ADD_POSTAL_CODE_ADDRESS_BEGIN';
@@ -107,12 +106,10 @@ const adDataReducer = (state = initialState, action: any) => {
 
 const manipulateAdReducer = (state: Stilling, action: any) => {
     switch (action.type) {
-        case SET_STYRK:
+        case SET_JANZZ:
             return {
                 ...state,
-                categoryList: action.code
-                    ? [findStyrkAndSkipAlternativeNames(action.code)]
-                    : undefined,
+                categoryList: action.kategori,
             };
         case ADD_LOCATION_AREA: {
             const isAlreadyAdded = isLocationInList(action.location, state.locationList);
@@ -612,16 +609,6 @@ export function* findLocationByPostalCode(value: any): Generator<unknown, any, a
         return state.locationCode.locations.find((location: any) => location.postalCode === value);
     }
     return undefined;
-}
-
-function findStyrkAndSkipAlternativeNames(code: unknown) {
-    const found = lookUpStyrk(code);
-    if (found) {
-        // eslint-disable-next-line no-unused-vars
-        const { alternativeNames, ...rest } = found;
-        return rest;
-    }
-    return found;
 }
 
 function isLocationInList(location: any, locationList: any) {

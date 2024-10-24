@@ -15,7 +15,6 @@ import locationAreaReducer, {
 import locationCodeReducer, {
     locationCodeSaga,
 } from '../stilling/edit/arbeidssted/locationCodeReducer';
-import styrkReducer, { styrkSaga } from '../stilling/edit/om-stillingen/styrk/styrkReducer';
 import stillingsinfoDataReducer from '../stillingsinfo/stillingsinfoDataReducer';
 import stillingsinfoReducer, {
     StillingsinfoState,
@@ -48,7 +47,6 @@ const createReduxStore = () => {
             locationCode: locationCodeReducer,
             locationArea: locationAreaReducer,
             reportee: reporteeReducer,
-            styrk: styrkReducer,
             stillingsinfo: stillingsinfoReducer,
             stillingsinfoData: stillingsinfoDataReducer,
             visVarsling: varslingReducer,
@@ -59,7 +57,6 @@ const createReduxStore = () => {
     sagaMiddleware.run(adSaga);
     sagaMiddleware.run(validationSaga);
     sagaMiddleware.run(locationCodeSaga);
-    sagaMiddleware.run(styrkSaga);
     sagaMiddleware.run(reporteeSaga);
     sagaMiddleware.run(adDataSaga);
     sagaMiddleware.run(locationAreaSaga);

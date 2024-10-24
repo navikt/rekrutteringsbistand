@@ -50,6 +50,8 @@ spec:
           - application: presenterte-kandidater-api
           - application: modiacontextholder
             namespace: personoversikt
+          - application: pam-ontologi
+            namespace: teampam
         external:
           - host: {{ statistikkApiHost }}
           - host: {{ kandidatApiHost }}
@@ -91,3 +93,5 @@ spec:
           value: http://modiacontextholder.personoversikt
         - name: KANDIDATVARSEL_API_URL
           value: http://rekrutteringsbistand-kandidatvarsel-api
+        - name: PAM_ONTOLOGI_URL
+          value: http://pam-ontologi.teampam

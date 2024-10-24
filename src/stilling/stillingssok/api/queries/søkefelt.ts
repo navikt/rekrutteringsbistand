@@ -1,4 +1,3 @@
-import { tittelfelt } from '../../stillingsliste/stillingsrad/Stillingsrad';
 import { Søkefelt } from '../../søkefelter/Søkefelter';
 
 const søkefelt = (søketermer: Set<string>, felter: Set<Søkefelt>) => {
@@ -11,7 +10,7 @@ const søkefelt = (søketermer: Set<string>, felter: Set<Søkefelt>) => {
     }
 
     if (felter.has(Søkefelt.Tittel)) {
-        feltManSkalSøkeI.push(`stilling.${tittelfelt}`);
+        feltManSkalSøkeI.push(`stilling.tittel`);
     }
 
     if (felter.has(Søkefelt.Annonsetekst)) {
@@ -25,7 +24,7 @@ const søkefelt = (søketermer: Set<string>, felter: Set<Søkefelt>) => {
     if (feltManSkalSøkeI.length === 0) {
         feltManSkalSøkeI.push(
             'stilling.adtext_no^0.5',
-            `stilling.${tittelfelt}`,
+            `stilling.tittel`,
             'stilling.annonsenr',
             'stilling.employer.name',
             'stilling.employer.orgnr',
