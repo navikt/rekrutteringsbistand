@@ -7,19 +7,21 @@ import css from './Stillingstittel.module.css';
 type Props = {
     tittel?: string;
     employer?: string;
-    location?: Geografi | null;
+    locationList?: Geografi[] | null;
 };
 
-const Stillingstittel: FunctionComponent<Props> = ({ tittel, employer, location }) => {
+const Stillingstittel: FunctionComponent<Props> = ({ tittel, employer, locationList }) => {
     let mestSpesifikkeSted = '';
-    if (location) {
-        if (location.city) {
-            mestSpesifikkeSted = location.city;
-        } else if (location.municipal) {
-            mestSpesifikkeSted = location.municipal;
-        } else if (location.country) {
-            mestSpesifikkeSted = location.country;
-        }
+    if (locationList) {
+        locationList.forEach((location) => {
+            if (location.city) {
+                mestSpesifikkeSted = `${location.city}, ${mestSpesifikkeSted}`.trim();
+            } else if (location.municipal) {
+                mestSpesifikkeSted = `${location.municipal}, ${mestSpesifikkeSted}`.trim();
+            } else if (location.country) {
+                mestSpesifikkeSted = `${location.country}, ${mestSpesifikkeSted}`.trim();
+            }
+        });
     }
 
     const formatertSted = commaSeparate(employer, capitalizeLocation(mestSpesifikkeSted));
