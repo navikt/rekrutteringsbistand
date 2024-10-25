@@ -4,7 +4,7 @@ import {
     stedmappingFraGammeltNavn,
     stedmappingFraGammeltNummer,
 } from 'felles/MappingSted';
-import { Rekrutteringsbistandstilling } from 'felles/domene/stilling/Stilling';
+import { Geografi, Rekrutteringsbistandstilling } from 'felles/domene/stilling/Stilling';
 import { useEffect, useState } from 'react';
 import { HentFylkerDTO, useHentFylker } from '../../api/stillings-api/hentFylker';
 import useHentStilling from '../../felles/hooks/useStilling';
@@ -64,7 +64,14 @@ const hentØnsketStedFraStilling = (
     rekrutteringsbistandstilling: Rekrutteringsbistandstilling,
     fylker: HentFylkerDTO | undefined
 ): string | null => {
-    const { location } = rekrutteringsbistandstilling.stilling;
+    const { locationList } = rekrutteringsbistandstilling.stilling;
+    if (!locationList) return null;
+    return locationList
+        .map((location) => lagSøkestrengFraLokasjonsListe(location, fylker))
+        .join(LISTEPARAMETER_SEPARATOR);
+};
+
+const lagSøkestrengFraLokasjonsListe = (location: Geografi, fylker: HentFylkerDTO | undefined) => {
     const { municipal, municipalCode, county } = location;
 
     if (municipal && municipalCode) {

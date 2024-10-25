@@ -16,7 +16,7 @@ export type Stillingbase = {
     published: string | null;
     expires: string | null;
     administration: Administration | null;
-    location: Geografi | null;
+    locationList: Geografi[] | null;
     publishedByAdmin: string | null;
     businessName: string | null;
 };
@@ -35,12 +35,6 @@ export type Stilling = Stillingbase & {
     contactList?: Kontaktinfo[];
     mediaList?: object[];
     properties: Properties & Record<string, any>;
-    location: {
-        municipalCode: string | null;
-        municipal: string | null;
-        postalCode: string | null;
-        county: string | null;
-    };
 };
 
 // TODO: Fjern nå vi har byttet om

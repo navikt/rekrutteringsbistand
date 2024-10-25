@@ -237,7 +237,7 @@ const Stilling = () => {
                     <Stillingstittel
                         tittel={hentTittelFraStilling(stilling)}
                         employer={stilling.properties.employer}
-                        location={stilling.location}
+                        locationList={stilling.locationList}
                     />
                 )}
             </>
