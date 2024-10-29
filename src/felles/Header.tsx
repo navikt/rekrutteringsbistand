@@ -1,4 +1,3 @@
-import { Alert, Heading } from '@navikt/ds-react';
 import { useContext } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useLocalStorageToggle } from '../dev/DevUtil';
@@ -26,12 +25,6 @@ const Header = () => {
             />
 
             <Navigeringsmeny />
-            <Alert variant="warning" fullWidth>
-                <Heading spacing size="small" level="3">
-                    Rekrutteringsbistand vil ha nedetid fra 14.45
-                </Heading>
-                Dette er nedetid grunnet oppdatering av databaser og jobben kan ta opp til en time.
-            </Alert>
             {!harRolle([
                 Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
                 Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
