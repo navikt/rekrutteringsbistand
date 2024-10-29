@@ -18,6 +18,9 @@ spec:
     readiness:
         initialDelay: 5
         path: /internal/isReady
+    replicas:
+      min: 0
+      max: 0
     azure:
         application:
             enabled: true
