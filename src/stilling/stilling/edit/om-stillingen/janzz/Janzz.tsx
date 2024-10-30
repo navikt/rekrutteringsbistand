@@ -50,6 +50,8 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
     const onChange = (value: string | undefined) => {
         if (value) {
             setInput(value);
+        } else {
+            setInput('');
         }
     };
 
