@@ -48,7 +48,9 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
     }, [input]);
 
     const onChange = (value: string | undefined) => {
-        if (value) {
+        if (value === 'Stilling uten valgt jobbtittel') {
+            setInput('');
+        } else if (value) {
             setInput(value);
         } else {
             setInput('');
