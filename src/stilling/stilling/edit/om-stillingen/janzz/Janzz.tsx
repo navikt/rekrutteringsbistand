@@ -48,9 +48,7 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
     }, [input]);
 
     const onChange = (value: string | undefined) => {
-        if (value === 'Stilling uten valgt jobbtittel') {
-            setInput('');
-        } else if (value) {
+        if (value) {
             setInput(value);
         } else {
             setInput('');
@@ -86,7 +84,7 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
     return (
         <Typeahead
             label="Yrkestittel som vises på stillingen"
-            value={input}
+            value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
             onSelect={onForslagValgt}
             onChange={onChange}
             onBlur={onChange}
