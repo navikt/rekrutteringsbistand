@@ -43,19 +43,12 @@ export type Stilling = Stillingbase & {
     };
 };
 
-// TODO: Fjern nå vi har byttet om
 export const hentTittelFraStilling = (stilling: Stilling) => {
     if (stilling.source !== 'DIR') {
         return stilling.title;
     }
 
-    const passendeStyrkkoder =
-        stilling.categoryList?.filter(({ categoryType }) => categoryType === 'JANZZ') ?? [];
-
-    if (passendeStyrkkoder.length === 0) {
-        return 'Stilling uten valgt jobbtittel';
-    }
-    return passendeStyrkkoder.map((it) => it.name).join('/');
+    return stilling.categoryList?.find(({ categoryType }) => categoryType === 'JANZZ')?.name || '';
 };
 
 export enum System {
