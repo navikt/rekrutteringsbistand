@@ -7,6 +7,7 @@ import capitalizeEmployerName from '../../endre-arbeidsgiver/capitalizeEmployerN
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { StyrkCategory } from 'felles/domene/stilling/Stilling';
 import { useDispatch } from 'react-redux';
+import { UNSAFE_Combobox } from '@navikt/ds-react';
 
 type Props = {
     categoryList: StyrkCategory[];
@@ -82,19 +83,33 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
     const feilmeldingTilBruker = suggestions.kind === Nettstatus.Feil && suggestions.error.message;
 
     return (
-        <Typeahead
-            label="Yrkestittel som vises på stillingen"
-            value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
-            onSelect={onForslagValgt}
-            onChange={onChange}
-            onBlur={onChange}
-            suggestions={konverterTilTypeaheadFormat(suggestions)}
-            error={feilmeldingTilBruker || undefined}
-            className={css.typeahead}
-            aria-labelledby="endre-stilling-styrk"
-        />
+        <div>
+            <Typeahead
+                label="Yrkestittel som vises på stillingen (må fylles ut)"
+                value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
+                onSelect={onForslagValgt}
+                onChange={onChange}
+                onBlur={onChange}
+                suggestions={konverterTilTypeaheadFormat(suggestions)}
+                error={feilmeldingTilBruker || undefined}
+                className={css.typeahead}
+                aria-labelledby="endre-stilling-styrk"
+            />
+        </div>
     );
 };
+/*  <UNSAFE_Combobox
+    label="Yrkestittel som vises på stillingen"
+    value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
+    options={}
+    //onSelect={onForslagValgt}
+    //onChange={onChange}
+    //onBlur={onChange}
+    //suggestions={konverterTilTypeaheadFormat(suggestions)}
+    error={feilmeldingTilBruker || undefined}
+    className={css.typeahead}
+    aria-labelledby="endre-stilling-styrk"
+        />*/
 
 const finnJanzzStilling = (suggestions: JanzzStilling[], navn: string) =>
     suggestions.find(

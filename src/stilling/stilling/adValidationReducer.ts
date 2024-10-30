@@ -25,6 +25,7 @@ import {
     SET_EMPLOYMENT_SECTOR,
     SET_EMPLOYMENT_STARTTIME,
     SET_EXPIRATION_DATE,
+    SET_JANZZ,
     SET_PRIVACY,
     SET_PUBLISHED,
     UNCHECK_EMPLOYMENT_WORKDAY,
@@ -41,6 +42,7 @@ export type ValidertFelt =
     | 'location'
     | 'postalCode'
     | 'locationArea'
+    | 'yrkestittel'
     | 'adText'
     | 'expires'
     | 'published'
@@ -137,6 +139,16 @@ function* validateLocationArea(): Generator<unknown, any, any> {
         });
     } else {
         yield removeValidationError({ field: 'locationArea' });
+    }
+}
+function* validateYrkestittel(): Generator<unknown, any, any> {
+    const state = yield select();
+    const { categoryList } = state.adData;
+
+    if (valueIsNotSet(categoryList)) {
+        yield addValidationError({ field: 'yrkestittel', message: 'Yrkestittel mangler' });
+    } else {
+        yield removeValidationError({ field: 'yrkestittel' });
     }
 }
 
@@ -477,6 +489,7 @@ export function* validateAll(): Generator<unknown, any, any> {
         yield validateLocation();
         yield validateExpireDate();
         yield validatePublishDate();
+        yield validateYrkestittel();
         yield validateAdtext();
         yield validateApplicationEmail();
         yield validatePostalCode();
@@ -500,6 +513,7 @@ export function hasValidationErrors(validation: Record<ValidertFelt, string | un
         validation.location !== undefined ||
         validation.expires !== undefined ||
         validation.adText !== undefined ||
+        validation.yrkestittel !== undefined ||
         validation.applicationEmail !== undefined ||
         validation.contactPersonEmail !== undefined ||
         validation.contactPersonEmailOrPhone !== undefined ||
@@ -573,6 +587,7 @@ export const validationSaga = function* saga() {
     yield takeLatest(VALIDATE_ALL, validateAll);
     yield takeLatest(SET_EXPIRATION_DATE, validateExpireDate);
     yield takeLatest(SET_PUBLISHED, validatePublishDate);
+    yield takeLatest(SET_JANZZ, validateYrkestittel);
     yield takeLatest(ADD_POSTAL_CODE_BEGIN, validatePostalCode);
     yield takeLatest(VALIDATE_LOCATION_AREA, validateLocationArea);
     yield takeLatest(
