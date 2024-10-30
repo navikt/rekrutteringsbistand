@@ -107,6 +107,7 @@ const adDataReducer = (state = initialState, action: any) => {
 const manipulateAdReducer = (state: Stilling, action: any) => {
     switch (action.type) {
         case SET_JANZZ:
+            console.log('datareducer SET_JANZZ', action);
             return {
                 ...state,
                 categoryList: action.kategori,

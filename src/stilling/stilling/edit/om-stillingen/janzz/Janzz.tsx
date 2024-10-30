@@ -6,8 +6,9 @@ import { fetchJanzzYrker, JanzzStilling } from '../../../../api/api';
 import capitalizeEmployerName from '../../endre-arbeidsgiver/capitalizeEmployerName';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { StyrkCategory } from 'felles/domene/stilling/Stilling';
-import { useDispatch } from 'react-redux';
-import { UNSAFE_Combobox } from '@navikt/ds-react';
+import { useDispatch, useSelector } from 'react-redux';
+import Skjemalabel from '../../skjemaetikett/Skjemalabel';
+import { State } from '../../../../redux/store';
 
 type Props = {
     categoryList: StyrkCategory[];
@@ -16,6 +17,7 @@ type Props = {
 
 const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
     const dispatch = useDispatch();
+    const yrkestittelError = useSelector((state: State) => state.adValidation.errors.yrkestittel);
 
     const [input, setInput] = useState<string>(tittel);
     const [suggestions, setSuggestions] = useState<Nettressurs<JanzzStilling[]>>(ikkeLastet());
@@ -57,6 +59,7 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
     };
 
     const onForslagValgt = (valgtForslag: Suggestion) => {
+        console.log('valgtforslag', valgtForslag);
         if (suggestions.kind === Nettstatus.Suksess) {
             if (valgtForslag) {
                 const found = finnJanzzStilling(suggestions.data, valgtForslag.value);
@@ -73,25 +76,31 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
                             parentId: null,
                         },
                     ];
+                    console.log('kategori', kategori);
                     dispatch({ type: SET_JANZZ, kategori });
+                } else {
+                    dispatch({ type: SET_JANZZ, undefined });
                 }
                 setInput(capitalizeEmployerName(found ? found.label : null) || '');
+            } else {
+                dispatch({ type: SET_JANZZ, undefined });
             }
         }
     };
 
-    const feilmeldingTilBruker = suggestions.kind === Nettstatus.Feil && suggestions.error.message;
+    //const feilmeldingTilBruker = suggestions.kind === Nettstatus.Feil && suggestions.error.message;
 
     return (
         <div>
+            <Skjemalabel påkrevd>Yrkestittel som vises på stillingen</Skjemalabel>
             <Typeahead
-                label="Yrkestittel som vises på stillingen (må fylles ut)"
+                label=""
                 value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
                 onSelect={onForslagValgt}
                 onChange={onChange}
                 onBlur={onChange}
                 suggestions={konverterTilTypeaheadFormat(suggestions)}
-                error={feilmeldingTilBruker || undefined}
+                error={yrkestittelError}
                 className={css.typeahead}
                 aria-labelledby="endre-stilling-styrk"
             />
