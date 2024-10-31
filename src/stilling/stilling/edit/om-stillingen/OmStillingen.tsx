@@ -34,7 +34,7 @@ const OmStillingen = ({ stilling, erFormidling }: Props) => {
 
     return (
         <>
-            <Janzz tittel={stilling.title} categoryList={stilling.categoryList} />
+            <Janzz tittel={stilling.title} />
             {!erFormidling && (
                 <div>
                     <Skjemalabel påkrevd inputId="endre-stilling-annonsetekst">

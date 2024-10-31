@@ -1,21 +1,19 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import css from './Janzz.module.css';
-import Typeahead, { Suggestion } from '../../../../common/typeahead/Typeahead';
 import { ikkeLastet, Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { fetchJanzzYrker, JanzzStilling } from '../../../../api/api';
 import capitalizeEmployerName from '../../endre-arbeidsgiver/capitalizeEmployerName';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
-import { StyrkCategory } from 'felles/domene/stilling/Stilling';
 import { useDispatch, useSelector } from 'react-redux';
-import Skjemalabel from '../../skjemaetikett/Skjemalabel';
 import { State } from '../../../../redux/store';
+import { UNSAFE_Combobox as UnsafeCombobox } from '@navikt/ds-react';
+import Skjemalabel from '../../skjemaetikett/Skjemalabel';
 
 type Props = {
-    categoryList: StyrkCategory[];
     tittel: string;
 };
 
-const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
+const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const dispatch = useDispatch();
     const yrkestittelError = useSelector((state: State) => state.adValidation.errors.yrkestittel);
 
@@ -28,10 +26,8 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
                 kind: Nettstatus.LasterInn,
             });
 
-            let response: JanzzStilling[] | null = null;
-
             try {
-                response = await fetchJanzzYrker(typeahead);
+                const response = await fetchJanzzYrker(typeahead);
 
                 setSuggestions({
                     kind: Nettstatus.Suksess,
@@ -47,22 +43,19 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
 
         if (input.length > 2) {
             hentJanzzYrker(input);
+        } else {
+            setSuggestions(ikkeLastet());
         }
     }, [input]);
 
-    const onChange = (value: string | undefined) => {
-        if (value) {
-            setInput(value);
-        } else {
-            setInput('');
-        }
+    const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
+        setInput(value || '');
     };
 
-    const onForslagValgt = (valgtForslag: Suggestion) => {
-        console.log('valgtforslag', valgtForslag);
-        if (suggestions.kind === Nettstatus.Suksess) {
-            if (valgtForslag) {
-                const found = finnJanzzStilling(suggestions.data, valgtForslag.value);
+    const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
+        if (isSelected) {
+            if (suggestions.kind === Nettstatus.Suksess) {
+                const found = finnJanzzStilling(suggestions.data, option);
 
                 if (found) {
                     dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
@@ -76,64 +69,47 @@ const Janzz: FunctionComponent<Props> = ({ categoryList, tittel }) => {
                             parentId: null,
                         },
                     ];
-                    console.log('kategori', kategori);
                     dispatch({ type: SET_JANZZ, kategori });
+                    setInput(capitalizeEmployerName(found.label) || '');
                 } else {
                     dispatch({ type: SET_JANZZ, undefined });
                 }
-                setInput(capitalizeEmployerName(found ? found.label : null) || '');
-            } else {
-                dispatch({ type: SET_JANZZ, undefined });
             }
+        } else {
+            dispatch({ type: SET_JANZZ, undefined });
         }
     };
 
-    //const feilmeldingTilBruker = suggestions.kind === Nettstatus.Feil && suggestions.error.message;
+    const feilmeldingTilBruker = suggestions.kind === Nettstatus.Feil && suggestions.error.message;
 
     return (
         <div>
-            <Skjemalabel påkrevd>Yrkestittel som vises på stillingen</Skjemalabel>
-            <Typeahead
-                label=""
+            <UnsafeCombobox
+                label={<Skjemalabel påkrevd>Yrkestittel som vises på stillingen</Skjemalabel>}
                 value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
-                onSelect={onForslagValgt}
+                options={konverterTilComboboxOptions(suggestions)}
                 onChange={onChange}
-                onBlur={onChange}
-                suggestions={konverterTilTypeaheadFormat(suggestions)}
-                error={yrkestittelError}
+                onToggleSelected={onToggleSelected}
+                isLoading={suggestions.kind === Nettstatus.LasterInn}
+                error={yrkestittelError || feilmeldingTilBruker || undefined}
                 className={css.typeahead}
                 aria-labelledby="endre-stilling-styrk"
             />
         </div>
     );
 };
-/*  <UNSAFE_Combobox
-    label="Yrkestittel som vises på stillingen"
-    value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
-    options={}
-    //onSelect={onForslagValgt}
-    //onChange={onChange}
-    //onBlur={onChange}
-    //suggestions={konverterTilTypeaheadFormat(suggestions)}
-    error={feilmeldingTilBruker || undefined}
-    className={css.typeahead}
-    aria-labelledby="endre-stilling-styrk"
-        />*/
+
+const konverterTilComboboxOptions = (suggestions: Nettressurs<JanzzStilling[]>): string[] => {
+    if (suggestions.kind === Nettstatus.Suksess) {
+        return suggestions.data.map((f) => f.label);
+    } else {
+        return [];
+    }
+};
 
 const finnJanzzStilling = (suggestions: JanzzStilling[], navn: string) =>
     suggestions.find(
         (forslag: JanzzStilling) => forslag.label.toLowerCase() === navn.toLowerCase()
     );
-
-const konverterTilTypeaheadFormat = (suggestions: Nettressurs<JanzzStilling[]>) => {
-    if (suggestions.kind === Nettstatus.Suksess) {
-        return suggestions.data.map((f) => ({
-            value: f.label,
-            label: f.label,
-        }));
-    } else {
-        return [];
-    }
-};
 
 export default Janzz;
