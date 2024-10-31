@@ -1,10 +1,9 @@
-// src/api/stilling-api/janzz-api.ts
-
 import useSWR from 'swr';
 import { getAPIwithSchema } from '../fetcher';
 import { z } from 'zod';
+import { api } from 'felles/api';
 
-export const hentJanzzYrkerEndepunkt = '/stilling-api/rekrutteringsbistand/api/v1/janzz-yrker';
+export const hentJanzzYrkerEndepunkt = `${api.pamOntologi}/rest/typeahead/stilling`;
 
 export const janzzStillingSchema = z.object({
     label: z.string(),
