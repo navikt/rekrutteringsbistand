@@ -30,7 +30,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     }, []);
 
     useEffect(() => {
-        if (input.length > 0) {
+        if (input.length > 1) {
             hentJanzzYrker(input);
         } else {
             setSuggestions(ikkeLastet());
