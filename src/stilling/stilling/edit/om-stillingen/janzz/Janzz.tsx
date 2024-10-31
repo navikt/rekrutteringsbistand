@@ -7,7 +7,6 @@ import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../../../redux/store';
 import { UNSAFE_Combobox as UnsafeCombobox } from '@navikt/ds-react';
-import Skjemalabel from '../../skjemaetikett/Skjemalabel';
 
 type Props = {
     tittel: string;
@@ -49,7 +48,13 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     }, [input]);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
-        setInput(value || '');
+        if (event && event.target) {
+            setInput(event.target.value);
+        } else if (value !== undefined) {
+            setInput(value);
+        } else {
+            setInput('');
+        }
     };
 
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
@@ -85,7 +90,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     return (
         <div>
             <UnsafeCombobox
-                label={<Skjemalabel påkrevd>Yrkestittel som vises på stillingen</Skjemalabel>}
+                label="Yrkestittel som vises på stillingen"
                 value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
                 options={konverterTilComboboxOptions(suggestions)}
                 onChange={onChange}
