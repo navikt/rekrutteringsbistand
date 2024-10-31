@@ -18,7 +18,7 @@ export type HentJanzzYrkerDTO = z.infer<typeof hentJanzzYrkerSchema>;
 export const useHentJanzzYrker = (query: string) => {
     const shouldFetch = query.length > 1;
     const endpoint = shouldFetch
-        ? `${hentJanzzYrkerEndepunkt}?query=${encodeURIComponent(query)}`
+        ? `${hentJanzzYrkerEndepunkt}?stillingstittel=${encodeURIComponent(query)}`
         : null;
     return useSWR(endpoint, getAPIwithSchema(hentJanzzYrkerSchema));
 };
