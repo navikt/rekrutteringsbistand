@@ -2,12 +2,17 @@ import useSWR from 'swr';
 import { getAPIwithSchema } from '../fetcher';
 import { z } from 'zod';
 import { api } from 'felles/api';
+import { v4 as uuidv4 } from 'uuid';
 
 export const hentJanzzYrkerEndepunkt = `${api.pamOntologi}/rest/typeahead/stilling`;
 
 export const janzzStillingSchema = z.object({
     label: z.string(),
     konseptId: z.number(),
+    styrk08: z.any().optional(),
+    esco: z.any().optional(),
+    escoLabel: z.any().optional(),
+    undertype: z.any().optional(),
 });
 
 const hentJanzzYrkerSchema = z.array(janzzStillingSchema);
@@ -20,10 +25,12 @@ export const useHentJanzzYrker = (query: string) => {
     const endpoint = shouldFetch
         ? `${hentJanzzYrkerEndepunkt}?stillingstittel=${encodeURIComponent(query)}`
         : null;
-    return useSWR(endpoint, getAPIwithSchema(hentJanzzYrkerSchema));
-};
 
-export interface JanzzStilling {
-    label: string;
-    konseptId: number;
-}
+    const headers = {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Cache-Control': 'no-cache, no-store',
+        'Nav-CallId': uuidv4(),
+    };
+
+    return useSWR(endpoint, getAPIwithSchema(hentJanzzYrkerSchema, headers));
+};

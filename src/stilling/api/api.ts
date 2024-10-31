@@ -130,6 +130,35 @@ export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Enhetsre
     ];
 };
 
+export type JanzzStilling = {
+    konseptId: number;
+    label: string;
+};
+
+export const fetchJanzzYrker = async (typeahead: string): Promise<JanzzStilling[]> => {
+    const response = await fetch(
+        `${api.pamOntologi}/rest/typeahead/stilling?stillingstittel=${typeahead}`,
+        {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Cache-Control': 'no-cache, no-store',
+                'Nav-CallId': uuidv4(),
+            },
+        }
+    );
+    const result = await response.json();
+    return result.map((janzzStilling: any) => ({
+        konseptId: janzzStilling.konseptId,
+        styrk08: janzzStilling.styrk08,
+        esco: janzzStilling.esco,
+        escoLabel: janzzStilling.escoLabel,
+        label: janzzStilling.label,
+        undertype: janzzStilling.undertype,
+    }));
+};
+
 /**
  * TODO: Dette er en workaround, fordi det finnes annonser med ad.administration=null i databasen.
  * Når databasen er migrert og ikke inneholder administration=null kan denne workarounden fjernes.
