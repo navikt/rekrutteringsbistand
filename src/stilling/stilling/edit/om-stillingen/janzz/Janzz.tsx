@@ -44,11 +44,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 ];
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
-            } else {
-                dispatch({ type: SET_JANZZ, undefined });
             }
-        } else {
-            dispatch({ type: SET_JANZZ, undefined });
         }
     };
 
