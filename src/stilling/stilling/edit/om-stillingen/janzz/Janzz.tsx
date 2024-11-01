@@ -69,6 +69,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 error={yrkestittelError || feilmeldingTilBruker}
                 className={css.typeahead}
                 aria-labelledby="endre-stilling-styrk"
+                filteredOptions={suggestions ? suggestions.map((f) => f.label) : []}
             />
         </div>
     );
