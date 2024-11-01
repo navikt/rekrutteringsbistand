@@ -34,7 +34,12 @@ const OmStillingen = ({ stilling, erFormidling }: Props) => {
 
     return (
         <>
-            <Janzz tittel={stilling.title} />
+            <Janzz
+                tittel={
+                    stilling.categoryList?.find(({ categoryType }) => categoryType === 'JANZZ')
+                        ?.name ?? ''
+                }
+            />
             {!erFormidling && (
                 <div>
                     <Skjemalabel påkrevd inputId="endre-stilling-annonsetekst">
