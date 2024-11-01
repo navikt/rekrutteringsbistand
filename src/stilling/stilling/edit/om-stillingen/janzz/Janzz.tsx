@@ -8,6 +8,7 @@ import { State } from '../../../../redux/store';
 import { UNSAFE_Combobox as UnsafeCombobox } from '@navikt/ds-react';
 import capitalizeEmployerName from '../../endre-arbeidsgiver/capitalizeEmployerName';
 import { useHentJanzzYrker } from '../../../../../api/stillings-api/hentJanzzyrker';
+import Skjemalabel from '../../skjemaetikett/Skjemalabel';
 
 type Props = {
     tittel: string;
@@ -50,11 +51,17 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
     const feilmeldingTilBruker = error ? error.message : undefined;
 
+    // TODO: Fjern default tekster fra backend, slik at vi slipper å filterere de bort her
     return (
         <div>
             <UnsafeCombobox
-                label="Yrkestittel som vises på stillingen"
-                value={input === 'Stilling uten valgt jobbtittel' ? '' : input}
+                label={<Skjemalabel påkrevd>Yrkestittel som vises på stillingen</Skjemalabel>}
+                value={
+                    input === 'Stilling uten valgt jobbtittel' ||
+                    input === 'Invitasjon til jobbmesse'
+                        ? ''
+                        : input
+                }
                 options={suggestions ? suggestions.map((f) => f.label) : []}
                 onChange={onChange}
                 onToggleSelected={onToggleSelected}
