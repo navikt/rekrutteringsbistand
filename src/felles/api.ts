@@ -12,6 +12,7 @@ export const api = {
     modiaContextHolder: '/modiacontextholder/api',
     arbeidsgiverNotifikasjon: '/arbeidsgiver-notifikasjon-api',
     kandidatSokApi: '/kandidatsok-api',
+    pamOntologi: '/pam-ontologi',
 };
 
 export const videresendTilInnlogging = () => {

@@ -5,6 +5,21 @@ const tilDato = (dag: number, måned: number, år: number, timer = 0, minutter =
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(1, 11, 2024),
+        tittel: 'STYRK byttet ut med yrkestittel i stillingsregistreringen',
+        innhold: (
+            <>
+                <p>Vi har byttet ut STYRK i stillingsregistreringen.</p>
+                <p>
+                    Vi har byttet ut STYRK i stillingsregistreringen til en bedre løsning som lar
+                    deg velge mer detaljerte og treffsikre stillingstyper. Valgt yrkestittel vil bli
+                    tittel på stillingen. Yrkestittel setter du i feltet med overskriften
+                    «Yrkestittel som vises på stillingen».
+                </p>
+            </>
+        ),
+    },
+    {
         dato: tilDato(13, 6, 2024),
         tittel: 'Ny tilgangsstyring',
         innhold: (

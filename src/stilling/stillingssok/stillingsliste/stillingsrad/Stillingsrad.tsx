@@ -9,12 +9,7 @@ import {
     EsStilling,
     stillingErUtløpt,
 } from 'felles/domene/stilling/EsStilling';
-import {
-    Geografi,
-    Privacy,
-    Stillingskategori,
-    USE_STYRK_AS_TITLE_FEATURE_TOGGLE,
-} from 'felles/domene/stilling/Stilling';
+import { Geografi, Privacy, Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { ApplikasjonContext } from '../../../../felles/ApplikasjonContext';
 import RekBisKortStilling from '../../../../felles/komponenter/rekbis-kort/RekBisKortStilling';
 import TekstlinjeMedIkon from '../../../../felles/komponenter/tekstlinje-med-ikon/TekstlinjeMedIkon';
@@ -31,7 +26,6 @@ type Props = {
     kandidatnr?: string;
     navIdent?: string;
 };
-export const tittelfelt = USE_STYRK_AS_TITLE_FEATURE_TOGGLE ? 'styrkEllerTittel' : 'title';
 
 const Stillingsrad: FunctionComponent<Props> = ({
     rekrutteringsbistandstilling,
@@ -93,7 +87,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
             score={score}
             lenkeTilStilling={
                 erSlettet ? (
-                    stilling[tittelfelt]
+                    stilling['tittel']
                 ) : (
                     <Link
                         className={classNames(css.stillingslenke, 'navds-link')}
@@ -102,7 +96,7 @@ const Stillingsrad: FunctionComponent<Props> = ({
                             stillingssøk: searchParams.toString(),
                         }}
                     >
-                        {stilling[tittelfelt]}
+                        {stilling['tittel']}
                     </Link>
                 )
             }

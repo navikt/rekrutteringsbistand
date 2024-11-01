@@ -2,17 +2,23 @@ import { z, ZodSchema } from 'zod';
 
 const basePath = import.meta.env.VITEST ? 'http://localhost:3000' : '';
 
-export const getAPIwithSchema = <T>(schema: ZodSchema<T>): ((url: string) => Promise<T>) => {
+export const getAPIwithSchema = <T>(
+    schema: ZodSchema<T>,
+    headers?: HeadersInit
+): ((url: string) => Promise<T>) => {
     return async (url: string) => {
-        const data = await getAPI(url);
+        const data = await getAPI(url, headers);
         return schema.parse(data);
     };
 };
 
-export const getAPI = async (url: string) => {
+export const getAPI = async (url: string, headers?: HeadersInit) => {
     const response = await fetch(basePath + url, {
         method: 'GET',
         credentials: 'include',
+        headers: {
+            ...headers,
+        },
     });
 
     if (response.ok) {

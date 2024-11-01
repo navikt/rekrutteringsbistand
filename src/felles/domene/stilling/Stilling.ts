@@ -43,24 +43,12 @@ export type Stilling = Stillingbase & {
     };
 };
 
-// TODO: Fjern nå vi har byttet om
-export const USE_STYRK_AS_TITLE_FEATURE_TOGGLE = true;
 export const hentTittelFraStilling = (stilling: Stilling) => {
-    if (!USE_STYRK_AS_TITLE_FEATURE_TOGGLE) {
-        return stilling.title;
-    }
-
     if (stilling.source !== 'DIR') {
         return stilling.title;
     }
 
-    const passendeStyrkkoder =
-        stilling.categoryList?.filter(({ categoryType }) => categoryType === 'STYRK08NAV') ?? [];
-
-    if (passendeStyrkkoder.length === 0) {
-        return 'Stilling uten valgt jobbtittel';
-    }
-    return passendeStyrkkoder.map((it) => it.name).join('/');
+    return stilling.categoryList?.find(({ categoryType }) => categoryType === 'JANZZ')?.name || '';
 };
 
 export enum System {
@@ -122,6 +110,7 @@ export type EsStyrkCategory = {
 
 export type StyrkCategory = {
     categoryType: string;
+    code: string;
     name: string;
 };
 

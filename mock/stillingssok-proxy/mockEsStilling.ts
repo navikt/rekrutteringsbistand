@@ -12,7 +12,7 @@ export const mockEsRekrutteringsbistandstilling: EsRekrutteringsbistandstilling 
     stilling: {
         ...mockStilling,
         uuid: 'intern',
-        styrkEllerTittel: 'Intern stilling',
+        tittel: 'Intern stilling',
         annonsenr: String(mockStilling.id),
         categories: [
             {
@@ -44,7 +44,7 @@ export const mockEsRekrutteringsbistandstillingMin: EsRekrutteringsbistandstilli
     stilling: {
         ...mockEsRekrutteringsbistandstilling.stilling,
         uuid: 'minIntern',
-        styrkEllerTittel: 'Intern stilling MIN',
+        tittel: 'Intern stilling MIN',
         administration: {
             ...(mockEsRekrutteringsbistandstilling.stilling.administration as Administration),
             navIdent: 'Z123456',
@@ -63,7 +63,7 @@ export const mockEsRekrutteringsbistandstillingEkstern: EsRekrutteringsbistandst
         uuid: 'ekstern',
         source: Kilde.Finn,
         medium: Medium.Ass,
-        styrkEllerTittel: 'Ekstern stilling',
+        tittel: 'Ekstern stilling',
         annonsenr: String(mockStilling.id),
         categories: [
             {
@@ -96,7 +96,7 @@ export const mockEsRekrutteringsbistandstillingEksternMin: EsRekrutteringsbistan
     stilling: {
         ...mockEsRekrutteringsbistandstillingEkstern.stilling,
         uuid: 'minEkstern',
-        styrkEllerTittel: 'Ekstern stilling MIN',
+        tittel: 'Ekstern stilling MIN',
         administration: {
             ...(mockEsRekrutteringsbistandstillingEkstern.stilling
                 .administration as Administration),
