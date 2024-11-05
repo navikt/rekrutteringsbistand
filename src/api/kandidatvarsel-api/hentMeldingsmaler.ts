@@ -41,24 +41,24 @@ export const hentMeldingsmalerMock = [
             {
                 vurdertSomAktuell: {
                     smsTekst:
-                        'Hei! Vi har vurdert at kompetansen din kan passe til en stilling. Logg inn på NAV for å se stillingen. Vennlig hilsen NAV',
+                        'Hei! Vi har vurdert at kompetansen din kan passe til en stilling. Logg inn på Nav for å se stillingen. Vennlig hilsen Nav',
                     epostTittel: 'Stilling som kan passe for deg?',
                     epostHtmlBody:
-                        '<!DOCTYPE html><html><head><title>Melding</title></head><body><p>Hei!</p><p>Vi har vurdert at kompetansen din kan passe til en stilling. Logg inn på NAV for å se stillingen.</p><p>Vennlig hilsen</p><p>NAV</p></body></html>',
+                        '<!DOCTYPE html><html><head><title>Melding</title></head><body><p>Hei!</p><p>Vi har vurdert at kompetansen din kan passe til en stilling. Logg inn på Nav for å se stillingen.</p><p>Vennlig hilsen</p><p>Nav</p></body></html>',
                 },
                 passendeStilling: {
                     smsTekst:
-                        'Hei! Vi har funnet en stilling som kan passe deg. Logg inn på NAV for å se stillingen. Vennlig hilsen NAV',
+                        'Hei! Vi har funnet en stilling som kan passe deg. Logg inn på Nav for å se stillingen. Vennlig hilsen Nav',
                     epostTittel: 'Stilling som kan passe for deg?',
                     epostHtmlBody:
-                        '<!DOCTYPE html><html><head><title>Melding</title></head><body><p>Hei!</p><p>Vi har funnet en stilling som kanskje kan passe for deg. Logg inn på NAV for å se stillingen.</p><p>Vennlig hilsen</p><p>NAV</p></body></html>',
+                        '<!DOCTYPE html><html><head><title>Melding</title></head><body><p>Hei!</p><p>Vi har funnet en stilling som kanskje kan passe for deg. Logg inn på Nav for å se stillingen.</p><p>Vennlig hilsen</p><p>Nav</p></body></html>',
                 },
                 passendeJobbarrangement: {
                     smsTekst:
-                        'Hei! Vi har funnet et jobbarrangement som kanskje passer for deg. Logg inn på NAV for å se arrangementet. Vennlig hilsen NAV',
+                        'Hei! Vi har funnet et jobbarrangement som kanskje passer for deg. Logg inn på Nav for å se arrangementet. Vennlig hilsen Nav',
                     epostTittel: 'Jobbarrangement',
                     epostHtmlBody:
-                        '<!DOCTYPE html><html><head><title>Melding</title></head><body><p>Hei!</p><p>Vi har funnet et jobbarrangement som kanskje passer for deg. Logg inn på NAV for å se arrangementet.</p><p>Vennlig hilsen</p><p>NAV</p></body></html>',
+                        '<!DOCTYPE html><html><head><title>Melding</title></head><body><p>Hei!</p><p>Vi har funnet et jobbarrangement som kanskje passer for deg. Logg inn på Nav for å se arrangementet.</p><p>Vennlig hilsen</p><p>Nav</p></body></html>',
                 },
             },
         ]);
