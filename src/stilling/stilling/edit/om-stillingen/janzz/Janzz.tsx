@@ -1,5 +1,3 @@
-// components/Janzz.tsx
-
 import React, { FunctionComponent, useState } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
@@ -19,11 +17,13 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const yrkestittelError = useSelector((state: State) => state.adValidation.errors.yrkestittel);
 
     const [input, setInput] = useState<string>(tittel);
+    const [hasValidSelection, setHasValidSelection] = useState<boolean>(true);
 
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
         setInput(event?.target?.value || value || '');
+        setHasValidSelection(false); // Reset valid selection status on change
     };
 
     const onToggleSelected = (option: string, isSelected: boolean) => {
@@ -45,13 +45,20 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 ];
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
+                setHasValidSelection(true); // Mark selection as valid
             }
+        }
+    };
+
+    const onBlur = () => {
+        // If no valid selection is made and input is not empty, show an error message
+        if (!hasValidSelection && input) {
+            dispatch({ type: SET_JANZZ, kategori: undefined });
         }
     };
 
     const feilmeldingTilBruker = error ? error.message : undefined;
 
-    // TODO: Fjern default tekster fra backend, slik at vi slipper å filterere de bort her
     return (
         <div>
             <UnsafeCombobox
@@ -65,6 +72,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 options={suggestions ? suggestions.map((f) => f.label) : []}
                 onChange={onChange}
                 onToggleSelected={onToggleSelected}
+                onBlur={onBlur}
                 isLoading={isLoading}
                 error={yrkestittelError || feilmeldingTilBruker}
                 className={css.typeahead}
