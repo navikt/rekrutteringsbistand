@@ -1,6 +1,4 @@
-// components/Janzz.tsx
-
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +19,11 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const [input, setInput] = useState<string>(tittel);
 
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
+
+    useEffect(() => {
+        setInput(tittel);
+        dispatch({ type: SET_JANZZ, undefined });
+    }, [tittel]);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
         setInput(event?.target?.value || value || '');
@@ -58,7 +61,6 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
     const feilmeldingTilBruker = error ? error.message : undefined;
 
-    // TODO: Fjern default tekster fra backend, slik at vi slipper å filterere de bort her
     return (
         <div>
             <UnsafeCombobox
