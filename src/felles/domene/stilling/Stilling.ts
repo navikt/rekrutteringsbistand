@@ -50,11 +50,11 @@ export const hentTittelFraStilling = (stilling: Stilling) => {
 
     const janzz = stilling.categoryList?.find(({ categoryType }) => categoryType === 'JANZZ')?.name;
 
-    const styrk = stilling.categoryList?.find(
+    const styrk08Nav = stilling.categoryList?.find(
         ({ categoryType }) => categoryType === 'STYRK08NAV'
     )?.name;
 
-    return janzz ?? styrk ?? 'Stilling uten valgt jobbtittel';
+    return styrk08Nav ?? janzz ?? 'Stilling uten valgt jobbtittel';
 };
 
 export enum System {
