@@ -1,4 +1,6 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+// components/Janzz.tsx
+
+import React, { FunctionComponent, useState } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,15 +22,17 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
-    useEffect(() => {
-        if (suggestions && suggestions.length > 0) {
-            const found = suggestions.find(
-                ({ label }) => label.toLowerCase() === input.toLowerCase()
-            );
+    const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
+        setInput(event?.target?.value || value || '');
+    };
 
+    const onToggleSelected = (option: string, isSelected: boolean) => {
+        if (isSelected && suggestions) {
+            const found = suggestions.find(
+                (forslag) => forslag.label.toLowerCase() === option.toLowerCase()
+            );
             if (found) {
                 dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
-
                 const kategori = [
                     {
                         id: found.konseptId,
@@ -39,28 +43,15 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                         parentId: null,
                     },
                 ];
-
                 dispatch({ type: SET_JANZZ, kategori });
-            } else {
-                dispatch({ type: SET_JANZZ, undefined });
+                setInput(capitalizeEmployerName(found.label) || '');
             }
-        } else {
-            dispatch({ type: SET_JANZZ, undefined });
-        }
-    }, [input, suggestions]);
-
-    const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
-        setInput(event?.target?.value || value || '');
-    };
-
-    const onToggleSelected = (option: string, isSelected: boolean) => {
-        if (isSelected) {
-            setInput(capitalizeEmployerName(option) || '');
         }
     };
 
     const feilmeldingTilBruker = error ? error.message : undefined;
 
+    // TODO: Fjern default tekster fra backend, slik at vi slipper å filterere de bort her
     return (
         <div>
             <UnsafeCombobox
