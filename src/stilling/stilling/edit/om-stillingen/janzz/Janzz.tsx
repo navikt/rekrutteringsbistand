@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,10 +17,36 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const yrkestittelError = useSelector((state: State) => state.adValidation.errors.yrkestittel);
 
     const [input, setInput] = useState<string>(tittel);
+    const [initialLoad, setInitialLoad] = useState<boolean>(true);
 
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
+    // Keep track of whether the user has modified the title
+    const isUserEditing = useRef(false);
+
+    // Update input when tittel prop changes (e.g., when loading a different position)
     useEffect(() => {
+        setInput(tittel);
+        setInitialLoad(true);
+        isUserEditing.current = false;
+    }, [tittel]);
+
+    useEffect(() => {
+        if (initialLoad) {
+            setInitialLoad(false);
+            return;
+        }
+
+        if (!isUserEditing.current) {
+            return;
+        }
+
+        if (input.trim() === '') {
+            dispatch({ type: SET_JANZZ, payload: undefined });
+            dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: '' });
+            return;
+        }
+
         if (suggestions && suggestions.length > 0) {
             const found = suggestions.find(
                 ({ label }) => label.toLowerCase() === input.toLowerCase()
@@ -42,20 +68,25 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
                 dispatch({ type: SET_JANZZ, kategori });
             } else {
-                dispatch({ type: SET_JANZZ, undefined });
+                dispatch({ type: SET_JANZZ, payload: undefined });
+                dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: input });
             }
         } else {
-            dispatch({ type: SET_JANZZ, undefined });
+            dispatch({ type: SET_JANZZ, payload: undefined });
+            dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: input });
         }
-    }, [input, suggestions]);
+    }, [input, suggestions, initialLoad, dispatch]);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
-        setInput(event?.target?.value || value || '');
+        const newValue = event?.target?.value || value || '';
+        setInput(newValue);
+        isUserEditing.current = true;
     };
 
     const onToggleSelected = (option: string, isSelected: boolean) => {
         if (isSelected) {
             setInput(capitalizeEmployerName(option) || '');
+            isUserEditing.current = true;
         }
     };
 
