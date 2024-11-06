@@ -28,5 +28,5 @@ export const useSuggestKontor = (props: SuggestKontorProps) => {
 };
 
 export const suggestKontorMockMsw = http.post(suggestKontorEndepunkt, async (_) => {
-    return HttpResponse.json(['NAV Hordaland', 'NAV Bergen', 'NAV Tønsberg']);
+    return HttpResponse.json(['Nav Hordaland', 'Nav Bergen', 'Nav Tønsberg']);
 });

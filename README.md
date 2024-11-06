@@ -1,6 +1,6 @@
 # Rekrutteringsbistand #Frontend
 
-Et arbeidsmobiliseringsverktøy for veiledere og markedskontakter i NAV.
+Et arbeidsmobiliseringsverktøy for veiledere og markedskontakter i Nav.
 
 ## Installasjon
 
@@ -110,4 +110,4 @@ EKSEMPEL_API_URL=http://eksempel.nav.no
 
 ## For folk utenfor Nav
 
-* IT-avdelingen i [Arbeids- og velferdsdirektoratet](https://www.nav.no/no/NAV+og+samfunn/Kontakt+NAV/Relatert+informasjon/arbeids-og-velferdsdirektoratet-kontorinformasjon)
+* IT-avdelingen i [Arbeids- og velferdsdirektoratet](https://www.nav.no/no/nav+og+samfunn/Kontakt+nav/Relatert+informasjon/arbeids-og-velferdsdirektoratet-kontorinformasjon)
