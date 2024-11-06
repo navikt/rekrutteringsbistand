@@ -22,7 +22,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
     useEffect(() => {
         setInput(tittel);
-        dispatch({ type: SET_JANZZ, undefined });
+        dispatch({ type: SET_JANZZ, payload: undefined });
     }, [tittel]);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
@@ -31,14 +31,14 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
     const onToggleSelected = (option: string, isSelected: boolean) => {
         if (!isSelected || !suggestions) {
-            dispatch({ type: SET_JANZZ, undefined });
+            dispatch({ type: SET_JANZZ, payload: undefined });
             return;
         }
 
         const found = suggestions.find(({ label }) => label.toLowerCase() === option.toLowerCase());
 
         if (!found) {
-            dispatch({ type: SET_JANZZ, undefined });
+            dispatch({ type: SET_JANZZ, payload: undefined });
             return;
         }
 
@@ -55,7 +55,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
             },
         ];
 
-        dispatch({ type: SET_JANZZ, kategori });
+        dispatch({ type: SET_JANZZ, payload: kategori });
         setInput(capitalizeEmployerName(found.label) || '');
     };
 
