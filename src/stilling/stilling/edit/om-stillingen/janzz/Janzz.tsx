@@ -21,42 +21,42 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
     useEffect(() => {
-        setInput(tittel);
-        dispatch({ type: SET_JANZZ, payload: undefined });
-    }, [tittel]);
+        if (suggestions && suggestions.length > 0) {
+            const found = suggestions.find(
+                ({ label }) => label.toLowerCase() === input.toLowerCase()
+            );
+
+            if (found) {
+                dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
+
+                const kategori = [
+                    {
+                        id: found.konseptId,
+                        code: found.konseptId.toString(),
+                        categoryType: 'JANZZ',
+                        name: found.label,
+                        description: null,
+                        parentId: null,
+                    },
+                ];
+
+                dispatch({ type: SET_JANZZ, kategori });
+            } else {
+                dispatch({ type: SET_JANZZ, undefined });
+            }
+        } else {
+            dispatch({ type: SET_JANZZ, undefined });
+        }
+    }, [input, suggestions]);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
         setInput(event?.target?.value || value || '');
     };
 
     const onToggleSelected = (option: string, isSelected: boolean) => {
-        if (!isSelected || !suggestions) {
-            dispatch({ type: SET_JANZZ, payload: undefined });
-            return;
+        if (isSelected) {
+            setInput(capitalizeEmployerName(option) || '');
         }
-
-        const found = suggestions.find(({ label }) => label.toLowerCase() === option.toLowerCase());
-
-        if (!found) {
-            dispatch({ type: SET_JANZZ, payload: undefined });
-            return;
-        }
-
-        dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
-
-        const kategori = [
-            {
-                id: found.konseptId,
-                code: found.konseptId.toString(),
-                categoryType: 'JANZZ',
-                name: found.label,
-                description: null,
-                parentId: null,
-            },
-        ];
-
-        dispatch({ type: SET_JANZZ, payload: kategori });
-        setInput(capitalizeEmployerName(found.label) || '');
     };
 
     const feilmeldingTilBruker = error ? error.message : undefined;
