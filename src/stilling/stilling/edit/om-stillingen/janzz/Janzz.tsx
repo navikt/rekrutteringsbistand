@@ -27,26 +27,33 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     };
 
     const onToggleSelected = (option: string, isSelected: boolean) => {
-        if (isSelected && suggestions) {
-            const found = suggestions.find(
-                (forslag) => forslag.label.toLowerCase() === option.toLowerCase()
-            );
-            if (found) {
-                dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
-                const kategori = [
-                    {
-                        id: found.konseptId,
-                        code: found.konseptId.toString(),
-                        categoryType: 'JANZZ',
-                        name: found.label,
-                        description: null,
-                        parentId: null,
-                    },
-                ];
-                dispatch({ type: SET_JANZZ, kategori });
-                setInput(capitalizeEmployerName(found.label) || '');
-            }
+        if (!isSelected || !suggestions) {
+            dispatch({ type: SET_JANZZ, undefined });
+            return;
         }
+
+        const found = suggestions.find(({ label }) => label.toLowerCase() === option.toLowerCase());
+
+        if (!found) {
+            dispatch({ type: SET_JANZZ, undefined });
+            return;
+        }
+
+        dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
+
+        const kategori = [
+            {
+                id: found.konseptId,
+                code: found.konseptId.toString(),
+                categoryType: 'JANZZ',
+                name: found.label,
+                description: null,
+                parentId: null,
+            },
+        ];
+
+        dispatch({ type: SET_JANZZ, kategori });
+        setInput(capitalizeEmployerName(found.label) || '');
     };
 
     const feilmeldingTilBruker = error ? error.message : undefined;
