@@ -51,8 +51,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     };
 
     const onBlur = () => {
-        // If no valid selection is made and input is not empty, show an error message
-        if (!hasValidSelection && input) {
+        if (!hasValidSelection) {
             dispatch({ type: SET_JANZZ, kategori: undefined });
         }
     };
