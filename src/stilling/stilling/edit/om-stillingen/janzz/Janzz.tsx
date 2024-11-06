@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect, useRef } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,11 +12,6 @@ type Props = {
     tittel: string;
 };
 
-interface Suggestion {
-    label: string;
-    konseptId: number;
-}
-
 const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const dispatch = useDispatch();
     const yrkestittelError = useSelector((state: State) => state.adValidation.errors.yrkestittel);
@@ -25,37 +20,15 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
-    const typedSuggestions = suggestions as Suggestion[] | undefined;
-
-    const isUserEditing = useRef(false);
-
     useEffect(() => {
-        setInput(tittel);
-        isUserEditing.current = false;
-    }, [tittel]);
-
-    useEffect(() => {
-        if (!isUserEditing.current) {
-            return;
-        }
-
-        if (input.trim() === '') {
-            // User cleared the input
-            dispatch({ type: SET_JANZZ, payload: undefined });
-            dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: '' });
-            return;
-        }
-
-        // Update job title with user's input
-        dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: input });
-
-        // Check if the input matches a suggestion
-        if (typedSuggestions && typedSuggestions.length > 0) {
-            const found = typedSuggestions.find(
-                (suggestion) => suggestion.label.toLowerCase() === input.toLowerCase()
+        if (suggestions && suggestions.length > 0) {
+            const found = suggestions.find(
+                ({ label }) => label.toLowerCase() === input.toLowerCase()
             );
 
             if (found) {
+                dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
+
                 const kategori = [
                     {
                         id: found.konseptId,
@@ -69,23 +42,20 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
                 dispatch({ type: SET_JANZZ, kategori });
             } else {
-                dispatch({ type: SET_JANZZ, payload: undefined });
+                dispatch({ type: SET_JANZZ, undefined });
             }
         } else {
-            dispatch({ type: SET_JANZZ, payload: undefined });
+            dispatch({ type: SET_JANZZ, undefined });
         }
-    }, [input, typedSuggestions, dispatch]);
+    }, [input, suggestions]);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
-        const newValue = event?.target?.value || value || '';
-        setInput(newValue);
-        isUserEditing.current = true;
+        setInput(event?.target?.value || value || '');
     };
 
     const onToggleSelected = (option: string, isSelected: boolean) => {
         if (isSelected) {
             setInput(capitalizeEmployerName(option) || '');
-            isUserEditing.current = true;
         }
     };
 
@@ -101,14 +71,14 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                         ? ''
                         : input
                 }
-                options={typedSuggestions ? typedSuggestions.map((s) => s.label) : []}
+                options={suggestions ? suggestions.map((f) => f.label) : []}
                 onChange={onChange}
                 onToggleSelected={onToggleSelected}
                 isLoading={isLoading}
                 error={yrkestittelError || feilmeldingTilBruker}
                 className={css.typeahead}
                 aria-labelledby="endre-stilling-styrk"
-                filteredOptions={typedSuggestions ? typedSuggestions.map((s) => s.label) : []}
+                filteredOptions={suggestions ? suggestions.map((f) => f.label) : []}
             />
         </div>
     );
