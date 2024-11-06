@@ -12,49 +12,50 @@ type Props = {
     tittel: string;
 };
 
+interface Suggestion {
+    label: string;
+    konseptId: number;
+}
+
 const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const dispatch = useDispatch();
     const yrkestittelError = useSelector((state: State) => state.adValidation.errors.yrkestittel);
 
     const [input, setInput] = useState<string>(tittel);
-    const [initialLoad, setInitialLoad] = useState<boolean>(true);
 
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
-    // Keep track of whether the user has modified the title
+    const typedSuggestions = suggestions as Suggestion[] | undefined;
+
     const isUserEditing = useRef(false);
 
-    // Update input when tittel prop changes (e.g., when loading a different position)
     useEffect(() => {
         setInput(tittel);
-        setInitialLoad(true);
         isUserEditing.current = false;
     }, [tittel]);
 
     useEffect(() => {
-        if (initialLoad) {
-            setInitialLoad(false);
-            return;
-        }
-
         if (!isUserEditing.current) {
             return;
         }
 
         if (input.trim() === '') {
+            // User cleared the input
             dispatch({ type: SET_JANZZ, payload: undefined });
             dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: '' });
             return;
         }
 
-        if (suggestions && suggestions.length > 0) {
-            const found = suggestions.find(
-                ({ label }) => label.toLowerCase() === input.toLowerCase()
+        // Update job title with user's input
+        dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: input });
+
+        // Check if the input matches a suggestion
+        if (typedSuggestions && typedSuggestions.length > 0) {
+            const found = typedSuggestions.find(
+                (suggestion) => suggestion.label.toLowerCase() === input.toLowerCase()
             );
 
             if (found) {
-                dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
-
                 const kategori = [
                     {
                         id: found.konseptId,
@@ -69,13 +70,11 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 dispatch({ type: SET_JANZZ, kategori });
             } else {
                 dispatch({ type: SET_JANZZ, payload: undefined });
-                dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: input });
             }
         } else {
             dispatch({ type: SET_JANZZ, payload: undefined });
-            dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: input });
         }
-    }, [input, suggestions, initialLoad, dispatch]);
+    }, [input, typedSuggestions, dispatch]);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
         const newValue = event?.target?.value || value || '';
@@ -102,14 +101,14 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                         ? ''
                         : input
                 }
-                options={suggestions ? suggestions.map((f) => f.label) : []}
+                options={typedSuggestions ? typedSuggestions.map((s) => s.label) : []}
                 onChange={onChange}
                 onToggleSelected={onToggleSelected}
                 isLoading={isLoading}
                 error={yrkestittelError || feilmeldingTilBruker}
                 className={css.typeahead}
                 aria-labelledby="endre-stilling-styrk"
-                filteredOptions={suggestions ? suggestions.map((f) => f.label) : []}
+                filteredOptions={typedSuggestions ? typedSuggestions.map((s) => s.label) : []}
             />
         </div>
     );
