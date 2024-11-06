@@ -12,12 +12,12 @@ spec:
     port: 8080
     ingresses:
         - {{ ingress }}
-    liveness:
-        initialDelay: 5
-        path: /internal/isAlive
-    readiness:
-        initialDelay: 5
-        path: /internal/isReady
+    # liveness:
+    #     initialDelay: 5
+    #     path: /internal/isAlive
+    # readiness:
+    #     initialDelay: 5
+        # path: /internal/isReady
     azure:
         application:
             enabled: true
