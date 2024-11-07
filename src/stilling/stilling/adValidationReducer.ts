@@ -147,7 +147,7 @@ function* validateYrkestittel(): Generator<unknown, any, any> {
     console.log('validateYrkestittel SET_JANZZ', categoryList);
 
     if (valueIsNotSet(categoryList)) {
-        yield addValidationError({ field: 'yrkestittel', message: 'Gyldig yrkestittel mangler' });
+        yield addValidationError({ field: 'yrkestittel', message: 'Gyldig yrkestittel må velges' });
     } else {
         yield removeValidationError({ field: 'yrkestittel' });
     }
