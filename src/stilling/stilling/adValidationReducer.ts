@@ -144,7 +144,6 @@ function* validateLocationArea(): Generator<unknown, any, any> {
 function* validateYrkestittel(): Generator<unknown, any, any> {
     const state = yield select();
     const { categoryList } = state.adData;
-    console.log('validateYrkestittel SET_JANZZ', categoryList);
 
     if (valueIsNotSet(categoryList)) {
         yield addValidationError({ field: 'yrkestittel', message: 'Gyldig yrkestittel må velges' });

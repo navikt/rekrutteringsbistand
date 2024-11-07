@@ -58,6 +58,12 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
     const feilmeldingTilBruker = error ? error.message : undefined;
 
+    const filteredSuggestions = suggestions
+        ? suggestions
+              .filter((f) => f.styrk08 && f.styrk08.trim() !== '' && f.styrk08 !== '9999')
+              .map((f) => f.label)
+        : [];
+
     return (
         <div>
             <UnsafeCombobox
@@ -68,7 +74,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                         ? ''
                         : input
                 }
-                options={suggestions ? suggestions.map((f) => f.label) : []}
+                options={filteredSuggestions}
                 onChange={onChange}
                 onToggleSelected={onToggleSelected}
                 onBlur={onBlur}
@@ -76,7 +82,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 error={yrkestittelError || feilmeldingTilBruker}
                 className={css.typeahead}
                 aria-labelledby="endre-stilling-styrk"
-                filteredOptions={suggestions ? suggestions.map((f) => f.label) : []}
+                filteredOptions={filteredSuggestions}
             />
         </div>
     );
