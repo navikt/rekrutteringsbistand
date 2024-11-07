@@ -23,7 +23,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
         setInput(event?.target?.value || value || '');
-        setHasValidSelection(false); // Reset valid selection status on change
+        setHasValidSelection(false);
     };
 
     const onToggleSelected = (option: string, isSelected: boolean) => {
@@ -45,7 +45,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 ];
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
-                setHasValidSelection(true); // Mark selection as valid
+                setHasValidSelection(true);
             }
         }
     };
