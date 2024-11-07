@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useRef } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,11 +19,19 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const [input, setInput] = useState<string>(tittel);
     const [hasValidSelection, setHasValidSelection] = useState<boolean>(true);
 
+    const optionSelectedRef = useRef(false);
+
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
-        setInput(event?.target?.value || value || '');
-        setHasValidSelection(false);
+        const newValue = event?.target?.value || value || '';
+        setInput(newValue);
+
+        if (optionSelectedRef.current) {
+            optionSelectedRef.current = false;
+        } else {
+            setHasValidSelection(false);
+        }
     };
 
     const onToggleSelected = (option: string, isSelected: boolean) => {
@@ -46,6 +54,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
                 setHasValidSelection(true);
+                optionSelectedRef.current = true; // For å unngå resetting av validselection i onChange
             }
         }
     };
@@ -79,7 +88,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 onToggleSelected={onToggleSelected}
                 onBlur={onBlur}
                 isLoading={isLoading}
-                error={yrkestittelError || feilmeldingTilBruker}
+                error={!hasValidSelection ? yrkestittelError || feilmeldingTilBruker : undefined}
                 className={css.typeahead}
                 aria-labelledby="endre-stilling-styrk"
                 filteredOptions={filteredSuggestions}
