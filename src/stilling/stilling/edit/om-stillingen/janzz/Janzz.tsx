@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useRef } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,6 +19,8 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const [input, setInput] = useState<string>(tittel);
     const [hasValidSelection, setHasValidSelection] = useState<boolean>(true);
 
+    const optionSelectedRef = useRef<boolean>(false);
+
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
     const filteredSuggestions = suggestions
@@ -30,7 +32,12 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
         const newValue = event?.target.value || value || '';
         setInput(newValue);
-        setHasValidSelection(false); // Assume invalid until selection is made
+
+        if (optionSelectedRef.current) {
+            optionSelectedRef.current = false;
+        } else {
+            setHasValidSelection(false);
+        }
     };
 
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
@@ -53,8 +60,10 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
                 setHasValidSelection(true);
+                optionSelectedRef.current = true; // Indicate that an option was just selected
             }
         } else {
+            // Option was deselected
             setHasValidSelection(false);
             dispatch({ type: SET_JANZZ, kategori: undefined });
         }
