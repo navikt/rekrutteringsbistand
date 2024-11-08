@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useRef } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,24 +19,23 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const [input, setInput] = useState<string>(tittel);
     const [hasValidSelection, setHasValidSelection] = useState<boolean>(true);
 
-    const optionSelectedRef = useRef(false);
-
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
-        const newValue = event?.target?.value || value || '';
-        setInput(newValue);
+    const filteredSuggestions = suggestions
+        ? suggestions
+              .filter((f) => f.styrk08 && f.styrk08.trim() !== '' && f.styrk08 !== '9999')
+              .map((f) => f.label)
+        : [];
 
-        if (optionSelectedRef.current) {
-            optionSelectedRef.current = false;
-        } else {
-            setHasValidSelection(false);
-        }
+    const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
+        const newValue = event?.target.value || value || '';
+        setInput(newValue);
+        setHasValidSelection(false); // Assume invalid until selection is made
     };
 
-    const onToggleSelected = (option: string, isSelected: boolean) => {
-        if (isSelected && suggestions) {
-            const found = suggestions.find(
+    const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
+        if (isSelected) {
+            const found = suggestions?.find(
                 (forslag) => forslag.label.toLowerCase() === option.toLowerCase()
             );
             if (found) {
@@ -54,8 +53,10 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
                 setHasValidSelection(true);
-                optionSelectedRef.current = true; // For å unngå resetting av validselection i onChange
             }
+        } else {
+            setHasValidSelection(false);
+            dispatch({ type: SET_JANZZ, kategori: undefined });
         }
     };
 
@@ -66,12 +67,6 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     };
 
     const feilmeldingTilBruker = error ? error.message : undefined;
-
-    const filteredSuggestions = suggestions
-        ? suggestions
-              .filter((f) => f.styrk08 && f.styrk08.trim() !== '' && f.styrk08 !== '9999')
-              .map((f) => f.label)
-        : [];
 
     return (
         <div>
