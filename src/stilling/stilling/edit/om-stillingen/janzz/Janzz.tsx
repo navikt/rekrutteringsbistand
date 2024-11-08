@@ -1,6 +1,4 @@
-// components/Janzz.tsx
-
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useRef } from 'react';
 import css from './Janzz.module.css';
 import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,16 +17,33 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const yrkestittelError = useSelector((state: State) => state.adValidation.errors.yrkestittel);
 
     const [input, setInput] = useState<string>(tittel);
+    const [hasValidSelection, setHasValidSelection] = useState<boolean>(true);
+
+    // Må håndtere at onChange blir kalt når en onToggleSelection blir valgt i comboboxen
+    const optionSelectedRef = useRef<boolean>(false);
 
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
 
+    const filteredSuggestions = suggestions
+        ? suggestions
+              .filter((f) => f.styrk08 && f.styrk08.trim() !== '' && f.styrk08 !== '9999')
+              .map((f) => f.label)
+        : [];
+
     const onChange = (event: React.ChangeEvent<HTMLInputElement> | null, value?: string) => {
-        setInput(event?.target?.value || value || '');
+        const newValue = event?.target.value || value || '';
+        setInput(newValue);
+
+        if (optionSelectedRef.current) {
+            optionSelectedRef.current = false;
+        } else {
+            setHasValidSelection(false);
+        }
     };
 
-    const onToggleSelected = (option: string, isSelected: boolean) => {
-        if (isSelected && suggestions) {
-            const found = suggestions.find(
+    const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
+        if (isSelected) {
+            const found = suggestions?.find(
                 (forslag) => forslag.label.toLowerCase() === option.toLowerCase()
             );
             if (found) {
@@ -45,13 +60,23 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 ];
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
+                setHasValidSelection(true);
+                optionSelectedRef.current = true;
             }
+        } else {
+            setHasValidSelection(false);
+            dispatch({ type: SET_JANZZ, kategori: undefined });
+        }
+    };
+
+    const onBlur = () => {
+        if (!hasValidSelection) {
+            dispatch({ type: SET_JANZZ, kategori: undefined });
         }
     };
 
     const feilmeldingTilBruker = error ? error.message : undefined;
 
-    // TODO: Fjern default tekster fra backend, slik at vi slipper å filterere de bort her
     return (
         <div>
             <UnsafeCombobox
@@ -62,14 +87,15 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                         ? ''
                         : input
                 }
-                options={suggestions ? suggestions.map((f) => f.label) : []}
+                options={filteredSuggestions}
                 onChange={onChange}
                 onToggleSelected={onToggleSelected}
+                onBlur={onBlur}
                 isLoading={isLoading}
-                error={yrkestittelError || feilmeldingTilBruker}
+                error={!hasValidSelection ? yrkestittelError || feilmeldingTilBruker : undefined}
                 className={css.typeahead}
                 aria-labelledby="endre-stilling-styrk"
-                filteredOptions={suggestions ? suggestions.map((f) => f.label) : []}
+                filteredOptions={filteredSuggestions}
             />
         </div>
     );
