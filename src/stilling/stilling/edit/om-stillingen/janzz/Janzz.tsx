@@ -19,6 +19,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
     const [input, setInput] = useState<string>(tittel);
     const [hasValidSelection, setHasValidSelection] = useState<boolean>(true);
 
+    // Må håndtere at onChange blir kalt når en onToggleSelection blir valgt i comboboxen
     const optionSelectedRef = useRef<boolean>(false);
 
     const { data: suggestions, isLoading, error } = useHentJanzzYrker(input);
@@ -60,10 +61,9 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
                 setHasValidSelection(true);
-                optionSelectedRef.current = true; // Indicate that an option was just selected
+                optionSelectedRef.current = true;
             }
         } else {
-            // Option was deselected
             setHasValidSelection(false);
             dispatch({ type: SET_JANZZ, kategori: undefined });
         }
