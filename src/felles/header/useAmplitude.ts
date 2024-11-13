@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react';
 import {
-    setNavKontorForAmplitude,
-    sendGenerellEvent,
     AmplitudeEvent,
     sendEvent,
+    sendGenerellEvent,
+    setNavKontorForAmplitude,
 } from 'felles/amplitude';
-import { generaliserPath } from './utils/path';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { generaliserPath } from './utils/path';
 
 const useAmplitude = (navKontor: string | null) => {
     const location = useLocation();
     const [harSendtÅpneAppEvent, setHarSendtÅpneAppEvent] = useState<boolean>(false);
 
     useEffect(() => {
-        const konfigurerAmplitudeOgSendEvents = async (navKontor: string) => {
+        const konfigurerAmplitudeOgSendEvents = (navKontor: string) => {
             setNavKontorForAmplitude(navKontor);
 
-            await sendGenerellEvent(AmplitudeEvent.Sidevisning, {
+            sendGenerellEvent(AmplitudeEvent.Sidevisning, {
                 path: generaliserPath(location.pathname),
             });
 
