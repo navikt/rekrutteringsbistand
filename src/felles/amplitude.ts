@@ -1,4 +1,5 @@
-import amplitudeJs, { AmplitudeClient } from 'amplitude-js';
+import * as amplitude from '@amplitude/analytics-browser';
+import { Types } from '@amplitude/analytics-browser';
 import { Miljø, getMiljø } from './miljø';
 
 export enum AmplitudeEvent {
@@ -14,47 +15,45 @@ const getApiKey = () => {
 
 export const setNavKontorForAmplitude = (navKontor: string) => {
     if (import.meta.env.PROD) {
-        client.setUserProperties({
-            navKontor,
-        });
+        const nyttIdentitentsObjekt = new amplitude.Identify();
+        nyttIdentitentsObjekt.set('navKontor', navKontor);
+        client()?.identify(nyttIdentitentsObjekt);
     }
 };
 
 export const sendEvent = (område: string, hendelse: string, data?: object) => {
     if (import.meta.env.PROD) {
-        client.logEvent(['#rekrutteringsbistand', område, hendelse].join('-'), data);
+        client()?.logEvent(['#rekrutteringsbistand', område, hendelse].join('-'), data);
     }
 };
 
 export const sendGenerellEvent = (
     event: AmplitudeEvent | string,
     properties: Record<string, any>
-): Promise<void> | undefined => {
+) => {
     if (import.meta.env.PROD) {
         const eventProperties = {
             app: 'rekrutteringsbistand',
             ...properties,
         };
 
-        return new Promise((resolve, reject) => {
-            client.logEvent(
-                event,
-                eventProperties,
-                () => resolve(),
-                () => reject()
-            );
-        });
+        client()?.logEvent(event, eventProperties);
     }
 };
 
-const client: AmplitudeClient = amplitudeJs.getInstance();
-
-if (import.meta.env.PROD) {
-    client.init(getApiKey(), '', {
-        apiEndpoint: 'amplitude.nav.no/collect',
-        saveEvents: false,
-        includeUtm: true,
-        batchEvents: false,
-        includeReferrer: false,
+export const client = (): Pick<Types.BrowserClient, 'logEvent' | 'identify'> | null => {
+    amplitude.init(getApiKey(), undefined, {
+        serverUrl: 'https://amplitude.nav.no/collect',
+        useBatch: false,
+        autocapture: {
+            attribution: true,
+            fileDownloads: false,
+            formInteractions: false,
+            pageViews: true,
+            sessions: true,
+            elementInteractions: false,
+        },
     });
-}
+
+    return amplitude;
+};
