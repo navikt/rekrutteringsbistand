@@ -26,6 +26,18 @@ export const proxyMedOboToken = (
 ) => {
     app.use(
         path,
+        (req, _, next) => {
+            // Filtrer ut alle AMP_ cookies
+            if (req.headers.cookie) {
+                const filteredCookies = req.headers.cookie
+                    .split(';')
+                    .filter((cookie) => !cookie.trim().startsWith('AMP_'))
+                    .join('; ');
+
+                req.headers.cookie = filteredCookies;
+            }
+            next();
+        },
         respondUnauthorizedIfNotLoggedIn,
         customMiddleware ? customMiddleware : tomMiddleware,
         setOnBehalfOfToken(apiScope),
