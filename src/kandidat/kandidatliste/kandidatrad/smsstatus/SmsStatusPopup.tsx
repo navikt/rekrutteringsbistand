@@ -66,6 +66,12 @@ const Popuptekst: FunctionComponent<{ sms: Sms }> = ({ sms }) => {
                         <br /> Ekstern varsel: epost sendt
                     </>
                 );
+            case 'FERDIGSTILT':
+                return (
+                    <>
+                        <br /> Ekstern varsel: varsling er ferdigstilt{' '}
+                    </>
+                );
             case 'FEIL':
                 return (
                     <>

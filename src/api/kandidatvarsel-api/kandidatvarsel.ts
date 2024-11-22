@@ -50,6 +50,9 @@ export enum EksternStatus {
     /** Vi har fått bekreftet at en e-post er sendt. */
     VELLYKKET_EPOST = 'VELLYKKET_EPOST',
 
+    /** Varsling er ferdigstilt*/
+    FERDIGSTILT = 'FERDIGSTILT',
+
     /** Det skjedde en feil, og vi vil ikke prøve å sende varselet igjen. */
     FEIL = 'FEIL',
 }
@@ -58,6 +61,7 @@ const EksternStatusSchema = z
     .literal(EksternStatus.UNDER_UTSENDING)
     .or(z.literal(EksternStatus.VELLYKKET_SMS))
     .or(z.literal(EksternStatus.VELLYKKET_EPOST))
+    .or(z.literal(EksternStatus.FERDIGSTILT))
     .or(z.literal(EksternStatus.FEIL));
 
 const SmsSchema = z
