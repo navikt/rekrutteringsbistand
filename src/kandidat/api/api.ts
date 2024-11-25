@@ -151,7 +151,7 @@ export const fetchMineKandidatlister = async (
     pageSize: number
 ): Promise<MineKandidatlister> =>
     await fetchJson(
-        `${api.kandidat}/veileder/kandidatlister?kunEgne=true&status=ÅPEN&pagesize=${pageSize}${
+        `${api.kandidat}/veileder/kandidatlister?pagesize=${pageSize}${
             side > 1 ? `&pagenumber=${side - 1}` : ''
         }`
     );
