@@ -1,4 +1,4 @@
-import { Privacy } from 'felles/domene/stilling/Stilling';
+import { Privacy, Stillingskategori } from 'felles/domene/stilling/Stilling';
 import moment from 'moment';
 import { put, select, takeLatest } from 'redux-saga/effects';
 import { State } from '../redux/store';
@@ -400,16 +400,17 @@ function* validateEngagementType(): Generator<unknown, any, any> {
 function* validatePositionCount() {
     const state: State = yield select();
     const positioncount = state.adData?.properties.positioncount;
-
     const error = positioncount && !positioncount.match(/^[1-9]\d*$/);
 
-    if (valueIsNotSet(positioncount) || error) {
-        yield addValidationError({
-            field: 'positioncount',
-            message: 'Antall stillinger mangler',
-        });
-    } else {
-        yield removeValidationError({ field: 'positioncount' });
+    if (state.stillingsinfoData.stillingskategori !== Stillingskategori.Jobbmesse) {
+        if (valueIsNotSet(positioncount) || error) {
+            yield addValidationError({
+                field: 'positioncount',
+                message: 'Antall stillinger mangler',
+            });
+        } else {
+            yield removeValidationError({ field: 'positioncount' });
+        }
     }
 }
 

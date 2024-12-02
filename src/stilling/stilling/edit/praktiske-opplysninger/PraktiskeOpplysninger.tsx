@@ -39,6 +39,7 @@ type Props = {
     setStartTime: (value?: string) => void;
     setApplicationDue: (value: string) => void;
     validation: Record<ValidertFelt, string | undefined>;
+    erJobbmesse: boolean;
 };
 
 class PraktiskeOpplysninger extends React.Component<Props> {
@@ -100,7 +101,7 @@ class PraktiskeOpplysninger extends React.Component<Props> {
     };
 
     render() {
-        const { ad, workday, workhours } = this.props;
+        const { ad, workday, workhours, erJobbmesse } = this.props;
 
         const workdayAsArray: string[] | undefined = workday
             ? isJson(workday)
@@ -175,16 +176,18 @@ class PraktiskeOpplysninger extends React.Component<Props> {
                     <Radio value="Ikke oppgitt">Ikke oppgitt</Radio>
                 </RadioGroup>
                 <div className={css.skillelinje} />
-                <div>
-                    <TextField
-                        label={<Skjemalabel påkrevd>Antall stillinger</Skjemalabel>}
-                        value={ad.properties.positioncount}
-                        onChange={this.onPositioncountChange}
-                        error={this.props.validation.positioncount}
-                        type="number"
-                        min="1"
-                    />
-                </div>
+                {!erJobbmesse && (
+                    <div>
+                        <TextField
+                            label={<Skjemalabel påkrevd>Antall stillinger</Skjemalabel>}
+                            value={ad.properties.positioncount}
+                            onChange={this.onPositioncountChange}
+                            error={this.props.validation.positioncount}
+                            type="number"
+                            min="1"
+                        />
+                    </div>
+                )}
                 <Fieldset
                     className={css.datepickerOgCheckbox}
                     legend={<Skjemalabel påkrevd>Søknadsfrist</Skjemalabel>}
