@@ -56,6 +56,7 @@ const Stilling = () => {
     const stillingsinfo = useSelector((state: State) => state.stillingsinfoData);
 
     const erFormidling = stillingsinfo.stillingskategori === Stillingskategori.Formidling;
+    const erJobbmesse = stillingsinfo.stillingskategori === Stillingskategori.Jobbmesse;
 
     const { kandidatlisteId, mutate } = useKandidatlisteId(uuid);
 
@@ -185,6 +186,7 @@ const Stilling = () => {
                                 ) : (
                                     <Edit
                                         erFormidling={erFormidling}
+                                        erJobbmesse={erJobbmesse}
                                         innloggetBruker={navIdent}
                                         onPreviewAdClick={onPreviewAdClick}
                                     />

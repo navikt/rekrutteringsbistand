@@ -26,6 +26,7 @@ type Props = {
     resetValidation: () => void;
     stilling: Stilling;
     erFormidling: boolean;
+    erJobbmesse: boolean;
 };
 
 const Edit = ({
@@ -34,6 +35,7 @@ const Edit = ({
     onPreviewAdClick,
     resetValidation,
     erFormidling,
+    erJobbmesse,
 }: Props) => {
     const stillingenErEkstern = stilling.createdBy !== System.Rekrutteringsbistand;
 
@@ -78,7 +80,7 @@ const Edit = ({
                 </Accordion>
                 <Accordion className={classNames(css.høyre, css.accordions)}>
                     <Seksjon spacing tittel="Praktiske opplysninger">
-                        <PraktiskeOpplysninger />
+                        <PraktiskeOpplysninger erJobbmesse={erJobbmesse} />
                     </Seksjon>
                     <Seksjon spacing tittel="Kontaktinformasjon">
                         <Kontaktinformasjon innloggetBruker={innloggetBruker} />
