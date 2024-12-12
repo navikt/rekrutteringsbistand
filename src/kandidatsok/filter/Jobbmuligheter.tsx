@@ -9,10 +9,6 @@ export enum FiltrerbarInnsatsgruppe {
 }
 
 const filtrerbareInnsatsgrupper = {
-    [Innsatsgruppe.Standardinnsats]: {
-        label: 'Standard innsats',
-        description: 'Gode muligheter',
-    },
     [Innsatsgruppe.SituasjonsbestemtInnsats]: {
         label: 'Situasjonsbestemt innsats',
         description: 'Trenger veiledning',
@@ -28,6 +24,10 @@ const filtrerbareInnsatsgrupper = {
     [Innsatsgruppe.VarigTilpassetInnsats]: {
         label: 'Varig tilpasset innsats',
         description: 'Liten mulighet til å jobbe',
+    },
+    [Innsatsgruppe.Standardinnsats]: {
+        label: 'Standard innsats',
+        description: 'Gode muligheter',
     },
     [FiltrerbarInnsatsgruppe.AndreInnsatsgrupper]: {
         label: 'Ikke vurdert',
