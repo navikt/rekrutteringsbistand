@@ -35,7 +35,7 @@ export const mockKandidat: Kandidat = {
     navkontor: 'NAV Lofoten',
     orgenhet: '1860',
     hovedmaalkode: Hovedmål.SkaffeArbeid,
-    kvalifiseringsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
+    innsatsgruppekode: Innsatsgruppe.SituasjonsbestemtInnsats,
     formidlingsgruppekode: Formidlingsgruppe.Arbeidssøker,
     veileder: mockVeileder.navIdent,
 

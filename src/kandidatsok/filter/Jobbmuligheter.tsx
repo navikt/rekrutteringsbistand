@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxGroup } from '@navikt/ds-react';
-import { Innsatsgruppe, Servicegruppe } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
+import { Innsatsgruppe } from 'felles/domene/kandidat/Oppfølgingsinformasjon';
 import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 
@@ -9,45 +9,34 @@ export enum FiltrerbarInnsatsgruppe {
 }
 
 const filtrerbareInnsatsgrupper = {
-    [Innsatsgruppe.SpesieltTilpassetInnsats]: {
-        label: 'Spesielt tilpasset innsats',
-        description: 'Har et identifisert behov for tilrettelegging',
+    [Innsatsgruppe.Standardinnsats]: {
+        label: 'Gode muligheter',
+        description: 'Standard innsats',
     },
     [Innsatsgruppe.SituasjonsbestemtInnsats]: {
-        label: 'Situasjonsbestemt innsats',
-        description: 'Moderat bistandsbehov',
+        label: 'Trenger veiledning',
+        description: 'Situasjonsbestemt innsats',
     },
-    [Innsatsgruppe.VarigTilpasset]: {
-        label: 'Varig tilpasset',
-        description: 'Varig nedsatt arbeidsevne',
+    [Innsatsgruppe.SpesieltTilpassetInnsats]: {
+        label: 'Trenger veiledning, nedsatt arbeidsevne',
+        description: 'Spesielt tilpasset innsats',
     },
-    [Innsatsgruppe.Standardinnsats]: {
-        label: 'Standardinnsats',
-        description: 'Behov for ordinær bistand',
+    [Innsatsgruppe.GradertVarigTilpassetInnsats]: {
+        label: 'Jobbe delvis',
+        description: 'Delvis varig tilpasset innsats',
+    },
+    [Innsatsgruppe.VarigTilpassetInnsats]: {
+        label: 'Liten mulighet til å jobbe',
+        description: 'Varig tilpasset innsats',
     },
     [FiltrerbarInnsatsgruppe.AndreInnsatsgrupper]: {
-        label: 'Andre kvalifiseringsgrupper',
-        description: 'Ikke vurdert, helserelatert arbeidsrettet oppfølging, sykmeldt',
+        label: 'Ikke vurdert',
+        description: '',
     },
 };
 
 export const alleInnsatsgrupper = {
     ...filtrerbareInnsatsgrupper,
-    [Servicegruppe.IkkeVurdert]: {
-        label: 'Ikke vurdert',
-    },
-    [Servicegruppe.BehovForArbeidsevnevurdering]: {
-        label: 'Behov for arbeidsevnevurdering',
-    },
-    [Servicegruppe.HelserelatertArbeidsrettetOppfølgingINav]: {
-        label: 'Helserelatert arbeidsrettet oppfølging i NAV',
-    },
-    [Servicegruppe.SykmeldtMedOppfølgingPåArbeidsplassen]: {
-        label: 'Sykmeldt med oppfølging på arbeidsplassen',
-    },
-    [Servicegruppe.SykmeldtUtenArbeidsgiver]: {
-        label: 'sykmeldt uten arbeidsgiver',
-    },
 };
 
 const Jobbmuligheter = () => {
