@@ -32,7 +32,7 @@ export enum Innsatsgruppekode {
     GRADERT_VARIG_TILPASSET_INNSATS = 'GRADERT_VARIG_TILPASSET_INNSATS',
 }
 
-export const innsatsgruppekodeSchema = z.nativeEnum(Innsatsgruppekode);
+export const innsatsgruppekodeSchema = z.nativeEnum(Innsatsgruppekode).optional();
 
 export const totalSchema = z.object({
     value: z.number(),
