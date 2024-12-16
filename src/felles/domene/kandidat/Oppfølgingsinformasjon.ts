@@ -4,6 +4,7 @@ export enum Innsatsgruppe {
     Standardinnsats = 'STANDARD_INNSATS',
     VarigTilpassetInnsats = 'VARIG_TILPASSET_INNSATS',
     GradertVarigTilpassetInnsats = 'GRADERT_VARIG_TILPASSET_INNSATS',
+    SPESIELT_TILPASSET_INNSATS = 'SPESIELT_TILPASSET_INNSATS',
 }
 
 export type Kvalifiseringsgruppe = Innsatsgruppe;

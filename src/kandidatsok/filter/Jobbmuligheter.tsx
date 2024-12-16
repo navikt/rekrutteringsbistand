@@ -5,7 +5,7 @@ import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekr
 
 export enum FiltrerbarInnsatsgruppe {
     Innsatsgruppe,
-    AndreInnsatsgrupper = 'ANDRE',
+    IkkeVurdert = 'HAR_IKKE_GJELDENDE_14A_VEDTAK',
 }
 
 const filtrerbareInnsatsgrupper = {
@@ -29,7 +29,7 @@ const filtrerbareInnsatsgrupper = {
         label: 'Standard innsats',
         description: 'Gode muligheter',
     },
-    [FiltrerbarInnsatsgruppe.AndreInnsatsgrupper]: {
+    [FiltrerbarInnsatsgruppe.IkkeVurdert]: {
         label: 'Ikke vurdert',
         description: '',
     },

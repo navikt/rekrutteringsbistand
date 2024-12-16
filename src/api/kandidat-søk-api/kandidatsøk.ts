@@ -30,9 +30,10 @@ export enum Innsatsgruppekode {
     STANDARD_INNSATS = 'STANDARD_INNSATS',
     VARIG_TILPASSET_INNSATS = 'VARIG_TILPASSET_INNSATS',
     GRADERT_VARIG_TILPASSET_INNSATS = 'GRADERT_VARIG_TILPASSET_INNSATS',
+    HAR_IKKE_GJELDENDE_14A_VEDTAK = 'HAR_IKKE_GJELDENDE_14A_VEDTAK',
 }
 
-export const innsatsgruppekodeSchema = z.nativeEnum(Innsatsgruppekode).optional();
+export const innsatsgruppekodeSchema = z.nativeEnum(Innsatsgruppekode);
 
 export const totalSchema = z.object({
     value: z.number(),
