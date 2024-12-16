@@ -1,6 +1,6 @@
 import { KandidatStillingssøkDTO } from './kandidatStillingssøk';
 import { Kandidatsammendrag } from './kandidatsammendrag';
-import { Innsatsgruppekode, KandidatsøkKandidat } from './kandidatsøk';
+import { Innsatsgruppe, KandidatsøkKandidat } from './kandidatsøk';
 
 export const mockKandidatStillingssøk: KandidatStillingssøkDTO = {
     yrkeJobbonskerObj: [
@@ -121,7 +121,7 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidat[] = [
         ],
         fornavn: 'Patent',
         fodselsnummer: '17907096467',
-        innsatsgruppekode: Innsatsgruppekode.SITUASJONSBESTEMT_INNSATS,
+        innsatsgruppe: Innsatsgruppe.SITUASJONSBESTEMT_INNSATS,
     },
     {
         yrkeJobbonskerObj: [],
@@ -132,7 +132,7 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidat[] = [
         geografiJobbonsker: [],
         fornavn: 'Kandidat',
         fodselsnummer: '17907096400',
-        innsatsgruppekode: Innsatsgruppekode.SITUASJONSBESTEMT_INNSATS,
+        innsatsgruppe: Innsatsgruppe.SITUASJONSBESTEMT_INNSATS,
     },
     {
         yrkeJobbonskerObj: [
@@ -186,7 +186,7 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidat[] = [
         ],
         fornavn: 'Ufruktbar',
         fodselsnummer: '22899497590',
-        innsatsgruppekode: Innsatsgruppekode.SITUASJONSBESTEMT_INNSATS,
+        innsatsgruppe: Innsatsgruppe.SITUASJONSBESTEMT_INNSATS,
     },
     {
         yrkeJobbonskerObj: [
@@ -280,6 +280,6 @@ export const mockKandidatsøkKandidater: KandidatsøkKandidat[] = [
         ],
         fornavn: 'Selvhjulpen',
         fodselsnummer: '10870396894',
-        innsatsgruppekode: Innsatsgruppekode.SITUASJONSBESTEMT_INNSATS,
+        innsatsgruppe: Innsatsgruppe.SITUASJONSBESTEMT_INNSATS,
     },
 ];

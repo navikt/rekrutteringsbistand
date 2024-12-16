@@ -23,8 +23,7 @@ export enum Hovedmål {
 type Oppfølgingsinformasjon = {
     navkontor: string;
     orgenhet: string;
-    hovedmaalkode: Hovedmål;
-    innsatsgruppekode: Kvalifiseringsgruppe;
+    innsatsgruppe: Kvalifiseringsgruppe;
     formidlingsgruppekode: Formidlingsgruppe;
     veileder: string | null;
     veilederIdent: string | null;

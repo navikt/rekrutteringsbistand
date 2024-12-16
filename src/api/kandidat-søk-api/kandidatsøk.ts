@@ -24,7 +24,7 @@ export enum Portefølje {
     ALLE = 'alle',
 }
 
-export enum Innsatsgruppekode {
+export enum Innsatsgruppe {
     SPESIELT_TILPASSET_INNSATS = 'SPESIELT_TILPASSET_INNSATS',
     SITUASJONSBESTEMT_INNSATS = 'SITUASJONSBESTEMT_INNSATS',
     STANDARD_INNSATS = 'STANDARD_INNSATS',
@@ -33,7 +33,7 @@ export enum Innsatsgruppekode {
     HAR_IKKE_GJELDENDE_14A_VEDTAK = 'HAR_IKKE_GJELDENDE_14A_VEDTAK',
 }
 
-export const innsatsgruppekodeSchema = z.nativeEnum(Innsatsgruppekode);
+export const innsatsgruppeSchema = z.nativeEnum(Innsatsgruppe);
 
 export const totalSchema = z.object({
     value: z.number(),
@@ -60,7 +60,7 @@ export const kandidaterSchema = z.object({
     geografiJobbonsker: z.array(geografiJobbonskerSchema),
     fornavn: z.string(),
     fodselsnummer: z.string(),
-    innsatsgruppekode: innsatsgruppekodeSchema,
+    innsatsgruppe: innsatsgruppeSchema,
 });
 export const navigeringSchema = z.object({
     kandidatnumre: z.array(z.string()),
