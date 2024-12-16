@@ -3,9 +3,9 @@ import { FilterParam } from '../hooks/useQuery';
 import useSøkekriterier, { LISTEPARAMETER_SEPARATOR } from '../hooks/useSøkekriterier';
 
 export enum Mål {
-    SkaffeArbeid = 'SKAFFEA',
-    BeholdeArbeid = 'BEHOLDEA',
-    ØkeDeltagelse = 'OKEDELT',
+    SkaffeArbeid = 'SKAFFE_ARBEID',
+    BeholdeArbeid = 'BEHOLDE_ARBEID',
+    ØkeDeltagelse = 'OKE_DELTAKELSE',
 }
 
 const Hovedmål = () => {
@@ -23,7 +23,7 @@ const Hovedmål = () => {
         >
             <Checkbox value={Mål.SkaffeArbeid}>Skaffe arbeid</Checkbox>
             <Checkbox value={Mål.BeholdeArbeid}>Beholde arbeid</Checkbox>
-            <Checkbox value={Mål.ØkeDeltagelse}>Øke deltagelse</Checkbox>
+            <Checkbox value={Mål.ØkeDeltagelse}>Øke deltagelse eller mål om arbeid</Checkbox>
         </CheckboxGroup>
     );
 };

@@ -45,7 +45,7 @@ jobs:
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/jobbmesse-antall'
+        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/14a-innsatsgrupper-hovedmål'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3

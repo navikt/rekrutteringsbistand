@@ -73,7 +73,7 @@ const Kandidatrad: FunctionComponent<Props> = ({
             }
             ønsker={alleØnskedeYrker ?? '-'}
             lokasjon={alleØnskedeSteder ?? '-'}
-            innsatsgruppe={alleInnsatsgrupper[kandidat.kvalifiseringsgruppekode].label}
+            innsatsgruppe={alleInnsatsgrupper[kandidat.innsatsgruppe].label}
             bosted={`${kandidat.postnummer ?? '-'} ${kandidat.kommuneNavn ?? '-'}`}
         />
     );
