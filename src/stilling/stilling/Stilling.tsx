@@ -273,6 +273,7 @@ const Stilling = () => {
                         stillingId={stilling.uuid}
                         erEier={erEier}
                         erFormidling={erFormidling}
+                        erJobbmesse={erJobbmesse}
                         source={stilling.source}
                     />
                 </div>

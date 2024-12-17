@@ -17,6 +17,7 @@ type ILeggTilKandidat = {
     kandidatlisteId: string;
     stillingsId: string;
     erEier?: boolean;
+    erJobbmesse?: boolean;
 };
 
 const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
@@ -24,6 +25,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     onClose,
     erEier,
     stillingsId,
+    erJobbmesse,
 }) => {
     const [visOppsummering, setVisOppsummering] = useState<boolean>(false);
     const [visSynlighetsEvaluering, setVisSynlighetsEvaluering] = useState<boolean>(false);
@@ -103,7 +105,9 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                 onAvbryt={onClose}
                                 onBekreft={handleBekreft}
                                 setRegistrerFormidling={
-                                    erEier ? () => setRegistrerFormidling(true) : undefined
+                                    !erJobbmesse && erEier
+                                        ? () => setRegistrerFormidling(true)
+                                        : undefined
                                 }
                             />
                         ))}
@@ -174,7 +178,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                     )}
                                     <br />
 
-                                    {erEier && (
+                                    {!erJobbmesse && erEier && (
                                         <Button
                                             onClick={() => setRegistrerFormidling(true)}
                                             style={{ width: '100%', marginBottom: '1rem' }}

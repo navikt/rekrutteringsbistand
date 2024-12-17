@@ -4,6 +4,8 @@ import Kandidatliste, { Kandidatlistestatus } from 'felles/domene/kandidatliste/
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
 import { FunctionComponent, ReactNode } from 'react';
 import { useSmserForStilling } from '../../../api/kandidatvarsel-api/kandidatvarsel';
+import { Rolle } from '../../../felles/tilgangskontroll/Roller';
+import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import {
     erKobletTilArbeidsgiver,
     erKobletTilStilling,
@@ -14,8 +16,6 @@ import MedPopover from '../med-popover/MedPopover';
 import DelMedArbeidsgiverKnapp from './DelMedArbeidsgiverKnapp';
 import css from './KnappeRad.module.css';
 import ForespørselOmDelingAvCv from './forespørsel-om-deling-av-cv/ForespørselOmDelingAvCv';
-import { TilgangskontrollForInnhold } from '../../../felles/tilgangskontroll/TilgangskontrollForInnhold';
-import { Rolle } from '../../../felles/tilgangskontroll/Roller';
 
 type Props = {
     kandidatliste: Kandidatliste;
@@ -39,6 +39,7 @@ const KnappeRad: FunctionComponent<Props> = ({
         erFormidling ? null : kandidatliste.stillingId || null
     );
     const markerteKandidater = useMarkerteKandidater(kandidatliste.kandidater);
+
     const minstEnKandidatErMarkert = markerteKandidater.length > 0;
     const markerteAktiveKandidater = markerteKandidater.filter((kandidat) => kandidat.fodselsnr);
     const kandidatvarselFeil = error !== undefined;
