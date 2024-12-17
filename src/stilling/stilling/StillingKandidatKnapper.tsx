@@ -5,14 +5,15 @@ import { Link } from 'react-router-dom';
 import { Rolle } from '../../felles/tilgangskontroll/Roller';
 import { TilgangskontrollForInnhold } from '../../felles/tilgangskontroll/TilgangskontrollForInnhold';
 import { lenkeTilFinnKandidater } from '../../kandidat/app/paths';
-import LeggTilKandidatModal from './legg-til-kandidat/LeggTilKandidatModal';
 import AnalyserStillingModal from './analyse/AnalyserStillingModal';
+import LeggTilKandidatModal from './legg-til-kandidat/LeggTilKandidatModal';
 
 export interface IStillingKandidatKnapper {
     kandidatlisteId: string;
     stillingId: string | null;
     erEier?: boolean;
     erFormidling?: boolean;
+    erJobbmesse?: boolean;
     source?: string;
 }
 
@@ -21,6 +22,7 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
     stillingId,
     erEier,
     erFormidling,
+    erJobbmesse,
     source,
 }) => {
     const [visLeggTilKandidatModal, setVisLeggTilKandidatModal] = React.useState<boolean>(false);
@@ -92,13 +94,15 @@ const StillingKandidatKnapper: React.FC<IStillingKandidatKnapper> = ({
                     </Button>
                 </TilgangskontrollForInnhold>
 
-                <LeggTilKandidatModal
-                    erEier={erEier}
-                    vis={visLeggTilKandidatModal}
-                    onClose={() => setVisLeggTilKandidatModal(false)}
-                    //@ts-ignore TODO: written before strict-mode enabled
-                    stillingsId={stillingId}
-                />
+                {stillingId && (
+                    <LeggTilKandidatModal
+                        erEier={erEier}
+                        vis={visLeggTilKandidatModal}
+                        onClose={() => setVisLeggTilKandidatModal(false)}
+                        erJobbmesse={erJobbmesse}
+                        stillingsId={stillingId}
+                    />
+                )}
                 <AnalyserStillingModal
                     vis={visAnalyserStillingModal}
                     onClose={() => setVisAnalyserStillingModal(false)}
