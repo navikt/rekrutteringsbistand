@@ -14,7 +14,6 @@ import { lesSessionStorage, skrivSessionStorage } from './sessionStorage';
 export type Økt = Partial<{
     searchParams: string;
     sistBesøkteKandidat: string;
-    markerteKandidater: string[];
     navigerbareKandidater: string[];
     totaltAntallKandidater: number;
     pageSize: number;
