@@ -45,7 +45,7 @@ export const totalSchema = z.object({
 
 export const geografiJobbonskerSchema = z.object({
     geografiKodeTekst: z.string(),
-    geografiKode: z.string(),
+    geografiKode: z.string().nullable(),
 });
 
 export const yrkeJobbonskerObjSchema = z.object({

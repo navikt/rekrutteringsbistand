@@ -1,16 +1,16 @@
 import { sendEvent } from 'felles/amplitude';
 import { Jobbønske } from 'felles/domene/kandidat/Jobbprofil';
+import { getNummerFraSted, stedmappingFraGammeltNummer } from 'felles/MappingSted';
 import { useEffect, useState } from 'react';
 import {
+    GeografiØnske,
     KandidatStillingssøkDTO,
     useKandidatStillingssøk,
-    GeografiØnske,
 } from '../../../api/kandidat-søk-api/kandidatStillingssøk';
 import { Status } from '../filter/om-annonsen/Annonsestatus';
 import { Publisert } from '../filter/om-annonsen/HvorErAnnonsenPublisert';
 import useNavigering from '../useNavigering';
 import { QueryParam } from '../utils/urlUtils';
-import { getNummerFraSted, stedmappingFraGammeltNummer } from 'felles/MappingSted';
 
 interface IuseKandidatStillingssøk {
     kandidatnr: string;
@@ -44,9 +44,12 @@ export const useKandidatStillingssøkData = ({
             const geografikoder =
                 geografiJobbonsker.length === 0
                     ? [kommunenummerstring]
-                    : geografiJobbonsker.map((g: GeografiØnske) =>
-                          getNummerFraSted(g.geografiKode)
-                      );
+                    : geografiJobbonsker.map((g: GeografiØnske) => {
+                          if (g.geografiKode) {
+                              return getNummerFraSted(g.geografiKode);
+                          }
+                          return getNummerFraSted(g.geografiKodeTekst);
+                      });
 
             const konverterteGeografikoder = konverterStederTilNåværendeKoder(geografikoder);
 

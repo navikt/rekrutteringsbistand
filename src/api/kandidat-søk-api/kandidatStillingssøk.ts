@@ -25,7 +25,7 @@ const yrkeJobbonskeSchema = z.object({
 
 const geografiJobbonskeSchema = z.object({
     geografiKodeTekst: z.string(),
-    geografiKode: z.string(),
+    geografiKode: z.string().nullable(),
 });
 
 export const kandidatStillingssøkDTOSchema = z.object({
