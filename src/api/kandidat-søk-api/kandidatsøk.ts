@@ -87,7 +87,7 @@ interface IuseKandidatsøk {
 
 export const useKandidatsøk = ({ søkeprops, portefølje }: IuseKandidatsøk) => {
     const queryParams = new URLSearchParams({
-        side: String(søkeprops.side),
+        side: Math.max(1, Math.floor(søkeprops.side)).toString(),
         sortering: søkeprops.sortering,
     });
 
