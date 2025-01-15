@@ -8,7 +8,6 @@ import InfoAlert from './header/navigeringsmeny/InfoAlert';
 import Navigeringsmeny from './header/navigeringsmeny/Navigeringsmeny';
 import useAmplitude from './header/useAmplitude';
 import { Rolle } from './tilgangskontroll/Roller';
-import InfoAlertMidlertidigNedetid from 'felles/header/navigeringsmeny/InfoAlertMidlertidigNedetid';
 
 const Header = () => {
     const [mockAktiv] = useLocalStorageToggle('Mock modia');
@@ -24,8 +23,6 @@ const Header = () => {
                     setValgtNavKontor(navKontor);
                 }}
             />
-
-            <InfoAlertMidlertidigNedetid />
 
             <Navigeringsmeny />
             {!harRolle([
