@@ -7,9 +7,9 @@ import Stilling, {
     Stillingskategori,
 } from 'felles/domene/stilling/Stilling';
 import { Miljø, getMiljø } from 'felles/miljø';
+import { v4 as uuidv4 } from 'uuid';
 import { fetchGet, fetchPost, fetchPut } from './apiUtils';
 import devVirksomheter from './devVirksomheter';
-import { v4 as uuidv4 } from 'uuid';
 
 export const postStilling = async (
     stilling: Partial<Stilling>,
@@ -101,6 +101,13 @@ export const fetchEmployerNameCompletionHits = async (
 
 export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Enhetsregistertreff[]> => {
     const utenMellomrom = orgnummer.replace(/\s/g, '');
+
+    const er11siffer = utenMellomrom.length === 11;
+
+    // QuicFix: Hindre at vi gjør request med 11 siffer.
+    if (er11siffer) {
+        return [];
+    }
 
     if (getMiljø() === Miljø.DevGcp) {
         const matchendeVirksomheter = devVirksomheter.filter((virksomhet: Enhetsregistertreff) =>
