@@ -10,7 +10,7 @@ const nyhetssaker: Nyhet[] = [
         innhold: (
             <>
                 <p>
-                    Personer som ikke er arbeidssøkere, med formidlingskoden "ikke-arbeidssøker
+                    Personer som ikke er arbeidssøkere, med formidlingskoden "ikke-arbeidssøker"
                     (IARBS) er tatt ut av kandidatsøket. De fjernes for å gjøre søket mer relevant.
                     Les mer på Navet
                 </p>
