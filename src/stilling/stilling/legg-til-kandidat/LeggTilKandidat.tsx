@@ -137,34 +137,36 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                 Årsaken kan være en eller flere av disse:
                                             </strong>
                                             <ol>
-                                                <li>Kandidaten mangler CV eller jobbprofil.</li>
+                                                <li>Personbruker mangler CV eller jobbprofil.</li>
                                                 <li>
-                                                    Kandidaten har ikke blitt informert om NAVs
+                                                    Personbruker har ikke blitt informert om NAVs
                                                     behandlingsgrunnlag for deling av CV.
                                                 </li>
                                                 <li>
-                                                    Kandidat har ikke valgt «Del CV». Kandidaten har
-                                                    tidligere registrert CV, men har siden vært ute
-                                                    av oppfølging. Kandidaten er igjen under
-                                                    oppfølging, men har ikke godkjent deling av CV
-                                                    med NAV i dette nye oppfølgingsløpet. Hen må
-                                                    logge seg inn på arbeidsplassen.no og velge “Del
-                                                    CV”. Husk å be bruker om å oppdatere CV.
+                                                    Personbruker har ikke valgt «Del CV». Dette
+                                                    kravet opptrer kun i tilfeller hvor personen har
+                                                    hatt en CV på Arbeidsplassen før personen kom
+                                                    under nåværende oppfølging av Nav.
                                                 </li>
                                                 <li>
-                                                    Kandidaten har personforholdet «Fritatt for
+                                                    Personbruker har personforholdet «Fritatt for
                                                     kandidatsøk» i Arena.
                                                 </li>
                                                 <li>
-                                                    Kandidaten har formidlingskode «Ikke
+                                                    Personbruker har formidlingskode «Ikke
                                                     servicebehov (ISERV)» i Arena.
                                                 </li>
-                                                <li>Kandidaten har status "Egen ansatt".</li>
                                                 <li>
-                                                    Kandidaten har diskresjonskode (kode 6 og 7).
+                                                    Personbruker har kode IARBS (Arena-koden "ikke
+                                                    arbeidssøker").
+                                                </li>
+                                                <li>Personbruker har status "Egen ansatt".</li>
+                                                <li>
+                                                    Personbruker har adresseskjerming (kode 6 og 7
+                                                    eller §19).
                                                 </li>
                                                 <li>
-                                                    Kandidaten er deltager i kommunalt
+                                                    Personbruker er deltager i kommunalt
                                                     kvalifiseringsprogram (KVP)
                                                 </li>
                                             </ol>
