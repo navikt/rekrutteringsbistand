@@ -31,6 +31,7 @@ export enum Hendelse {
     EksternVarselFeilet = 'EKSTERN_VARSEL_FEILET',
     SmsSendt = 'SMS_SENDT',
     EpostSendt = 'EPOST_SENDT',
+    Ferdigstilt = 'FERDIGSTILT',
 }
 
 const Hendelsesetikett: FunctionComponent<Props> = ({
@@ -164,6 +165,9 @@ const hendelseTilLabel = (
         }
         case Hendelse.EksternVarselFeilet: {
             return `SMS/epost feilet – ${sms && formaterDatoUtenÅrstall(sms.opprettet)}`;
+        }
+        case Hendelse.Ferdigstilt: {
+            return `${sms?.eksternKanal === 'SMS' ? 'SMS sendt –' : 'Epost sendt –'} ${sms && formaterDatoUtenÅrstall(sms.opprettet)}`;
         }
         default:
             return '';
