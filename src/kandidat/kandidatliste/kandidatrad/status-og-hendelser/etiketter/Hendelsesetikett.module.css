@@ -14,6 +14,9 @@
 }
 
 .delt_med_kandidat,
+.ferdigstilt_sms,
+.ferdigstilt_epost,
+.epost_sendt,
 .sms_sendt {
     background-color: var(--a-deepblue-100);
     border-color: var(--a-deepblue-500);
