@@ -1,5 +1,9 @@
 import { Kandidatutfall, Utfallsendring } from 'felles/domene/kandidatliste/KandidatIKandidatliste';
-import { EksternStatus, Sms } from '../../../../../api/kandidatvarsel-api/kandidatvarsel';
+import {
+    EksternKanal,
+    EksternStatus,
+    Sms,
+} from '../../../../../api/kandidatvarsel-api/kandidatvarsel';
 import moment from 'moment';
 import { FunctionComponent } from 'react';
 import { formaterDato, formaterDatoUtenÅrstall } from '../../../../utils/dateUtils';
@@ -31,6 +35,8 @@ export enum Hendelse {
     EksternVarselFeilet = 'EKSTERN_VARSEL_FEILET',
     SmsSendt = 'SMS_SENDT',
     EpostSendt = 'EPOST_SENDT',
+    FerdigstiltSms = 'FERDIGSTILT_SMS',
+    FerdigstiltEpost = 'FERDIGSTILT_EPOST',
 }
 
 const Hendelsesetikett: FunctionComponent<Props> = ({
@@ -93,6 +99,10 @@ export const hentKandidatensSisteHendelse = (
         return Hendelse.EpostSendt;
     } else if (sms?.eksternStatus === EksternStatus.FEIL) {
         return Hendelse.EksternVarselFeilet;
+    } else if (sms?.eksternKanal === EksternKanal.SMS) {
+        return Hendelse.FerdigstiltSms;
+    } else if (sms?.eksternKanal === EksternKanal.EPOST) {
+        return Hendelse.FerdigstiltEpost;
     }
 
     return Hendelse.NyKandidat;
@@ -164,6 +174,12 @@ const hendelseTilLabel = (
         }
         case Hendelse.EksternVarselFeilet: {
             return `SMS/epost feilet – ${sms && formaterDatoUtenÅrstall(sms.opprettet)}`;
+        }
+        case Hendelse.FerdigstiltSms: {
+            return `SMS sendt - ${sms && formaterDatoUtenÅrstall(sms.opprettet)}`;
+        }
+        case Hendelse.FerdigstiltEpost: {
+            return `Epost sendt - ${sms && formaterDatoUtenÅrstall(sms.opprettet)}`;
         }
         default:
             return '';
