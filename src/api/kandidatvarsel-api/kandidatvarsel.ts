@@ -176,6 +176,7 @@ export const kandidatvarselMock = [
                     opprettet: new Date().toISOString(),
                     minsideStatus: MinsideStatus.OPPRETTET,
                     eksternStatus: EksternStatus.VELLYKKET_SMS,
+                    eksternKanal: EksternKanal.SMS,
                 },
             ]);
         }
