@@ -52,10 +52,7 @@ const useSøkekriterierFraStilling = (
 const hentØnsketYrkeFraStilling = (rekrutteringsbistandstilling: Rekrutteringsbistandstilling) => {
     const { categoryList } = rekrutteringsbistandstilling.stilling;
     return categoryList
-        .filter(
-            (category) =>
-                category.categoryType === 'STYRK08' || category.categoryType === 'STYRK08NAV'
-        )
+        .filter((category) => category.categoryType === 'JANZZ')
         .map((category) => category.name)
         .join(LISTEPARAMETER_SEPARATOR);
 };
