@@ -8,10 +8,10 @@ export const lesSessionStorage = (sessionStorageKey: string): Økt => {
 
         return {
             ...verdier,
-            markerteKandidater: new Set(markerteKandidater),
+            markerteKandidater: markerteKandidater || {},
         };
     } else {
-        return {};
+        return { markerteKandidater: {} };
     }
 };
 
@@ -23,7 +23,7 @@ export const skrivSessionStorage = (
         sessionStorageKey,
         JSON.stringify({
             ...verdier,
-            markerteKandidater: Array.from(markerteKandidater || []),
+            markerteKandidater,
         })
     );
 };
