@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const useMarkerteKandidater = (initiellVerdi: string[] = []) => {
+const useMarkerteKandidater = (stillingsId: string, initiellVerdi: string[] = []) => {
     const [markerteKandidater, setMarkerteKandidater] = useState<Set<string>>(
         new Set(initiellVerdi)
     );

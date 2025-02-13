@@ -1,6 +1,7 @@
+import Piktogram from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
+import { KandidatsokQueryParam } from 'felles/lenker';
 import { useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Piktogram from 'felles/komponenter/piktogrammer/finn-kandidater.svg';
 import Layout from '../felles/komponenter/layout/Layout';
 import { KandidatSøkContext } from './KandidatSøkContext';
 import css from './Kandidatsøk.module.css';
@@ -12,7 +13,6 @@ import useMarkerteKandidater from './hooks/useMarkerteKandidater';
 import useNavigeringsstate from './hooks/useNavigeringsstate';
 import Kandidater from './kandidater/Kandidater';
 import Kandidatlistebanner from './kandidatlistebanner/Kandidatlistebanner';
-import { KandidatsokQueryParam } from 'felles/lenker';
 
 const Kandidatsøk = () => {
     const navigeringsstate = useNavigeringsstate();
@@ -26,6 +26,7 @@ const Kandidatsøk = () => {
             : kandidatSøkØkt?.forrigeØkt;
 
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
+        stillingId ?? '',
         forrigeØkt?.markerteKandidater
     );
 
