@@ -7,6 +7,7 @@ import { useHentMineKandidaterIStilling } from '../../api/kandidat-api/hentMineK
 import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 import { KandidatSøkContext } from '../KandidatSøkContext';
 import Paginering from '../filter/Paginering';
+import { useMarkerteKandidaterØkt } from '../hooks/MarkerteKandidaterContext';
 import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import AntallKandidater from './AntallKandidater';
@@ -16,9 +17,6 @@ import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
 
 type Props = {
-    markerteKandidater: Set<string>;
-    onMarkerKandidat: (kandidatnr: string | string[]) => void;
-    fjernMarkering: () => void;
     stillingId: string | null;
 };
 
@@ -28,14 +26,10 @@ enum Modal {
     BekreftLagreIKandidatliste,
 }
 
-const Kandidater: FunctionComponent<Props> = ({
-    markerteKandidater,
-    onMarkerKandidat,
-    fjernMarkering,
-    stillingId,
-}) => {
+const Kandidater: FunctionComponent<Props> = ({ stillingId }) => {
     const { kandidatSøk } = useContext(KandidatSøkContext);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
+    const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidaterØkt();
 
     const {
         data: mineKandidaterIStilling,
