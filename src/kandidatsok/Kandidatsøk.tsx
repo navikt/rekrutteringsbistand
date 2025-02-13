@@ -26,7 +26,7 @@ const Kandidatsøk = () => {
             : kandidatSøkØkt?.forrigeØkt;
 
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
-        forrigeØkt?.markerteKandidater
+        forrigeØkt?.stillingsId === stillingId ? forrigeØkt?.markerteKandidater : []
     );
 
     useLagreØkt();
@@ -34,8 +34,9 @@ const Kandidatsøk = () => {
         kandidatSøkØkt?.setØkt &&
             kandidatSøkØkt.setØkt({
                 markerteKandidater: Array.from(markerteKandidater),
+                stillingsId: stillingId,
             });
-    }, [markerteKandidater, kandidatSøkØkt]);
+    }, [markerteKandidater, kandidatSøkØkt, stillingId]);
 
     return (
         <Layout

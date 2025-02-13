@@ -19,6 +19,7 @@ export type Økt = Partial<{
     totaltAntallKandidater: number;
     pageSize: number;
     fritekst: string;
+    stillingsId?: string | null;
 }>;
 
 interface IØkt {
