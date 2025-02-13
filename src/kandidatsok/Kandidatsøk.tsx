@@ -26,7 +26,6 @@ const Kandidatsøk = () => {
             : kandidatSøkØkt?.forrigeØkt;
 
     const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidater(
-        stillingId ?? '',
         forrigeØkt?.markerteKandidater
     );
 
@@ -46,7 +45,7 @@ const Kandidatsøk = () => {
             knappIBanner={<TømFiltre />}
             sidepanel={<Filter />}
         >
-            <PorteføljeTabs stillingId={stillingId}>
+            <PorteføljeTabs stillingId={stillingId} key={stillingId ?? ''}>
                 <div className={css.hovedinnhold}>
                     <Kandidater
                         markerteKandidater={markerteKandidater}

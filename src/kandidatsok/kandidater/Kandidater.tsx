@@ -2,6 +2,8 @@ import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, ErrorMessage } from '@navikt/ds-react';
 import { FunctionComponent, useContext, useState } from 'react';
 
+import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
+import { useHentMineKandidaterIStilling } from '../../api/kandidat-api/hentMineKandidaterIStillling';
 import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 import { KandidatSøkContext } from '../KandidatSøkContext';
 import Paginering from '../filter/Paginering';
@@ -12,8 +14,6 @@ import css from './Kandidater.module.css';
 import MarkerAlle from './MarkerAlle';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
-import { useHentMineKandidaterIStilling } from '../../api/kandidat-api/hentMineKandidaterIStillling';
-import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 
 type Props = {
     markerteKandidater: Set<string>;
@@ -129,6 +129,7 @@ const Kandidater: FunctionComponent<Props> = ({
                     onClose={() => setAktivModal(Modal.IngenModal)}
                     markerteKandidater={markerteKandidater}
                     kandidaterPåSiden={kandidatsøkKandidater || []}
+                    fjernMarkering={fjernMarkering}
                 />
             ) : (
                 <LagreKandidaterISpesifikkKandidatlisteModal
@@ -136,6 +137,7 @@ const Kandidater: FunctionComponent<Props> = ({
                     onClose={() => setAktivModal(Modal.IngenModal)}
                     markerteKandidater={markerteKandidater}
                     stillingId={stillingId}
+                    fjernMarkering={fjernMarkering}
                 />
             )}
         </div>

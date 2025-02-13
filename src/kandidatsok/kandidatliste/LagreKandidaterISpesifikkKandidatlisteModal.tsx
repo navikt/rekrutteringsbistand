@@ -11,6 +11,7 @@ type Props = {
     onClose: () => void;
     markerteKandidater: Set<string>;
     stillingId: string;
+    fjernMarkering: () => void;
 };
 
 const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
@@ -18,6 +19,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
     onClose,
     markerteKandidater,
     stillingId,
+    fjernMarkering,
 }) => {
     const [lagreKandidater, setLagreKandidater] = useState<Nettressurs<LagreKandidaterDto>>({
         kind: Nettstatus.IkkeLastet,
@@ -40,6 +42,7 @@ const LagreKandidaterISpesifikkKandidatlisteModal: FunctionComponent<Props> = ({
 
             if (response.ok) {
                 setInnsengingOk(true);
+                fjernMarkering();
             } else {
                 setInnsengingOk(false);
                 if (response.status === 403) {
