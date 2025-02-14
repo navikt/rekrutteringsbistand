@@ -136,34 +136,43 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                             <strong>
                                                 Årsaken kan være en eller flere av disse:
                                             </strong>
-                                            <ol>
-                                                <li>Personbruker mangler CV eller jobbprofil.</li>
+                                            <ol
+                                                style={{
+                                                    listStyleType: 'decimal',
+                                                    paddingLeft: '1.5rem',
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '0.5rem',
+                                                }}
+                                            >
                                                 <li>
-                                                    Personbruker har ikke blitt informert om NAVs
+                                                    Personbruker mangler CV. Minimum innhold er ett
+                                                    yrkesønske og ett geografisk sted person ønsker
+                                                    å jobbe.
+                                                </li>
+                                                <li>
+                                                    Personbruker har ikke blitt informert om Navs
                                                     behandlingsgrunnlag for deling av CV.
                                                 </li>
                                                 <li>
-                                                    Personbruker har ikke valgt «Del CV». Dette
-                                                    kravet opptrer kun i tilfeller hvor personen har
-                                                    hatt en CV på Arbeidsplassen før personen kom
-                                                    under nåværende oppfølging av Nav.
+                                                    Dette kravet opptrer kun i overgangs-tilfeller
+                                                    hvor personbruker kommer under oppfølging av Nav
+                                                    med en CV som hen har fra en tidligere
+                                                    oppfølgingsperiode, eller med en CV som ble
+                                                    opprettet før hen kom under oppfølging av Nav.
                                                 </li>
                                                 <li>
                                                     Personbruker har personforholdet «Fritatt for
                                                     kandidatsøk» i Arena.
                                                 </li>
                                                 <li>
-                                                    Personbruker har formidlingskode «Ikke
-                                                    servicebehov (ISERV)» i Arena.
-                                                </li>
-                                                <li>
-                                                    Personbruker har kode IARBS (Arena-koden "ikke
-                                                    arbeidssøker").
+                                                    Personbruker må ha formidlingsgruppe ARBS
+                                                    (Arena-kode som betyr “arbeidssøker”).
                                                 </li>
                                                 <li>Personbruker har status "Egen ansatt".</li>
                                                 <li>
                                                     Personbruker har adresseskjerming (kode 6 og 7
-                                                    eller §19).
+                                                    eller strengt fortrolig utland §19).
                                                 </li>
                                                 <li>
                                                     Personbruker er deltager i kommunalt
