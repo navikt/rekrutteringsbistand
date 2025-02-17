@@ -477,10 +477,9 @@ function* publishAd(): Generator<unknown, any, any> {
 }
 
 function* stopAd() {
-    const state: State = yield select();
     yield put({ type: SET_ADMIN_STATUS, status: AdminStatus.Done });
     yield put({ type: SET_AD_STATUS, status: Status.Stoppet });
-    yield put({ type: SET_EXPIRATION_DATE, expires: formatISOString(state.adData?.updated) });
+    yield put({ type: SET_EXPIRATION_DATE, expires: formatISOString(new Date().toString()) });
     yield saveRekrutteringsbistandStilling();
 }
 
