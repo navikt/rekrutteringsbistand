@@ -43,7 +43,6 @@ const KandidatenFinnesIkke: FunctionComponent<Props> = ({ synlighetsevaluering }
             <>
                 {kandidatensKriterierPerAnsvarsområde.kandidat.length > 0 && (
                     <>
-                        <span>For å bli synlig må kandidaten</span>
                         <ul>
                             {kandidatensKriterierPerAnsvarsområde.kandidat.map((kriterie) => (
                                 <li key={kriterie}>{kriterieTilForklaring(kriterie)}</li>
@@ -53,7 +52,6 @@ const KandidatenFinnesIkke: FunctionComponent<Props> = ({ synlighetsevaluering }
                 )}
                 {kandidatensKriterierPerAnsvarsområde.veileder.length > 0 && (
                     <>
-                        <span>For å bli synlig må du</span>
                         <ul>
                             {kandidatensKriterierPerAnsvarsområde.veileder.map((kriterie) => (
                                 <li key={kriterie}>{kriterieTilForklaring(kriterie)}</li>

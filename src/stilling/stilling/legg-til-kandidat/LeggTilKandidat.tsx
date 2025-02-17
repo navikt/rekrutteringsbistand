@@ -155,9 +155,10 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                     behandlingsgrunnlag for deling av CV.
                                                 </li>
                                                 <li>
-                                                    Dette kravet opptrer kun i overgangs-tilfeller
-                                                    hvor personbruker kommer under oppfølging av Nav
-                                                    med en CV som hen har fra en tidligere
+                                                    Personbruker har ikke valgt «Del CV». Dette
+                                                    kravet opptrer kun i overgangs-tilfeller hvor
+                                                    personbruker kommer under oppfølging av Nav med
+                                                    en CV som hen har fra en tidligere
                                                     oppfølgingsperiode, eller med en CV som ble
                                                     opprettet før hen kom under oppfølging av Nav.
                                                 </li>
