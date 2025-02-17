@@ -18,6 +18,7 @@ import {
     SET_NAV_IDENT,
     SET_REPORTEE,
     SET_UPDATED_BY,
+    SET_EXPIRATION_DATE,
 } from './adDataReducer';
 import {
     hasValidationErrors,
@@ -476,8 +477,10 @@ function* publishAd(): Generator<unknown, any, any> {
 }
 
 function* stopAd() {
+    const state: State = yield select();
     yield put({ type: SET_ADMIN_STATUS, status: AdminStatus.Done });
     yield put({ type: SET_AD_STATUS, status: Status.Stoppet });
+    yield put({ type: SET_EXPIRATION_DATE, expires: formatISOString(state.adData?.updated) });
     yield saveRekrutteringsbistandStilling();
 }
 
