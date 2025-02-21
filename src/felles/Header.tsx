@@ -8,6 +8,7 @@ import InfoAlert from './header/navigeringsmeny/InfoAlert';
 import Navigeringsmeny from './header/navigeringsmeny/Navigeringsmeny';
 import useAmplitude from './header/useAmplitude';
 import { Rolle } from './tilgangskontroll/Roller';
+import InfoAlert2 from './header/navigeringsmeny/InfoAlertTmp';
 
 const Header = () => {
     const [mockAktiv] = useLocalStorageToggle('Mock modia');
@@ -25,6 +26,7 @@ const Header = () => {
             />
 
             <Navigeringsmeny />
+            <InfoAlert2 />
             {!harRolle([
                 Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET,
                 Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET,
