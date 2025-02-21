@@ -9,6 +9,7 @@ type ILeggTilKandidatModal = {
     onClose: () => void;
     stillingsId: string;
     erEier?: boolean;
+    erJobbmesse?: boolean;
 };
 
 const LeggTilKandidatModal: React.FC<ILeggTilKandidatModal> = ({
@@ -16,6 +17,7 @@ const LeggTilKandidatModal: React.FC<ILeggTilKandidatModal> = ({
     onClose,
     stillingsId,
     erEier,
+    erJobbmesse,
 }) => {
     const { kandidatlisteId, isLoading, isError } = useKandidatlisteId(stillingsId);
     return (
@@ -39,6 +41,7 @@ const LeggTilKandidatModal: React.FC<ILeggTilKandidatModal> = ({
                     onClose={onClose}
                     erEier={erEier}
                     stillingsId={stillingsId}
+                    erJobbmesse={erJobbmesse}
                 />
             )}
         </Modal>

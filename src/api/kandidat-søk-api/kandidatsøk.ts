@@ -41,7 +41,7 @@ export const totalSchema = z.object({
 
 export const geografiJobbonskerSchema = z.object({
     geografiKodeTekst: z.string(),
-    geografiKode: z.string(),
+    geografiKode: z.string().nullable(),
 });
 
 export const yrkeJobbonskerObjSchema = z.object({
@@ -83,7 +83,7 @@ interface IuseKandidatsøk {
 
 export const useKandidatsøk = ({ søkeprops, portefølje }: IuseKandidatsøk) => {
     const queryParams = new URLSearchParams({
-        side: String(søkeprops.side),
+        side: Math.max(1, Math.floor(søkeprops.side)).toString(),
         sortering: søkeprops.sortering,
     });
 

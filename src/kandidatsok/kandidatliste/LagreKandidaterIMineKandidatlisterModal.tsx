@@ -1,17 +1,18 @@
 import { Button, Modal } from '@navikt/ds-react';
 import { Nettressurs, Nettstatus } from 'felles/nettressurs';
 import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react';
+import { leggTilKandidaterIKandidatliste } from '../../api/kandidat-api/leggTilKandidat';
 import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 import { storForbokstav } from '../utils';
 import css from './LagreKandidaterIMineKandidatlisterModal.module.css';
 import VelgKandidatlister from './VelgKandidatlister';
-import { leggTilKandidaterIKandidatliste } from '../../api/kandidat-api/leggTilKandidat';
 
 type Props = {
     vis: boolean;
     onClose: () => void;
     markerteKandidater: Set<string>;
     kandidaterPåSiden: KandidatsøkKandidat[];
+    fjernMarkering: () => void;
 };
 
 export type LagreKandidaterDto = Array<{
@@ -23,6 +24,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
     onClose,
     markerteKandidater,
     kandidaterPåSiden,
+    fjernMarkering,
 }) => {
     const [markerteLister, setMarkerteLister] = useState<Set<string>>(new Set());
     const [lagredeLister, setLagredeLister] = useState<Set<string>>(new Set());
@@ -80,6 +82,7 @@ const LagreKandidaterIMineKandidatlisterModal: FunctionComponent<Props> = ({
             });
 
             setLagredeLister(oppdaterteLagredeLister);
+            fjernMarkering();
         } catch (e) {
             setLagreIKandidatlister({
                 kind: Nettstatus.Feil,

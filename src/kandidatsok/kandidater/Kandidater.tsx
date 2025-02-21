@@ -2,9 +2,12 @@ import { PersonPlusIcon, XMarkIcon } from '@navikt/aksel-icons';
 import { BodyShort, Button, ErrorMessage } from '@navikt/ds-react';
 import { FunctionComponent, useContext, useState } from 'react';
 
+import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
+import { useHentMineKandidaterIStilling } from '../../api/kandidat-api/hentMineKandidaterIStillling';
 import { KandidatsøkKandidat } from '../../api/kandidat-søk-api/kandidatsøk';
 import { KandidatSøkContext } from '../KandidatSøkContext';
 import Paginering from '../filter/Paginering';
+import { useMarkerteKandidaterØkt } from '../hooks/MarkerteKandidaterContext';
 import LagreKandidaterIMineKandidatlisterModal from '../kandidatliste/LagreKandidaterIMineKandidatlisterModal';
 import LagreKandidaterISpesifikkKandidatlisteModal from '../kandidatliste/LagreKandidaterISpesifikkKandidatlisteModal';
 import AntallKandidater from './AntallKandidater';
@@ -12,13 +15,8 @@ import css from './Kandidater.module.css';
 import MarkerAlle from './MarkerAlle';
 import Kandidatrad from './kandidatrad/Kandidatrad';
 import Sortering from './sortering/Sortering';
-import { useHentMineKandidaterIStilling } from '../../api/kandidat-api/hentMineKandidaterIStillling';
-import Sidelaster from 'felles/komponenter/sidelaster/Sidelaster';
 
 type Props = {
-    markerteKandidater: Set<string>;
-    onMarkerKandidat: (kandidatnr: string | string[]) => void;
-    fjernMarkering: () => void;
     stillingId: string | null;
 };
 
@@ -28,14 +26,10 @@ enum Modal {
     BekreftLagreIKandidatliste,
 }
 
-const Kandidater: FunctionComponent<Props> = ({
-    markerteKandidater,
-    onMarkerKandidat,
-    fjernMarkering,
-    stillingId,
-}) => {
+const Kandidater: FunctionComponent<Props> = ({ stillingId }) => {
     const { kandidatSøk } = useContext(KandidatSøkContext);
     const [aktivModal, setAktivModal] = useState<Modal>(Modal.IngenModal);
+    const { markerteKandidater, onMarkerKandidat, fjernMarkering } = useMarkerteKandidaterØkt();
 
     const {
         data: mineKandidaterIStilling,
@@ -129,6 +123,7 @@ const Kandidater: FunctionComponent<Props> = ({
                     onClose={() => setAktivModal(Modal.IngenModal)}
                     markerteKandidater={markerteKandidater}
                     kandidaterPåSiden={kandidatsøkKandidater || []}
+                    fjernMarkering={fjernMarkering}
                 />
             ) : (
                 <LagreKandidaterISpesifikkKandidatlisteModal
@@ -136,6 +131,7 @@ const Kandidater: FunctionComponent<Props> = ({
                     onClose={() => setAktivModal(Modal.IngenModal)}
                     markerteKandidater={markerteKandidater}
                     stillingId={stillingId}
+                    fjernMarkering={fjernMarkering}
                 />
             )}
         </div>

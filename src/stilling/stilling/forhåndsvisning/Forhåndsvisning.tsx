@@ -1,8 +1,10 @@
 import { Panel } from '@navikt/ds-react';
 
 import Stilling from 'felles/domene/stilling/Stilling';
+import useKandidatlisteId from 'felles/hooks/useKandidatlisteId';
 import parse from 'html-react-parser';
 import { erDirektemeldtStilling } from '../adUtils';
+import { AntallKandidaterIStilling } from './antall-kandidater/AntallKandidater';
 import css from './Forhåndsvisning.module.css';
 import Kontaktperson from './kontaktperson/Kontaktperson';
 import MulighetForÅInkludere from './mulighet-for-å-inkludere/MulighetForÅInkludere';
@@ -10,8 +12,6 @@ import OmAnnonsen from './om-annonsen/OmAnnonsen';
 import OmBedriften from './om-bedriften/OmBedriften';
 import OmStillingen from './om-stillingen/OmStillingen';
 import Søknad from './søknad/Søknad';
-import useKandidatlisteId from 'felles/hooks/useKandidatlisteId';
-import { AntallKandidaterIStilling } from './antall-kandidater/AntallKandidater';
 
 type Props = {
     stilling: Stilling;
@@ -33,7 +33,7 @@ const Forhåndsvisning = ({ stilling, erFormidling }: Props) => {
                     {erFormidling ? (
                         <span>Formidling</span>
                     ) : (
-                        parse(stilling.properties.adtext || '')
+                        <div className={css.adText}>{parse(stilling.properties.adtext || '')}</div>
                     )}
                 </Panel>
                 {erDirektemeldtStilling(stilling.source) && (

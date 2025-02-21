@@ -34,11 +34,21 @@ export enum MinsideStatus {
     SLETTET = 'SLETTET',
 }
 
+export enum EksternKanal {
+    SMS = 'SMS',
+    EPOST = 'EPOST',
+}
+
 const MinsideStatusSchema = z
     .literal(MinsideStatus.IKKE_BESTILT)
     .or(z.literal(MinsideStatus.UNDER_UTSENDING))
     .or(z.literal(MinsideStatus.OPPRETTET))
     .or(z.literal(MinsideStatus.SLETTET));
+
+const EksternKanalSchema = z
+    .literal(null)
+    .or(z.literal(EksternKanal.SMS))
+    .or(z.literal(EksternKanal.EPOST));
 
 export enum EksternStatus {
     /** Vi jobber med å sende ut eksternt varsel. Status er ikke avklart enda. */
@@ -74,6 +84,7 @@ const SmsSchema = z
         minsideStatus: MinsideStatusSchema,
         eksternStatus: EksternStatusSchema,
         eksternFeilmelding: z.string().nullable(),
+        eksternKanal: EksternKanalSchema,
     })
     .partial({ eksternFeilmelding: true });
 
@@ -165,6 +176,7 @@ export const kandidatvarselMock = [
                     opprettet: new Date().toISOString(),
                     minsideStatus: MinsideStatus.OPPRETTET,
                     eksternStatus: EksternStatus.VELLYKKET_SMS,
+                    eksternKanal: EksternKanal.SMS,
                 },
             ]);
         }
@@ -198,6 +210,7 @@ const smsExampleMock = {
     opprettet: new Date().toISOString(),
     minsideStatus: MinsideStatus.OPPRETTET,
     eksternStatus: EksternStatus.VELLYKKET_SMS,
+    eksternKanal: EksternKanal.SMS,
 };
 
 const mockSms: Sms[] = [smsExampleMock];

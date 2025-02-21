@@ -5,6 +5,28 @@ const tilDato = (dag: number, måned: number, år: number, timer = 0, minutter =
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(6, 2, 2025),
+        tittel: 'Personer som ikke er arbeidssøkere er tatt ut av kandidatsøket',
+        innhold: (
+            <>
+                <p>
+                    Personer som ikke er arbeidssøkere, med formidlingskoden "ikke-arbeidssøker"
+                    (IARBS) er tatt ut av kandidatsøket. De fjernes for å gjøre søket mer relevant.
+                    Les mer på Navet
+                </p>
+                <p>
+                    <a
+                        target="_blank"
+                        href="https://navno.sharepoint.com/:u:/r/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Vi-rydder-opp-i-kandidats%C3%B8ket-i-Rekrutteringsbistand.aspx?csf=1&web=1&e=3P16XY"
+                        rel="noopener noreferrer"
+                    >
+                        Vi rydder opp i kandidatsøket i Rekrutteringsbistand
+                    </a>
+                </p>
+            </>
+        ),
+    },
+    {
         dato: tilDato(1, 11, 2024),
         tittel: 'STYRK byttet ut med yrkestittel i stillingsregistreringen',
         innhold: (

@@ -1,11 +1,11 @@
-import { FunctionComponent, ReactNode } from 'react';
 import { Alert } from '@navikt/ds-react';
 import Synlighetsevaluering, {
-    Synlighetskriterie,
-    KriterieUtenforNoensKontroll,
     KravTilKandidaten,
     KravTilVeileder,
+    KriterieUtenforNoensKontroll,
+    Synlighetskriterie,
 } from 'felles/domene/synlighet/Synlighetsevaluering';
+import { FunctionComponent, ReactNode } from 'react';
 import css from './KandidatenFinnesIkke.module.css';
 
 type Props = {
@@ -43,7 +43,6 @@ const KandidatenFinnesIkke: FunctionComponent<Props> = ({ synlighetsevaluering }
             <>
                 {kandidatensKriterierPerAnsvarsområde.kandidat.length > 0 && (
                     <>
-                        <span>For å bli synlig må kandidaten</span>
                         <ul>
                             {kandidatensKriterierPerAnsvarsområde.kandidat.map((kriterie) => (
                                 <li key={kriterie}>{kriterieTilForklaring(kriterie)}</li>
@@ -53,7 +52,6 @@ const KandidatenFinnesIkke: FunctionComponent<Props> = ({ synlighetsevaluering }
                 )}
                 {kandidatensKriterierPerAnsvarsområde.veileder.length > 0 && (
                     <>
-                        <span>For å bli synlig må du</span>
                         <ul>
                             {kandidatensKriterierPerAnsvarsområde.veileder.map((kriterie) => (
                                 <li key={kriterie}>{kriterieTilForklaring(kriterie)}</li>
@@ -99,25 +97,19 @@ const hentKandidatensKriterierPerAnsvarsområde = (synlighetsevaluering: Synligh
 const kriterieTilForklaring = (kriterie: Synlighetskriterie) => {
     switch (kriterie) {
         case KravTilKandidaten.HarAktivCv:
-            return 'logge inn på Arbeidsplassen og opprette CV';
         case KravTilKandidaten.HarJobbprofil:
-            return 'logge inn på Arbeidsplassen og registrere jobbønsker i CV-en';
+            return 'Personbruker mangler CV. Minimum innhold er ett yrkesønske og ett geografisk sted person ønsker å jobbe.';
         case KravTilKandidaten.HarSettHjemmel:
-            return 'logge inn på Arbeidsplassen og godkjenne deling av CV-en med NAV';
-        case KravTilKandidaten.ErUnderOppfølging:
-            return 'registrere seg som arbeidssøker på nav.no';
+            return 'Personbruker har ikke blitt informert om Navs behandlingsgrunnlag for deling av CV.';
         case KravTilKandidaten.MåIkkeBehandleTidligereCv:
-            return 'logge inn på Arbeidsplassen og godkjenne tidligere registrert CV for deling med NAV';
-
+            return 'Personbruker har ikke valgt «Del CV». Dette kravet opptrer kun i overgangs-tilfeller hvor personbruker kommer under oppfølging av Nav med en CV som hen har fra en tidligere oppfølgingsperiode, eller med en CV som ble opprettet før hen kom under oppfølging av Nav.';
         case KravTilVeileder.ErIkkeFritattKandidatsøk:
-            return 'fjerne personforholdet "Fritatt for kandidatsøk" i Arena';
+            return 'Personbruker har personforholdet «Fritatt for kandidatsøk» i Arena.';
+        case KravTilKandidaten.ErUnderOppfølging:
         case KravTilVeileder.HarRiktigFormidlingsgruppe:
-            return 'reaktivere personen som arbeidssøker. Han/hun har feil formidlingskode i Arena';
-
-        case KriterieUtenforNoensKontroll.ErIkkeSperretAnsatt:
-            return 'Egen ansatt';
+            return 'Personbruker må ha formidlingsgruppe ARBS (Arena-kode som betyr “arbeidssøker”).';
         case KriterieUtenforNoensKontroll.ErIkkeDød:
-            return 'Død';
+            return 'Er død.';
     }
 };
 

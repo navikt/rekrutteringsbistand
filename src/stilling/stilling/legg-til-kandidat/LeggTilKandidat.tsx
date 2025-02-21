@@ -17,6 +17,7 @@ type ILeggTilKandidat = {
     kandidatlisteId: string;
     stillingsId: string;
     erEier?: boolean;
+    erJobbmesse?: boolean;
 };
 
 const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
@@ -24,6 +25,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     onClose,
     erEier,
     stillingsId,
+    erJobbmesse,
 }) => {
     const [visOppsummering, setVisOppsummering] = useState<boolean>(false);
     const [visSynlighetsEvaluering, setVisSynlighetsEvaluering] = useState<boolean>(false);
@@ -103,7 +105,9 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                 onAvbryt={onClose}
                                 onBekreft={handleBekreft}
                                 setRegistrerFormidling={
-                                    erEier ? () => setRegistrerFormidling(true) : undefined
+                                    !erJobbmesse && erEier
+                                        ? () => setRegistrerFormidling(true)
+                                        : undefined
                                 }
                             />
                         ))}
@@ -132,35 +136,47 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                             <strong>
                                                 Årsaken kan være en eller flere av disse:
                                             </strong>
-                                            <ol>
-                                                <li>Kandidaten mangler CV eller jobbprofil.</li>
+                                            <ol
+                                                style={{
+                                                    listStyleType: 'decimal',
+                                                    paddingLeft: '1.5rem',
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '0.5rem',
+                                                }}
+                                            >
                                                 <li>
-                                                    Kandidaten har ikke blitt informert om NAVs
+                                                    Personbruker mangler CV. Minimum innhold er ett
+                                                    yrkesønske og ett geografisk sted person ønsker
+                                                    å jobbe.
+                                                </li>
+                                                <li>
+                                                    Personbruker har ikke blitt informert om Navs
                                                     behandlingsgrunnlag for deling av CV.
                                                 </li>
                                                 <li>
-                                                    Kandidat har ikke valgt «Del CV». Kandidaten har
-                                                    tidligere registrert CV, men har siden vært ute
-                                                    av oppfølging. Kandidaten er igjen under
-                                                    oppfølging, men har ikke godkjent deling av CV
-                                                    med NAV i dette nye oppfølgingsløpet. Hen må
-                                                    logge seg inn på arbeidsplassen.no og velge “Del
-                                                    CV”. Husk å be bruker om å oppdatere CV.
+                                                    Personbruker har ikke valgt «Del CV». Dette
+                                                    kravet opptrer kun i overgangs-tilfeller hvor
+                                                    personbruker kommer under oppfølging av Nav med
+                                                    en CV som hen har fra en tidligere
+                                                    oppfølgingsperiode, eller med en CV som ble
+                                                    opprettet før hen kom under oppfølging av Nav.
                                                 </li>
                                                 <li>
-                                                    Kandidaten har personforholdet «Fritatt for
+                                                    Personbruker har personforholdet «Fritatt for
                                                     kandidatsøk» i Arena.
                                                 </li>
                                                 <li>
-                                                    Kandidaten har formidlingskode «Ikke
-                                                    servicebehov (ISERV)» i Arena.
+                                                    Personbruker må ha formidlingsgruppe ARBS
+                                                    (Arena-kode som betyr “arbeidssøker”).
                                                 </li>
-                                                <li>Kandidaten har status "Egen ansatt".</li>
+                                                <li>Personbruker har status "Egen ansatt".</li>
                                                 <li>
-                                                    Kandidaten har diskresjonskode (kode 6 og 7).
+                                                    Personbruker har adresseskjerming (kode 6 og 7
+                                                    eller strengt fortrolig utland §19).
                                                 </li>
                                                 <li>
-                                                    Kandidaten er deltager i kommunalt
+                                                    Personbruker er deltager i kommunalt
                                                     kvalifiseringsprogram (KVP)
                                                 </li>
                                             </ol>
@@ -174,7 +190,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                     )}
                                     <br />
 
-                                    {erEier && (
+                                    {!erJobbmesse && erEier && (
                                         <Button
                                             onClick={() => setRegistrerFormidling(true)}
                                             style={{ width: '100%', marginBottom: '1rem' }}

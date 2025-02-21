@@ -39,13 +39,11 @@ jobs:
               id: docker-build-push
               with:
                   team: toi
-                  identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
-                  project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
 
     deploy-til-dev:
         name: Deploy til dev-gcp
         needs: bygg-og-push-docker-image
-        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/14a-innsatsgrupper-hovedmål'
+        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/todo'
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
