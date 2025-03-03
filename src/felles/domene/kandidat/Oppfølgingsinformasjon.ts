@@ -1,19 +1,13 @@
 export enum Innsatsgruppe {
-    SpesieltTilpassetInnsats = 'BATT',
-    SituasjonsbestemtInnsats = 'BFORM',
-    Standardinnsats = 'IKVAL',
-    VarigTilpasset = 'VARIG',
+    SpesieltTilpassetInnsats = 'SPESIELT_TILPASSET_INNSATS',
+    SituasjonsbestemtInnsats = 'SITUASJONSBESTEMT_INNSATS',
+    Standardinnsats = 'STANDARD_INNSATS',
+    VarigTilpassetInnsats = 'VARIG_TILPASSET_INNSATS',
+    GradertVarigTilpassetInnsats = 'GRADERT_VARIG_TILPASSET_INNSATS',
+    SPESIELT_TILPASSET_INNSATS = 'SPESIELT_TILPASSET_INNSATS',
 }
 
-export enum Servicegruppe {
-    IkkeVurdert = 'IVURD',
-    BehovForArbeidsevnevurdering = 'BKART',
-    HelserelatertArbeidsrettetOppfølgingINav = 'OPPFI',
-    SykmeldtMedOppfølgingPåArbeidsplassen = 'VURDI',
-    SykmeldtUtenArbeidsgiver = 'VURDU',
-}
-
-export type Kvalifiseringsgruppe = Innsatsgruppe | Servicegruppe;
+export type Kvalifiseringsgruppe = Innsatsgruppe;
 
 export enum Formidlingsgruppe {
     Arbeidssøker = 'ARBS',
@@ -21,16 +15,15 @@ export enum Formidlingsgruppe {
 }
 
 export enum Hovedmål {
-    ØkeDeltagelse = 'OKEDELT',
-    SkaffeArbeid = 'SKAFFEA',
-    BeholdeArbeid = 'BEHOLDEA',
+    ØkeDeltagelse = 'OKE_DELTAKELSE',
+    SkaffeArbeid = 'SKAFFE_ARBEID',
+    BeholdeArbeid = 'BEHOLDE_ARBEID',
 }
 
 type Oppfølgingsinformasjon = {
     navkontor: string;
     orgenhet: string;
-    hovedmaalkode: Hovedmål;
-    kvalifiseringsgruppekode: Kvalifiseringsgruppe;
+    innsatsgruppe: Kvalifiseringsgruppe;
     formidlingsgruppekode: Formidlingsgruppe;
     veileder: string | null;
     veilederIdent: string | null;

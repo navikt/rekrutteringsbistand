@@ -24,20 +24,16 @@ export enum Portefølje {
     ALLE = 'alle',
 }
 
-export enum Kvalifiseringsgruppekode {
-    Batt = 'BATT',
-    Ikval = 'IKVAL',
-    Varig = 'VARIG',
-    Bform = 'BFORM',
-    Andre = 'ANDRE',
-    Ivurd = 'IVURD',
-    Bkart = 'BKART',
-    Oppfi = 'OPPFI',
-    Vurdi = 'VURDI',
-    Vurdu = 'VURDU',
+export enum Innsatsgruppe {
+    SPESIELT_TILPASSET_INNSATS = 'SPESIELT_TILPASSET_INNSATS',
+    SITUASJONSBESTEMT_INNSATS = 'SITUASJONSBESTEMT_INNSATS',
+    STANDARD_INNSATS = 'STANDARD_INNSATS',
+    VARIG_TILPASSET_INNSATS = 'VARIG_TILPASSET_INNSATS',
+    GRADERT_VARIG_TILPASSET_INNSATS = 'GRADERT_VARIG_TILPASSET_INNSATS',
+    HAR_IKKE_GJELDENDE_14A_VEDTAK = 'HAR_IKKE_GJELDENDE_14A_VEDTAK',
 }
 
-export const kvalifiseringsgruppekodeSchema = z.nativeEnum(Kvalifiseringsgruppekode);
+export const innsatsgruppeSchema = z.nativeEnum(Innsatsgruppe);
 
 export const totalSchema = z.object({
     value: z.number(),
@@ -64,7 +60,7 @@ export const kandidaterSchema = z.object({
     geografiJobbonsker: z.array(geografiJobbonskerSchema),
     fornavn: z.string(),
     fodselsnummer: z.string(),
-    kvalifiseringsgruppekode: kvalifiseringsgruppekodeSchema,
+    innsatsgruppe: innsatsgruppeSchema,
 });
 export const navigeringSchema = z.object({
     kandidatnumre: z.array(z.string()),
