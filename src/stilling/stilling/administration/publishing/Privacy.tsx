@@ -20,7 +20,7 @@ export default function Privacy() {
             onChange={onPrivacyChange}
             legend="Hvor skal stillingen publiseres?"
         >
-            <Radio value={PrivacyStatusEnum.INTERNAL_NOT_SHOWN}>Kun internt i NAV</Radio>
+            <Radio value={PrivacyStatusEnum.INTERNAL_NOT_SHOWN}>Kun internt i Nav</Radio>
             <Radio value={PrivacyStatusEnum.SHOW_ALL}>Eksternt på Arbeidsplassen</Radio>
         </RadioGroup>
     );

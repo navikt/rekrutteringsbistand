@@ -104,7 +104,7 @@ const ForespørselOmDelingAvCv: FunctionComponent<Props> = ({ stillingsId, marke
             if (valgtNavKontor === null) {
                 setKanIkkeDelePopover(event.currentTarget);
                 setKanIkkeDeleFeilmelding(
-                    'Du må representere et NAV-kontor før du kan dele stillingen med kandidaten.'
+                    'Du må representere et Nav-kontor før du kan dele stillingen med kandidaten.'
                 );
             } else if (markerteKandidater.length === 0) {
                 setKanIkkeDelePopover(event.currentTarget);

@@ -38,7 +38,7 @@ const Statistikk: FunctionComponent<Props> = ({ navKontor, navKontorNavn }) => {
             <div className={css.konktekstForStatistikk}>
                 <div>
                     <Heading level="2" size="medium">
-                        Ditt NAV-kontor
+                        Ditt Nav-kontor
                     </Heading>
                     <BodyShort>{navKontorNavn ?? `Enhet ${navKontor}`}</BodyShort>
                 </div>

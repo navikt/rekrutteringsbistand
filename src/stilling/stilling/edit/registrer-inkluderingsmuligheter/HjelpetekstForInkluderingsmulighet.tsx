@@ -49,7 +49,7 @@ const TiltakEllerVirkemiddel = () => (
         <BodyLong size="small" spacing>
             Arbeidsgiveren er åpen for en kandidat som har behov for midlertidig eller varig
             lønnstilskudd. Kandidaten blir ansatt på ordinære lønns- og arbeidsvilkår, men kan få
-            tilskudd til lønn fra NAV som skal kompensere for lavere produktivitet.
+            tilskudd til lønn fra Nav som skal kompensere for lavere produktivitet.
         </BodyLong>
         <Heading level="3" size="xsmall">
             Mentor (tilskudd)
@@ -86,7 +86,7 @@ const PrioriterteMålgrupper = () => (
             Unge under 30 år
         </Heading>
         <BodyLong size="small" spacing>
-            Unge under 30 år er en målgruppe med høy prioritet i NAV. Tidlig og tett oppfølging er
+            Unge under 30 år er en målgruppe med høy prioritet i Nav. Tidlig og tett oppfølging er
             viktig for å hindre at unge blir stående utenfor arbeidslivet.
         </BodyLong>
         <Heading level="3" size="xsmall">
@@ -101,7 +101,7 @@ const PrioriterteMålgrupper = () => (
             Innvandrere fra land utenfor EØS
         </Heading>
         <BodyLong size="small" spacing>
-            Innvandrere fra land utenfor EØS er en prioritert målgruppe i NAV, og sysselsettingen i
+            Innvandrere fra land utenfor EØS er en prioritert målgruppe i Nav, og sysselsettingen i
             denne gruppen er lav. Mange innvandrere vil ha behov for å utvikle kompetanse og få
             erfaring som det norske arbeidslivet etterspør.
         </BodyLong>
@@ -134,8 +134,8 @@ const StatligInkluderingsdugnad = () => (
             Statlig inkluderingsdugnad
         </Heading>
         <BodyLong size="small" spacing>
-            Statlig inkluderingsdugnad skal benyttes når NAV har inngått en samarbeidsavtale med
-            statlige bedrifter. Avtalen går ut på at NAV får forsprang til å jobbe med
+            Statlig inkluderingsdugnad skal benyttes når Nav har inngått en samarbeidsavtale med
+            statlige bedrifter. Avtalen går ut på at Nav får forsprang til å jobbe med
             (midlertidige) stillinger.
         </BodyLong>
     </>

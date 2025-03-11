@@ -40,7 +40,7 @@ const VelgKontor: FunctionComponent<Props> = ({ forslagId }) => {
     return (
         <Typeahead
             label="Velg kontor"
-            description="For eksempel «NAV Kristiansand»"
+            description="For eksempel «Nav Kristiansand»"
             value={input}
             suggestions={suggestions}
             suggestionsId={forslagId}

@@ -71,7 +71,7 @@ const ContactInfo = () => {
                 Spørsmål om stillingen?
             </Heading>
             <BodyShort size="small" spacing>
-                Kontaktperson hos NAV: {reportee} {navIdent ? ` (${navIdent})` : ''}
+                Kontaktperson hos Nav: {reportee} {navIdent ? ` (${navIdent})` : ''}
             </BodyShort>
             {visMarkerSomMinKnapp && markerSomMinKnappOgModal()}
         </div>
@@ -83,7 +83,7 @@ const ContactInfo = () => {
                         Spørsmål om stillingen?
                     </Heading>
                     <BodyShort size="small" spacing>
-                        Kontaktperson hos NAV: {stillingsinfo.eierNavn}{' '}
+                        Kontaktperson hos Nav: {stillingsinfo.eierNavn}{' '}
                         {stillingsinfo.eierNavident ? ` (${stillingsinfo.eierNavident})` : ''}
                     </BodyShort>
                     {(!stillingsinfo.eierNavident ||

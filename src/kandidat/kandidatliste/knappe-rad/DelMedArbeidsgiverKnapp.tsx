@@ -72,7 +72,7 @@ const DelMedArbeidsgiverKnapp: FunctionComponent<Props> = ({
                             kan derfor ikke dele disse.
                         </BodyLong>
                         <BodyLong>
-                            Har du hatt dialog med kandidaten, og fått bekreftet at NAV kan dele
+                            Har du hatt dialog med kandidaten, og fått bekreftet at Nav kan dele
                             CV-en? Da må du registrere dette i aktivitetsplanen. Har du ikke delt
                             stillingen med kandidaten må du gjøre det først.{' '}
                             <Link

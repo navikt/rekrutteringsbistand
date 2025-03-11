@@ -46,7 +46,7 @@ const FeilVedSendingAvForespørsel: FunctionComponent<Props> = ({
             {antallBrukereDerVeilederKanSvare.length > 0 && (
                 <Alert variant="warning" className={css.alert}>
                     {antallBrukereDerVeilederKanSvare.length} av kandidatene bruker ikke digitale
-                    tjenester fra NAV. Du må ringe og registrere svaret i stillingskortet i
+                    tjenester fra Nav. Du må ringe og registrere svaret i stillingskortet i
                     Aktivitetsplanen.
                 </Alert>
             )}

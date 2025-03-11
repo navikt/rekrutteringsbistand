@@ -82,7 +82,7 @@ const SendForespørselPåNytt: FunctionComponent<Props> = ({
                 setSenderForespørselPåNytt(false);
             }
         } else {
-            setFeilmelding('Du må representere et NAV-kontor for å dele stillingen på nytt.');
+            setFeilmelding('Du må representere et Nav-kontor for å dele stillingen på nytt.');
         }
     };
 
