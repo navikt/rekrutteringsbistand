@@ -1,7 +1,14 @@
-.beskrivelse {
+.adText :global(ul) {
+    list-style-type: disc;
+    padding-left: 1.5rem;
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-.beskrivelse p:last-child {
-    margin-bottom: 0;
+.adText :global(li) {
+    margin-bottom: 0.5rem;
+}
+
+.adText :global(li p) {
+    margin: 0;
 }

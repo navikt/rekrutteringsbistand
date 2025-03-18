@@ -114,7 +114,7 @@ const OmBedriften = ({ stilling }: Props) => {
                 )}
             </dl>
             {properties.employerdescription && (
-                <div className={css.beskrivelse}>{parse(properties.employerdescription || '')}</div>
+                <div className={css.adText}>{parse(properties.employerdescription || '')}</div>
             )}
         </Panel>
     );
