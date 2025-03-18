@@ -5,7 +5,7 @@ import useKandidatlisteId from 'felles/hooks/useKandidatlisteId';
 import parse from 'html-react-parser';
 import { erDirektemeldtStilling } from '../adUtils';
 import { AntallKandidaterIStilling } from './antall-kandidater/AntallKandidater';
-import css from './Forhåndsvisning.module.css';
+import { default as css, default as styles } from './Forhåndsvisning.module.css';
 import Kontaktperson from './kontaktperson/Kontaktperson';
 import MulighetForÅInkludere from './mulighet-for-å-inkludere/MulighetForÅInkludere';
 import OmAnnonsen from './om-annonsen/OmAnnonsen';
@@ -29,11 +29,13 @@ const Forhåndsvisning = ({ stilling, erFormidling }: Props) => {
                         kandidatelisteId={kandidatlisteId}
                     ></AntallKandidaterIStilling>
                 )}
-                <Panel as="article" className={css.annonsetekst}>
+                <Panel as="article">
                     {erFormidling ? (
                         <span>Formidling</span>
                     ) : (
-                        <div className={css.adText}>{parse(stilling.properties.adtext || '')}</div>
+                        <div className={styles.adText}>
+                            {parse(stilling.properties.adtext || '')}
+                        </div>
                     )}
                 </Panel>
                 {erDirektemeldtStilling(stilling.source) && (
