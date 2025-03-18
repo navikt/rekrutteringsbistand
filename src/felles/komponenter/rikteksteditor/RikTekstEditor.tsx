@@ -1,30 +1,12 @@
-import {
-    ArrowRedoIcon,
-    ArrowUndoIcon,
-    BulletListIcon,
-    ChevronRightDoubleIcon,
-    LinkBrokenIcon,
-    LinkIcon,
-    NumberListIcon,
-} from '@navikt/aksel-icons';
-import { ErrorMessage, Loader } from '@navikt/ds-react';
-import Blockquote from '@tiptap/extension-blockquote';
-import Bold from '@tiptap/extension-bold';
-import BulletList from '@tiptap/extension-bullet-list';
-import Document from '@tiptap/extension-document';
-import HardBreak from '@tiptap/extension-hard-break';
-import Heading from '@tiptap/extension-heading';
-import History from '@tiptap/extension-history';
-import Italic from '@tiptap/extension-italic';
-import Link from '@tiptap/extension-link';
-import ListItem from '@tiptap/extension-list-item';
-import OrderedList from '@tiptap/extension-ordered-list';
-import Paragraph from '@tiptap/extension-paragraph';
-import Text from '@tiptap/extension-text';
-import Underline from '@tiptap/extension-underline';
+import { Box, Button, ErrorMessage } from '@navikt/ds-react';
 import { EditorContent, useEditor } from '@tiptap/react';
-import * as React from 'react';
-import style from './RikTekstEditor.module.css';
+import StarterKit from '@tiptap/starter-kit';
+import IconBold from '../../../../public/editor/iconbold.svg';
+import IconItalic from '../../../../public/editor/iconitalic.svg';
+import IconList from '../../../../public/editor/iconlist.svg';
+import IconRedo from '../../../../public/editor/iconredo.svg';
+import IconUndo from '../../../../public/editor/iconundo.svg';
+import styles from './RikTekstEditor.module.css';
 
 export interface IRikTekstEditor {
     skjulToolbar?: boolean;
@@ -41,166 +23,80 @@ const RikTekstEditor: React.FC<IRikTekstEditor> = ({
     skjulToolbar,
     feilMelding,
 }) => {
-    const [headerValue, setHeaderValue] = React.useState<number>(0);
+    const extensions = [
+        StarterKit.configure({
+            orderedList: false,
+            blockquote: false,
+            code: false,
+            codeBlock: false,
+            horizontalRule: false,
+            strike: false,
+        }),
+    ];
 
     const editor = useEditor({
-        extensions: [
-            HardBreak,
-            Document,
-            Paragraph,
-            Text,
-            History,
-            Bold,
-            Italic,
-            Underline,
-            Blockquote,
-            BulletList,
-            OrderedList,
-            ListItem,
-            Link.configure({
-                openOnClick: false,
-            }),
-            Heading.configure({
-                levels: [1, 2, 3, 4, 5, 6],
-            }),
-        ],
+        extensions: extensions,
         content: tekst,
-        onUpdate: ({ editor }) => onChange(editor.getHTML()),
-        onTransaction: ({ editor, transaction }) => {
-            if (transaction.selection) {
-                const level = editor.getAttributes('heading').level;
-                setHeaderValue(level ? level : 0);
-            }
+        onUpdate: ({ editor }) => {
+            onChange(editor.getHTML());
         },
     });
 
     if (!editor) {
-        return <Loader />;
+        return null;
     }
-
-    const setLink = () => {
-        const url = prompt('Skriv inn lenke');
-        if (url) {
-            editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-        }
-    };
-
-    const unsetLink = () => {
-        editor.chain().focus().unsetLink().run();
-    };
-
-    const onSelectHeading = (value: string) => {
-        const level = parseInt(value, 10);
-
-        if (level === 0) {
-            editor.chain().focus().setParagraph().run();
-        } else {
-            // @ts-ignore
-            editor.chain().focus().toggleHeading({ level }).run();
-        }
-    };
-
     return (
-        <div className={style.editor} id={id}>
-            <div>
-                {skjulToolbar ? (
-                    <div />
-                ) : (
-                    <div className={style.toolbar}>
-                        <select
-                            value={headerValue}
-                            onChange={(e) => onSelectHeading(e.target.value)}
-                        >
-                            <option value={0}>Normal</option>
-                            <option value={1}>H1</option>
-                            <option value={2}>H2</option>
-                            <option value={3}>H3</option>
-                            <option value={4}>H4</option>
-                            <option value={5}>H5</option>
-                        </select>
-                        <button
-                            onClick={() => editor.chain().focus().toggleBold().run()}
-                            className={
-                                editor.isActive('bold') ? style.aktivKnapp : style.inaktivKnapp
-                            }
-                        >
-                            <strong>B</strong>
-                        </button>
-                        <button
-                            onClick={() => editor.chain().focus().toggleItalic().run()}
-                            className={
-                                editor.isActive('italic') ? style.aktivKnapp : style.inaktivKnapp
-                            }
-                        >
-                            <strong>
-                                <i>I</i>
-                            </strong>
-                        </button>
-                        <button
-                            onClick={() => editor.chain().focus().toggleUnderline().run()}
-                            className={
-                                editor.isActive('underline') ? style.aktivKnapp : style.inaktivKnapp
-                            }
-                        >
-                            <strong>
-                                <ins>U</ins>
-                            </strong>
-                        </button>
-                        <button
-                            onClick={() => editor.chain().focus().toggleBlockquote().run()}
-                            className={style.inaktivKnapp}
-                        >
-                            <ChevronRightDoubleIcon />
-                        </button>
-                        <button
-                            onClick={() => editor.chain().focus().toggleBulletList().run()}
-                            className={
-                                editor.isActive('bulletList')
-                                    ? style.aktivKnapp
-                                    : style.inaktivKnapp
-                            }
-                        >
-                            <BulletListIcon />
-                        </button>
-                        <button
-                            onClick={() => editor.chain().focus().toggleOrderedList().run()}
-                            className={
-                                editor.isActive('orderedList')
-                                    ? style.aktivKnapp
-                                    : style.inaktivKnapp
-                            }
-                        >
-                            <NumberListIcon />
-                        </button>
-                        <button
-                            onClick={setLink}
-                            className={
-                                editor.isActive('link') ? style.aktivKnapp : style.inaktivKnapp
-                            }
-                        >
-                            <LinkIcon />
-                        </button>
-                        <button onClick={unsetLink} disabled={!editor.isActive('link')}>
-                            <LinkBrokenIcon />
-                        </button>
-                        <button
-                            onClick={() => editor.chain().focus().undo().run()}
-                            disabled={!editor.can().chain().focus().undo().run()}
-                        >
-                            <ArrowUndoIcon />
-                        </button>
-                        <button
-                            onClick={() => editor.chain().focus().redo().run()}
-                            disabled={!editor.can().chain().focus().redo().run()}
-                        >
-                            <ArrowRedoIcon />
-                        </button>
-                    </div>
-                )}
-            </div>
-            <EditorContent editor={editor} />
+        <Box borderWidth="1" padding="4" borderRadius="xlarge">
+            {!skjulToolbar && (
+                <Box style={{ display: 'flex', gap: '0.5rem', marginBottom: '10px' }}>
+                    <Button
+                        type="button"
+                        icon={<IconBold />}
+                        variant={editor.isActive('bold') ? 'primary-neutral' : 'secondary-neutral'}
+                        size="small"
+                        onClick={() => editor.commands.toggleBold()}
+                        aria-pressed={editor.isActive('bold')}
+                    />
+                    <Button
+                        type="button"
+                        icon={<IconItalic />}
+                        variant={
+                            editor.isActive('italic') ? 'primary-neutral' : 'secondary-neutral'
+                        }
+                        size="small"
+                        onClick={() => editor.commands.toggleItalic()}
+                        aria-pressed={editor.isActive('italic')}
+                    />
+                    <Button
+                        type="button"
+                        icon={<IconList />}
+                        variant={
+                            editor.isActive('bulletList') ? 'primary-neutral' : 'secondary-neutral'
+                        }
+                        size="small"
+                        onClick={() => editor.commands.toggleBulletList()}
+                        aria-pressed={editor.isActive('bulletList')}
+                    />
+                    <Button
+                        type="button"
+                        icon={<IconUndo />}
+                        variant="secondary-neutral"
+                        size="small"
+                        onClick={() => editor.commands.undo()}
+                    />
+                    <Button
+                        variant="secondary-neutral"
+                        type="button"
+                        icon={<IconRedo />}
+                        size="small"
+                        onClick={() => editor.commands.redo()}
+                    />
+                </Box>
+            )}
+            <hr />
+            <EditorContent id={id} editor={editor} className={styles.editorContent} />
             {feilMelding && <ErrorMessage>{feilMelding}</ErrorMessage>}
-        </div>
+        </Box>
     );
 };
 
