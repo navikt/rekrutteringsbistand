@@ -55,7 +55,7 @@ const HvorErAnnonsenPublisert: FunctionComponent = () => {
 export const publisertTilVisningsnavn = (publisert: Publisert) => {
     switch (publisert) {
         case Publisert.Intern:
-            return 'Internt i NAV';
+            return 'Internt i Nav';
         case Publisert.Arbeidsplassen:
             return 'På Arbeidsplassen';
     }

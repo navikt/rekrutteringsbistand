@@ -80,7 +80,7 @@ const OpprettNyStilling: FunctionComponent<Props> = ({ onClose }) => {
                 <Alert variant="warning" className={css.advarsel}>
                     <BodyLong spacing>
                         Det arbeides fremdeles med å avklare hva som er lov å registrere i
-                        Rekrutteringsbistand. Derfor kan du ikke registrere NAV-kurs, webinar,
+                        Rekrutteringsbistand. Derfor kan du ikke registrere Nav-kurs, webinar,
                         arbeidstrening og lignende. Det er kun kategoriene nedenfor som skal brukes.
                     </BodyLong>
                     <BodyLong>

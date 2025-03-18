@@ -193,7 +193,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
                                 visArkiverte={filter.visArkiverte}
                             >
                                 <Search
-                                    label="Søk alle NAV sine sider"
+                                    label="Søk alle Nav sine sider"
                                     variant="simple"
                                     onChange={(e) => setNavnefilter(e)}
                                     title="Søk etter navn i listen"

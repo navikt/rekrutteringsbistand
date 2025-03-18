@@ -148,7 +148,7 @@ const PresenterKandidaterModal = ({
                                     disse.
                                 </BodyLong>
                                 <BodyLong spacing>
-                                    Har du hatt dialog med kandidaten, og fått bekreftet at NAV kan
+                                    Har du hatt dialog med kandidaten, og fått bekreftet at Nav kan
                                     dele CV-en? Da må du registrere dette i aktivitetsplanen. Har du
                                     ikke delt stillingen med kandidaten må du gjøre det først.{' '}
                                     <Link href={rutinerForDeling}>Se rutiner</Link>.

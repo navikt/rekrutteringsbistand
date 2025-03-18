@@ -90,7 +90,7 @@ const Kontaktinformasjon: FunctionComponent<Props> = ({
 
             <TextField
                 label={
-                    <Skjemalabel påkrevd beskrivelse="For eksempel: leder, NAV-ansatt">
+                    <Skjemalabel påkrevd beskrivelse="For eksempel: leder, Nav-ansatt">
                         Tittel på kontaktperson
                     </Skjemalabel>
                 }

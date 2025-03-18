@@ -63,7 +63,7 @@ const StatusPåForespørselOmDelingAvCv: FunctionComponent<Props> = ({ forespør
                     )}
                     {veilederKanSvare && (
                         <BodyShort>
-                            Kandidaten bruker ikke digitale tjenester fra NAV. Du må ringe og
+                            Kandidaten bruker ikke digitale tjenester fra Nav. Du må ringe og
                             registrere svaret i stillingskortet i Aktivitetsplanen.
                         </BodyShort>
                     )}

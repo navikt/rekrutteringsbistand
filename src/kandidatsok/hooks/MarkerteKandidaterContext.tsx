@@ -30,28 +30,25 @@ export const MarkerteKandidaterProvider = ({
     const onMarkerKandidat = useCallback(
         (kandidatNr: string | string[]) => {
             const sessionData = JSON.parse(sessionStorage.getItem('kandidatsøk-økt') || '{}');
+            const nySet = Array.isArray(kandidatNr)
+                ? new Set(kandidatNr)
+                : new Set(
+                      markerteKandidater.has(kandidatNr)
+                          ? Array.from(markerteKandidater).filter((k) => k !== kandidatNr)
+                          : [...markerteKandidater, kandidatNr]
+                  );
+            setMarkerteKandidater(nySet);
 
-            if (typeof kandidatNr === 'string') {
-                const nySet = new Set(markerteKandidater);
-                if (nySet.has(kandidatNr)) {
-                    nySet.delete(kandidatNr);
-                } else {
-                    nySet.add(kandidatNr);
-                }
-
-                setMarkerteKandidater(nySet);
-
-                if (stillingId) {
-                    const updatedData = {
-                        ...sessionData,
-                        markerteKandidater: {
-                            ...sessionData.markerteKandidater,
-                            [stillingId]: Array.from(nySet),
-                        },
-                    };
-                    sessionStorage.setItem('kandidatsøk-økt', JSON.stringify(updatedData));
-                    kandidatSøkØkt?.setØkt(updatedData);
-                }
+            if (stillingId) {
+                const updatedData = {
+                    ...sessionData,
+                    markerteKandidater: {
+                        ...sessionData.markerteKandidater,
+                        [stillingId]: Array.from(nySet),
+                    },
+                };
+                sessionStorage.setItem('kandidatsøk-økt', JSON.stringify(updatedData));
+                kandidatSøkØkt?.setØkt(updatedData);
             }
         },
         [stillingId, kandidatSøkØkt, markerteKandidater]
@@ -85,7 +82,7 @@ export const MarkerteKandidaterProvider = ({
 export const useMarkerteKandidaterØkt = () => {
     const context = useContext(MarkerteKandidaterContext);
     if (!context) {
-        throw new Error('useMarkerteKandidater must be used within MarkerteKandidaterProvider');
+        throw new Error('useMarkerteKandidaterØkt must be used within MarkerteKandidaterProvider');
     }
     return context;
 };
