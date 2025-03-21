@@ -35,6 +35,7 @@ import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
 import SideHeader from './side-header/SideHeader';
 import SmsFeilAlertStripe from './smsFeilAlertStripe/SmsFeilAlertStripe';
 import TomListe from './tom-liste/TomListe';
+import OrganisasjonsnummerAlert from './OrganisasjonsnummerAlert';
 
 type Props = {
     kandidatliste: Kandidatlistetype;
@@ -47,6 +48,7 @@ type Props = {
     onSendSmsClick: any;
     onToggleArkivert: any;
     skjulBanner?: boolean;
+    organisasjonsnummerFraStilling?: string | null;
 };
 
 const Kandidatliste: FunctionComponent<Props> = ({
@@ -60,6 +62,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
     onToggleMarkert,
     onToggleArkivert,
     skjulBanner,
+    organisasjonsnummerFraStilling,
 }) => {
     useMaskerFødselsnumre();
     useHentForespørslerOmDelingAvCv(kandidatliste.stillingId);
@@ -163,7 +166,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
 
     const kandidatlistenErÅpen = kandidatliste.status === Kandidatlistestatus.Åpen;
     const kanArkivereKandidater = !filter.visArkiverte && kandidatlistenErÅpen;
-
     return (
         <div className={css.innhold}>
             <SideHeader kandidatliste={kandidatliste} skjulBanner={skjulBanner} />
@@ -185,6 +187,10 @@ const Kandidatliste: FunctionComponent<Props> = ({
                                         kandidatliste={kandidatliste}
                                     />
                                 )}
+                            {kandidatliste.organisasjonReferanse &&
+                                organisasjonsnummerFraStilling &&
+                                kandidatliste.organisasjonReferanse !==
+                                    organisasjonsnummerFraStilling && <OrganisasjonsnummerAlert />}
                             <KnappeRad
                                 kandidatliste={kandidatliste}
                                 onSendSmsClick={onSendSmsClick}
