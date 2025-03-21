@@ -32,3 +32,7 @@
 .knapper > *:not(:last-child) {
     margin-right: 1rem;
 }
+
+.alertWrapper {
+    max-width: 40rem;
+}
