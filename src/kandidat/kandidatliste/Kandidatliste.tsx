@@ -166,6 +166,12 @@ const Kandidatliste: FunctionComponent<Props> = ({
 
     const kandidatlistenErÅpen = kandidatliste.status === Kandidatlistestatus.Åpen;
     const kanArkivereKandidater = !filter.visArkiverte && kandidatlistenErÅpen;
+
+    const orgnummerDivergererMellomStillingOgKandidat: boolean =
+        kandidatliste &&
+        kandidatliste.organisasjonReferanse != null &&
+        organisasjonsnummerFraStilling != null &&
+        kandidatliste.organisasjonReferanse !== organisasjonsnummerFraStilling;
     return (
         <div className={css.innhold}>
             <SideHeader kandidatliste={kandidatliste} skjulBanner={skjulBanner} />
@@ -187,10 +193,9 @@ const Kandidatliste: FunctionComponent<Props> = ({
                                         kandidatliste={kandidatliste}
                                     />
                                 )}
-                            {kandidatliste.organisasjonReferanse &&
-                                organisasjonsnummerFraStilling &&
-                                kandidatliste.organisasjonReferanse !==
-                                    organisasjonsnummerFraStilling && <OrganisasjonsnummerAlert />}
+                            {orgnummerDivergererMellomStillingOgKandidat && (
+                                <OrganisasjonsnummerAlert />
+                            )}
                             <KnappeRad
                                 kandidatliste={kandidatliste}
                                 onSendSmsClick={onSendSmsClick}
@@ -266,7 +271,14 @@ const Kandidatliste: FunctionComponent<Props> = ({
                     </div>
                 </>
             ) : (
-                <TomListe kandidatlistenErLukket={!kandidatlistenErÅpen}></TomListe>
+                <>
+                    <TomListe
+                        kandidatlistenErLukket={!kandidatlistenErÅpen}
+                        orgnummerDivergererMellomStillingOgKandidat={
+                            orgnummerDivergererMellomStillingOgKandidat
+                        }
+                    ></TomListe>
+                </>
             )}
         </div>
     );
