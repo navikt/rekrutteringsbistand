@@ -18,7 +18,7 @@ Følgende kommando starter appen i et utviklingsmiljø. Alle API-kall er mocket 
 
 npm run start
 
-``` 
+```
 
 ### For typing:
 
