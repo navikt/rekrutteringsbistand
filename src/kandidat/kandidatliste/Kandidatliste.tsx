@@ -173,24 +173,6 @@ const Kandidatliste: FunctionComponent<Props> = ({
         organisasjonsnummerFraStilling != null &&
         kandidatliste.organisasjonReferanse !== organisasjonsnummerFraStilling;
 
-    console.log(
-        'orgnummerDivergererMellomStillingOgKandidat',
-        orgnummerDivergererMellomStillingOgKandidat,
-        'kandidatliste',
-        kandidatliste,
-        'kandidatliste.organisasjonReferanse',
-        kandidatliste.organisasjonReferanse,
-        'organisasjonsnummerFraStilling',
-        organisasjonsnummerFraStilling,
-        'test1',
-        kandidatliste.organisasjonReferanse !== organisasjonsnummerFraStilling,
-        'test2',
-        kandidatliste.organisasjonReferanse + '-' !== organisasjonsnummerFraStilling + '-',
-        'test3',
-        '-' + kandidatliste.organisasjonReferanse + '-',
-        'test4',
-        '-' + organisasjonsnummerFraStilling + '-'
-    );
     return (
         <div className={css.innhold}>
             <SideHeader kandidatliste={kandidatliste} skjulBanner={skjulBanner} />
