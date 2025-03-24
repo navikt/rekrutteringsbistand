@@ -35,6 +35,7 @@ import { Kandidatlistefilter } from './reducer/kandidatlisteReducer';
 import SideHeader from './side-header/SideHeader';
 import SmsFeilAlertStripe from './smsFeilAlertStripe/SmsFeilAlertStripe';
 import TomListe from './tom-liste/TomListe';
+import OrganisasjonsnummerAlert from './OrganisasjonsnummerAlert';
 
 type Props = {
     kandidatliste: Kandidatlistetype;
@@ -47,6 +48,7 @@ type Props = {
     onSendSmsClick: any;
     onToggleArkivert: any;
     skjulBanner?: boolean;
+    organisasjonsnummerFraStilling?: string | null;
 };
 
 const Kandidatliste: FunctionComponent<Props> = ({
@@ -60,6 +62,7 @@ const Kandidatliste: FunctionComponent<Props> = ({
     onToggleMarkert,
     onToggleArkivert,
     skjulBanner,
+    organisasjonsnummerFraStilling,
 }) => {
     useMaskerFødselsnumre();
     useHentForespørslerOmDelingAvCv(kandidatliste.stillingId);
@@ -164,6 +167,12 @@ const Kandidatliste: FunctionComponent<Props> = ({
     const kandidatlistenErÅpen = kandidatliste.status === Kandidatlistestatus.Åpen;
     const kanArkivereKandidater = !filter.visArkiverte && kandidatlistenErÅpen;
 
+    const orgnummerDivergererMellomStillingOgKandidat: boolean =
+        kandidatliste &&
+        kandidatliste.organisasjonReferanse != null &&
+        organisasjonsnummerFraStilling != null &&
+        kandidatliste.organisasjonReferanse !== organisasjonsnummerFraStilling;
+
     return (
         <div className={css.innhold}>
             <SideHeader kandidatliste={kandidatliste} skjulBanner={skjulBanner} />
@@ -185,6 +194,9 @@ const Kandidatliste: FunctionComponent<Props> = ({
                                         kandidatliste={kandidatliste}
                                     />
                                 )}
+                            {orgnummerDivergererMellomStillingOgKandidat && (
+                                <OrganisasjonsnummerAlert />
+                            )}
                             <KnappeRad
                                 kandidatliste={kandidatliste}
                                 onSendSmsClick={onSendSmsClick}
@@ -260,7 +272,12 @@ const Kandidatliste: FunctionComponent<Props> = ({
                     </div>
                 </>
             ) : (
-                <TomListe kandidatlistenErLukket={!kandidatlistenErÅpen}></TomListe>
+                <TomListe
+                    kandidatlistenErLukket={!kandidatlistenErÅpen}
+                    orgnummerDivergererMellomStillingOgKandidat={
+                        orgnummerDivergererMellomStillingOgKandidat
+                    }
+                ></TomListe>
             )}
         </div>
     );

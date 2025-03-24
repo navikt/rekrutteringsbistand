@@ -207,6 +207,7 @@ class LegacyKandidatlisteOgModaler extends React.Component<Props> {
                     onKandidaterAngreArkivering={this.onKandidaterAngreArkivering}
                     onSendSmsClick={() => this.onToggleSendSmsModal(true)}
                     onToggleArkivert={toggleArkivert}
+                    organisasjonsnummerFraStilling={this.props.stilling?.employer?.orgnr}
                 />
             </div>
         );
