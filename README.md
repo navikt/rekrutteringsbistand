@@ -12,7 +12,7 @@ npm install
 
 ## Utvikling
 
-Følgende kommando starter appen i et utviklingsmiljø. Alle API-kall er mocket med msw.js.
+Følgende kommando starter appen i et utviklingsmiljø. Alle API-kall er mocket med msw.js. 
 
 ```sh
 
