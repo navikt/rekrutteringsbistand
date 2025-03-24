@@ -272,14 +272,12 @@ const Kandidatliste: FunctionComponent<Props> = ({
                     </div>
                 </>
             ) : (
-                <>
-                    <TomListe
-                        kandidatlistenErLukket={!kandidatlistenErÅpen}
-                        orgnummerDivergererMellomStillingOgKandidat={
-                            orgnummerDivergererMellomStillingOgKandidat
-                        }
-                    ></TomListe>
-                </>
+                <TomListe
+                    kandidatlistenErLukket={!kandidatlistenErÅpen}
+                    orgnummerDivergererMellomStillingOgKandidat={
+                        orgnummerDivergererMellomStillingOgKandidat
+                    }
+                ></TomListe>
             )}
         </div>
     );
