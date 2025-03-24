@@ -181,7 +181,15 @@ const Kandidatliste: FunctionComponent<Props> = ({
         'kandidatliste.organisasjonReferanse',
         kandidatliste.organisasjonReferanse,
         'organisasjonsnummerFraStilling',
-        organisasjonsnummerFraStilling
+        organisasjonsnummerFraStilling,
+        'test1',
+        kandidatliste.organisasjonReferanse !== organisasjonsnummerFraStilling,
+        'test2',
+        kandidatliste.organisasjonReferanse + '-' !== organisasjonsnummerFraStilling + '-',
+        'test3',
+        '-' + kandidatliste.organisasjonReferanse + '-',
+        'test4',
+        '-' + organisasjonsnummerFraStilling + '-'
     );
     return (
         <div className={css.innhold}>
