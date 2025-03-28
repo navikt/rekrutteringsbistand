@@ -15,10 +15,8 @@ const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr }) => {
 
     if (error?.message === '403') {
         return (
-            <Alert variant="warning" style={{ marginTop: '1rem' }}>
-                <strong>Ingen tilgang</strong>
-                <br />
-                Du har ikke tilgang til å se denne informasjonen om kandidaten
+            <Alert variant="error" style={{ marginTop: '1rem' }}>
+                Tilgangen ble avvist fordi brukeren har adressebeskyttelse
             </Alert>
         );
     }
