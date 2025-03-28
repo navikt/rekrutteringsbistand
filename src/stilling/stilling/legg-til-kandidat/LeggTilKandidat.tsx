@@ -31,7 +31,9 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     const [visSynlighetsEvaluering, setVisSynlighetsEvaluering] = useState<boolean>(false);
     const [fnr, setFnr] = useState<string | null>(null);
     const [registrerFormidling, setRegistrerFormidling] = useState<boolean>(false);
-    const { navn: kandidatnavn, error } = useHentKandidatnavn({ fodselsnummer: fnr });
+    const { navn: kandidatnavn, error: kandidatnavnError } = useHentKandidatnavn({
+        fodselsnummer: fnr,
+    });
     const { arenaKandidatnr } = useHentArenaKandidatnr({ fodselsnummer: fnr });
 
     const tilbakestill = () => {
@@ -83,6 +85,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                         }}
                     />
                     {fnr && !registrerFormidling && <KandidatNavn fnr={fnr} />}
+
                     {kandidatnavn &&
                         kandidatnavn.kilde === KandidatKilde.REKRUTTERINGSBISTAND &&
                         (registrerFormidling ? (
@@ -112,7 +115,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                         ))}
                     {kandidatnavn && kandidatnavn.kilde === KandidatKilde.PDL && (
                         <>
-                            {error?.message === '403' ? (
+                            {kandidatnavnError?.message === '403' ? (
                                 <Alert variant="warning" style={{ marginTop: '1.5rem' }}>
                                     <Heading size="medium">Ingen tilgang</Heading>
                                     <p>
@@ -120,7 +123,17 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                         kandidaten
                                     </p>
                                 </Alert>
-                            ) : error?.message === '404' ? (
+                            ) : registrerFormidling ? (
+                                <LeggTilFormidling
+                                    kilde={KandidatKilde.PDL}
+                                    handleBekreft={handleBekreft}
+                                    kandidatSøkResultat={kandidatnavn}
+                                    fnr={fnr}
+                                    stillingsId={stillingsId}
+                                    onClose={onClose}
+                                    kandidatlisteId={kandidatlisteId}
+                                />
+                            ) : (
                                 <div style={{ marginTop: '1.5rem' }}>
                                     <Alert variant="warning">
                                         Kandidaten er ikke synlig i Rekrutteringsbistand
@@ -174,7 +187,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                 </li>
                                                 <li>
                                                     Personbruker er deltager i kommunalt
-                                                    kvalifiseringsprogram (KVP).
+                                                    kvalifiseringsprogram (KVP)
                                                 </li>
                                             </ol>
                                             <Button
@@ -186,6 +199,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                         </Alert>
                                     )}
                                     <br />
+
                                     {!erJobbmesse && erEier && (
                                         <Button
                                             onClick={() => setRegistrerFormidling(true)}
@@ -196,16 +210,6 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                     )}
                                     <Knapper leggTilDisabled onAvbrytClick={onClose} />
                                 </div>
-                            ) : (
-                                <LeggTilFormidling
-                                    kilde={KandidatKilde.PDL}
-                                    handleBekreft={handleBekreft}
-                                    kandidatSøkResultat={kandidatnavn}
-                                    fnr={fnr}
-                                    stillingsId={stillingsId}
-                                    onClose={onClose}
-                                    kandidatlisteId={kandidatlisteId}
-                                />
                             )}
                         </>
                     )}
