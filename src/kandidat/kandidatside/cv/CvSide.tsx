@@ -29,9 +29,9 @@ const CvSide: FunctionComponent = () => {
         return (
             <div className={css.side}>
                 <div className={css.wrapper}>
-                    <Alert variant="warning">
+                    <Alert variant="error">
                         <Heading size="medium">Ingen tilgang</Heading>
-                        <p>Du har ikke tilgang til å se denne informasjonen om kandidaten</p>
+                        <p>Tilgangen ble avvist fordi brukeren har adressebeskyttelse</p>
                     </Alert>
                 </div>
             </div>
