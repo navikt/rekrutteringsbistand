@@ -116,12 +116,8 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                     {kandidatnavn && kandidatnavn.kilde === KandidatKilde.PDL && (
                         <>
                             {kandidatnavnError?.message === '403' ? (
-                                <Alert variant="warning" style={{ marginTop: '1.5rem' }}>
-                                    <Heading size="medium">Ingen tilgang</Heading>
-                                    <p>
-                                        Du har ikke tilgang til å se denne informasjonen om
-                                        kandidaten
-                                    </p>
+                                <Alert variant="error" style={{ marginTop: '1.5rem' }}>
+                                    Tilgangen ble avvist fordi brukeren har adressebeskyttelse
                                 </Alert>
                             ) : registrerFormidling ? (
                                 <LeggTilFormidling
