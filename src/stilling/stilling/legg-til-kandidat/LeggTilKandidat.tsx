@@ -1,4 +1,4 @@
-import { Alert, Button, Modal } from '@navikt/ds-react';
+import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 import { useHentArenaKandidatnr } from '../../../api/kandidat-søk-api/hentArenaKandidatnr';
 import { KandidatKilde, useHentKandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
@@ -31,7 +31,9 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
     const [visSynlighetsEvaluering, setVisSynlighetsEvaluering] = useState<boolean>(false);
     const [fnr, setFnr] = useState<string | null>(null);
     const [registrerFormidling, setRegistrerFormidling] = useState<boolean>(false);
-    const { navn: kandidatnavn } = useHentKandidatnavn({ fodselsnummer: fnr });
+    const { navn: kandidatnavn, error: kandidatnavnError } = useHentKandidatnavn({
+        fodselsnummer: fnr,
+    });
     const { arenaKandidatnr } = useHentArenaKandidatnr({ fodselsnummer: fnr });
 
     const tilbakestill = () => {
@@ -113,7 +115,11 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                         ))}
                     {kandidatnavn && kandidatnavn.kilde === KandidatKilde.PDL && (
                         <>
-                            {registrerFormidling ? (
+                            {kandidatnavnError?.message === '403' ? (
+                                <Alert variant="error" style={{ marginTop: '1.5rem' }}>
+                                    Tilgangen ble avvist fordi brukeren har adressebeskyttelse
+                                </Alert>
+                            ) : registrerFormidling ? (
                                 <LeggTilFormidling
                                     kilde={KandidatKilde.PDL}
                                     handleBekreft={handleBekreft}

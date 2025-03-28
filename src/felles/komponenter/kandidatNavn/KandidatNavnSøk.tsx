@@ -7,10 +7,18 @@ export interface IKandidatNavn {
 }
 
 const KandidatNavn: React.FC<IKandidatNavn> = ({ fnr }) => {
-    const { navn, isLoading } = useHentKandidatnavn({ fodselsnummer: fnr });
+    const { navn, isLoading, error } = useHentKandidatnavn({ fodselsnummer: fnr });
 
     if (isLoading) {
         return <Loader size="medium" />;
+    }
+
+    if (error?.message === '403') {
+        return (
+            <Alert variant="error" style={{ marginTop: '1rem' }}>
+                Tilgangen ble avvist fordi brukeren har adressebeskyttelse
+            </Alert>
+        );
     }
 
     if (navn?.kilde === KandidatKilde.REKRUTTERINGSBISTAND) {
