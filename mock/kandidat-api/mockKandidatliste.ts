@@ -148,7 +148,6 @@ export const opprettMockKandidatlisteForKandidat = (
     slettet: kandidat.arkivert,
     stillingskategori: kandidatliste.stillingskategori,
     opprettetAvIdent: kandidatliste.opprettetAv.ident,
-    erMaskert: true,
 });
 
 export const mockAlleKandidatlister = [

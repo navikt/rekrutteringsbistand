@@ -31,35 +31,20 @@ export const Historikkrad: FunctionComponent<Props> = ({
 }) => {
     let tittel: ReactNode = null;
 
-    const { isError, stilling } = useHentStilling(
-        kandidatliste.erMaskert ? undefined : kandidatliste.stillingId
-    );
+    const { isError, stilling } = useHentStilling(kandidatliste.stillingId);
 
     const stillingsTittel = isError
         ? 'klarte ikke hente tittel ...'
         : stilling?.stilling?.title ?? 'laster ...';
 
-    const listeTittel = kandidatliste.erMaskert
-        ? kandidatliste.tittel
-        : kandidatliste.stillingId
-          ? stillingsTittel
-          : kandidatliste.tittel;
+    const listeTittel = kandidatliste.stillingId ? stillingsTittel : kandidatliste.tittel;
 
     if (kandidatliste.slettet) {
         tittel = (
             <>
                 <BodyShort as="span">{listeTittel} </BodyShort>
-                <Detail as="span" className={css.slettetEllerMaskert}>
+                <Detail as="span" className={css.slettet}>
                     (slettet)
-                </Detail>
-            </>
-        );
-    } else if (kandidatliste.erMaskert) {
-        tittel = (
-            <>
-                <BodyShort as="span">{listeTittel} </BodyShort>
-                <Detail as="span" className={css.slettetEllerMaskert}>
-                    (ingen tilgang)
                 </Detail>
             </>
         );
@@ -71,7 +56,7 @@ export const Historikkrad: FunctionComponent<Props> = ({
         tittel = <BodyShort as="span">{listeTittel} </BodyShort>;
     }
 
-    const skalViseLenkeTilStilling = !(kandidatliste.slettet || kandidatliste.erMaskert);
+    const skalViseLenkeTilStilling = !kandidatliste.slettet;
 
     return (
         <Table.Row shadeOnHover={false} selected={aktiv} key={kandidatliste.uuid}>
