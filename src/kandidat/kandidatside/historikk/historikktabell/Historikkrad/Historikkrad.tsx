@@ -39,22 +39,16 @@ export const Historikkrad: FunctionComponent<Props> = ({
 
     const listeTittel = kandidatliste.stillingId ? stillingsTittel : kandidatliste.tittel;
 
-    if (kandidatliste.slettet) {
-        tittel = (
-            <>
-                <BodyShort as="span">{listeTittel} </BodyShort>
-                <Detail as="span" className={css.slettet}>
-                    (slettet)
-                </Detail>
-            </>
-        );
-    } else if (kandidatliste.stillingId) {
-        tittel = kandidatliste?.stillingId && (
-            <Lenke to={lenkeTilKandidatliste(kandidatliste?.stillingId)}>{listeTittel}</Lenke>
-        );
-    } else {
-        tittel = <BodyShort as="span">{listeTittel} </BodyShort>;
-    }
+    tittel = kandidatliste.slettet ? (
+        <>
+            <BodyShort as="span">{listeTittel} </BodyShort>
+            <Detail as="span" className={css.slettet}>
+                (slettet)
+            </Detail>
+        </>
+    ) : (
+        <BodyShort as="span">{listeTittel} </BodyShort>
+    );
 
     const skalViseLenkeTilStilling = !kandidatliste.slettet;
 
