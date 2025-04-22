@@ -106,8 +106,8 @@ const kriterieTilForklaring = (kriterie: Synlighetskriterie) => {
         case KravTilVeileder.ErIkkeFritattKandidatsøk:
             return 'Personbruker har personforholdet «Fritatt for kandidatsøk» i Arena.';
         case KravTilKandidaten.ErUnderOppfølging:
-        case KravTilVeileder.HarRiktigFormidlingsgruppe:
-            return 'Personbruker må ha formidlingsgruppe ARBS (Arena-kode som betyr “arbeidssøker”).';
+        case KravTilVeileder.ErArbeidssøker:
+            return 'Personbruker må være i Navs Arbeidssøkerregister.';
         case KriterieUtenforNoensKontroll.ErIkkeDød:
             return 'Er død.';
     }
