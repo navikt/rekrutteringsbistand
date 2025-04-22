@@ -13,7 +13,7 @@ export enum KravTilKandidaten {
 
 export enum KravTilVeileder {
     ErIkkeFritattKandidatsøk = 'erIkkeFritattKandidatsøk',
-    HarRiktigFormidlingsgruppe = 'harRiktigFormidlingsgruppe',
+    ErArbeidssøker = 'erArbeidssøker',
 }
 
 export type Synlighetskriterie = KriterieUtenforNoensKontroll | KravTilKandidaten | KravTilVeileder;

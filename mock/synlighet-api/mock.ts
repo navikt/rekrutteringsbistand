@@ -13,7 +13,7 @@ const mockSynlighetsevaluering: Synlighetsevaluering = {
     erIkkeSperretAnsatt: true,
     erUnderOppfoelging: false,
     harJobbprofil: false,
-    harRiktigFormidlingsgruppe: true,
+    erArbeidssøker: true,
     harSettHjemmel: false,
     maaIkkeBehandleTidligereCv: true,
 };

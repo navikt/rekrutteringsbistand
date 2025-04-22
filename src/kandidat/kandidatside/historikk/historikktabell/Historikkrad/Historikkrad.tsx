@@ -9,7 +9,6 @@ import { KandidatlisteForKandidat } from 'felles/domene/kandidatliste/Kandidatli
 import { Sms } from '../../../../../api/kandidatvarsel-api/kandidatvarsel';
 import useHentStilling from '../../../../../felles/hooks/useStilling';
 import { lenkeTilStilling } from '../../../../../felles/lenker';
-import { lenkeTilKandidatliste } from '../../../../app/paths';
 import Hendelsesetikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/Hendelsesetikett';
 import StatusEtikett from '../../../../kandidatliste/kandidatrad/status-og-hendelser/etiketter/StatusEtikett';
 import { ForespørselOmDelingAvCv } from '../../../../kandidatliste/knappe-rad/forespørsel-om-deling-av-cv/Forespørsel';

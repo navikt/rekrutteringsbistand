@@ -173,8 +173,8 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                     kandidatsøk» i Arena.
                                                 </li>
                                                 <li>
-                                                    Personbruker må ha formidlingsgruppe ARBS
-                                                    (Arena-kode som betyr “arbeidssøker”).
+                                                    Personbruker må være i Navs
+                                                    Arbeidssøkerregister.
                                                 </li>
                                                 <li>Personbruker har status "Egen ansatt".</li>
                                                 <li>
