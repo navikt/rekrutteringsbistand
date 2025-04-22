@@ -5,6 +5,31 @@ const tilDato = (dag: number, måned: number, år: number, timer = 0, minutter =
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(22, 4, 2025),
+        tittel: 'Rekrutteringsbistand bruker nå Arbeidssøkerregisteret.',
+        innhold: (
+            <>
+                <p>
+                    Det er nå et nytt krav for å være synlig med CV i kandidatsøket i
+                    Rekrutteringsbistand. Det nye kravet er at person må opptre i Navs
+                    Arbeidssøkerregister. Samtidig opphører krav om at personen må ha Arena-kode
+                    ARBS (står for «arbeidssøker»). Dette er ikke lenger noe vi tar hensyn til. For
+                    alle reglene som må være oppfylt for å kunne ha synlig CV, se oppdatert
+                    informasjon på Navet:
+                </p>
+                <p>
+                    <a
+                        target="_blank"
+                        href="https://navno.sharepoint.com/:u:/r/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Hvorfor-er-ikke-personen-synlig-i-Rekr.aspx?csf=1&web=1&e=qqMnTh"
+                        rel="noopener noreferrer"
+                    >
+                        Regler som styrer synlighet for CV i Rekrutteringsbistand
+                    </a>
+                </p>
+            </>
+        ),
+    },
+    {
         dato: tilDato(6, 2, 2025),
         tittel: 'Personer som ikke er arbeidssøkere er tatt ut av kandidatsøket',
         innhold: (
@@ -33,10 +58,10 @@ const nyhetssaker: Nyhet[] = [
             <>
                 <p>Vi har byttet ut STYRK i stillingsregistreringen.</p>
                 <p>
-                    Vi har byttet ut STYRK i stillingsregistreringen til en bedre løsning som lar
-                    deg velge mer detaljerte og treffsikre stillingstyper. Valgt yrkestittel vil bli
-                    tittel på stillingen. Yrkestittel setter du i feltet med overskriften
-                    «Yrkestittel som vises på stillingen».
+                    Vi har erstattet yrkeskodeverket STYRK med et mer moderne i
+                    stillingsregistreringen, som er Janzz yrkesontologi. Det nye har flere tusen
+                    flere yrker å velge i sammenlignet med STYRK. Det nye oppdateres jevnlig med
+                    endringer som skjer i arbeidsmarkedet.
                 </p>
             </>
         ),
