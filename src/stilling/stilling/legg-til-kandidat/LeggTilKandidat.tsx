@@ -1,4 +1,4 @@
-import { Alert, Button, Heading, Modal } from '@navikt/ds-react';
+import { Alert, Button, Modal } from '@navikt/ds-react';
 import { FunctionComponent, useState } from 'react';
 import { useHentArenaKandidatnr } from '../../../api/kandidat-søk-api/hentArenaKandidatnr';
 import { KandidatKilde, useHentKandidatnavn } from '../../../api/kandidat-søk-api/hentKandidatnavn';
