@@ -1,12 +1,12 @@
-import React, { FunctionComponent, useState, useRef } from 'react';
-import css from './Janzz.module.css';
-import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
-import { useDispatch, useSelector } from 'react-redux';
-import { State } from '../../../../redux/store';
 import { UNSAFE_Combobox as UnsafeCombobox } from '@navikt/ds-react';
-import capitalizeEmployerName from '../../endre-arbeidsgiver/capitalizeEmployerName';
+import React, { FunctionComponent, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHentJanzzYrker } from '../../../../../api/stillings-api/hentJanzzyrker';
+import { State } from '../../../../redux/store';
+import { SET_EMPLOYMENT_JOBTITLE, SET_JANZZ } from '../../../adDataReducer';
+import capitalizeEmployerName from '../../endre-arbeidsgiver/capitalizeEmployerName';
 import Skjemalabel from '../../skjemaetikett/Skjemalabel';
+import css from './Janzz.module.css';
 
 type Props = {
     tittel: string;
@@ -41,6 +41,15 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
         }
     };
 
+    interface KategoriType {
+        id: number | null;
+        code: string | null;
+        categoryType: string | null;
+        name: string | null;
+        description: string | null;
+        parentId: string | null;
+    }
+
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
         if (isSelected) {
             const found = suggestions?.find(
@@ -48,7 +57,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
             );
             if (found) {
                 dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
-                const kategori = [
+                const kategori: KategoriType[] = [
                     {
                         id: found.konseptId,
                         code: found.konseptId.toString(),
@@ -58,6 +67,28 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                         parentId: null,
                     },
                 ];
+
+                if (found?.esco) {
+                    kategori.push({
+                        id: null,
+                        code: found?.esco ?? null,
+                        categoryType: 'ESCO',
+                        name: found?.escoLabel ?? null,
+                        description: null,
+                        parentId: null,
+                    });
+                }
+                if (found?.styrk08) {
+                    kategori.push({
+                        id: null,
+                        code: found?.styrk08 ?? null,
+                        categoryType: 'STYRK08',
+                        name: found?.styrk08Label ?? null,
+                        description: null,
+                        parentId: null,
+                    });
+                }
+
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
                 setHasValidSelection(true);
