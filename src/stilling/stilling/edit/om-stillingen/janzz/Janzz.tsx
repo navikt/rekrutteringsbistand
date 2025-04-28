@@ -57,23 +57,29 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                         description: null,
                         parentId: null,
                     },
-                    {
+                ];
+
+                if(found?.esco) {
+                    kategori.push({
                         id: null,
                         code: found?.esco ?? null,
                         categoryType: 'ESCO',
                         name: found?.escoLabel ?? null,
                         description: null,
                         parentId: null,
-                    },
-                    {
+                    });
+                }
+                if(found?.styrk08) {
+                    kategori.push({
                         id: null,
                         code: found?.styrk08 ?? null,
                         categoryType: 'STYRK08',
                         name: found?.styrk08Label ?? null,
                         description: null,
                         parentId: null,
-                    },
-                ];
+                    });
+                }
+
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
                 setHasValidSelection(true);
