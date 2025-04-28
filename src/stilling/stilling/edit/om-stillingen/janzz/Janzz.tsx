@@ -41,6 +41,15 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
         }
     };
 
+    interface KategoriType {
+        id: number | null;
+        code: string | null;
+        categoryType: string | null;
+        name: string | null;
+        description: string | null;
+        parentId: string | null;
+    }
+
     const onToggleSelected = (option: string, isSelected: boolean, isCustomOption: boolean) => {
         if (isSelected) {
             const found = suggestions?.find(
@@ -48,7 +57,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
             );
             if (found) {
                 dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
-                const kategori = [
+                const kategori: KategoriType[] = [
                     {
                         id: found.konseptId,
                         code: found.konseptId.toString(),
@@ -59,7 +68,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                     },
                 ];
 
-                if(found?.esco) {
+                if (found?.esco) {
                     kategori.push({
                         id: null,
                         code: found?.esco ?? null,
@@ -69,7 +78,7 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
                         parentId: null,
                     });
                 }
-                if(found?.styrk08) {
+                if (found?.styrk08) {
                     kategori.push({
                         id: null,
                         code: found?.styrk08 ?? null,
