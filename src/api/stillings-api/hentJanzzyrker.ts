@@ -1,8 +1,8 @@
-import useSWR from 'swr';
-import { getAPIwithSchema } from '../fetcher';
-import { z } from 'zod';
 import { api } from 'felles/api';
+import useSWR from 'swr';
 import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
+import { getAPIwithSchema } from '../fetcher';
 
 export const hentJanzzYrkerEndepunkt = `${api.pamOntologi}/rest/typeahead/stilling`;
 
@@ -10,6 +10,7 @@ export const janzzStillingSchema = z.object({
     label: z.string(),
     konseptId: z.number(),
     styrk08: z.any().optional(),
+    styrk08Label: z.any().optional(),
     esco: z.any().optional(),
     escoLabel: z.any().optional(),
     undertype: z.any().optional(),
