@@ -49,32 +49,30 @@ const Janzz: FunctionComponent<Props> = ({ tittel }) => {
             if (found) {
                 dispatch({ type: SET_EMPLOYMENT_JOBTITLE, jobtitle: found.label });
                 const kategori = [
-                    [
-                        {
-                            id: found.konseptId,
-                            code: found.konseptId.toString(),
-                            categoryType: 'JANZZ',
-                            name: found.label,
-                            description: null,
-                            parentId: null,
-                        },
-                        {
-                            id: null,
-                            code: found?.esco ?? null,
-                            categoryType: 'ESCO',
-                            name: found?.escoLabel ?? null,
-                            description: null,
-                            parentId: null,
-                        },
-                        {
-                            id: null,
-                            code: found?.styrk08 ?? null,
-                            categoryType: 'STYRK08',
-                            name: found?.styrk08Label ?? null,
-                            description: null,
-                            parentId: null,
-                        },
-                    ],
+                    {
+                        id: found.konseptId,
+                        code: found.konseptId.toString(),
+                        categoryType: 'JANZZ',
+                        name: found.label,
+                        description: null,
+                        parentId: null,
+                    },
+                    {
+                        id: null,
+                        code: found?.esco ?? null,
+                        categoryType: 'ESCO',
+                        name: found?.escoLabel ?? null,
+                        description: null,
+                        parentId: null,
+                    },
+                    {
+                        id: null,
+                        code: found?.styrk08 ?? null,
+                        categoryType: 'STYRK08',
+                        name: found?.styrk08Label ?? null,
+                        description: null,
+                        parentId: null,
+                    },
                 ];
                 dispatch({ type: SET_JANZZ, kategori });
                 setInput(capitalizeEmployerName(found.label) || '');
