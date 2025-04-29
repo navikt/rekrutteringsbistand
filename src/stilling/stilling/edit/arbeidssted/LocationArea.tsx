@@ -57,10 +57,6 @@ class LocationArea extends React.Component<Props> {
         const countyForMunicipal = municipalsCountiesCache.find(
             (cm: any) => !cm.countyCode && municipal && cm.code === municipal.countyCode
         );
-        console.log('MunicipalCountiesCache', JSON.stringify(municipalsCountiesCache));
-        console.log('County location', JSON.stringify(county));
-        console.log('Municipal location', JSON.stringify(municipal));
-        console.log('countyForMunicipal', JSON.stringify(countyForMunicipal));
 
         if (municipal) {
             addLocationArea({
