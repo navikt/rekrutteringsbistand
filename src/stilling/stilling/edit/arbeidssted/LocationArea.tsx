@@ -48,7 +48,7 @@ class LocationArea extends React.Component<Props> {
             (m: any) => m.countyCode && m.name.toLowerCase() === suggestion.name.toLowerCase()
         );
         const countyForMunicipal = municipalsCounties.find(
-            (cm: any) => municipal.countyCode && municipal.countyCode === cm.code
+            (cm: any) => municipal.countyCode && municipal.countyCode === cm.countyCode
         );
         console.log('Municipal location', JSON.stringify(municipal));
         console.log('countyForMunicipal', JSON.stringify(countyForMunicipal));
