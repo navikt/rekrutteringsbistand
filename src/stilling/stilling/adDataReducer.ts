@@ -410,6 +410,8 @@ const manipulateAdReducer = (state: Stilling, action: any) => {
                         ...state.employer,
                         name: action.employer.name,
                         orgnr: action.employer.orgnr,
+                        parentOrgnr: action.employer.orgnr,
+                        orgform: action.employer.orgform,
                         location: action.employer.location,
                     },
                 };

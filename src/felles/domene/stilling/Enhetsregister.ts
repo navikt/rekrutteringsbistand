@@ -6,4 +6,6 @@ export type Enhetsregistertreff = {
     location?: Geografi;
     name: string;
     orgnr?: string;
+    parentOrgnr?: string;
+    orgform?: string;
 };
