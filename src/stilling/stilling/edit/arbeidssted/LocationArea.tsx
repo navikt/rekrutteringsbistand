@@ -54,9 +54,20 @@ class LocationArea extends React.Component<Props> {
         const municipal = municipalsCounties.find(
             (m: any) => m.countyCode && m.name.toLowerCase() === suggestion.name.toLowerCase()
         );
-        const countyForMunicipal = municipalsCountiesCache.find(
-            (cm: any) => !cm.countyCode && municipal && cm.code === municipal.countyCode
-        );
+        let countyForMunicipal;
+        if (municipal && municipal.name === 'OSLO') {
+            countyForMunicipal = {
+                name: 'OSLO',
+            };
+        } else if (municipal && municipal.name === 'JAN MAYEN') {
+            countyForMunicipal = {
+                name: 'JAN MAYEN',
+            };
+        } else {
+            countyForMunicipal = municipalsCountiesCache.find(
+                (cm: any) => !cm.countyCode && municipal && cm.code === municipal.countyCode
+            );
+        }
 
         if (municipal) {
             addLocationArea({
