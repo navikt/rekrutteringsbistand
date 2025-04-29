@@ -52,10 +52,13 @@ class LocationArea extends React.Component<Props> {
             addLocationArea({
                 municipal: municipal.name,
                 municipalCode: municipal.code,
+                country: 'NORGE',
+                county: municipal.county,
             });
         } else if (county) {
             addLocationArea({
                 county: county.name,
+                country: 'NORGE',
             });
         } else if (country) {
             addLocationArea({
