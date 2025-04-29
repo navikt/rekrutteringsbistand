@@ -28,6 +28,7 @@ type Props = {
     locationList: Geografi[];
     validation: Record<ValidertFelt, string | undefined>;
     validateLocationArea: () => void;
+    municipalsCountiesCache: any;
 };
 
 class LocationArea extends React.Component<Props> {
@@ -36,7 +37,13 @@ class LocationArea extends React.Component<Props> {
     }
 
     onLocationAreaSelect = (suggestion: any) => {
-        const { municipalsCounties, countries, addLocationArea, validateLocationArea } = this.props;
+        const {
+            municipalsCounties,
+            countries,
+            addLocationArea,
+            validateLocationArea,
+            municipalsCountiesCache,
+        } = this.props;
 
         const country = countries.find(
             (c: any) => c.name.toLowerCase() === suggestion.name.toLowerCase()
@@ -47,10 +54,10 @@ class LocationArea extends React.Component<Props> {
         const municipal = municipalsCounties.find(
             (m: any) => m.countyCode && m.name.toLowerCase() === suggestion.name.toLowerCase()
         );
-        const countyForMunicipal = municipalsCounties.find(
+        const countyForMunicipal = municipalsCountiesCache.find(
             (cm: any) => !cm.countyCode && municipal && cm.code === municipal.countyCode
         );
-        console.log('MunicipalCounties', JSON.stringify(municipalsCounties));
+        console.log('MunicipalCountiesCache', JSON.stringify(municipalsCountiesCache));
         console.log('County location', JSON.stringify(county));
         console.log('Municipal location', JSON.stringify(municipal));
         console.log('countyForMunicipal', JSON.stringify(countyForMunicipal));
@@ -208,6 +215,7 @@ const mapStateToProps = (state: State) => ({
     typeaheadValue: state.locationArea.typeaheadValue,
     locationList: state.adData?.locationList,
     validation: state.adValidation.errors,
+    municipalsCountiesCache: state.locationArea.municipalsCountiesCache,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
