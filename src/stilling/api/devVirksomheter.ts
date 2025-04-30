@@ -4,6 +4,8 @@ const devVirksomheter: Enhetsregistertreff[] = [
     {
         orgnr: '312113341',
         name: 'ORDKNAPP BLOMSTRETE TIGER AS',
+        parentOrgnr: '311185268',
+        orgform: 'BEDR',
         location: {
             address: 'Nordre Kvervet',
             postalCode: '1410',

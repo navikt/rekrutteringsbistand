@@ -88,6 +88,8 @@ export const fetchEmployerNameCompletionHits = async (
         ...result.hits.hits.map((employer: any) => ({
             name: employer._source.navn,
             orgnr: employer._source.organisasjonsnummer,
+            parentOrgnr: employer._source.parentOrgnr,
+            orgform: employer._source.orgform,
             location: employer._source.adresse
                 ? {
                       address: employer._source.adresse.adresse,
@@ -125,6 +127,8 @@ export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Enhetsre
             .map((employer: any) => ({
                 name: employer._source.navn,
                 orgnr: employer._source.organisasjonsnummer,
+                parentOrgnr: employer._source.parentOrgnr,
+                orgform: employer._source.orgform,
                 location: employer._source.adresse
                     ? {
                           address: employer._source.adresse.adresse,
