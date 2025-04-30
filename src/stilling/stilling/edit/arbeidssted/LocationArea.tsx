@@ -28,6 +28,7 @@ type Props = {
     locationList: Geografi[];
     validation: Record<ValidertFelt, string | undefined>;
     validateLocationArea: () => void;
+    municipalsCountiesCache: any;
 };
 
 class LocationArea extends React.Component<Props> {
@@ -36,7 +37,13 @@ class LocationArea extends React.Component<Props> {
     }
 
     onLocationAreaSelect = (suggestion: any) => {
-        const { municipalsCounties, countries, addLocationArea, validateLocationArea } = this.props;
+        const {
+            municipalsCounties,
+            countries,
+            addLocationArea,
+            validateLocationArea,
+            municipalsCountiesCache,
+        } = this.props;
 
         const country = countries.find(
             (c: any) => c.name.toLowerCase() === suggestion.name.toLowerCase()
@@ -47,15 +54,32 @@ class LocationArea extends React.Component<Props> {
         const municipal = municipalsCounties.find(
             (m: any) => m.countyCode && m.name.toLowerCase() === suggestion.name.toLowerCase()
         );
+        let countyForMunicipal;
+        if (municipal && municipal.name === 'OSLO') {
+            countyForMunicipal = {
+                name: 'OSLO',
+            };
+        } else if (municipal && municipal.name === 'JAN MAYEN') {
+            countyForMunicipal = {
+                name: 'JAN MAYEN',
+            };
+        } else {
+            countyForMunicipal = municipalsCountiesCache.find(
+                (cm: any) => !cm.countyCode && municipal && cm.code === municipal.countyCode
+            );
+        }
 
         if (municipal) {
             addLocationArea({
                 municipal: municipal.name,
                 municipalCode: municipal.code,
+                country: 'NORGE',
+                county: countyForMunicipal?.name,
             });
         } else if (county) {
             addLocationArea({
                 county: county.name,
+                country: 'NORGE',
             });
         } else if (country) {
             addLocationArea({
@@ -198,6 +222,7 @@ const mapStateToProps = (state: State) => ({
     typeaheadValue: state.locationArea.typeaheadValue,
     locationList: state.adData?.locationList,
     validation: state.adValidation.errors,
+    municipalsCountiesCache: state.locationArea.municipalsCountiesCache,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
