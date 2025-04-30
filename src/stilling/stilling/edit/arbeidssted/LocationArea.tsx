@@ -74,7 +74,7 @@ class LocationArea extends React.Component<Props> {
                 municipal: municipal.name,
                 municipalCode: municipal.code,
                 country: 'NORGE',
-                county: countyForMunicipal.name,
+                county: countyForMunicipal?.name,
             });
         } else if (county) {
             addLocationArea({
