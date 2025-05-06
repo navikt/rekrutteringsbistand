@@ -394,7 +394,9 @@ function* createAd(action: any): Generator<unknown, any, any> {
             createdBy: System.Rekrutteringsbistand,
             updatedBy: System.Rekrutteringsbistand,
             source: Kilde.Intern,
+            medium: Kilde.Intern,
             privacy: Privacy.Intern,
+            businessName: action.arbeidsgiver.name,
             administration: {
                 status: AdminStatus.Pending,
                 reportee: reportee.displayName,
