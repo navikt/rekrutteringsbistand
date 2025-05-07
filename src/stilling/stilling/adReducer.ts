@@ -470,7 +470,7 @@ function* publishAd(): Generator<unknown, any, any> {
     } else {
         yield put({ type: SET_ADMIN_STATUS, status: AdminStatus.Done });
         yield put({ type: SET_AD_STATUS, status: Status.Aktiv });
-        if (state.adData?.firstPublished === null) {
+        if (state.adData?.firstPublished === false || state.adData?.firstPublished === null) {
             yield put({ type: SET_FIRST_PUBLISHED });
         }
         yield put({ type: SHOW_AD_PUBLISHED_MODAL });
