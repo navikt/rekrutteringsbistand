@@ -512,6 +512,9 @@ function* publishAdChanges(): Generator<unknown, any, any> {
     } else {
         yield put({ type: SET_ADMIN_STATUS, status: AdminStatus.Done });
         yield put({ type: SET_AD_STATUS, status: Status.Aktiv });
+        if (state.adData?.firstPublished === false || state.adData?.firstPublished === null) {
+            yield put({ type: SET_FIRST_PUBLISHED });
+        }
         yield saveRekrutteringsbistandStilling();
         state = yield select();
         if (state.adData?.activationOnPublishingDate && state.adData?.status === Status.Inaktiv) {
