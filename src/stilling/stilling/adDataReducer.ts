@@ -654,6 +654,7 @@ function* addLocationPostalCode(action: any): Generator<unknown, any, any> {
                 municipal: location.municipality.name,
                 municipalCode: location.municipality.code,
                 postalCode: location.postalCode,
+                country: 'NORGE',
             },
         });
     } else {
