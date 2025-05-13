@@ -1,6 +1,7 @@
 import { CheckmarkCircleIcon } from '@navikt/aksel-icons';
-import { BodyLong, Button, Heading, HStack, List, VStack } from '@navikt/ds-react';
+import { BodyLong, Button, Heading, HStack, Link, List, VStack } from '@navikt/ds-react';
 import * as React from 'react';
+import { getMiljø, Miljø } from '../felles/miljø';
 import PusserOppIllustrasjon from './pusser-opp.svg';
 // Assuming you have an illustration component or an SVG file
 // import PusserOppIllustrasjon from './PusserOppIllustrasjon'; // Example import
@@ -52,9 +53,17 @@ const PusserOpp: React.FC<PusserOppProps> = ({ children }) => {
                     </List>
                     <BodyLong>Vi håper du vil teste ut og hjelpe oss.</BodyLong>
                     <div>
-                        <Button onClick={handleButtonClick} style={{ marginTop: '1rem' }}>
-                            Prøv nye rekrutteringsbistand
-                        </Button>
+                        <Link
+                            href={
+                                getMiljø() === Miljø.ProdGcp
+                                    ? 'https://rekrutteringsbistand.intern.dev.nav.no/'
+                                    : 'https://rekrutteringsbistand.intern.nav.no/'
+                            }
+                        >
+                            <Button onClick={handleButtonClick} style={{ marginTop: '1rem' }}>
+                                Prøv nye rekrutteringsbistand
+                            </Button>
+                        </Link>
                     </div>
                 </VStack>
                 <div style={{ flexShrink: 0 }}>
