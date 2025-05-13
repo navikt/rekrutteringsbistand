@@ -14,8 +14,7 @@ const Forside = () => {
         <div className={css.forsideWrapper}>
             <ErrorBoundary>
                 <div className={css.forside}>
-                    <PusserOpp />
-                    <Hurtiglenker />
+                    <Hurtiglenker /> <PusserOpp />
                     {valgtNavKontor ? (
                         <Statistikk
                             navKontor={valgtNavKontor.navKontor}
