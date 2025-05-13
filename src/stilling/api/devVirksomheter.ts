@@ -11,6 +11,7 @@ const devVirksomheter: Enhetsregistertreff[] = [
             postalCode: '1410',
             city: 'KOLBOTN',
             municipal: 'NORDRE FOLLO',
+            municipalCode: '3207',
             country: 'Norge',
             county: null,
             latitude: null,
