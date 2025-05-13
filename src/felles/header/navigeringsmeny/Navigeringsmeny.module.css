@@ -3,6 +3,11 @@
     align-items: center;
     border-bottom: 1px solid var(--a-border-divider);
 }
+.navigeringsmenyHøyre {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
 
 @media print {
     .navigeringsmeny {
