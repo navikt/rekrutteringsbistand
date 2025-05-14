@@ -3,10 +3,14 @@ import { mockArbeidsgiver } from './mockStilling';
 export const mockTreffIEnhetsregistersøk = {
     navn: mockArbeidsgiver.name,
     organisasjonsnummer: mockArbeidsgiver.orgnr,
+    antallAnsatte: mockArbeidsgiver.employees,
     adresse: {
         adresse: mockArbeidsgiver.location.address,
         postnummer: mockArbeidsgiver.location.postalCode,
         poststed: mockArbeidsgiver.location.city,
+        kommunenummer: mockArbeidsgiver.location.municipal,
+        kommune: mockArbeidsgiver.location.municipal,
+        land: mockArbeidsgiver.location.country,
     },
 };
 
