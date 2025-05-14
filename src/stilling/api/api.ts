@@ -90,11 +90,15 @@ export const fetchEmployerNameCompletionHits = async (
             orgnr: employer._source.organisasjonsnummer,
             parentOrgnr: employer._source.parentOrgnr,
             orgform: employer._source.orgform,
+            employees: employer._source.antallAnsatte,
             location: employer._source.adresse
                 ? {
                       address: employer._source.adresse.adresse,
                       postalCode: employer._source.adresse.postnummer,
                       city: employer._source.adresse.poststed,
+                      municipal: employer._source.adresse.kommune,
+                      municipalCode: employer._source.adresse.kommunenummer,
+                      country: employer._source.adresse.land,
                   }
                 : undefined,
         })),
@@ -129,11 +133,15 @@ export const fetchOrgnrSuggestions = async (orgnummer: string): Promise<Enhetsre
                 orgnr: employer._source.organisasjonsnummer,
                 parentOrgnr: employer._source.parentOrgnr,
                 orgform: employer._source.orgform,
+                employees: employer._source.antallAnsatte,
                 location: employer._source.adresse
                     ? {
                           address: employer._source.adresse.adresse,
                           postalCode: employer._source.adresse.postnummer,
                           city: employer._source.adresse.poststed,
+                          municipal: employer._source.adresse.kommune,
+                          municipalCode: employer._source.adresse.kommunenummer,
+                          country: employer._source.adresse.land,
                       }
                     : undefined,
             }))

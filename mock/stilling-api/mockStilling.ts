@@ -24,6 +24,7 @@ export const mockArbeidsgiver: Arbeidsgiver = {
     publicName: 'TULLEKONTORET AS',
     orgnr: '976434099',
     orgform: 'BEDR',
+    employees: 50,
     location: {
         address: 'Lilleakerveien 37D',
         postalCode: '0284',

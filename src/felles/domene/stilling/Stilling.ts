@@ -106,6 +106,7 @@ export type Arbeidsgiver = {
     orgnr: string | null;
     parentOrgnr: string | null;
     orgform: string;
+    employees: number | null;
     location: Geografi;
 };
 
