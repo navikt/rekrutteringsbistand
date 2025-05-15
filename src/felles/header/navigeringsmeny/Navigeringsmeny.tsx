@@ -1,7 +1,9 @@
+import { SparklesIcon } from '@navikt/aksel-icons';
+import { Button, Link } from '@navikt/ds-react';
 import { FunctionComponent, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
-
 import { ApplikasjonContext } from '../../ApplikasjonContext';
+import { getMiljø, Miljø } from '../../miljø';
 import { Rolle } from '../../tilgangskontroll/Roller';
 import { TilgangskontrollForInnhold } from '../../tilgangskontroll/TilgangskontrollForInnhold';
 import Nyheter from '../nyheter/Nyheter';
@@ -58,7 +60,21 @@ const Navigeringsmeny: FunctionComponent = () => {
                         )
                     )}
                 </nav>
-                <Nyheter />
+                <div className={css.navigeringsmenyHøyre}>
+                    <Nyheter />
+                    <Link
+                        style={{ textDecoration: 'none' }}
+                        href={
+                            getMiljø() === Miljø.ProdGcp
+                                ? 'https://rekrutteringsbistand-frontend.intern.nav.no/'
+                                : 'https://rekrutteringsbistand-frontend.intern.dev.nav.no/'
+                        }
+                    >
+                        <Button icon={<SparklesIcon />} variant="tertiary">
+                            Prøv nye rekrutteringsbistand
+                        </Button>
+                    </Link>
+                </div>
             </div>
         </div>
     );
