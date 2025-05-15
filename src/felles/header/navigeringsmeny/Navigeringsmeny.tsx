@@ -66,8 +66,8 @@ const Navigeringsmeny: FunctionComponent = () => {
                         style={{ textDecoration: 'none' }}
                         href={
                             getMiljø() === Miljø.ProdGcp
-                                ? 'https://rekrutteringsbistand.intern.dev.nav.no/'
-                                : 'https://rekrutteringsbistand.intern.nav.no/'
+                                ? 'https://rekrutteringsbistand-frontend.intern.nav.no/'
+                                : 'https://rekrutteringsbistand-frontend.intern.dev.nav.no/'
                         }
                     >
                         <Button icon={<SparklesIcon />} variant="tertiary">

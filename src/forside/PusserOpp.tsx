@@ -56,8 +56,8 @@ const PusserOpp: React.FC<PusserOppProps> = ({ children }) => {
                         <Link
                             href={
                                 getMiljø() === Miljø.ProdGcp
-                                    ? 'https://rekrutteringsbistand.intern.dev.nav.no/'
-                                    : 'https://rekrutteringsbistand.intern.nav.no/'
+                                    ? 'https://rekrutteringsbistand-frontend.intern.nav.no/'
+                                    : 'https://rekrutteringsbistand-frontend.intern.dev.nav.no/'
                             }
                         >
                             <Button onClick={handleButtonClick} style={{ marginTop: '1rem' }}>
