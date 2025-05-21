@@ -1,10 +1,11 @@
 import { Alert, BodyLong, Button, Modal } from '@navikt/ds-react';
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Enhetsregistertreff } from 'felles/domene/stilling/Enhetsregister';
 import { Stillingskategori } from 'felles/domene/stilling/Stilling';
+import { ApplikasjonContext } from '../../felles/ApplikasjonContext';
 import { State } from '../redux/store';
 import { REDIGERINGSMODUS_QUERY_PARAM } from '../stilling/Stilling';
 import { CREATE_AD } from '../stilling/adReducer';
@@ -19,7 +20,7 @@ type Props = {
 const OpprettNyStilling: FunctionComponent<Props> = ({ onClose }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
     const { hasSavedChanges } = useSelector((state: State) => state.ad);
     const stilling = useSelector((state: State) => state.ad.originalData);
 
@@ -61,6 +62,7 @@ const OpprettNyStilling: FunctionComponent<Props> = ({ onClose }) => {
             type: CREATE_AD,
             kategori: stillingskategori,
             arbeidsgiver: arbeidsgiver,
+            eierNavKontorEnhetId: valgtNavKontor?.navKontor,
         });
     };
 
