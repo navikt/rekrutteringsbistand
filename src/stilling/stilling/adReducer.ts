@@ -14,11 +14,11 @@ import {
     SET_ADMIN_STATUS,
     SET_AD_DATA,
     SET_AD_STATUS,
+    SET_EXPIRATION_DATE,
     SET_FIRST_PUBLISHED,
     SET_NAV_IDENT,
     SET_REPORTEE,
     SET_UPDATED_BY,
-    SET_EXPIRATION_DATE,
 } from './adDataReducer';
 import {
     hasValidationErrors,
@@ -407,7 +407,8 @@ function* createAd(action: any): Generator<unknown, any, any> {
 
         const response: Rekrutteringsbistandstilling = yield postStilling(
             stillingDto as Stilling,
-            action.kategori
+            action.kategori,
+            action.eierNavKontorEnhetId
         );
 
         sendEvent('stilling', 'opprett', {

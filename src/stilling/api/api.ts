@@ -13,13 +13,15 @@ import devVirksomheter from './devVirksomheter';
 
 export const postStilling = async (
     stilling: Partial<Stilling>,
-    kategori: Stillingskategori
+    kategori: Stillingskategori,
+    eierNavKontorEnhetId: string
 ): Promise<Rekrutteringsbistandstilling> => {
     const postUrl = `${api.stilling}/rekrutteringsbistandstilling`;
 
     return await fetchPost(postUrl, {
         stilling,
         kategori,
+        eierNavKontorEnhetId,
     });
 };
 
