@@ -1,97 +1,103 @@
 apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
-    name: rekrutteringsbistand
-    namespace: toi
-    labels:
-        team: toi
+  name: rekrutteringsbistand
+  namespace: toi
+  labels:
+    team: toi
 
 spec:
-    # prettier-ignore
-    image: {{ image }}
-    port: 8080
-    ingresses:
-        - {{ ingress }}
-    liveness:
-        initialDelay: 5
-        path: /internal/isAlive
-    readiness:
-        initialDelay: 5
-        path: /internal/isReady
-    azure:
-        application:
-            enabled: true
-            allowAllUsers: false
-            claims:
-                groups:
-                    - id: {{ adGruppeModiaGenerellTilgang }}
-                    - id: {{ adGruppeModiaOppfolging }}
-                    - id: {{ adGruppeRekrutteringsbistandArbeidsgiverrettet }}
-                    - id: {{ adGruppeRekrutteringsbistandJobbsokerrettet }}
-                    - id: {{ adGruppeRekrutteringsbistandUtvikler }}
-                extra:
-                    - NAVident
-        sidecar:
-            enabled: true
-    openSearch:
-      access: read
-      instance: kandidat
-    secureLogs:
+  # prettier-ignore
+  image: {{ image }}
+  port: 8080
+  ingresses:
+    - {{ ingress }}
+  liveness:
+    initialDelay: 5
+    path: /internal/isAlive
+  readiness:
+    initialDelay: 5
+    path: /internal/isReady
+  azure:
+    application:
       enabled: true
-    accessPolicy:
-      outbound:
-        rules:
-          - application: rekrutteringsbistand-stilling-api
-          - application: rekrutteringsbistand-stillingssok-proxy
-          - application: rekrutteringsbistand-kandidatsok-api
-          - application: rekrutteringsbistand-kandidatvarsel-api
-          - application: toi-synlighetsmotor
-          - application: toi-arbeidsgiver-notifikasjon
-          - application: presenterte-kandidater-api
-          - application: modiacontextholder
-            namespace: personoversikt
-          - application: pam-ontologi
-            namespace: teampam
-        external:
-          - host: {{ statistikkApiHost }}
-          - host: {{ kandidatApiHost }}
-          - host: {{ foresporselOmDelingAvCvApiHost }}
-    env:
-        - name: NODE_EXTRA_CA_CERTS
-          value: /etc/ssl/ca-bundle.pem
+      allowAllUsers: false
+      claims:
+        groups:
+          - id: {{ adGruppeModiaGenerellTilgang }}
+          - id: {{ adGruppeModiaOppfolging }}
+          - id: {{ adGruppeRekrutteringsbistandArbeidsgiverrettet }}
+          - id: {{ adGruppeRekrutteringsbistandJobbsokerrettet }}
+          - id: {{ adGruppeRekrutteringsbistandUtvikler }}
+        extra:
+          - NAVident
+    sidecar:
+      enabled: true
+  openSearch:
+    access: read
+    instance: kandidat
+  secureLogs:
+    enabled: true
+  accessPolicy:
+    outbound:
+      rules:
+        - application: rekrutteringsbistand-stilling-api
+        - application: rekrutteringsbistand-stillingssok-proxy
+        - application: rekrutteringsbistand-kandidatsok-api
+        - application: rekrutteringsbistand-kandidatvarsel-api
+        - application: toi-synlighetsmotor
+        - application: toi-arbeidsgiver-notifikasjon
+        - application: presenterte-kandidater-api
+        - application: modiacontextholder
+          namespace: personoversikt
+        - application: pam-ontologi
+          namespace: teampam
+      external:
+        - host: {{ statistikkApiHost }}
+        - host: {{ kandidatApiHost }}
+        - host: {{ foresporselOmDelingAvCvApiHost }}
+  env:
+    - name: NODE_EXTRA_CA_CERTS
+      value: /etc/ssl/ca-bundle.pem
 
-        - name: AD_GRUPPE_MODIA_GENERELL_TILGANG
-          value: {{ adGruppeModiaGenerellTilgang }}
-        - name: AD_GRUPPE_MODIA_OPPFOLGING
-          value: {{ adGruppeModiaOppfolging }}
-        - name: AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET
-          value: {{ adGruppeRekrutteringsbistandArbeidsgiverrettet }}
-        - name: AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET
-          value: {{ adGruppeRekrutteringsbistandJobbsokerrettet }}
-        - name: AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER
-          value: {{ adGruppeRekrutteringsbistandUtvikler }}
+    - name: AD_GRUPPE_MODIA_GENERELL_TILGANG
+      value: {{ adGruppeModiaGenerellTilgang }}
+    - name: AD_GRUPPE_MODIA_OPPFOLGING
+      value: {{ adGruppeModiaOppfolging }}
+    - name: AD_GRUPPE_REKRUTTERINGSBISTAND_ARBEIDSGIVERRETTET
+      value: {{ adGruppeRekrutteringsbistandArbeidsgiverrettet }}
+    - name: AD_GRUPPE_REKRUTTERINGSBISTAND_JOBBSOKERRETTET
+      value: {{ adGruppeRekrutteringsbistandJobbsokerrettet }}
+    - name: AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER
+      value: {{ adGruppeRekrutteringsbistandUtvikler }}
 
-        - name: STATISTIKK_API_URL
-          value: {{ statistikkApiUrl }}
-        - name: STILLINGSSOK_PROXY_URL
-          value: http://rekrutteringsbistand-stillingssok-proxy
-        - name: STILLING_API_URL
-          value: http://rekrutteringsbistand-stilling-api
-        - name: KANDIDAT_API_URL
-          value: {{ kandidatApiUrl }}
-        - name: KANDIDATSOK_API_URL
-          value: http://rekrutteringsbistand-kandidatsok-api
-        - name: FORESPORSEL_OM_DELING_AV_CV_API
-          value: {{ foresporselOmDelingAvCvApi }}
-        - name: SYNLIGHETSMOTOR_API
-          value: http://toi-synlighetsmotor
-        - name: ARBEIDSGIVER_NOTIFIKASJON_API
-          value: http://toi-arbeidsgiver-notifikasjon
-        - name: PRESENTERTE_KANDIDATER_API
-          value: http://presenterte-kandidater-api
-        - name: MODIA_CONTEXT_HOLDER_API
-          value: http://modiacontextholder.personoversikt
-        - name: KANDIDATVARSEL_API_URL
-          value: http://rekrutteringsbistand-kandidatvarsel-api
-        - name: PAM_ONTOLOGI_URL
-          value: http://pam-ontologi.teampam
+    - name: STATISTIKK_API_URL
+      value: {{ statistikkApiUrl }}
+    - name: STILLINGSSOK_PROXY_URL
+      value: http://rekrutteringsbistand-stillingssok-proxy
+    - name: STILLING_API_URL
+      value: http://rekrutteringsbistand-stilling-api
+    - name: KANDIDAT_API_URL
+      value: {{ kandidatApiUrl }}
+    - name: KANDIDATSOK_API_URL
+      value: http://rekrutteringsbistand-kandidatsok-api
+    - name: FORESPORSEL_OM_DELING_AV_CV_API
+      value: {{ foresporselOmDelingAvCvApi }}
+    - name: SYNLIGHETSMOTOR_API
+      value: http://toi-synlighetsmotor
+    - name: ARBEIDSGIVER_NOTIFIKASJON_API
+      value: http://toi-arbeidsgiver-notifikasjon
+    - name: PRESENTERTE_KANDIDATER_API
+      value: http://presenterte-kandidater-api
+    - name: MODIA_CONTEXT_HOLDER_API
+      value: http://modiacontextholder.personoversikt
+    - name: KANDIDATVARSEL_API_URL
+      value: http://rekrutteringsbistand-kandidatvarsel-api
+    - name: PAM_ONTOLOGI_URL
+      value: http://pam-ontologi.teampam
+  observability:
+    logging:
+      destinations:
+        - id: loki
+        - id: elastic
+      enabled: true
