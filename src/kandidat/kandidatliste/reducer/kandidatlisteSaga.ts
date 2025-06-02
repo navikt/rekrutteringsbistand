@@ -221,7 +221,8 @@ function* toggleArkivert(action: ToggleArkivertAction): Generator<unknown, any, 
         const arkivertKandidat = yield putArkivert(
             action.kandidatlisteId,
             action.kandidatnr,
-            action.arkivert
+            action.arkivert,
+            action.navKontor
         );
 
         yield put<ToggleArkivertSuccessAction>({
@@ -243,7 +244,8 @@ function* angreArkiveringForKandidater(action: AngreArkiveringAction) {
             putArkivertForFlereKandidater,
             action.kandidatlisteId,
             action.kandidatnumre,
-            false
+            false,
+            action.navKontor
         );
 
         const dearkiverteKandidater = kandidatnumre.filter(

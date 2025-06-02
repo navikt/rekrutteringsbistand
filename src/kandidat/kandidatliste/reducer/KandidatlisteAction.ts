@@ -142,6 +142,7 @@ export interface ToggleArkivertAction {
     kandidatlisteId: string;
     kandidatnr: string;
     arkivert: boolean;
+    navKontor: string;
 }
 
 export interface ToggleArkivertSuccessAction {
@@ -157,6 +158,7 @@ export interface AngreArkiveringAction {
     type: KandidatlisteActionType.AngreArkivering;
     kandidatlisteId: string;
     kandidatnumre: string[];
+    navKontor: string;
 }
 
 export interface AngreArkiveringSuccessAction {
