@@ -24,13 +24,23 @@ type OwnProps = {
     kandidatliste: Kandidatlistetype;
     skjulBanner?: boolean;
     stilling?: Stilling;
+    navKontor?: string;
 };
 
 type ConnectedProps = {
     endreStatusKandidat: any;
     fodselsnummer?: string;
-    toggleArkivert: (kandidatlisteId: string, kandidatnr: string, arkivert: boolean) => void;
-    angreArkiveringForKandidater: (kandidatlisteId: string, kandidatnumre: string[]) => void;
+    toggleArkivert: (
+        kandidatlisteId: string,
+        kandidatnr: string,
+        arkivert: boolean,
+        navKontor: string
+    ) => void;
+    angreArkiveringForKandidater: (
+        kandidatlisteId: string,
+        kandidatnumre: string[],
+        navKontor: string
+    ) => void;
     statusArkivering: Nettstatus;
     statusDearkivering: Nettstatus;
     toggleMarkeringAvKandidat: (kandidatnr: string) => void;
@@ -154,7 +164,8 @@ class LegacyKandidatlisteOgModaler extends React.Component<Props> {
 
         this.props.angreArkiveringForKandidater(
             this.props.kandidatliste.kandidatlisteId,
-            markerteKandidater
+            markerteKandidater,
+            this.props.navKontor || ''
         );
     };
 
@@ -231,19 +242,30 @@ const mapDispatchToProps = (dispatch: Dispatch<KandidatlisteAction>) => ({
             kandidatnr,
         });
     },
-    toggleArkivert: (kandidatlisteId: string, kandidatnr: string, arkivert: boolean) => {
+    toggleArkivert: (
+        kandidatlisteId: string,
+        kandidatnr: string,
+        arkivert: boolean,
+        navKontor: string
+    ) => {
         dispatch({
             type: KandidatlisteActionType.ToggleArkivert,
             kandidatlisteId,
             kandidatnr,
             arkivert,
+            navKontor,
         });
     },
-    angreArkiveringForKandidater: (kandidatlisteId: string, kandidatnumre: string[]) => {
+    angreArkiveringForKandidater: (
+        kandidatlisteId: string,
+        kandidatnumre: string[],
+        navKontor: string
+    ) => {
         dispatch({
             type: KandidatlisteActionType.AngreArkivering,
             kandidatlisteId,
             kandidatnumre,
+            navKontor,
         });
     },
     toggleMarkeringAvKandidat: (kandidatnr: string) => {

@@ -125,21 +125,27 @@ export const putFormidlingsutfallForUsynligKandidat = (
         JSON.stringify({ utfall, navKontor })
     );
 
-export const putArkivert = (kandidatlisteId: string, kandidatNr: string, arkivert: boolean) => {
+export const putArkivert = (
+    kandidatlisteId: string,
+    kandidatNr: string,
+    arkivert: boolean,
+    navKontor: string
+) => {
     return putJson(
         `${api.kandidat}/veileder/kandidatlister/${kandidatlisteId}/kandidater/${kandidatNr}/arkivert`,
-        JSON.stringify({ arkivert })
+        JSON.stringify({ arkivert, navKontor })
     );
 };
 
 export const putArkivertForFlereKandidater = (
     kandidatlisteId: string,
     kandidatnumre: string[],
-    arkivert: boolean
+    arkivert: boolean,
+    navKontor: string
 ): Promise<Array<string | null>> => {
     return Promise.all(
         kandidatnumre.map((kandidatNr) =>
-            putArkivert(kandidatlisteId, kandidatNr, arkivert)
+            putArkivert(kandidatlisteId, kandidatNr, arkivert, navKontor)
                 .then((kandidat) => kandidat.kandidatnr)
                 .catch(() => null)
         )

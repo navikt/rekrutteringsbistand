@@ -1,7 +1,7 @@
 import { InformationSquareIcon, TrashIcon } from '@navikt/aksel-icons';
 import { BodyLong, BodyShort, Button, Checkbox, Modal } from '@navikt/ds-react';
 import classNames from 'classnames';
-import { FunctionComponent, useEffect, useRef, useState } from 'react';
+import { FunctionComponent, useContext, useEffect, useRef, useState } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -24,6 +24,7 @@ import MerInfo from './mer-info/MerInfo';
 import SmsStatusPopup from './smsstatus/SmsStatusPopup';
 import StatusOgHendelser from './status-og-hendelser/StatusOgHendelser';
 import StatusPåForespørselOmDelingAvCv from './status-på-forespørsel/StatusPåForespørselOmDelingAvCv';
+import { ApplikasjonContext } from 'felles/ApplikasjonContext';
 
 type Props = {
     kandidat: KandidatIKandidatliste;
@@ -87,9 +88,16 @@ const Kandidatrad: FunctionComponent<Props> = ({
         );
     };
 
+    const { valgtNavKontor } = useContext(ApplikasjonContext);
+
     const onToggleArkivert = () => {
         setVisBekreftModal(false);
-        toggleArkivert(kandidatliste.kandidatlisteId, kandidat.kandidatnr, true);
+        toggleArkivert(
+            kandidatliste.kandidatlisteId,
+            kandidat.kandidatnr,
+            true,
+            valgtNavKontor ? valgtNavKontor.navKontor : ''
+        );
     };
 
     const fornavn = kandidat.fornavn ? capitalizeFirstLetter(kandidat.fornavn) : '';
