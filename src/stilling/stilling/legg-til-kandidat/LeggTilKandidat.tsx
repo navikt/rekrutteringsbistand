@@ -169,10 +169,6 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                     opprettet før hen kom under oppfølging av Nav.
                                                 </li>
                                                 <li>
-                                                    Personbruker har personforholdet «Fritatt for
-                                                    kandidatsøk» i Arena.
-                                                </li>
-                                                <li>
                                                     Personbruker må være i Navs
                                                     Arbeidssøkerregister.
                                                 </li>
@@ -190,7 +186,7 @@ const LeggTilKandidat: FunctionComponent<ILeggTilKandidat> = ({
                                                 onClick={() => setVisSynlighetsEvaluering(true)}
                                                 variant="secondary"
                                             >
-                                                Se hvorfor kandidaten ikke er synlig (punkt 1-5)
+                                                Se hvorfor kandidaten ikke er synlig (punkt 1-4)
                                             </Button>
                                         </Alert>
                                     )}
