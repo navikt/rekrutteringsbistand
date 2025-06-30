@@ -5,6 +5,31 @@ const tilDato = (dag: number, måned: number, år: number, timer = 0, minutter =
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(30, 6, 2025),
+        tittel: '"Fritatt fra kandidatsøk" ikke lenger en synlighetsregel i Rekrutteringsbistand',
+        innhold: (
+            <>
+                <p>
+                    Rekrutteringsbistand tar ikke lenger hensyn til FRKAS som synlighetsregel for
+                    CV-er kandidatsøket i Rekrutteringsbistand.
+                </p>
+                <p>
+                    FRKAS er en kode som settes i Arena, og betyr «fritatt fra kandidatsøk». De
+                    oppdaterte synlighetsreglene kan du se på Navet:
+                </p>
+                <p>
+                    <a
+                        target="_blank"
+                        href="https://navno.sharepoint.com/:u:/r/sites/fag-og-ytelser-arbeid-markedsarbeid/SitePages/Hvorfor-er-ikke-personen-synlig-i-Rekr.aspx?csf=1&web=1&e=qqMnTh"
+                        rel="noopener noreferrer"
+                    >
+                        Regler som styrer synlighet for CV i Rekrutteringsbistand
+                    </a>
+                </p>
+            </>
+        ),
+    },
+    {
         dato: tilDato(22, 4, 2025),
         tittel: 'Rekrutteringsbistand bruker nå Arbeidssøkerregisteret.',
         innhold: (
