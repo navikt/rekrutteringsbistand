@@ -114,7 +114,7 @@ describe('<LeggTilKandidat />', () => {
         // Viser knapp for oppslag i synlighetsmotoren
         expect(
             screen.getByRole('button', {
-                name: 'Se hvorfor kandidaten ikke er synlig (punkt 1-5)',
+                name: 'Se hvorfor kandidaten ikke er synlig (punkt 1-4)',
             })
         );
 
