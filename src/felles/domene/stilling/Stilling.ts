@@ -24,6 +24,7 @@ export type Stillingbase = {
 /* Datastrukturen som brukes i stilling-api */
 export type Stilling = Stillingbase & {
     id: number;
+    annonsenr: string;
     employer: Arbeidsgiver | null;
     activationOnPublishingDate: boolean;
     firstPublished: boolean | null;

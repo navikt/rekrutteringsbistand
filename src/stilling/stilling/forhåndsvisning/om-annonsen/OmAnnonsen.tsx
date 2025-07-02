@@ -8,7 +8,7 @@ type Props = {
 };
 
 const OmAnnonsen = ({ stilling }: Props) => {
-    const { updated, medium, reference, id } = stilling;
+    const { updated, medium, reference, annonsenr } = stilling;
 
     return (
         <Panel className={css.infoboks}>
@@ -28,10 +28,10 @@ const OmAnnonsen = ({ stilling }: Props) => {
                         <dd key="dd">{medium}</dd>
                     </>
                 )}
-                {id && (
+                {annonsenr && (
                     <>
                         <dt key="dt">Annonsenummer:</dt>
-                        <dd key="dd">{id}</dd>
+                        <dd key="dd">{annonsenr}</dd>
                     </>
                 )}
                 {reference && (
