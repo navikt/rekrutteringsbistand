@@ -102,14 +102,13 @@ const FraSøkMedKandidatliste: FunctionComponent<Props> = ({
                                 kandidatlisten
                             </Link>
                         </BodyShort>
-                    ) : (
-                        <Button
-                            icon={<PersonPlusIcon aria-hidden />}
-                            onClick={() => setVisLagreKandidatModal(true)}
-                        >
-                            Lagre kandidat
-                        </Button>
-                    )}
+                    ) : // <Button
+                    //     icon={<PersonPlusIcon aria-hidden />}
+                    //     onClick={() => setVisLagreKandidatModal(true)}
+                    // >
+                    //     Lagre kandidat
+                    // </Button>
+                    null}
                 </Kandidatmeny>
                 <Tabs.Panel value={fane}>{children}</Tabs.Panel>
             </Tabs>
