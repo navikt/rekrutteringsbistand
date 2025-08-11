@@ -64,7 +64,7 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
             className={css.modal}
             open={vis}
             onClose={onClose}
-            header={{ heading: 'Lagre kandidaten i kandidatlisten' }}
+            header={{ heading: 'Lagre kandidaten i kandidatlisten?' }}
         >
             <>
                 {kandidatliste.kind === Nettstatus.LasterInn && <Sidelaster />}
@@ -85,14 +85,14 @@ const LagreKandidatIKandidatlisteModal: FunctionComponent<Props> = ({
                                     loading={lagreKandidatStatus === Nettstatus.SenderInn}
                                     onClick={onBekreftClick(kandidatliste.data.stillingId)}
                                 >
-                                    Lagre
+                                    Ja, lagre
                                 </Button>
                                 <Button
                                     variant="tertiary"
                                     disabled={lagreKandidatStatus === Nettstatus.SenderInn}
                                     onClick={onClose}
                                 >
-                                    Avbryt
+                                    Nei, avbryt
                                 </Button>
                             </Modal.Footer>
                         </>
