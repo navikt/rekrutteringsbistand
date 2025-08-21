@@ -41,6 +41,7 @@ export const mockArbeidsgiver: Arbeidsgiver = {
 
 export const mockStilling /* : Stilling */ = {
     id: 100,
+    annonsenr: 'R100',
     uuid: stillingsId,
     created: iDag,
     createdBy: System.Rekrutteringsbistand,
@@ -125,6 +126,7 @@ export const mockEksternStilling = {
     stillingsinfo: null,
     stilling: {
         id: 301,
+        annonsenr: '301',
         uuid: 'eksternStilling',
         created: '2024-04-30T08:01:18.201333',
         createdBy: 'import-api',
