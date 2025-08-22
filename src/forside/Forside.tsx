@@ -4,8 +4,8 @@ import { ApplikasjonContext } from '../felles/ApplikasjonContext';
 import ErrorBoundary from '../felles/feilhåndtering/ErrorBoundary';
 import css from './Forside.module.css';
 import Hurtiglenker from './hurtiglenker/Hurtiglenker';
-import PusserOpp from './PusserOpp';
 import Statistikk from './statistikk/Statistikk';
+import Utfasing from './Utfasing';
 
 const Forside = () => {
     const { valgtNavKontor } = useContext(ApplikasjonContext);
@@ -14,7 +14,8 @@ const Forside = () => {
         <div className={css.forsideWrapper}>
             <ErrorBoundary>
                 <div className={css.forside}>
-                    <Hurtiglenker /> <PusserOpp />
+                    <Utfasing />
+                    <Hurtiglenker />
                     {valgtNavKontor ? (
                         <Statistikk
                             navKontor={valgtNavKontor.navKontor}
