@@ -28,7 +28,7 @@ const Utfasing: React.FC<UtfasingProps> = ({ children }) => {
                 <VStack gap="6" style={{ flex: 1 }}>
                     <HStack gap="2" align="center">
                         <Heading level="2" size="large">
-                            Adjø til gamle rekrutteringsbistand fra 1. september
+                            Adjø til gamle rekrutteringsbistand fra 15. september
                         </Heading>
                         <Tag variant="success" icon={<RocketIcon aria-hidden />}>
                             Nyhet
