@@ -5,6 +5,22 @@ const tilDato = (dag: number, måned: number, år: number, timer = 0, minutter =
 
 const nyhetssaker: Nyhet[] = [
     {
+        dato: tilDato(1, 9, 2024),
+        tittel: 'Ny dato for nedstengning av gamle rekrutteringsbistand: 15 september.',
+        innhold: (
+            <>
+                <p>
+                    Vi ønsker å forbedre funksjonaliteten i nye rekrutteringsbistand før vi slår av
+                    den gamle. Derfor utsetter vi nedstengningen til mandag 15. september.
+                </p>
+                <p>
+                    Hvis du ikke har prøvd den nye versjonen ennå kan du sjekke den ut allerede i
+                    dag. Vi har gjort flere endringer over sommeren, og flere er på vei.
+                </p>
+            </>
+        ),
+    },
+    {
         dato: tilDato(30, 6, 2025),
         tittel: '"Fritatt fra kandidatsøk" ikke lenger en synlighetsregel i Rekrutteringsbistand',
         innhold: (
