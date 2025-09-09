@@ -46,7 +46,7 @@ const Utfasing: React.FC<UtfasingProps> = ({ children }) => {
 
                     <List>
                         <List.Item icon={<CheckmarkCircleIcon aria-hidden />}>
-                            Den gamle løsningen <strong>stås av 1. september 2025.</strong>
+                            Den gamle løsningen <strong>slåes av 15. september 2025.</strong>
                         </List.Item>
                         <List.Item icon={<CheckmarkCircleIcon aria-hidden />}>
                             Hvis du ikke har prøvd den nye versjonen ennå kan du{' '}
