@@ -40,7 +40,6 @@ export const mockArbeidsgiver: Arbeidsgiver = {
 };
 
 export const mockStilling /* : Stilling */ = {
-    id: 100,
     annonsenr: 'R100',
     uuid: stillingsId,
     created: iDag,
@@ -125,7 +124,6 @@ export const mockStilling /* : Stilling */ = {
 export const mockEksternStilling = {
     stillingsinfo: null,
     stilling: {
-        id: 301,
         annonsenr: '301',
         uuid: 'eksternStilling',
         created: '2024-04-30T08:01:18.201333',
@@ -278,7 +276,6 @@ export const mockRekrutteringsbistandstillingMinEkstern: any = {
 export const mockNyRekrutteringsbistandstilling: Rekrutteringsbistandstilling = {
     stilling: {
         ...mockStilling,
-        id: 101,
         uuid: '004aa428-8033-404a-bcf2-4dd5e33205c9',
         title: 'TITTEL FRA ARBEIDSPLASSEN',
         administration: {
