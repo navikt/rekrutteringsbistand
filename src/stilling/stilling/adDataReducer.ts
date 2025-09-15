@@ -52,7 +52,6 @@ export const SET_PUBLISHED = 'SET_PUBLISHED';
 export const SET_FIRST_PUBLISHED = 'SET_FIRST_PUBLISHED';
 export const SET_LAST_UPDATED = 'SET_LAST_UPDATED';
 export const SET_MEDIUM = 'SET_MEDIUM';
-export const SET_ID = 'SET_ID';
 export const SET_REFERENCE = 'SET_REFERENCE';
 export const SET_EXPIRATION_DATE = 'SET_EXPIRATION_DATE';
 export const SET_AD_TEXT = 'SET_AD_TEXT';
@@ -484,11 +483,6 @@ const manipulateAdReducer = (state: Stilling, action: any) => {
             return {
                 ...state,
                 medium: action.medium,
-            };
-        case SET_ID:
-            return {
-                ...state,
-                id: action.id,
             };
         case SET_REFERENCE:
             return {

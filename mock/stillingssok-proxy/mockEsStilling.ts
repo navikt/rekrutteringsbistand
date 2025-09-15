@@ -13,7 +13,7 @@ export const mockEsRekrutteringsbistandstilling: EsRekrutteringsbistandstilling 
         ...mockStilling,
         uuid: 'intern',
         tittel: 'Intern stilling',
-        annonsenr: String(mockStilling.id),
+        annonsenr: 'R12345',
         categories: [
             {
                 name: 'Foo',
@@ -64,7 +64,7 @@ export const mockEsRekrutteringsbistandstillingEkstern: EsRekrutteringsbistandst
         source: Kilde.Finn,
         medium: Medium.Ass,
         tittel: 'Ekstern stilling',
-        annonsenr: String(mockStilling.id),
+        annonsenr: 'R12345',
         categories: [
             {
                 name: 'Foo',
