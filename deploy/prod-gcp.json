@@ -7,7 +7,7 @@
     "adGruppeRekrutteringsbistandUtvikler": "41080368-439f-4128-858a-afbef876431e",
     "foresporselOmDelingAvCvApi": "https://foresporsel-om-deling-av-cv-api.prod-fss-pub.nais.io",
     "foresporselOmDelingAvCvApiHost": "foresporsel-om-deling-av-cv-api.prod-fss-pub.nais.io",
-    "ingress": "https://rekrutteringsbistand-frontend.intern.nav.no",
+    "ingress": "https://rekrutteringsbistand-frontend-temp.intern.nav.no",
     "kandidatApiHost": "rekrutteringsbistand-sms.prod-fss-pub.nais.io",
     "kandidatApiUrl": "https://rekrutteringsbistand-kandidat-api.prod-fss-pub.nais.io/rekrutteringsbistand-kandidat-api/rest",
     "statistikkApiHost": "rekrutteringsbistand-statistikk-api.prod-fss-pub.nais.io",
