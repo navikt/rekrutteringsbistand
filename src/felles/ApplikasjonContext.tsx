@@ -1,4 +1,5 @@
 import { Loader } from '@navikt/ds-react';
+import { getMiljø, Miljø } from 'felles/miljø';
 import React from 'react';
 import { useMeg } from '../api/frackend/meg';
 import Stilling, { Stillingbase, Stillingsinfo } from './domene/stilling/Stilling';
@@ -68,6 +69,39 @@ export const ApplikasjonContextProvider: React.FC<IApplikasjonContextProvider> =
         return false;
     };
 
+    if (!roller) {
+        return <Loader />;
+    }
+
+    if (!roller?.includes(Rolle.AD_GRUPPE_REKRUTTERINGSBISTAND_UTVIKLER)) {
+        const href =
+            getMiljø() === Miljø.ProdGcp
+                ? 'https://rekrutteringsbistand.intern.nav.no/'
+                : 'https://rekrutteringsbistand.intern.dev.nav.no/';
+
+        window.location.href = href;
+
+        return (
+            <div>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <div>Sender bruker til ny løsning...</div>
+                </div>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Loader />
+                </div>
+            </div>
+        );
+    }
     return (
         <ApplikasjonContext.Provider
             value={{
