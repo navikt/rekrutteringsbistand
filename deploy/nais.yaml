@@ -1,14 +1,14 @@
 apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
-  name: rekrutteringsbistand
-  namespace: toi
-  labels:
-    team: toi
+    name: rekrutteringsbistand
+    namespace: toi
+    labels:
+        team: toi
 
 spec:
-  # prettier-ignore
-  image: {{ image }}
+    # prettier-ignore
+    image: {{ image }}
   port: 8080
   ingresses:
     - {{ ingress }}
@@ -33,9 +33,6 @@ spec:
           - NAVident
     sidecar:
       enabled: true
-  openSearch:
-    access: read
-    instance: kandidat
   secureLogs:
     enabled: true
   accessPolicy:
