@@ -1,5 +1,8 @@
 # Rekrutteringsbistand #Frontend
 
+## Arkivert! Erstattet av rekrutteringsbistand-frontend
+
+
 Et arbeidsmobiliseringsverktøy for veiledere og markedskontakter i Nav.
 
 ## Installasjon
